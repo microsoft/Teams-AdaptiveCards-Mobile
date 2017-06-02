@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class ImageSizeOptions {
+public class ImageSizesConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected ImageSizeOptions(long cPtr, boolean cMemoryOwn) {
+  protected ImageSizesConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(ImageSizeOptions obj) {
+  protected static long getCPtr(ImageSizesConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,38 +29,38 @@ public class ImageSizeOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_ImageSizeOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_ImageSizesConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setSmallSize(long value) {
-    AdaptiveCardObjectModelJNI.ImageSizeOptions_smallSize_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.ImageSizesConfig_smallSize_set(swigCPtr, this, value);
   }
 
   public long getSmallSize() {
-    return AdaptiveCardObjectModelJNI.ImageSizeOptions_smallSize_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.ImageSizesConfig_smallSize_get(swigCPtr, this);
   }
 
   public void setMediumSize(long value) {
-    AdaptiveCardObjectModelJNI.ImageSizeOptions_mediumSize_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.ImageSizesConfig_mediumSize_set(swigCPtr, this, value);
   }
 
   public long getMediumSize() {
-    return AdaptiveCardObjectModelJNI.ImageSizeOptions_mediumSize_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.ImageSizesConfig_mediumSize_get(swigCPtr, this);
   }
 
   public void setLargeSize(long value) {
-    AdaptiveCardObjectModelJNI.ImageSizeOptions_largeSize_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.ImageSizesConfig_largeSize_set(swigCPtr, this, value);
   }
 
   public long getLargeSize() {
-    return AdaptiveCardObjectModelJNI.ImageSizeOptions_largeSize_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.ImageSizesConfig_largeSize_get(swigCPtr, this);
   }
 
-  public ImageSizeOptions() {
-    this(AdaptiveCardObjectModelJNI.new_ImageSizeOptions(), true);
+  public ImageSizesConfig() {
+    this(AdaptiveCardObjectModelJNI.new_ImageSizesConfig(), true);
   }
 
 }

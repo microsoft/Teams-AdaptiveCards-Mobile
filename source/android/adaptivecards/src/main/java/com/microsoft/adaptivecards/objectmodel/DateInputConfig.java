@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class ToggleInputOptions {
+public class DateInputConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected ToggleInputOptions(long cPtr, boolean cMemoryOwn) {
+  protected DateInputConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(ToggleInputOptions obj) {
+  protected static long getCPtr(DateInputConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,23 +29,23 @@ public class ToggleInputOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_ToggleInputOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_DateInputConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.ToggleInputOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.DateInputConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.ToggleInputOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.DateInputConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public ToggleInputOptions() {
-    this(AdaptiveCardObjectModelJNI.new_ToggleInputOptions(), true);
+  public DateInputConfig() {
+    this(AdaptiveCardObjectModelJNI.new_DateInputConfig(), true);
   }
 
 }

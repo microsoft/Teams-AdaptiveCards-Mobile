@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class AdaptiveCardOptions {
+public class AdaptiveCardConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected AdaptiveCardOptions(long cPtr, boolean cMemoryOwn) {
+  protected AdaptiveCardConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(AdaptiveCardOptions obj) {
+  protected static long getCPtr(AdaptiveCardConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,31 +29,31 @@ public class AdaptiveCardOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_AdaptiveCardOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_AdaptiveCardConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setPadding(BoundaryOptions value) {
-    AdaptiveCardObjectModelJNI.AdaptiveCardOptions_padding_set(swigCPtr, this, BoundaryOptions.getCPtr(value), value);
+  public void setPadding(SpacingDefinition value) {
+    AdaptiveCardObjectModelJNI.AdaptiveCardConfig_padding_set(swigCPtr, this, SpacingDefinition.getCPtr(value), value);
   }
 
-  public BoundaryOptions getPadding() {
-    long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCardOptions_padding_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new BoundaryOptions(cPtr, false);
+  public SpacingDefinition getPadding() {
+    long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCardConfig_padding_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SpacingDefinition(cPtr, false);
   }
 
   public void setBackgroundColor(String value) {
-    AdaptiveCardObjectModelJNI.AdaptiveCardOptions_backgroundColor_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.AdaptiveCardConfig_backgroundColor_set(swigCPtr, this, value);
   }
 
   public String getBackgroundColor() {
-    return AdaptiveCardObjectModelJNI.AdaptiveCardOptions_backgroundColor_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.AdaptiveCardConfig_backgroundColor_get(swigCPtr, this);
   }
 
-  public AdaptiveCardOptions() {
-    this(AdaptiveCardObjectModelJNI.new_AdaptiveCardOptions(), true);
+  public AdaptiveCardConfig() {
+    this(AdaptiveCardObjectModelJNI.new_AdaptiveCardConfig(), true);
   }
 
 }

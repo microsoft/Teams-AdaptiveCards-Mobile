@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class TextOptions {
+public class TextConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected TextOptions(long cPtr, boolean cMemoryOwn) {
+  protected TextConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(TextOptions obj) {
+  protected static long getCPtr(TextConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,46 +29,46 @@ public class TextOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_TextOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_TextConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setWeight(TextWeight value) {
-    AdaptiveCardObjectModelJNI.TextOptions_weight_set(swigCPtr, this, value.swigValue());
+    AdaptiveCardObjectModelJNI.TextConfig_weight_set(swigCPtr, this, value.swigValue());
   }
 
   public TextWeight getWeight() {
-    return TextWeight.swigToEnum(AdaptiveCardObjectModelJNI.TextOptions_weight_get(swigCPtr, this));
+    return TextWeight.swigToEnum(AdaptiveCardObjectModelJNI.TextConfig_weight_get(swigCPtr, this));
   }
 
   public void setSize(TextSize value) {
-    AdaptiveCardObjectModelJNI.TextOptions_size_set(swigCPtr, this, value.swigValue());
+    AdaptiveCardObjectModelJNI.TextConfig_size_set(swigCPtr, this, value.swigValue());
   }
 
   public TextSize getSize() {
-    return TextSize.swigToEnum(AdaptiveCardObjectModelJNI.TextOptions_size_get(swigCPtr, this));
+    return TextSize.swigToEnum(AdaptiveCardObjectModelJNI.TextConfig_size_get(swigCPtr, this));
   }
 
   public void setColor(TextColor value) {
-    AdaptiveCardObjectModelJNI.TextOptions_color_set(swigCPtr, this, value.swigValue());
+    AdaptiveCardObjectModelJNI.TextConfig_color_set(swigCPtr, this, value.swigValue());
   }
 
   public TextColor getColor() {
-    return TextColor.swigToEnum(AdaptiveCardObjectModelJNI.TextOptions_color_get(swigCPtr, this));
+    return TextColor.swigToEnum(AdaptiveCardObjectModelJNI.TextConfig_color_get(swigCPtr, this));
   }
 
   public void setIsSubtle(boolean value) {
-    AdaptiveCardObjectModelJNI.TextOptions_isSubtle_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.TextConfig_isSubtle_set(swigCPtr, this, value);
   }
 
   public boolean getIsSubtle() {
-    return AdaptiveCardObjectModelJNI.TextOptions_isSubtle_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.TextConfig_isSubtle_get(swigCPtr, this);
   }
 
-  public TextOptions() {
-    this(AdaptiveCardObjectModelJNI.new_TextOptions(), true);
+  public TextConfig() {
+    this(AdaptiveCardObjectModelJNI.new_TextConfig(), true);
   }
 
 }

@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class ChoiceSetOptions {
+public class ChoiceSetConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected ChoiceSetOptions(long cPtr, boolean cMemoryOwn) {
+  protected ChoiceSetConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(ChoiceSetOptions obj) {
+  protected static long getCPtr(ChoiceSetConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,23 +29,23 @@ public class ChoiceSetOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_ChoiceSetOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_ChoiceSetConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.ChoiceSetOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.ChoiceSetConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.ChoiceSetOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.ChoiceSetConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public ChoiceSetOptions() {
-    this(AdaptiveCardObjectModelJNI.new_ChoiceSetOptions(), true);
+  public ChoiceSetConfig() {
+    this(AdaptiveCardObjectModelJNI.new_ChoiceSetConfig(), true);
   }
 
 }

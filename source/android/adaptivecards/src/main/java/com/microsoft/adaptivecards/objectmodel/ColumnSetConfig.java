@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class TimeInputOptions {
+public class ColumnSetConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected TimeInputOptions(long cPtr, boolean cMemoryOwn) {
+  protected ColumnSetConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(TimeInputOptions obj) {
+  protected static long getCPtr(ColumnSetConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,23 +29,23 @@ public class TimeInputOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_TimeInputOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_ColumnSetConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.TimeInputOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.ColumnSetConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.TimeInputOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.ColumnSetConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public TimeInputOptions() {
-    this(AdaptiveCardObjectModelJNI.new_TimeInputOptions(), true);
+  public ColumnSetConfig() {
+    this(AdaptiveCardObjectModelJNI.new_ColumnSetConfig(), true);
   }
 
 }

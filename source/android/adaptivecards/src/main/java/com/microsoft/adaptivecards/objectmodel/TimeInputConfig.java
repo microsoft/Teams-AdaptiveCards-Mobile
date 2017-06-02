@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class ColorOption {
+public class TimeInputConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected ColorOption(long cPtr, boolean cMemoryOwn) {
+  protected TimeInputConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(ColorOption obj) {
+  protected static long getCPtr(TimeInputConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,30 +29,23 @@ public class ColorOption {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_ColorOption(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_TimeInputConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setNormal(String value) {
-    AdaptiveCardObjectModelJNI.ColorOption_normal_set(swigCPtr, this, value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.TimeInputConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public String getNormal() {
-    return AdaptiveCardObjectModelJNI.ColorOption_normal_get(swigCPtr, this);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.TimeInputConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public void setSubtle(String value) {
-    AdaptiveCardObjectModelJNI.ColorOption_subtle_set(swigCPtr, this, value);
-  }
-
-  public String getSubtle() {
-    return AdaptiveCardObjectModelJNI.ColorOption_subtle_get(swigCPtr, this);
-  }
-
-  public ColorOption() {
-    this(AdaptiveCardObjectModelJNI.new_ColorOption(), true);
+  public TimeInputConfig() {
+    this(AdaptiveCardObjectModelJNI.new_TimeInputConfig(), true);
   }
 
 }

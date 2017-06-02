@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class TextInputOptions {
+public class ImageConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected TextInputOptions(long cPtr, boolean cMemoryOwn) {
+  protected ImageConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(TextInputOptions obj) {
+  protected static long getCPtr(ImageConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,23 +29,23 @@ public class TextInputOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_TextInputOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_ImageConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.TextInputOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.ImageConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.TextInputOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.ImageConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public TextInputOptions() {
-    this(AdaptiveCardObjectModelJNI.new_TextInputOptions(), true);
+  public ImageConfig() {
+    this(AdaptiveCardObjectModelJNI.new_ImageConfig(), true);
   }
 
 }

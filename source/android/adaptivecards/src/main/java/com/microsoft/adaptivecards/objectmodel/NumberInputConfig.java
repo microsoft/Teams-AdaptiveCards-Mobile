@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class NumberInputOptions {
+public class NumberInputConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected NumberInputOptions(long cPtr, boolean cMemoryOwn) {
+  protected NumberInputConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(NumberInputOptions obj) {
+  protected static long getCPtr(NumberInputConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,23 +29,23 @@ public class NumberInputOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_NumberInputOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_NumberInputConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.NumberInputOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.NumberInputConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.NumberInputOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.NumberInputConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public NumberInputOptions() {
-    this(AdaptiveCardObjectModelJNI.new_NumberInputOptions(), true);
+  public NumberInputConfig() {
+    this(AdaptiveCardObjectModelJNI.new_NumberInputConfig(), true);
   }
 
 }

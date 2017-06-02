@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class SeparationOptions {
+public class SeparationConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected SeparationOptions(long cPtr, boolean cMemoryOwn) {
+  protected SeparationConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(SeparationOptions obj) {
+  protected static long getCPtr(SeparationConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,38 +29,38 @@ public class SeparationOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_SeparationOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_SeparationConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setSpacing(long value) {
-    AdaptiveCardObjectModelJNI.SeparationOptions_spacing_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.SeparationConfig_spacing_set(swigCPtr, this, value);
   }
 
   public long getSpacing() {
-    return AdaptiveCardObjectModelJNI.SeparationOptions_spacing_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.SeparationConfig_spacing_get(swigCPtr, this);
   }
 
   public void setLineThickness(long value) {
-    AdaptiveCardObjectModelJNI.SeparationOptions_lineThickness_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.SeparationConfig_lineThickness_set(swigCPtr, this, value);
   }
 
   public long getLineThickness() {
-    return AdaptiveCardObjectModelJNI.SeparationOptions_lineThickness_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.SeparationConfig_lineThickness_get(swigCPtr, this);
   }
 
   public void setLineColor(String value) {
-    AdaptiveCardObjectModelJNI.SeparationOptions_lineColor_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.SeparationConfig_lineColor_set(swigCPtr, this, value);
   }
 
   public String getLineColor() {
-    return AdaptiveCardObjectModelJNI.SeparationOptions_lineColor_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.SeparationConfig_lineColor_get(swigCPtr, this);
   }
 
-  public SeparationOptions() {
-    this(AdaptiveCardObjectModelJNI.new_SeparationOptions(), true);
+  public SeparationConfig() {
+    this(AdaptiveCardObjectModelJNI.new_SeparationConfig(), true);
   }
 
 }

@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class DateInputOptions {
+public class ColorConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected DateInputOptions(long cPtr, boolean cMemoryOwn) {
+  protected ColorConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(DateInputOptions obj) {
+  protected static long getCPtr(ColorConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,23 +29,30 @@ public class DateInputOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_DateInputOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_ColorConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.DateInputOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setNormal(String value) {
+    AdaptiveCardObjectModelJNI.ColorConfig_normal_set(swigCPtr, this, value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.DateInputOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public String getNormal() {
+    return AdaptiveCardObjectModelJNI.ColorConfig_normal_get(swigCPtr, this);
   }
 
-  public DateInputOptions() {
-    this(AdaptiveCardObjectModelJNI.new_DateInputOptions(), true);
+  public void setSubtle(String value) {
+    AdaptiveCardObjectModelJNI.ColorConfig_subtle_set(swigCPtr, this, value);
+  }
+
+  public String getSubtle() {
+    return AdaptiveCardObjectModelJNI.ColorConfig_subtle_get(swigCPtr, this);
+  }
+
+  public ColorConfig() {
+    this(AdaptiveCardObjectModelJNI.new_ColorConfig(), true);
   }
 
 }

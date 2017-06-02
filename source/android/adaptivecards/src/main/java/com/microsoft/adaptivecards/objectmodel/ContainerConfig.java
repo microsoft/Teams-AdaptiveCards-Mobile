@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class ContainerOptions {
+public class ContainerConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected ContainerOptions(long cPtr, boolean cMemoryOwn) {
+  protected ContainerConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(ContainerOptions obj) {
+  protected static long getCPtr(ContainerConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,41 +29,41 @@ public class ContainerOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_ContainerOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_ContainerConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.ContainerOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.ContainerConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.ContainerOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.ContainerConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
   public void setNormal(ContainerStyleConfig value) {
-    AdaptiveCardObjectModelJNI.ContainerOptions_normal_set(swigCPtr, this, ContainerStyleConfig.getCPtr(value), value);
+    AdaptiveCardObjectModelJNI.ContainerConfig_normal_set(swigCPtr, this, ContainerStyleConfig.getCPtr(value), value);
   }
 
   public ContainerStyleConfig getNormal() {
-    long cPtr = AdaptiveCardObjectModelJNI.ContainerOptions_normal_get(swigCPtr, this);
+    long cPtr = AdaptiveCardObjectModelJNI.ContainerConfig_normal_get(swigCPtr, this);
     return (cPtr == 0) ? null : new ContainerStyleConfig(cPtr, false);
   }
 
   public void setEmphasis(ContainerStyleConfig value) {
-    AdaptiveCardObjectModelJNI.ContainerOptions_emphasis_set(swigCPtr, this, ContainerStyleConfig.getCPtr(value), value);
+    AdaptiveCardObjectModelJNI.ContainerConfig_emphasis_set(swigCPtr, this, ContainerStyleConfig.getCPtr(value), value);
   }
 
   public ContainerStyleConfig getEmphasis() {
-    long cPtr = AdaptiveCardObjectModelJNI.ContainerOptions_emphasis_get(swigCPtr, this);
+    long cPtr = AdaptiveCardObjectModelJNI.ContainerConfig_emphasis_get(swigCPtr, this);
     return (cPtr == 0) ? null : new ContainerStyleConfig(cPtr, false);
   }
 
-  public ContainerOptions() {
-    this(AdaptiveCardObjectModelJNI.new_ContainerOptions(), true);
+  public ContainerConfig() {
+    this(AdaptiveCardObjectModelJNI.new_ContainerConfig(), true);
   }
 
 }

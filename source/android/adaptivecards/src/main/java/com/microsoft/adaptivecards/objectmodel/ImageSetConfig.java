@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class ImageSetOptions {
+public class ImageSetConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected ImageSetOptions(long cPtr, boolean cMemoryOwn) {
+  protected ImageSetConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(ImageSetOptions obj) {
+  protected static long getCPtr(ImageSetConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,31 +29,31 @@ public class ImageSetOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_ImageSetOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_ImageSetConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setImageSize(ImageSize value) {
-    AdaptiveCardObjectModelJNI.ImageSetOptions_imageSize_set(swigCPtr, this, value.swigValue());
+    AdaptiveCardObjectModelJNI.ImageSetConfig_imageSize_set(swigCPtr, this, value.swigValue());
   }
 
   public ImageSize getImageSize() {
-    return ImageSize.swigToEnum(AdaptiveCardObjectModelJNI.ImageSetOptions_imageSize_get(swigCPtr, this));
+    return ImageSize.swigToEnum(AdaptiveCardObjectModelJNI.ImageSetConfig_imageSize_get(swigCPtr, this));
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.ImageSetOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.ImageSetConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.ImageSetOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.ImageSetConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public ImageSetOptions() {
-    this(AdaptiveCardObjectModelJNI.new_ImageSetOptions(), true);
+  public ImageSetConfig() {
+    this(AdaptiveCardObjectModelJNI.new_ImageSetConfig(), true);
   }
 
 }

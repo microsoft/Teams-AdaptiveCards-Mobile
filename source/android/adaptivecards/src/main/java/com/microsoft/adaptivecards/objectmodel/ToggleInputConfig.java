@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class ColumnOptions {
+public class ToggleInputConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected ColumnOptions(long cPtr, boolean cMemoryOwn) {
+  protected ToggleInputConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(ColumnOptions obj) {
+  protected static long getCPtr(ToggleInputConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,23 +29,23 @@ public class ColumnOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_ColumnOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_ToggleInputConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.ColumnOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.ToggleInputConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.ColumnOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.ToggleInputConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public ColumnOptions() {
-    this(AdaptiveCardObjectModelJNI.new_ColumnOptions(), true);
+  public ToggleInputConfig() {
+    this(AdaptiveCardObjectModelJNI.new_ToggleInputConfig(), true);
   }
 
 }

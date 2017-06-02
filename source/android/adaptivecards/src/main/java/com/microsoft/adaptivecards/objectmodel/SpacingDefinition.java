@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class BoundaryOptions {
+public class SpacingDefinition {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected BoundaryOptions(long cPtr, boolean cMemoryOwn) {
+  protected SpacingDefinition(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(BoundaryOptions obj) {
+  protected static long getCPtr(SpacingDefinition obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,46 +29,46 @@ public class BoundaryOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_BoundaryOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_SpacingDefinition(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public void setLeft(long value) {
-    AdaptiveCardObjectModelJNI.BoundaryOptions_left_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.SpacingDefinition_left_set(swigCPtr, this, value);
   }
 
   public long getLeft() {
-    return AdaptiveCardObjectModelJNI.BoundaryOptions_left_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.SpacingDefinition_left_get(swigCPtr, this);
   }
 
   public void setRight(long value) {
-    AdaptiveCardObjectModelJNI.BoundaryOptions_right_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.SpacingDefinition_right_set(swigCPtr, this, value);
   }
 
   public long getRight() {
-    return AdaptiveCardObjectModelJNI.BoundaryOptions_right_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.SpacingDefinition_right_get(swigCPtr, this);
   }
 
   public void setTop(long value) {
-    AdaptiveCardObjectModelJNI.BoundaryOptions_top_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.SpacingDefinition_top_set(swigCPtr, this, value);
   }
 
   public long getTop() {
-    return AdaptiveCardObjectModelJNI.BoundaryOptions_top_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.SpacingDefinition_top_get(swigCPtr, this);
   }
 
   public void setBottom(long value) {
-    AdaptiveCardObjectModelJNI.BoundaryOptions_bottom_set(swigCPtr, this, value);
+    AdaptiveCardObjectModelJNI.SpacingDefinition_bottom_set(swigCPtr, this, value);
   }
 
   public long getBottom() {
-    return AdaptiveCardObjectModelJNI.BoundaryOptions_bottom_get(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.SpacingDefinition_bottom_get(swigCPtr, this);
   }
 
-  public BoundaryOptions() {
-    this(AdaptiveCardObjectModelJNI.new_BoundaryOptions(), true);
+  public SpacingDefinition() {
+    this(AdaptiveCardObjectModelJNI.new_SpacingDefinition(), true);
   }
 
 }

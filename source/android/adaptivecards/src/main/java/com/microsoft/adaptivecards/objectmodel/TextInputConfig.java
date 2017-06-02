@@ -8,16 +8,16 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public class ColumnSetOptions {
+public class TextInputConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected ColumnSetOptions(long cPtr, boolean cMemoryOwn) {
+  protected TextInputConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(ColumnSetOptions obj) {
+  protected static long getCPtr(TextInputConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -29,23 +29,23 @@ public class ColumnSetOptions {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_ColumnSetOptions(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_TextInputConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setSeparation(SeparationOptions value) {
-    AdaptiveCardObjectModelJNI.ColumnSetOptions_separation_set(swigCPtr, this, SeparationOptions.getCPtr(value), value);
+  public void setSeparation(SeparationConfig value) {
+    AdaptiveCardObjectModelJNI.TextInputConfig_separation_set(swigCPtr, this, SeparationConfig.getCPtr(value), value);
   }
 
-  public SeparationOptions getSeparation() {
-    long cPtr = AdaptiveCardObjectModelJNI.ColumnSetOptions_separation_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new SeparationOptions(cPtr, false);
+  public SeparationConfig getSeparation() {
+    long cPtr = AdaptiveCardObjectModelJNI.TextInputConfig_separation_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SeparationConfig(cPtr, false);
   }
 
-  public ColumnSetOptions() {
-    this(AdaptiveCardObjectModelJNI.new_ColumnSetOptions(), true);
+  public TextInputConfig() {
+    this(AdaptiveCardObjectModelJNI.new_TextInputConfig(), true);
   }
 
 }
