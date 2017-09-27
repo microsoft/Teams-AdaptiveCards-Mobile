@@ -8,10 +8,14 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public final class SeparationStyle {
-  public final static SeparationStyle Default = new SeparationStyle("Default", AdaptiveCardObjectModelJNI.SeparationStyle_Default_get());
-  public final static SeparationStyle None = new SeparationStyle("None");
-  public final static SeparationStyle Strong = new SeparationStyle("Strong");
+public final class Spacing {
+  public final static Spacing Default = new Spacing("Default", AdaptiveCardObjectModelJNI.Spacing_Default_get());
+  public final static Spacing None = new Spacing("None");
+  public final static Spacing Small = new Spacing("Small");
+  public final static Spacing Medium = new Spacing("Medium");
+  public final static Spacing Large = new Spacing("Large");
+  public final static Spacing ExtraLarge = new Spacing("ExtraLarge");
+  public final static Spacing Padding = new Spacing("Padding");
 
   public final int swigValue() {
     return swigValue;
@@ -21,33 +25,33 @@ public final class SeparationStyle {
     return swigName;
   }
 
-  public static SeparationStyle swigToEnum(int swigValue) {
+  public static Spacing swigToEnum(int swigValue) {
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
     for (int i = 0; i < swigValues.length; i++)
       if (swigValues[i].swigValue == swigValue)
         return swigValues[i];
-    throw new IllegalArgumentException("No enum " + SeparationStyle.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + Spacing.class + " with value " + swigValue);
   }
 
-  private SeparationStyle(String swigName) {
+  private Spacing(String swigName) {
     this.swigName = swigName;
     this.swigValue = swigNext++;
   }
 
-  private SeparationStyle(String swigName, int swigValue) {
+  private Spacing(String swigName, int swigValue) {
     this.swigName = swigName;
     this.swigValue = swigValue;
     swigNext = swigValue+1;
   }
 
-  private SeparationStyle(String swigName, SeparationStyle swigEnum) {
+  private Spacing(String swigName, Spacing swigEnum) {
     this.swigName = swigName;
     this.swigValue = swigEnum.swigValue;
     swigNext = this.swigValue+1;
   }
 
-  private static SeparationStyle[] swigValues = { Default, None, Strong };
+  private static Spacing[] swigValues = { Default, None, Small, Medium, Large, ExtraLarge, Padding };
   private static int swigNext = 0;
   private final int swigValue;
   private final String swigName;

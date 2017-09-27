@@ -8,14 +8,14 @@
 
 package com.microsoft.adaptivecards.objectmodel;
 
-public final class TextColor {
-  public final static TextColor Default = new TextColor("Default", AdaptiveCardObjectModelJNI.TextColor_Default_get());
-  public final static TextColor Dark = new TextColor("Dark");
-  public final static TextColor Light = new TextColor("Light");
-  public final static TextColor Accent = new TextColor("Accent");
-  public final static TextColor Good = new TextColor("Good");
-  public final static TextColor Warning = new TextColor("Warning");
-  public final static TextColor Attention = new TextColor("Attention");
+public final class ForegroundColor {
+  public final static ForegroundColor Default = new ForegroundColor("Default", AdaptiveCardObjectModelJNI.ForegroundColor_Default_get());
+  public final static ForegroundColor Dark = new ForegroundColor("Dark");
+  public final static ForegroundColor Light = new ForegroundColor("Light");
+  public final static ForegroundColor Accent = new ForegroundColor("Accent");
+  public final static ForegroundColor Good = new ForegroundColor("Good");
+  public final static ForegroundColor Warning = new ForegroundColor("Warning");
+  public final static ForegroundColor Attention = new ForegroundColor("Attention");
 
   public final int swigValue() {
     return swigValue;
@@ -25,33 +25,33 @@ public final class TextColor {
     return swigName;
   }
 
-  public static TextColor swigToEnum(int swigValue) {
+  public static ForegroundColor swigToEnum(int swigValue) {
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
     for (int i = 0; i < swigValues.length; i++)
       if (swigValues[i].swigValue == swigValue)
         return swigValues[i];
-    throw new IllegalArgumentException("No enum " + TextColor.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + ForegroundColor.class + " with value " + swigValue);
   }
 
-  private TextColor(String swigName) {
+  private ForegroundColor(String swigName) {
     this.swigName = swigName;
     this.swigValue = swigNext++;
   }
 
-  private TextColor(String swigName, int swigValue) {
+  private ForegroundColor(String swigName, int swigValue) {
     this.swigName = swigName;
     this.swigValue = swigValue;
     swigNext = swigValue+1;
   }
 
-  private TextColor(String swigName, TextColor swigEnum) {
+  private ForegroundColor(String swigName, ForegroundColor swigEnum) {
     this.swigName = swigName;
     this.swigValue = swigEnum.swigValue;
     swigNext = this.swigValue+1;
   }
 
-  private static TextColor[] swigValues = { Default, Dark, Light, Accent, Good, Warning, Attention };
+  private static ForegroundColor[] swigValues = { Default, Dark, Light, Accent, Good, Warning, Attention };
   private static int swigNext = 0;
   private final int swigValue;
   private final String swigName;
