@@ -8,41 +8,38 @@
 
 package io.adaptivecards.objectmodel;
 
-public enum ActionType {
-  Unsupported(0),
-  ShowCard,
-  Submit,
-  OpenUrl,
-  ToggleVisibility,
-  Custom;
+public enum IsVisible {
+  IsVisibleToggle,
+  IsVisibleTrue,
+  IsVisibleFalse;
 
   public final int swigValue() {
     return swigValue;
   }
 
-  public static ActionType swigToEnum(int swigValue) {
-    ActionType[] swigValues = ActionType.class.getEnumConstants();
+  public static IsVisible swigToEnum(int swigValue) {
+    IsVisible[] swigValues = IsVisible.class.getEnumConstants();
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
-    for (ActionType swigEnum : swigValues)
+    for (IsVisible swigEnum : swigValues)
       if (swigEnum.swigValue == swigValue)
         return swigEnum;
-    throw new IllegalArgumentException("No enum " + ActionType.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + IsVisible.class + " with value " + swigValue);
   }
 
   @SuppressWarnings("unused")
-  private ActionType() {
+  private IsVisible() {
     this.swigValue = SwigNext.next++;
   }
 
   @SuppressWarnings("unused")
-  private ActionType(int swigValue) {
+  private IsVisible(int swigValue) {
     this.swigValue = swigValue;
     SwigNext.next = swigValue+1;
   }
 
   @SuppressWarnings("unused")
-  private ActionType(ActionType swigEnum) {
+  private IsVisible(IsVisible swigEnum) {
     this.swigValue = swigEnum.swigValue;
     SwigNext.next = this.swigValue+1;
   }
