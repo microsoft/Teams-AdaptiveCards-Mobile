@@ -20,14 +20,8 @@ PS: Latest Build Status is against `main` branch.
 
 |Platform|Latest Release|Source|Docs|Latest Build Status|
 |---|---|---|---|---|
-| JavaScript | [![npm install](https://img.shields.io/npm/v/adaptivecards.svg)](https://www.npmjs.com/package/adaptivecards) | [Source](https://github.com/Microsoft/AdaptiveCards/tree/main/source/nodejs/adaptivecards)| [Docs](https://docs.microsoft.com/en-us/adaptive-cards/display/libraries/htmlclient) | ![Build Status](https://img.shields.io/azure-devops/build/Microsoft/56cf629e-8f3a-4412-acbc-bf69366c552c/20564/main.svg) |
-| .NET | [![Nuget install](https://img.shields.io/nuget/vpre/AdaptiveCards.svg)](https://www.nuget.org/packages/AdaptiveCards) | [Source](https://github.com/Microsoft/AdaptiveCards/tree/main/source/dotnet)| [Docs](https://docs.microsoft.com/en-us/adaptive-cards/create/libraries/net) | ![Build status](https://img.shields.io/azure-devops/build/Microsoft/56cf629e-8f3a-4412-acbc-bf69366c552c/20596/main.svg) |
-| .NET WPF | [![Nuget install](https://img.shields.io/nuget/vpre/AdaptiveCards.Rendering.Wpf.svg)](https://www.nuget.org/packages/AdaptiveCards.Rendering.Wpf) | [Source](https://github.com/Microsoft/AdaptiveCards/tree/main/source/dotnet)| [Docs](https://docs.microsoft.com/en-us/adaptive-cards/display/libraries/net-wpf) | ![Build status](https://img.shields.io/azure-devops/build/Microsoft/56cf629e-8f3a-4412-acbc-bf69366c552c/20596/main.svg) |
-| .NET HTML | [![Nuget install](https://img.shields.io/nuget/vpre/AdaptiveCards.Rendering.Html.svg)](https://www.nuget.org/packages/AdaptiveCards.Rendering.Html) | [Source](https://github.com/Microsoft/AdaptiveCards/tree/main/source/dotnet) | [Docs](https://docs.microsoft.com/en-us/adaptive-cards/display/libraries/net-html) | ![Build status](https://img.shields.io/azure-devops/build/Microsoft/56cf629e-8f3a-4412-acbc-bf69366c552c/20596/main.svg) |
-| Windows UWP | [![Nuget install](https://img.shields.io/nuget/vpre/AdaptiveCards.Rendering.Uwp.svg)](https://www.nuget.org/packages/AdaptiveCards.Rendering.Uwp) | [Source](https://github.com/Microsoft/AdaptiveCards/tree/main/source/uwp) | [Docs](https://docs.microsoft.com/en-us/adaptive-cards/display/libraries/uwp) | ![Build Status](https://img.shields.io/azure-devops/build/Microsoft/56cf629e-8f3a-4412-acbc-bf69366c552c/20583/main.svg) |
 | Android | [![Maven Central](https://img.shields.io/maven-central/v/io.adaptivecards/adaptivecards-android.svg)](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22adaptivecards-android%22) | [Source](https://github.com/Microsoft/AdaptiveCards/tree/main/source/android) | [Docs](https://docs.microsoft.com/en-us/adaptive-cards/display/libraries/android) | ![Build status](https://img.shields.io/azure-devops/build/Microsoft/56cf629e-8f3a-4412-acbc-bf69366c552c/37913/main.svg)
 | iOS | [![CocoaPods](https://img.shields.io/cocoapods/v/AdaptiveCards.svg)](https://cocoapods.org/pods/AdaptiveCards) | [Source](https://github.com/Microsoft/AdaptiveCards/tree/main/source/ios) | [Docs](https://docs.microsoft.com/en-us/adaptive-cards/display/libraries/ios) |  ![Build status](https://img.shields.io/azure-devops/build/Microsoft/56cf629e-8f3a-4412-acbc-bf69366c552c/37917/main.svg) |
-| Card Designer | [![npm install](https://img.shields.io/npm/v/adaptivecards-designer.svg)](https://www.npmjs.com/package/adaptivecards-designer) | [Source](https://github.com/Microsoft/AdaptiveCards/tree/main/source/nodejs/adaptivecards-designer)| [Docs](https://www.npmjs.com/package/adaptivecards-designer) | ![Build Status](https://img.shields.io/azure-devops/build/Microsoft/56cf629e-8f3a-4412-acbc-bf69366c552c/20564/main.svg) |
 
 ## Code format
 
@@ -77,20 +71,9 @@ Two ways to setup the hook:
 
 ## End User License Agreement for our binary packages
 Consumption of the AdaptiveCards binary packages are subject to the Microsoft EULA (End User License Agreement). Please see the relevant terms as listed below:
-- [UWP/.NET](https://github.com/microsoft/AdaptiveCards/blob/main/source/EULA-Windows.txt)
 - [Android/iOS](https://github.com/microsoft/AdaptiveCards/blob/main/source/EULA-Non-Windows.txt)
 
 NOTE: All of the source code, itself, made available in this repo as well as our NPM packages, continue to be governed by the open source [MIT license](https://github.com/microsoft/AdaptiveCards/blob/main/LICENSE).
-
-### Community SDKs
-
-The following SDKs are lovingly maintained by the Adaptive Cards community. Their contributions are sincerely appreciated! 🎉
-
-|Platform|Install|Repo|Maintainer|
-|---|---|---|---|
-| ReactNative | [![npm install](https://img.shields.io/npm/v/adaptivecards-reactnative.svg)](https://www.npmjs.com/package/adaptivecards-reactnative) | [GitHub](https://github.com/BigThinkcode/AdaptiveCards) | [BigThinkCode](https://github.com/BigThinkcode) |
-| Pic2Card | | [GitHub](https://github.com/BigThinkcode/AdaptiveCards/blob/fork-main/source/pic2card/README.md) | [BigThinkCode](https://github.com/BigThinkcode) |
-| Vue.js | [![npm install](https://img.shields.io/npm/v/adaptivecards-vue.svg)](https://www.npmjs.com/package/adaptivecards-vue) | [GitHub](https://github.com/DeeJayTC/adaptivecards-vue)| [Tim Cadenbach](https://github.com/DeeJayTC)
 
 ## Contribute
 
@@ -103,114 +86,3 @@ There are many ways to [contribute](https://github.com/Microsoft/AdaptiveCards/b
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see 
 the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-## Supported Features
-|Feature|Schema Version|Platform|Parsing|Rendering|
-|---|---|---|:---:|:---:|
-|Action.OpenUrl|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Action.ShowCard|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Action.Submit|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Column|v1.0|All| :white_check_mark: | :white_check_mark:|
-|ColumnSet|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Container|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Fact|v1.0|All| :white_check_mark: | :white_check_mark:|
-|FactSet|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Image|v1.0|All| :white_check_mark: | :white_check_mark:|
-|ImageSet|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Input.ChoiceSet|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Input.Date|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Input.Number|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Input.Text|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Input.Time|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Input.Toggle|v1.0|All| :white_check_mark: | :white_check_mark:|
-|SelectAction|v1.0|All| :white_check_mark: | :white_check_mark:|
-|TextBlock|v1.0|All| :white_check_mark: | :white_check_mark:|
-|Explicit Image Dimension|v1.1|All| :white_check_mark: | :white_check_mark:|
-|Background Color|v1.1|All| :white_check_mark: | :white_check_mark:|
-|Vertical Content Alignment|v1.1|All| :white_check_mark: | :white_check_mark:|
-|Action Icon|v1.1|All| :white_check_mark: | :white_check_mark:|
-|Action Style|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Toggle Visibility|v1.2|All| :white_check_mark: | :white_check_mark:|
-|ActionSet|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Fallback|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Container BackgroundImage|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Container MinHeight|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Container Bleed|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Container Style|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Image Data Uri|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Action Icon Data Uri|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Input.Text Inline Action|v1.2|All| :white_check_mark: | :white_check_mark:|
-|TextBlock FontType|v1.2|All| :white_check_mark: | :white_check_mark:|
-|RichTextBlock|v1.2|All| :white_check_mark: | :white_check_mark:|
-|Input Label|v1.3|All| :white_check_mark: | :white_check_mark:|
-|Input ErrorMessage|v1.3|All| :white_check_mark: | :white_check_mark:|
-|AssociatedInputs|v1.3|All| :white_check_mark: | :white_check_mark:|
-|RichTextBlock UnderLine|v1.3|All| :white_check_mark: | :white_check_mark:|
-|Action.Refresh|v1.4|All| :white_check_mark: | :white_check_mark:|
-|AdaptiveCard Authentication|v1.4|All| :white_check_mark: | :white_check_mark:|
-|Action.Execute|v1.4|All| :white_check_mark: | :white_check_mark:|
-|Action IsEnabled|v1.5|JS| :white_check_mark: | :white_check_mark:|
-|Action IsEnabled|v1.5|iOS| :white_check_mark: | :white_check_mark:|
-|Action IsEnabled|v1.5|Android| :white_check_mark: | :white_check_mark:|
-|Action IsEnabled|v1.5|XAML| :white_check_mark: | :white_check_mark:|
-|Action IsEnabled|v1.5|.NET| :white_check_mark: | :negative_squared_cross_mark:|
-|Action Mode|v1.5|JS| :white_check_mark: | :white_check_mark:|
-|Action Mode|v1.5|iOS| :white_check_mark: | :white_check_mark:|
-|Action Mode|v1.5|Android| :white_check_mark: | :white_check_mark:|
-|Action Mode|v1.5|XAML| :white_check_mark: | :white_check_mark:|
-|Action Mode|v1.5|.NET| :white_check_mark: | :negative_squared_cross_mark:|
-|Action/SelectAction ToolTip|v1.5|JS| :white_check_mark: | :white_check_mark:|
-|Action/SelectAction ToolTip|v1.5|iOS| :white_check_mark: | :white_check_mark:|
-|Action/SelectAction ToolTip|v1.5|Android| :white_check_mark: | :white_check_mark:|
-|Action/SelectAction ToolTip|v1.5|XAML| :white_check_mark: | :white_check_mark:|
-|Action/SelectAction ToolTip|v1.5|.NET| :white_check_mark: | :negative_squared_cross_mark:|
-|Input.ChoiceSet Filtered Style |v1.5|JS| :white_check_mark: | :white_check_mark:|
-|Input.ChoiceSet Filtered Style |v1.5|iOS| :white_check_mark: | :white_check_mark:|
-|Input.ChoiceSet Filtered Style |v1.5|Android| :white_check_mark: | :white_check_mark:|
-|Input.ChoiceSet Filtered Style |v1.5|XAML| :white_check_mark: | :white_check_mark:|
-|Input.ChoiceSet Filtered Style |v1.5|.NET| :white_check_mark: | :negative_squared_cross_mark:|
-|Input.Text Password Style |v1.5|JS| :white_check_mark: | :white_check_mark:|
-|Input.Text Password Style |v1.5|iOS| :white_check_mark: | :white_check_mark:|
-|Input.Text Password Style |v1.5|Android| :white_check_mark: | :white_check_mark:|
-|Input.Text Password Style |v1.5|XAML| :white_check_mark: | :white_check_mark:|
-|Input.Text Password Style |v1.5|.NET| :white_check_mark: | :negative_squared_cross_mark:|
-|TextBlock Heading Style|v1.5|JS| :white_check_mark: | :white_check_mark:|
-|TextBlock Heading Style|v1.5|iOS| :white_check_mark: | :white_check_mark:|
-|TextBlock Heading Style|v1.5|Android| :white_check_mark: | :white_check_mark:|
-|TextBlock Heading Style|v1.5|XAML| :white_check_mark: | :white_check_mark:|
-|TextBlock Heading Style|v1.5|.NET| :white_check_mark: | :negative_squared_cross_mark:|
-|RTL |v1.5|JS| :white_check_mark: | :white_check_mark:|
-|RTL |v1.5|iOS| :white_check_mark: | :white_check_mark:|
-|RTL |v1.5|Android| :white_check_mark: | :white_check_mark:|
-|RTL |v1.5|XAML| :white_check_mark: | :white_check_mark:|
-|RTL |v1.5|.NET| :white_check_mark: | :negative_squared_cross_mark:|
-|Table |v1.5|JS| :white_check_mark: | :white_check_mark:|
-|Table |v1.5|iOS| :white_check_mark: | :white_check_mark:|
-|Table |v1.5|Android| :white_check_mark: | :white_check_mark:|
-|Table |v1.5|XAML| :white_check_mark: | :white_check_mark:|
-|Table |v1.5|.NET| :white_check_mark: | :negative_squared_cross_mark:|
-|Carousel|v1.6|JS| :white_check_mark: | :white_check_mark:|
-|Carousel|v1.6|iOS| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Carousel|v1.6|Android| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Carousel|v1.6|XAML| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Carousel|v1.6|.NET| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|ImageSet Stacked Presentation Style|v1.6|JS| :white_check_mark: | :white_check_mark:|
-|ImageSet Stacked Presentation Style|v1.6|iOS| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|ImageSet Stacked Presentation Style|v1.6|Android| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|ImageSet Stacked Presentation Style|v1.6|XAML| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|ImageSet Stacked Presentation Style|v1.6|.NET| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Dynamic Type Ahead Search|v1.6|JS| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Dynamic Type Ahead Search|v1.6|iOS| :white_check_mark: | :negative_squared_cross_mark:|
-|Dynamic Type Ahead Search|v1.6|Android| :white_check_mark: | :negative_squared_cross_mark:|
-|Dynamic Type Ahead Search|v1.6|XAML| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Dynamic Type Ahead Search|v1.6|.NET| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Label Position|v1.6|JS| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Label Position|v1.6|iOS| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Label Position|v1.6|Android| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Label Position|v1.6|XAML| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Label Position|v1.6|.NET| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Inline Editable Input Style|v1.6|JS| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Inline Editable Input Style|v1.6|iOS| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Inline Editable Input Style|v1.6|Android| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Inline Editable Input Style|v1.6|XAML| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
-|Inline Editable Input Style|v1.6|.NET| :negative_squared_cross_mark: | :negative_squared_cross_mark:|
