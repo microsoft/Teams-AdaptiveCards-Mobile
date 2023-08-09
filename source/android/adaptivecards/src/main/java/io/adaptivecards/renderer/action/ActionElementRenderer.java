@@ -142,6 +142,8 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         }
 
         button.setLayoutParams(layoutParams);
+        int minHeight = context.getResources().getDimensionPixelSize(R.dimen.action_min_height);
+        button.post(() -> Util.expandClickArea(button, minHeight));
 
         String iconUrl = baseActionElement.GetIconUrl();
         if (!iconUrl.isEmpty())
