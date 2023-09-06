@@ -70,16 +70,6 @@ This tables describes the various packages we offer, the support type, latest pa
 | --- | --- | --- | --- | --- |
 | Card Designer | 1.4.0 | 2020.09.01 | Current |
 
-### Community SDKs and Tools
-
-The following SDKs are not developed or maintained by Microsoft. They are developed and serviced by the Adaptive Cards community, and are not officially supported. In most cases they are in active developments and bugs will be addressed where possible.
-
-| **SDK** | **Maintainer** | **Support Level** |
-| --- | --- | --- |
-| ReactNative | [BigThinkCode](https://github.com/BigThinkcode) | Community |
-| Pic2Card | [BigThinkCode](https://github.com/BigThinkcode) | Community |
-| Vue.js | [Tim Cadenbach](https://github.com/DeeJayTC) | Community |
-
 ## Release Types
 
 Microsoft produces **Current**, **Maintenance**, and **Community** releases for this project, which are defined as:
