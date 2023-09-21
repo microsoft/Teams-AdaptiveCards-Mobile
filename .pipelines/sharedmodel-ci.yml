@@ -29,8 +29,8 @@ jobs:
     inputs:
       solution: source/shared/cpp/AdaptiveCardsSharedModel/AdaptiveCardsSharedModel.sln
       vsVersion: 16.0
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
+      platform: 'x64'
+      configuration: 'Release'
       maximumCpuCount: true
       createLogFile: true
       logFileVerbosity: detailed
@@ -46,8 +46,8 @@ jobs:
       runTestsInIsolation: true
       codeCoverageEnabled: true
       testRunTitle: SharedModel CI
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
+      platform: 'x64'
+      configuration: 'Release'
       failOnMinTestsNotRun: true
       diagnosticsEnabled: True
       collectDumpOn: always
