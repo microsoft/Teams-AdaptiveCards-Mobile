@@ -1,0 +1,53 @@
+# Multi-job configuration must be converted to matrix strategy: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#multi-job-configuration
+trigger:
+  branches:
+    include:
+    - main
+    - feature/*
+  batch: True
+name: $(date:yyMM).$(date:dd)$(rev:rrr)
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/main
+jobs:
+- job: Phase_1
+  displayName: Build & Test
+  timeoutInMinutes: 100
+  cancelTimeoutInMinutes: 1
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+    clean: true
+    fetchDepth: 100
+    fetchTags: false
+  - task: VSBuild@1
+    name: VSBuild3
+    displayName: Build solution
+    inputs:
+      solution: source/shared/cpp/AdaptiveCardsSharedModel/AdaptiveCardsSharedModel.sln
+      vsVersion: 16.0
+      platform: 'x64'
+      configuration: 'Release'
+      maximumCpuCount: true
+      createLogFile: true
+      logFileVerbosity: detailed
+  - task: VSTest@2
+    displayName: VsTest - testAssemblies
+    inputs:
+      testAssemblyVer2: >-
+        **\*test*.dll
+
+        !**\obj\**
+      searchFolder: $(System.DefaultWorkingDirectory)\source\shared\cpp
+      runInParallel: true
+      runTestsInIsolation: true
+      codeCoverageEnabled: true
+      testRunTitle: SharedModel CI
+      platform: 'x64'
+      configuration: 'Release'
+      failOnMinTestsNotRun: true
+      diagnosticsEnabled: True
+      collectDumpOn: always
