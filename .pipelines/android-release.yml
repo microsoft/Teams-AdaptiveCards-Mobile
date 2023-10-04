@@ -83,7 +83,7 @@ stages:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
       displayName: 'ESRP CodeSign (Detached PGP)'
       inputs:
-        ConnectedServiceName: 'AdaptiveCards ESRP CodeSigning 2022'
+        ConnectedServiceName: 'AdaptiveCards ESRP CodeSigning Oct 2023'
         FolderPath: $(build.artifactstagingdirectory)
         Pattern: '*.asc'
         signConfigType: inlineSignParams
