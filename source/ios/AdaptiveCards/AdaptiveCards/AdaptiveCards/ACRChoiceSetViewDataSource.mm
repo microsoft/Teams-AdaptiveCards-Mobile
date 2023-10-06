@@ -19,7 +19,8 @@ NSString *uncheckedCheckboxReuseID = @"unchecked-checkbox";
 NSString *checkedRadioButtonReuseID = @"checked-radiobutton";
 NSString *uncheckedRadioButtonReuseID = @"unchecked-radiobutton";
 
-const CGFloat padding = 2.0f;
+const CGFloat padding = 8.0f;
+const CGFloat minimumRowHeight = 44.0;
 
 @implementation ACRChoiceSetCell {
     CGSize _imageSize;
@@ -269,8 +270,10 @@ const CGFloat padding = 2.0f;
                               attributes:@{NSFontAttributeName : cell.textLabel.font}
                                  context:nil]
             .size;
-
-    return labelStringSize.height + _spacing;
+    
+    CGFloat rowHeight = labelStringSize.height + _spacing;
+    
+    return (rowHeight < minimumRowHeight) ? minimumRowHeight : rowHeight;
 }
 
 - (BOOL)validate:(NSError **)error
