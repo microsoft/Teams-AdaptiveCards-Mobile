@@ -316,22 +316,33 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
             {
                 super(context, resource, items);
                 m_hasEmptyDefault = hasEmptyDefault;
-                m_itemCount = items.size();
+                m_items = new ArrayList<>(items);
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        @NonNull ViewGroup parent) {
+                View spinnerView = super.getDropDownView(position, convertView, parent);
+                TextView spinnerTextView = (TextView) spinnerView;
+
+                String talkbackAnnouncement = context.getResources().getString(R.string.spinner_talkback_announcement, m_items.get(position), position+1, m_items.size());
+                spinnerTextView.setContentDescription(talkbackAnnouncement);
+                return spinnerView;
             }
 
             public int getCount()
             {
                 if (m_hasEmptyDefault)
                 {
-                    return m_itemCount - 1;
+                    return m_items.size() - 1;
                 }
                 else
                 {
-                    return m_itemCount;
+                    return m_items.size();
                 }
             }
 
-            private int m_itemCount = 0;
+            private final ArrayList<String> m_items;
             private boolean m_hasEmptyDefault = false;
         }
 
