@@ -232,6 +232,9 @@ public class CardRendererRegistration
 
     public FeatureRegistration getFeatureRegistration()
     {
+        if (m_featureRegistration == null) {
+            m_featureRegistration = new FeatureRegistration();
+        }
         return m_featureRegistration;
     }
 
@@ -307,7 +310,7 @@ public class CardRendererRegistration
         // - mockLayout is a layout to contain the rendered element, as android renderers have to add
         //      the drawn views into the container view, it makes it easier to do not draw something unwanted
         //      into the final rendered card
-        ViewGroup mockLayout = null;
+        ViewGroup mockLayout;
         if (Util.isOfType(cardElement, Column.class))
         {
             mockLayout = new FlexboxLayout(context);
