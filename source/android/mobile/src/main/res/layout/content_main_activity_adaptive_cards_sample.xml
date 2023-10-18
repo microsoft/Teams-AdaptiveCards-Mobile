@@ -183,7 +183,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical" >
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/customActions"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -193,11 +193,11 @@
                                 android:id="@+id/cardsCustomActions"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
+                                android:paddingStart="15dp"
                                 android:text="CustomActionRenderingTest.json"
                                 android:visibility="gone" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/customElements"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -207,12 +207,13 @@
                                 android:id="@+id/cardsCustomElements"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
+                                android:paddingStart="15dp"
                                 android:text="CustomElement.json"
                                 android:visibility="gone" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/customFeatureReg"
+                                android:visibility="visible"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Register Feature Registration" />
@@ -221,11 +222,11 @@
                                 android:id="@+id/cardsCustomFeature"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
+                                android:paddingStart="15dp"
                                 android:text="Element.Requires.json"
                                 android:visibility="gone" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/svgSupport"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -235,11 +236,11 @@
                                 android:id="@+id/cardsSvgSupport"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
+                                android:paddingStart="15dp"
                                 android:text="Image.SvgDataUri.json"
                                 android:visibility="gone" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/customImageLoader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -249,11 +250,11 @@
                                 android:id="@+id/cardsCustomImageLoader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
+                                android:paddingStart="15dp"
                                 android:text="Image.ResourceResolver.json"
                                 android:visibility="gone" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/customMediaLoader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -263,11 +264,11 @@
                                 android:id="@+id/cardsCustomMediaLoader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
+                                android:paddingStart="15dp"
                                 android:text="Media.json"
                                 android:visibility="gone" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/onlineImageLoader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -277,11 +278,11 @@
                                 android:id="@+id/cardsCustomOnlineImageLoader"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
+                                android:paddingStart="15dp"
                                 android:text="Image.json"
                                 android:visibility="gone" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/customTypeface"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -295,18 +296,17 @@
                                 android:visibility="gone"
                                 tools:visibility="gone" />
 
-                            <Switch
+                            <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/httpResourceResolver"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="ResourceResolver for all http
-                                images" />
+                                android:text="ResourceResolver for all http images" />
 
                             <TextView
                                 android:id="@+id/cardsHttpResourceResolver"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
+                                android:paddingStart="15dp"
                                 android:text="Action.OpenUrl.IconUrl.json"
                                 android:visibility="gone" />
 

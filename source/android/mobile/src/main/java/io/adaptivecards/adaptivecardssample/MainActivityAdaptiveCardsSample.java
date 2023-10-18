@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Switch;
+import androidx.appcompat.widget.SwitchCompat;
 import android.widget.TabHost;
 import android.view.View;
 import android.view.Menu;
@@ -74,15 +74,15 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
     private final long DELAY = 1000; // milliseconds
 
     // Options for custom elements
-    private Switch m_customActions;
-    private Switch m_customElements;
-    private Switch m_featureRegistration;
-    private Switch m_svgSupport;
-    private Switch m_customImageLoader;
-    private Switch m_customMediaLoader;
-    private Switch m_onlineImageLoader;
-    private Switch m_customTypeface;
-    private Switch m_httpResourceResolver;
+    private SwitchCompat m_customActions;
+    private SwitchCompat m_customElements;
+    private SwitchCompat m_featureRegistration;
+    private SwitchCompat m_svgSupport;
+    private SwitchCompat m_customImageLoader;
+    private SwitchCompat m_customMediaLoader;
+    private SwitchCompat m_onlineImageLoader;
+    private SwitchCompat m_customTypeface;
+    private SwitchCompat m_httpResourceResolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,31 +160,31 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
 
     protected void setupOptions()
     {
-        m_customActions = (Switch) findViewById(R.id.customActions);
+        m_customActions = (SwitchCompat) findViewById(R.id.customActions);
         m_customActions.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsCustomActions)));
 
-        m_customElements = (Switch) findViewById(R.id.customElements);
+        m_customElements = (SwitchCompat) findViewById(R.id.customElements);
         m_customElements.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsCustomElements)));
 
-        m_featureRegistration = (Switch) findViewById(R.id.customFeatureReg);
+        m_featureRegistration = (SwitchCompat) findViewById(R.id.customFeatureReg);
         m_featureRegistration.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsCustomFeature)));
 
-        m_svgSupport = (Switch) findViewById(R.id.svgSupport);
+        m_svgSupport = (SwitchCompat) findViewById(R.id.svgSupport);
         m_svgSupport.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsSvgSupport)));
 
-        m_customImageLoader = (Switch) findViewById(R.id.customImageLoader);
+        m_customImageLoader = (SwitchCompat) findViewById(R.id.customImageLoader);
         m_customImageLoader.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsCustomImageLoader)));
 
-        m_customMediaLoader = (Switch) findViewById(R.id.customMediaLoader);
+        m_customMediaLoader = (SwitchCompat) findViewById(R.id.customMediaLoader);
         m_customMediaLoader.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsCustomMediaLoader)));
 
-        m_onlineImageLoader = (Switch) findViewById(R.id.onlineImageLoader);
+        m_onlineImageLoader = (SwitchCompat) findViewById(R.id.onlineImageLoader);
         m_onlineImageLoader.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsCustomOnlineImageLoader)));
 
-        m_customTypeface = (Switch) findViewById(R.id.customTypeface);
+        m_customTypeface = (SwitchCompat) findViewById(R.id.customTypeface);
         m_customTypeface.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsCustomTypeface)));
 
-        m_httpResourceResolver = (Switch) findViewById(R.id.httpResourceResolver);
+        m_httpResourceResolver = (SwitchCompat) findViewById(R.id.httpResourceResolver);
         m_httpResourceResolver.setOnCheckedChangeListener(new SwitchListener(findViewById(R.id.cardsHttpResourceResolver)));
     }
 

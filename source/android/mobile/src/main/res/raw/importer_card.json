@@ -78,7 +78,15 @@
                                     {
                                         "title": "FlightDetails",
                                         "value": "v1.5/Scenarios/FlightDetails.json"
-                                    }
+                                    },
+									{
+									  	"title": "Fallback",
+									  	"value": "v1.5/Scenarios/Fallback.json"
+									},
+								  	{
+										"title": "FallbackAction",
+										"value": "v1.5/Scenarios/FallbackAction.json"
+								  	}
                                 ],
                                 "placeholder": "(choose sample)",
                                 "id": "sampleCardName"
