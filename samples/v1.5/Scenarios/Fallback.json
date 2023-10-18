@@ -17,7 +17,8 @@
 	  },
 	  "fallback": {
 		"type": "TextBlock",
-		"text": "This is the fallback TextBlock of the second TextBlock. If it renders, things work as expected"
+		"text": "This is the fallback TextBlock of the second TextBlock. If it renders, things work as expected",
+		"wrap": true
 	  }
 	},
 	{
