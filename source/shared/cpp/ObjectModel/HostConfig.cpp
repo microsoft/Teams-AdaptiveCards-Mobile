@@ -72,6 +72,9 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
 
     result._table = ParseUtil::ExtractJsonValueAndMergeWithDefault<TableConfig>(
         json, AdaptiveCardSchemaKey::Table, result._table, TableConfig::Deserialize);
+    
+    result._rootRequires = ParseUtil::ExtractJsonValueAndMergeWithDefault<RootRequiresConfig>(
+        json, AdaptiveCardSchemaKey::Requires, result._rootRequires, RootRequiresConfig::Deserialize);
 
     return result;
 }
@@ -478,6 +481,15 @@ TableConfig TableConfig::Deserialize(const Json::Value& json, const TableConfig&
 
     result.cellSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::CellSpacing, defaultValue.cellSpacing);
 
+    return result;
+}
+
+RootRequiresConfig RootRequiresConfig::Deserialize(const Json::Value& json, const RootRequiresConfig& defaultValue)
+{
+    RootRequiresConfig result;
+    
+    ParseUtil::GetParsedRequiresSet(json, result.requiresSet);
+    
     return result;
 }
 
@@ -936,4 +948,9 @@ TableConfig HostConfig::GetTable() const
 void HostConfig::SetTable(const TableConfig value)
 {
     _table = value;
+}
+
+RootRequiresConfig HostConfig::GetRootRequires() const
+{
+    return _rootRequires;
 }

@@ -14,6 +14,8 @@ class BaseCardElement;
 class BaseActionElement;
 class BackgroundImage;
 class ParseContext;
+class SemanticVersion;
+class FeatureRegistration;
 
 namespace ParseUtil
 {
@@ -119,6 +121,15 @@ namespace ParseUtil
     std::shared_ptr<BaseCardElement> GetLabel(ParseContext& context, const Json::Value& json, AdaptiveCardSchemaKey key);
 
     std::shared_ptr<BaseCardElement> GetLabelFromJsonValue(ParseContext& context, const Json::Value& json);
+
+    template <typename T>
+    void ParseFallback(ParseContext& context, const Json::Value& json, FallbackType& fallbackType, std::shared_ptr<BaseElement>& fallbackContent, const std::string& publicId, const InternalId& internalId);
+
+    void GetRootRequires(ParseContext& context, const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet);
+
+    void GetParsedRequiresSet(const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet);
+
+    bool MeetsRequirements(const std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet, const AdaptiveCards::FeatureRegistration& featureRegistration);
 }; // namespace ParseUtil
 
 template <typename T, typename Fn>
@@ -328,5 +339,47 @@ std::vector<std::shared_ptr<T>> ParseUtil::GetElementCollection(
     }
 
     return elements;
+}
+
+template <typename T>
+void ParseUtil::ParseFallback(ParseContext& context, const Json::Value& json, FallbackType& fallbackType, std::shared_ptr<BaseElement>& fallbackContent, const std::string& publicId, const InternalId& internalId)
+{
+    const auto fallbackValue = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Fallback, false);
+    if (!fallbackValue.empty())
+    {
+        // Two possible valid json values for fallback -- either the string "drop", or a valid Adaptive Card
+        // element.
+        if (fallbackValue.isString())
+        {
+            auto fallbackStringValue = ParseUtil::ToLowercase(fallbackValue.asString());
+            if (fallbackStringValue == "drop")
+            {
+                fallbackType = FallbackType::Drop;
+                return;
+            }
+            throw AdaptiveCardParseException(
+                ErrorStatusCode::InvalidPropertyValue,
+                "The only valid string value for the fallback property is 'drop'.");
+        }
+        else if (fallbackValue.isObject())
+        {
+            // fallback value is a JSON object. parse it and add it as fallback content. For more details, refer to
+            // the giant comment on ID collision detection in ParseContext.cpp.
+            context.PushElement(publicId, internalId, true /*isFallback*/);
+            std::shared_ptr<BaseElement> fallbackElement;
+            T::ParseJsonObject(context, fallbackValue, fallbackElement);
+            context.PopElement();
+
+            if (fallbackElement)
+            {
+                fallbackType = FallbackType::Content;
+                fallbackContent = fallbackElement;
+                return;
+            }
+            throw AdaptiveCardParseException(
+                ErrorStatusCode::InvalidPropertyValue, "Fallback content did not parse correctly.");
+        }
+        throw AdaptiveCardParseException(ErrorStatusCode::InvalidPropertyValue, "Invalid value for fallback");
+    }
 }
 } // namespace AdaptiveCards

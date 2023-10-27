@@ -114,10 +114,37 @@ AdaptiveCard::AdaptiveCard(
     m_fallbackText(fallbackText), m_backgroundImage(backgroundImage), m_refresh(refresh),
     m_authentication(authentication), m_speak(speak), m_style(style), m_language(language),
     m_verticalContentAlignment(verticalContentAlignment), m_height(height),
-    m_minHeight(minHeight), m_internalId{InternalId::Next()}, m_body(body), m_actions(actions), m_additionalProperties{}
+    m_minHeight(minHeight), m_internalId{InternalId::Next()}, m_body(body), m_actions(actions),
+    m_requires{}, m_fallbackContent{}, m_fallbackType(FallbackType::None), m_additionalProperties{}
 {
     PopulateKnownPropertiesSet();
 }
+
+AdaptiveCard::AdaptiveCard(
+    std::string const& version,
+    std::string const& fallbackText,
+    std::shared_ptr<BackgroundImage> backgroundImage,
+    std::shared_ptr<Refresh> refresh,
+    std::shared_ptr<Authentication> authentication,
+    ContainerStyle style,
+    std::string const& speak,
+    std::string const& language,
+    VerticalContentAlignment verticalContentAlignment,
+    HeightType height,
+    unsigned int minHeight,
+    std::vector<std::shared_ptr<BaseCardElement>>& body,
+    std::vector<std::shared_ptr<BaseActionElement>>& actions,
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& p_requires,
+    std::shared_ptr<BaseElement>& fallbackContent,
+    FallbackType& fallbackType) :
+    m_version(version),
+    m_fallbackText(fallbackText), m_backgroundImage(backgroundImage), m_refresh(refresh),
+    m_authentication(authentication), m_speak(speak), m_style(style), m_language(language),
+    m_verticalContentAlignment(verticalContentAlignment), m_height(height), m_minHeight(minHeight), m_internalId{InternalId::Next()}, m_body(body), m_actions(actions), m_requires(p_requires), m_fallbackContent(fallbackContent), m_fallbackType(fallbackType), m_additionalProperties{}
+{
+    PopulateKnownPropertiesSet();
+}
+
 
 #ifdef __ANDROID__
 std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromFile(const std::string& jsonFile, std::string rendererVersion) throw(AdaptiveCards::AdaptiveCardParseException)
@@ -244,11 +271,18 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
     auto body = ParseUtil::GetElementCollection<BaseCardElement>(true, context, json, AdaptiveCardSchemaKey::Body, false);
     // Parse actions if present
     auto actions = ParseUtil::GetActionCollection(context, json, AdaptiveCardSchemaKey::Actions, false);
-
+    // Parse required if present
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet;
+    ParseUtil::GetRootRequires(context, json, requiresSet);
+    // Parse fallback if present
+    std::shared_ptr<BaseElement> fallbackContent = {};
+    FallbackType fallbackType = FallbackType::None;
+    ParseUtil::ParseFallback<BaseCardElement>(context, json, fallbackType, fallbackContent, "rootFallbackId", InternalId::Current());
+    
     EnsureShowCardVersions(actions, version);
 
     auto result = std::make_shared<AdaptiveCard>(
-        version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, body, actions);
+        version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, body, actions, requiresSet, fallbackContent, fallbackType);
     result->SetLanguage(language);
     result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
 
@@ -563,7 +597,9 @@ void AdaptiveCard::PopulateKnownPropertiesSet()
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Height),
-         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Schema)});
+         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Schema),
+         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Requires),
+         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Fallback)});
 }
 
 const std::unordered_set<std::string>& AdaptiveCard::GetKnownProperties() const
@@ -609,4 +645,29 @@ std::vector<RemoteResourceInformation> AdaptiveCard::GetResourceInformation()
     }
 
     return resourceVector;
+}
+
+std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& AdaptiveCard::GetRootRequires()
+{
+    return m_requires;
+}
+
+const std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& AdaptiveCard::GetRootRequires() const
+{
+    return m_requires;
+}
+
+std::shared_ptr<BaseElement> AdaptiveCard::GetRootFallbackContent() const
+{
+    return m_fallbackContent;
+}
+
+FallbackType AdaptiveCard::GetRootFallbackType() const
+{
+    return m_fallbackType;
+}
+
+bool AdaptiveCard::MeetsRequirements(const AdaptiveCards::FeatureRegistration& featureRegistration) const
+{
+    return ParseUtil::MeetsRequirements(m_requires, featureRegistration);
 }

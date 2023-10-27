@@ -501,4 +501,79 @@ std::shared_ptr<BaseCardElement> ParseUtil::GetLabel(ParseContext& context, cons
 
     return nullptr;
 }
+
+void ParseUtil::GetRootRequires(ParseContext& /*context*/, const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet)
+{
+    const auto requiresValue = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Requires, false);
+    return ParseUtil::GetParsedRequiresSet(requiresValue, requiresSet);
+}
+
+void ParseUtil::GetParsedRequiresSet(const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet)
+{
+    if (!json.isNull())
+    {
+        if (json.isObject())
+        {
+            const auto& memberNames = json.getMemberNames();
+            const auto countNames = memberNames.size();
+            for (unsigned int i = 0; i < countNames; ++i)
+            {
+                const auto& memberName = memberNames.at(i);
+                const auto& memberValue = json[memberName].asString();
+
+                if (memberValue == "*")
+                {
+                    // * means any version.
+                    requiresSet.emplace(memberName, "0");
+                }
+                else
+                {
+                    try
+                    {
+                        SemanticVersion memberVersion(memberValue);
+                        requiresSet.emplace(memberName, memberVersion);
+                    }
+                    catch (const AdaptiveCardParseException&)
+                    {
+                        throw AdaptiveCardParseException(
+                            ErrorStatusCode::InvalidPropertyValue,
+                            "Invalid version in requires value: '" + memberValue + "'");
+                    }
+                }
+            }
+            return;
+        }
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue, "Invalid value for requires (should be object)");
+    }
+}
+
+// Given a map of what our host provides, determine if requirements are satisfied.
+bool ParseUtil::MeetsRequirements(const std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet, const AdaptiveCards::FeatureRegistration& featureRegistration)
+{
+    for (const auto& requirement : requiresSet)
+    {
+        // special case for adaptive cards version
+        const auto& requirementName = requirement.first;
+        const auto& requirementVersion = requirement.second;
+        const auto& featureVersion = featureRegistration.GetFeatureVersion(requirementName);
+        if (featureVersion.empty())
+        {
+            // host doesn't provide this requirement
+            return false;
+        }
+        else
+        {
+            // host provides this requirement, but does it provide an acceptible version?
+            const SemanticVersion providesVersion{featureVersion};
+            if (providesVersion < requirementVersion)
+            {
+                // host's provided version is too low
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 } // namespace AdaptiveCards

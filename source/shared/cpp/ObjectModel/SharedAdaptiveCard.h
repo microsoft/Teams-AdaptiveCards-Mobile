@@ -81,6 +81,24 @@ public:
         unsigned int minHeight,
         std::vector<std::shared_ptr<BaseCardElement>>& body,
         std::vector<std::shared_ptr<BaseActionElement>>& actions);
+    
+    AdaptiveCard(
+        std::string const& version,
+        std::string const& fallbackText,
+        std::shared_ptr<BackgroundImage> backgroundImage,
+        std::shared_ptr<Refresh> refresh,
+        std::shared_ptr<Authentication> authentication,
+        ContainerStyle style,
+        std::string const& speak,
+        std::string const& language,
+        VerticalContentAlignment verticalContentAlignment,
+        HeightType height,
+        unsigned int minHeight,
+        std::vector<std::shared_ptr<BaseCardElement>>& body,
+        std::vector<std::shared_ptr<BaseActionElement>>& actions,
+        std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& p_requires,
+        std::shared_ptr<BaseElement>& fallbackContent,
+        FallbackType& fallbackType);
 
     std::string GetVersion() const;
     void SetVersion(const std::string& value);
@@ -123,6 +141,14 @@ public:
     std::vector<RemoteResourceInformation> GetResourceInformation();
 
     CardElementType GetElementType() const;
+    
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& GetRootRequires();
+    const std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& GetRootRequires() const;
+    std::shared_ptr<BaseElement> GetRootFallbackContent() const;
+    FallbackType GetRootFallbackType() const;
+    
+    bool MeetsRequirements(const AdaptiveCards::FeatureRegistration& hostProvides) const;
+    
 #ifdef __ANDROID__
 #pragma GCC diagnostic ignored "-Wdynamic-exception-spec"
     static std::shared_ptr<ParseResult> DeserializeFromFile(
@@ -184,5 +210,9 @@ private:
     std::vector<std::shared_ptr<BaseActionElement>> m_actions;
 
     std::shared_ptr<BaseActionElement> m_selectAction;
+    
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> m_requires;
+    std::shared_ptr<BaseElement> m_fallbackContent;
+    FallbackType m_fallbackType;
 };
 } // namespace AdaptiveCards

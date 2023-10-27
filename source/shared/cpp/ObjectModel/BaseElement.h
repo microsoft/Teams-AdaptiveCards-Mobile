@@ -107,9 +107,6 @@ protected:
     Json::Value m_additionalProperties;
 
 private:
-    template <typename T>
-    void ParseFallback(ParseContext& context, const Json::Value& json);
-    void ParseRequires(ParseContext& context, const Json::Value& json);
     void PopulateKnownPropertiesSet();
 
     std::unordered_map<std::string, AdaptiveCards::SemanticVersion> m_requires;
@@ -128,49 +125,7 @@ void BaseElement::DeserializeBase(ParseContext& context, const Json::Value& json
     // Order matters here -- we need to set the id property *prior* to parsing fallback so that we can detect id
     // collisions.
     SetId(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Id));
-    ParseFallback<T>(context, json);
-    ParseRequires(context, json);
-}
-
-template <typename T>
-void BaseElement::ParseFallback(ParseContext& context, const Json::Value& json)
-{
-    const auto fallbackValue = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Fallback, false);
-    if (!fallbackValue.empty())
-    {
-        // Two possible valid json values for fallback -- either the string "drop", or a valid Adaptive Card
-        // element.
-        if (fallbackValue.isString())
-        {
-            auto fallbackStringValue = ParseUtil::ToLowercase(fallbackValue.asString());
-            if (fallbackStringValue == "drop")
-            {
-                m_fallbackType = FallbackType::Drop;
-                return;
-            }
-            throw AdaptiveCardParseException(
-                ErrorStatusCode::InvalidPropertyValue,
-                "The only valid string value for the fallback property is 'drop'.");
-        }
-        else if (fallbackValue.isObject())
-        {
-            // fallback value is a JSON object. parse it and add it as fallback content. For more details, refer to
-            // the giant comment on ID collision detection in ParseContext.cpp.
-            context.PushElement(GetId(), GetInternalId(), true /*isFallback*/);
-            std::shared_ptr<BaseElement> fallbackElement;
-            T::ParseJsonObject(context, fallbackValue, fallbackElement);
-            context.PopElement();
-
-            if (fallbackElement)
-            {
-                m_fallbackType = FallbackType::Content;
-                m_fallbackContent = fallbackElement;
-                return;
-            }
-            throw AdaptiveCardParseException(
-                ErrorStatusCode::InvalidPropertyValue, "Fallback content did not parse correctly.");
-        }
-        throw AdaptiveCardParseException(ErrorStatusCode::InvalidPropertyValue, "Invalid value for fallback");
-    }
+    ParseUtil::ParseFallback<T>(context, json, m_fallbackType, m_fallbackContent, GetId(), GetInternalId());
+    ParseUtil::GetRootRequires(context, json, m_requires);
 }
 } // namespace AdaptiveCards

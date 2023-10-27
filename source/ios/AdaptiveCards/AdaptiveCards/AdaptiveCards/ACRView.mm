@@ -793,6 +793,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
         fallbackElem = fallbackElemCard->GetFallbackContent();
     }
+    // TODO: Add recursive root fallback here
 }
 
 - (ACRTargetBuilderDirector *)getActionsTargetBuilderDirector

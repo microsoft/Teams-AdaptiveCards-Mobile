@@ -465,6 +465,7 @@ void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContent
         fallbackBaseElement = elem->GetFallbackContent();
         elem = std::static_pointer_cast<BaseCardElement>(fallbackBaseElement);
         if (!elem) {
+            // TODO: Add root fallback logic here
             break;
         }
 

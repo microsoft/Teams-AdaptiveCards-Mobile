@@ -4,6 +4,8 @@
 
 #include "pch.h"
 
+#include "SemanticVersion.h"
+
 namespace AdaptiveCards
 {
 class FontSizesConfig
@@ -376,6 +378,12 @@ struct TableConfig
     static TableConfig Deserialize(const Json::Value& json, const TableConfig& defaultValue);
 };
 
+struct RootRequiresConfig
+{
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet;
+    static RootRequiresConfig Deserialize(const Json::Value& json, const RootRequiresConfig& defaultValue);
+};
+
 class HostConfig
 {
 public:
@@ -453,6 +461,8 @@ public:
 
     TableConfig GetTable() const;
     void SetTable(const TableConfig value);
+    
+    RootRequiresConfig GetRootRequires() const;
 
 private:
     const ContainerStyleDefinition& GetContainerStyle(ContainerStyle style) const;
@@ -478,5 +488,6 @@ private:
     TextBlockConfig _textBlock;
     TextStylesConfig _textStyles;
     TableConfig _table;
+    RootRequiresConfig _rootRequires;
 };
 } // namespace AdaptiveCards

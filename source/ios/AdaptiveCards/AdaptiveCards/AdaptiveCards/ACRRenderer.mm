@@ -15,6 +15,7 @@
 #import "ACRContentHoldingUIScrollView.h"
 #import "ACRImageRenderer.h"
 #import "ACRRegistration.h"
+#import "ACRRegistrationPrivate.h"
 #import "ACRRendererPrivate.h"
 #import "ACRSeparator.h"
 #import "ACRUIImageView.h"
@@ -78,11 +79,30 @@ using namespace AdaptiveCards;
     ACRColumnView *verticalView = containingView;
 
     std::vector<std::shared_ptr<BaseActionElement>> actions = adaptiveCard->GetActions();
+    
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> rootRequires = adaptiveCard->GetRootRequires();
 
     if (!actions.empty()) {
         [rootView loadImagesForActionsAndCheckIfAllActionsHaveIconImages:actions hostconfig:config hash:iOSInternalIdHash(adaptiveCard->GetInternalId().Hash())];
     }
-
+    
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> hostConfigRequires = [config getHostConfig]->GetRootRequires().requiresSet;
+    
+    ACOFeatureRegistration *featureReg = [ACOFeatureRegistration getInstance];
+    const std::shared_ptr<FeatureRegistration> sharedFReg = [featureReg getSharedFeatureRegistration];
+    
+    if(adaptiveCard->MeetsRequirements(*sharedFReg.get()) == false)
+    {
+        NSLog(@"Failed REQUIREMENT");
+    }
+    /*
+    for (const auto& requirement : hostConfigRequires)
+    {
+        const auto& requirementName = requirement.first;
+        const auto& requirementVersion = requirement.second;
+        [featureReg addFeature:requirementName featureVersion:requirementVersion];
+    }
+    */
     // set context
     ACOAdaptiveCard *wrapperCard = [[ACOAdaptiveCard alloc] init];
     [wrapperCard setCard:adaptiveCard];

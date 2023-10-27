@@ -96,30 +96,7 @@ void BaseElement::SetAdditionalProperties(const Json::Value& value)
 // Given a map of what our host provides, determine if this element's requirements are satisfied.
 bool BaseElement::MeetsRequirements(const AdaptiveCards::FeatureRegistration& featureRegistration) const
 {
-    for (const auto& requirement : m_requires)
-    {
-        // special case for adaptive cards version
-        const auto& requirementName = requirement.first;
-        const auto& requirementVersion = requirement.second;
-        const auto& featureVersion = featureRegistration.GetFeatureVersion(requirementName);
-        if (featureVersion.empty())
-        {
-            // host doesn't provide this requirement
-            return false;
-        }
-        else
-        {
-            // host provides this requirement, but does it provide an acceptible version?
-            const SemanticVersion providesVersion{featureVersion};
-            if (providesVersion < requirementVersion)
-            {
-                // host's provided version is too low
-                return false;
-            }
-        }
-    }
-
-    return true;
+    return ParseUtil::MeetsRequirements(m_requires, featureRegistration);
 }
 
 std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& BaseElement::GetRequirements()
@@ -175,46 +152,5 @@ Json::Value BaseElement::SerializeToJsonValue() const
 void BaseElement::GetResourceInformation(std::vector<RemoteResourceInformation>& /*resourceInfo*/)
 {
     return;
-}
-
-void BaseElement::ParseRequires(ParseContext& /*context*/, const Json::Value& json)
-{
-    const auto requiresValue = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Requires, false);
-    if (!requiresValue.isNull())
-    {
-        if (requiresValue.isObject())
-        {
-            const auto& memberNames = requiresValue.getMemberNames();
-            const auto countNames = memberNames.size();
-            for (unsigned int i = 0; i < countNames; ++i)
-            {
-                const auto& memberName = memberNames.at(i);
-                const auto& memberValue = requiresValue[memberName].asString();
-
-                if (memberValue == "*")
-                {
-                    // * means any version.
-                    m_requires.emplace(memberName, "0");
-                }
-                else
-                {
-                    try
-                    {
-                        SemanticVersion memberVersion(memberValue);
-                        m_requires.emplace(memberName, memberVersion);
-                    }
-                    catch (const AdaptiveCardParseException&)
-                    {
-                        throw AdaptiveCardParseException(
-                            ErrorStatusCode::InvalidPropertyValue,
-                            "Invalid version in requires value: '" + memberValue + "'");
-                    }
-                }
-            }
-            return;
-        }
-        throw AdaptiveCardParseException(
-            ErrorStatusCode::InvalidPropertyValue, "Invalid value for requires (should be object)");
-    }
 }
 } // namespace AdaptiveCards
