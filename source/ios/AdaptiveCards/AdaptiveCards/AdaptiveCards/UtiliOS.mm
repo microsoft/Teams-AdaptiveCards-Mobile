@@ -503,6 +503,41 @@ void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContent
     }
 }
 
+void handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
+                        UIView<ACRIContentHoldingView> *view,
+                             ACRView *rootView, NSMutableArray *inputs,
+                             ACOHostConfig *config)
+{
+    FallbackType fallbackType = adaptiveCard->GetRootFallbackType();
+    std::shared_ptr<BaseElement> fallbackBaseElement = adaptiveCard->GetRootFallbackContent();
+    std::shared_ptr<BaseCardElement> elem = std::static_pointer_cast<BaseCardElement>(fallbackBaseElement);
+    ACRRegistration *reg = [ACRRegistration getInstance];
+    
+    if (fallbackType != FallbackType::Content || !elem)
+    {
+        return;
+    }
+    
+    ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] init];
+    [acoElem setElem:elem];
+
+    ACRBaseCardElementRenderer *renderer =
+        [reg getRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];
+    
+    if (renderer) {
+        @try {
+            [renderer render:view
+                       rootView:rootView
+                         inputs:inputs
+                baseCardElement:acoElem
+                     hostConfig:config];
+        } @catch (ACOFallbackException *e) {
+            NSLog(@"Root Fallback Failed");
+            NSLog(@"%@", e);
+        }
+    }
+}
+
 void removeLastViewFromCollectionView(const CardElementType elemType,
                                       UIView<ACRIContentHoldingView> *view)
 {
