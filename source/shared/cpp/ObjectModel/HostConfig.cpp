@@ -487,8 +487,13 @@ TableConfig TableConfig::Deserialize(const Json::Value& json, const TableConfig&
 RootRequiresConfig RootRequiresConfig::Deserialize(const Json::Value& json, const RootRequiresConfig& defaultValue)
 {
     RootRequiresConfig result;
-    
+
     ParseUtil::GetParsedRequiresSet(json, result.requiresSet);
+    
+    if (result.requiresSet.empty())
+    {
+        result = defaultValue;
+    }
     
     return result;
 }
