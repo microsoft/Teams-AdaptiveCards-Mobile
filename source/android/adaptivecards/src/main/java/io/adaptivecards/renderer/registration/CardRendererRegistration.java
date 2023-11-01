@@ -314,7 +314,6 @@ public class CardRendererRegistration
         childRenderArgs.setAncestorHasFallback(elementHasFallback || renderArgs.getAncestorHasFallback());
 
         HostWidthType hostWidth = getHostWidth();
-        TargetWidthType cardWidth = cardElement.GetTargetWidth();
         // To avoid tampering with this method, this two variables are introduced:
         // - renderedElement contains the element that was finally rendered (after performing fallback)
         //      this allows us to check if it was an input and render the label and error message
