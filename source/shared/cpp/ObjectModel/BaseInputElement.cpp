@@ -16,8 +16,8 @@ BaseInputElement::BaseInputElement(CardElementType elementType) : BaseCardElemen
     PopulateKnownPropertiesSet();
 }
 
-BaseInputElement::BaseInputElement(CardElementType elementType, Spacing spacing, bool separator, HeightType height) :
-    BaseCardElement(elementType, spacing, separator, height), m_isRequired(false)
+BaseInputElement::BaseInputElement(CardElementType elementType, Spacing spacing, bool separator, HeightType height, TargetWidthType targetWidthType) :
+    BaseCardElement(elementType, spacing, separator, height, targetWidthType), m_isRequired(false)
 {
     PopulateKnownPropertiesSet();
 }

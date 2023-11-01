@@ -86,6 +86,10 @@
 								  	{
 										"title": "FallbackAction",
 										"value": "v1.5/Scenarios/FallbackAction.json"
+								  	},
+								  	{
+										"title": "ResponsiveLayout",
+										"value": "v1.5/Scenarios/ResponsiveLayout.json"
 								  	}
                                 ],
                                 "placeholder": "(choose sample)",

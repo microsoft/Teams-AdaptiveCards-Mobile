@@ -176,6 +176,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TableCell, "tableCell"},
             {AdaptiveCardSchemaKey::TableRow, "tableRow"},
             {AdaptiveCardSchemaKey::TargetElements, "targetElements"},
+            {AdaptiveCardSchemaKey::TargetWidth, "targetWidth"},
             {AdaptiveCardSchemaKey::Text, "text"},
             {AdaptiveCardSchemaKey::TextBlock, "textBlock"},
             {AdaptiveCardSchemaKey::TextConfig, "textConfig"},
@@ -401,4 +402,27 @@ namespace AdaptiveCards
             {ErrorStatusCode::UnsupportedParserOverride, "UnsupportedParserOverride"},
             {ErrorStatusCode::IdCollision, "IdCollision"},
             {ErrorStatusCode::CustomError, "CustomError"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(TargetWidthType, {
+        {TargetWidthType::Default, "Default"},
+        {TargetWidthType::VeryNarrow, "veryNarrow"},
+        {TargetWidthType::Narrow, "narrow"},
+        {TargetWidthType::Standard, "standard"},
+        {TargetWidthType::Wide, "wide"},
+        {TargetWidthType::AtMostVeryNarrow, "atMost:veryNarrow"},
+        {TargetWidthType::AtMostNarrow, "atMost:narrow"},
+        {TargetWidthType::AtMostStandard, "atMost:standard"},
+        {TargetWidthType::AtMostWide, "atMost:wide"},
+        {TargetWidthType::AtLeastVeryNarrow, "atLeast:veryNarrow"},
+        {TargetWidthType::AtLeastNarrow, "atLeast:narrow"},
+        {TargetWidthType::AtLeastStandard, "atLeast:standard"},
+        {TargetWidthType::AtLeastWide, "atLeast:wide"}});
+
+
+    DEFINE_ADAPTIVECARD_ENUM(HostWidthType, {
+        {HostWidthType::Default, "Default"},
+        {HostWidthType::VeryNarrow, "veryNarrow"},
+        {HostWidthType::Narrow, "narrow"},
+        {HostWidthType::Standard, "standard"},
+        {HostWidthType::Wide, "wide"}});
 }

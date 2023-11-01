@@ -16,7 +16,7 @@ namespace AdaptiveCards
 class BaseCardElement : public BaseElement
 {
 public:
-    BaseCardElement(CardElementType type, Spacing spacing, bool separator, HeightType height);
+    BaseCardElement(CardElementType type, Spacing spacing, bool separator, HeightType height, TargetWidthType targetWidthType);
     BaseCardElement(CardElementType type);
 
     BaseCardElement() = default;
@@ -34,6 +34,9 @@ public:
     HeightType GetHeight() const;
     void SetHeight(HeightType value);
 
+    TargetWidthType GetTargetWidth() const;
+    void SetTargetWidth(TargetWidthType value);
+
     virtual Spacing GetSpacing() const;
     virtual void SetSpacing(Spacing value);
 
@@ -42,6 +45,7 @@ public:
 
     CardElementType GetElementType() const;
 
+    bool MeetsTargetWidthRequirement(HostWidthType hostWidth) const;
     static std::shared_ptr<BaseCardElement> DeserializeBasePropertiesFromString(ParseContext& context, const std::string& jsonString);
     static std::shared_ptr<BaseCardElement> DeserializeBaseProperties(ParseContext& context, const Json::Value& json);
 
@@ -60,6 +64,7 @@ private:
     CardElementType m_type;
     Spacing m_spacing;
     HeightType m_height;
+    TargetWidthType m_targetWidth;
     bool m_separator;
     bool m_isVisible;
 };

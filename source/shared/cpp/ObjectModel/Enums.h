@@ -178,6 +178,7 @@ enum class AdaptiveCardSchemaKey
     TableCell,
     TableRow,
     TargetElements,
+    TargetWidth,
     Text,
     TextBlock,
     TextConfig,
@@ -566,4 +567,32 @@ enum class FallbackType
     Drop,
     Content
 };
+
+enum class HostWidthType
+{
+    Default = 0,
+    VeryNarrow = 1,
+    Narrow = 2,
+    Standard = 3,
+    Wide = 4,
+};
+DECLARE_ADAPTIVECARD_ENUM(HostWidthType);
+
+enum class TargetWidthType
+{
+    Default = 0,
+    VeryNarrow,
+    Narrow,
+    Standard,
+    Wide,
+    AtMostVeryNarrow,
+    AtMostNarrow,
+    AtMostStandard,
+    AtMostWide,
+    AtLeastVeryNarrow,
+    AtLeastNarrow,
+    AtLeastStandard,
+    AtLeastWide
+};
+DECLARE_ADAPTIVECARD_ENUM(TargetWidthType);
 } // namespace AdaptiveCards
