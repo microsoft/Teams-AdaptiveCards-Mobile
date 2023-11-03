@@ -8,40 +8,40 @@
 
 package io.adaptivecards.objectmodel;
 
-public enum TextInputStyle {
-  Text(0),
-  Tel,
-  Url,
-  Email,
-  Password;
+public enum ActionRole {
+  Button(0),
+  Link,
+  Tab,
+  Menu,
+  MenuItem;
 
   public final int swigValue() {
     return swigValue;
   }
 
-  public static TextInputStyle swigToEnum(int swigValue) {
-    TextInputStyle[] swigValues = TextInputStyle.class.getEnumConstants();
+  public static ActionRole swigToEnum(int swigValue) {
+    ActionRole[] swigValues = ActionRole.class.getEnumConstants();
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
-    for (TextInputStyle swigEnum : swigValues)
+    for (ActionRole swigEnum : swigValues)
       if (swigEnum.swigValue == swigValue)
         return swigEnum;
-    throw new IllegalArgumentException("No enum " + TextInputStyle.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + ActionRole.class + " with value " + swigValue);
   }
 
   @SuppressWarnings("unused")
-  private TextInputStyle() {
+  private ActionRole() {
     this.swigValue = SwigNext.next++;
   }
 
   @SuppressWarnings("unused")
-  private TextInputStyle(int swigValue) {
+  private ActionRole(int swigValue) {
     this.swigValue = swigValue;
     SwigNext.next = swigValue+1;
   }
 
   @SuppressWarnings("unused")
-  private TextInputStyle(TextInputStyle swigEnum) {
+  private ActionRole(ActionRole swigEnum) {
     this.swigValue = swigEnum.swigValue;
     SwigNext.next = this.swigValue+1;
   }
