@@ -287,7 +287,6 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             featureRegistration = new FeatureRegistration();
             featureRegistration.AddFeature("acTest", "1.0");
         }
-        CardRendererRegistration.getInstance().registerHostWidth(HostWidthType.Standard);
         CardRendererRegistration.getInstance().registerFeatureRegistration(featureRegistration);
     }
 

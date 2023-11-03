@@ -445,6 +445,9 @@ public:
     InputsConfig GetInputs() const;
     void SetInputs(const InputsConfig value);
 
+    HostWidthType getHostWidthType() const;
+    void SetHostWidthType(const HostWidthType value);
+
     TextStylesConfig GetTextStyles() const;
     void SetTextStyles(const TextStylesConfig value);
 
@@ -475,6 +478,7 @@ private:
     ContainerStylesDefinition _containerStyles;
     MediaConfig _media;
     InputsConfig _inputs;
+    HostWidthType _hostWidthType;
     TextBlockConfig _textBlock;
     TextStylesConfig _textStyles;
     TableConfig _table;

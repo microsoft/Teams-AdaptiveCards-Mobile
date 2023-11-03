@@ -64,6 +64,9 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._inputs = ParseUtil::ExtractJsonValueAndMergeWithDefault<InputsConfig>(
         json, AdaptiveCardSchemaKey::Inputs, result._inputs, InputsConfig::Deserialize);
 
+    result._hostWidthType =
+            ParseUtil::GetEnumValue<HostWidthType>(json, AdaptiveCardSchemaKey::HostWidthType, HostWidthType::Default, HostWidthTypeFromString);
+
     result._textBlock = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextBlockConfig>(
         json, AdaptiveCardSchemaKey::TextBlock, result._textBlock, TextBlockConfig::Deserialize);
 
@@ -906,6 +909,16 @@ InputsConfig HostConfig::GetInputs() const
 void HostConfig::SetInputs(const InputsConfig value)
 {
     _inputs = value;
+}
+
+HostWidthType HostConfig::getHostWidthType() const
+{
+    return _hostWidthType;
+}
+
+void HostConfig::SetHostWidthType(const HostWidthType value)
+{
+    _hostWidthType = value;
 }
 
 TextBlockConfig HostConfig::GetTextBlock() const

@@ -189,7 +189,7 @@
                             }
                         ]
                     },
-                    "isEnabled": false
+                    "isEnabled": true
                 },
                 {
                     "type": "Action.ShowCard",

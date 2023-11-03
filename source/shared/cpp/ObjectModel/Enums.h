@@ -90,6 +90,7 @@ enum class AdaptiveCardSchemaKey
     HighlightColors,
     HorizontalAlignment,
     HorizontalCellContentAlignment,
+    HostWidthType,
     IconPlacement,
     IconSize,
     IconUrl,

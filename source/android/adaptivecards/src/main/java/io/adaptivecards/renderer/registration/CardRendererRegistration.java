@@ -32,7 +32,6 @@ import io.adaptivecards.objectmodel.HostWidthType;
 import io.adaptivecards.objectmodel.Image;
 import io.adaptivecards.objectmodel.ImageSet;
 import io.adaptivecards.objectmodel.Mode;
-import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.renderer.ActionLayoutRenderer;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.AdaptiveWarning;
@@ -240,16 +239,6 @@ public class CardRendererRegistration
         return m_featureRegistration;
     }
 
-    public HostWidthType getHostWidth()
-    {
-        return m_hostWidth;
-    }
-
-    public void registerHostWidth(HostWidthType hostWidth)
-    {
-        m_hostWidth = hostWidth;
-    }
-
     public IOverflowActionRenderer getOverflowActionRenderer() {
         return m_overflowActionRenderer;
     }
@@ -313,7 +302,7 @@ public class CardRendererRegistration
         RenderArgs childRenderArgs = new RenderArgs(renderArgs);
         childRenderArgs.setAncestorHasFallback(elementHasFallback || renderArgs.getAncestorHasFallback());
 
-        HostWidthType hostWidth = getHostWidth();
+        HostWidthType hostWidthType = hostConfig.getHostWidthType();
         // To avoid tampering with this method, this two variables are introduced:
         // - renderedElement contains the element that was finally rendered (after performing fallback)
         //      this allows us to check if it was an input and render the label and error message
@@ -339,7 +328,7 @@ public class CardRendererRegistration
             {
                 throw new AdaptiveFallbackException(cardElement);
             }
-            if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
+            if (hostWidthType != null && !cardElement.MeetsTargetWidthRequirement(hostWidthType))
             {
                 throw new AdaptiveFallbackException(cardElement);
             }
@@ -423,10 +412,10 @@ public class CardRendererRegistration
                 // There's an ancestor with fallback so we throw to trigger it
                 throw e;
             }
-            else if (!cardElement.MeetsTargetWidthRequirement(hostWidth))
+            else if (hostWidthType != null && !cardElement.MeetsTargetWidthRequirement(hostWidthType))
             {
                 renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.RESPONSIVE_LAYOUT_NOT_MET, cardElement.GetElementTypeString() + " of width " + cardElement.GetTargetWidth()
-                    + " does not meet hostWidth " + hostWidth));
+                    + " does not meet hostWidth " + hostWidthType));
                 renderedElement = null;
             }
             else
@@ -648,7 +637,6 @@ public class CardRendererRegistration
     private HashMap<String, IResourceResolver> m_resourceResolvers = new HashMap<>();
     private IOnlineMediaLoader m_onlineMediaLoader = null;
     private FeatureRegistration m_featureRegistration = null;
-    private HostWidthType m_hostWidth = null;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
 }

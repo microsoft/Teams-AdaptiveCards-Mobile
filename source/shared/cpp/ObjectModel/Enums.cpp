@@ -88,6 +88,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::HighlightColors, "highlightColors"},
             {AdaptiveCardSchemaKey::HorizontalAlignment, "horizontalAlignment"},
             {AdaptiveCardSchemaKey::HorizontalCellContentAlignment, "horizontalCellContentAlignment"},
+            {AdaptiveCardSchemaKey::HostWidthType, "hostWidthType"},
             {AdaptiveCardSchemaKey::IconPlacement, "iconPlacement"},
             {AdaptiveCardSchemaKey::IconSize, "iconSize"},
             {AdaptiveCardSchemaKey::IconUrl, "iconUrl"},
@@ -421,8 +422,8 @@ namespace AdaptiveCards
 
     DEFINE_ADAPTIVECARD_ENUM(HostWidthType, {
         {HostWidthType::Default, "Default"},
-        {HostWidthType::VeryNarrow, "veryNarrow"},
-        {HostWidthType::Narrow, "narrow"},
-        {HostWidthType::Standard, "standard"},
-        {HostWidthType::Wide, "wide"}});
+        {HostWidthType::VeryNarrow, "VeryNarrow"},
+        {HostWidthType::Narrow, "Narrow"},
+        {HostWidthType::Standard, "Standard"},
+        {HostWidthType::Wide, "Wide"}});
 }
