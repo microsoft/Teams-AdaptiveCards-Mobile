@@ -126,6 +126,6 @@ void BaseElement::DeserializeBase(ParseContext& context, const Json::Value& json
     // collisions.
     SetId(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Id));
     ParseUtil::ParseFallback<T>(context, json, m_fallbackType, m_fallbackContent, GetId(), GetInternalId());
-    ParseUtil::GetRootRequires(context, json, m_requires);
+    ParseUtil::ParseRequires(context, json, m_requires);
 }
 } // namespace AdaptiveCards

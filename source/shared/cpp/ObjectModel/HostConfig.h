@@ -463,6 +463,8 @@ public:
     void SetTable(const TableConfig value);
     
     RootRequiresConfig GetRootRequires() const;
+    
+    bool MeetsRequirements(std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet);
 
 private:
     const ContainerStyleDefinition& GetContainerStyle(ContainerStyle style) const;

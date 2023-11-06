@@ -273,7 +273,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
     auto actions = ParseUtil::GetActionCollection(context, json, AdaptiveCardSchemaKey::Actions, false);
     // Parse required if present
     std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet;
-    ParseUtil::GetRootRequires(context, json, requiresSet);
+    ParseUtil::ParseRequires(context, json, requiresSet);
     // Parse fallback if present
     std::shared_ptr<BaseElement> fallbackContent = {};
     FallbackType fallbackType = FallbackType::None;
@@ -665,9 +665,4 @@ std::shared_ptr<BaseElement> AdaptiveCard::GetRootFallbackContent() const
 FallbackType AdaptiveCard::GetRootFallbackType() const
 {
     return m_fallbackType;
-}
-
-bool AdaptiveCard::MeetsRequirements(const AdaptiveCards::FeatureRegistration& featureRegistration) const
-{
-    return ParseUtil::MeetsRequirements(m_requires, featureRegistration);
 }

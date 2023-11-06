@@ -146,9 +146,6 @@ public:
     const std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& GetRootRequires() const;
     std::shared_ptr<BaseElement> GetRootFallbackContent() const;
     FallbackType GetRootFallbackType() const;
-    
-    bool MeetsRequirements(const AdaptiveCards::FeatureRegistration& hostProvides) const;
-    
 #ifdef __ANDROID__
 #pragma GCC diagnostic ignored "-Wdynamic-exception-spec"
     static std::shared_ptr<ParseResult> DeserializeFromFile(

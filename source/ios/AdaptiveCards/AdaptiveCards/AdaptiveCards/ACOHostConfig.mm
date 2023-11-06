@@ -10,6 +10,7 @@
 #import "AdaptiveCardParseException.h"
 #import "Enums.h"
 #import "TextBlock.h"
+#import "ACOAdaptiveCard.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -441,5 +442,10 @@ using namespace AdaptiveCards;
 - (void)setIconPlacement:(NSNumber *)internalId placement:(BOOL)placement
 {
     [_iconPlacements setObject:[NSNumber numberWithBool:placement] forKey:internalId];
+}
+
+- (BOOL)meetsRequirements:(std::shared_ptr<AdaptiveCard> const &)adaptiveCard
+{
+    return _config->MeetsRequirements(adaptiveCard->GetRootRequires());
 }
 @end

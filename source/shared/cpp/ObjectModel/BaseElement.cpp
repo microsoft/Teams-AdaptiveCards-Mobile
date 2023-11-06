@@ -96,7 +96,30 @@ void BaseElement::SetAdditionalProperties(const Json::Value& value)
 // Given a map of what our host provides, determine if this element's requirements are satisfied.
 bool BaseElement::MeetsRequirements(const AdaptiveCards::FeatureRegistration& featureRegistration) const
 {
-    return ParseUtil::MeetsRequirements(m_requires, featureRegistration);
+    for (const auto& requirement : m_requires)
+    {
+        // special case for adaptive cards version
+        const auto& requirementName = requirement.first;
+        const auto& requirementVersion = requirement.second;
+        const auto& featureVersion = featureRegistration.GetFeatureVersion(requirementName);
+        if (featureVersion.empty())
+        {
+            // host doesn't provide this requirement
+            return false;
+        }
+        else
+        {
+            // host provides this requirement, but does it provide an acceptible version?
+            const SemanticVersion providesVersion{featureVersion};
+            if (providesVersion < requirementVersion)
+            {
+                // host's provided version is too low
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& BaseElement::GetRequirements()

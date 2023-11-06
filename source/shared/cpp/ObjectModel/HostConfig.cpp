@@ -959,3 +959,26 @@ RootRequiresConfig HostConfig::GetRootRequires() const
 {
     return _rootRequires;
 }
+
+bool HostConfig::MeetsRequirements(std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet)
+{
+    for (const auto &featureToCheck : requiresSet)
+    {
+        auto foundFeature = _rootRequires.requiresSet.find(featureToCheck.first);
+        
+        if (foundFeature == _rootRequires.requiresSet.end())
+        {
+            return false;
+        }
+        else
+        {
+            AdaptiveCards::SemanticVersion hostConfigVersion = foundFeature->second;
+            AdaptiveCards::SemanticVersion adaptiveCardVersion = featureToCheck.second;
+            if (hostConfigVersion < adaptiveCardVersion)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}

@@ -91,27 +91,9 @@ using namespace AdaptiveCards;
     [rootView.context pushCardContext:wrapperCard];
     
     auto backgroundImageProperties = adaptiveCard->GetBackgroundImage();
-    
-    // Added host config root requirements into feature registration
-    
-    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> hostConfigRequires = [config getHostConfig]->GetRootRequires().requiresSet;
-    ACOFeatureRegistration *featureReg = [ACOFeatureRegistration getInstance];
-    
-    for (const auto& requirement : hostConfigRequires)
-    {
-        NSString* requirementName = [NSString stringWithCString:requirement.first.c_str()
-                                                         encoding:[NSString defaultCStringEncoding]];
-        std::string requirementVersion_cstring = requirement.second;
-        NSString* requirementVersion = [NSString stringWithCString:requirementVersion_cstring.c_str()
-                                                         encoding:[NSString defaultCStringEncoding]];
-        [featureReg addFeature:requirementName featureVersion:requirementVersion];
-    }
-    
+
     // Check if features registered meet adaptive card's root requirements
-    
-    const std::shared_ptr<FeatureRegistration> sharedFReg = [featureReg getSharedFeatureRegistration];
-    
-    if(adaptiveCard->MeetsRequirements(*sharedFReg.get()) == false)
+    if([config meetsRequirements:adaptiveCard] == NO)
     {
         NSLog(@"Card does not meet root requirements");
         ACOAdaptiveCard *card = [[ACOAdaptiveCard alloc] init];

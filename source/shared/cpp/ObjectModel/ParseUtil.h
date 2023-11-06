@@ -125,11 +125,10 @@ namespace ParseUtil
     template <typename T>
     void ParseFallback(ParseContext& context, const Json::Value& json, FallbackType& fallbackType, std::shared_ptr<BaseElement>& fallbackContent, const std::string& publicId, const InternalId& internalId);
 
-    void GetRootRequires(ParseContext& context, const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet);
+    void ParseRequires(ParseContext& context, const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet);
 
     void GetParsedRequiresSet(const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet);
 
-    bool MeetsRequirements(const std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet, const AdaptiveCards::FeatureRegistration& featureRegistration);
 }; // namespace ParseUtil
 
 template <typename T, typename Fn>

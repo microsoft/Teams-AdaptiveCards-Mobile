@@ -13,6 +13,7 @@
 #import "ACREnums.h"
 #import "HostConfig.h"
 #import "TextBlock.h"
+#import "SharedAdaptiveCard.h"
 #else
 /// Cocoapods Imports
 #import <AdaptiveCards/ACOBaseActionElement.h>
@@ -22,6 +23,7 @@
 #import <AdaptiveCards/ACREnums.h>
 #import <AdaptiveCards/HostConfig.h>
 #import <AdaptiveCards/TextBlock.h>
+#import <AdaptiveCards/SharedAdaptiveCard.h>
 #endif
 #import <UIKit/UIKit.h>
 
@@ -73,5 +75,7 @@ using namespace AdaptiveCards;
 - (ACRIconPlacement)getIconPlacement;
 
 - (void)setIconPlacement:(NSNumber *)internalId placement:(BOOL)placement;
+
+- (BOOL)meetsRequirements:(std::shared_ptr<AdaptiveCard> const &)adaptiveCard;
 
 @end
