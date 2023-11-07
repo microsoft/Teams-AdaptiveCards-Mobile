@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.registration;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -28,7 +30,7 @@ import io.adaptivecards.objectmodel.FallbackType;
 import io.adaptivecards.objectmodel.FeatureRegistration;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HostConfig;
-import io.adaptivecards.objectmodel.HostWidthType;
+import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.Image;
 import io.adaptivecards.objectmodel.ImageSet;
 import io.adaptivecards.objectmodel.Mode;
@@ -193,6 +195,19 @@ public class CardRendererRegistration
         m_onlineMediaLoader = onlineMediaLoader;
     }
 
+    public float getHostPixelWidth(Context context)
+    {
+        if (hostPixelWidth == -1)
+        {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            ((Activity) context).getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displayMetrics);
+            hostPixelWidth = displayMetrics.widthPixels / displayMetrics.density;
+        }
+        return hostPixelWidth;
+    }
+
     /**
      * @deprecated As of AdaptiveCards 1.2, replaced by {@link #registerResourceResolver(String, IResourceResolver)}
      */
@@ -302,7 +317,7 @@ public class CardRendererRegistration
         RenderArgs childRenderArgs = new RenderArgs(renderArgs);
         childRenderArgs.setAncestorHasFallback(elementHasFallback || renderArgs.getAncestorHasFallback());
 
-        HostWidthType hostWidthType = hostConfig.getHostWidthType();
+        HostWidthConfig hostWidthConfig = hostConfig.getHostWidth();
         // To avoid tampering with this method, this two variables are introduced:
         // - renderedElement contains the element that was finally rendered (after performing fallback)
         //      this allows us to check if it was an input and render the label and error message
@@ -328,7 +343,8 @@ public class CardRendererRegistration
             {
                 throw new AdaptiveFallbackException(cardElement);
             }
-            if (hostWidthType != null && !cardElement.MeetsTargetWidthRequirement(hostWidthType))
+            if (hostWidthConfig != null && !cardElement.MeetsTargetWidthRequirement(getHostPixelWidth(context), hostWidthConfig.getVeryNarrow(),
+                hostWidthConfig.getNarrow(), hostWidthConfig.getStandard()))
             {
                 throw new AdaptiveFallbackException(cardElement);
             }
@@ -412,10 +428,11 @@ public class CardRendererRegistration
                 // There's an ancestor with fallback so we throw to trigger it
                 throw e;
             }
-            else if (hostWidthType != null && !cardElement.MeetsTargetWidthRequirement(hostWidthType))
+            else if (hostWidthConfig != null && !cardElement.MeetsTargetWidthRequirement(getHostPixelWidth(context), hostWidthConfig.getVeryNarrow(),
+                hostWidthConfig.getNarrow(), hostWidthConfig.getStandard()))
             {
                 renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.RESPONSIVE_LAYOUT_NOT_MET, cardElement.GetElementTypeString() + " of width " + cardElement.GetTargetWidth()
-                    + " does not meet hostWidth " + hostWidthType));
+                    + " does not meet hostWidth"));
                 renderedElement = null;
             }
             else
@@ -636,6 +653,7 @@ public class CardRendererRegistration
     private IOnlineImageLoader m_onlineImageLoader = null;
     private HashMap<String, IResourceResolver> m_resourceResolvers = new HashMap<>();
     private IOnlineMediaLoader m_onlineMediaLoader = null;
+    private float hostPixelWidth = -1;
     private FeatureRegistration m_featureRegistration = null;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;

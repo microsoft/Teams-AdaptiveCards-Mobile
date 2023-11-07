@@ -132,8 +132,8 @@ public class BaseCardElement extends BaseElement {
     return CardElementType.swigToEnum(AdaptiveCardObjectModelJNI.BaseCardElement_GetElementType(swigCPtr, this));
   }
 
-  public boolean MeetsTargetWidthRequirement(HostWidthType hostWidth) {
-    return AdaptiveCardObjectModelJNI.BaseCardElement_MeetsTargetWidthRequirement(swigCPtr, this, hostWidth.swigValue());
+  public boolean MeetsTargetWidthRequirement(float hostWidth, long veryNarrow, long narrow, long standard) {
+    return AdaptiveCardObjectModelJNI.BaseCardElement_MeetsTargetWidthRequirement(swigCPtr, this, hostWidth, veryNarrow, narrow, standard);
   }
 
   public static BaseCardElement DeserializeBasePropertiesFromString(ParseContext context, String jsonString) {

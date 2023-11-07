@@ -90,7 +90,7 @@ enum class AdaptiveCardSchemaKey
     HighlightColors,
     HorizontalAlignment,
     HorizontalCellContentAlignment,
-    HostWidthType,
+    HostWidthBreakpoints,
     IconPlacement,
     IconSize,
     IconUrl,
@@ -138,6 +138,7 @@ enum class AdaptiveCardSchemaKey
     MinHeight,
     Mode,
     Monospace,
+    Narrow,
     NumberInput,
     OptionalInputs,
     Padding,
@@ -169,6 +170,7 @@ enum class AdaptiveCardSchemaKey
     Spacing,
     SpacingDefinition,
     Speak,
+    Standard,
     Stretch,
     Strikethrough,
     Style,
@@ -202,6 +204,7 @@ enum class AdaptiveCardSchemaKey
     ValueOff,
     ValueOn,
     Verb,
+    VeryNarrow,
     Version,
     VerticalAlignment,
     VerticalCellContentAlignment,
@@ -568,16 +571,6 @@ enum class FallbackType
     Drop,
     Content
 };
-
-enum class HostWidthType
-{
-    Default = 0,
-    VeryNarrow = 1,
-    Narrow = 2,
-    Standard = 3,
-    Wide = 4,
-};
-DECLARE_ADAPTIVECARD_ENUM(HostWidthType);
 
 enum class TargetWidthType
 {

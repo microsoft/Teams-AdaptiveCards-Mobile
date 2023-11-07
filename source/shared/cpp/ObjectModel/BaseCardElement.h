@@ -8,6 +8,7 @@
 #include "ElementParserRegistration.h"
 #include "Separator.h"
 #include "RemoteResourceInformation.h"
+#include "HostConfig.h"
 
 void HandleUnknownProperties(const Json::Value& json, const std::unordered_set<std::string>& knownProperties, Json::Value& unknownProperties);
 
@@ -45,7 +46,7 @@ public:
 
     CardElementType GetElementType() const;
 
-    bool MeetsTargetWidthRequirement(HostWidthType hostWidth) const;
+    bool MeetsTargetWidthRequirement(float hostWidth, unsigned int veryNarrow, unsigned int narrow, unsigned int standard) const;
     static std::shared_ptr<BaseCardElement> DeserializeBasePropertiesFromString(ParseContext& context, const std::string& jsonString);
     static std::shared_ptr<BaseCardElement> DeserializeBaseProperties(ParseContext& context, const Json::Value& json);
 

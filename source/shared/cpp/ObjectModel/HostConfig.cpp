@@ -61,11 +61,11 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._media = ParseUtil::ExtractJsonValueAndMergeWithDefault<MediaConfig>(
         json, AdaptiveCardSchemaKey::Media, result._media, MediaConfig::Deserialize);
 
+    result._hostWidth = ParseUtil::ExtractJsonValueAndMergeWithDefault<HostWidthConfig>(
+            json, AdaptiveCardSchemaKey::HostWidthBreakpoints, result._hostWidth, HostWidthConfig::Deserialize);
+
     result._inputs = ParseUtil::ExtractJsonValueAndMergeWithDefault<InputsConfig>(
         json, AdaptiveCardSchemaKey::Inputs, result._inputs, InputsConfig::Deserialize);
-
-    result._hostWidthType =
-            ParseUtil::GetEnumValue<HostWidthType>(json, AdaptiveCardSchemaKey::HostWidthType, HostWidthType::Default, HostWidthTypeFromString);
 
     result._textBlock = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextBlockConfig>(
         json, AdaptiveCardSchemaKey::TextBlock, result._textBlock, TextBlockConfig::Deserialize);
@@ -463,6 +463,17 @@ MediaConfig MediaConfig::Deserialize(const Json::Value& json, const MediaConfig&
     result.allowInlinePlayback =
         ParseUtil::GetBool(json, AdaptiveCardSchemaKey::AllowInlinePlayback, defaultValue.allowInlinePlayback);
 
+    return result;
+}
+
+
+HostWidthConfig HostWidthConfig::Deserialize(const Json::Value& json, const HostWidthConfig& defaultValue)
+{
+    HostWidthConfig result;
+
+    result.veryNarrow = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::VeryNarrow, 0);
+    result.narrow = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Narrow, 0);
+    result.standard = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Standard, 0);
     return result;
 }
 
@@ -911,14 +922,14 @@ void HostConfig::SetInputs(const InputsConfig value)
     _inputs = value;
 }
 
-HostWidthType HostConfig::getHostWidthType() const
+HostWidthConfig HostConfig::getHostWidth() const
 {
-    return _hostWidthType;
+    return _hostWidth;
 }
 
-void HostConfig::SetHostWidthType(const HostWidthType value)
+void HostConfig::SetHostWidth(const HostWidthConfig value)
 {
-    _hostWidthType = value;
+    _hostWidth = value;
 }
 
 TextBlockConfig HostConfig::GetTextBlock() const

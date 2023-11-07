@@ -88,7 +88,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::HighlightColors, "highlightColors"},
             {AdaptiveCardSchemaKey::HorizontalAlignment, "horizontalAlignment"},
             {AdaptiveCardSchemaKey::HorizontalCellContentAlignment, "horizontalCellContentAlignment"},
-            {AdaptiveCardSchemaKey::HostWidthType, "hostWidthType"},
+            {AdaptiveCardSchemaKey::HostWidthBreakpoints, "hostWidthBreakpoints"},
             {AdaptiveCardSchemaKey::IconPlacement, "iconPlacement"},
             {AdaptiveCardSchemaKey::IconSize, "iconSize"},
             {AdaptiveCardSchemaKey::IconUrl, "iconUrl"},
@@ -136,6 +136,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::MinHeight, "minHeight"},
             {AdaptiveCardSchemaKey::Mode, "mode"},
             {AdaptiveCardSchemaKey::Monospace, "monospace"},
+            {AdaptiveCardSchemaKey::Narrow, "narrow"},
             {AdaptiveCardSchemaKey::NumberInput, "numberInput"},
             {AdaptiveCardSchemaKey::OptionalInputs, "optionalInputs"},
             {AdaptiveCardSchemaKey::Padding, "padding"},
@@ -167,6 +168,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Spacing, "spacing"},
             {AdaptiveCardSchemaKey::SpacingDefinition, "spacingDefinition"},
             {AdaptiveCardSchemaKey::Speak, "speak"},
+            {AdaptiveCardSchemaKey::Standard, "standard"},
             {AdaptiveCardSchemaKey::Stretch, "stretch"},
             {AdaptiveCardSchemaKey::Strikethrough, "strikethrough"},
             {AdaptiveCardSchemaKey::Style, "style"},
@@ -200,6 +202,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ValueOff, "valueOff"},
             {AdaptiveCardSchemaKey::ValueOn, "valueOn"},
             {AdaptiveCardSchemaKey::Verb, "verb"},
+            {AdaptiveCardSchemaKey::VeryNarrow, "veryNarrow"},
             {AdaptiveCardSchemaKey::Version, "version"},
             {AdaptiveCardSchemaKey::VerticalAlignment, "verticalAlignment"},
             {AdaptiveCardSchemaKey::VerticalCellContentAlignment, "verticalCellContentAlignment"},
@@ -418,12 +421,4 @@ namespace AdaptiveCards
         {TargetWidthType::AtLeastNarrow, "atLeast:narrow"},
         {TargetWidthType::AtLeastStandard, "atLeast:standard"},
         {TargetWidthType::AtLeastWide, "atLeast:wide"}});
-
-
-    DEFINE_ADAPTIVECARD_ENUM(HostWidthType, {
-        {HostWidthType::Default, "Default"},
-        {HostWidthType::VeryNarrow, "VeryNarrow"},
-        {HostWidthType::Narrow, "Narrow"},
-        {HostWidthType::Standard, "Standard"},
-        {HostWidthType::Wide, "Wide"}});
 }

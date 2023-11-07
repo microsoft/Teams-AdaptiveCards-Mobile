@@ -11,7 +11,11 @@
 		"lineThickness": 1,
 		"lineColor": "#EEEEEE"
 	},
-  	"hostWidthType": "standard",
+	"hostWidthBreakpoints": {
+	  "veryNarrow": 216,
+	  "narrow": 413,
+	  "standard": 500
+	},
 	"supportsInteractivity": true,
 	"fontTypes": {
 		"default": {

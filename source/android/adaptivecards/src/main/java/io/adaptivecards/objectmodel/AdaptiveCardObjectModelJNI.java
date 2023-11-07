@@ -472,9 +472,6 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getHeightTypeEnum();
   public final static native String HeightTypeToString(int jarg1);
   public final static native int HeightTypeFromString(String jarg1);
-  public final static native long getHostWidthTypeEnum();
-  public final static native String HostWidthTypeToString(int jarg1);
-  public final static native int HostWidthTypeFromString(String jarg1);
   public final static native long getTargetWidthTypeEnum();
   public final static native String TargetWidthTypeToString(int jarg1);
   public final static native int TargetWidthTypeFromString(String jarg1);
@@ -608,7 +605,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native boolean BaseCardElement_GetIsVisible(long jarg1, BaseCardElement jarg1_);
   public final static native void BaseCardElement_SetIsVisible(long jarg1, BaseCardElement jarg1_, boolean jarg2);
   public final static native int BaseCardElement_GetElementType(long jarg1, BaseCardElement jarg1_);
-  public final static native boolean BaseCardElement_MeetsTargetWidthRequirement(long jarg1, BaseCardElement jarg1_, int jarg2);
+  public final static native boolean BaseCardElement_MeetsTargetWidthRequirement(long jarg1, BaseCardElement jarg1_, float jarg2, long jarg3, long jarg4, long jarg5);
   public final static native long BaseCardElement_DeserializeBasePropertiesFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native long BaseCardElement_DeserializeBaseProperties(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native void BaseCardElement_ParseJsonObject(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_, long jarg3, BaseElement jarg3_);
@@ -1386,6 +1383,15 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long MediaConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, MediaConfig jarg2_);
   public final static native long new_MediaConfig();
   public final static native void delete_MediaConfig(long jarg1);
+  public final static native void HostWidthConfig_veryNarrow_set(long jarg1, HostWidthConfig jarg1_, long jarg2);
+  public final static native long HostWidthConfig_veryNarrow_get(long jarg1, HostWidthConfig jarg1_);
+  public final static native void HostWidthConfig_narrow_set(long jarg1, HostWidthConfig jarg1_, long jarg2);
+  public final static native long HostWidthConfig_narrow_get(long jarg1, HostWidthConfig jarg1_);
+  public final static native void HostWidthConfig_standard_set(long jarg1, HostWidthConfig jarg1_, long jarg2);
+  public final static native long HostWidthConfig_standard_get(long jarg1, HostWidthConfig jarg1_);
+  public final static native long HostWidthConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, HostWidthConfig jarg2_);
+  public final static native long new_HostWidthConfig();
+  public final static native void delete_HostWidthConfig(long jarg1);
   public final static native void TextBlockConfig_headingLevel_set(long jarg1, TextBlockConfig jarg1_, long jarg2);
   public final static native long TextBlockConfig_headingLevel_get(long jarg1, TextBlockConfig jarg1_);
   public final static native long TextBlockConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, TextBlockConfig jarg2_);
@@ -1442,8 +1448,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void HostConfig_SetMedia(long jarg1, HostConfig jarg1_, long jarg2, MediaConfig jarg2_);
   public final static native long HostConfig_GetInputs(long jarg1, HostConfig jarg1_);
   public final static native void HostConfig_SetInputs(long jarg1, HostConfig jarg1_, long jarg2, InputsConfig jarg2_);
-  public final static native int HostConfig_getHostWidthType(long jarg1, HostConfig jarg1_);
-  public final static native void HostConfig_SetHostWidthType(long jarg1, HostConfig jarg1_, int jarg2);
+  public final static native long HostConfig_getHostWidth(long jarg1, HostConfig jarg1_);
+  public final static native void HostConfig_SetHostWidth(long jarg1, HostConfig jarg1_, long jarg2, HostWidthConfig jarg2_);
   public final static native long HostConfig_GetTextStyles(long jarg1, HostConfig jarg1_);
   public final static native void HostConfig_SetTextStyles(long jarg1, HostConfig jarg1_, long jarg2, TextStylesConfig jarg2_);
   public final static native long HostConfig_GetTextBlock(long jarg1, HostConfig jarg1_);

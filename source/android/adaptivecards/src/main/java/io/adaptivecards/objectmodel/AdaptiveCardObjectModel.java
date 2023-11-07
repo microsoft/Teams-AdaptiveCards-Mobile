@@ -361,18 +361,6 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return HeightType.swigToEnum(AdaptiveCardObjectModelJNI.HeightTypeFromString(t));
   }
 
-  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HostWidthType_t getHostWidthTypeEnum() {
-    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HostWidthType_t(AdaptiveCardObjectModelJNI.getHostWidthTypeEnum(), false);
-  }
-
-  public static String HostWidthTypeToString(HostWidthType t) {
-    return AdaptiveCardObjectModelJNI.HostWidthTypeToString(t.swigValue());
-  }
-
-  public static HostWidthType HostWidthTypeFromString(String t) {
-    return HostWidthType.swigToEnum(AdaptiveCardObjectModelJNI.HostWidthTypeFromString(t));
-  }
-
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TargetWidthType_t getTargetWidthTypeEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TargetWidthType_t(AdaptiveCardObjectModelJNI.getTargetWidthTypeEnum(), false);
   }

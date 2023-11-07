@@ -8,22 +8,22 @@
 
 package io.adaptivecards.objectmodel;
 
-public class SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HostWidthType_t {
+public class SWIGTYPE_p_HostWidthConfig {
   private transient long swigCPtr;
 
-  protected SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HostWidthType_t(long cPtr, @SuppressWarnings("unused") boolean futureUse) {
+  protected SWIGTYPE_p_HostWidthConfig(long cPtr, @SuppressWarnings("unused") boolean futureUse) {
     swigCPtr = cPtr;
   }
 
-  protected SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HostWidthType_t() {
+  protected SWIGTYPE_p_HostWidthConfig() {
     swigCPtr = 0;
   }
 
-  protected static long getCPtr(SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HostWidthType_t obj) {
+  protected static long getCPtr(SWIGTYPE_p_HostWidthConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
-  protected static long swigRelease(SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HostWidthType_t obj) {
+  protected static long swigRelease(SWIGTYPE_p_HostWidthConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 }

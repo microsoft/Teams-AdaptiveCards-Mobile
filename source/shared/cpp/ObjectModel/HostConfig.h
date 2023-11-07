@@ -363,6 +363,15 @@ struct MediaConfig
     static MediaConfig Deserialize(const Json::Value& json, const MediaConfig& defaultValue);
 };
 
+struct HostWidthConfig
+{
+    unsigned int veryNarrow;
+    unsigned int narrow;
+    unsigned int standard;
+
+    static HostWidthConfig Deserialize(const Json::Value& json, const HostWidthConfig& defaultValue);
+};
+
 struct TextBlockConfig
 {
     unsigned int headingLevel = 2;
@@ -445,8 +454,8 @@ public:
     InputsConfig GetInputs() const;
     void SetInputs(const InputsConfig value);
 
-    HostWidthType getHostWidthType() const;
-    void SetHostWidthType(const HostWidthType value);
+    HostWidthConfig getHostWidth() const;
+    void SetHostWidth(const HostWidthConfig value);
 
     TextStylesConfig GetTextStyles() const;
     void SetTextStyles(const TextStylesConfig value);
@@ -478,7 +487,7 @@ private:
     ContainerStylesDefinition _containerStyles;
     MediaConfig _media;
     InputsConfig _inputs;
-    HostWidthType _hostWidthType;
+    HostWidthConfig _hostWidth;
     TextBlockConfig _textBlock;
     TextStylesConfig _textStyles;
     TableConfig _table;
