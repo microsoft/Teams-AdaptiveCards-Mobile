@@ -8,7 +8,6 @@
 #include "ElementParserRegistration.h"
 #include "Separator.h"
 #include "RemoteResourceInformation.h"
-#include "HostConfig.h"
 
 void HandleUnknownProperties(const Json::Value& json, const std::unordered_set<std::string>& knownProperties, Json::Value& unknownProperties);
 
