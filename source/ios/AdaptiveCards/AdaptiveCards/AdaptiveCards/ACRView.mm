@@ -793,15 +793,6 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
         fallbackElem = fallbackElemCard->GetFallbackContent();
     }
-    // Adds root fallback as the last element of fallback element stack.
-    std::shared_ptr<BaseElement> rootFallBackElem = _adaptiveCard.card->GetRootFallbackContent();
-    if (rootFallBackElem)
-    {
-        std::shared_ptr<BaseCardElement> rootFallbackElemCard = std::static_pointer_cast<BaseCardElement>(rootFallBackElem);
-        if (rootFallbackElemCard) {
-            [self processBaseCardElement:rootFallbackElemCard registration:registration];
-        }
-    }
 }
 
 - (ACRTargetBuilderDirector *)getActionsTargetBuilderDirector

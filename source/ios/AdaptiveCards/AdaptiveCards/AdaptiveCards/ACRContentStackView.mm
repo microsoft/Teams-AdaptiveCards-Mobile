@@ -274,6 +274,14 @@ using namespace AdaptiveCards;
     }
 }
 
+- (void)removeAllArrangedSubviews
+{
+    for (UIView *view in _stackView.subviews)
+    {
+        [view removeFromSuperview];
+    }
+}
+
 - (void)removeViewFromContentStackView:(UIView *)view
 {
     [_stackView removeArrangedSubview:view];

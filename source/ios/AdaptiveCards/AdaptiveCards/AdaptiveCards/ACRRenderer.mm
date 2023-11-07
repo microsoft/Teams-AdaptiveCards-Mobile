@@ -215,7 +215,16 @@ using namespace AdaptiveCards;
                 [(ACRContentStackView *)view removeViewFromContentStackView:separator];
             }
         } @catch (ACOFallbackException *e) {
-            handleFallbackException(e, view, rootView, inputs, elem, config);
+            
+            @try {
+                handleFallbackException(e, view, rootView, inputs, elem, config);
+                
+            } @catch (ACOFallbackException *e) {
+                
+                [view removeAllArrangedSubviews];
+                handleRootFallback(rootView.card.card, view, rootView, inputs, config);
+                break;
+            }
         }
     }
 

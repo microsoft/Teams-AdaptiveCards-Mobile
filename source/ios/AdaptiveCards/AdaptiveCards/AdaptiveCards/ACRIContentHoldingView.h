@@ -22,6 +22,7 @@
 - (void)addArrangedSubview:(UIView *)view;
 - (void)insertArrangedSubview:(UIView *)view atIndex:(NSUInteger)insertionIndex;
 - (void)removeLastViewFromArrangedSubview;
+- (void)removeAllArrangedSubviews;
 - (void)addTarget:(NSObject *)target;
 - (void)configureForSelectAction:(ACOBaseActionElement *)action rootView:(ACRView *)rootView;
 - (void)adjustHuggingForLastElement;
