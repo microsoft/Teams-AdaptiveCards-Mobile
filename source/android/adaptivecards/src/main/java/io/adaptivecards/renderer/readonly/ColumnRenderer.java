@@ -126,6 +126,8 @@ public class ColumnRenderer extends BaseCardElementRenderer
         LinearLayout columnLayout = new LinearLayout(context);
         columnLayout.setOrientation(LinearLayout.VERTICAL);
         columnLayout.setTag(new TagContent(column));
+        columnLayout.setFocusable(true);
+        columnLayout.setFocusableInTouchMode(true);
 
         setVisibility(baseCardElement.GetIsVisible(), columnLayout);
 
