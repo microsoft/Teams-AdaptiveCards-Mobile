@@ -54,6 +54,7 @@
 
     self.frame = [self computeBoundingRect];
 
+#if !TARGET_OS_VISION
     CGRect frame = CGRectMake(0, 0, self.frame.size.width, 30);
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:frame];
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -61,6 +62,7 @@
     [toolBar setItems:@[ doneButton, flexSpace ] animated:NO];
     [toolBar sizeToFit];
     self.inputAccessoryView = toolBar;
+#endif
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView

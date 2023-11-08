@@ -133,7 +133,9 @@ static CGFloat const ACOStackViewSpacing = 14.0f;
     _listView.dataSource = self;
     _listView.delegate = self;
     _listView.accessibilityIdentifier = [NSString stringWithFormat:@"%@, %@", @"listView", [_choiceSetDelegate getChoiceSetId]];
+#if !TARGET_OS_VISION
     _listView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+#endif
     self.filteredListView = _listView;
     [_container addArrangedSubview:_searchBar];
     [_container addArrangedSubview:_searchBarSeparator];

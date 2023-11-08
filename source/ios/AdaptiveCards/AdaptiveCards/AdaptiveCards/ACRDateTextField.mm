@@ -133,6 +133,7 @@ using namespace AdaptiveCards;
 
         [picker addTarget:self action:@selector(update:) forControlEvents:UIControlEventValueChanged];
 
+#if !TARGET_OS_VISION
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                 target:self
                                                                                 action:@selector(dismiss)];
@@ -143,6 +144,7 @@ using namespace AdaptiveCards;
         button.tintColor = [UIColor blackColor];
 
         self.inputAccessoryView = bar;
+#endif
         self.inputView = picker;
         self.hasValidationProperties = self.isRequired || self.max || self.min;
     }
