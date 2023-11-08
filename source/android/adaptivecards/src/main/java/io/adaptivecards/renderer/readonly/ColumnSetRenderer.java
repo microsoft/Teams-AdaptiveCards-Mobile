@@ -74,6 +74,8 @@ public class ColumnSetRenderer extends BaseCardElementRenderer
         SelectableFlexboxLayout columnSetLayout = new SelectableFlexboxLayout(context);
         columnSetLayout.setFlexWrap(FlexWrap.NOWRAP);
         columnSetLayout.setFlexDirection(FlexDirection.ROW);
+        columnSetLayout.setFocusable(true);
+        columnSetLayout.setFocusableInTouchMode(true);
 
         // TODO: Consistent column-width across platforms, which may need normalized weights:
         // normalizeWeights(columnVector);
