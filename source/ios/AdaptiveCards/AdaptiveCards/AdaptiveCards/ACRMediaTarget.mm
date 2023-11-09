@@ -209,6 +209,18 @@ const int posterTag = 0x504F5354;
 
 - (void)playVideoWhenTrackIsReady:(AVURLAsset *)asset
 {
+#if !TARGET_OS_VISION
+    AVAssetTrack *track = [asset tracksWithMediaCharacteristic:AVMediaCharacteristicVisual][0];
+    [track loadValuesAsynchronouslyForKeys:@[ @"naturalSize" ]
+                         completionHandler:^{
+        AVKeyValueStatus status = [asset statusOfValueForKey:@"naturalSize" error:nil];
+        if (status == AVKeyValueStatusLoaded) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self playMedia:track asset:asset];
+            });
+        }
+    }];
+#else
     [asset loadTracksWithMediaCharacteristic:AVMediaCharacteristicVisual completionHandler:^(NSArray<AVAssetTrack *> *tracks, NSError *err) {
         AVAssetTrack *track = tracks[0];
         [track loadValuesAsynchronouslyForKeys:@[ @"naturalSize" ]
@@ -221,6 +233,7 @@ const int posterTag = 0x504F5354;
             }
         }];
     }];
+#endif
 }
 
 - (void)playMedia:(AVAssetTrack *)track asset:(AVURLAsset *)asset
