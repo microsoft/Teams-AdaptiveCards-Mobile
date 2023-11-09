@@ -296,9 +296,6 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 - (void)layoutFilterredView
 {
     CGPoint position = [self.superview convertPoint:self.frame.origin toView:nil];
-#if !TARGET_OS_VISION
-    CGSize windowSize = (self.window) ? self.window.bounds.size : UIScreen.mainScreen.bounds.size;
-#else
     CGSize windowSize;
     if (self.window != nil)
     {
@@ -309,7 +306,6 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         CGRect sceneBounds = ActiveSceneBoundsForView(self);
         windowSize = sceneBounds.size;
     }
-#endif
 
     UIViewController *viewController = traverseResponderChainForUIViewController(_rootView);
     CGRect frame = viewController.view.frame;
