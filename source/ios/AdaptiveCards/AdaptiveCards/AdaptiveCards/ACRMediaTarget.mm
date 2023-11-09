@@ -209,32 +209,18 @@ const int posterTag = 0x504F5354;
 
 - (void)playVideoWhenTrackIsReady:(AVURLAsset *)asset
 {
-    if (@available(iOS 15.0, *)) {
-        [asset loadTracksWithMediaCharacteristic:AVMediaCharacteristicVisual completionHandler:^(NSArray<AVAssetTrack *> *tracks, NSError *err) {
-            AVAssetTrack *track = tracks[0];
-            [track loadValuesAsynchronouslyForKeys:@[ @"naturalSize" ]
-                                 completionHandler:^{
-                AVKeyValueStatus status = [asset statusOfValueForKey:@"naturalSize" error:nil];
-                if (status == AVKeyValueStatusLoaded) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self playMedia:track asset:asset];
-                    });
-                }
-            }];
-        }];
-    } else {
-        // Fallback on earlier versions
-        AVAssetTrack *track = [asset tracksWithMediaCharacteristic:AVMediaCharacteristicVisual][0];
+    [asset loadTracksWithMediaCharacteristic:AVMediaCharacteristicVisual completionHandler:^(NSArray<AVAssetTrack *> *tracks, NSError *err) {
+        AVAssetTrack *track = tracks[0];
         [track loadValuesAsynchronouslyForKeys:@[ @"naturalSize" ]
                              completionHandler:^{
-                                 AVKeyValueStatus status = [asset statusOfValueForKey:@"naturalSize" error:nil];
-                                 if (status == AVKeyValueStatusLoaded) {
-                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                         [self playMedia:track asset:asset];
-                                     });
-                                 }
-                             }];
-    }
+            AVKeyValueStatus status = [asset statusOfValueForKey:@"naturalSize" error:nil];
+            if (status == AVKeyValueStatusLoaded) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self playMedia:track asset:asset];
+                });
+            }
+        }];
+    }];
 }
 
 - (void)playMedia:(AVAssetTrack *)track asset:(AVURLAsset *)asset
