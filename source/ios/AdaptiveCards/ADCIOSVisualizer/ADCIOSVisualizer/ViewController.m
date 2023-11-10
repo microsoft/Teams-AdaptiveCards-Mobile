@@ -109,7 +109,11 @@ CGFloat kFileBrowserWidth = 0;
     [super viewDidLoad];
     _global_queue = dispatch_get_main_queue();
 
+#if !TARGET_OS_VISION
     kFileBrowserWidth = [[UIScreen mainScreen] bounds].size.width - 32.0f;
+#else
+    kFileBrowserWidth = 600;
+#endif
     kAdaptiveCardsWidth = kFileBrowserWidth;
     [self registerForKeyboardNotifications];
 

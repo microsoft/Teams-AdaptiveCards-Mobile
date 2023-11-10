@@ -7,7 +7,7 @@
 
 #import "ACRBaseTarget.h"
 #import <UIKit/UIKit.h>
-#if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS)
+#if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS) && !TARGET_OS_VISION
 #import <FluentUI/FluentUI-Swift.h>
 #endif
 
@@ -37,7 +37,7 @@
 
 - (void)showToolTip:(UILongPressGestureRecognizer *)recognizer
 {
-#if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS)
+#if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS) && !TARGET_OS_VISION
     if (recognizer.state == UIGestureRecognizerStateBegan && _toolTip && recognizer.view) {
         [MSFTooltip.shared showWith:_toolTip for:recognizer.view preferredArrowDirection:MSFTooltipArrowDirectionUp offset:CGPointZero screenMargins:MSFTooltip.defaultScreenMargins dismissOn:MSFTooltipDismissModeTapAnywhere onTap:nil];
     }
