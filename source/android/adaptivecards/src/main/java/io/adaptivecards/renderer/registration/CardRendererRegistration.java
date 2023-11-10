@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.registration;
 
-import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -30,6 +28,7 @@ import io.adaptivecards.objectmodel.FallbackType;
 import io.adaptivecards.objectmodel.FeatureRegistration;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HostConfig;
+import io.adaptivecards.objectmodel.HostWidth;
 import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.Image;
 import io.adaptivecards.objectmodel.ImageSet;
@@ -195,19 +194,6 @@ public class CardRendererRegistration
         m_onlineMediaLoader = onlineMediaLoader;
     }
 
-    public float getHostPixelWidth(Context context)
-    {
-        if (hostPixelWidth == -1)
-        {
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            ((Activity) context).getWindowManager()
-                .getDefaultDisplay()
-                .getMetrics(displayMetrics);
-            hostPixelWidth = displayMetrics.widthPixels / displayMetrics.density;
-        }
-        return hostPixelWidth;
-    }
-
     /**
      * @deprecated As of AdaptiveCards 1.2, replaced by {@link #registerResourceResolver(String, IResourceResolver)}
      */
@@ -244,6 +230,16 @@ public class CardRendererRegistration
     public void registerFeatureRegistration(FeatureRegistration featureRegistration)
     {
         m_featureRegistration = featureRegistration;
+    }
+
+    public int getHostCardContainer()
+    {
+        return m_hostCardContainer;
+    }
+
+    public void registerHostCardContainer(int hostCardContainer)
+    {
+        m_hostCardContainer = hostCardContainer;
     }
 
     public FeatureRegistration getFeatureRegistration()
@@ -317,7 +313,11 @@ public class CardRendererRegistration
         RenderArgs childRenderArgs = new RenderArgs(renderArgs);
         childRenderArgs.setAncestorHasFallback(elementHasFallback || renderArgs.getAncestorHasFallback());
 
+        HostWidth hostWidth = null;
         HostWidthConfig hostWidthConfig = hostConfig.getHostWidth();
+        if (hostWidthConfig != null) {
+            hostWidth = Util.convertHostCardContainerToHostWidth(getHostCardContainer(), hostWidthConfig);
+        }
         // To avoid tampering with this method, this two variables are introduced:
         // - renderedElement contains the element that was finally rendered (after performing fallback)
         //      this allows us to check if it was an input and render the label and error message
@@ -343,8 +343,7 @@ public class CardRendererRegistration
             {
                 throw new AdaptiveFallbackException(cardElement);
             }
-            if (hostWidthConfig != null && !cardElement.MeetsTargetWidthRequirement(getHostPixelWidth(context), hostWidthConfig.getVeryNarrow(),
-                hostWidthConfig.getNarrow(), hostWidthConfig.getStandard()))
+            if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
             {
                 throw new AdaptiveFallbackException(cardElement);
             }
@@ -428,8 +427,7 @@ public class CardRendererRegistration
                 // There's an ancestor with fallback so we throw to trigger it
                 throw e;
             }
-            else if (hostWidthConfig != null && !cardElement.MeetsTargetWidthRequirement(getHostPixelWidth(context), hostWidthConfig.getVeryNarrow(),
-                hostWidthConfig.getNarrow(), hostWidthConfig.getStandard()))
+            else if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
             {
                 renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.RESPONSIVE_LAYOUT_NOT_MET, cardElement.GetElementTypeString() + " of width " + cardElement.GetTargetWidth()
                     + " does not meet hostWidth"));
@@ -655,6 +653,7 @@ public class CardRendererRegistration
     private IOnlineMediaLoader m_onlineMediaLoader = null;
     private float hostPixelWidth = -1;
     private FeatureRegistration m_featureRegistration = null;
+    private int m_hostCardContainer = -1;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
 }

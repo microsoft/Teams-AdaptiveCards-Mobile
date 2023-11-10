@@ -605,7 +605,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native boolean BaseCardElement_GetIsVisible(long jarg1, BaseCardElement jarg1_);
   public final static native void BaseCardElement_SetIsVisible(long jarg1, BaseCardElement jarg1_, boolean jarg2);
   public final static native int BaseCardElement_GetElementType(long jarg1, BaseCardElement jarg1_);
-  public final static native boolean BaseCardElement_MeetsTargetWidthRequirement(long jarg1, BaseCardElement jarg1_, float jarg2, long jarg3, long jarg4, long jarg5);
+  public final static native boolean BaseCardElement_MeetsTargetWidthRequirement(long jarg1, BaseCardElement jarg1_, int jarg2);
   public final static native long BaseCardElement_DeserializeBasePropertiesFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native long BaseCardElement_DeserializeBaseProperties(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native void BaseCardElement_ParseJsonObject(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_, long jarg3, BaseElement jarg3_);

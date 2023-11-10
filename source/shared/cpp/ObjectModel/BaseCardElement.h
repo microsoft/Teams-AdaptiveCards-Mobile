@@ -45,7 +45,7 @@ public:
 
     CardElementType GetElementType() const;
 
-    bool MeetsTargetWidthRequirement(float hostWidth, unsigned int veryNarrow, unsigned int narrow, unsigned int standard) const;
+    bool MeetsTargetWidthRequirement(HostWidth hostWidth) const;
     static std::shared_ptr<BaseCardElement> DeserializeBasePropertiesFromString(ParseContext& context, const std::string& jsonString);
     static std::shared_ptr<BaseCardElement> DeserializeBaseProperties(ParseContext& context, const Json::Value& json);
 

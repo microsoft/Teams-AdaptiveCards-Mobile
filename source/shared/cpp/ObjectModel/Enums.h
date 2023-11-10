@@ -572,6 +572,15 @@ enum class FallbackType
     Content
 };
 
+enum class HostWidth
+{
+    Default = 0,
+    VeryNarrow = 1,
+    Narrow = 2,
+    Standard = 3,
+    Wide = 4
+};
+
 enum class TargetWidthType
 {
     Default = 0,

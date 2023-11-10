@@ -152,49 +152,37 @@ void BaseCardElement::ParseJsonObject(AdaptiveCards::ParseContext& context, cons
     throw AdaptiveCardParseException(ErrorStatusCode::InvalidPropertyValue, "Unable to parse element of type " + typeString);
 }
 
-bool BaseCardElement::MeetsTargetWidthRequirement(float hostWidth, unsigned int veryNarrow, unsigned int narrow, unsigned int standard)  const
+bool BaseCardElement::MeetsTargetWidthRequirement(HostWidth hostWidth)  const
 {
     if (m_targetWidth == TargetWidthType::Default) {
         return true;
     }
 
-    TargetWidthType hostWidthSize;
-
-    if (hostWidth <= veryNarrow) {
-        hostWidthSize = TargetWidthType::VeryNarrow;
-    } else if (hostWidth >= veryNarrow && hostWidth <= narrow) {
-        hostWidthSize = TargetWidthType::Narrow;
-    } else if (hostWidth >= narrow && hostWidth <= standard) {
-        hostWidthSize = TargetWidthType::Standard;
-    } else {
-        hostWidthSize = TargetWidthType::Wide;
-    }
-
     switch(m_targetWidth) {
         case TargetWidthType::Wide:
-            return hostWidthSize == TargetWidthType::Wide;
+            return hostWidth == HostWidth::Wide;
         case TargetWidthType::Standard:
-            return hostWidthSize == TargetWidthType::Standard;
+            return hostWidth == HostWidth::Standard;
         case TargetWidthType::Narrow:
-            return hostWidthSize == TargetWidthType::Narrow;
+            return hostWidth == HostWidth::Narrow;
         case TargetWidthType::VeryNarrow:
-            return hostWidthSize == TargetWidthType::VeryNarrow;
+            return hostWidth == HostWidth::VeryNarrow;
         case TargetWidthType::AtLeastWide:
-            return hostWidthSize >= TargetWidthType::Wide;
+            return hostWidth >= HostWidth::Wide;
         case TargetWidthType::AtLeastStandard:
-            return hostWidthSize >= TargetWidthType::Standard;
+            return hostWidth >= HostWidth::Standard;
         case TargetWidthType::AtLeastNarrow:
-            return hostWidthSize >= TargetWidthType::Narrow;
+            return hostWidth >= HostWidth::Narrow;
         case TargetWidthType::AtLeastVeryNarrow:
-            return hostWidthSize >= TargetWidthType::VeryNarrow;
+            return hostWidth >= HostWidth::VeryNarrow;
         case TargetWidthType::AtMostWide:
-            return hostWidthSize <= TargetWidthType::Wide;
+            return hostWidth <= HostWidth::Wide;
         case TargetWidthType::AtMostStandard:
-            return hostWidthSize <= TargetWidthType::Standard;
+            return hostWidth <= HostWidth::Standard;
         case TargetWidthType::AtMostNarrow:
-            return hostWidthSize <= TargetWidthType::Narrow;
+            return hostWidth <= HostWidth::Narrow;
         case TargetWidthType::AtMostVeryNarrow:
-            return hostWidthSize <= TargetWidthType::VeryNarrow;
+            return hostWidth <= HostWidth::VeryNarrow;
         default:
             return true;
     }

@@ -13167,13 +13167,10 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseCardElement_1MeetsTargetWidthRequirement(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jfloat jarg2, jlong jarg3, jlong jarg4, jlong jarg5) {
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseCardElement_1MeetsTargetWidthRequirement(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jboolean jresult = 0 ;
   AdaptiveCards::BaseCardElement *arg1 = (AdaptiveCards::BaseCardElement *) 0 ;
-  float arg2 ;
-  unsigned int arg3 ;
-  unsigned int arg4 ;
-  unsigned int arg5 ;
+  AdaptiveCards::HostWidth arg2 ;
   std::shared_ptr< AdaptiveCards::BaseCardElement const > *smartarg1 = 0 ;
   bool result;
   
@@ -13183,11 +13180,8 @@ SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObject
   
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::BaseCardElement > **)&jarg1;
   arg1 = (AdaptiveCards::BaseCardElement *)(smartarg1 ? smartarg1->get() : 0); 
-  arg2 = (float)jarg2; 
-  arg3 = (unsigned int)jarg3; 
-  arg4 = (unsigned int)jarg4; 
-  arg5 = (unsigned int)jarg5; 
-  result = (bool)((AdaptiveCards::BaseCardElement const *)arg1)->MeetsTargetWidthRequirement(arg2,arg3,arg4,arg5);
+  arg2 = (AdaptiveCards::HostWidth)jarg2; 
+  result = (bool)((AdaptiveCards::BaseCardElement const *)arg1)->MeetsTargetWidthRequirement(arg2);
   jresult = (jboolean)result; 
   return jresult;
 }
