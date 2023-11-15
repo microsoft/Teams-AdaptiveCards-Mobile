@@ -140,13 +140,6 @@
 
 /* Begin PBXFileReference section */
 		0B3F74BE29E1CF92C4FAFB8C /* Pods_ADCIOSVisualizer_ADCIOSVisualizerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ADCIOSVisualizer_ADCIOSVisualizerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D7B946861F80EC28AC9295D /* Pods-ADCIOSVisualizer.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer.apprelease.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer/Pods-ADCIOSVisualizer.apprelease.xcconfig"; sourceTree = "<group>"; };
-		22BA9248EFA6A7D9C9C282A2 /* Pods-Fluent-ADCIOSVisualizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-ADCIOSVisualizer.release.xcconfig"; path = "Target Support Files/Pods-Fluent-ADCIOSVisualizer/Pods-Fluent-ADCIOSVisualizer.release.xcconfig"; sourceTree = "<group>"; };
-		36F7320180C4837D5F18C111 /* Pods-Fluent-ADCIOSVisualizerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-ADCIOSVisualizerUITests.release.xcconfig"; path = "Target Support Files/Pods-Fluent-ADCIOSVisualizerUITests/Pods-Fluent-ADCIOSVisualizerUITests.release.xcconfig"; sourceTree = "<group>"; };
-		3A6C0778EC0F075B01F8D22B /* Pods-Fluent-ADCIOSVisualizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-ADCIOSVisualizer.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-ADCIOSVisualizer/Pods-Fluent-ADCIOSVisualizer.debug.xcconfig"; sourceTree = "<group>"; };
-		558066F0B8F2228CDE30FDA1 /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.apprelease.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.apprelease.xcconfig"; sourceTree = "<group>"; };
-		5651E02964EBFDCF8375CE96 /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.debug.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		569410F5613D607C5A3B1413 /* Pods-ADCIOSVisualizerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizerUITests.debug.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6B055763233EC53D000EE24A /* RichTextBlock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RichTextBlock.json; sourceTree = "<group>"; };
 		6B1509FD22FC98AE00046B3A /* samples */ = {isa = PBXFileReference; lastKnownFileType = folder; name = samples; path = ../../../../samples; sourceTree = "<group>"; };
 		6B1509FF22FCE49600046B3A /* AdaptiveFileBrowserSource.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveFileBrowserSource.mm; sourceTree = "<group>"; };
@@ -239,10 +232,6 @@
 		6BFF9A11260132800028069F /* Action.ExecuteTest.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Action.ExecuteTest.mm; sourceTree = "<group>"; };
 		6BFF9A17260155240028069F /* Action.Execute.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Action.Execute.json; sourceTree = "<group>"; };
 		8C74931A3EA41F6932989B5B /* Pods_ADCIOSVisualizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ADCIOSVisualizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C4AE7CE62B15FF33461CE4D2 /* Pods-ADCIOSVisualizerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizerUITests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizerUITests.release.xcconfig"; sourceTree = "<group>"; };
-		D7181A8AD0E889C79FE0E50B /* Pods-ADCIOSVisualizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer/Pods-ADCIOSVisualizer.release.xcconfig"; sourceTree = "<group>"; };
-		E0D9B344ECC7442086CA0C7A /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.release.xcconfig"; sourceTree = "<group>"; };
-		ED56B4B7308EE7B480ABD5CA /* Pods-Fluent-ADCIOSVisualizerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-ADCIOSVisualizerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-ADCIOSVisualizerUITests/Pods-Fluent-ADCIOSVisualizerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F423C0721EE1FB6100905679 /* ADCIOSVisualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ADCIOSVisualizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F423C0761EE1FB6100905679 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F423C0781EE1FB6100905679 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -268,7 +257,6 @@
 		F4F44B74203FE73D00A2F24C /* CustomInputNumberRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInputNumberRenderer.h; sourceTree = "<group>"; };
 		F4F44BA8204CF98900A2F24C /* CustomProgressBarRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomProgressBarRenderer.h; sourceTree = "<group>"; };
 		F4F44BA9204CF98900A2F24C /* CustomProgressBarRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomProgressBarRenderer.mm; sourceTree = "<group>"; };
-		F6E8AB850C2EEB024550B8CC /* Pods-ADCIOSVisualizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer.debug.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer/Pods-ADCIOSVisualizer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -405,26 +393,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B5EC4766DE4C87DF736F4F38 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F6E8AB850C2EEB024550B8CC /* Pods-ADCIOSVisualizer.debug.xcconfig */,
-				D7181A8AD0E889C79FE0E50B /* Pods-ADCIOSVisualizer.release.xcconfig */,
-				5651E02964EBFDCF8375CE96 /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.debug.xcconfig */,
-				E0D9B344ECC7442086CA0C7A /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.release.xcconfig */,
-				569410F5613D607C5A3B1413 /* Pods-ADCIOSVisualizerUITests.debug.xcconfig */,
-				C4AE7CE62B15FF33461CE4D2 /* Pods-ADCIOSVisualizerUITests.release.xcconfig */,
-				3A6C0778EC0F075B01F8D22B /* Pods-Fluent-ADCIOSVisualizer.debug.xcconfig */,
-				22BA9248EFA6A7D9C9C282A2 /* Pods-Fluent-ADCIOSVisualizer.release.xcconfig */,
-				ED56B4B7308EE7B480ABD5CA /* Pods-Fluent-ADCIOSVisualizerUITests.debug.xcconfig */,
-				36F7320180C4837D5F18C111 /* Pods-Fluent-ADCIOSVisualizerUITests.release.xcconfig */,
-				0D7B946861F80EC28AC9295D /* Pods-ADCIOSVisualizer.apprelease.xcconfig */,
-				558066F0B8F2228CDE30FDA1 /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.apprelease.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
-			sourceTree = "<group>";
-		};
 		F423C0691EE1FB6100905679 = {
 			isa = PBXGroup;
 			children = (
@@ -439,7 +407,6 @@
 				F423C0731EE1FB6100905679 /* Products */,
 				6BF339E120A66A3F00DA5973 /* Frameworks */,
 				6BAC0F2A228B42EB00E42DEB /* Recovered References */,
-				B5EC4766DE4C87DF736F4F38 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -861,7 +828,6 @@
 		};
 		6BC1C777286BB5FA0084D1D9 /* AppRelease */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D7B946861F80EC28AC9295D /* Pods-ADCIOSVisualizer.apprelease.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -906,7 +872,6 @@
 		};
 		6BC1C779286BB5FA0084D1D9 /* AppRelease */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 558066F0B8F2228CDE30FDA1 /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.apprelease.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = UBF8T346G9;
@@ -1040,7 +1005,6 @@
 		};
 		F423C0A31EE1FB6100905679 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F6E8AB850C2EEB024550B8CC /* Pods-ADCIOSVisualizer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1062,7 +1026,6 @@
 		};
 		F423C0A41EE1FB6100905679 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D7181A8AD0E889C79FE0E50B /* Pods-ADCIOSVisualizer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1120,7 +1083,6 @@
 		};
 		F423C0A91EE1FB6100905679 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5651E02964EBFDCF8375CE96 /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = UBF8T346G9;
@@ -1138,7 +1100,6 @@
 		};
 		F423C0AA1EE1FB6100905679 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0D9B344ECC7442086CA0C7A /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = UBF8T346G9;
