@@ -64,6 +64,10 @@ public class AdaptiveCard {
     this(AdaptiveCardObjectModelJNI.new_AdaptiveCard__SWIG_5(version, fallbackText, BackgroundImage.getCPtr(backgroundImage), backgroundImage, Refresh.getCPtr(refresh), refresh, Authentication.getCPtr(authentication), authentication, style.swigValue(), speak, language, verticalContentAlignment.swigValue(), height.swigValue(), minHeight, BaseCardElementVector.getCPtr(body), body, BaseActionElementVector.getCPtr(actions), actions), true);
   }
 
+  public AdaptiveCard(String version, String fallbackText, BackgroundImage backgroundImage, Refresh refresh, Authentication authentication, ContainerStyle style, String speak, String language, VerticalContentAlignment verticalContentAlignment, HeightType height, long minHeight, BaseCardElementVector body, BaseActionElementVector actions, SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t p_requires, BaseElement fallbackContent, SWIGTYPE_p_AdaptiveCards__FallbackType fallbackType) {
+    this(AdaptiveCardObjectModelJNI.new_AdaptiveCard__SWIG_6(version, fallbackText, BackgroundImage.getCPtr(backgroundImage), backgroundImage, Refresh.getCPtr(refresh), refresh, Authentication.getCPtr(authentication), authentication, style.swigValue(), speak, language, verticalContentAlignment.swigValue(), height.swigValue(), minHeight, BaseCardElementVector.getCPtr(body), body, BaseActionElementVector.getCPtr(actions), actions, SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t.getCPtr(p_requires), BaseElement.getCPtr(fallbackContent), fallbackContent, SWIGTYPE_p_AdaptiveCards__FallbackType.getCPtr(fallbackType)), true);
+  }
+
   public String GetVersion() {
     return AdaptiveCardObjectModelJNI.AdaptiveCard_GetVersion(swigCPtr, this);
   }
@@ -204,6 +208,19 @@ public class AdaptiveCard {
     return CardElementType.swigToEnum(AdaptiveCardObjectModelJNI.AdaptiveCard_GetElementType(swigCPtr, this));
   }
 
+  public SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t GetRootRequires() {
+    return new SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t(AdaptiveCardObjectModelJNI.AdaptiveCard_GetRootRequires__SWIG_0(swigCPtr, this), false);
+  }
+
+  public BaseElement GetRootFallbackContent() {
+    long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_GetRootFallbackContent(swigCPtr, this);
+    return (cPtr == 0) ? null : new BaseElement(cPtr, true);
+  }
+
+  public FallbackType GetRootFallbackType() {
+    return FallbackType.swigToEnum(AdaptiveCardObjectModelJNI.AdaptiveCard_GetRootFallbackType(swigCPtr, this));
+  }
+
   public static ParseResult DeserializeFromFile(String jsonFile, String rendererVersion, ParseContext context) throws java.io.IOException {
     long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_DeserializeFromFile__SWIG_0(jsonFile, rendererVersion, ParseContext.getCPtr(context), context);
     return (cPtr == 0) ? null : new ParseResult(cPtr, true);
@@ -244,6 +261,14 @@ public class AdaptiveCard {
 
   public InternalId GetInternalId() {
     return new InternalId(AdaptiveCardObjectModelJNI.AdaptiveCard_GetInternalId(swigCPtr, this), true);
+  }
+
+  public static SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t GetFeaturesSupported() {
+    return new SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t(AdaptiveCardObjectModelJNI.AdaptiveCard_GetFeaturesSupported(), true);
+  }
+
+  public static boolean MeetsRootRequirements(SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t requiresSet) {
+    return AdaptiveCardObjectModelJNI.AdaptiveCard_MeetsRootRequirements(SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t.getCPtr(requiresSet));
   }
 
 }
