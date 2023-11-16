@@ -83,6 +83,12 @@ UIFontDescriptor *getItalicFontDescriptor(UIFontDescriptor *descriptor, bool isI
 void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContentHoldingView> *view,
                              ACRView *rootView, NSMutableArray *inputs,
                              std::shared_ptr<BaseCardElement> const &elem, ACOHostConfig *config);
+
+bool handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
+                        UIView<ACRIContentHoldingView> *view,
+                             ACRView *rootView, NSMutableArray *inputs,
+                        ACOHostConfig *config);
+
 void handleActionFallbackException(ACOFallbackException *exception,
                                    UIView<ACRIContentHoldingView> *view, ACRView *rootView,
                                    NSMutableArray *inputs, ACOBaseActionElement *acoElem,
