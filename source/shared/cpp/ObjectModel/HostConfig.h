@@ -4,8 +4,6 @@
 
 #include "pch.h"
 
-#include "SemanticVersion.h"
-
 namespace AdaptiveCards
 {
 class FontSizesConfig
