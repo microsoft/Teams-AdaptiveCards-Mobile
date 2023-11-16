@@ -9,12 +9,12 @@
    "body":[
       {
          "type":"TextBlock",
-         "text":"This TextBlock should always render",
+         "text":"This TextBlock should NOT render at all",
          "wrap":true
       },
       {
          "type":"TextBlock",
-         "text":"This TextBLock should NOT render, but its fallback should render",
+         "text":"This TextBLock should NOT render, but its root fallback should render",
          "wrap":true,
          "requires":{
             "abc":"*"
