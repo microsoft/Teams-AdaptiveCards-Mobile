@@ -182,7 +182,7 @@ public:
     {
         return m_internalId;
     }
-    
+    // Feature support validation
     static const std::unordered_map<std::string, AdaptiveCards::SemanticVersion> GetFeaturesSupported();
     static bool MeetsRootRequirements(std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet);
 

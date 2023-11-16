@@ -76,6 +76,4 @@ using namespace AdaptiveCards;
 
 - (void)setIconPlacement:(NSNumber *)internalId placement:(BOOL)placement;
 
-- (BOOL)meetsRequirements:(std::shared_ptr<AdaptiveCard> const &)adaptiveCard;
-
 @end

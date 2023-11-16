@@ -444,8 +444,4 @@ using namespace AdaptiveCards;
     [_iconPlacements setObject:[NSNumber numberWithBool:placement] forKey:internalId];
 }
 
-- (BOOL)meetsRequirements:(std::shared_ptr<AdaptiveCard> const &)adaptiveCard
-{
-    return _config->MeetsRequirements(adaptiveCard->GetRootRequires());
-}
 @end

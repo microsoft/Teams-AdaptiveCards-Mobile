@@ -91,52 +91,6 @@ using namespace AdaptiveCards;
     [rootView.context pushCardContext:wrapperCard];
     
     auto backgroundImageProperties = adaptiveCard->GetBackgroundImage();
-
-    /*
-    // Check if features registered meet adaptive card's root requirements
-    if([config meetsRequirements:adaptiveCard] == NO)
-    {
-        NSLog(@"Card does not meet root requirements");
-        ACOAdaptiveCard *card = [[ACOAdaptiveCard alloc] init];
-        [card setCard:adaptiveCard];
-        handleRootFallback(adaptiveCard, verticalView, rootView, inputs, config);
-    }
-    else
-    {
-        verticalView.rtl = rootView.context.rtl;
-
-        std::shared_ptr<BaseActionElement> selectAction = adaptiveCard->GetSelectAction();
-        if (selectAction) {
-            ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
-            [verticalView configureForSelectAction:acoSelectAction rootView:rootView];
-        }
-
-        if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
-            ObserverActionBlock observerAction =
-                ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
-                    UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
-                    if (view) {
-                        [view addObserver:rootView
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:backgroundImageProperties.get()];
-
-                        // store the image view and card for easy retrieval in ACRView::observeValueForKeyPath
-                        [rootView setImageView:key view:view];
-                    }
-                };
-            [rootView loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:@"backgroundImage" observerAction:observerAction];
-        }
-
-        ACRContainerStyle style = ([config getHostConfig]->GetAdaptiveCard().allowCustomStyle) ? (ACRContainerStyle)adaptiveCard->GetStyle() : ACRDefault;
-        style = (style == ACRNone) ? ACRDefault : style;
-        [verticalView setStyle:style];
-
-        [rootView addBaseCardElementListToConcurrentQueue:body registration:[ACRRegistration getInstance]];
-
-        [ACRRenderer render:verticalView rootView:rootView inputs:inputs withCardElems:body andHostConfig:config];
-    }
-    */
     verticalView.rtl = rootView.context.rtl;
 
     std::shared_ptr<BaseActionElement> selectAction = adaptiveCard->GetSelectAction();

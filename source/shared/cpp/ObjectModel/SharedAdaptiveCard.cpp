@@ -147,7 +147,10 @@ AdaptiveCard::AdaptiveCard(
 
 const std::unordered_map<std::string, AdaptiveCards::SemanticVersion> AdaptiveCard::GetFeaturesSupported()
 {
-    return {{"responsiveLayout", AdaptiveCards::SemanticVersion("1.0")}};
+    // Include all features using ParseUtil::ToLowercase
+    // Remove this line when Responsive Layout has been integrated
+    //return {{ParseUtil::ToLowercase("responsiveLayout"), AdaptiveCards::SemanticVersion("1.0")}};
+    return {};
 }
 
 #ifdef __ANDROID__
@@ -277,12 +280,11 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
     // Parse actions if present
     auto actions = ParseUtil::GetActionCollection(context, json, AdaptiveCardSchemaKey::Actions, false);
     // Parse fallback if present
-    std::shared_ptr<BaseElement> fallbackBaseElement = {};
+    std::shared_ptr<BaseElement> fallbackBaseElement;
     FallbackType fallbackType = FallbackType::None;
     ParseUtil::ParseFallback<BaseCardElement>(context, json, fallbackType, fallbackBaseElement, "rootFallbackId", InternalId::Current());
 
-    bool meetsRootRequirements = MeetsRootRequirements(requiresSet);
-    if (meetsRootRequirements)
+    if (MeetsRootRequirements(requiresSet))
     {
         // Parse body
         auto body = ParseUtil::GetElementCollection<BaseCardElement>(true, context, json, AdaptiveCardSchemaKey::Body, false);
@@ -303,8 +305,16 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
 
         return std::make_shared<ParseResult>(result, context.warnings);
     }
+    else if (fallbackBaseElement == nullptr)
+    {
+        fallbackText = "We're sorry, this card couldn't be displayed";
+        context.warnings.push_back(std::make_shared<AdaptiveCardParseWarning>(
+            AdaptiveCards::WarningStatusCode::UnsupportedSchemaVersion, "Requirements not meet and root Fallback parsing failed"));
+        return std::make_shared<ParseResult>(MakeFallbackTextCard(fallbackText, language, speak), context.warnings);
+    }
     else
     {
+        // Convert parsed fallback to collection of BaseCardElement
         std::shared_ptr<BaseCardElement> fallbackCardElement = std::static_pointer_cast<BaseCardElement>(fallbackBaseElement);
         std::vector<std::shared_ptr<BaseCardElement>> fallbackVector = {fallbackCardElement};
         
@@ -322,32 +332,6 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
 
         return std::make_shared<ParseResult>(result, context.warnings);
     }
-    /*
-    // Parse body
-    auto body = ParseUtil::GetElementCollection<BaseCardElement>(true, context, json, AdaptiveCardSchemaKey::Body, false);
-    // Parse actions if present
-    auto actions = ParseUtil::GetActionCollection(context, json, AdaptiveCardSchemaKey::Actions, false);
-    // Parse fallback if present
-    std::shared_ptr<BaseElement> fallbackContent = {};
-    FallbackType fallbackType = FallbackType::None;
-    ParseUtil::ParseFallback<BaseCardElement>(context, json, fallbackType, fallbackContent, "rootFallbackId", InternalId::Current());
-    
-    EnsureShowCardVersions(actions, version);
-
-    auto result = std::make_shared<AdaptiveCard>(
-        version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, body, actions, requiresSet, fallbackContent, fallbackType);
-    result->SetLanguage(language);
-    result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
-
-    // Parse optional selectAction
-    result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
-
-    Json::Value additionalProperties;
-    HandleUnknownProperties(json, result->GetKnownProperties(), additionalProperties);
-    result->SetAdditionalProperties(additionalProperties);
-
-    return std::make_shared<ParseResult>(result, context.warnings);
-    */
 }
 
 bool AdaptiveCard::MeetsRootRequirements(std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet)
@@ -356,7 +340,7 @@ bool AdaptiveCard::MeetsRootRequirements(std::unordered_map<std::string, Adaptiv
     
     for (const auto &featureToCheck : requiresSet)
     {
-        auto foundFeature = featuresSupported.find(featureToCheck.first);
+        auto foundFeature = featuresSupported.find(ParseUtil::ToLowercase(featureToCheck.first));
         
         if (foundFeature == featuresSupported.end())
         {
