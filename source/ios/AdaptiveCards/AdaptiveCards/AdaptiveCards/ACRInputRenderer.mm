@@ -52,6 +52,7 @@
         }
         case TextInputStyle::Tel: {
             txtInput = [bundle loadNibNamed:@"ACRTextTelelphoneField" owner:rootView options:nil][0];
+#if !TARGET_OS_VISION
             CGRect frame = CGRectMake(0, 0, viewGroup.frame.size.width, 30);
             UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:frame];
             UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -59,6 +60,7 @@
             [toolBar setItems:@[ doneButton, flexSpace ] animated:NO];
             [toolBar sizeToFit];
             txtInput.inputAccessoryView = toolBar;
+#endif
             break;
         }
         case TextInputStyle::Url: {
