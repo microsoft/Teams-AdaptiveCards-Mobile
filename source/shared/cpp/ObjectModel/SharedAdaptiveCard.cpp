@@ -145,6 +145,10 @@ AdaptiveCard::AdaptiveCard(
     PopulateKnownPropertiesSet();
 }
 
+const std::unordered_map<std::string, AdaptiveCards::SemanticVersion> AdaptiveCard::GetFeaturesSupported()
+{
+    return {{"responsiveLayout", AdaptiveCards::SemanticVersion("1.0")}};
+}
 
 #ifdef __ANDROID__
 std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromFile(const std::string& jsonFile, std::string rendererVersion) throw(AdaptiveCards::AdaptiveCardParseException)
@@ -267,13 +271,62 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
     unsigned int minHeight =
         ParseSizeForPixelSize(ParseUtil::GetString(json, AdaptiveCardSchemaKey::MinHeight), &context.warnings).value_or(0);
 
+    // Parse required if present
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet;
+    ParseUtil::ParseRequires(context, json, requiresSet);
+    // Parse actions if present
+    auto actions = ParseUtil::GetActionCollection(context, json, AdaptiveCardSchemaKey::Actions, false);
+    // Parse fallback if present
+    std::shared_ptr<BaseElement> fallbackBaseElement = {};
+    FallbackType fallbackType = FallbackType::None;
+    ParseUtil::ParseFallback<BaseCardElement>(context, json, fallbackType, fallbackBaseElement, "rootFallbackId", InternalId::Current());
+
+    bool meetsRootRequirements = MeetsRootRequirements(requiresSet);
+    if (meetsRootRequirements)
+    {
+        // Parse body
+        auto body = ParseUtil::GetElementCollection<BaseCardElement>(true, context, json, AdaptiveCardSchemaKey::Body, false);
+        
+        EnsureShowCardVersions(actions, version);
+
+        auto result = std::make_shared<AdaptiveCard>(
+            version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, body, actions, requiresSet, fallbackBaseElement, fallbackType);
+        result->SetLanguage(language);
+        result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
+
+        // Parse optional selectAction
+        result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
+
+        Json::Value additionalProperties;
+        HandleUnknownProperties(json, result->GetKnownProperties(), additionalProperties);
+        result->SetAdditionalProperties(additionalProperties);
+
+        return std::make_shared<ParseResult>(result, context.warnings);
+    }
+    else
+    {
+        std::shared_ptr<BaseCardElement> fallbackCardElement = std::static_pointer_cast<BaseCardElement>(fallbackBaseElement);
+        std::vector<std::shared_ptr<BaseCardElement>> fallbackVector = {fallbackCardElement};
+        
+        auto result = std::make_shared<AdaptiveCard>(
+            version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, fallbackVector, actions);
+        result->SetLanguage(language);
+        result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
+
+        // Parse optional selectAction
+        result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
+
+        Json::Value additionalProperties;
+        HandleUnknownProperties(json, result->GetKnownProperties(), additionalProperties);
+        result->SetAdditionalProperties(additionalProperties);
+
+        return std::make_shared<ParseResult>(result, context.warnings);
+    }
+    /*
     // Parse body
     auto body = ParseUtil::GetElementCollection<BaseCardElement>(true, context, json, AdaptiveCardSchemaKey::Body, false);
     // Parse actions if present
     auto actions = ParseUtil::GetActionCollection(context, json, AdaptiveCardSchemaKey::Actions, false);
-    // Parse required if present
-    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet;
-    ParseUtil::ParseRequires(context, json, requiresSet);
     // Parse fallback if present
     std::shared_ptr<BaseElement> fallbackContent = {};
     FallbackType fallbackType = FallbackType::None;
@@ -294,6 +347,32 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
     result->SetAdditionalProperties(additionalProperties);
 
     return std::make_shared<ParseResult>(result, context.warnings);
+    */
+}
+
+bool AdaptiveCard::MeetsRootRequirements(std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet)
+{
+    std::unordered_map<std::string, AdaptiveCards::SemanticVersion> featuresSupported = GetFeaturesSupported();
+    
+    for (const auto &featureToCheck : requiresSet)
+    {
+        auto foundFeature = featuresSupported.find(featureToCheck.first);
+        
+        if (foundFeature == featuresSupported.end())
+        {
+            return false;
+        }
+        else
+        {
+            AdaptiveCards::SemanticVersion localFeatureVersion = foundFeature->second;
+            AdaptiveCards::SemanticVersion adaptiveCardVersion = featureToCheck.second;
+            if (localFeatureVersion < adaptiveCardVersion)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 #ifdef __ANDROID__

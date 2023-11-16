@@ -177,11 +177,14 @@ public:
 #endif // __ANDROID__
     Json::Value SerializeToJsonValue() const;
     std::string Serialize() const;
-
+    
     const InternalId GetInternalId() const
     {
         return m_internalId;
     }
+    
+    static const std::unordered_map<std::string, AdaptiveCards::SemanticVersion> GetFeaturesSupported();
+    static bool MeetsRootRequirements(std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet);
 
 private:
     static void _ValidateLanguage(const std::string& language, std::vector<std::shared_ptr<AdaptiveCardParseWarning>>& warnings);

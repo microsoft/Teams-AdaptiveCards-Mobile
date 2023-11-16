@@ -465,7 +465,6 @@ void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContent
         fallbackBaseElement = elem->GetFallbackContent();
         elem = std::static_pointer_cast<BaseCardElement>(fallbackBaseElement);
         if (!elem) {
-            // TODO: Add root fallback logic here
             break;
         }
 
@@ -494,7 +493,7 @@ void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContent
     } while (!bHandled);
 
     if (!bHandled) {
-        if (bCanFallbackToAncestor && fallbackType != FallbackType::Drop) {
+        if (fallbackType != FallbackType::Drop) {
             @throw exception;
         } else {
             const CardElementType elemType = givenElem->GetElementType();
@@ -503,7 +502,7 @@ void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContent
     }
 }
 
-void handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
+bool handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
                         UIView<ACRIContentHoldingView> *view,
                              ACRView *rootView, NSMutableArray *inputs,
                              ACOHostConfig *config)
@@ -515,7 +514,7 @@ void handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
     
     if (fallbackType != FallbackType::Content || !elem)
     {
-        return;
+        return false;
     }
     
     ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] init];
@@ -526,16 +525,23 @@ void handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
     
     if (renderer) {
         @try {
-            [renderer render:view
-                       rootView:rootView
-                         inputs:inputs
-                baseCardElement:acoElem
-                     hostConfig:config];
+            
+            UIView* renderedView = [renderer render:view
+                                           rootView:rootView
+                                             inputs:inputs
+                                    baseCardElement:acoElem
+                                         hostConfig:config];
+            [view removeAllArrangedSubviews];
+            [view insertArrangedSubview:renderedView atIndex:0];
+            
+            return true;
+            
         } @catch (ACOFallbackException *e) {
             NSLog(@"Root Fallback Failed");
             NSLog(@"%@", e);
         }
     }
+    return false;
 }
 
 void removeLastViewFromCollectionView(const CardElementType elemType,
