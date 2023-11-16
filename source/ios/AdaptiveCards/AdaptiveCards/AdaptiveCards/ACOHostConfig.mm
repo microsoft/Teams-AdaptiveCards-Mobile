@@ -10,7 +10,6 @@
 #import "AdaptiveCardParseException.h"
 #import "Enums.h"
 #import "TextBlock.h"
-#import "ACOAdaptiveCard.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -443,5 +442,4 @@ using namespace AdaptiveCards;
 {
     [_iconPlacements setObject:[NSNumber numberWithBool:placement] forKey:internalId];
 }
-
 @end
