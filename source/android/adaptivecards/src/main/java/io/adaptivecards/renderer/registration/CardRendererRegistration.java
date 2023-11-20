@@ -6,16 +6,14 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.flexbox.FlexboxLayout;
-
 import java.util.HashMap;
 
 import io.adaptivecards.objectmodel.ActionType;
+import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.AdaptiveCardObjectModel;
 import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.BaseCardElementVector;
@@ -269,6 +267,19 @@ public class CardRendererRegistration
         return m_overflowActionLayoutRenderer;
     }
 
+    public void registerRootFallbackView(AdaptiveCard adaptiveCard)
+    {
+        FallbackType fallbackType = adaptiveCard.GetRootFallbackType();
+        BaseElement fallbackBaseElement = adaptiveCard.GetRootFallbackContent();
+        if (fallbackBaseElement != null && fallbackType == FallbackType.Content) {
+            m_rootFallbackCard = Util.castToBaseCardElement(fallbackBaseElement);
+        }
+    }
+
+    public BaseCardElement getRootFallbackCard()
+    {
+        return m_rootFallbackCard;
+    }
 
     public View renderElements(RenderedAdaptiveCard renderedCard,
                                Context context,
@@ -287,16 +298,18 @@ public class CardRendererRegistration
 
         FeatureRegistration featureRegistration = CardRendererRegistration.getInstance().getFeatureRegistration();
 
-        for (int i = 0; i < size; i++)
+        registerRootFallbackView(renderedCard.getAdaptiveCard());
+        boolean shouldRenderCardElements = true;
+        for (int i = 0; i < size && shouldRenderCardElements; i++)
         {
             BaseCardElement cardElement = baseCardElementList.get(i);
-            renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration);
+            shouldRenderCardElements = renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration);
         }
 
         return viewGroup;
     }
 
-    public void renderElementAndPerformFallback(
+    public boolean renderElementAndPerformFallback(
             RenderedAdaptiveCard renderedCard,
             Context context,
             FragmentManager fragmentManager,
@@ -307,6 +320,7 @@ public class CardRendererRegistration
             RenderArgs renderArgs,
             FeatureRegistration featureRegistration) throws AdaptiveFallbackException, Exception
     {
+        boolean shouldRenderCardElements = true;
         IBaseCardElementRenderer renderer = m_typeToRendererMap.get(cardElement.GetElementTypeString());
 
         boolean elementHasFallback = (cardElement.GetFallbackType() != FallbackType.None);
@@ -327,15 +341,7 @@ public class CardRendererRegistration
         // - mockLayout is a layout to contain the rendered element, as android renderers have to add
         //      the drawn views into the container view, it makes it easier to do not draw something unwanted
         //      into the final rendered card
-        ViewGroup mockLayout;
-        if (Util.isOfType(cardElement, Column.class))
-        {
-            mockLayout = new FlexboxLayout(context);
-        }
-        else
-        {
-            mockLayout = new LinearLayout(context);
-        }
+        ViewGroup mockLayout = Util.getMockLayout(context, cardElement);
 
         try
         {
@@ -429,9 +435,24 @@ public class CardRendererRegistration
             }
             else if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
             {
-                renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.RESPONSIVE_LAYOUT_NOT_MET, cardElement.GetElementTypeString() + " of width " + cardElement.GetTargetWidth()
-                    + " does not meet hostWidth"));
                 renderedElement = null;
+            }
+            else if (getRootFallbackCard() != null)
+            {
+                // There's no fallback, so we render the root fallback view
+                viewGroup.removeAllViews();
+                renderedElement = getRootFallbackCard();
+                IBaseCardElementRenderer fallbackRenderer = m_typeToRendererMap.get(renderedElement.GetElementTypeString());
+                if ((fallbackRenderer == null) || (featureRegistration != null) && (!renderedElement.MeetsRequirements(featureRegistration)))
+                {
+                    renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.UNKNOWN_ELEMENT_TYPE, "Unsupported card element type: " + cardElement.GetElementTypeString()));
+                    renderedElement = null;
+                }
+                else
+                {
+                    renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, renderedElement, cardActionHandler, hostConfig, childRenderArgs);
+                    shouldRenderCardElements = false;
+                }
             }
             else
             {
@@ -480,6 +501,7 @@ public class CardRendererRegistration
 
             HandleVisibility(renderedElement, renderedElementView);
         }
+        return shouldRenderCardElements;
     }
 
     private static void HandleSpacing(Context context,
@@ -652,6 +674,7 @@ public class CardRendererRegistration
     private HashMap<String, IResourceResolver> m_resourceResolvers = new HashMap<>();
     private IOnlineMediaLoader m_onlineMediaLoader = null;
     private float hostPixelWidth = -1;
+    private BaseCardElement m_rootFallbackCard = null;
     private FeatureRegistration m_featureRegistration = null;
     private int m_hostCardContainer = -1;
     private IOverflowActionRenderer m_overflowActionRenderer =null;

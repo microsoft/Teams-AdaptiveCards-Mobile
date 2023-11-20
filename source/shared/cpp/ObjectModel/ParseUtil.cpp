@@ -501,4 +501,50 @@ std::shared_ptr<BaseCardElement> ParseUtil::GetLabel(ParseContext& context, cons
 
     return nullptr;
 }
+
+void ParseUtil::ParseRequires(ParseContext& /*context*/, const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet)
+{
+    const auto requiresValue = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Requires, false);
+    return ParseUtil::GetParsedRequiresSet(requiresValue, requiresSet);
+}
+
+void ParseUtil::GetParsedRequiresSet(const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet)
+{
+    if (!json.isNull())
+    {
+        if (json.isObject())
+        {
+            const auto& memberNames = json.getMemberNames();
+            const auto countNames = memberNames.size();
+            for (unsigned int i = 0; i < countNames; ++i)
+            {
+                const auto& memberName = memberNames.at(i);
+                const auto& memberValue = json[memberName].asString();
+
+                if (memberValue == "*")
+                {
+                    // * means any version.
+                    requiresSet.emplace(memberName, "0");
+                }
+                else
+                {
+                    try
+                    {
+                        SemanticVersion memberVersion(memberValue);
+                        requiresSet.emplace(memberName, memberVersion);
+                    }
+                    catch (const AdaptiveCardParseException&)
+                    {
+                        throw AdaptiveCardParseException(
+                            ErrorStatusCode::InvalidPropertyValue,
+                            "Invalid version in requires value: '" + memberValue + "'");
+                    }
+                }
+            }
+            return;
+        }
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue, "Invalid value for requires (should be object)");
+    }
+}
 } // namespace AdaptiveCards

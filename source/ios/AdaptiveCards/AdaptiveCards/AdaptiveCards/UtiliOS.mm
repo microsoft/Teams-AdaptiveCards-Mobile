@@ -493,13 +493,55 @@ void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContent
     } while (!bHandled);
 
     if (!bHandled) {
-        if (bCanFallbackToAncestor && fallbackType != FallbackType::Drop) {
+        if (fallbackType != FallbackType::Drop) {
             @throw exception;
         } else {
             const CardElementType elemType = givenElem->GetElementType();
             removeLastViewFromCollectionView(elemType, view);
         }
     }
+}
+
+bool handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
+                        UIView<ACRIContentHoldingView> *view,
+                             ACRView *rootView, NSMutableArray *inputs,
+                             ACOHostConfig *config)
+{
+    FallbackType fallbackType = adaptiveCard->GetRootFallbackType();
+    std::shared_ptr<BaseElement> fallbackBaseElement = adaptiveCard->GetRootFallbackContent();
+    std::shared_ptr<BaseCardElement> elem = std::static_pointer_cast<BaseCardElement>(fallbackBaseElement);
+    ACRRegistration *reg = [ACRRegistration getInstance];
+    
+    if (fallbackType != FallbackType::Content || !elem)
+    {
+        return false;
+    }
+    
+    ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] init];
+    [acoElem setElem:elem];
+
+    ACRBaseCardElementRenderer *renderer =
+        [reg getRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];
+    
+    if (renderer) {
+        @try {
+            
+            UIView* renderedView = [renderer render:view
+                                           rootView:rootView
+                                             inputs:inputs
+                                    baseCardElement:acoElem
+                                         hostConfig:config];
+            [view removeAllArrangedSubviews];
+            [view insertArrangedSubview:renderedView atIndex:0];
+            
+            return true;
+            
+        } @catch (ACOFallbackException *e) {
+            NSLog(@"Root Fallback Failed");
+            NSLog(@"%@", e);
+        }
+    }
+    return false;
 }
 
 void removeLastViewFromCollectionView(const CardElementType elemType,

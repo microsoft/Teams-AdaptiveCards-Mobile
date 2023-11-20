@@ -15,6 +15,7 @@
 #import "ACRContentHoldingUIScrollView.h"
 #import "ACRImageRenderer.h"
 #import "ACRRegistration.h"
+#import "ACRRegistrationPrivate.h"
 #import "ACRRendererPrivate.h"
 #import "ACRSeparator.h"
 #import "ACRUIImageView.h"
@@ -78,17 +79,18 @@ using namespace AdaptiveCards;
     ACRColumnView *verticalView = containingView;
 
     std::vector<std::shared_ptr<BaseActionElement>> actions = adaptiveCard->GetActions();
-
+    
     if (!actions.empty()) {
         [rootView loadImagesForActionsAndCheckIfAllActionsHaveIconImages:actions hostconfig:config hash:iOSInternalIdHash(adaptiveCard->GetInternalId().Hash())];
     }
-
+    
     // set context
     ACOAdaptiveCard *wrapperCard = [[ACOAdaptiveCard alloc] init];
     [wrapperCard setCard:adaptiveCard];
-
+    
     [rootView.context pushCardContext:wrapperCard];
-
+    
+    auto backgroundImageProperties = adaptiveCard->GetBackgroundImage();
     verticalView.rtl = rootView.context.rtl;
 
     std::shared_ptr<BaseActionElement> selectAction = adaptiveCard->GetSelectAction();
@@ -97,7 +99,6 @@ using namespace AdaptiveCards;
         [verticalView configureForSelectAction:acoSelectAction rootView:rootView];
     }
 
-    auto backgroundImageProperties = adaptiveCard->GetBackgroundImage();
     if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
         ObserverActionBlock observerAction =
             ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
@@ -122,7 +123,7 @@ using namespace AdaptiveCards;
     [rootView addBaseCardElementListToConcurrentQueue:body registration:[ACRRegistration getInstance]];
 
     [ACRRenderer render:verticalView rootView:rootView inputs:inputs withCardElems:body andHostConfig:config];
-
+    
     [verticalView configureLayoutAndVisibility:GetACRVerticalContentAlignment(adaptiveCard->GetVerticalContentAlignment())
                                      minHeight:adaptiveCard->GetMinHeight()
                                     heightType:GetACRHeight(adaptiveCard->GetHeight())
@@ -202,7 +203,18 @@ using namespace AdaptiveCards;
                 [(ACRContentStackView *)view removeViewFromContentStackView:separator];
             }
         } @catch (ACOFallbackException *e) {
-            handleFallbackException(e, view, rootView, inputs, elem, config);
+            
+            @try {
+                handleFallbackException(e, view, rootView, inputs, elem, config);
+                
+            } @catch (ACOFallbackException *e) {
+                
+                BOOL isRootFallbackRendered = handleRootFallback(rootView.card.card, view, rootView, inputs, config);
+                if (isRootFallbackRendered == YES)
+                {
+                    break;
+                }
+            }
         }
     }
 
