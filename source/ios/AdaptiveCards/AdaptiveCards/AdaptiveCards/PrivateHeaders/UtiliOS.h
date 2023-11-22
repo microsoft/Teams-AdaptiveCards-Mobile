@@ -159,3 +159,6 @@ id traverseResponderChainForUIViewController(UIView *view);
 CGRect FindClosestRectToCover(CGRect coverRect, CGRect targetRectToCover);
 
 void addSelectActionToView(ACOHostConfig *acoConfig, ACOBaseActionElement *acoSelectAction, ACRView *rootView, UIView *view, UIView<ACRIContentHoldingView> *viewGroup);
+
+// Validate date of type "YYYY. MM. DD. HH:MM AM|PM" to prevent parsing issues
+bool matchHungarianDateRegex(NSString *stringToValidate);
