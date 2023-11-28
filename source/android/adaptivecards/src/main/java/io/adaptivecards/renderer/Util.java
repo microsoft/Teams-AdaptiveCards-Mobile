@@ -130,9 +130,9 @@ public final class Util {
 
         if (hostCardContainer <= hostWidthConfig.getVeryNarrow()) {
             hostWidth = HostWidth.VeryNarrow;
-        } else if (hostCardContainer >= hostWidthConfig.getVeryNarrow() && hostCardContainer <= hostWidthConfig.getNarrow()) {
+        } else if (hostCardContainer > hostWidthConfig.getVeryNarrow() && hostCardContainer <= hostWidthConfig.getNarrow()) {
             hostWidth = HostWidth.Narrow;
-        } else if (hostCardContainer >= hostWidthConfig.getNarrow() && hostCardContainer <= hostWidthConfig.getStandard()) {
+        } else if (hostCardContainer > hostWidthConfig.getNarrow() && hostCardContainer <= hostWidthConfig.getStandard()) {
             hostWidth = HostWidth.Standard;
         } else {
             hostWidth = HostWidth.Wide;

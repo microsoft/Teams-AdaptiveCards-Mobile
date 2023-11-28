@@ -433,10 +433,6 @@ public class CardRendererRegistration
                 // There's an ancestor with fallback so we throw to trigger it
                 throw e;
             }
-            else if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
-            {
-                renderedElement = null;
-            }
             else if (getRootFallbackCard() != null)
             {
                 // There's no fallback, so we render the root fallback view
@@ -453,6 +449,10 @@ public class CardRendererRegistration
                     renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, renderedElement, cardActionHandler, hostConfig, childRenderArgs);
                     shouldRenderCardElements = false;
                 }
+            }
+            else if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
+            {
+                renderedElement = null;
             }
             else
             {
@@ -673,7 +673,6 @@ public class CardRendererRegistration
     private IOnlineImageLoader m_onlineImageLoader = null;
     private HashMap<String, IResourceResolver> m_resourceResolvers = new HashMap<>();
     private IOnlineMediaLoader m_onlineMediaLoader = null;
-    private float hostPixelWidth = -1;
     private BaseCardElement m_rootFallbackCard = null;
     private FeatureRegistration m_featureRegistration = null;
     private int m_hostCardContainer = -1;
