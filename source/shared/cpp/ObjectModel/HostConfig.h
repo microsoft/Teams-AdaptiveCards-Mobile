@@ -365,9 +365,9 @@ struct MediaConfig
 
 struct HostWidthConfig
 {
-    unsigned int veryNarrow;
-    unsigned int narrow;
-    unsigned int standard;
+    unsigned int veryNarrow = 0;
+    unsigned int narrow = 0;
+    unsigned int standard = 0;
 
     static HostWidthConfig Deserialize(const Json::Value& json, const HostWidthConfig& defaultValue);
 };
