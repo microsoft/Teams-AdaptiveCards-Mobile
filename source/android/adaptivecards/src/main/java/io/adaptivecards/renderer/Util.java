@@ -123,8 +123,8 @@ public final class Util {
     public static HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthConfig hostWidthConfig) {
 
         if (hostCardContainer == -1 || hostWidthConfig == null
-            || hostWidthConfig.getVeryNarrow() == -1 || hostWidthConfig.getNarrow() == -1
-            || hostWidthConfig.getStandard() == -1) {
+            || hostWidthConfig.getVeryNarrow() == 0 || hostWidthConfig.getNarrow() == 0
+            || hostWidthConfig.getStandard() == 0) {
             return HostWidth.Standard;
         }
 
