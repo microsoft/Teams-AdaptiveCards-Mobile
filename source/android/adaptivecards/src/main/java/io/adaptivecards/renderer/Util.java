@@ -122,7 +122,9 @@ public final class Util {
 
     public static HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthConfig hostWidthConfig) {
 
-        if (hostCardContainer == -1 || hostWidthConfig == null) {
+        if (hostCardContainer == -1 || hostWidthConfig == null
+            || hostWidthConfig.getVeryNarrow() == -1 || hostWidthConfig.getNarrow() == -1
+            || hostWidthConfig.getStandard() == -1) {
             return HostWidth.Standard;
         }
 

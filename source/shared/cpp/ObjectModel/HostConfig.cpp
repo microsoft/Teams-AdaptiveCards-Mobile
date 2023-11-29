@@ -471,9 +471,9 @@ HostWidthConfig HostWidthConfig::Deserialize(const Json::Value& json, const Host
 {
     HostWidthConfig result;
 
-    result.veryNarrow = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::VeryNarrow, 0);
-    result.narrow = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Narrow, 0);
-    result.standard = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Standard, 0);
+    result.veryNarrow = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::VeryNarrow, defaultValue.veryNarrow);
+    result.narrow = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Narrow, defaultValue.narrow);
+    result.standard = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Standard, defaultValue.standard);
     return result;
 }
 
