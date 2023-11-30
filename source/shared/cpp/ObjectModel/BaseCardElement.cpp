@@ -154,7 +154,8 @@ void BaseCardElement::ParseJsonObject(AdaptiveCards::ParseContext& context, cons
 
 bool BaseCardElement::MeetsTargetWidthRequirement(HostWidth hostWidth)  const
 {
-    if (m_targetWidth == TargetWidthType::Default) {
+    if (m_targetWidth == TargetWidthType::Default || hostWidth == HostWidth::Default)
+    {
         return true;
     }
 
