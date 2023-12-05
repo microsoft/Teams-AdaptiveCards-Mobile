@@ -143,6 +143,11 @@ EmphasisParser::EmphasisState EmphasisParser::MatchText(EmphasisParser& parser, 
             // remove escape char from stream
             token.pop_back();
         }
+        else if ((currentChar == '*' || currentChar == '_') &&
+            parser.m_lookBehind == DelimiterType::Escape)
+        {
+            token.pop_back();
+        }
 
         parser.UpdateLookBehind(currentChar);
         char streamChar{};
