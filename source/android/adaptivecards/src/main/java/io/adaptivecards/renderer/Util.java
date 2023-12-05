@@ -14,8 +14,11 @@ import android.util.TypedValue;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+
+import com.google.android.flexbox.FlexboxLayout;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -26,6 +29,7 @@ import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.BaseElement;
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.CharVector;
+import io.adaptivecards.objectmodel.Column;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
 import io.adaptivecards.objectmodel.JsonValue;
@@ -176,6 +180,18 @@ public final class Util {
     {
         return (tryCastTo(cardElement, cardElementType) != null);
     }
+
+    public static ViewGroup getMockLayout(Context context, BaseCardElement baseCardElement) {
+        if (Util.isOfType(baseCardElement, Column.class))
+        {
+            return new FlexboxLayout(context);
+        }
+        else
+        {
+            return new LinearLayout(context);
+        }
+    }
+
 
     /**
      * Casts the provided cardElement into the specified type

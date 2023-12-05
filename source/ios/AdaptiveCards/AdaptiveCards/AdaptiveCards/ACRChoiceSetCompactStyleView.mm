@@ -19,6 +19,55 @@
 
 using namespace AdaptiveCards;
 
+static inline CGRect ActiveScreenBounds()
+{
+    // this code is also compiled for extensions where UIApplication.sharedApplication is not available
+    UIApplication *sharedApp = nil;
+    if ([UIApplication respondsToSelector:NSSelectorFromString(@"sharedApplication")])
+    {
+        sharedApp = [UIApplication performSelector:NSSelectorFromString(@"sharedApplication")];
+    }
+    
+    UIWindowScene *activeScene = nil;
+    for (UIWindowScene *scene in sharedApp.connectedScenes)
+    {
+        if (scene.activationState == UISceneActivationStateForegroundActive)
+        {
+            activeScene = scene;
+            break;
+        }
+    }
+
+    if ((activeScene == nil) && (sharedApp.connectedScenes.count > 0))
+    {
+        activeScene = (UIWindowScene *)sharedApp.connectedScenes.anyObject;
+    }
+
+    if (activeScene != nil)
+    {
+        return activeScene.coordinateSpace.bounds;
+    }
+#if !TARGET_OS_VISION
+    else
+    {
+        return UIScreen.mainScreen.bounds;
+    }
+#endif
+    return CGRectZero;
+
+}
+
+static inline CGRect ActiveSceneBoundsForView(UIView *view)
+{
+    UIWindowScene *activeScene = view.window.windowScene;
+    if(activeScene != nil)
+    {
+        return activeScene.coordinateSpace.bounds;
+    }
+    
+    return ActiveScreenBounds();
+}
+
 @implementation ACRChoiceSetCompactStyleView {
     ACOFilteredDataSource *_filteredDataSource;
     ACOFilteredListStateManager *_stateManager;
@@ -247,7 +296,16 @@ using namespace AdaptiveCards;
 - (void)layoutFilterredView
 {
     CGPoint position = [self.superview convertPoint:self.frame.origin toView:nil];
-    CGSize windowSize = (self.window) ? self.window.bounds.size : UIScreen.mainScreen.bounds.size;
+    CGSize windowSize;
+    if (self.window != nil)
+    {
+        windowSize = self.window.bounds.size;
+    }
+    else
+    {
+        CGRect sceneBounds = ActiveSceneBoundsForView(self);
+        windowSize = sceneBounds.size;
+    }
 
     UIViewController *viewController = traverseResponderChainForUIViewController(_rootView);
     CGRect frame = viewController.view.frame;

@@ -1081,6 +1081,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long new_AdaptiveCard__SWIG_3(String jarg1, String jarg2, long jarg3, BackgroundImage jarg3_, int jarg4, String jarg5, String jarg6, int jarg7, int jarg8, long jarg9);
   public final static native long new_AdaptiveCard__SWIG_4(String jarg1, String jarg2, long jarg3, BackgroundImage jarg3_, int jarg4, String jarg5, String jarg6, int jarg7, int jarg8, long jarg9, long jarg10, BaseCardElementVector jarg10_, long jarg11, BaseActionElementVector jarg11_);
   public final static native long new_AdaptiveCard__SWIG_5(String jarg1, String jarg2, long jarg3, BackgroundImage jarg3_, long jarg4, Refresh jarg4_, long jarg5, Authentication jarg5_, int jarg6, String jarg7, String jarg8, int jarg9, int jarg10, long jarg11, long jarg12, BaseCardElementVector jarg12_, long jarg13, BaseActionElementVector jarg13_);
+  public final static native long new_AdaptiveCard__SWIG_6(String jarg1, String jarg2, long jarg3, BackgroundImage jarg3_, long jarg4, Refresh jarg4_, long jarg5, Authentication jarg5_, int jarg6, String jarg7, String jarg8, int jarg9, int jarg10, long jarg11, long jarg12, BaseCardElementVector jarg12_, long jarg13, BaseActionElementVector jarg13_, long jarg14, long jarg15, BaseElement jarg15_, long jarg16);
   public final static native String AdaptiveCard_GetVersion(long jarg1, AdaptiveCard jarg1_);
   public final static native void AdaptiveCard_SetVersion(long jarg1, AdaptiveCard jarg1_, String jarg2);
   public final static native String AdaptiveCard_GetFallbackText(long jarg1, AdaptiveCard jarg1_);
@@ -1114,6 +1115,9 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void AdaptiveCard_SetAdditionalProperties__SWIG_0(long jarg1, AdaptiveCard jarg1_, long jarg2, JsonValue jarg2_);
   public final static native long AdaptiveCard_GetResourceInformation(long jarg1, AdaptiveCard jarg1_);
   public final static native int AdaptiveCard_GetElementType(long jarg1, AdaptiveCard jarg1_);
+  public final static native long AdaptiveCard_GetRootRequires__SWIG_0(long jarg1, AdaptiveCard jarg1_);
+  public final static native long AdaptiveCard_GetRootFallbackContent(long jarg1, AdaptiveCard jarg1_);
+  public final static native int AdaptiveCard_GetRootFallbackType(long jarg1, AdaptiveCard jarg1_);
   public final static native long AdaptiveCard_DeserializeFromFile__SWIG_0(String jarg1, String jarg2, long jarg3, ParseContext jarg3_) throws java.io.IOException;
   public final static native long AdaptiveCard_DeserializeFromFile__SWIG_1(String jarg1, String jarg2) throws java.io.IOException;
   public final static native long AdaptiveCard_Deserialize(long jarg1, JsonValue jarg1_, String jarg2, long jarg3, ParseContext jarg3_) throws java.io.IOException;
@@ -1123,6 +1127,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long AdaptiveCard_SerializeToJsonValue(long jarg1, AdaptiveCard jarg1_);
   public final static native String AdaptiveCard_Serialize(long jarg1, AdaptiveCard jarg1_);
   public final static native long AdaptiveCard_GetInternalId(long jarg1, AdaptiveCard jarg1_);
+  public final static native long AdaptiveCard_GetFeaturesSupported();
+  public final static native boolean AdaptiveCard_MeetsRootRequirements(long jarg1);
   public final static native void delete_AdaptiveCard(long jarg1);
   public final static native long new_AdaptiveCardParseException(int jarg1, String jarg2);
   public final static native String AdaptiveCardParseException_what(long jarg1, AdaptiveCardParseException jarg1_);

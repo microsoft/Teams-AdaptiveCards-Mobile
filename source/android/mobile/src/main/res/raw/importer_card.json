@@ -86,7 +86,15 @@
 								  	{
 										"title": "FallbackAction",
 										"value": "v1.5/Scenarios/FallbackAction.json"
-								  	}
+								  	},
+									{
+										"title": "RootFallback",
+										"value": "v1.6/Tests/Fallback.Root.json"
+									},
+									{
+										"title": "RecursiveRootFallback",
+										"value": "v1.6/Tests/Fallback.Root.Recursive.json"
+									}
                                 ],
                                 "placeholder": "(choose sample)",
                                 "id": "sampleCardName"

@@ -176,45 +176,4 @@ void BaseElement::GetResourceInformation(std::vector<RemoteResourceInformation>&
 {
     return;
 }
-
-void BaseElement::ParseRequires(ParseContext& /*context*/, const Json::Value& json)
-{
-    const auto requiresValue = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Requires, false);
-    if (!requiresValue.isNull())
-    {
-        if (requiresValue.isObject())
-        {
-            const auto& memberNames = requiresValue.getMemberNames();
-            const auto countNames = memberNames.size();
-            for (unsigned int i = 0; i < countNames; ++i)
-            {
-                const auto& memberName = memberNames.at(i);
-                const auto& memberValue = requiresValue[memberName].asString();
-
-                if (memberValue == "*")
-                {
-                    // * means any version.
-                    m_requires.emplace(memberName, "0");
-                }
-                else
-                {
-                    try
-                    {
-                        SemanticVersion memberVersion(memberValue);
-                        m_requires.emplace(memberName, memberVersion);
-                    }
-                    catch (const AdaptiveCardParseException&)
-                    {
-                        throw AdaptiveCardParseException(
-                            ErrorStatusCode::InvalidPropertyValue,
-                            "Invalid version in requires value: '" + memberValue + "'");
-                    }
-                }
-            }
-            return;
-        }
-        throw AdaptiveCardParseException(
-            ErrorStatusCode::InvalidPropertyValue, "Invalid value for requires (should be object)");
-    }
-}
 } // namespace AdaptiveCards
