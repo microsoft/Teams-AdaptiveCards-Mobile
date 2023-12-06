@@ -8,12 +8,6 @@ pool:
   vmImage: windows-2019
   demands: java
 
-- task: UseDotNet@2
-  displayName: 'Install .NET Core SDK'
-  inputs:
-    version: 6.x
-    performMultiLevelLookup: true
-
 parameters:
 - name: base_version
   displayName: Please enter the base version (i.e. MAJOR.MINOR.PATCH)
@@ -44,6 +38,12 @@ stages:
   jobs:
   - job: Staging
     steps:
+
+    - task: UseDotNet@2
+    displayName: 'Install .NET Core SDK'
+    inputs:
+      version: 6.x
+      performMultiLevelLookup: true
 
     - task: DotNetCoreCLI@2
       inputs:
