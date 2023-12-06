@@ -167,11 +167,16 @@ tasks.withType(GenerateModuleMetadata) {
     enabled = false
 }
 
-nexusStaging {
-    username "adaptivecards"
-    password System.getenv("AC_SONATYPE_CREDENTIAL") ?: "${NexusPassword}"
-    packageGroup 'io.adaptivecards'
-    stagingProfileId '9ee8e04fa2eec'
+nexusPublishing {
+    packageGroup = "io.adaptivecards"
+
+    repositories {
+        sonatype {
+            stagingProfileId = "9ee8e04fa2eec"
+            username = "adaptivecards"
+            password = System.getenv("AC_SONATYPE_CREDENTIAL") ?: "${NexusPassword}"
+        }
+    }
 }
 
 dependencies {
