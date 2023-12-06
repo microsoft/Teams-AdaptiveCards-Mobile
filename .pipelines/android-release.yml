@@ -40,9 +40,10 @@ stages:
     steps:
 
     - task: UseDotNet@2
+      displayName: 'Install .NET Core SDK'
       inputs:
-        packageType: 'sdk'
-        version: '2.1.0'
+        version: 6.x
+        performMultiLevelLookup: true
 
     - task: Gradle@2
       displayName: build
