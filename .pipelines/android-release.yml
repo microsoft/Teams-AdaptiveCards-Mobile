@@ -7,11 +7,11 @@ pool:
   name: Azure Pipelines
   vmImage: windows-2019
   demands: java
-  - task: UseDotNet@2
-    displayName: 'Install .NET Core SDK'
-    inputs:
-      version: 6.x
-      performMultiLevelLookup: true
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    version: 6.x
+    performMultiLevelLookup: true
 
 parameters:
 - name: base_version
