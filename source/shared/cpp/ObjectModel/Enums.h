@@ -90,6 +90,7 @@ enum class AdaptiveCardSchemaKey
     HighlightColors,
     HorizontalAlignment,
     HorizontalCellContentAlignment,
+    HostWidthBreakpoints,
     IconPlacement,
     IconSize,
     IconUrl,
@@ -137,6 +138,7 @@ enum class AdaptiveCardSchemaKey
     MinHeight,
     Mode,
     Monospace,
+    Narrow,
     NumberInput,
     OptionalInputs,
     Padding,
@@ -168,6 +170,7 @@ enum class AdaptiveCardSchemaKey
     Spacing,
     SpacingDefinition,
     Speak,
+    Standard,
     Stretch,
     Strikethrough,
     Style,
@@ -178,6 +181,7 @@ enum class AdaptiveCardSchemaKey
     TableCell,
     TableRow,
     TargetElements,
+    TargetWidth,
     Text,
     TextBlock,
     TextConfig,
@@ -200,6 +204,7 @@ enum class AdaptiveCardSchemaKey
     ValueOff,
     ValueOn,
     Verb,
+    VeryNarrow,
     Version,
     VerticalAlignment,
     VerticalCellContentAlignment,
@@ -566,4 +571,31 @@ enum class FallbackType
     Drop,
     Content
 };
+
+enum class HostWidth
+{
+    Default = 0,
+    VeryNarrow = 1,
+    Narrow = 2,
+    Standard = 3,
+    Wide = 4
+};
+
+enum class TargetWidthType
+{
+    Default = 0,
+    VeryNarrow,
+    Narrow,
+    Standard,
+    Wide,
+    AtMostVeryNarrow,
+    AtMostNarrow,
+    AtMostStandard,
+    AtMostWide,
+    AtLeastVeryNarrow,
+    AtLeastNarrow,
+    AtLeastStandard,
+    AtLeastWide
+};
+DECLARE_ADAPTIVECARD_ENUM(TargetWidthType);
 } // namespace AdaptiveCards

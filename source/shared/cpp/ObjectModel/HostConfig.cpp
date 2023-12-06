@@ -61,6 +61,9 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._media = ParseUtil::ExtractJsonValueAndMergeWithDefault<MediaConfig>(
         json, AdaptiveCardSchemaKey::Media, result._media, MediaConfig::Deserialize);
 
+    result._hostWidth = ParseUtil::ExtractJsonValueAndMergeWithDefault<HostWidthConfig>(
+            json, AdaptiveCardSchemaKey::HostWidthBreakpoints, result._hostWidth, HostWidthConfig::Deserialize);
+
     result._inputs = ParseUtil::ExtractJsonValueAndMergeWithDefault<InputsConfig>(
         json, AdaptiveCardSchemaKey::Inputs, result._inputs, InputsConfig::Deserialize);
 
@@ -460,6 +463,17 @@ MediaConfig MediaConfig::Deserialize(const Json::Value& json, const MediaConfig&
     result.allowInlinePlayback =
         ParseUtil::GetBool(json, AdaptiveCardSchemaKey::AllowInlinePlayback, defaultValue.allowInlinePlayback);
 
+    return result;
+}
+
+
+HostWidthConfig HostWidthConfig::Deserialize(const Json::Value& json, const HostWidthConfig& defaultValue)
+{
+    HostWidthConfig result;
+
+    result.veryNarrow = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::VeryNarrow, defaultValue.veryNarrow);
+    result.narrow = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Narrow, defaultValue.narrow);
+    result.standard = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Standard, defaultValue.standard);
     return result;
 }
 
@@ -906,6 +920,16 @@ InputsConfig HostConfig::GetInputs() const
 void HostConfig::SetInputs(const InputsConfig value)
 {
     _inputs = value;
+}
+
+HostWidthConfig HostConfig::getHostWidth() const
+{
+    return _hostWidth;
+}
+
+void HostConfig::SetHostWidth(const HostWidthConfig value)
+{
+    _hostWidth = value;
 }
 
 TextBlockConfig HostConfig::GetTextBlock() const

@@ -66,7 +66,7 @@ class SwigDirector_BaseCardElement : public AdaptiveCards::BaseCardElement, publ
 
 public:
     void swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global);
-    SwigDirector_BaseCardElement(JNIEnv *jenv,AdaptiveCards::CardElementType type,AdaptiveCards::Spacing spacing,bool separator,AdaptiveCards::HeightType height);
+    SwigDirector_BaseCardElement(JNIEnv *jenv,AdaptiveCards::CardElementType type,AdaptiveCards::Spacing spacing,bool separator,AdaptiveCards::HeightType height,AdaptiveCards::TargetWidthType targetWidthType);
     SwigDirector_BaseCardElement(JNIEnv *jenv,AdaptiveCards::CardElementType type);
     SwigDirector_BaseCardElement(JNIEnv *jenv);
     SwigDirector_BaseCardElement(JNIEnv *jenv,AdaptiveCards::BaseCardElement const &arg0);

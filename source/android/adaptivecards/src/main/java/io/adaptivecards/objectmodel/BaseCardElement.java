@@ -64,8 +64,8 @@ public class BaseCardElement extends BaseElement {
      return o != null ? (BaseCardElement)o : this;
   }
 
-  public BaseCardElement(CardElementType type, Spacing spacing, boolean separator, HeightType height) {
-    this(AdaptiveCardObjectModelJNI.new_BaseCardElement__SWIG_0(type.swigValue(), spacing.swigValue(), separator, height.swigValue()), true);
+  public BaseCardElement(CardElementType type, Spacing spacing, boolean separator, HeightType height, TargetWidthType targetWidthType) {
+    this(AdaptiveCardObjectModelJNI.new_BaseCardElement__SWIG_0(type.swigValue(), spacing.swigValue(), separator, height.swigValue(), targetWidthType.swigValue()), true);
     AdaptiveCardObjectModelJNI.BaseCardElement_director_connect(this, swigCPtr, true, true);
   }
 
@@ -104,6 +104,14 @@ public class BaseCardElement extends BaseElement {
     AdaptiveCardObjectModelJNI.BaseCardElement_SetHeight(swigCPtr, this, value.swigValue());
   }
 
+  public TargetWidthType GetTargetWidth() {
+    return TargetWidthType.swigToEnum(AdaptiveCardObjectModelJNI.BaseCardElement_GetTargetWidth(swigCPtr, this));
+  }
+
+  public void SetTargetWidth(TargetWidthType value) {
+    AdaptiveCardObjectModelJNI.BaseCardElement_SetTargetWidth(swigCPtr, this, value.swigValue());
+  }
+
   public Spacing GetSpacing() {
     return Spacing.swigToEnum((getClass() == BaseCardElement.class) ? AdaptiveCardObjectModelJNI.BaseCardElement_GetSpacing(swigCPtr, this) : AdaptiveCardObjectModelJNI.BaseCardElement_GetSpacingSwigExplicitBaseCardElement(swigCPtr, this));
   }
@@ -122,6 +130,10 @@ public class BaseCardElement extends BaseElement {
 
   public CardElementType GetElementType() {
     return CardElementType.swigToEnum(AdaptiveCardObjectModelJNI.BaseCardElement_GetElementType(swigCPtr, this));
+  }
+
+  public boolean MeetsTargetWidthRequirement(HostWidth hostWidth) {
+    return AdaptiveCardObjectModelJNI.BaseCardElement_MeetsTargetWidthRequirement(swigCPtr, this, hostWidth.swigValue());
   }
 
   public static BaseCardElement DeserializeBasePropertiesFromString(ParseContext context, String jsonString) {

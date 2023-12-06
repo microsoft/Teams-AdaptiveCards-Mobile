@@ -232,6 +232,14 @@ public class HostConfig {
     AdaptiveCardObjectModelJNI.HostConfig_SetInputs(swigCPtr, this, InputsConfig.getCPtr(value), value);
   }
 
+  public HostWidthConfig getHostWidth() {
+    return new HostWidthConfig(AdaptiveCardObjectModelJNI.HostConfig_getHostWidth(swigCPtr, this), true);
+  }
+
+  public void SetHostWidth(HostWidthConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetHostWidth(swigCPtr, this, HostWidthConfig.getCPtr(value), value);
+  }
+
   public TextStylesConfig GetTextStyles() {
     return new TextStylesConfig(AdaptiveCardObjectModelJNI.HostConfig_GetTextStyles(swigCPtr, this), true);
   }

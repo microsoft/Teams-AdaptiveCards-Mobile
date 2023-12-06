@@ -26,6 +26,8 @@ import io.adaptivecards.objectmodel.FallbackType;
 import io.adaptivecards.objectmodel.FeatureRegistration;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HostConfig;
+import io.adaptivecards.objectmodel.HostWidth;
+import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.Image;
 import io.adaptivecards.objectmodel.ImageSet;
 import io.adaptivecards.objectmodel.Mode;
@@ -228,6 +230,16 @@ public class CardRendererRegistration
         m_featureRegistration = featureRegistration;
     }
 
+    public int getHostCardContainer()
+    {
+        return m_hostCardContainer;
+    }
+
+    public void registerHostCardContainer(int hostCardContainer)
+    {
+        m_hostCardContainer = hostCardContainer;
+    }
+
     public FeatureRegistration getFeatureRegistration()
     {
         if (m_featureRegistration == null) {
@@ -315,6 +327,11 @@ public class CardRendererRegistration
         RenderArgs childRenderArgs = new RenderArgs(renderArgs);
         childRenderArgs.setAncestorHasFallback(elementHasFallback || renderArgs.getAncestorHasFallback());
 
+        HostWidth hostWidth = null;
+        HostWidthConfig hostWidthConfig = hostConfig.getHostWidth();
+        if (hostWidthConfig != null) {
+            hostWidth = Util.convertHostCardContainerToHostWidth(getHostCardContainer(), hostWidthConfig);
+        }
         // To avoid tampering with this method, this two variables are introduced:
         // - renderedElement contains the element that was finally rendered (after performing fallback)
         //      this allows us to check if it was an input and render the label and error message
@@ -329,6 +346,10 @@ public class CardRendererRegistration
         try
         {
             if (renderer == null)
+            {
+                throw new AdaptiveFallbackException(cardElement);
+            }
+            if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
             {
                 throw new AdaptiveFallbackException(cardElement);
             }
@@ -428,6 +449,10 @@ public class CardRendererRegistration
                     renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, renderedElement, cardActionHandler, hostConfig, childRenderArgs);
                     shouldRenderCardElements = false;
                 }
+            }
+            else if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
+            {
+                renderedElement = null;
             }
             else
             {
@@ -650,6 +675,7 @@ public class CardRendererRegistration
     private IOnlineMediaLoader m_onlineMediaLoader = null;
     private BaseCardElement m_rootFallbackCard = null;
     private FeatureRegistration m_featureRegistration = null;
+    private int m_hostCardContainer = -1;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
 }
