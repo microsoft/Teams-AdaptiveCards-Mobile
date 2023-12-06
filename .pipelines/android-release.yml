@@ -38,6 +38,12 @@ stages:
   jobs:
   - job: Staging
     steps:
+
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '6.0'
+
     - task: Gradle@2
       displayName: build
       inputs:
