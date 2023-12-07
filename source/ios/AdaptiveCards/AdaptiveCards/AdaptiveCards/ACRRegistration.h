@@ -60,6 +60,10 @@
 
 - (ACOParseContext *_Nonnull)getParseContext;
 
+- (int)getHostCardContainer;
+
+- (void)registerHostCardContainer:(int)hostCardContainer;
+
 @end
 
 @interface ACOFeatureRegistration : NSObject
