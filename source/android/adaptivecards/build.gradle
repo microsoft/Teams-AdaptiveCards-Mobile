@@ -1,8 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-plugins {
-    id 'io.codearte.nexus-staging' version '0.30.0'
-}
 apply from: '../constants.gradle'
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -167,11 +164,25 @@ tasks.withType(GenerateModuleMetadata) {
     enabled = false
 }
 
-nexusStaging {
-    username "adaptivecards"
-    password System.getenv("AC_SONATYPE_CREDENTIAL") ?: "${NexusPassword}"
-    packageGroup 'io.adaptivecards'
-    stagingProfileId '9ee8e04fa2eec'
+nexusPublishing {
+    packageGroup = "io.adaptivecards"
+
+    repositories {
+        sonatype {
+            stagingProfileId = "9ee8e04fa2eec"
+
+            username = "adaptivecards"
+            password = System.getenv("AC_SONATYPE_CREDENTIAL") ?: "${NexusPassword}"
+        }
+    }
+
+    clientTimeout = Duration.ofSeconds(300)
+    connectTimeout = Duration.ofSeconds(60)
+
+    transitionCheckOptions {
+        maxRetries.set(40)
+        delayBetween.set(java.time.Duration.ofMillis(3000))
+    }
 }
 
 dependencies {
