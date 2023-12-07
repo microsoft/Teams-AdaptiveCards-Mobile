@@ -58,6 +58,7 @@ using namespace AdaptiveCards;
     NSMutableSet *_useResourceResolverActionsSet;
     id<ACRIBaseActionSetRenderer> _defaultActionSetRenderer;
     ACOParseContext *_parseContext;
+    int _hostCardContainer;
 }
 
 - (instancetype)init
@@ -108,6 +109,8 @@ using namespace AdaptiveCards;
 
         _useResourceResolverElementsSet = [[NSMutableSet alloc] init];
         _useResourceResolverActionsSet = [[NSMutableSet alloc] init];
+        
+        _hostCardContainer = -1;
     }
     return self;
 }
@@ -319,6 +322,16 @@ using namespace AdaptiveCards;
 - (BOOL)checkResourceResolverSet:(NSNumber *)key isAction:(BOOL)isAction
 {
     return (isAction) ? [_useResourceResolverActionsSet containsObject:key] : [_useResourceResolverElementsSet containsObject:key];
+}
+
+- (int)getHostCardContainer
+{
+    return _hostCardContainer;
+}
+
+- (void)registerHostCardContainer:(int)hostCardContainer
+{
+    _hostCardContainer = hostCardContainer;
 }
 
 @end
