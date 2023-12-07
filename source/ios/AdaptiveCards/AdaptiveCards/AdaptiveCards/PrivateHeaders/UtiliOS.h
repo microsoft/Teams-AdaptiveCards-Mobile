@@ -82,7 +82,7 @@ UIFontDescriptor *getItalicFontDescriptor(UIFontDescriptor *descriptor, bool isI
 
 void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContentHoldingView> *view,
                              ACRView *rootView, NSMutableArray *inputs,
-                             std::shared_ptr<BaseCardElement> const &elem, ACOHostConfig *config);
+                             std::shared_ptr<BaseCardElement> const &elem, ACOHostConfig *config, bool canFallbackToAncestor);
 
 bool handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
                         UIView<ACRIContentHoldingView> *view,
@@ -159,3 +159,5 @@ id traverseResponderChainForUIViewController(UIView *view);
 CGRect FindClosestRectToCover(CGRect coverRect, CGRect targetRectToCover);
 
 void addSelectActionToView(ACOHostConfig *acoConfig, ACOBaseActionElement *acoSelectAction, ACRView *rootView, UIView *view, UIView<ACRIContentHoldingView> *viewGroup);
+
+HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthConfig& hostWidthConfig);

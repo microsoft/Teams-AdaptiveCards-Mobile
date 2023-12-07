@@ -248,5 +248,10 @@
 	"media": {
         "playButton" : "http://adaptivecards.io/content/adaptive-card-50.png",
 		"allowInlinePlayback" : true
-	}
+	},
+    "hostWidthBreakpoints": {
+          "veryNarrow": 216,
+          "narrow": 413,
+          "standard": 500
+    }
 }
