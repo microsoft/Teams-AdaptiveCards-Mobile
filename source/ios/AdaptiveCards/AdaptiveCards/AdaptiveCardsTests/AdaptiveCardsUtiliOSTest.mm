@@ -51,10 +51,14 @@ using namespace AdaptiveCards;
     NSString* trueDate = @"2022. 12. 19. 06:00 PM";
     NSString* badDate = @"2022.12. 19. 06:00 PM";
     NSString* composedBadString = @"This is a sample test 2022. 12. 19. 06:00 PM";
+    NSString* diffDateFormat1 = @"2022-12-19. 06:00 PM";
+    NSString* diffDateFormat2 = @"12/19/2022 06:00 PM";
     //Then
     XCTAssertTrue(matchHungarianDateRegex(trueDate));
     XCTAssertFalse(matchHungarianDateRegex(badDate));
     XCTAssertFalse(matchHungarianDateRegex(composedBadString));
+    XCTAssertFalse(matchHungarianDateRegex(diffDateFormat1));
+    XCTAssertFalse(matchHungarianDateRegex(diffDateFormat2));
 }
 
 @end
