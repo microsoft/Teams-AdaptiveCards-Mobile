@@ -14,7 +14,7 @@ class BaseInputElement : public BaseCardElement
 public:
     BaseInputElement();
     BaseInputElement(CardElementType elementType);
-    BaseInputElement(CardElementType type, Spacing spacing, bool separator, HeightType height);
+    BaseInputElement(CardElementType type, Spacing spacing, bool separator, HeightType height, TargetWidthType targetWidthType);
 
     template <typename T>
     static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json);

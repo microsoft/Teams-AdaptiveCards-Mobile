@@ -41,6 +41,11 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<ColumnSet> columnSetElem = std::dynamic_pointer_cast<ColumnSet>(elem);
+    
+    // Get responsive layout's host width
+    ACRRegistration *reg = [ACRRegistration getInstance];
+    HostWidthConfig hostWidthConfig = config->getHostWidth();
+    HostWidth hostWidth = convertHostCardContainerToHostWidth([reg getHostCardContainer], hostWidthConfig);
 
     [rootView.context pushBaseCardElementContext:acoElem];
 
@@ -107,10 +112,13 @@
         [acoColumn setElem:column];
 
         @try {
-            if ([acoElem meetsRequirements:featureReg] == NO) {
+            if ([acoColumn meetsRequirements:featureReg] == NO) {
                 @throw [ACOFallbackException fallbackException];
             }
-
+            if (column->MeetsTargetWidthRequirement(hostWidth) == false){
+                @throw [ACOFallbackException fallbackException];
+            }
+            
             if (lastColumn == column) {
                 columnSetView.isLastColumn = YES;
             }
@@ -123,8 +131,8 @@
             }
         } @catch (ACOFallbackException *e) {
 
-            handleFallbackException(e, columnSetView, rootView, inputs, column, acoConfig);
-
+            handleFallbackException(e, columnSetView, rootView, inputs, column, acoConfig, column->CanFallbackToAncestor());
+            
             if (separator) {
                 [columnSetView removeViewFromContentStackView:separator];
             }

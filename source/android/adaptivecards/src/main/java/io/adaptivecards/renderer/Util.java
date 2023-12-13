@@ -31,6 +31,8 @@ import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.CharVector;
 import io.adaptivecards.objectmodel.Column;
 import io.adaptivecards.objectmodel.HostConfig;
+import io.adaptivecards.objectmodel.HostWidth;
+import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
 import io.adaptivecards.objectmodel.JsonValue;
 import io.adaptivecards.objectmodel.Mode;
@@ -116,6 +118,29 @@ public final class Util {
         float width = scaleRatio * d.getIntrinsicWidth();
 
         return Bitmap.createScaledBitmap(bitmap, (int)width, (int)height, false);
+    }
+
+    public static HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthConfig hostWidthConfig) {
+
+        if (hostCardContainer <= 0 || hostWidthConfig == null
+            || hostWidthConfig.getVeryNarrow() == 0 || hostWidthConfig.getNarrow() == 0
+            || hostWidthConfig.getStandard() == 0) {
+            return HostWidth.Default;
+        }
+
+        HostWidth hostWidth;
+
+        if (hostCardContainer <= hostWidthConfig.getVeryNarrow()) {
+            hostWidth = HostWidth.VeryNarrow;
+        } else if (hostCardContainer > hostWidthConfig.getVeryNarrow() && hostCardContainer <= hostWidthConfig.getNarrow()) {
+            hostWidth = HostWidth.Narrow;
+        } else if (hostCardContainer > hostWidthConfig.getNarrow() && hostCardContainer <= hostWidthConfig.getStandard()) {
+            hostWidth = HostWidth.Standard;
+        } else {
+            hostWidth = HostWidth.Wide;
+        }
+
+        return hostWidth;
     }
 
     public static void MoveChildrenViews(ViewGroup origin, ViewGroup destination)

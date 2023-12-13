@@ -148,9 +148,7 @@ AdaptiveCard::AdaptiveCard(
 const std::unordered_map<std::string, AdaptiveCards::SemanticVersion> AdaptiveCard::GetFeaturesSupported()
 {
     // Include all features using ParseUtil::ToLowercase
-    // Remove this line when Responsive Layout has been integrated
-    //return {{ParseUtil::ToLowercase("responsiveLayout"), AdaptiveCards::SemanticVersion("1.0")}};
-    return {};
+    return {{ParseUtil::ToLowercase("responsiveLayout"), AdaptiveCards::SemanticVersion("1.0")}};
 }
 
 #ifdef __ANDROID__
@@ -288,7 +286,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
     {
         // Parse body
         auto body = ParseUtil::GetElementCollection<BaseCardElement>(true, context, json, AdaptiveCardSchemaKey::Body, false);
-        
+
         EnsureShowCardVersions(actions, version);
 
         auto result = std::make_shared<AdaptiveCard>(
@@ -317,7 +315,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
         // Convert parsed fallback to collection of BaseCardElement
         std::shared_ptr<BaseCardElement> fallbackCardElement = std::static_pointer_cast<BaseCardElement>(fallbackBaseElement);
         std::vector<std::shared_ptr<BaseCardElement>> fallbackVector = {fallbackCardElement};
-        
+
         auto result = std::make_shared<AdaptiveCard>(
             version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, fallbackVector, actions);
         result->SetLanguage(language);
@@ -337,11 +335,11 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
 bool AdaptiveCard::MeetsRootRequirements(std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet)
 {
     std::unordered_map<std::string, AdaptiveCards::SemanticVersion> featuresSupported = GetFeaturesSupported();
-    
+
     for (const auto &featureToCheck : requiresSet)
     {
         auto foundFeature = featuresSupported.find(ParseUtil::ToLowercase(featureToCheck.first));
-        
+
         if (foundFeature == featuresSupported.end())
         {
             return false;

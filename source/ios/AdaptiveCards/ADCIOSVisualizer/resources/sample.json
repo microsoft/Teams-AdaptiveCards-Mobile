@@ -6,7 +6,12 @@
 		"large": 30,
 		"extraLarge": 40,
 		"padding": 10
-	},	
+	},
+    "hostWidthBreakpoints": {
+          "veryNarrow": 216,
+          "narrow": 413,
+          "standard": 500
+    },
 	"supportsInteractivity": true,
 	"imageBaseUrl": "https://pbs.twimg.com/profile_images/3647943215/",
 	"fontTypes": {

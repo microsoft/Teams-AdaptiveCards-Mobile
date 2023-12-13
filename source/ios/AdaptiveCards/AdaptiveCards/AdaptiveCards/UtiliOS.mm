@@ -447,11 +447,11 @@ ObserverActionBlock generateBackgroundImageObserverAction(
 void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContentHoldingView> *view,
                              ACRView *rootView, NSMutableArray *inputs,
                              std::shared_ptr<BaseCardElement> const &givenElem,
-                             ACOHostConfig *config)
+                             ACOHostConfig *config,
+                             bool canFallbackToAncestor)
 {
     std::shared_ptr<BaseElement> fallbackBaseElement = nullptr;
     std::shared_ptr<BaseCardElement> elem = givenElem;
-    bool bCanFallbackToAncestor = elem->CanFallbackToAncestor();
     FallbackType fallbackType = elem->GetFallbackType();
     bool bHandled = false;
     ACRRegistration *reg = [ACRRegistration getInstance];
@@ -493,7 +493,7 @@ void handleFallbackException(ACOFallbackException *exception, UIView<ACRIContent
     } while (!bHandled);
 
     if (!bHandled) {
-        if (fallbackType != FallbackType::Drop) {
+        if (canFallbackToAncestor && fallbackType != FallbackType::Drop) {
             @throw exception;
         } else {
             const CardElementType elemType = givenElem->GetElementType();
@@ -1140,6 +1140,28 @@ void addSelectActionToView(ACOHostConfig *acoConfig, ACOBaseActionElement *acoSe
     if (target && acoSelectAction.inlineTooltip) {
         [target addGestureRecognizer:view toolTipText:acoSelectAction.inlineTooltip];
     }
+}
+
+HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthConfig& hostWidthConfig)
+{
+    if (hostCardContainer <= 0 || hostWidthConfig.veryNarrow == 0 || hostWidthConfig.narrow == 0 || hostWidthConfig.standard == 0)
+    {
+        return HostWidth::Default;
+    }
+
+    HostWidth hostWidth;
+
+    if (hostCardContainer <= hostWidthConfig.veryNarrow) {
+        hostWidth = HostWidth::VeryNarrow;
+    } else if (hostCardContainer > hostWidthConfig.veryNarrow && hostCardContainer <= hostWidthConfig.narrow) {
+        hostWidth = HostWidth::Narrow;
+    } else if (hostCardContainer > hostWidthConfig.narrow && hostCardContainer <= hostWidthConfig.standard) {
+        hostWidth = HostWidth::Standard;
+    } else {
+        hostWidth = HostWidth::Wide;
+    }
+
+    return hostWidth;
 }
 
 // Validate date of type "YYYY. MM. DD. HH:MM AM|PM" to prevent parsing issues

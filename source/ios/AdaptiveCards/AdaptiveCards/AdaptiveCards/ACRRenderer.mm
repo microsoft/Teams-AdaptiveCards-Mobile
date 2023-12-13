@@ -167,6 +167,10 @@ using namespace AdaptiveCards;
     ACRRegistration *reg = [ACRRegistration getInstance];
     ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] init];
     ACOFeatureRegistration *featureReg = [ACOFeatureRegistration getInstance];
+    
+    // Get responsive layout's host width
+    HostWidthConfig hostWidthConfig = [config getHostConfig]->getHostWidth();
+    HostWidth hostWidth = convertHostCardContainerToHostWidth([reg getHostCardContainer], hostWidthConfig);
 
     UIView *renderedView = nil;
 
@@ -191,7 +195,10 @@ using namespace AdaptiveCards;
         [acoElem setElem:elem];
 
         @try {
-            if ([acoElem meetsRequirements:featureReg] == NO) {
+            if ([acoElem meetsRequirements:featureReg] == NO){
+                @throw [ACOFallbackException fallbackException];
+            }
+            if (elem->MeetsTargetWidthRequirement(hostWidth) == false){
                 @throw [ACOFallbackException fallbackException];
             }
 
@@ -205,7 +212,7 @@ using namespace AdaptiveCards;
         } @catch (ACOFallbackException *e) {
             
             @try {
-                handleFallbackException(e, view, rootView, inputs, elem, config);
+                handleFallbackException(e, view, rootView, inputs, elem, config, true);
                 
             } @catch (ACOFallbackException *e) {
                 

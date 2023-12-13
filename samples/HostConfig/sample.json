@@ -11,6 +11,11 @@
 		"lineThickness": 1,
 		"lineColor": "#EEEEEE"
 	},
+	"hostWidthBreakpoints": {
+	  "veryNarrow": 216,
+	  "narrow": 413,
+	  "standard": 500
+	},
 	"supportsInteractivity": true,
 	"fontTypes": {
 		"default": {
@@ -295,9 +300,9 @@
 		},
 		"spacing": 8
 	},
-	"inputs": 
+	"inputs":
 	{
-		"label": 
+		"label":
 		{
 			"inputSpacing": "small",
 			"requiredInputs": {
@@ -310,7 +315,7 @@
 				"isSubtle": true
 			}
 		},
-		"errorMessage": 
+		"errorMessage":
 		{
 			"spacing": "small",
 			"size": "small",
