@@ -23,7 +23,6 @@
 // if the width for Adaptive Cards is zero, the width is determined by the contraint(s) set externally on the card.
 CGFloat kAdaptiveCardsWidth = 0;
 CGFloat kFileBrowserWidth = 0;
-int hostCardContainer = 500;
 
 @interface ViewController () {
     id<ACRIBaseActionSetRenderer> _defaultRenderer;
@@ -132,7 +131,7 @@ int hostCardContainer = 500;
     [registration setCustomActionRenderer:customActionRenderer key:type1];
     
     // Required registration for testing responsive layout
-    [registration registerHostCardContainer:hostCardContainer];
+    [registration registerHostCardContainer:kFileBrowserWidth];
 
     self.ACVTabVC = [[ACVTableViewController alloc] init];
     [self addChildViewController:self.ACVTabVC];
@@ -740,5 +739,12 @@ int hostCardContainer = 500;
 
         [self.chatWindow setContentOffset:point animated:NO];
     }
+}
+
+-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    // Update responsive layout's host card container when device orientation changes
+    CGFloat cardWidthAfterTransition = size.width - 32.0f;
+    [[ACRRegistration getInstance] registerHostCardContainer:cardWidthAfterTransition];
 }
 @end
