@@ -721,8 +721,20 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
 {
     std::shared_ptr<MarkDownParser> markDownParser = std::make_shared<MarkDownParser>([ACOHostConfig getLocalizedDate:textProperties.GetText() language:textProperties.GetLanguage()]);
 
-    // MarkDownParser transforms text with MarkDown to a html string
-    auto markdownString = markDownParser->TransformToHtml();
+    std::string markdownString;
+    
+    NSString *markDownParserString = [NSString stringWithCString:markDownParser->GetRawText().c_str() encoding:NSUTF8StringEncoding];
+    
+    // This validation prevents to detect the dot and space ". " of hungarian date as a list of elements in parsing
+    if (matchHungarianDateRegex(markDownParserString))
+    {
+        markdownString = std::string([[NSString stringWithFormat:@"<p>%@</p>", markDownParserString] UTF8String]);
+    }
+    else
+    {
+        // MarkDownParser transforms text with MarkDown to a html string
+        markdownString = markDownParser->TransformToHtml();
+    }
     NSString *parsedString = (markDownParser->HasHtmlTags()) ? [NSString stringWithCString:markdownString.c_str() encoding:NSUTF8StringEncoding] : [NSString stringWithCString:markDownParser->GetRawText().c_str() encoding:NSUTF8StringEncoding];
 
     if (markDownParser->HasHtmlTags() && ([parsedString containsString:@"\n"] || [parsedString containsString:@"\r"])) {
@@ -1150,4 +1162,13 @@ HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthCo
     }
 
     return hostWidth;
+}
+
+// Validate date of type "YYYY. MM. DD. HH:MM AM|PM" to prevent parsing issues
+bool matchHungarianDateRegex(NSString *stringToValidate)
+{
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[0-9]{4}. [0-9]{2}. [0-9]{2}. [0-9]{2}:[0-9]{2} [AM|PM]" options:0 error:nil];
+    NSTextCheckingResult *match = [regex firstMatchInString:stringToValidate options:0 range:NSMakeRange(0, [stringToValidate length])];
+    // Only true if exists a match and is the complete string
+    return match != nil && stringToValidate.length == (match.range.length + 1);
 }
