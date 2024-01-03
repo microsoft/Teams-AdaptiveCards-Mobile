@@ -4,6 +4,7 @@ package io.adaptivecards.renderer.input;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
@@ -45,7 +46,7 @@ public class ToggleInputRenderer extends BaseCardElementRenderer
     }
 
     @Override
-    public View render(
+    public @Nullable View render(
             RenderedAdaptiveCard renderedCard,
             Context context,
             FragmentManager fragmentManager,

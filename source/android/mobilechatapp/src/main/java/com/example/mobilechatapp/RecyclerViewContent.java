@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 package com.example.mobilechatapp;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -30,7 +31,7 @@ public class RecyclerViewContent
         }
 
         @Override
-        protected View doInBackground(ParseResult... objects) {
+        protected @Nullable View doInBackground(ParseResult... objects) {
             try
             {
                 RenderedAdaptiveCard renderedCard = AdaptiveCardRenderer.getInstance().render(m_context, m_fragmentManager, objects[0].GetAdaptiveCard(), m_cardActionHandler, m_hostConfig);

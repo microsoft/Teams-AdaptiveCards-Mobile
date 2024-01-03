@@ -256,7 +256,7 @@ public class TextBlockRenderer extends BaseCardElementRenderer
     }
 
     @Override
-    public View render(
+    public @Nullable View render(
             RenderedAdaptiveCard renderedCard,
             Context context,
             FragmentManager fragmentManager,
@@ -267,11 +267,6 @@ public class TextBlockRenderer extends BaseCardElementRenderer
             RenderArgs renderArgs) throws Exception
     {
         TextBlock textBlock = Util.castTo(baseCardElement, TextBlock.class);
-
-        if (textBlock.GetText().isEmpty())
-        {
-            return null;
-        }
 
         TextView textView = new TextView(context);
         textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));

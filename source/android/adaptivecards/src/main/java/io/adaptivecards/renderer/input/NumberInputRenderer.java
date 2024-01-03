@@ -3,6 +3,8 @@
 package io.adaptivecards.renderer.input;
 
 import android.content.Context;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import android.text.InputType;
 import android.view.View;
@@ -37,7 +39,7 @@ public class NumberInputRenderer extends TextInputRenderer
     }
 
     @Override
-    public View render(
+    public @Nullable View render(
             RenderedAdaptiveCard renderedCard,
             Context context,
             FragmentManager fragmentManager,
