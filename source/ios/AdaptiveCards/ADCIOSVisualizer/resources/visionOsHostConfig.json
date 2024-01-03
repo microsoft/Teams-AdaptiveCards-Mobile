@@ -1,0 +1,171 @@
+{
+    "spacing": {
+        "small": 3,
+        "default": 8,
+        "medium": 20,
+        "large": 30,
+        "extraLarge": 40,
+        "padding": 10
+    },
+    "supportsInteractivity": true,
+    "imageBaseUrl": "https://pbs.twimg.com/profile_images/3647943215/",
+    "fontTypes": {
+        "default": {
+            "fontFamily": "San Francisco, American Typewriter, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue",
+            "fontSizes": {
+                "small": 12,
+                "default": 14,
+                "medium": 17,
+                "large": 21,
+                "extraLarge": 26
+            },
+            "fontWeights": {
+                "lighter": 200,
+                "default": 400,
+                "bolder": 700
+            }
+        },
+        "monospace": {
+            "fontFamily": "Courier New, Courier",
+            "fontSizes": {
+                "small": 12,
+                "default": 14,
+                "medium": 17,
+                "large": 21,
+                "extraLarge": 26
+            },
+            "fontWeights": {
+                "lighter": 400,
+                "default": 400,
+                "bolder": 700
+            }
+        }
+    },
+    "containerStyles": {
+        "default": {
+            "foregroundColors": {
+                "default": {
+                    "default": "#F5FFFFFF",
+                    "subtle": "#CCFFFFFF"
+                    },
+                "dark": {
+                    "default": "#000000",
+                    "subtle": "#CC000000"
+                },
+                "light": {
+                    "default": "#F5FFFFFF",
+                    "subtle": "#CCFFFFFF"
+                },
+                "accent": {
+                    "default": "#7F85F5",
+                    "subtle": "#5B5FC7"
+                   },
+                "good": {
+                    "default": "#32D74B",
+                    "subtle": "#CC32D74B"
+                },
+                "warning": {
+                    "default": "#FFB900",
+                    "subtle": "#CCFFB900"
+                },
+                "attention": {
+                    "default": "#FF857E",
+                    "subtle": "#EBFF857E"
+                }
+            },
+            "backgroundColor": "#570D0D0D"
+        },
+        "emphasis": {
+            "foregroundColors": {
+                "default": {
+                    "default": "#F5FFFFFF",
+                    "subtle": "#CCFFFFFF"
+                },
+                "dark": {
+                    "default": "#000000",
+                    "subtle": "#CC000000"
+                },
+                "light": {
+                    "default": "#F5FFFFFF",
+                    "subtle": "#CCFFFFFF"
+                },
+                "accent": {
+                    "default": "#96A7FD",
+                    "subtle": "#F296A7FD"
+                },
+                "good": {
+                    "default": "#32D74B",
+                    "subtle": "#CC32D74B"
+                },
+                "warning": {
+                    "default": "#FFB900",
+                    "subtle": "#CCFFB900"
+                },
+                "attention": {
+                    "default": "#FF857E",
+                    "subtle": "#EBFF857E"
+                }
+            },
+            "backgroundColor": "#700D0D0D"
+        },
+        "good": {
+            "backgroundColor": "#26006300"
+        },
+        "warning": {
+            "backgroundColor": "#14B8B000"
+        },
+        "attention": {
+            "backgroundColor": "#0AE83A3A"
+        },
+        "accent": {
+            "backgroundColor": "#3D1423CB"
+        }
+    },
+    "imageSizes": {
+        "small": 40,
+        "medium": 80,
+        "large": 160
+    },
+    "actions": {
+        "maxActions": 10,
+        "spacing": "Default",
+        "buttonSpacing": 15,
+        "showCard": {
+            "actionMode": "Popup",
+            "inlineTopMargin": 16,
+            "style": "Emphasis"
+        },
+        "preExpandSingleShowCardAction": false,
+        "actionsOrientation": "Vertical",
+        "actionAlignment": "Stretch"
+    },
+    "adaptiveCard": {
+        "allowCustomStyle": true
+    },
+    "imageSet": {
+        "imageSize": "medium",
+        "maxImageHeight": 100
+    },
+    "factSet": {
+        "title": {
+            "size": "Default",
+            "color": "Default",
+            "isSubtle": false,
+            "weight": "Bolder",
+            "maxWidth":150,
+            "warp": true
+        },
+        "value": {
+            "size": "Default",
+            "color": "Default",
+            "isSubtle": false,
+            "weight": "Default",
+            "warp": true
+        },
+        "spacing": 5
+    },
+    "media": {
+        "playButton" : "http://adaptivecards.io/content/adaptive-card-50.png",
+        "allowInlinePlayback" : true
+    }
+}

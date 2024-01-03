@@ -109,7 +109,11 @@ CGFloat kFileBrowserWidth = 0;
     [super viewDidLoad];
     _global_queue = dispatch_get_main_queue();
 
-    kFileBrowserWidth = [[UIScreen mainScreen] bounds].size.width - 32.0f;
+    #if !TARGET_OS_VISION
+        kFileBrowserWidth = [[UIScreen mainScreen] bounds].size.width - 32.0f;
+    #else
+        kFileBrowserWidth = 600;
+    #endif
     kAdaptiveCardsWidth = kFileBrowserWidth;
     [self registerForKeyboardNotifications];
 
@@ -163,6 +167,9 @@ CGFloat kFileBrowserWidth = 0;
                                         WithDataDelegate:self.ACVTabVC];
     fileBrowserView.translatesAutoresizingMaskIntoConstraints = NO;
     [_compositeFileBrowserView addArrangedSubview:fileBrowserView];
+    #if TARGET_OS_VISION
+    _compositeFileBrowserView.backgroundColor = UIColor.clearColor;
+    #endif
 
     [_compositeFileBrowserView addArrangedSubview:ACVTabView];
     ACVTabView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -217,6 +224,10 @@ CGFloat kFileBrowserWidth = 0;
     ACOFeatureRegistration *featureReg = [ACOFeatureRegistration getInstance];
     [featureReg addFeature:@"acTest" featureVersion:@"1.0"];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleVoiceOverEvent:) name:UIAccessibilityElementFocusedNotification object:nil];
+    
+    #if TARGET_OS_VISION
+    self.view.backgroundColor = UIColor.clearColor;
+    #endif
 }
 
 - (void)viewWillAppear:(BOOL)animated
