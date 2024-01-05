@@ -3,6 +3,8 @@ package io.adaptivecards.adaptivecardssample.CustomObjects.Media;
 import android.media.MediaDataSource;
 import android.os.AsyncTask;
 import android.os.Build;
+
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import io.adaptivecards.objectmodel.MediaSourceVector;
@@ -42,7 +44,7 @@ public class OnlineMediaLoader implements IOnlineMediaLoader
 
 
     @Override
-    public MediaDataSource loadOnlineMedia(MediaSourceVector mediaSources, IMediaDataSourceOnPreparedListener mediaDataSourceOnPreparedListener)
+    public @Nullable MediaDataSource loadOnlineMedia(MediaSourceVector mediaSources, IMediaDataSourceOnPreparedListener mediaDataSourceOnPreparedListener)
     {
         final long mediaSourcesSize = mediaSources.size();
         for(int i = 0; i < mediaSourcesSize; i++)

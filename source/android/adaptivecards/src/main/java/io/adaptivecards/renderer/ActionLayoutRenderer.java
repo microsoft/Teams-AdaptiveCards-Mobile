@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import io.adaptivecards.objectmodel.ActionAlignment;
@@ -39,7 +40,7 @@ public class ActionLayoutRenderer implements IActionLayoutRenderer {
         return s_instance;
     }
 
-    public View renderActions(
+    public @Nullable View renderActions(
         RenderedAdaptiveCard renderedCard,
         Context context,
         FragmentManager fragmentManager,

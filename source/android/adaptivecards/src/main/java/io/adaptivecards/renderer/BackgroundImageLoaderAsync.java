@@ -12,6 +12,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+
 import io.adaptivecards.objectmodel.BackgroundImage;
 import io.adaptivecards.renderer.http.HttpRequestResult;
 
@@ -31,7 +33,7 @@ public class BackgroundImageLoaderAsync extends GenericImageLoaderAsync
     }
 
     @Override
-    protected HttpRequestResult<Bitmap> doInBackground(String... args)
+    protected @Nullable HttpRequestResult<Bitmap> doInBackground(String... args)
     {
         if (args.length == 0)
         {

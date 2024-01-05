@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.HashMap;
@@ -197,7 +198,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             m_hiddenCardsLayout.addView(m_invisibleCard);
         }
 
-        private Activity getActivity(Context context)
+        private @Nullable Activity getActivity(Context context)
         {
             while (context instanceof ContextWrapper)
             {
