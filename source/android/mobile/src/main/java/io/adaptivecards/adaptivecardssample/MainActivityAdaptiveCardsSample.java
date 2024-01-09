@@ -4,6 +4,8 @@ package io.adaptivecards.adaptivecardssample;
 
 import android.graphics.Typeface;
 import android.os.Build;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentActivity;
 import android.content.Context;
@@ -430,7 +432,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
      * @param uri file path
      * @return file contents
      */
-    private String loadFile(Uri uri)
+    private @Nullable String loadFile(Uri uri)
     {
         // Get the Uri of the selected file
         if (uri == null)
@@ -464,7 +466,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
      * @param inputStream stream to read from
      * @return file contents
      */
-    private String readStream(InputStream inputStream)
+    private @Nullable String readStream(InputStream inputStream)
     {
         try
         {

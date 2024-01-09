@@ -5,6 +5,8 @@ package com.example.mobilechatapp;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 
+import androidx.annotation.Nullable;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +35,7 @@ public class CardReaderTask extends AsyncTask<Void, Void, Card> {
     }
 
     @Override
-    protected Card doInBackground(Void... voids)
+    protected @Nullable Card doInBackground(Void... voids)
     {
         try
         {

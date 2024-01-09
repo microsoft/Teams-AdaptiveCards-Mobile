@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import io.adaptivecards.objectmodel.BaseCardElement;
@@ -15,7 +16,7 @@ import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 
 public interface IBaseCardElementRenderer
 {
-    View render(
+    @Nullable View render(
             @NonNull RenderedAdaptiveCard renderedCard,
             @NonNull Context context,
             @NonNull FragmentManager fragmentManager,

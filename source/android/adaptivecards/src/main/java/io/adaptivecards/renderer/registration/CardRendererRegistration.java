@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.HashMap;
@@ -640,7 +641,7 @@ public class CardRendererRegistration
         }
     }
 
-    public static View findElementWithTagContent(ViewGroup viewContainer)
+    public static @Nullable View findElementWithTagContent(ViewGroup viewContainer)
     {
         for (int i = 0; i < viewContainer.getChildCount(); ++i)
         {

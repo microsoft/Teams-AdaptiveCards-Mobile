@@ -5,6 +5,8 @@ package io.adaptivecards.renderer;
 import android.graphics.Bitmap;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import io.adaptivecards.renderer.http.HttpRequestResult;
 
 public abstract class InnerImageLoaderAsync extends GenericImageLoaderAsync
@@ -24,7 +26,7 @@ public abstract class InnerImageLoaderAsync extends GenericImageLoaderAsync
     }
 
     @Override
-    protected HttpRequestResult<Bitmap> doInBackground(String... args)
+    protected @Nullable HttpRequestResult<Bitmap> doInBackground(String... args)
     {
         if (args.length == 0)
         {

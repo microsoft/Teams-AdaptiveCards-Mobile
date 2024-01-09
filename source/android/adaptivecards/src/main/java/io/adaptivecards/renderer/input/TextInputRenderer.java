@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -364,7 +365,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
     }
 
     @Override
-    public View render(
+    public @Nullable View render(
             RenderedAdaptiveCard renderedCard,
             Context context,
             FragmentManager fragmentManager,

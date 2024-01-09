@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -50,7 +51,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
      * @param column The Column element
      * @return weight, or null if width is not relative
      */
-    static Float getRelativeWidth(Column column)
+    static @Nullable Float getRelativeWidth(Column column)
     {
         try
         {

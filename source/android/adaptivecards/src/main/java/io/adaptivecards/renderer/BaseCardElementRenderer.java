@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.Set;
@@ -61,13 +63,13 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
         return android.graphics.Color.parseColor(colorCode);
     }
 
-    public static View setSpacingAndSeparator(Context context,
-                                               ViewGroup viewGroup,
-                                               Spacing spacing,
-                                               boolean separator,
-                                               HostConfig hostConfig,
-                                               boolean isHorizontalSpacing,
-                                               boolean isImageSet)
+    public static @Nullable View setSpacingAndSeparator(Context context,
+                                                        ViewGroup viewGroup,
+                                                        Spacing spacing,
+                                                        boolean separator,
+                                                        HostConfig hostConfig,
+                                                        boolean isHorizontalSpacing,
+                                                        boolean isImageSet)
     {
         if (viewGroup.getChildCount() <= 0)
         {
@@ -151,7 +153,7 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
      * @param view defines the rendered element to grab the TagContent from
      * @return TagContent form view
      */
-    public static TagContent getTagContent(View view)
+    public static @Nullable TagContent getTagContent(View view)
     {
         if (view != null)
         {

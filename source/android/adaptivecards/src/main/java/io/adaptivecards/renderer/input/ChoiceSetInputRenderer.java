@@ -628,7 +628,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
 
 
     @Override
-    public View render(
+    public @Nullable View render(
             RenderedAdaptiveCard renderedCard,
             Context context,
             FragmentManager fragmentManager,

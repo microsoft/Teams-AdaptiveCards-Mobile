@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -160,7 +161,7 @@ public final class Util {
      * @param baseElement BaseElement to be casted into BaseCardElement
      * @return Casted BaseCardElement object if succeeded, null otherwise
      */
-    public static BaseCardElement tryCastToBaseCardElement(BaseElement baseElement)
+    public static @Nullable BaseCardElement tryCastToBaseCardElement(BaseElement baseElement)
     {
         try
         {
@@ -282,7 +283,7 @@ public final class Util {
      * @param baseElement BaseElement to be casted into BaseActionElement
      * @return Casted BaseActionElement object if succeeded, null otherwise
      */
-    public static BaseActionElement tryCastToBaseActionElement(BaseElement baseElement)
+    public static @Nullable BaseActionElement tryCastToBaseActionElement(BaseElement baseElement)
     {
         try
         {
