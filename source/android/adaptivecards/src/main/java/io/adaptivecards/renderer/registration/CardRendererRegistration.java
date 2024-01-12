@@ -300,7 +300,6 @@ public class CardRendererRegistration
         FeatureRegistration featureRegistration = CardRendererRegistration.getInstance().getFeatureRegistration();
 
         registerRootFallbackView(renderedCard.getAdaptiveCard());
-        boolean shouldRenderCardElements = true;
         for (int i = 0; i < size; i++)
         {
             BaseCardElement cardElement = baseCardElementList.get(i);
