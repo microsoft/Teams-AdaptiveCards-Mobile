@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer;
 
+import static androidx.annotation.Dimension.DP;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -16,8 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.Px;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -347,6 +351,20 @@ public final class Util {
         {
             return null;
         }
+    }
+
+
+    /**
+     * Converts pixels to dps.
+     *
+     * @param context the Context for getting the resources
+     * @param px      dimension in pixels
+     * @return dimension in dps
+     */
+    public static @Dimension(unit = DP) int pixelToDp(@NonNull Context context, @Px int px) {
+        DisplayMetrics displayMetrics = context.getResources()
+            .getDisplayMetrics();
+        return Math.round(px / displayMetrics.density);
     }
 
     /**
