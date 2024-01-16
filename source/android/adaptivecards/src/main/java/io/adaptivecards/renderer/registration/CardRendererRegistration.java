@@ -300,17 +300,16 @@ public class CardRendererRegistration
         FeatureRegistration featureRegistration = CardRendererRegistration.getInstance().getFeatureRegistration();
 
         registerRootFallbackView(renderedCard.getAdaptiveCard());
-        boolean shouldRenderCardElements = true;
-        for (int i = 0; i < size && shouldRenderCardElements; i++)
+        for (int i = 0; i < size; i++)
         {
             BaseCardElement cardElement = baseCardElementList.get(i);
-            shouldRenderCardElements = renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration);
+            renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration);
         }
 
         return viewGroup;
     }
 
-    public boolean renderElementAndPerformFallback(
+    public void renderElementAndPerformFallback(
             RenderedAdaptiveCard renderedCard,
             Context context,
             FragmentManager fragmentManager,
@@ -326,7 +325,7 @@ public class CardRendererRegistration
 
         boolean elementHasFallback = (cardElement.GetFallbackType() != FallbackType.None);
         RenderArgs childRenderArgs = new RenderArgs(renderArgs);
-        childRenderArgs.setAncestorHasFallback(elementHasFallback || renderArgs.getAncestorHasFallback());
+        childRenderArgs.setAncestorHasFallback(elementHasFallback || renderArgs.getAncestorHasFallback() || getRootFallbackCard() != null);
 
         HostWidth hostWidth = null;
         HostWidthConfig hostWidthConfig = hostConfig.getHostWidth();
@@ -350,10 +349,6 @@ public class CardRendererRegistration
             {
                 throw new AdaptiveFallbackException(cardElement);
             }
-            if (hostWidth != null && !cardElement.MeetsTargetWidthRequirement(hostWidth))
-            {
-                throw new AdaptiveFallbackException(cardElement);
-            }
 
             if ((featureRegistration != null) && (!cardElement.MeetsRequirements(featureRegistration)))
             {
@@ -365,8 +360,11 @@ public class CardRendererRegistration
                 renderArgs.setRootLevelActions(false);
             }
 
-            renderedElementView = renderer.render(renderedCard, context, fragmentManager, mockLayout, cardElement, cardActionHandler, hostConfig, childRenderArgs);
-            renderedElement = cardElement;
+            if (hostWidth == null || cardElement.MeetsTargetWidthRequirement(hostWidth))
+            {
+                renderedElementView = renderer.render(renderedCard, context, fragmentManager, mockLayout, cardElement, cardActionHandler, hostConfig, childRenderArgs);
+                renderedElement = cardElement;
+            }
         }
         catch (AdaptiveFallbackException e)
         {
@@ -400,9 +398,11 @@ public class CardRendererRegistration
                             // before rendering, check if the element to render is an input, if it is, then create an stretchable input layout, and add the label
                             // pass that as the viewgroup and
 
-                            renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, fallbackCardElement, cardActionHandler, hostConfig, childRenderArgs);
-                            renderedElement = fallbackCardElement;
-                            break;
+                            if (hostWidth == null || cardElement.MeetsTargetWidthRequirement(hostWidth)) {
+                                renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, fallbackCardElement, cardActionHandler, hostConfig, childRenderArgs);
+                                renderedElement = fallbackCardElement;
+                                break;
+                            }
                         }
                         catch (AdaptiveFallbackException e2)
                         {
@@ -502,7 +502,6 @@ public class CardRendererRegistration
 
             HandleVisibility(renderedElement, renderedElementView);
         }
-        return shouldRenderCardElements;
     }
 
     private static void HandleSpacing(Context context,
