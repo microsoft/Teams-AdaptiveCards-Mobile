@@ -116,7 +116,7 @@
                 @throw [ACOFallbackException fallbackException];
             }
             if (column->MeetsTargetWidthRequirement(hostWidth) == false){
-                @throw [ACOFallbackException fallbackException];
+                continue;
             }
             
             if (lastColumn == column) {

@@ -29,3 +29,9 @@ typedef NS_ENUM(NSUInteger, ACRRenderingStatus) {
 + (ACOFallbackException *)fallbackException;
 
 @end
+
+@interface ACORootFallbackException : NSObject
+
++ (ACORootFallbackException *)fallbackException;
+
+@end

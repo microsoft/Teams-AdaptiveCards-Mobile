@@ -121,25 +121,32 @@ using namespace AdaptiveCards;
     [verticalView setStyle:style];
 
     [rootView addBaseCardElementListToConcurrentQueue:body registration:[ACRRegistration getInstance]];
-
-    [ACRRenderer render:verticalView rootView:rootView inputs:inputs withCardElems:body andHostConfig:config];
     
-    [verticalView configureLayoutAndVisibility:GetACRVerticalContentAlignment(adaptiveCard->GetVerticalContentAlignment())
-                                     minHeight:adaptiveCard->GetMinHeight()
-                                    heightType:GetACRHeight(adaptiveCard->GetHeight())
-                                          type:ACRColumn];
+    @try {
+        
+        [ACRRenderer render:verticalView rootView:rootView inputs:inputs withCardElems:body andHostConfig:config];
+        
+        [verticalView configureLayoutAndVisibility:GetACRVerticalContentAlignment(adaptiveCard->GetVerticalContentAlignment())
+                                         minHeight:adaptiveCard->GetMinHeight()
+                                        heightType:GetACRHeight(adaptiveCard->GetHeight())
+                                              type:ACRColumn];
 
-    [[rootView card] setInputs:inputs];
+        [[rootView card] setInputs:inputs];
 
-    if (!actions.empty()) {
-        [ACRSeparator renderActionsSeparator:verticalView hostConfig:[config getHostConfig]];
+        if (!actions.empty()) {
+            [ACRSeparator renderActionsSeparator:verticalView hostConfig:[config getHostConfig]];
 
-        // renders buttons and their associated actions
-        ACOAdaptiveCard *card = [[ACOAdaptiveCard alloc] init];
-        [card setCard:adaptiveCard];
-        [ACRRenderer renderActions:rootView inputs:inputs superview:verticalView card:card hostConfig:config];
+            // renders buttons and their associated actions
+            ACOAdaptiveCard *card = [[ACOAdaptiveCard alloc] init];
+            [card setCard:adaptiveCard];
+            [ACRRenderer renderActions:rootView inputs:inputs superview:verticalView card:card hostConfig:config];
+        }
+        
+    } @catch (ACORootFallbackException *e) {
+        
+        handleRootFallback(rootView.card.card, verticalView, rootView, inputs, config);
     }
-
+    
     // renders background image for AdaptiveCard and an inner AdaptiveCard in a ShowCard
     renderBackgroundImage(backgroundImageProperties, verticalView, rootView);
 
@@ -199,7 +206,7 @@ using namespace AdaptiveCards;
                 @throw [ACOFallbackException fallbackException];
             }
             if (elem->MeetsTargetWidthRequirement(hostWidth) == false){
-                @throw [ACOFallbackException fallbackException];
+                continue;
             }
 
             renderedView = [renderer render:view rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:config];
@@ -216,11 +223,7 @@ using namespace AdaptiveCards;
                 
             } @catch (ACOFallbackException *e) {
                 
-                BOOL isRootFallbackRendered = handleRootFallback(rootView.card.card, view, rootView, inputs, config);
-                if (isRootFallbackRendered == YES)
-                {
-                    break;
-                }
+                @throw [ACORootFallbackException fallbackException];
             }
         }
     }

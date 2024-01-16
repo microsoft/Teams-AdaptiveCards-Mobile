@@ -19,3 +19,13 @@ NSString *const ACRParseErrorDomain = @"ACRParseErrorDomain";
 }
 
 @end
+
+@implementation ACORootFallbackException
+
++ (ACORootFallbackException *)fallbackException
+{
+    ACORootFallbackException *fallbackException = [[ACORootFallbackException alloc] init];
+    return fallbackException;
+}
+
+@end
