@@ -131,7 +131,7 @@
             }
         } @catch (ACOFallbackException *e) {
 
-            handleFallbackException(e, columnSetView, rootView, inputs, column, acoConfig, column->CanFallbackToAncestor());
+            handleFallbackException(e, columnSetView, rootView, inputs, column, acoConfig, true);
             
             if (separator) {
                 [columnSetView removeViewFromContentStackView:separator];

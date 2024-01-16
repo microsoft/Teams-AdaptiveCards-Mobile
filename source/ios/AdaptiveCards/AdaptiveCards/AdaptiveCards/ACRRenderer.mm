@@ -142,7 +142,7 @@ using namespace AdaptiveCards;
             [ACRRenderer renderActions:rootView inputs:inputs superview:verticalView card:card hostConfig:config];
         }
         
-    } @catch (ACORootFallbackException *e) {
+    } @catch (ACOFallbackException *e) {
         
         handleRootFallback(rootView.card.card, verticalView, rootView, inputs, config);
     }
@@ -218,13 +218,7 @@ using namespace AdaptiveCards;
             }
         } @catch (ACOFallbackException *e) {
             
-            @try {
-                handleFallbackException(e, view, rootView, inputs, elem, config, true);
-                
-            } @catch (ACOFallbackException *e) {
-                
-                @throw [ACORootFallbackException fallbackException];
-            }
+            handleFallbackException(e, view, rootView, inputs, elem, config, true);
         }
     }
 
