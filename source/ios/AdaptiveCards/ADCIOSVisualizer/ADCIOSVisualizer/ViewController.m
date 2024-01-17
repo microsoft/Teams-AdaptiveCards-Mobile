@@ -329,7 +329,7 @@ CGFloat kFileBrowserWidth = 0;
 {
     _targetView = button;
     if (isVisible) {
-        button.backgroundColor = [UIColor redColor];
+        button.backgroundColor = [UIColor colorWithRed:0.82 green:0.2 blue:0.13 alpha:1.0];
     } else {
         if ([button isKindOfClass:[ACRButton class]]) {
             ACRButton *acrButton = (ACRButton *)button;
