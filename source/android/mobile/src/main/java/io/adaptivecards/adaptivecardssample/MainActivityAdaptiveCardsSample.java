@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 package io.adaptivecards.adaptivecardssample;
 
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentActivity;
@@ -14,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -85,6 +88,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
     private SwitchCompat m_onlineImageLoader;
     private SwitchCompat m_customTypeface;
     private SwitchCompat m_httpResourceResolver;
+    private int mLayoutWidth = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +206,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
                 {
                     public void run()
                     {
+                        setLayoutListenerForContainerWidth();
                         renderAdaptiveCard(true);
                     }
                 });
@@ -364,10 +369,13 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
 
             ParseContext context = createParseContextForCustomElements();
             ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
-            LinearLayout layout = (LinearLayout) findViewById(R.id.visualAdaptiveCardLayout);
+            LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
             layout.removeAllViews();
 
             registerCustomFeatures();
+            if (mLayoutWidth != 0) {
+                CardRendererRegistration.getInstance().registerHostCardContainer(mLayoutWidth);
+            }
 
             RenderedAdaptiveCard renderedCard = AdaptiveCardRenderer.getInstance().render(this, getSupportFragmentManager(), parseResult.GetAdaptiveCard(), this, hostConfig);
             layout.addView(renderedCard.getView());
@@ -381,6 +389,43 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         }
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mLayoutWidth = 0;
+            setLayoutListenerForContainerWidth();
+            renderAdaptiveCard(true);
+        }
+    }
+
+    private void setLayoutListenerForContainerWidth() {
+        LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
+    }
+
+    private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener =
+        new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
+                layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mLayoutWidth = Util.pixelToDp(getApplicationContext(), layout.getMeasuredWidth());
+                renderAdaptiveCard(true);
+            }
+        };
+
+
+    @Override
+    public void onDetachedFromWindow() {
+        LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
+        if (layout != null && mOnGlobalLayoutListener != null && layout.getViewTreeObserver() != null) {
+            layout.getViewTreeObserver().removeOnGlobalLayoutListener(mOnGlobalLayoutListener);
+        }
+        super.onDetachedFromWindow();
+    }
+
+
     /**
      * Render importer UI (defined as an AdaptiveCard) in the importer tab
      * @param showErrorToast show toast on IO errors, if True
@@ -390,7 +435,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         try
         {
             ParseResult parseResult = AdaptiveCard.DeserializeFromString(readStream(getResources().openRawResource(R.raw.importer_card)), AdaptiveCardRenderer.VERSION);
-            LinearLayout importerLayout = (LinearLayout) findViewById(R.id.importerCardLayout);
+            LinearLayout importerLayout = findViewById(R.id.importerCardLayout);
             importerLayout.removeAllViews();
 
             CardRendererRegistration.getInstance().setInputWatcher(this);
@@ -505,6 +550,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         m_jsonEditText.setText(card);
 
         // Render it immediately
+        setLayoutListenerForContainerWidth();
         renderAdaptiveCard(true);
     }
 
@@ -519,6 +565,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         m_configEditText.setText(hostConfig);
 
         // Render it immediately
+        setLayoutListenerForContainerWidth();
         renderAdaptiveCard(true);
     }
 

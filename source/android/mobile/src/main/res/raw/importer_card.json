@@ -98,6 +98,14 @@
 									{
 										"title": "ResponsiveLayout",
 										"value": "v1.5/Scenarios/ResponsiveLayout.json"
+									},
+									{
+										"title": "NestedFallbackBody",
+										"value": "v1.5/Scenarios/NestedFallbackBody.json"
+									},
+									{
+										"title": "NestedFallbackRoot",
+										"value": "v1.5/Scenarios/NestedFallbackRoot.json"
 									}
                                 ],
                                 "placeholder": "(choose sample)",
