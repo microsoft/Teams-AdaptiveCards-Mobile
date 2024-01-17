@@ -165,6 +165,10 @@ shared_ptr<SubmitAction> buildAction(const string &path, const string &title)
     [self.bottomAnchor constraintEqualToAnchor:_adaptiveView.bottomAnchor].active = YES;
     [_adaptiveView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
     [_adaptiveView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+    #if TARGET_OS_VISION
+    _adaptiveView.backgroundColor = [UIColor.grayColor colorWithAlphaComponent:0.4];
+    _adaptiveView.layer.cornerRadius = 6;
+    #endif
 }
 
 - (void)didFetchUserResponses:(ACOAdaptiveCard *)card action:(ACOBaseActionElement *)action
