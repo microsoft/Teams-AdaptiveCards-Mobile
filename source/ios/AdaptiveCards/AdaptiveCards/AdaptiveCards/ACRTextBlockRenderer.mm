@@ -123,8 +123,6 @@
 
     lab.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [viewGroup addArrangedSubview:lab];
-
     lab.textContainer.maximumNumberOfLines = int(txtBlck->GetMaxLines());
     if (!lab.textContainer.maximumNumberOfLines && !txtBlck->GetWrap()) {
         lab.textContainer.maximumNumberOfLines = 1;
@@ -135,7 +133,7 @@
     }
 
     lab.editable = NO;
-
+    
     [lab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
 
     if (txtBlck->GetHeight() == HeightType::Auto) {
@@ -143,8 +141,10 @@
     } else {
         [lab setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisVertical];
     }
-
+    
     configRtl(lab, rootView.context);
+    
+    [viewGroup addArrangedSubview:lab];
 
     return lab;
 }
