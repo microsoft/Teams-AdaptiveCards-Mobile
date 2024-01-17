@@ -28,10 +28,17 @@
 
     selectedRow = -1;
 
+    #if TARGET_OS_VISION
+    [_delegate source:self
+           userconfig:[NSString stringWithContentsOfFile:[main pathForResource:@"visionOsHostConfig" ofType:@"json"]
+                                                encoding:NSUTF8StringEncoding
+                                                   error:nil]];
+    #else
     [_delegate source:self
            userconfig:[NSString stringWithContentsOfFile:[main pathForResource:@"sample" ofType:@"json"]
                                                 encoding:NSUTF8StringEncoding
                                                    error:nil]];
+    #endif
     _editor = [[UITextView alloc] init];
     _editor.editable = YES;
     _editorViewController = [[NSBundle mainBundle] loadNibNamed:@"ACEditorViewController" owner:self options:nil][0];
@@ -72,7 +79,9 @@
     }
 
     cell.textLabel.attributedText = attributedString;
-
+    #if TARGET_OS_VISION
+    cell.hoverStyle = [UIHoverStyle styleWithEffect:[UIHoverHighlightEffect effect] shape:nil] ;
+    #endif
     return cell;
 }
 
@@ -151,18 +160,19 @@
     _pathsToFiles = data;
     if (self.tableView.hidden) {
         if (data) {
-            [UIView animateWithDuration:0.6
-                             animations:^{
-                                 self.tableView.hidden = NO;
-                                 self.tableHeight.active = NO;
-                                 self.tableHeight = [self.tableView.heightAnchor constraintEqualToConstant:200];
-                                 self.tableHeight.active = YES;
-                             }];
+            #if TARGET_OS_VISION
+            self.view.backgroundColor = [UIColor.grayColor colorWithAlphaComponent:0.4];
+            #endif
+            self.tableView.hidden = NO;
+            self.tableHeight.active = NO;
+            self.tableHeight = [self.tableView.heightAnchor constraintEqualToConstant:200];
+            self.tableHeight.active = YES;
             self.IsCollapsed = NO;
         }
     } else if (!data) {
-        [UIView animateWithDuration:0.6
+        [UIView animateWithDuration:0.3
                          animations:^{
+                             self.view.backgroundColor = UIColor.clearColor;
                              self.tableView.hidden = YES;
                          }];
     }

@@ -32,9 +32,15 @@
         adaptiveCardsPayloads = [[NSMutableArray alloc] init];
         adaptiveCardsViews = [[NSMutableArray alloc] init];
         NSBundle *main = [NSBundle mainBundle];
+        #if TARGET_OS_VISION
+        hostConfig = [NSString stringWithContentsOfFile:[main pathForResource:@"visionOsHostConfig" ofType:@"json"]
+                                               encoding:NSUTF8StringEncoding
+                                                  error:nil];
+        #else
         hostConfig = [NSString stringWithContentsOfFile:[main pathForResource:@"sample" ofType:@"json"]
                                                encoding:NSUTF8StringEncoding
                                                   error:nil];
+        #endif
         resolvers = [[ACOResourceResolvers alloc] init];
         ADCResolver *resolver = [[ADCResolver alloc] init];
         [resolvers setResourceResolver:resolver scheme:@"http"];
@@ -146,6 +152,9 @@
                            widthConstraint:adaptiveCardsWidth
                                   delegate:self.adaptiveCardsDelegates];
     }
+    #if TARGET_OS_VISION
+    renderResult.view.layer.cornerRadius = 12;
+    #endif
     return renderResult.view;
 }
 
