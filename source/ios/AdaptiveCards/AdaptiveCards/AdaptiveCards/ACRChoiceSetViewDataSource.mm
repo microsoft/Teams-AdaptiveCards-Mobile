@@ -108,7 +108,8 @@ const CGFloat minimumRowHeight = 44.0;
         _currentSelectedIndexPath = nil;
         _config = hostConfig;
         _parentStyle = ACRContainerStyle::ACRNone;
-
+        self.isRequired = choiceSet->GetIsRequired();
+        
         NSString *defaultValues = [NSString stringWithCString:_choiceSetDataSource->GetValue().c_str()
                                                      encoding:NSUTF8StringEncoding];
         _defaultValuesArray = [defaultValues componentsSeparatedByCharactersInSet:
@@ -128,7 +129,7 @@ const CGFloat minimumRowHeight = 44.0;
             }
             ++index;
         }
-
+        
         self.hasValidationProperties = self.isRequired;
     }
     return self;
@@ -181,7 +182,18 @@ const CGFloat minimumRowHeight = 44.0;
     NSString *accessibilityLabel = ([tableView isKindOfClass:[ACRInputTableView class]]) ? ((ACRInputTableView *)tableView).adaptiveAccessibilityLabel : tableView.accessibilityLabel;
     _accessibilityString = accessibilityLabel ? accessibilityLabel : @"";
     cell.accessibilityTraits = cell.accessibilityTraits;
-    cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@, %@", _accessibilityString, cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
+    
+    // If required field voice over should call it out as required.
+    if (isRequired)
+    {
+        cell.accessibilityLabel = [NSString stringWithFormat:@"%@ %@, %@, %@", _accessibilityString, @"(Required)", cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
+        cell.accessibilityLabel = [cell.accessibilityLabel stringByReplacingOccurrencesOfString:@"*" withString:@""];
+    } 
+    else
+    {
+        cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@, %@", _accessibilityString, cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
+    }
+    
     cell.accessibilityHint = NSLocalizedString(@"double tap to select", nil);
 
     NSString *elementId = [NSString stringWithCString:_choiceSetDataSource->GetId().c_str()
