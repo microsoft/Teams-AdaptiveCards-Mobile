@@ -35,6 +35,9 @@ CGFloat kFileBrowserWidth = 0;
 @end
 
 @implementation ViewController
+
+UIColor* defaultButtonBackgroundColor;
+
 + (void)applyConstraints:(NSArray<NSString *> *)formats variables:(NSDictionary *)variables
 {
     NSArray<NSLayoutConstraint *> *constraints = nil;
@@ -108,6 +111,8 @@ CGFloat kFileBrowserWidth = 0;
 {
     [super viewDidLoad];
     _global_queue = dispatch_get_main_queue();
+    
+    defaultButtonBackgroundColor = [UIColor colorWithRed:0 / 255 green:122.0 / 255 blue:1 alpha:1];
 
     #if !TARGET_OS_VISION
         kFileBrowserWidth = [[UIScreen mainScreen] bounds].size.width - 32.0f;
@@ -337,10 +342,10 @@ CGFloat kFileBrowserWidth = 0;
                 [@"default" caseInsensitiveCompare:acrButton.sentiment] != NSOrderedSame) {
                 [acrButton applySentimentStyling];
             } else {
-                button.backgroundColor = [UIColor colorWithRed:0.11 green:0.68 blue:0.97 alpha:1.0];
+                button.backgroundColor = defaultButtonBackgroundColor;
             }
         } else {
-            button.backgroundColor = [UIColor colorWithRed:0.11 green:0.68 blue:0.97 alpha:1.0];
+            button.backgroundColor = defaultButtonBackgroundColor;
         }
     }
 }
@@ -581,10 +586,7 @@ CGFloat kFileBrowserWidth = 0;
     [button addTarget:self
                   action:selector
         forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor colorWithRed:0 / 255
-                                             green:122.0 / 255
-                                              blue:1
-                                             alpha:1];
+    button.backgroundColor = defaultButtonBackgroundColor;
     button.contentEdgeInsets = UIEdgeInsetsMake(5, 8, 5, 8);
     button.layer.cornerRadius = 10;
     return button;
