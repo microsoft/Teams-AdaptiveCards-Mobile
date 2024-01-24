@@ -222,7 +222,7 @@ stages:
        git add gradle.properties
        git commit -m "[Android] Bump to v${{ parameters.base_version }}"
        git push --tags --set-upstream origin "adaptivecards/post-release-$AC_VERSION_STRING"
-       curl -i -u $AC_GHUSER:$AC_GHPAT -d '{ "title": "[Android] Bump to v${{ parameters.base_version }}", "head": "adaptivecards/post-release-$AC_VERSION_STRING", "base": "main", "body": "Auto-generated post-release pull request" }' https://api.github.com/repos/microsoft/adaptivecards/pulls
+       curl -i -u $AC_GHUSER:$AC_GHPAT -d '{ "title": "[Android] Bump to v${{ parameters.base_version }}", "head": "adaptivecards/post-release-$AC_VERSION_STRING", "base": "main", "body": "Auto-generated post-release pull request" }' https://api.github.com/repos/Microsoft/AdaptiveCards-Mobile/pulls
 
       workingDirectory: source/android/adaptivecards
       displayName: 'Update version file'
