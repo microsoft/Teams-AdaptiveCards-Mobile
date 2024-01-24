@@ -32,7 +32,7 @@ body:
       required: true
     attributes:
       label: Problem Description
-      description: Please enter a description of the issue. If you just have a question, please post [on GitHub Discussions](https://github.com/microsoft/AdaptiveCards/discussions)
+      description: Please enter a description of the issue. If you just have a question, please post [on GitHub Discussions](https://github.com/Microsoft/AdaptiveCards-Mobile/discussions)
   - type: textarea
     validations:
       required: true

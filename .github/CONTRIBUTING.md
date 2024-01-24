@@ -2,7 +2,7 @@
 
 ## 1. Search for Duplicates
 
-[Search the existing issues](https://github.com/Microsoft/AdaptiveCards/issues?utf8=%E2%9C%93&q=is%3Aissue) before logging a new one.
+[Search the existing issues](https://github.com/Microsoft/AdaptiveCards-Mobile/issues?utf8=%E2%9C%93&q=is%3Aissue) before logging a new one.
 
 ## 2. Do you have a question?
 
@@ -41,14 +41,14 @@ A bug must have an issue tracking it in the issue tracker that has been approved
 ## Contributing features
 
 Thank you for wanting to contribute to Adaptive Cards. If you are planning to make changes to the Core SDK, please make sure these changes align with our [Core Design Principles](https://docs.microsoft.com/en-us/adaptive-cards/#core-design-principles). Prior to writing any code that affects rendering, please make sure you follow the following steps:
-1.	Open a "Feature Request" issue to start the discussion on the feature you wish to see in the product. Please make sure you search our [planned work](https://github.com/microsoft/AdaptiveCards/projects/32) to see if your feature is already planned.
-2.	Open a PR with a .MD file to the [following directory](https://github.com/microsoft/AdaptiveCards/tree/main/specs/elements) with a spec that clearly outlines the feature you are implementing. **Include as much detail on the feature as possible**.
+1.	Open a "Feature Request" issue to start the discussion on the feature you wish to see in the product.
+2.	Open a PR with a .MD file to the [following directory](https://github.com/Microsoft/AdaptiveCards/tree/main/specs/elements) with a spec that clearly outlines the feature you are implementing. **Include as much detail on the feature as possible**.
     1.	At a bare minimum you must answer the following questions:
         1.	Why do you need this feature and what will the feature do?
         2.	What will the API surface look like?
         3.	What will the schema look like?
         4.	What is the down-level impact of this feature?
-    2.  Please make sure your PR follows a similar format as our [Spec](https://github.com/microsoft/AdaptiveCards/blob/main/specs/SpecTemplate.md) template including a summary, rationale, scope, and examples.
+    2.  Please make sure your PR follows a similar format as our [Spec](https://github.com/Microsoft/AdaptiveCards/blob/main/specs/SpecTemplate.md) template including a summary, rationale, scope, and examples.
 3.	Once you open the PR with the spec, the team will review it and schedule a call with the community to walk through the feature. This is where the discussion will happen.
 4.	If the spec is approved, you may begin writing the implementation for your feature and submit a PR.
     1.	Note: In order for your feature to release with Adaptive Cards it must be implemented on all platforms (.NET, iOS, Android, JavaScript) as per our Core Design Principles. You may choose to implement on any number on these platforms as a starting point for our team, but please keep in mind we wont be able to merge anything until all platforms are implemented.
