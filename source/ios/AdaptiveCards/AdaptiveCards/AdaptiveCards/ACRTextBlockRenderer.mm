@@ -116,6 +116,11 @@
         lab.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
         lab.attributedText = content;
         lab.accessibilityLabel = content.string;
+        // if accessibility label is the same as accessibility value, clear accessibility value
+        // this prevents the same content from being repeated twice in voiceover
+        if (lab.accessibilityValue != nil && [lab.accessibilityValue isEqualToString:lab.accessibilityLabel]) {
+            lab.accessibilityValue = @"";
+        }
         if ([content.string stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet].length == 0) {
             lab.accessibilityElementsHidden = YES;
         }
