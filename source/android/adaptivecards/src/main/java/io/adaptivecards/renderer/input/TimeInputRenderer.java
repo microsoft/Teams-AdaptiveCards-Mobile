@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 
 import io.adaptivecards.objectmodel.BaseCardElement;
@@ -62,7 +63,7 @@ public class TimeInputRenderer extends TextInputRenderer
 
         TimeInput timeInput = Util.castTo(baseCardElement, TimeInput.class);
 
-        TimeInputHandler timeInputHandler = new TimeInputHandler(timeInput, fragmentManager);
+        TimeInputHandler timeInputHandler = new TimeInputHandler(timeInput, new WeakReference<>(fragmentManager));
         String time = "";
         String value = timeInput.GetValue();
         if (RendererUtil.isValidTime(value) && !value.isEmpty())
@@ -100,7 +101,8 @@ public class TimeInputRenderer extends TextInputRenderer
                 timePickerFragment.setArguments(args);
 
                 FragmentManager fm = timeInputHandler.getFragmentManager();
-                timePickerFragment.show(fm, TITLE);
+                if (fm != null)
+                    timePickerFragment.show(fm, TITLE);
             }
         });
 
