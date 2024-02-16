@@ -743,7 +743,12 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
                                                                   options:NSRegularExpressionSearch
                                                                     range:NSMakeRange(0, [parsedString length])];
     }
-
+    // Added manual replace of \\* when the text is used directly, html parsing is exluding this case successfully
+    if (!markDownParser->HasHtmlTags() && [parsedString containsString:@"\\*"]) {
+        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"\\*"
+                                                               withString:@"*"];
+    }
+    
     NSDictionary *data = nil;
 
     FontType sharedFontType = textProperties.GetFontType().value_or(FontType::Default);
