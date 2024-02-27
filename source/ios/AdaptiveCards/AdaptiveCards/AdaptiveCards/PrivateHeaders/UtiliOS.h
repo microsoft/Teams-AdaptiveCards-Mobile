@@ -164,3 +164,6 @@ HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthCo
 
 // Validate date of type "YYYY. MM. DD. HH:MM AM|PM" to prevent parsing issues
 bool matchHungarianDateRegex(NSString *stringToValidate);
+
+// Retuns a string with removed symbols of type \\x
+NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, NSSet<NSString *> *symbolsSet);

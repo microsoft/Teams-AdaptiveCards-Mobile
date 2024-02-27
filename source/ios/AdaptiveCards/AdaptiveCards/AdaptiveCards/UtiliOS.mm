@@ -735,46 +735,60 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
         // MarkDownParser transforms text with MarkDown to a html string
         markdownString = markDownParser->TransformToHtml();
     }
-    NSString *parsedString = [NSString stringWithCString:markdownString.c_str() encoding:NSUTF8StringEncoding];
+    NSString *parsedString = (markDownParser->HasHtmlTags()) ? [NSString stringWithCString:markdownString.c_str() encoding:NSUTF8StringEncoding] : [NSString stringWithCString:markDownParser->GetRawText().c_str() encoding:NSUTF8StringEncoding];
 
-    if ([parsedString containsString:@"\n"] || [parsedString containsString:@"\r"]) {
+    if (markDownParser->HasHtmlTags() && ([parsedString containsString:@"\n"] || [parsedString containsString:@"\r"])) {
         parsedString = [parsedString stringByReplacingOccurrencesOfString:@"[\\n\\r]"
                                                                withString:@"<br>"
                                                                   options:NSRegularExpressionSearch
                                                                     range:NSMakeRange(0, [parsedString length])];
     }
-
+    // Added manual replace of \\* when the text is used directly, html parsing is exluding this case successfully
+    if (!markDownParser->HasHtmlTags())
+    {
+        NSSet* symbolsToRemove = [NSSet setWithObjects:@"*", @"_", nil];
+        parsedString = stringWithRemovedBackslashedSymbols(parsedString, symbolsToRemove);
+    }
+    
     NSDictionary *data = nil;
 
     FontType sharedFontType = textProperties.GetFontType().value_or(FontType::Default);
     TextWeight sharedTextWeight = textProperties.GetTextWeight().value_or(TextWeight::Default);
     TextSize sharedTextSize = textProperties.GetTextSize().value_or(TextSize::Default);
 
-    NSString *fontFamilyName = nil;
+    // use Apple's html rendering only if the string has markdowns
+    if (markDownParser->HasHtmlTags()) {
+        NSString *fontFamilyName = nil;
 
-    if (![hostConfig getFontFamily:sharedFontType]) {
-        if (sharedFontType == FontType::Monospace) {
-            fontFamilyName = @"'Courier New'";
+        if (![hostConfig getFontFamily:sharedFontType]) {
+            if (sharedFontType == FontType::Monospace) {
+                fontFamilyName = @"'Courier New'";
+            } else {
+                fontFamilyName = @"'-apple-system',  'San Francisco'";
+            }
         } else {
-            fontFamilyName = @"'-apple-system',  'San Francisco'";
+            fontFamilyName = [hostConfig getFontFamily:sharedFontType];
         }
+
+        NSString *font_style = textProperties.GetItalic() ? @"italic" : @"normal";
+        // Font and text size are applied as CSS style by appending it to the html string
+        parsedString = [parsedString stringByAppendingString:[NSString stringWithFormat:@"<style>body{font-family: %@; font-size:%dpx; font-weight: %d; font-style: %@;}</style>",
+                                                                                        fontFamilyName,
+                                                                                        [hostConfig getTextBlockTextSize:sharedFontType
+                                                                                                                textSize:sharedTextSize],
+                                                                                        [hostConfig getTextBlockFontWeight:sharedFontType
+                                                                                                                textWeight:sharedTextWeight],
+                                                                                        font_style]];
+
+        NSData *htmlData = [parsedString dataUsingEncoding:NSUTF16StringEncoding];
+        NSDictionary *options = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
+        data = @{@"html" : htmlData, @"options" : options};
     } else {
-        fontFamilyName = [hostConfig getFontFamily:sharedFontType];
+        UIFont *font = getFont(hostConfig, textProperties);
+
+        NSDictionary *attributeDictionary = @{NSFontAttributeName : font};
+        data = @{@"nonhtml" : parsedString, @"descriptor" : attributeDictionary};
     }
-
-    NSString *font_style = textProperties.GetItalic() ? @"italic" : @"normal";
-    // Font and text size are applied as CSS style by appending it to the html string
-    parsedString = [parsedString stringByAppendingString:[NSString stringWithFormat:@"<style>body{font-family: %@; font-size:%dpx; font-weight: %d; font-style: %@;}</style>",
-                                                                                    fontFamilyName,
-                                                                                    [hostConfig getTextBlockTextSize:sharedFontType
-                                                                                                            textSize:sharedTextSize],
-                                                                                    [hostConfig getTextBlockFontWeight:sharedFontType
-                                                                                                            textWeight:sharedTextWeight],
-                                                                                    font_style]];
-
-    NSData *htmlData = [parsedString dataUsingEncoding:NSUTF16StringEncoding];
-    NSDictionary *options = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
-    data = @{@"html" : htmlData, @"options" : options};
 
     if (elementId) {
         [rootView enqueueIntermediateTextProcessingResult:data
@@ -1163,4 +1177,15 @@ bool matchHungarianDateRegex(NSString *stringToValidate)
     NSTextCheckingResult *match = [regex firstMatchInString:stringToValidate options:0 range:NSMakeRange(0, [stringToValidate length])];
     // Only true if exists a match and is the complete string
     return match != nil && stringToValidate.length == (match.range.length + 1);
+}
+
+NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, NSSet<NSString *> *symbolsSet)
+{
+    NSString* tempString = stringToRemoveSymbols;
+    for (NSString* symbol in symbolsSet)
+    {
+        tempString = [tempString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\\%@", symbol]
+                                                           withString:symbol];
+    }
+    return tempString;
 }
