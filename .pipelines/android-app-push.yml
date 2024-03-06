@@ -23,3 +23,30 @@ pool:
 
 variables:
 - group: AdaptiveCards-KVLink
+
+steps:
+- task: Gradle@2
+  displayName: 'gradlew mobile:assembleRelease'
+  inputs:
+    gradleWrapperFile: source/android/gradlew.bat
+    workingDirectory: source/android
+    tasks: 'mobile:assembleRelease'
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*.apk'
+    apksignerKeystoreFile: '/keystore'
+    apksignerKeystorePassword: '$(keystorePwd)'
+    apksignerKeystoreAlias: 'key0'
+    apksignerKeyPassword: '$(keystorePwd)'
+    
+- task: AppCenterDistribute@3
+  inputs:
+    serverEndpoint: 'AppCenter App'
+    appSlug: 'AdaptiveCards-Mobile/AdaptiveCards-iOS-Visualizer'
+    appFile: 'source/android/mobile/release/'
+    buildVersion: '${{ parameters.appVersion }}'
+    symbolsOption: 'Android'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'New build'
+    destinationType: 'groups'
+    
