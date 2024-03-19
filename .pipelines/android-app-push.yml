@@ -1,11 +1,3 @@
-parameters:
-  - name: appVersion
-    displayName: Update version of app
-    type: string
-    default: 2.4.0-beta
-    values:
-      - 2.4.0-beta
-
 name: $(Year:yy).$(Month).$(DayOfMonth).$(rev:r)
 
 pr: none
@@ -18,32 +10,46 @@ schedules:
       include:
         - main
 
+parameters:
+  - name: appVersion
+    displayName: Please enter the base version (i.e. MAJOR.MINOR.PATCH)
+    type: string
+    default: 1.0.0
+
 pool:
-  vmImage: 'macos-latest'
+  name: Azure Pipelines
+  vmImage: windows-2019
+  demands: java
 
 variables:
 - group: AdaptiveCards-KVLink
 
 steps:
+    
 - task: Gradle@2
-  displayName: 'gradlew mobile:assembleRelease'
   inputs:
-    gradleWrapperFile: source/android/gradlew.bat
-    workingDirectory: source/android
+    workingDirectory: 'source/android'
+    gradleWrapperFile: 'source/android/gradlew'
+    gradleOptions: '-Xmx3072m'
+    publishJUnitResults: false
+    jdkVersionOption: 1.11
+    testResultsFiles: '**/TEST-*.xml'
     tasks: 'mobile:assembleRelease'
+    
 - task: AndroidSigning@3
   inputs:
     apkFiles: '**/*.apk'
-    apksignerKeystoreFile: 'source/android/keystore.keystore'
+    apksignerKeystoreFile: 'keystore.keystore'
     apksignerKeystorePassword: '$(keystorePwd)'
     apksignerKeystoreAlias: 'key0'
     apksignerKeyPassword: '$(keystorePwd)'
+    apksignerArguments: --out source/android/mobile/build/outputs/apk/release/mobile-release-signed.apk
     
 - task: AppCenterDistribute@3
   inputs:
     serverEndpoint: 'AppCenter App'
-    appSlug: 'AdaptiveCards-Mobile/AdaptiveCards-iOS-Visualizer'
-    appFile: 'source/android/mobile/release/'
+    appSlug: 'AdaptiveCards-Mobile/AdaptiveCards-Android-Visualizer'
+    appFile: 'source/android/mobile/build/outputs/apk/release/mobile-release-signed.apk'
     buildVersion: '${{ parameters.appVersion }}'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
