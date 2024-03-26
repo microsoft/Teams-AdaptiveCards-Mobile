@@ -743,7 +743,13 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
                                                                   options:NSRegularExpressionSearch
                                                                     range:NSMakeRange(0, [parsedString length])];
     }
-
+    // Added manual replace of \\* when the text is used directly, html parsing is exluding this case successfully
+    if (!markDownParser->HasHtmlTags())
+    {
+        NSSet* symbolsToRemove = [NSSet setWithObjects:@"*", @"_", nil];
+        parsedString = stringWithRemovedBackslashedSymbols(parsedString, symbolsToRemove);
+    }
+    
     NSDictionary *data = nil;
 
     FontType sharedFontType = textProperties.GetFontType().value_or(FontType::Default);
@@ -1171,4 +1177,15 @@ bool matchHungarianDateRegex(NSString *stringToValidate)
     NSTextCheckingResult *match = [regex firstMatchInString:stringToValidate options:0 range:NSMakeRange(0, [stringToValidate length])];
     // Only true if exists a match and is the complete string
     return match != nil && stringToValidate.length == (match.range.length + 1);
+}
+
+NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, NSSet<NSString *> *symbolsSet)
+{
+    NSString* tempString = stringToRemoveSymbols;
+    for (NSString* symbol in symbolsSet)
+    {
+        tempString = [tempString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\\%@", symbol]
+                                                           withString:symbol];
+    }
+    return tempString;
 }
