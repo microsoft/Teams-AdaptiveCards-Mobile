@@ -1,0 +1,58 @@
+name: $(Year:yy).$(Month).$(DayOfMonth).$(rev:r)
+
+pr: none
+trigger: none
+
+schedules:
+  - cron: "0 3 * * 1"
+    displayName: Publish Android App
+    branches:
+      include:
+        - main
+
+parameters:
+  - name: appVersion
+    displayName: Please enter the base version (i.e. MAJOR.MINOR.PATCH)
+    type: string
+    default: 1.0.0
+
+pool:
+  name: Azure Pipelines
+  vmImage: windows-2019
+  demands: java
+
+variables:
+- group: AdaptiveCards-KVLink
+
+steps:
+    
+- task: Gradle@2
+  inputs:
+    workingDirectory: 'source/android'
+    gradleWrapperFile: 'source/android/gradlew'
+    gradleOptions: '-Xmx3072m'
+    publishJUnitResults: false
+    jdkVersionOption: 1.11
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'mobile:assembleRelease'
+    
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*.apk'
+    apksignerKeystoreFile: 'keystore.keystore'
+    apksignerKeystorePassword: '$(keystorePwd)'
+    apksignerKeystoreAlias: 'key0'
+    apksignerKeyPassword: '$(keystorePwd)'
+    apksignerArguments: --out source/android/mobile/build/outputs/apk/release/mobile-release-signed.apk
+    
+- task: AppCenterDistribute@3
+  inputs:
+    serverEndpoint: 'AppCenter App'
+    appSlug: 'AdaptiveCards-Mobile/AdaptiveCards-Android-Visualizer'
+    appFile: 'source/android/mobile/build/outputs/apk/release/mobile-release-signed.apk'
+    buildVersion: '${{ parameters.appVersion }}'
+    symbolsOption: 'Android'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'New build'
+    destinationType: 'groups'
+    
