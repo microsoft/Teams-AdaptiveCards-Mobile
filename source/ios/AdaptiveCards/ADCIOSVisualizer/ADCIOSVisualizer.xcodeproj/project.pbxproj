@@ -971,7 +971,7 @@
 				);
 				INFOPLIST_FILE = ADCIOSVisualizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-df";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-mobile";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1135,7 +1135,7 @@
 				DEVELOPMENT_TEAM = 9KBH5RKYEW;
 				INFOPLIST_FILE = ADCIOSVisualizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-df";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-mobile";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1154,7 +1154,7 @@
 				DEVELOPMENT_TEAM = 9KBH5RKYEW;
 				INFOPLIST_FILE = ADCIOSVisualizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-df";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-mobile";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
