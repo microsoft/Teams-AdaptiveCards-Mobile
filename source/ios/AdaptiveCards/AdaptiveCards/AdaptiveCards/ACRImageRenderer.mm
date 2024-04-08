@@ -143,6 +143,10 @@
     if (imgElem->GetImageStyle() == ImageStyle::Person) {
         wrappingView.isPersonStyle = YES;
     }
+    
+    if (imgElem->GetImageStyle() == ImageStyle::RoundedCorners) {
+        view.layer.cornerRadius = 5;
+    }
 
     if (view && view.image) {
         // if we already have UIImageView and UIImage, configures the constraints and turn off the notification

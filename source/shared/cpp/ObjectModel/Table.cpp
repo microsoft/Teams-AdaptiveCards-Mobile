@@ -45,6 +45,16 @@ void Table::SetFirstRowAsHeaders(bool value)
     m_firstRowAsHeaders = value;
 }
 
+bool Table::GetRoundedCorners() const
+{
+    return m_roundedCorners;
+}
+
+void Table::SetRoundedCorners(bool value)
+{
+    m_roundedCorners = value;
+}
+
 std::optional<HorizontalAlignment> Table::GetHorizontalCellContentAlignment() const
 {
     return m_horizontalCellContentAlignment;
@@ -183,6 +193,7 @@ std::shared_ptr<BaseCardElement> TableParser::Deserialize(ParseContext& context,
     }
 
     table->SetShowGridLines(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ShowGridLines, true, false));
+    table->SetRoundedCorners(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::RoundedCorners, false, false));
     table->SetGridStyle(ParseUtil::GetEnumValue<ContainerStyle>(
         json, AdaptiveCardSchemaKey::GridStyle, ContainerStyle::None, ContainerStyleFromString));
     table->SetFirstRowAsHeaders(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::FirstRowAsHeaders, true, false));

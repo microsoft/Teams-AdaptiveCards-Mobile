@@ -37,6 +37,11 @@
         }
         [self defineColumnDefinitions:table];
         [self buildRowView:table rootView:rootView inputs:inputs hostConfig:acoConfig];
+        bool roundedCorner = table->GetRoundedCorners();
+        if (roundedCorner)
+        {
+            self.layer.cornerRadius = 5;
+        }
     }
     return self;
 }

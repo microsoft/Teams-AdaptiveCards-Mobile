@@ -1,0 +1,43 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+        {
+            "type": "Container",
+            "style": "good",
+            "showBorder": true,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "This Container shows border around it's content. Border colour comes from host config",
+                    "wrap": true
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "style": "good",
+            "bleed": true,
+            "roundedCorners": true,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "This Container shows border around it's content and also bleeds into it's parent",
+                    "wrap": true
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "style": "warning",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "This Container is just a plain ol' container, it looks nice too though!",
+                    "wrap": true
+                }
+            ]
+        }
+    ]
+}

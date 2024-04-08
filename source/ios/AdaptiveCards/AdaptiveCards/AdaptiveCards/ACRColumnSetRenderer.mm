@@ -56,6 +56,8 @@
     columnSetView.rtl = rootView.context.rtl;
 
     [viewGroup addArrangedSubview:columnSetView];
+    
+    [self configureBorderForElement:acoElem container:columnSetView config:acoConfig];
 
     configBleed(rootView, elem, columnSetView, acoConfig);
 
@@ -234,6 +236,27 @@
     columnSetView.accessibilityElements = [columnSetView getArrangedSubviews];
 
     return columnSetView;
+}
+
+- (void)configureBorderForElement:(ACOBaseCardElement *)acoElem container:(ACRContentStackView *)container config:(ACOHostConfig *)acoConfig
+{
+    std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<ColumnSet> containerElem = std::dynamic_pointer_cast<ColumnSet>(elem);
+    bool shouldShowBorder = containerElem->GetShowBorder();
+    if(shouldShowBorder)
+    {
+        container.layer.borderWidth = 1;
+        std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+        ACRContainerStyle style = (ACRContainerStyle)containerElem->GetStyle();
+        auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:style]);
+        UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
+        [[container layer] setBorderColor:[color CGColor]];
+    }
+    bool roundedCorner = containerElem->GetRoundedCorners();
+    if (roundedCorner)
+    {
+        container.layer.cornerRadius = 5;
+    }
 }
 
 @end

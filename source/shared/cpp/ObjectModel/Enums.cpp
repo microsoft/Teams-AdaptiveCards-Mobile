@@ -107,6 +107,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::IsEnabled, "isEnabled"},
             {AdaptiveCardSchemaKey::IsMultiSelect, "isMultiSelect"},
             {AdaptiveCardSchemaKey::IsMultiline, "isMultiline"},
+            {AdaptiveCardSchemaKey::ShowBorder, "showBorder"},
+            {AdaptiveCardSchemaKey::RoundedCorners, "roundedCorners"},
             {AdaptiveCardSchemaKey::IsRequired, "isRequired"},
             {AdaptiveCardSchemaKey::IsSelected, "isSelected"},
             {AdaptiveCardSchemaKey::IsSubtle, "isSubtle"},
@@ -269,7 +271,8 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(ImageStyle, {
             {
                 {ImageStyle::Default, "default"},
-                {ImageStyle::Person, "person"}
+                {ImageStyle::Person, "person"},
+                {ImageStyle::RoundedCorners, "roundedCorners"}
             },
             {
                 {"normal", ImageStyle::Default} // Back compat to support "Normal" for "Default" for pre V1.0 payloads
