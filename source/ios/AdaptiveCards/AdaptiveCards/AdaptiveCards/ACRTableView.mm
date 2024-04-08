@@ -40,7 +40,12 @@
         bool roundedCorner = table->GetRoundedCorners();
         if (roundedCorner)
         {
+            auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:_gridStyle]);
+            UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
             self.layer.cornerRadius = 5;
+            self.layer.borderWidth = 1;
+            self.layer.borderColor = [color CGColor];
+            self.layer.masksToBounds = YES;
         }
     }
     return self;
