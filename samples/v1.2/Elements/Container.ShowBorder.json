@@ -20,10 +20,11 @@
             "style": "good",
             "bleed": true,
             "roundedCorners": true,
+            "showBorder": true,
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "This Container shows border around it's content and also bleeds into it's parent",
+                    "text": "This Container shows border around it's content has rounded corners and also bleeds into it's parent",
                     "wrap": true
                 }
             ]
