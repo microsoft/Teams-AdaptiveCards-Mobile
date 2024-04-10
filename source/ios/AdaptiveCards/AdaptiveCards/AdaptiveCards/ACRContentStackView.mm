@@ -345,6 +345,9 @@ using namespace AdaptiveCards;
 
 - (void)applyPadding:(unsigned int)padding priority:(unsigned int)priority
 {
+    // remove existing padding first
+    [self removeConstraints:_widthconstraint];
+    [self removeConstraints:_heightconstraint];
     [self applyPadding:padding priority:priority location:ACRBleedToAll];
 }
 

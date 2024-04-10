@@ -250,6 +250,8 @@
         ACRContainerStyle style = (ACRContainerStyle)containerElem->GetStyle();
         auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:style]);
         UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
+        // we will add padding for any column element which has shouldShowBorder.
+        [container applyPadding:config->GetSpacing().paddingSpacing priority:1000];
         [[container layer] setBorderColor:[color CGColor]];
     }
     bool roundedCorner = containerElem->GetRoundedCorners();
