@@ -171,7 +171,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
         ContainerRenderer.applyContainerStyle(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig);
         ContainerRenderer.applyBleed(column, columnLayout, context, hostConfig);
         ContainerRenderer.applyBorder(styleForThis, columnLayout, hostConfig, column.GetShowBorder());
-        ContainerRenderer.applyRoundedCorners(columnLayout, hostConfig, column.GetRoundedCorners());
+        ContainerRenderer.applyRoundedCorners(columnLayout, column.GetRoundedCorners());
         BaseCardElementRenderer.applyRtl(column.GetRtl(), columnLayout);
 
         ContainerRenderer.setSelectAction(renderedCard, column.GetSelectAction(), columnLayout, cardActionHandler, renderArgs);

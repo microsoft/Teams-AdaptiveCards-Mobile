@@ -90,7 +90,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
         applyContainerStyle(styleForThis, containerStyle, containerView, hostConfig);
         applyBleed(container, containerView, context, hostConfig);
         applyBorder(styleForThis, containerView, hostConfig, container.GetShowBorder());
-        applyRoundedCorners(containerView, hostConfig, container.GetRoundedCorners());
+        applyRoundedCorners(containerView, container.GetRoundedCorners());
         BaseCardElementRenderer.applyRtl(container.GetRtl(), containerView);
 
         RenderArgs containerRenderArgs = new RenderArgs(renderArgs);
@@ -221,7 +221,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
     }
 
-    public static void applyRoundedCorners(ViewGroup collectionElementView, HostConfig hostConfig, boolean roundedCorners) {
+    public static void applyRoundedCorners(ViewGroup collectionElementView, boolean roundedCorners) {
         if (roundedCorners) {
             float cornerRadius = Util.dpToPixels(collectionElementView.getContext(), 5f);
             if (collectionElementView.getBackground() instanceof GradientDrawable) {

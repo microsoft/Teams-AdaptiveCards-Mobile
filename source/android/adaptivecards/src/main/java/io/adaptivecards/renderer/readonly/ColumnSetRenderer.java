@@ -137,7 +137,7 @@ public class ColumnSetRenderer extends BaseCardElementRenderer
         ContainerRenderer.applyContainerStyle(styleForThis, parentContainerStyle, columnSetLayout, hostConfig);
         ContainerRenderer.applyBleed(columnSet, columnSetLayout, context, hostConfig);
         ContainerRenderer.applyBorder(styleForThis, columnSetLayout, hostConfig, columnSet.GetShowBorder());
-        ContainerRenderer.applyRoundedCorners(columnSetLayout, hostConfig, columnSet.GetRoundedCorners());
+        ContainerRenderer.applyRoundedCorners(columnSetLayout, columnSet.GetRoundedCorners());
         return columnSetLayout;
     }
 
