@@ -86,9 +86,11 @@ public class ContainerRenderer extends BaseCardElementRenderer
 
         ContainerStyle containerStyle = renderArgs.getContainerStyle();
         ContainerStyle styleForThis = getLocalContainerStyle(container, containerStyle);
-        applyPadding(styleForThis, containerStyle, containerView, hostConfig);
+        applyPadding(styleForThis, containerStyle, containerView, hostConfig, container.GetShowBorder());
         applyContainerStyle(styleForThis, containerStyle, containerView, hostConfig);
         applyBleed(container, containerView, context, hostConfig);
+        applyBorder(styleForThis, containerView, hostConfig, container.GetShowBorder());
+        applyRoundedCorners(containerView, hostConfig, container.GetRoundedCorners());
         BaseCardElementRenderer.applyRtl(container.GetRtl(), containerView);
 
         RenderArgs containerRenderArgs = new RenderArgs(renderArgs);
@@ -113,7 +115,6 @@ public class ContainerRenderer extends BaseCardElementRenderer
                 throw e;
             }
         }
-
         ContainerRenderer.setBackgroundImage(renderedCard, context, container.GetBackgroundImage(), hostConfig, containerView);
         setSelectAction(renderedCard, container.GetSelectAction(), containerView, cardActionHandler, renderArgs);
 
@@ -204,6 +205,32 @@ public class ContainerRenderer extends BaseCardElementRenderer
         {
             int padding = Util.dpToPixels(collectionElementView.getContext(), hostConfig.GetSpacing().getPaddingSpacing());
             collectionElementView.setPadding(padding, padding, padding, padding);
+        }
+    }
+
+    public static void applyBorder(ContainerStyle containerStyle, ViewGroup collectionElementView, HostConfig hostConfig, boolean showBorder) {
+        if (showBorder) {
+            int borderColor = Color.parseColor(hostConfig.GetBorderColor(containerStyle));
+            if (collectionElementView.getBackground() instanceof GradientDrawable) {
+                ((GradientDrawable) collectionElementView.getBackground()).setStroke(Util.dpToPixels(collectionElementView.getContext(), 1f), borderColor);
+            } else {
+                GradientDrawable gradientDrawable = new GradientDrawable();
+                gradientDrawable.setStroke(Util.dpToPixels(collectionElementView.getContext(), 1f), borderColor);
+                collectionElementView.setBackground(gradientDrawable);
+            }
+        }
+    }
+
+    public static void applyRoundedCorners(ViewGroup collectionElementView, HostConfig hostConfig, boolean roundedCorners) {
+        if (roundedCorners) {
+            float cornerRadius = Util.dpToPixels(collectionElementView.getContext(), 5f);
+            if (collectionElementView.getBackground() instanceof GradientDrawable) {
+                ((GradientDrawable) collectionElementView.getBackground()).setCornerRadius(cornerRadius);
+            } else {
+                GradientDrawable gradientDrawable = new GradientDrawable();
+                gradientDrawable.setCornerRadius(cornerRadius);
+                collectionElementView.setBackground(gradientDrawable);
+            }
         }
     }
 

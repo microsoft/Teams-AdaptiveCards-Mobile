@@ -3,6 +3,8 @@
 package io.adaptivecards.renderer.readonly
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TableLayout
@@ -52,6 +54,24 @@ object TableRenderer : BaseCardElementRenderer() {
                 tableCellRenderer.render(renderedCard, context, fragmentManager, rowLayout, cell, cardActionHandler, hostConfig, cellArgs)
             }
             tableLayout.addView(rowLayout)
+        }
+
+        if (table.GetRoundedCorners()) {
+            if (table.GetShowGridLines()) {
+                val cornerRadius = Util.dpToPixels(tableLayout.context, 5f).toFloat()
+                if (tableLayout.background is GradientDrawable) {
+                    (tableLayout.background as GradientDrawable).apply {
+                        this.cornerRadius = cornerRadius
+                        this.setStroke(Util.dpToPixels(tableLayout.context, 1f), Color.parseColor(hostConfig.GetBorderColor(computedGridStyle)))
+                    }
+                } else {
+                    tableLayout.background = GradientDrawable().apply {
+                        this.cornerRadius = cornerRadius
+                        this.setStroke(Util.dpToPixels(tableLayout.context, 1f), Color.parseColor(hostConfig.GetBorderColor(computedGridStyle)))
+                    }
+                }
+            }
+            tableLayout.clipToOutline = true
         }
 
         viewGroup.addView(tableLayout)
