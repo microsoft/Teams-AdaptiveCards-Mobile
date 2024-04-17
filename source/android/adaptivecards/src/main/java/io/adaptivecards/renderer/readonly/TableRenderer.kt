@@ -70,8 +70,8 @@ object TableRenderer : BaseCardElementRenderer() {
                         this.setStroke(Util.dpToPixels(tableLayout.context, 1f), Color.parseColor(hostConfig.GetBorderColor(computedGridStyle)))
                     }
                 }
+                tableLayout.clipToOutline = true
             }
-            tableLayout.clipToOutline = true
         }
 
         viewGroup.addView(tableLayout)
