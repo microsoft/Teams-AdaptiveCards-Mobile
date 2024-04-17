@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -107,8 +108,26 @@ public class ImageRenderer extends BaseCardElementRenderer
         @Override
         protected void renderBitmap(Bitmap bitmap)
         {
-            ImageView view = (ImageView) m_view ;
+            ImageView view = applyRoundedCorners();
             view.setImageBitmap(bitmap);
+        }
+
+        ImageView applyRoundedCorners() {
+            ImageView view = (ImageView) m_view ;
+            if (m_imageStyle == ImageStyle.RoundedCorners) {
+                GradientDrawable gradientDrawable;
+                if (view.getBackground() instanceof GradientDrawable) {
+                    gradientDrawable = (GradientDrawable) view.getBackground();
+                } else {
+                    gradientDrawable = new GradientDrawable();
+                }
+                gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+                gradientDrawable.setCornerRadius(Util.dpToPixels(view.getContext(), 5f));
+                gradientDrawable.setColor(m_backgroundColor);
+                view.setBackground(gradientDrawable);
+                view.setClipToOutline(true);
+            }
+            return view;
         }
 
         private ImageStyle m_imageStyle;
