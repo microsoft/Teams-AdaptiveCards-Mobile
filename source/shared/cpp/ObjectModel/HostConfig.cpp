@@ -752,14 +752,14 @@ std::string HostConfig::GetBorderColor(ContainerStyle style) const
 unsigned int HostConfig::GetBorderWidth(CardElementType elementType) const
 {
     std::string key = CardElementTypeToString(elementType);
-    auto borderWidth = ParseUtil::GetInt(_borderWidth, AdaptiveCardSchemaKeyFromString(key), 10);
+    auto borderWidth = ParseUtil::GetInt(_borderWidth, AdaptiveCardSchemaKeyFromString(key), 1);
     return borderWidth;
 }
 
 unsigned int HostConfig::GetCornerRadius(CardElementType elementType) const
 {
     std::string key = CardElementTypeToString(elementType);
-    auto cornerRadius = ParseUtil::GetInt(_cornerRadius, AdaptiveCardSchemaKeyFromString(key), 50);
+    auto cornerRadius = ParseUtil::GetInt(_cornerRadius, AdaptiveCardSchemaKeyFromString(key), 5);
     return cornerRadius;
 }
 
