@@ -196,8 +196,6 @@ struct ContainerStyleDefinition
 {
     std::string backgroundColor = "#FFFFFFFF";
     std::string borderColor = "#FF7F7F7F";
-    unsigned int borderThickness = 0; // CAUTION: Experimental feature for iOS. Not in v1 schema, subject to change.
-                                      // (see #1150)
     ColorsConfig foregroundColors;
 
     static ContainerStyleDefinition Deserialize(const Json::Value& json, const ContainerStyleDefinition& defaultValue);
@@ -208,7 +206,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition defaultPalette = {
         "#FFFFFFFF",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -222,7 +219,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition emphasisPalette = {
         "#08000000",
         "#08000000",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -236,7 +232,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition goodPalette = {
         "#FFD5F0DD",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -250,7 +245,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition attentionPalette = {
         "#F7E9E9",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -265,7 +259,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition warningPalette = {
         "#F7F7DF",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -279,7 +272,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition accentPalette = {
         "#DCE5F7",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -401,7 +393,8 @@ public:
     std::string GetForegroundColor(ContainerStyle style, ForegroundColor color, bool isSubtle) const;
     std::string GetHighlightColor(ContainerStyle style, ForegroundColor color, bool isSubtle) const;
     std::string GetBorderColor(ContainerStyle style) const;
-    unsigned int GetBorderThickness(ContainerStyle style) const;
+    unsigned int GetBorderWidth(CardElementType elementType) const;
+    unsigned int GetCornerRadius(CardElementType elementType) const;
 
     std::string GetFontFamily() const;
     void SetFontFamily(const std::string& value);
@@ -491,5 +484,7 @@ private:
     TextBlockConfig _textBlock;
     TextStylesConfig _textStyles;
     TableConfig _table;
+    Json::Value _borderWidth;
+    Json::Value _cornerRadius;
 };
 } // namespace AdaptiveCards

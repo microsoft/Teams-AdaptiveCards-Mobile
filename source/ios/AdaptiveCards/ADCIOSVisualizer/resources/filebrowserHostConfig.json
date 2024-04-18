@@ -89,7 +89,6 @@
 			},
 			"backgroundColor": "#08000000",
 			"borderColor": "#FF000000",
-			"borderThickness": 1
 		},
 		"good": {
 			"foregroundColors": {
@@ -166,7 +165,6 @@
 			},
 			"backgroundColor": "#DDFF0000",
 			"borderColor": "#FF000000",
-			"borderThickness": 2
 		},
 		"accent": {
 			"foregroundColors": {
@@ -192,7 +190,6 @@
 				}
 			},
 			"backgroundColor": "#882E89FC",
-			"borderThickness": 1
 		}
 	},
 	"spacing": {
@@ -253,5 +250,17 @@
           "veryNarrow": 216,
           "narrow": 413,
           "standard": 500
+    },
+    "borderWidth": {
+        "columnSet": 1,
+        "column": 1,
+        "container": 1
+    },
+    "cornerRadius": {
+        "columnSet": 5,
+        "column": 5,
+        "container": 5,
+        "table": 5,
+        "image": 5
     }
 }

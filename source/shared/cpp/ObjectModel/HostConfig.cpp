@@ -75,6 +75,10 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
 
     result._table = ParseUtil::ExtractJsonValueAndMergeWithDefault<TableConfig>(
         json, AdaptiveCardSchemaKey::Table, result._table, TableConfig::Deserialize);
+    
+    result._borderWidth = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::BorderWidth);
+    
+    result._cornerRadius = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::CornerRadius);
 
     return result;
 }
@@ -393,8 +397,6 @@ ContainerStyleDefinition ContainerStyleDefinition::Deserialize(const Json::Value
 
     const std::string borderColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BorderColor);
     result.borderColor = borderColor == "" ? defaultValue.borderColor : borderColor;
-
-    result.borderThickness = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::BorderThickness, defaultValue.borderThickness);
 
     result.foregroundColors = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorsConfig>(
         json, AdaptiveCardSchemaKey::ForegroundColors, defaultValue.foregroundColors, ColorsConfig::Deserialize);
@@ -747,9 +749,18 @@ std::string HostConfig::GetBorderColor(ContainerStyle style) const
     return GetContainerStyle(style).borderColor;
 }
 
-unsigned int HostConfig::GetBorderThickness(ContainerStyle style) const
+unsigned int HostConfig::GetBorderWidth(CardElementType elementType) const
 {
-    return GetContainerStyle(style).borderThickness;
+    std::string key = CardElementTypeToString(elementType);
+    auto borderWidth = ParseUtil::GetInt(_borderWidth, AdaptiveCardSchemaKeyFromString(key), 10);
+    return borderWidth;
+}
+
+unsigned int HostConfig::GetCornerRadius(CardElementType elementType) const
+{
+    std::string key = CardElementTypeToString(elementType);
+    auto cornerRadius = ParseUtil::GetInt(_cornerRadius, AdaptiveCardSchemaKeyFromString(key), 50);
+    return cornerRadius;
 }
 
 std::string HostConfig::GetFontFamily() const

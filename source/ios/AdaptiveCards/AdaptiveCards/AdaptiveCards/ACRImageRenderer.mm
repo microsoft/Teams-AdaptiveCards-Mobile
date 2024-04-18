@@ -145,7 +145,8 @@
     }
     
     if (imgElem->GetImageStyle() == ImageStyle::RoundedCorners) {
-        view.layer.cornerRadius = 5;
+        std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+        view.layer.cornerRadius = config->GetCornerRadius(imgElem->GetElementType());
     }
 
     if (view && view.image) {

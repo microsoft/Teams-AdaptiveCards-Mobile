@@ -92,12 +92,12 @@
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
+    std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     bool shouldShowBorder = containerElem->GetShowBorder();
     if(shouldShowBorder)
     {
-        container.layer.borderWidth = 1;
-        std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
         ACRContainerStyle style = (ACRContainerStyle)containerElem->GetStyle();
+        container.layer.borderWidth = config->GetBorderWidth(containerElem->GetElementType());
         auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:style]);
         UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
         // we will add padding for any column element which has shouldShowBorder.
@@ -108,7 +108,7 @@
     bool roundedCorner = containerElem->GetRoundedCorners();
     if (roundedCorner)
     {
-        container.layer.cornerRadius = 5;
+        container.layer.cornerRadius = config->GetCornerRadius(containerElem->GetElementType());
     }
 }
 

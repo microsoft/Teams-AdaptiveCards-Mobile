@@ -40,13 +40,13 @@
         bool roundedCorner = table->GetRoundedCorners();
         if (roundedCorner)
         {
-            self.layer.cornerRadius = 5;
+            self.layer.cornerRadius = config->GetCornerRadius(table->GetElementType());
             self.layer.masksToBounds = YES;
             if (self.showGridLines)
             {
                 auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:_gridStyle]);
                 UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
-                self.layer.borderWidth = 1;
+                self.layer.borderWidth = config->GetBorderWidth(table->GetElementType());
                 self.layer.borderColor = [color CGColor];
             }
         }

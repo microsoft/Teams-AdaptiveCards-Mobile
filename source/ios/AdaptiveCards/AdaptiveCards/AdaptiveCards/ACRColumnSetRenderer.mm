@@ -243,10 +243,10 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<ColumnSet> containerElem = std::dynamic_pointer_cast<ColumnSet>(elem);
     bool shouldShowBorder = containerElem->GetShowBorder();
+    std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     if(shouldShowBorder)
     {
-        container.layer.borderWidth = 1;
-        std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+        container.layer.borderWidth = config->GetBorderWidth(containerElem->GetElementType());
         ACRContainerStyle style = (ACRContainerStyle)containerElem->GetStyle();
         auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:style]);
         UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
@@ -257,7 +257,7 @@
     bool roundedCorner = containerElem->GetRoundedCorners();
     if (roundedCorner)
     {
-        container.layer.cornerRadius = 5;
+        container.layer.cornerRadius = config->GetCornerRadius(containerElem->GetElementType());
     }
 }
 
