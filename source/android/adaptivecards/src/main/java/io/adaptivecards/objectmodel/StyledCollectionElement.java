@@ -71,6 +71,22 @@ public class StyledCollectionElement extends CollectionCoreElement {
     AdaptiveCardObjectModelJNI.StyledCollectionElement_SetPadding(swigCPtr, this, value);
   }
 
+  public boolean GetShowBorder() {
+    return AdaptiveCardObjectModelJNI.StyledCollectionElement_GetShowBorder(swigCPtr, this);
+  }
+
+  public void SetShowBorder(boolean value) {
+    AdaptiveCardObjectModelJNI.StyledCollectionElement_SetShowBorder(swigCPtr, this, value);
+  }
+
+  public boolean GetRoundedCorners() {
+    return AdaptiveCardObjectModelJNI.StyledCollectionElement_GetRoundedCorners(swigCPtr, this);
+  }
+
+  public void SetRoundedCorners(boolean value) {
+    AdaptiveCardObjectModelJNI.StyledCollectionElement_SetRoundedCorners(swigCPtr, this, value);
+  }
+
   public boolean GetBleed() {
     return AdaptiveCardObjectModelJNI.StyledCollectionElement_GetBleed(swigCPtr, this);
   }
