@@ -250,7 +250,9 @@ public class ContainerRenderer extends BaseCardElementRenderer
             }
             else
             {
-                collectionElementView.setBackgroundColor(color);
+                GradientDrawable gradientDrawable = new GradientDrawable();
+                gradientDrawable.setColor(color);
+                collectionElementView.setBackground(gradientDrawable);
             }
         }
     }
