@@ -157,6 +157,11 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             Util.loadIcon(context, button, iconUrl, hostConfig, renderedCard, iconPlacement);
         }
 
+        if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
+            String openUrlAnnouncement = context.getResources().getString(R.string.open_url_announcement, baseActionElement.GetTitle());
+            button.setContentDescription(openUrlAnnouncement);
+        }
+
         viewGroup.addView(button);
 
         return button;
