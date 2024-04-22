@@ -419,6 +419,11 @@ void configBleed(ACRView *rootView, std::shared_ptr<BaseCardElement> const &elem
                     [backgroundView layer].borderColor = [container layer].borderColor;
                     [container layer].borderColor = 0;
                 }
+                
+                if ([container layer].cornerRadius) {
+                    [backgroundView layer].cornerRadius = [container layer].cornerRadius;
+                    [container layer].cornerRadius = 0;
+                }
             }
         }
     }
