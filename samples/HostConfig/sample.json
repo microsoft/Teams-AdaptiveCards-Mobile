@@ -29,6 +29,19 @@
 	  "narrow": 413,
 	  "standard": 500
 	},
+	"borderWidth": {
+		"columnSet": 1,
+		"column": 1,
+		"container": 1,
+		"table": 1
+	},
+	"cornerRadius": {
+		"columnSet": 5,
+		"column": 5,
+		"container": 5,
+		"table": 5,
+		"image": 5
+	},
 	"supportsInteractivity": true,
 	"fontTypes": {
 		"default": {

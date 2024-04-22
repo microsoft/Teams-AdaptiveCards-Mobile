@@ -3,6 +3,8 @@
 package io.adaptivecards.renderer.readonly
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TableLayout
@@ -52,6 +54,29 @@ object TableRenderer : BaseCardElementRenderer() {
                 tableCellRenderer.render(renderedCard, context, fragmentManager, rowLayout, cell, cardActionHandler, hostConfig, cellArgs)
             }
             tableLayout.addView(rowLayout)
+        }
+
+        if (table.GetRoundedCorners()) {
+            if (table.GetShowGridLines()) {
+                val cornerRadius = hostConfig.GetCornerRadius(table.GetElementType()).toFloat()
+                val cornerRadiusInPixels = Util.dpToPixels(tableLayout.context, cornerRadius).toFloat()
+
+                val borderWidth = hostConfig.GetBorderWidth(table.GetElementType()).toFloat()
+                val borderWidthInPixels = Util.dpToPixels(tableLayout.context, borderWidth)
+
+                if (tableLayout.background is GradientDrawable) {
+                    (tableLayout.background as GradientDrawable).apply {
+                        this.cornerRadius = cornerRadiusInPixels
+                        this.setStroke(borderWidthInPixels, Color.parseColor(hostConfig.GetBorderColor(computedGridStyle)))
+                    }
+                } else {
+                    tableLayout.background = GradientDrawable().apply {
+                        this.cornerRadius = cornerRadiusInPixels
+                        this.setStroke(borderWidthInPixels, Color.parseColor(hostConfig.GetBorderColor(computedGridStyle)))
+                    }
+                }
+            }
+            tableLayout.clipToOutline = true
         }
 
         viewGroup.addView(tableLayout)
