@@ -158,8 +158,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         }
 
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
-            String openUrlAnnouncement = context.getResources().getString(R.string.open_url_announcement, baseActionElement.GetTitle());
-            button.setContentDescription(openUrlAnnouncement);
+            button.setContentDescription(Util.getOpenUrlAnnouncement(context, baseActionElement.GetTitle()));
         }
 
         viewGroup.addView(button);

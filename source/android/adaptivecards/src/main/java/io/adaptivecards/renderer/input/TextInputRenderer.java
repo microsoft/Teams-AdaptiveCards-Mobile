@@ -313,8 +313,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
                         }
 
                         if (action.GetElementType() == ActionType.OpenUrl) {
-                            String openUrlAnnouncement = context.getResources().getString(R.string.open_url_announcement, action.GetTitle());
-                            inlineButton.setContentDescription(openUrlAnnouncement);
+                            inlineButton.setContentDescription(Util.getOpenUrlAnnouncement(context, action.GetTitle()));
                         }
 
                         textInputViewGroup.addView(inlineButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
@@ -351,8 +350,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
                         }
 
                         if (action.GetElementType() == ActionType.OpenUrl) {
-                            String openUrlAnnouncement = context.getResources().getString(R.string.open_url_announcement, action.GetTitle());
-                            inlineButton.setContentDescription(openUrlAnnouncement);
+                            inlineButton.setContentDescription(Util.getOpenUrlAnnouncement(context, action.GetTitle()));
                         }
 
                         textInputViewGroup.addView(inlineButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));

@@ -28,6 +28,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import io.adaptivecards.R;
 import io.adaptivecards.objectmodel.BaseActionElement;
 import io.adaptivecards.objectmodel.BaseActionElementVector;
 import io.adaptivecards.objectmodel.BaseCardElement;
@@ -575,5 +576,9 @@ public final class Util {
             context
         );
         imageLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl);
+    }
+
+    public static String getOpenUrlAnnouncement(Context context, String urlTitle) {
+        return context.getResources().getString(R.string.open_url_announcement, urlTitle);
     }
 }
