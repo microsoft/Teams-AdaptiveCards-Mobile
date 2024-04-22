@@ -88,7 +88,7 @@
 				}
 			},
 			"backgroundColor": "#08000000",
-			"borderColor": "#FF000000",
+			"borderColor": "#FF000000"
 		},
 		"good": {
 			"foregroundColors": {
@@ -164,7 +164,7 @@
 				}
 			},
 			"backgroundColor": "#DDFF0000",
-			"borderColor": "#FF000000",
+			"borderColor": "#FF000000"
 		},
 		"accent": {
 			"foregroundColors": {
@@ -189,7 +189,7 @@
 					"subtle": "#DDED0000"
 				}
 			},
-			"backgroundColor": "#882E89FC",
+			"backgroundColor": "#882E89FC"
 		}
 	},
 	"spacing": {
