@@ -86,6 +86,8 @@
     std::shared_ptr<BaseActionElement> selectAction = columnElem->GetSelectAction();
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
 
+    [self configureBorderForElement:acoElem container:column config:acoConfig];
+    
     [column configureForSelectAction:acoSelectAction rootView:rootView];
 
     column.shouldGroupAccessibilityChildren = YES;
@@ -111,6 +113,30 @@
     auto backgroundImageProperties = columnElem->GetBackgroundImage();
 
     renderBackgroundImage(rootView, backgroundImageProperties.get(), imageView, image);
+}
+
+- (void)configureBorderForElement:(ACOBaseCardElement *)acoElem container:(ACRContentStackView *)container config:(ACOHostConfig *)acoConfig
+{
+    std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<Column> containerElem = std::dynamic_pointer_cast<Column>(elem);
+    bool shouldShowBorder = containerElem->GetShowBorder();
+    std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+    if(shouldShowBorder)
+    {
+        container.layer.borderWidth = config->GetBorderWidth(containerElem->GetElementType());
+        ACRContainerStyle style = (ACRContainerStyle)containerElem->GetStyle();
+        auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:style]);
+        UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
+        // we will add padding for any column element which has shouldShowBorder.
+        [container applyPadding:config->GetSpacing().paddingSpacing priority:1000];
+        [[container layer] setBorderColor:[color CGColor]];
+    }
+    
+    bool roundedCorner = containerElem->GetRoundedCorners();
+    if (roundedCorner)
+    {
+        container.layer.cornerRadius = config->GetCornerRadius(containerElem->GetElementType());
+    }
 }
 
 @end
