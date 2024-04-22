@@ -75,6 +75,14 @@ public class Table extends CollectionCoreElement {
     AdaptiveCardObjectModelJNI.Table_SetFirstRowAsHeaders(swigCPtr, this, value);
   }
 
+  public boolean GetRoundedCorners() {
+    return AdaptiveCardObjectModelJNI.Table_GetRoundedCorners(swigCPtr, this);
+  }
+
+  public void SetRoundedCorners(boolean value) {
+    AdaptiveCardObjectModelJNI.Table_SetRoundedCorners(swigCPtr, this, value);
+  }
+
   public @androidx.annotation.Nullable HorizontalAlignment GetHorizontalCellContentAlignment() {
     StdOptionalHorizontalAlignment optvalue = new StdOptionalHorizontalAlignment(AdaptiveCardObjectModelJNI.Table_GetHorizontalCellContentAlignment(swigCPtr, this), false);
     return optvalue.has_value() ? optvalue.value() : null;

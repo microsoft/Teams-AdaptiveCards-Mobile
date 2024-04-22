@@ -10,7 +10,8 @@ package io.adaptivecards.objectmodel;
 
 public enum ImageStyle {
   Default(0),
-  Person;
+  Person,
+  RoundedCorners;
 
   public final int swigValue() {
     return swigValue;
