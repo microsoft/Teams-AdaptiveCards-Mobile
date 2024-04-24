@@ -29,6 +29,7 @@ using namespace AdaptiveCards;
     self.valueOff = [[NSString alloc] initWithCString:toggleInput->GetValueOff().c_str()
                                              encoding:NSUTF8StringEncoding];
     self.hasValidationProperties = self.isRequired;
+    self.delegateSet = [NSMutableSet set];
     return self;
 }
 
@@ -51,8 +52,22 @@ using namespace AdaptiveCards;
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _toggleSwitch);
 }
 
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nullable)delegate {
+    [_toggleSwitch addTarget:self action:@selector(onSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [delegateSet addObject:delegate];
+}
+
+- (void)onSwitchValueChanged:(UISwitch *)sender {
+    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
+        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
+            [delegate inputValueChanged];
+        }
+    }
+}
+
 @synthesize isRequired;
 @synthesize hasValidationProperties;
 @synthesize hasVisibilityChanged;
+@synthesize delegateSet;
 
 @end

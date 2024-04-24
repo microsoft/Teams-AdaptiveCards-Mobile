@@ -219,6 +219,11 @@
     return inputHandler;
 }
 
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nullable)delegate {
+    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
+    [inputHandler addObserverForValueChange:delegate];
+}
+
 - (UIView *)getInputView
 {
     if ((_stack.arrangedSubviews.count) == 3) {
@@ -288,5 +293,7 @@
 @synthesize id;
 
 @synthesize hasVisibilityChanged;
+
+@synthesize delegateSet;
 
 @end

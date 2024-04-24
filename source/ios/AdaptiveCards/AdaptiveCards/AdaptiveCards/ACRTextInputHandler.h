@@ -17,6 +17,7 @@
 @property BOOL hasText;
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem;
+- (void)textFieldDidChange;
 
 @end
 

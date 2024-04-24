@@ -90,6 +90,7 @@ static NSString *pickerCell = @"pickerCell";
         }
         _userSelectedTitle = valuesMap[defaultValue];
         self.hasValidationProperties = self.isRequired;
+        self.delegateSet = [NSMutableSet set];
     }
     return self;
 }
@@ -260,9 +261,22 @@ static NSString *pickerCell = @"pickerCell";
     }
 }
 
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nullable)delegate {
+    [delegateSet addObject:delegate];
+}
+
+- (void)notifyDelegates {
+    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
+        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
+            [delegate inputValueChanged];
+        }
+    }
+}
+
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _userSelectedRow = row;
+    [self notifyDelegates];
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
@@ -295,5 +309,6 @@ static NSString *pickerCell = @"pickerCell";
 @synthesize isRequired;
 @synthesize hasValidationProperties;
 @synthesize hasVisibilityChanged;
+@synthesize delegateSet;
 
 @end

@@ -117,6 +117,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
                                      encoding:NSUTF8StringEncoding];
         self.isRequired = _validator.isRequired;
         self.hasValidationProperties = self.isRequired;
+        self.delegateSet = [NSMutableSet set];
         auto inputLabel = choiceSet->GetLabel();
         _inputLabel = (!inputLabel.empty()) ? [NSString stringWithCString:inputLabel.c_str() encoding:NSUTF8StringEncoding] : @"";
 
@@ -385,6 +386,19 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     dictionary[self.id] = [_validator getValue:self.text];
 }
 
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nullable)delegate {
+    [delegateSet addObject:delegate];
+}
+
+- (void)notifyDelegates {
+    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
+        // Perform actions with the delegate object
+        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
+            [delegate inputValueChanged];
+        }
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -419,6 +433,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     [_stateManager collapsed];
     [self updateControls];
 
+    [self notifyDelegates];
     [self resignFirstResponder];
 }
 
@@ -429,7 +444,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 @synthesize isRequired;
 
 @synthesize hasVisibilityChanged;
-
+@synthesize delegateSet;
 @end
 
 @implementation ACOFilteredDataSource {
