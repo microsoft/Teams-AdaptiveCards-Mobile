@@ -415,6 +415,12 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getVerticalAlignmentEnum();
   public final static native String VerticalAlignmentToString(int jarg1);
   public final static native int VerticalAlignmentFromString(String jarg1);
+  public final static native long getIconSizeEnum();
+  public final static native String IconSizeToString(int jarg1);
+  public final static native int IconSizeFromString(String jarg1);
+  public final static native long getIconStyleEnum();
+  public final static native String IconStyleToString(int jarg1);
+  public final static native int IconStyleFromString(String jarg1);
   public final static native long getImageFillModeEnum();
   public final static native String ImageFillModeToString(int jarg1);
   public final static native int ImageFillModeFromString(String jarg1);

@@ -8,60 +8,43 @@
 
 package io.adaptivecards.objectmodel;
 
-public enum CardElementType {
-  ActionSet(0),
-  AdaptiveCard,
-  ChoiceInput,
-  ChoiceSetInput,
-  Column,
-  ColumnSet,
-  Container,
-  Custom,
-  DateInput,
-  Fact,
-  FactSet,
-  Image,
-  Icon,
-  ImageSet,
-  Media,
-  NumberInput,
-  RichTextBlock,
-  Table,
-  TableCell,
-  TableRow,
-  TextBlock,
-  TextInput,
-  TimeInput,
-  ToggleInput,
-  Unknown;
+public enum IconSize {
+  xxSmall(0),
+  xSmall,
+  Small,
+  Standard,
+  Medium,
+  Large,
+  xLarge,
+  xxLarge;
 
   public final int swigValue() {
     return swigValue;
   }
 
-  public static CardElementType swigToEnum(int swigValue) {
-    CardElementType[] swigValues = CardElementType.class.getEnumConstants();
+  public static IconSize swigToEnum(int swigValue) {
+    IconSize[] swigValues = IconSize.class.getEnumConstants();
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
-    for (CardElementType swigEnum : swigValues)
+    for (IconSize swigEnum : swigValues)
       if (swigEnum.swigValue == swigValue)
         return swigEnum;
-    throw new IllegalArgumentException("No enum " + CardElementType.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + IconSize.class + " with value " + swigValue);
   }
 
   @SuppressWarnings("unused")
-  private CardElementType() {
+  private IconSize() {
     this.swigValue = SwigNext.next++;
   }
 
   @SuppressWarnings("unused")
-  private CardElementType(int swigValue) {
+  private IconSize(int swigValue) {
     this.swigValue = swigValue;
     SwigNext.next = swigValue+1;
   }
 
   @SuppressWarnings("unused")
-  private CardElementType(CardElementType swigEnum) {
+  private IconSize(IconSize swigEnum) {
     this.swigValue = swigEnum.swigValue;
     SwigNext.next = this.swigValue+1;
   }
