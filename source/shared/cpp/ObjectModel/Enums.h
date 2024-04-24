@@ -22,6 +22,7 @@ enum class AdaptiveCardSchemaKey
     AllowCustomStyle,
     AllowInlinePlayback,
     AltText,
+    Name,
     AssociatedInputs,
     Attention,
     Authentication,
@@ -97,6 +98,7 @@ enum class AdaptiveCardSchemaKey
     IconUrl,
     Id,
     Image,
+    Icon,
     ImageBaseUrl,
     ImageSet,
     ImageSize,
@@ -235,6 +237,7 @@ enum class CardElementType
     Fact,
     FactSet,
     Image,
+    Icon,
     ImageSet,
     Media,
     NumberInput,
@@ -315,6 +318,26 @@ enum class VerticalAlignment
     Bottom
 };
 DECLARE_ADAPTIVECARD_ENUM(VerticalAlignment);
+
+enum class IconSize
+{
+    xxSmall = 0,
+    xSmall,
+    Small,
+    Standard,
+    Medium,
+    Large,
+    xLarge,
+    xxLarge
+};
+DECLARE_ADAPTIVECARD_ENUM(IconSize);
+
+enum class IconStyle
+{
+    Regular = 0,
+    Filled
+};
+DECLARE_ADAPTIVECARD_ENUM(IconStyle);
 
 enum class ImageFillMode
 {

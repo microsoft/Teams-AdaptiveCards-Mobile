@@ -20,6 +20,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::AllowCustomStyle, "allowCustomStyle"},
             {AdaptiveCardSchemaKey::AllowInlinePlayback, "allowInlinePlayback"},
             {AdaptiveCardSchemaKey::AltText, "altText"},
+            {AdaptiveCardSchemaKey::Name, "name"},
             {AdaptiveCardSchemaKey::AssociatedInputs, "associatedInputs"},
             {AdaptiveCardSchemaKey::Attention, "attention"},
             {AdaptiveCardSchemaKey::Authentication, "authentication"},
@@ -95,6 +96,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::IconUrl, "iconUrl"},
             {AdaptiveCardSchemaKey::Id, "id"},
             {AdaptiveCardSchemaKey::Image, "image"},
+            {AdaptiveCardSchemaKey::Icon, "icon"},
             {AdaptiveCardSchemaKey::ImageBaseUrl, "imageBaseUrl"},
             {AdaptiveCardSchemaKey::ImageSet, "imageSet"},
             {AdaptiveCardSchemaKey::ImageSize, "imageSize"},
@@ -228,6 +230,7 @@ namespace AdaptiveCards
             {CardElementType::Fact, "Fact"},
             {CardElementType::FactSet, "FactSet"},
             {CardElementType::Image, "Image"},
+            {CardElementType::Icon, "Icon"},
             {CardElementType::ImageSet, "ImageSet"},
             {CardElementType::Media, "Media"},
             {CardElementType::NumberInput, "Input.Number"},
@@ -278,6 +281,20 @@ namespace AdaptiveCards
             {
                 {"normal", ImageStyle::Default} // Back compat to support "Normal" for "Default" for pre V1.0 payloads
             }});
+
+    DEFINE_ADAPTIVECARD_ENUM(IconSize, {
+        {IconSize::xxSmall, "xxSmall"},
+        {IconSize::xSmall, "xSmall"},
+        {IconSize::Small, "Small"},
+        {IconSize::Standard, "Standard"},
+        {IconSize::Medium, "Medium"},
+        {IconSize::Large, "Large"},
+        {IconSize::xLarge, "xLarge"},
+        {IconSize::Large, "xxLarge"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(IconStyle, {
+        {IconStyle::Regular, "regular"},
+        {IconStyle::Filled, "filled"},});
 
     DEFINE_ADAPTIVECARD_ENUM(VerticalAlignment, {
         { VerticalAlignment::Top, "top" },
