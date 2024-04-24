@@ -20,6 +20,7 @@ import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.BackgroundImage;
 import io.adaptivecards.objectmodel.BaseActionElement;
 import io.adaptivecards.objectmodel.BaseCardElement;
+import io.adaptivecards.objectmodel.CardElementType;
 import io.adaptivecards.objectmodel.Container;
 import io.adaptivecards.objectmodel.ContainerBleedDirection;
 import io.adaptivecards.objectmodel.ContainerStyle;
@@ -86,9 +87,11 @@ public class ContainerRenderer extends BaseCardElementRenderer
 
         ContainerStyle containerStyle = renderArgs.getContainerStyle();
         ContainerStyle styleForThis = getLocalContainerStyle(container, containerStyle);
-        applyPadding(styleForThis, containerStyle, containerView, hostConfig);
+        applyPadding(styleForThis, containerStyle, containerView, hostConfig, container.GetShowBorder());
         applyContainerStyle(styleForThis, containerStyle, containerView, hostConfig);
         applyBleed(container, containerView, context, hostConfig);
+        applyBorder(styleForThis, containerView, hostConfig, container.GetElementType(), container.GetShowBorder());
+        applyRoundedCorners(containerView, hostConfig, container.GetElementType(), container.GetRoundedCorners());
         BaseCardElementRenderer.applyRtl(container.GetRtl(), containerView);
 
         RenderArgs containerRenderArgs = new RenderArgs(renderArgs);
@@ -113,7 +116,6 @@ public class ContainerRenderer extends BaseCardElementRenderer
                 throw e;
             }
         }
-
         ContainerRenderer.setBackgroundImage(renderedCard, context, container.GetBackgroundImage(), hostConfig, containerView);
         setSelectAction(renderedCard, container.GetSelectAction(), containerView, cardActionHandler, renderArgs);
 
@@ -207,6 +209,35 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
     }
 
+    public static void applyBorder(ContainerStyle containerStyle, ViewGroup collectionElementView, HostConfig hostConfig, CardElementType cardElementType, boolean showBorder) {
+        if (showBorder) {
+            float borderWidth = (float) hostConfig.GetBorderWidth(cardElementType);
+            int borderWidthInPixels = Util.dpToPixels(collectionElementView.getContext(), borderWidth);
+            int borderColor = Color.parseColor(hostConfig.GetBorderColor(containerStyle));
+            if (collectionElementView.getBackground() instanceof GradientDrawable) {
+                ((GradientDrawable) collectionElementView.getBackground()).setStroke(borderWidthInPixels, borderColor);
+            } else {
+                GradientDrawable gradientDrawable = new GradientDrawable();
+                gradientDrawable.setStroke(borderWidthInPixels, borderColor);
+                collectionElementView.setBackground(gradientDrawable);
+            }
+        }
+    }
+
+    public static void applyRoundedCorners(ViewGroup collectionElementView, HostConfig hostConfig, CardElementType cardElementType, boolean roundedCorners) {
+        if (roundedCorners) {
+            float cornerRadius = (float) hostConfig.GetCornerRadius(cardElementType);
+            float cornerRadiusInPixels = Util.dpToPixels(collectionElementView.getContext(), cornerRadius);
+            if (collectionElementView.getBackground() instanceof GradientDrawable) {
+                ((GradientDrawable) collectionElementView.getBackground()).setCornerRadius(cornerRadiusInPixels);
+            } else {
+                GradientDrawable gradientDrawable = new GradientDrawable();
+                gradientDrawable.setCornerRadius(cornerRadiusInPixels);
+                collectionElementView.setBackground(gradientDrawable);
+            }
+        }
+    }
+
     public static void applyContainerStyle(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig)
     {
         if (computedContainerStyle != parentContainerStyle)
@@ -219,7 +250,9 @@ public class ContainerRenderer extends BaseCardElementRenderer
             }
             else
             {
-                collectionElementView.setBackgroundColor(color);
+                GradientDrawable gradientDrawable = new GradientDrawable();
+                gradientDrawable.setColor(color);
+                collectionElementView.setBackground(gradientDrawable);
             }
         }
     }

@@ -167,13 +167,14 @@ public class ColumnRenderer extends BaseCardElementRenderer
 
         ContainerRenderer.applyVerticalContentAlignment(columnLayout, column.GetVerticalContentAlignment());
 
-        ContainerRenderer.applyPadding(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig);
+        ContainerRenderer.applyPadding(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig, column.GetShowBorder());
         ContainerRenderer.applyContainerStyle(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig);
         ContainerRenderer.applyBleed(column, columnLayout, context, hostConfig);
+        ContainerRenderer.applyBorder(styleForThis, columnLayout, hostConfig, column.GetElementType(), column.GetShowBorder());
+        ContainerRenderer.applyRoundedCorners(columnLayout, hostConfig, column.GetElementType(), column.GetRoundedCorners());
         BaseCardElementRenderer.applyRtl(column.GetRtl(), columnLayout);
 
         ContainerRenderer.setSelectAction(renderedCard, column.GetSelectAction(), columnLayout, cardActionHandler, renderArgs);
-
         viewGroup.addView(columnLayout);
         return columnLayout;
     }

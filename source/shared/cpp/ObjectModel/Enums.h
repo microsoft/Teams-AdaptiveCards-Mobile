@@ -22,6 +22,7 @@ enum class AdaptiveCardSchemaKey
     AllowCustomStyle,
     AllowInlinePlayback,
     AltText,
+    Name,
     AssociatedInputs,
     Attention,
     Authentication,
@@ -34,7 +35,6 @@ enum class AdaptiveCardSchemaKey
     Body,
     Bolder,
     BorderColor,
-    BorderThickness,
     Bottom,
     ButtonSpacing,
     Buttons,
@@ -56,6 +56,8 @@ enum class AdaptiveCardSchemaKey
     ConnectionName,
     Container,
     ContainerStyles,
+    BorderWidth,
+    CornerRadius,
     Dark,
     Data,
     DataQuery,
@@ -96,6 +98,7 @@ enum class AdaptiveCardSchemaKey
     IconUrl,
     Id,
     Image,
+    Icon,
     ImageBaseUrl,
     ImageSet,
     ImageSize,
@@ -109,6 +112,8 @@ enum class AdaptiveCardSchemaKey
     IsEnabled,
     IsMultiSelect,
     IsMultiline,
+    ShowBorder,
+    RoundedCorners,
     IsRequired,
     IsSelected,
     IsSubtle,
@@ -232,6 +237,7 @@ enum class CardElementType
     Fact,
     FactSet,
     Image,
+    Icon,
     ImageSet,
     Media,
     NumberInput,
@@ -313,6 +319,26 @@ enum class VerticalAlignment
 };
 DECLARE_ADAPTIVECARD_ENUM(VerticalAlignment);
 
+enum class IconSize
+{
+    xxSmall = 0,
+    xSmall,
+    Small,
+    Standard,
+    Medium,
+    Large,
+    xLarge,
+    xxLarge
+};
+DECLARE_ADAPTIVECARD_ENUM(IconSize);
+
+enum class IconStyle
+{
+    Regular = 0,
+    Filled
+};
+DECLARE_ADAPTIVECARD_ENUM(IconStyle);
+
 enum class ImageFillMode
 {
     Cover = 0,
@@ -325,7 +351,8 @@ DECLARE_ADAPTIVECARD_ENUM(ImageFillMode);
 enum class ImageStyle
 {
     Default = 0,
-    Person
+    Person,
+    RoundedCorners
 };
 DECLARE_ADAPTIVECARD_ENUM(ImageStyle);
 

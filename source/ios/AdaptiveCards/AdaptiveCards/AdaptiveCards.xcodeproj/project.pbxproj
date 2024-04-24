@@ -29,6 +29,10 @@
 		300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
 		30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */; };
+		463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C062BD8DB1F00A95C4E /* Icon.cpp */; };
+		463C3C0B2BD8DCC000A95C4E /* Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0A2BD8DCC000A95C4E /* Icon.h */; };
+		463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */; };
+		463C3C0F2BD8F7D200A95C4E /* ACRIconRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */; };
 		6B096D4E225431D0006CC034 /* ACRRichTextBlockRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B096D4D225431D0006CC034 /* ACRRichTextBlockRenderer.mm */; };
@@ -508,6 +512,10 @@
 		30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsTextBlockTests.mm; sourceTree = "<group>"; };
 		3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		463C3C062BD8DB1F00A95C4E /* Icon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Icon.cpp; path = ../../../../shared/cpp/ObjectModel/Icon.cpp; sourceTree = "<group>"; };
+		463C3C0A2BD8DCC000A95C4E /* Icon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Icon.h; path = ../../../../shared/cpp/ObjectModel/Icon.h; sourceTree = "<group>"; };
+		463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRIconRenderer.h; sourceTree = "<group>"; };
+		463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRIconRenderer.mm; sourceTree = "<group>"; };
 		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRTypeaheadSearchViewControllerPrivate.h; path = PrivateHeaders/ACRTypeaheadSearchViewControllerPrivate.h; sourceTree = "<group>"; };
 		6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRichTextBlockRenderer.h; sourceTree = "<group>"; };
@@ -1453,6 +1461,8 @@
 				F44872D71EE2261F00FCAFAE /* HostConfig.h */,
 				F44872DA1EE2261F00FCAFAE /* Image.cpp */,
 				F44872DB1EE2261F00FCAFAE /* Image.h */,
+				463C3C062BD8DB1F00A95C4E /* Icon.cpp */,
+				463C3C0A2BD8DCC000A95C4E /* Icon.h */,
 				F44872DC1EE2261F00FCAFAE /* ImageSet.cpp */,
 				F44872DD1EE2261F00FCAFAE /* ImageSet.h */,
 				6B2242B322334492000ACDA1 /* Inline.cpp */,
@@ -1637,6 +1647,8 @@
 				F42741061EF8624F00399FBB /* ACRIBaseCardElementRenderer.h */,
 				6B74403725BA71B60051F2A1 /* ACRImageProperties.h */,
 				6B74403825BA71B60051F2A1 /* ACRImageProperties.mm */,
+				463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */,
+				463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */,
 				F42741101EF873A600399FBB /* ACRImageRenderer.h */,
 				F42741111EF873A600399FBB /* ACRImageRenderer.mm */,
 				6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */,
@@ -1821,6 +1833,7 @@
 				F427411C1EF8A25200399FBB /* ACRRegistration.h in Headers */,
 				F49683541F6CA24600DF0D3A /* ACRRenderResult.h in Headers */,
 				F4F44BA1204CED2400A2F24C /* ACRCustomRenderer.h in Headers */,
+				463C3C0B2BD8DCC000A95C4E /* Icon.h in Headers */,
 				6B9AB31020DD82A2005C8E15 /* ACRTextView.h in Headers */,
 				6B3787BB20CB3E0E00015401 /* ACRContentHoldingUIScrollView.h in Headers */,
 				6B9BDF8020F40D1000F13155 /* ACOResourceResolvers.h in Headers */,
@@ -1880,6 +1893,7 @@
 				6BFF23F32714C0F000183C59 /* ACOHostConfigPrivate.h in Headers */,
 				6BFF24002714CA7600183C59 /* ACRChoiceSetViewDataSource.h in Headers */,
 				6BFF23FE2714C0F000183C59 /* ACOActionOverflowPrivate.h in Headers */,
+				463C3C0F2BD8F7D200A95C4E /* ACRIconRenderer.h in Headers */,
 				6BFF24122714E99C00183C59 /* ACRTargetBuilderDirector.h in Headers */,
 				6B8C765926449B09009548FA /* TableCell.h in Headers */,
 				6BFCA14C265452E100195CA7 /* ACRTableRenderer.h in Headers */,
@@ -2203,6 +2217,7 @@
 				6B7B1A9220B4D2AB00260731 /* MediaSource.cpp in Sources */,
 				F44873011EE2261F00FCAFAE /* Column.cpp in Sources */,
 				CFB972022941C07A008E3795 /* ChoicesData.cpp in Sources */,
+				463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */,
 				F448730D1EE2261F00FCAFAE /* FactSet.cpp in Sources */,
 				F44873031EE2261F00FCAFAE /* ColumnSet.cpp in Sources */,
 				F4FE456F1F1985200071D9E5 /* ACRColumnSetView.mm in Sources */,
@@ -2288,6 +2303,7 @@
 				7EDC0F68213878E800077A13 /* SemanticVersion.cpp in Sources */,
 				84AE295827FFA26F00D01B82 /* ContentSource.cpp in Sources */,
 				F42E517A1FEC3840008F9642 /* MarkDownParser.cpp in Sources */,
+				463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */,
 				6B7B1A9720BE2CBC00260731 /* ACRUIImageView.mm in Sources */,
 				6BCE4B252108FA7D00021A62 /* ACRMediaRenderer.mm in Sources */,
 				6B2242A32233439E000ACDA1 /* TextElementProperties.cpp in Sources */,
