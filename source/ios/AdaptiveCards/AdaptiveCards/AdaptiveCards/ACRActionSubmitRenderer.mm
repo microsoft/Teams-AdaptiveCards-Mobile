@@ -72,7 +72,6 @@ NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerF
 }
 
 - (void)inputValueChanged {
-    NSLog(@"valueChanged");
     for (UIButton *button in buttons)
     {
         [button setEnabled:[self validateInputs]];

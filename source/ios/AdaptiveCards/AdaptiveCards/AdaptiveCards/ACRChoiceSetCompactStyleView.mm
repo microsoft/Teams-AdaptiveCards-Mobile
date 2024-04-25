@@ -392,7 +392,6 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 
 - (void)notifyDelegates {
     for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-        // Perform actions with the delegate object
         if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
             [delegate inputValueChanged];
         }

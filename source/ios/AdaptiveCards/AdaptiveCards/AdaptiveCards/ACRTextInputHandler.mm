@@ -10,8 +10,6 @@
 #import "ACRInputLabelView.h"
 #import "NumberInput.h"
 #import "TextInput.h"
-#import "ACRIBaseInputHandler.h"
-
 
 @implementation ACRTextInputHandler
 
@@ -67,12 +65,10 @@
 }
 
 - (void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nullable)delegate {
-    NSLog(@"observer added:");
     [delegateSet addObject:delegate];
 }
 
 - (void)textFieldDidChange {
-// do something here
     for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
         if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
             [delegate inputValueChanged];

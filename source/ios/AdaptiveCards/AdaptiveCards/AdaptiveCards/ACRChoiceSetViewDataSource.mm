@@ -295,7 +295,6 @@ const CGFloat minimumRowHeight = 44.0;
 
 - (void)notifyDelegates {
     for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-        // Perform actions with the delegate object
         if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
             [delegate inputValueChanged];
         }

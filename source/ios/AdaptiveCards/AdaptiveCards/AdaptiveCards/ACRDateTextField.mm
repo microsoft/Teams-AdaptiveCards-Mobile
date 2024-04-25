@@ -231,22 +231,16 @@ using namespace AdaptiveCards;
 }
 
 -(void)datePickerValueChanged:(UIDatePicker *)datePicker {
-
-        for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-            // Perform actions with the delegate object
-            if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
-                [delegate inputValueChanged];
-            }
+    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
+        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
+            [delegate inputValueChanged];
         }
-
+    }
 }
 
 @synthesize hasValidationProperties;
-
 @synthesize id;
-
 @synthesize isRequired;
-
 @synthesize hasVisibilityChanged;
 @synthesize delegateSet;
 
