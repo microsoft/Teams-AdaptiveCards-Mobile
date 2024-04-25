@@ -40,13 +40,18 @@ NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerF
     if(action->m_conditionallyEnabled && button.isEnabled)
     {
         _inputs = [[NSMutableArray<ACRIBaseInputHandler> alloc] initWithArray:inputs];
+        BOOL atleastOneInputRequired = false;
         for (id<ACRIBaseInputHandler> input in _inputs) {
             if (input.isRequired) {
+                atleastOneInputRequired = true;
                 [input addObserverForValueChange:self];
             }
         }
-        [buttons addObject:button];
-        [button setEnabled:[self validateInputs]];
+        // update button enable state only if alteast one input is required
+        if(atleastOneInputRequired) {
+            [buttons addObject:button];
+            [button setEnabled:[self validateInputs]];
+        }
     }
     
     ACRAggregateTarget *target;
