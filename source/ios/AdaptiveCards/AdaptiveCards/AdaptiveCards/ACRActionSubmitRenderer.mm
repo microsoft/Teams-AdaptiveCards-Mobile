@@ -13,6 +13,7 @@
 #import "ACRButton.h"
 #import "SubmitAction.h"
 #import "UtiliOS.h"
+#import "ACRInputLabelView.h"
 
 @implementation ACRActionSubmitRenderer
 NSMutableArray<ACRIBaseInputHandler> *_inputs;
@@ -63,9 +64,14 @@ NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerF
 - (BOOL)validateInputs {
     BOOL validationResult = false;
     for (id<ACRIBaseInputHandler> input in _inputs) {
-        if(input.isRequired)
+        if(input.isRequired && !validationResult)
         {
-            validationResult |= [input validate:nil];
+            ACRInputLabelView *labelView = (ACRInputLabelView *)input;
+            if (labelView) {
+                validationResult |= [labelView.getInputHandler validate:nil];
+            } else {
+                validationResult |= [input validate:nil];
+            }
         }
     }
     return  validationResult;

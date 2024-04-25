@@ -17,7 +17,7 @@
 @property BOOL hasText;
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem;
-- (void)textFieldDidChange;
+- (void)textFieldDidChange:(UITextField *)textField;
 
 @end
 

@@ -68,7 +68,9 @@
     [delegateSet addObject:delegate];
 }
 
-- (void)textFieldDidChange {
+- (void)textFieldDidChange:(UITextField *)textField {
+    self.text = textField.text;
+    self.hasText = textField.hasText;
     for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
         if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
             [delegate inputValueChanged];
