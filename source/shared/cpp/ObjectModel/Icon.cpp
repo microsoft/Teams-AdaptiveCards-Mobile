@@ -111,13 +111,13 @@ std::shared_ptr<BaseCardElement> IconParser::Deserialize(ParseContext& context, 
 std::shared_ptr<BaseCardElement> IconParser::DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& json)
 {
     std::shared_ptr<Icon> icon = BaseCardElement::Deserialize<Icon>(context, json);
-    
+
     icon->setIconSize(ParseUtil::GetEnumValue<IconSize>(json, AdaptiveCardSchemaKey::Size, IconSize::Standard, IconSizeFromString));
-    
+
     icon->setIconStyle(ParseUtil::GetEnumValue<IconStyle>(json, AdaptiveCardSchemaKey::Style, IconStyle::Regular, IconStyleFromString));
-    
+
     icon->setForgroundColor(ParseUtil::GetEnumValue<ForegroundColor>(json, AdaptiveCardSchemaKey::Color, ForegroundColor::Default, ForegroundColorFromString));
-    
+
     icon->SetName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Name));
 
     // Parse optional selectAction
@@ -146,7 +146,7 @@ void Icon::GetResourceInformation(std::vector<RemoteResourceInformation>& resour
 std::string Icon::GetSVGResourceURL() const
 {
     // format: "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/<Icon Name>/<IconName><Size>Regular.json"
-    std::string m_url = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/" + GetName() + "/" + GetName() + std::to_string(getSize()) +"Regular.json";
+    std::string m_url = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/" + GetName() + "/" + GetName() + std::to_string(getSize()) + getStyle() + ".json";
     return m_url;
 }
 
@@ -157,20 +157,43 @@ unsigned int Icon::getSize() const
     {
         case IconSize::xxSmall:
             _size = 12;
+            break;
         case IconSize::xSmall:
             _size = 16;
+            break;
         case IconSize::Small:
             _size = 20;
+            break;
         case IconSize::Standard:
             _size = 24;
+            break;
         case IconSize::Medium:
             _size = 28;
+            break;
         case IconSize::Large:
             _size = 32;
+            break;
         case IconSize::xLarge:
             _size = 40;
+            break;
         case IconSize::xxLarge:
             _size = 48;
+            break;
     }
     return _size;
+}
+
+std::string Icon::getStyle() const
+{
+    std::string _style = "Regular";
+    switch (getIconStyle())
+    {
+        case IconStyle::Regular:
+            _style = "Regular";
+            break;
+        case IconStyle::Filled:
+            _style = "Filled";
+            break;
+    }
+    return _style;
 }

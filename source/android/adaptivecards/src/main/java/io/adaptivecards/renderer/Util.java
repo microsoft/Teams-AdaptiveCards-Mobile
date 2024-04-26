@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.TouchDelegate;
@@ -565,15 +566,61 @@ public final class Util {
 
     public static void loadIcon(Context context, View view, String iconUrl, HostConfig hostConfig, RenderedAdaptiveCard renderedCard, IconPlacement iconPlacement)
     {
-        ActionElementRendererIconImageLoaderAsync imageLoader = new ActionElementRendererIconImageLoaderAsync(
-            renderedCard,
-            view,
-            hostConfig.GetImageBaseUrl(),
-            iconPlacement,
-            hostConfig.GetActions().getIconSize(),
-            hostConfig.GetSpacing().getDefaultSpacing(),
-            context
-        );
-        imageLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl);
+        if (!iconUrl.startsWith(FLUENT_ICON_URL_PREFIX)) {
+            ActionElementRendererIconImageLoaderAsync imageLoader = new ActionElementRendererIconImageLoaderAsync(
+                renderedCard,
+                view,
+                hostConfig.GetImageBaseUrl(),
+                iconPlacement,
+                hostConfig.GetActions().getIconSize(),
+                hostConfig.GetSpacing().getDefaultSpacing(),
+                context
+            );
+            imageLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl);
+        }
+        else {
+            long iconSize = 20; // for testing purposes
+            String iconUrlToLoad = getFluentIconUrl(iconUrl, iconSize);
+            Log.d("Manpreet", "Creating Fluent Icon Url: " + iconUrlToLoad);
+            ActionElementRendererFluentIconImageLoaderAsync fluentIconLoaderAsync = new ActionElementRendererFluentIconImageLoaderAsync(
+                renderedCard,
+                iconSize,
+                view,
+                iconPlacement,
+                hostConfig.GetSpacing().getDefaultSpacing()
+            );
+            fluentIconLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrlToLoad);
+        }
     }
+
+    private static String getFluentIconUrl(String iconUrl, long iconSize) {
+        Pair<String, String> parsedIconUrl = parseIconUrl(iconUrl);
+        String iconName = parsedIconUrl.first;
+        String iconStyle = parsedIconUrl.second;
+        if (iconStyle == null) {
+            iconStyle = DEFAULT_FLUENT_ICON_STYLE;
+        }
+        StringBuilder urlBuilder = new StringBuilder(BASE_FLUENT_ICON_URL);
+        urlBuilder.append(iconName)
+            .append("/")
+            .append(iconName)
+            .append(iconSize)
+            .append(iconStyle)
+            .append(".json");
+        return urlBuilder.toString();
+    }
+
+    private static Pair<String, String> parseIconUrl(String iconUrl) {
+        String[] splitUrl = iconUrl.split(",");
+        String iconName = splitUrl[0].replaceFirst(FLUENT_ICON_URL_PREFIX, "");
+        String iconStyle = null;
+        if (splitUrl.length > 1) {
+            iconStyle = splitUrl[1];
+        }
+        return new Pair<>(iconName, iconStyle);
+    }
+
+    private static final String FLUENT_ICON_URL_PREFIX = "icon:";
+    private static final String BASE_FLUENT_ICON_URL = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/";
+    private static final String DEFAULT_FLUENT_ICON_STYLE = "Regular";
 }

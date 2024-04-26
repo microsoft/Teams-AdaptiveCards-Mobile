@@ -1,15 +1,13 @@
 {
-	"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
 	"type": "AdaptiveCard",
+	"$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
 	"version": "1.5",
 	"body": [
 		{
 			"type": "TextBlock",
-			"text": "Publish Adaptive Card schema",
-			"weight": "bolder",
-			"size": "medium",
+			"text": "New Icon element",
 			"wrap": true,
-			"style": "heading"
+			"size": "Large"
 		},
 		{
 			"type": "ColumnSet",
@@ -19,30 +17,171 @@
 					"width": "auto",
 					"items": [
 						{
-							"type": "Image",
-							"url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
-							"altText": "Matt Hidinger",
-							"size": "small",
-							"style": "person"
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "xxSmall",
+							"style": "Regular"
 						}
 					]
 				},
 				{
 					"type": "Column",
-					"width": "stretch",
+					"width": "auto",
 					"items": [
 						{
-							"type": "TextBlock",
-							"text": "Matt Hidinger",
-							"weight": "bolder",
-							"wrap": true
-						},
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "xSmall",
+							"style": "Regular"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
 						{
-							"type": "TextBlock",
-							"spacing": "none",
-							"text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
-							"isSubtle": true,
-							"wrap": true
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Small",
+							"style": "Regular"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Standard",
+							"style": "Regular"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Medium",
+							"style": "Regular"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Large",
+							"style": "Regular"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "xxLarge",
+							"style": "Regular"
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "ColumnSet",
+			"columns": [
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "xxSmall",
+							"style": "Filled"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "xSmall",
+							"style": "Filled"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Small",
+							"style": "Filled"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Standard",
+							"style": "Filled"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Medium",
+							"style": "Filled"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Large",
+							"style": "Filled"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "xxLarge",
+							"style": "Filled"
 						}
 					]
 				}
@@ -50,72 +189,189 @@
 		},
 		{
 			"type": "TextBlock",
-			"text": "Now that we have defined the main rules and features of the format, we need to produce a schema and publish it to GitHub. The schema will be the starting point of our reference documentation.",
-			"wrap": true
+			"text": "Standard font colors are supported",
+			"wrap": true,
+			"size": "Large"
 		},
 		{
-			"type": "FactSet",
-			"facts": [
+			"type": "ColumnSet",
+			"columns": [
 				{
-					"title": "Board:",
-					"value": "Adaptive Card"
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "xSmall"
+						}
+					]
 				},
 				{
-					"title": "List:",
-					"value": "Backlog"
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Small",
+							"color": "accent"
+						}
+					]
 				},
 				{
-					"title": "Assigned to:",
-					"value": "Matt Hidinger"
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Standard",
+							"color": "good"
+						}
+					]
 				},
 				{
-					"title": "Due date:",
-					"value": "Not set"
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Medium",
+							"color": "warning"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Large",
+							"color": "attention"
+						}
+					]
 				}
 			]
+		},
+		{
+			"type": "ColumnSet",
+			"columns": [
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "xSmall",
+							"style": "Filled"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Small",
+							"style": "Filled",
+							"color": "accent"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Standard",
+							"style": "Filled",
+							"color": "good"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Medium",
+							"style": "Filled",
+							"color": "warning"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "Calendar",
+							"size": "Large",
+							"style": "Filled",
+							"color": "attention"
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "TextBlock",
+			"text": "Clickable icons",
+			"wrap": true,
+			"size": "Large",
+			"separator": true,
+			"spacing": "large"
+		},
+		{
+			"type": "Icon",
+			"name": "Emoji",
+			"color": "attention",
+			"selectAction": {
+				"type": "Action.OpenUrl",
+				"url": "https://www.microsoft.com",
+				"title": "Click me!",
+				"tooltip": "Icons can handle actions"
+			}
+		},
+		{
+			"type": "TextBlock",
+			"text": "Icons on buttons",
+			"wrap": true,
+			"size": "Large",
+			"separator": true,
+			"spacing": "large"
 		}
 	],
 	"actions": [
 		{
-			"type": "Action.ShowCard",
-			"title": "Set due date",
-			"card": {
-				"type": "AdaptiveCard",
-				"body": [
-					{
-						"type": "Input.Date",
-						"label": "Enter the due date",
-						"id": "dueDate"
-					}
-				],
-				"actions": [
-					{
-						"type": "Action.Submit",
-						"title": "Send"
-					}
-				]
-			}
+			"type": "Action.OpenUrl",
+			"title": "Regular icon",
+			"url": "https://www.microsoft.com",
+			"iconUrl": "icon:AccessTime"
 		},
 		{
-			"type": "Action.ShowCard",
-			"title": "Comment",
-			"card": {
-				"type": "AdaptiveCard",
-				"body": [
-					{
-						"type": "Input.Text",
-						"id": "comment",
-						"isMultiline": true,
-						"label": "Add a comment"
-					}
-				],
-				"actions": [
-					{
-						"type": "Action.Submit",
-						"title": "OK"
-					}
-				]
-			}
+			"type": "Action.OpenUrl",
+			"title": "Filled icon",
+			"url": "https://www.microsoft.com",
+			"iconUrl": "icon:AccessTime,filled"
+		},
+		{
+			"type": "Action.OpenUrl",
+			"title": "Invalid icon doesn't render",
+			"url": "https://www.microsoft.com",
+			"iconUrl": "icon:Invalid"
 		}
 	]
 }
