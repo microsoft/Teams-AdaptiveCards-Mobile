@@ -4,10 +4,12 @@ package io.adaptivecards.renderer.inputhandler;
 
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ToggleInput;
 import io.adaptivecards.renderer.Util;
+import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
 import java.text.ParseException;
 import java.util.Map;
@@ -43,6 +45,11 @@ public class ToggleInputHandler extends BaseInputHandler
     @Override
     public boolean isValid()
     {
+        return isValid(true);
+    }
+
+    @Override
+    public boolean isValid(boolean showError) {
         boolean isValid = true;
 
         // Due to toggle not working as all other inputs where isRequired can be satisfied
@@ -51,10 +58,16 @@ public class ToggleInputHandler extends BaseInputHandler
         {
             isValid = getCheckBox().isChecked();
         }
-
-        showValidationErrors(isValid);
+        if(showError) {
+            showValidationErrors(isValid);
+        }
 
         return isValid;
+    }
+
+    @Override
+    public void registerInputObserver() {
+        getCheckBox().setOnCheckedChangeListener((buttonView, isChecked) -> notifyAllInputWatchers());
     }
 
     @Override

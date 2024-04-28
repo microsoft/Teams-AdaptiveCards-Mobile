@@ -11,6 +11,7 @@ import io.adaptivecards.objectmodel.ChoiceInput;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
 import io.adaptivecards.renderer.Util;
+import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
 import java.text.ParseException;
 import java.util.Map;
@@ -71,6 +72,12 @@ public class RadioGroupInputHandler extends BaseInputHandler
             radioGroup.check(-1);
         }
     }
+
+    @Override
+    public void registerInputObserver() {
+        getRadioGroup().setOnCheckedChangeListener((group, checkedId) -> notifyAllInputWatchers());
+    }
+
 
     @Override
     public void setFocusToView()
