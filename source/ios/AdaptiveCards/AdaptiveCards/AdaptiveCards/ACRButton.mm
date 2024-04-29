@@ -11,10 +11,19 @@
 #import "ACOHostConfigPrivate.h"
 #import "ACRUIImageView.h"
 #import "ACRViewPrivate.h"
+#import "ACRSVGImageView.h"
 
 @implementation ACRButton
 
-- (void)setImageView:(UIImage *)image withConfig:(ACOHostConfig *)config
+- (void)setImageView:(UIImage *)image
+          withConfig:(ACOHostConfig *)config
+{
+    [self setImageView:image withConfig:config widthToHeightRatio:0.0f];
+}
+
+- (void)setImageView:(UIImage *)image 
+          withConfig:(ACOHostConfig *)config
+  widthToHeightRatio:(float) widthToHeightRatio
 {
     float imageHeight = 0.0f;
     CGSize contentSize = [self.titleLabel intrinsicContentSize];
@@ -26,7 +35,6 @@
         imageHeight = contentSize.height;
     }
 
-    CGFloat widthToHeightRatio = 0.0f;
     if (image && image.size.height > 0) {
         widthToHeightRatio = image.size.width / image.size.height;
     }
@@ -134,7 +142,8 @@
 
     std::shared_ptr<AdaptiveCards::BaseActionElement> action = [acoAction element];
     NSDictionary *imageViewMap = [rootView getImageMap];
-    NSString *key = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString *key = iconURL;
     UIImage *img = imageViewMap[key];
     button.iconPlacement = [ACRButton getIconPlacmentAtCurrentContext:rootView url:key];
 
@@ -149,7 +158,16 @@
         NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
         NSString *key = [number stringValue];
         UIImageView *view = [rootView getImageView:key];
-        if (view) {
+        if([iconURL hasPrefix:@"icon:"])
+        {
+            // this is fluent icon
+            NSString *getSVGURL = [NSString stringWithCString:action->GetSVGResourceURL().c_str() encoding:[NSString defaultCStringEncoding]];
+            UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl size:CGSizeMake(24, 24)];
+            button.iconView = view;
+            [button addSubview:view];
+            [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];
+        }
+        else if (view) {
             if (view.image) {
                 button.iconView = view;
                 [button addSubview:view];

@@ -29,6 +29,7 @@ public:
     virtual void SetTitle(const std::string& value);
 
     const std::string& GetIconUrl() const;
+    std::string GetSVGResourceURL() const;
 
     void SetIconUrl(std::string&& value);
     void SetIconUrl(const std::string& value);
