@@ -201,9 +201,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         List<IInputHandler> inputHandlers = adaptiveCard.getInputsToValidate(Util.getViewId(button));
         button.setEnabled(isAnyInputValid(inputHandlers));
         for (IInputHandler inputHandler : inputHandlers) {
-            inputHandler.addInputWatcher((id, val) -> {
-                button.setEnabled(isAnyInputValid(inputHandlers));
-            });
+            inputHandler.addInputWatcher((id, val) -> button.setEnabled(isAnyInputValid(inputHandlers)));
         }
     }
 

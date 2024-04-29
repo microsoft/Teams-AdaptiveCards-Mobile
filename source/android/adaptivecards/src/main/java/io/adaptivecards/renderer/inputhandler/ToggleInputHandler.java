@@ -4,15 +4,10 @@ package io.adaptivecards.renderer.inputhandler;
 
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ToggleInput;
 import io.adaptivecards.renderer.Util;
-import io.adaptivecards.renderer.registration.CardRendererRegistration;
-
-import java.text.ParseException;
-import java.util.Map;
 
 public class ToggleInputHandler extends BaseInputHandler
 {
