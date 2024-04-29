@@ -691,6 +691,10 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void StyledCollectionElement_SetVerticalContentAlignment(long jarg1, StyledCollectionElement jarg1_, long jarg2, StdOptionalVerticalContentAlignment jarg2_);
   public final static native boolean StyledCollectionElement_GetPadding(long jarg1, StyledCollectionElement jarg1_);
   public final static native void StyledCollectionElement_SetPadding(long jarg1, StyledCollectionElement jarg1_, boolean jarg2);
+  public final static native boolean StyledCollectionElement_GetShowBorder(long jarg1, StyledCollectionElement jarg1_);
+  public final static native void StyledCollectionElement_SetShowBorder(long jarg1, StyledCollectionElement jarg1_, boolean jarg2);
+  public final static native boolean StyledCollectionElement_GetRoundedCorners(long jarg1, StyledCollectionElement jarg1_);
+  public final static native void StyledCollectionElement_SetRoundedCorners(long jarg1, StyledCollectionElement jarg1_, boolean jarg2);
   public final static native boolean StyledCollectionElement_GetBleed(long jarg1, StyledCollectionElement jarg1_);
   public final static native void StyledCollectionElement_SetBleed(long jarg1, StyledCollectionElement jarg1_, boolean jarg2);
   public final static native boolean StyledCollectionElement_GetCanBleed(long jarg1, StyledCollectionElement jarg1_);
@@ -1292,8 +1296,6 @@ public class AdaptiveCardObjectModelJNI {
   public final static native String ContainerStyleDefinition_backgroundColor_get(long jarg1, ContainerStyleDefinition jarg1_);
   public final static native void ContainerStyleDefinition_borderColor_set(long jarg1, ContainerStyleDefinition jarg1_, String jarg2);
   public final static native String ContainerStyleDefinition_borderColor_get(long jarg1, ContainerStyleDefinition jarg1_);
-  public final static native void ContainerStyleDefinition_borderThickness_set(long jarg1, ContainerStyleDefinition jarg1_, long jarg2);
-  public final static native long ContainerStyleDefinition_borderThickness_get(long jarg1, ContainerStyleDefinition jarg1_);
   public final static native void ContainerStyleDefinition_foregroundColors_set(long jarg1, ContainerStyleDefinition jarg1_, long jarg2, ColorsConfig jarg2_);
   public final static native long ContainerStyleDefinition_foregroundColors_get(long jarg1, ContainerStyleDefinition jarg1_);
   public final static native long ContainerStyleDefinition_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, ContainerStyleDefinition jarg2_);
@@ -1419,7 +1421,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native String HostConfig_GetForegroundColor(long jarg1, HostConfig jarg1_, int jarg2, int jarg3, boolean jarg4);
   public final static native String HostConfig_GetHighlightColor(long jarg1, HostConfig jarg1_, int jarg2, int jarg3, boolean jarg4);
   public final static native String HostConfig_GetBorderColor(long jarg1, HostConfig jarg1_, int jarg2);
-  public final static native long HostConfig_GetBorderThickness(long jarg1, HostConfig jarg1_, int jarg2);
+  public final static native long HostConfig_GetBorderWidth(long jarg1, HostConfig jarg1_, int jarg2);
+  public final static native long HostConfig_GetCornerRadius(long jarg1, HostConfig jarg1_, int jarg2);
   public final static native String HostConfig_GetFontFamily__SWIG_1(long jarg1, HostConfig jarg1_);
   public final static native void HostConfig_SetFontFamily(long jarg1, HostConfig jarg1_, String jarg2);
   public final static native long HostConfig_GetFontSizes(long jarg1, HostConfig jarg1_);
@@ -1525,6 +1528,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void Table_SetShowGridLines(long jarg1, Table jarg1_, boolean jarg2);
   public final static native boolean Table_GetFirstRowAsHeaders(long jarg1, Table jarg1_);
   public final static native void Table_SetFirstRowAsHeaders(long jarg1, Table jarg1_, boolean jarg2);
+  public final static native boolean Table_GetRoundedCorners(long jarg1, Table jarg1_);
+  public final static native void Table_SetRoundedCorners(long jarg1, Table jarg1_, boolean jarg2);
   public final static native long Table_GetHorizontalCellContentAlignment(long jarg1, Table jarg1_);
   public final static native void Table_SetHorizontalCellContentAlignment(long jarg1, Table jarg1_, long jarg2, StdOptionalHorizontalAlignment jarg2_);
   public final static native long Table_GetVerticalCellContentAlignment(long jarg1, Table jarg1_);

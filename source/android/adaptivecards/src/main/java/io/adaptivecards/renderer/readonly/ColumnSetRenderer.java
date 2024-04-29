@@ -133,10 +133,11 @@ public class ColumnSetRenderer extends BaseCardElementRenderer
 
         columnSetLayout.setTag(tagContent);
 
-        ContainerRenderer.applyPadding(styleForThis, parentContainerStyle, columnSetLayout, hostConfig);
+        ContainerRenderer.applyPadding(styleForThis, parentContainerStyle, columnSetLayout, hostConfig, columnSet.GetShowBorder());
         ContainerRenderer.applyContainerStyle(styleForThis, parentContainerStyle, columnSetLayout, hostConfig);
         ContainerRenderer.applyBleed(columnSet, columnSetLayout, context, hostConfig);
-
+        ContainerRenderer.applyBorder(styleForThis, columnSetLayout, hostConfig, columnSet.GetElementType(), columnSet.GetShowBorder());
+        ContainerRenderer.applyRoundedCorners(columnSetLayout, hostConfig, columnSet.GetElementType(), columnSet.GetRoundedCorners());
         return columnSetLayout;
     }
 

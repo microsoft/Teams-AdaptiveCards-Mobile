@@ -34,7 +34,6 @@ enum class AdaptiveCardSchemaKey
     Body,
     Bolder,
     BorderColor,
-    BorderThickness,
     Bottom,
     ButtonSpacing,
     Buttons,
@@ -56,6 +55,8 @@ enum class AdaptiveCardSchemaKey
     ConnectionName,
     Container,
     ContainerStyles,
+    BorderWidth,
+    CornerRadius,
     Dark,
     Data,
     DataQuery,
@@ -110,6 +111,8 @@ enum class AdaptiveCardSchemaKey
     ConditionallyEnabled,
     IsMultiSelect,
     IsMultiline,
+    ShowBorder,
+    RoundedCorners,
     IsRequired,
     IsSelected,
     IsSubtle,
@@ -326,7 +329,8 @@ DECLARE_ADAPTIVECARD_ENUM(ImageFillMode);
 enum class ImageStyle
 {
     Default = 0,
-    Person
+    Person,
+    RoundedCorners
 };
 DECLARE_ADAPTIVECARD_ENUM(ImageStyle);
 

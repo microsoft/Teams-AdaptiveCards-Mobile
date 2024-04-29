@@ -29,6 +29,13 @@ public:
 
     bool GetPadding() const;
     void SetPadding(const bool value);
+    
+    bool GetShowBorder() const;
+    void SetShowBorder(const bool value);
+    
+    bool GetRoundedCorners() const;
+    void SetRoundedCorners(const bool value);
+    
 
     bool GetBleed() const;
     void SetBleed(const bool value);
@@ -89,6 +96,8 @@ private:
     unsigned int m_minHeight;
     bool m_hasPadding;
     bool m_hasBleed;
+    bool m_showBorder;
+    bool m_roundedCorners;
     // id refers to parent to where bleed property should target
     AdaptiveCards::InternalId m_parentalId;
 
@@ -115,6 +124,10 @@ std::shared_ptr<T> StyledCollectionElement::Deserialize(ParseContext& context, c
         value, AdaptiveCardSchemaKey::VerticalContentAlignment, VerticalContentAlignmentFromString));
 
     collection->SetBleed(ParseUtil::GetBool(value, AdaptiveCardSchemaKey::Bleed, false));
+    
+    collection->SetShowBorder(ParseUtil::GetBool(value, AdaptiveCardSchemaKey::ShowBorder, false));
+    
+    collection->SetRoundedCorners(ParseUtil::GetBool(value, AdaptiveCardSchemaKey::RoundedCorners, false));
 
     if (const auto& minHeight =
             ParseSizeForPixelSize(ParseUtil::GetString(value, AdaptiveCardSchemaKey::MinHeight), &context.warnings);

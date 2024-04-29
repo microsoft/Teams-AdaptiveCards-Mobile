@@ -143,6 +143,11 @@
     if (imgElem->GetImageStyle() == ImageStyle::Person) {
         wrappingView.isPersonStyle = YES;
     }
+    
+    if (imgElem->GetImageStyle() == ImageStyle::RoundedCorners) {
+        std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+        view.layer.cornerRadius = config->GetCornerRadius(imgElem->GetElementType());
+    }
 
     if (view && view.image) {
         // if we already have UIImageView and UIImage, configures the constraints and turn off the notification

@@ -28,6 +28,9 @@ public:
 
     bool GetFirstRowAsHeaders() const;
     void SetFirstRowAsHeaders(bool value);
+    
+    bool GetRoundedCorners() const;
+    void SetRoundedCorners(const bool value);
 
     std::optional<HorizontalAlignment> GetHorizontalCellContentAlignment() const;
     void SetHorizontalCellContentAlignment(std::optional<HorizontalAlignment> value);
@@ -58,6 +61,7 @@ private:
 
     bool m_showGridLines;
     bool m_firstRowAsHeaders;
+    bool m_roundedCorners;
 };
 
 class TableParser : public BaseCardElementParser

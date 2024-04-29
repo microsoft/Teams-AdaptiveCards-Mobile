@@ -80,8 +80,12 @@ public class HostConfig {
     return AdaptiveCardObjectModelJNI.HostConfig_GetBorderColor(swigCPtr, this, style.swigValue());
   }
 
-  public long GetBorderThickness(ContainerStyle style) {
-    return AdaptiveCardObjectModelJNI.HostConfig_GetBorderThickness(swigCPtr, this, style.swigValue());
+  public long GetBorderWidth(CardElementType elementType) {
+    return AdaptiveCardObjectModelJNI.HostConfig_GetBorderWidth(swigCPtr, this, elementType.swigValue());
+  }
+
+  public long GetCornerRadius(CardElementType elementType) {
+    return AdaptiveCardObjectModelJNI.HostConfig_GetCornerRadius(swigCPtr, this, elementType.swigValue());
   }
 
   public String GetFontFamily() {
