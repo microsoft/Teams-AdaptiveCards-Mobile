@@ -290,11 +290,11 @@ namespace AdaptiveCards
         {IconSize::Medium, "Medium"},
         {IconSize::Large, "Large"},
         {IconSize::xLarge, "xLarge"},
-        {IconSize::Large, "xxLarge"}});
+        {IconSize::xxLarge, "xxLarge"}});
 
     DEFINE_ADAPTIVECARD_ENUM(IconStyle, {
-        {IconStyle::Regular, "regular"},
-        {IconStyle::Filled, "filled"},});
+        {IconStyle::Regular, "Regular"},
+        {IconStyle::Filled, "Filled"},});
 
     DEFINE_ADAPTIVECARD_ENUM(VerticalAlignment, {
         { VerticalAlignment::Top, "top" },

@@ -19,6 +19,8 @@
 #import "Icon.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import "ACRSVGImageView.h"
+#import "ACRSVGIconHoldingView.h"
 
 @implementation ACRIconRenderer
 
@@ -42,9 +44,29 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Icon> icon = std::dynamic_pointer_cast<Icon>(elem);
-    UIView *dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-    dummyView.layer.backgroundColor = UIColor.blueColor.CGColor;
-    return dummyView;
+    
+    NSString *svgPayloadURL = @(icon->GetSVGResourceURL().c_str());
+    CGSize size = CGSizeMake(icon->getSize(), icon->getSize());
+    
+    ACRSVGImageView *iconView = [[ACRSVGImageView alloc] init:svgPayloadURL
+                                                          rtl:rootView.context.rtl
+                                                         size:size];
+    
+    ACRSVGIconHoldingView *wrappingView = [[ACRSVGIconHoldingView alloc] init:iconView size:size];
+    
+    
+    wrappingView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [viewGroup addArrangedSubview:wrappingView];
+    
+    configRtl(iconView, rootView.context);
+    configRtl(wrappingView, rootView.context);
+    
+    std::shared_ptr<BaseActionElement> selectAction = icon->GetSelectAction();
+    ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
+    addSelectActionToView(acoConfig, acoSelectAction, rootView, wrappingView, viewGroup);
+    
+    return iconView;
 }
 
 @end

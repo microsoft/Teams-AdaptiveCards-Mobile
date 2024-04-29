@@ -145,8 +145,9 @@ void Icon::GetResourceInformation(std::vector<RemoteResourceInformation>& resour
 
 std::string Icon::GetSVGResourceURL() const
 {
-    // format: "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/<Icon Name>/<IconName><Size>Regular.json"
-    std::string m_url = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/" + GetName() + "/" + GetName() + std::to_string(getSize()) +"Regular.json";
+    // format: "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/<Icon Name>/<IconName><Size><Style>.json"
+
+    std::string m_url = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/" + GetName() + "/" + GetName() + std::to_string(getSize()) + IconStyleToString(getIconStyle()) + ".json";
     return m_url;
 }
 
@@ -157,20 +158,28 @@ unsigned int Icon::getSize() const
     {
         case IconSize::xxSmall:
             _size = 12;
+            break;
         case IconSize::xSmall:
             _size = 16;
+            break;
         case IconSize::Small:
             _size = 20;
+            break;
         case IconSize::Standard:
             _size = 24;
+            break;
         case IconSize::Medium:
             _size = 28;
+            break;
         case IconSize::Large:
             _size = 32;
+            break;
         case IconSize::xLarge:
             _size = 40;
+            break;
         case IconSize::xxLarge:
             _size = 48;
+            break;
     }
     return _size;
 }
