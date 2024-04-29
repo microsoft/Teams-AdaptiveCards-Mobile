@@ -15,7 +15,7 @@ public abstract class BaseInputHandler implements IInputHandler
     public BaseInputHandler(BaseInputElement baseInputElement)
     {
         m_baseInputElement = baseInputElement;
-        m_validityChangeObservers = new ArrayList<>();
+        m_inputWatchers = new ArrayList<>();
     }
 
     public void setView(View view)
@@ -56,7 +56,7 @@ public abstract class BaseInputHandler implements IInputHandler
         }
 
         isValid = isValid && isValidOnSpecifics(inputValue);
-        if(showError) {
+        if (showError) {
             showValidationErrors(isValid);
         }
 
@@ -81,11 +81,16 @@ public abstract class BaseInputHandler implements IInputHandler
 
     @Override
     public void addInputWatcher(IInputWatcher observer) {
-        m_validityChangeObservers.add(observer);
+        m_inputWatchers.add(observer);
+    }
+
+    @Override
+    public void registerInputObserver() {
+        // Default implementation does nothing
     }
 
     protected void notifyAllInputWatchers(){
-        for (IInputWatcher watcher : m_validityChangeObservers)
+        for (IInputWatcher watcher : m_inputWatchers)
         {
             watcher.onInputChange(getId(), getInput());
         }
@@ -94,6 +99,6 @@ public abstract class BaseInputHandler implements IInputHandler
     protected BaseInputElement m_baseInputElement = null;
     protected View m_view = null;
     private StretchableInputLayout m_inputLayout = null;
-    List<IInputWatcher> m_validityChangeObservers;
+    List<IInputWatcher> m_inputWatchers;
 
 }

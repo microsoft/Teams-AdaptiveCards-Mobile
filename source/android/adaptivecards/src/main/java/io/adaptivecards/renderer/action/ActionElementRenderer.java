@@ -182,7 +182,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
     protected void setButtonEnabledState(BaseActionElement baseActionElement, Button button, RenderedAdaptiveCard adaptiveCard) {
         if (!baseActionElement.GetIsEnabled()) {
             button.setEnabled(false);
-        } else if (Util.isOfType(baseActionElement, ExecuteAction.class) ) {
+        } else if (Util.isOfType(baseActionElement, ExecuteAction.class)) {
             ExecuteAction executeAction = Util.castTo(baseActionElement, ExecuteAction.class);
             if (executeAction.GetConditionallyEnabled()) {
                 addInputWatcherForConditionallyEnabledAction(adaptiveCard, button);

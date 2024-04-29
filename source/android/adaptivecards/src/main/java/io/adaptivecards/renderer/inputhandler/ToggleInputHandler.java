@@ -58,7 +58,7 @@ public class ToggleInputHandler extends BaseInputHandler
         {
             isValid = getCheckBox().isChecked();
         }
-        if(showError) {
+        if (showError) {
             showValidationErrors(isValid);
         }
 
