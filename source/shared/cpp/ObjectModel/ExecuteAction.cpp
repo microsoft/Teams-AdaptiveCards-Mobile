@@ -31,6 +31,16 @@ void ExecuteAction::SetDataJson(const Json::Value& value)
     m_dataJson = value;
 }
 
+bool ExecuteAction::GetConditionallyEnabled() const
+{
+    return m_conditionallyEnabled ;
+}
+
+void ExecuteAction::SetConditionallyEnabled(const bool conditionallyEnabled)
+{
+    m_conditionallyEnabled = conditionallyEnabled;
+}
+
 std::string ExecuteAction::GetVerb() const
 {
     return m_verb;
@@ -59,6 +69,11 @@ Json::Value ExecuteAction::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Data)] = m_dataJson;
     }
+    
+    if (!m_conditionallyEnabled)
+    {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ConditionallyEnabled)] = m_conditionallyEnabled;
+    }
 
     if (!m_verb.empty())
     {
@@ -78,6 +93,7 @@ std::shared_ptr<BaseActionElement> ExecuteActionParser::Deserialize(ParseContext
     std::shared_ptr<ExecuteAction> executeAction = BaseActionElement::Deserialize<ExecuteAction>(context, json);
 
     executeAction->SetDataJson(ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Data));
+    executeAction->SetConditionallyEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ConditionallyEnabled, true));
     executeAction->SetVerb(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Verb));
     executeAction->SetAssociatedInputs(ParseUtil::GetEnumValue<AssociatedInputs>(
         json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString));
@@ -94,6 +110,7 @@ void ExecuteAction::PopulateKnownPropertiesSet()
 {
     m_knownProperties.insert(
         {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Data),
+         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ConditionallyEnabled),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Verb),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::AssociatedInputs)});
 }

@@ -17,8 +17,6 @@
 @property BOOL hasText;
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem;
-- (void)textFieldDidChange:(UITextField *)textField;
-
 @end
 
 @interface ACRNumberInputHandler : ACRTextInputHandler

@@ -64,7 +64,7 @@
     }
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nullable)delegate {
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate {
     [delegateSet addObject:delegate];
 }
 

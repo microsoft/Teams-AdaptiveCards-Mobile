@@ -52,7 +52,7 @@ using namespace AdaptiveCards;
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _toggleSwitch);
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nullable)delegate {
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate {
     [_toggleSwitch addTarget:self action:@selector(onSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
     [delegateSet addObject:delegate];
 }

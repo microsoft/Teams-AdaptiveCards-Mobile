@@ -25,5 +25,5 @@
 - (BOOL)validate:(NSError *_Nullable *_Nullable)error;
 - (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *_Nullable)view;
 - (void)getInput:(NSMutableDictionary *_Nonnull)dictionary;
--(void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nullable)delegate;
+-(void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nonnull)delegate;
 @end

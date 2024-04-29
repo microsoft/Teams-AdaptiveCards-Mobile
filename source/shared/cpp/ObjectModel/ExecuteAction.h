@@ -22,6 +22,9 @@ public:
     Json::Value GetDataJsonAsValue() const;
     void SetDataJson(const Json::Value& value);
     void SetDataJson(const std::string value);
+    
+    bool GetConditionallyEnabled() const;
+    void SetConditionallyEnabled(const bool value);
 
     std::string GetVerb() const;
     void SetVerb(const std::string verb);
@@ -30,6 +33,7 @@ public:
     virtual void SetAssociatedInputs(const AssociatedInputs value);
 
     Json::Value SerializeToJsonValue() const override;
+    bool m_conditionallyEnabled;
 
 private:
     void PopulateKnownPropertiesSet();

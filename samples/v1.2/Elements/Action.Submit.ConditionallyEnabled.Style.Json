@@ -82,12 +82,22 @@
     "actions": [
         {
             "type": "Action.Submit",
-            "title": "OK",
+            "title": "Submit",
+            "conditionallyEnabled":true
+        },
+        {
+            "type": "Action.Execute",
+            "title": "Execute",
             "conditionallyEnabled":true
         },
         {
             "type": "Action.Submit",
-            "title": "Permanently disabled",
+            "title": "Permanently disabled Submit",
+            "isEnabled":false
+        },
+        {
+            "type": "Action.Execute",
+            "title": "Permanently disabled Execute",
             "isEnabled":false
         }
     ]
