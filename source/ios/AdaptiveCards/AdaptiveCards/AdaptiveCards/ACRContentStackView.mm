@@ -38,7 +38,6 @@ using namespace AdaptiveCards;
             style != parentStyle) {
             self.backgroundColor = [acoConfig getBackgroundColorForContainerStyle:_style];
             [self setBorderColorWithHostConfig:config];
-            [self setBorderThicknessWithHostConfig:config];
             [self removeConstraints:self.constraints];
             [self applyPadding:config->GetSpacing().paddingSpacing priority:1000];
         }
@@ -158,14 +157,6 @@ using namespace AdaptiveCards;
     UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
 
     [[self layer] setBorderColor:[color CGColor]];
-}
-
-- (void)setBorderThicknessWithHostConfig:(std::shared_ptr<HostConfig> const &)config
-{
-    auto borderThickness = config->GetBorderThickness([ACOHostConfig getSharedContainerStyle:_style]);
-    const CGFloat borderWidth = borderThickness;
-
-    [[self layer] setBorderWidth:borderWidth];
 }
 
 - (void)config:(nullable NSDictionary<NSString *, id> *)attributes
@@ -345,6 +336,9 @@ using namespace AdaptiveCards;
 
 - (void)applyPadding:(unsigned int)padding priority:(unsigned int)priority
 {
+    // remove existing padding first
+    [self removeConstraints:_widthconstraint];
+    [self removeConstraints:_heightconstraint];
     [self applyPadding:padding priority:priority location:ACRBleedToAll];
 }
 
