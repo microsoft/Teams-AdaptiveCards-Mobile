@@ -185,7 +185,7 @@ using namespace AdaptiveCards;
 
     for (const auto &elem : elems) {
         ACRSeparator *separator = nil;
-        if (*firstelem != elem && renderedView) {
+        if (*firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
             separator = [ACRSeparator renderSeparation:elem
                                           forSuperview:view
                                         withHostConfig:[config getHostConfig]];
