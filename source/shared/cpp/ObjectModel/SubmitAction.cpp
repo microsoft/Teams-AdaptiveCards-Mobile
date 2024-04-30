@@ -78,7 +78,7 @@ std::shared_ptr<BaseActionElement> SubmitActionParser::Deserialize(ParseContext&
     std::shared_ptr<SubmitAction> submitAction = BaseActionElement::Deserialize<SubmitAction>(context, json);
 
     submitAction->SetDataJson(ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Data));
-    submitAction->SetConditionallyEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ConditionallyEnabled, true));
+    submitAction->SetConditionallyEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ConditionallyEnabled, false));
     submitAction->SetAssociatedInputs(ParseUtil::GetEnumValue<AssociatedInputs>(
         json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString));
     return submitAction;
