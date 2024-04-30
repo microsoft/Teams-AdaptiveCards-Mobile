@@ -15,6 +15,7 @@
 
 - (instancetype)init:(NSString *)iconURL
                  rtl:(ACRRtl)rtl
-                size:(CGSize)size;
+                size:(CGSize)size
+           tintColor:(UIColor *)tintColor;
 
 @end

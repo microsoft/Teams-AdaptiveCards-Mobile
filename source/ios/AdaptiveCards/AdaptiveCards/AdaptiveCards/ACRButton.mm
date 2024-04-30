@@ -162,7 +162,7 @@
         {
             // this is fluent icon
             NSString *getSVGURL = [NSString stringWithCString:action->GetSVGResourceURL().c_str() encoding:[NSString defaultCStringEncoding]];
-            UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl size:CGSizeMake(24, 24)];
+            UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl size:CGSizeMake(24, 24) tintColor:button.currentTitleColor];
             button.iconView = view;
             [button addSubview:view];
             [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];

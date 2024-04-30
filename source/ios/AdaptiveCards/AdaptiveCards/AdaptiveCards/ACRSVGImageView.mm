@@ -14,11 +14,13 @@
     NSString *_svgPayloadURL;
     CGSize _size;
     ACRRtl _rtl;
+    UIColor *_tintColor;
 }
 
 - (instancetype)init:(NSString *)iconURL
                  rtl:(ACRRtl)rtl
                 size:(CGSize)size
+           tintColor:(UIColor *)tintColor;
 {
     self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     if (self)
@@ -26,6 +28,7 @@
         _svgPayloadURL = iconURL;
         _size = size;
         _rtl = rtl;
+        _tintColor = tintColor;
         [self loadIconFromCDN];
     }
     return self;
@@ -94,7 +97,6 @@
 
 - (void)setImageWith:(NSArray<NSString *> *)pathArray flipInRTL:(BOOL)flipInRTL
 {
-    
     NSString *path = [pathArray firstObject];
     NSString *svgXML = [self svgXMLPayloadFrom:path];
     NSData* svgData = [svgXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
@@ -102,14 +104,27 @@
     SVGKSource *svgSource = [[SVGKSource alloc] initWithInputSteam:stream];
     dispatch_async(dispatch_get_main_queue(), ^{
         SVGKImage *document = [SVGKImage imageWithSource:svgSource];
-        self.image = document.UIImage;
+        UIImage *imageToRender = [self processImage:document.UIImage flipInRTL:flipInRTL];
+        self.image = imageToRender;
     });
+}
+
+-(UIImage *)processImage:(UIImage *)img flipInRTL:(BOOL)flipInRTL
+{
+    self.tintColor = _tintColor;
+    UIImage *colored = [img imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    if (_rtl == ACRRtlRTL)
+    {
+        // flip in right to left mode
+        return [colored imageWithHorizontallyFlippedOrientation];
+    }
+    return colored;
 }
 
 - (NSString *)svgXMLPayloadFrom:(NSString *)path
 {
     return [[NSString alloc] initWithFormat:@"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"%f\" height=\"%f\" viewBox=\"0 0 %f %f\"><path d=\"%@\"/></svg>", _size.width, _size.height, _size.width, _size.height, path];
 }
-
 
 @end
