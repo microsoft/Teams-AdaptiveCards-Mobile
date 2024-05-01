@@ -53,6 +53,7 @@ public enum AdaptiveCardSchemaKey {
   ColumnHeader,
   ColumnSet,
   Columns,
+  ConditionallyEnabled,
   ConnectionName,
   Container,
   ContainerStyles,

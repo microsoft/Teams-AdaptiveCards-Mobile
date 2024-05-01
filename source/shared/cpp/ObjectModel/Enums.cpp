@@ -50,6 +50,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ColumnHeader, "columnHeader"},
             {AdaptiveCardSchemaKey::ColumnSet, "columnSet"},
             {AdaptiveCardSchemaKey::Columns, "columns"},
+            {AdaptiveCardSchemaKey::ConditionallyEnabled, "conditionallyEnabled"},
             {AdaptiveCardSchemaKey::ConnectionName, "connectionName"},
             {AdaptiveCardSchemaKey::Container, "container"},
             {AdaptiveCardSchemaKey::ContainerStyles, "containerStyles"},

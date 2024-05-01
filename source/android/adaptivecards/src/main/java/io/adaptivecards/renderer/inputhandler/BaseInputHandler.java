@@ -3,21 +3,19 @@
 package io.adaptivecards.renderer.inputhandler;
 
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
-import io.adaptivecards.renderer.BaseCardElementRenderer;
-import io.adaptivecards.renderer.input.customcontrols.IValidatedInputView;
-import io.adaptivecards.renderer.input.customcontrols.ValidatedEditText;
-import io.adaptivecards.renderer.input.customcontrols.ValidatedCheckBoxLayout;
 import io.adaptivecards.renderer.layout.StretchableInputLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseInputHandler implements IInputHandler
 {
     public BaseInputHandler(BaseInputElement baseInputElement)
     {
         m_baseInputElement = baseInputElement;
+        m_inputWatchers = new ArrayList<>();
     }
 
     public void setView(View view)
@@ -40,8 +38,14 @@ public abstract class BaseInputHandler implements IInputHandler
         m_inputLayout = inputLayout;
     }
 
+    @Override
     public boolean isValid()
     {
+        return isValid(true);
+    }
+
+    @Override
+    public boolean isValid(boolean showError) {
         boolean isValid = true;
         String inputValue = getInput();
 
@@ -52,8 +56,9 @@ public abstract class BaseInputHandler implements IInputHandler
         }
 
         isValid = isValid && isValidOnSpecifics(inputValue);
-
-        showValidationErrors(isValid);
+        if (showError) {
+            showValidationErrors(isValid);
+        }
 
         return isValid;
     }
@@ -74,8 +79,26 @@ public abstract class BaseInputHandler implements IInputHandler
         }
     }
 
+    @Override
+    public void addInputWatcher(IInputWatcher observer) {
+        m_inputWatchers.add(observer);
+    }
+
+    @Override
+    public void registerInputObserver() {
+        // Default implementation does nothing
+    }
+
+    protected void notifyAllInputWatchers(){
+        for (IInputWatcher watcher : m_inputWatchers)
+        {
+            watcher.onInputChange(getId(), getInput());
+        }
+    }
+
     protected BaseInputElement m_baseInputElement = null;
     protected View m_view = null;
     private StretchableInputLayout m_inputLayout = null;
+    List<IInputWatcher> m_inputWatchers;
 
 }

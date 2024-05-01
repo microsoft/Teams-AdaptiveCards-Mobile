@@ -3,7 +3,9 @@
 
 package io.adaptivecards.renderer.inputhandler;
 
+import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
@@ -64,6 +66,24 @@ public class ComboBoxInputHandler extends BaseInputHandler
         }
 
         getSpinner().setSelection(selectedPosition);
+    }
+
+    @Override
+    public void registerInputObserver() {
+        getSpinner().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                notifyAllInputWatchers();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+                notifyAllInputWatchers();
+            }
+        });
     }
 
     @Override
