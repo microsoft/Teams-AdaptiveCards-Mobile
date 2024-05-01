@@ -31,16 +31,6 @@ void ExecuteAction::SetDataJson(const Json::Value& value)
     m_dataJson = value;
 }
 
-bool ExecuteAction::GetConditionallyEnabled() const
-{
-    return m_conditionallyEnabled ;
-}
-
-void ExecuteAction::SetConditionallyEnabled(const bool conditionallyEnabled)
-{
-    m_conditionallyEnabled = conditionallyEnabled;
-}
-
 std::string ExecuteAction::GetVerb() const
 {
     return m_verb;
@@ -102,12 +92,10 @@ std::shared_ptr<BaseActionElement> ExecuteActionParser::Deserialize(ParseContext
     std::shared_ptr<ExecuteAction> executeAction = BaseActionElement::Deserialize<ExecuteAction>(context, json);
 
     executeAction->SetDataJson(ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Data));
-    executeAction->SetConditionallyEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ConditionallyEnabled, false));
     executeAction->SetVerb(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Verb));
     executeAction->SetAssociatedInputs(ParseUtil::GetEnumValue<AssociatedInputs>(
         json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString));
     executeAction->SetConditionallyEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ConditionallyEnabled, false, false));
-
 
     return executeAction;
 }

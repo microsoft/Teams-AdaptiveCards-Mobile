@@ -109,7 +109,6 @@ enum class AdaptiveCardSchemaKey
     InputSpacing,
     Inputs,
     IsEnabled,
-    ConditionallyEnabled,
     IsMultiSelect,
     IsMultiline,
     ShowBorder,

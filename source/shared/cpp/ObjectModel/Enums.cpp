@@ -107,7 +107,6 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::InputSpacing, "inputSpacing"},
             {AdaptiveCardSchemaKey::Inputs, "inputs"},
             {AdaptiveCardSchemaKey::IsEnabled, "isEnabled"},
-            {AdaptiveCardSchemaKey::ConditionallyEnabled, "conditionallyEnabled"},
             {AdaptiveCardSchemaKey::IsMultiSelect, "isMultiSelect"},
             {AdaptiveCardSchemaKey::IsMultiline, "isMultiline"},
             {AdaptiveCardSchemaKey::ShowBorder, "showBorder"},
