@@ -26,6 +26,8 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.ToggleInput;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedCheckBox;
+import io.adaptivecards.renderer.inputhandler.IInputWatcher;
+import io.adaptivecards.renderer.inputhandler.InputUtils;
 import io.adaptivecards.renderer.inputhandler.ToggleInputHandler;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
@@ -97,14 +99,7 @@ public class ToggleInputRenderer extends BaseCardElementRenderer
 
         checkBox.setOnTouchListener(new ChoiceSetInputRenderer.FocusableChoiceListener<CheckBox>(checkBox));
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(toggleInputHandler.getId(), toggleInputHandler.getInput());
-            }
-        });
+        InputUtils.updateInputHandlerInputWatcher(toggleInputHandler);
 
         viewGroup.addView(checkBox);
         checkBox.setTag(tagContent);

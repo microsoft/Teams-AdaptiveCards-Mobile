@@ -17,7 +17,6 @@
 @property BOOL hasText;
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem;
-
 @end
 
 @interface ACRNumberInputHandler : ACRTextInputHandler

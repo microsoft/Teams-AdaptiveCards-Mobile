@@ -74,6 +74,13 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
     }
 
     @Override
+    public void registerInputObserver() {
+        for (CheckBox checkBox : m_checkBoxList) {
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> notifyAllInputWatchers());
+        }
+    }
+
+    @Override
     public void setFocusToView()
     {
         if (m_checkBoxList.size() > 0)

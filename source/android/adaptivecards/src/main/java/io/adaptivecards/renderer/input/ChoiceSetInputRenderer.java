@@ -51,6 +51,7 @@ import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
+import io.adaptivecards.renderer.inputhandler.InputUtils;
 import io.adaptivecards.renderer.inputhandler.RadioGroupInputHandler;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
@@ -165,14 +166,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
                 checkBox.setChecked(true);
             }
             checkBoxList.add(checkBox);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-            {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-                {
-                    CardRendererRegistration.getInstance().notifyInputChange(checkBoxSetInputHandler.getId(), checkBoxSetInputHandler.getInput());
-                }
-            });
+            InputUtils.updateInputHandlerInputWatcher(checkBoxSetInputHandler);
 
             // Only for the first checkbox we'll add some extra behaviour as it's going to be the element to receive focus
             // When validation fails we'll set the first checkbox with focusableInTouchMode = true, this makes the clicking
@@ -231,14 +225,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
             radioButton.setOnTouchListener(new FocusableChoiceListener<RadioButton>((RadioButton) radioGroup.getChildAt(0)));
         }
         renderedCard.registerInputHandler(radioGroupInputHandler, renderArgs.getContainerCardId());
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(radioGroupInputHandler.getId(), radioGroupInputHandler.getInput());
-            }
-        });
+        InputUtils.updateInputHandlerInputWatcher(radioGroupInputHandler);
 
         return radioGroup;
     }
@@ -379,32 +366,18 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
 
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerArrayAdapter);
-
         spinner.setSelection(selection);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(comboBoxInputHandler.getId(), comboBoxInputHandler.getInput());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(comboBoxInputHandler.getId(), comboBoxInputHandler.getInput());
-            }
-        });
-
         spinner.setFocusable(true);
 
         if (needsOuterLayout)
         {
             inputLayout.addView(spinner);
+            InputUtils.updateInputHandlerInputWatcher(comboBoxInputHandler);
             return inputLayout;
         }
         else
         {
+            InputUtils.updateInputHandlerInputWatcher(comboBoxInputHandler);
             return spinner;
         }
     }
@@ -600,28 +573,15 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
             }
         });
 
-        autoCompleteTextView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(autoCompleteTextInputHandler.getId(), autoCompleteTextInputHandler.getInput());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(autoCompleteTextInputHandler.getId(), autoCompleteTextInputHandler.getInput());
-            }
-        });
-
         if (needsOuterLayout)
         {
             inputLayout.addView(autoCompleteTextView);
+            InputUtils.updateInputHandlerInputWatcher(autoCompleteTextInputHandler);
             return inputLayout;
         }
         else
         {
+            InputUtils.updateInputHandlerInputWatcher(autoCompleteTextInputHandler);
             return autoCompleteTextView;
         }
     }
