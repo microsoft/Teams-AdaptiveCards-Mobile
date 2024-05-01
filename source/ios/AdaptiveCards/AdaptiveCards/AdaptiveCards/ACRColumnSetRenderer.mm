@@ -107,7 +107,7 @@
     NSMutableArray<ACRColumnView *> *viewsWithRelativeWidth = [[NSMutableArray alloc] init];
 
     for (std::shared_ptr<Column> column : columns) {
-        if (*firstColumn != column) {
+        if (*firstColumn != column && column->MeetsTargetWidthRequirement(hostWidth)) {
             separator = [ACRSeparator renderSeparation:column forSuperview:columnSetView withHostConfig:config];
         }
 
