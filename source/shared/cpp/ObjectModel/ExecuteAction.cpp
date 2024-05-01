@@ -68,11 +68,6 @@ Json::Value ExecuteAction::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Data)] = m_dataJson;
     }
-    
-    if (!m_conditionallyEnabled)
-    {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ConditionallyEnabled)] = m_conditionallyEnabled;
-    }
 
     if (!m_verb.empty())
     {
@@ -109,7 +104,6 @@ void ExecuteAction::PopulateKnownPropertiesSet()
 {
     m_knownProperties.insert(
         {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Data),
-         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ConditionallyEnabled),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Verb),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::AssociatedInputs)});
 }
