@@ -30,13 +30,13 @@ public:
     void SetConditionallyEnabled(const bool value);
 
     Json::Value SerializeToJsonValue() const override;
+    bool m_conditionallyEnabled;
 
 private:
     void PopulateKnownPropertiesSet();
 
     Json::Value m_dataJson;
     AssociatedInputs m_associatedInputs;
-    bool m_conditionallyEnabled;
 };
 
 class SubmitActionParser : public ActionElementParser

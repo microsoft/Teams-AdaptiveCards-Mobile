@@ -92,7 +92,6 @@ std::shared_ptr<BaseActionElement> ExecuteActionParser::Deserialize(ParseContext
         json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString));
     executeAction->SetConditionallyEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ConditionallyEnabled, false, false));
 
-
     return executeAction;
 }
 

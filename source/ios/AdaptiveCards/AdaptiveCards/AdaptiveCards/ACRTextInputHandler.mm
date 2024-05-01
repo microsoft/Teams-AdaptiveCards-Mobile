@@ -11,7 +11,6 @@
 #import "NumberInput.h"
 #import "TextInput.h"
 
-
 @implementation ACRTextInputHandler
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem
@@ -30,6 +29,7 @@
             self.regexPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pattern];
         }
         self.hasValidationProperties = self.isRequired || self.maxLength || self.regexPredicate;
+        self.delegateSet = [NSMutableSet set];
         self.text = [NSString stringWithCString:inputBlock->GetValue().c_str() encoding:NSUTF8StringEncoding];
         if (self.text && self.text.length) {
             self.hasText = YES;
@@ -64,6 +64,21 @@
     }
 }
 
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
+{
+    [delegateSet addObject:delegate];
+}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    self.text = textField.text;
+    self.hasText = textField.hasText;
+    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
+        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
+            [delegate inputValueChanged];
+        }
+    }
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -89,6 +104,7 @@
 @synthesize hasValidationProperties;
 @synthesize id;
 @synthesize hasVisibilityChanged;
+@synthesize delegateSet;
 
 @end
 
@@ -121,6 +137,7 @@
         self.hasMax = maxVal.has_value();
         self.max = maxVal.value_or(0);
         self.hasValidationProperties = self.isRequired || self.hasMin || self.hasMax;
+        self.delegateSet = [NSMutableSet set];
     }
     return self;
 }
