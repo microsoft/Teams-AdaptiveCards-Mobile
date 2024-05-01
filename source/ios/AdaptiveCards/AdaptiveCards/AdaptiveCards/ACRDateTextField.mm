@@ -193,7 +193,8 @@ using namespace AdaptiveCards;
     return isValidated;
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate {
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
+{
     [(UIDatePicker *)self.inputView addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     [delegateSet addObject:delegate];
 }

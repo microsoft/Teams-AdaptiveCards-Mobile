@@ -219,7 +219,8 @@
     return inputHandler;
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate {
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
+{
     NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
     [inputHandler addObserverForValueChange:delegate];
 }

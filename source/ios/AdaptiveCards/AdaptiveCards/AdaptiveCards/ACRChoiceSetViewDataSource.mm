@@ -289,7 +289,8 @@ const CGFloat minimumRowHeight = 44.0;
     return (rowHeight < minimumRowHeight) ? minimumRowHeight : rowHeight;
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate {
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
+{
     [delegateSet addObject:delegate];
 }
 

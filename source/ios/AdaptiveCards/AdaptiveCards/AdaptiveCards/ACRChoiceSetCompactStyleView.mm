@@ -386,7 +386,8 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     dictionary[self.id] = [_validator getValue:self.text];
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate {
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
+{
     [delegateSet addObject:delegate];
 }
 

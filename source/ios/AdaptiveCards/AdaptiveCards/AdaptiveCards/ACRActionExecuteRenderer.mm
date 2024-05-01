@@ -42,14 +42,17 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
     {
         _inputsArray = [[NSMutableArray<ACRIBaseInputHandler> alloc] initWithArray:inputs];
         BOOL atleastOneInputRequired = false;
-        for (id<ACRIBaseInputHandler> input in _inputsArray) {
-            if (input.isRequired) {
+        for (id<ACRIBaseInputHandler> input in _inputsArray) 
+        {
+            if (input.isRequired)
+            {
                 atleastOneInputRequired = true;
                 [input addObserverForValueChange:self];
             }
         }
         // update button enable state only if alteast one input is required
-        if(atleastOneInputRequired) {
+        if(atleastOneInputRequired) 
+        {
             [executeButtons addObject:button];
             [button setEnabled:[self validateInputs]];
         }
@@ -67,7 +70,8 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
     return button;
 }
 
-- (BOOL)validateInputs {
+- (BOOL)validateInputs
+{
     BOOL validationResult = false;
     for (id<ACRIBaseInputHandler> input in _inputsArray) {
         if(input.isRequired && !validationResult)
@@ -75,7 +79,8 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
             ACRInputLabelView *labelView = (ACRInputLabelView *)input;
             if (labelView) {
                 validationResult |= [labelView.getInputHandler validate:nil];
-            } else {
+            } else 
+            {
                 validationResult |= [input validate:nil];
             }
         }
@@ -83,7 +88,8 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
     return  validationResult;
 }
 
-- (void)inputValueChanged {
+- (void)inputValueChanged 
+{
     for (UIButton *button in executeButtons)
     {
         [button setEnabled:[self validateInputs]];
