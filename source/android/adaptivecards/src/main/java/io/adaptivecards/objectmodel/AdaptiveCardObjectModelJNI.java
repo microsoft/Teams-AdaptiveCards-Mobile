@@ -974,6 +974,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void ExecuteAction_SetVerb(long jarg1, ExecuteAction jarg1_, String jarg2);
   public final static native int ExecuteAction_GetAssociatedInputs(long jarg1, ExecuteAction jarg1_);
   public final static native void ExecuteAction_SetAssociatedInputs(long jarg1, ExecuteAction jarg1_, int jarg2);
+  public final static native boolean ExecuteAction_GetConditionallyEnabled(long jarg1, ExecuteAction jarg1_);
+  public final static native void ExecuteAction_SetConditionallyEnabled(long jarg1, ExecuteAction jarg1_, boolean jarg2);
   public final static native long ExecuteAction_SerializeToJsonValue(long jarg1, ExecuteAction jarg1_);
   public final static native long ExecuteAction_dynamic_cast(long jarg1, BaseActionElement jarg1_);
   public final static native long new_ExecuteActionParser__SWIG_0();
@@ -1074,6 +1076,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void SubmitAction_SetDataJson__SWIG_1(long jarg1, SubmitAction jarg1_, String jarg2);
   public final static native int SubmitAction_GetAssociatedInputs(long jarg1, SubmitAction jarg1_);
   public final static native void SubmitAction_SetAssociatedInputs(long jarg1, SubmitAction jarg1_, int jarg2);
+  public final static native boolean SubmitAction_GetConditionallyEnabled(long jarg1, SubmitAction jarg1_);
+  public final static native void SubmitAction_SetConditionallyEnabled(long jarg1, SubmitAction jarg1_, boolean jarg2);
   public final static native long SubmitAction_SerializeToJsonValue(long jarg1, SubmitAction jarg1_);
   public final static native long SubmitAction_dynamic_cast(long jarg1, BaseActionElement jarg1_);
   public final static native long new_SubmitActionParser__SWIG_0();

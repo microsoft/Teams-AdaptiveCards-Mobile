@@ -20619,6 +20619,40 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ExecuteAction_1GetConditionallyEnabled(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::ExecuteAction *arg1 = (AdaptiveCards::ExecuteAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::ExecuteAction const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::ExecuteAction > **)&jarg1;
+  arg1 = (AdaptiveCards::ExecuteAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::ExecuteAction const *)arg1)->GetConditionallyEnabled();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ExecuteAction_1SetConditionallyEnabled(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::ExecuteAction *arg1 = (AdaptiveCards::ExecuteAction *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::ExecuteAction > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::ExecuteAction > **)&jarg1;
+  arg1 = (AdaptiveCards::ExecuteAction *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetConditionallyEnabled(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ExecuteAction_1SerializeToJsonValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::ExecuteAction *arg1 = (AdaptiveCards::ExecuteAction *) 0 ;
@@ -22732,6 +22766,40 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   arg1 = (AdaptiveCards::SubmitAction *)(smartarg1 ? smartarg1->get() : 0); 
   arg2 = (AdaptiveCards::AssociatedInputs)jarg2; 
   (arg1)->SetAssociatedInputs(arg2);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SubmitAction_1GetConditionallyEnabled(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::SubmitAction *arg1 = (AdaptiveCards::SubmitAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::SubmitAction const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::SubmitAction > **)&jarg1;
+  arg1 = (AdaptiveCards::SubmitAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::SubmitAction const *)arg1)->GetConditionallyEnabled();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SubmitAction_1SetConditionallyEnabled(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::SubmitAction *arg1 = (AdaptiveCards::SubmitAction *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::SubmitAction > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::SubmitAction > **)&jarg1;
+  arg1 = (AdaptiveCards::SubmitAction *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetConditionallyEnabled(arg2);
 }
 
 

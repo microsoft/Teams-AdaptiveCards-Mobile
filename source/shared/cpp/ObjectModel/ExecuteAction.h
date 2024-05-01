@@ -29,6 +29,9 @@ public:
     virtual AssociatedInputs GetAssociatedInputs() const;
     virtual void SetAssociatedInputs(const AssociatedInputs value);
 
+    bool GetConditionallyEnabled() const;
+    void SetConditionallyEnabled(const bool value);
+
     Json::Value SerializeToJsonValue() const override;
 
 private:
@@ -37,6 +40,7 @@ private:
     Json::Value m_dataJson;
     std::string m_verb;
     AssociatedInputs m_associatedInputs;
+    bool m_conditionallyEnabled;
 };
 
 class ExecuteActionParser : public ActionElementParser

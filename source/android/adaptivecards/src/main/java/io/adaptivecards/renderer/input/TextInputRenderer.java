@@ -54,6 +54,7 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.action.ActionElementRenderer;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedEditText;
+import io.adaptivecards.renderer.inputhandler.InputUtils;
 import io.adaptivecards.renderer.inputhandler.TextInputHandler;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
@@ -235,27 +236,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
         {
             editText.setHint(placeHolder);
         }
-        editText.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(textInputHandler.getId(), textInputHandler.getInput());
-            }
-        });
-
+        InputUtils.updateInputHandlerInputWatcher(textInputHandler);
         LinearLayout textInputViewGroup = null;
 
         if (textInput != null)
