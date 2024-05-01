@@ -163,6 +163,10 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             Util.loadIcon(context, button, iconUrl, hostConfig, renderedCard, iconPlacement);
         }
 
+        if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
+            button.setContentDescription(Util.getOpenUrlAnnouncement(context, baseActionElement.GetTitle()));
+        }
+
         viewGroup.addView(button);
 
         return button;

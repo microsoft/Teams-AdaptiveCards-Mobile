@@ -293,6 +293,10 @@ public class TextInputRenderer extends BaseCardElementRenderer
                             renderedCard.setCardForSubmitAction(Util.getViewId(inlineButton), renderArgs.getContainerCardId());
                         }
 
+                        if (action.GetElementType() == ActionType.OpenUrl) {
+                            inlineButton.setContentDescription(Util.getOpenUrlAnnouncement(context, action.GetTitle()));
+                        }
+
                         textInputViewGroup.addView(inlineButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
                     }
                     else
@@ -324,6 +328,10 @@ public class TextInputRenderer extends BaseCardElementRenderer
                         if (Util.isOfType(action, ExecuteAction.class) || Util.isOfType(action, SubmitAction.class) || action.GetElementType() == ActionType.Custom)
                         {
                             renderedCard.setCardForSubmitAction(Util.getViewId(inlineButton), renderArgs.getContainerCardId());
+                        }
+
+                        if (action.GetElementType() == ActionType.OpenUrl) {
+                            inlineButton.setContentDescription(Util.getOpenUrlAnnouncement(context, action.GetTitle()));
                         }
 
                         textInputViewGroup.addView(inlineButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
