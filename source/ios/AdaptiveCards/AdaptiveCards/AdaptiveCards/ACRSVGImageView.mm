@@ -12,9 +12,7 @@
 @implementation ACRSVGImageView
 {
     NSString *_svgPayloadURL;
-    CGSize _size;
     ACRRtl _rtl;
-    UIColor *_tintColor;
 }
 
 - (instancetype)init:(NSString *)iconURL
@@ -26,26 +24,42 @@
     if (self)
     {
         _svgPayloadURL = iconURL;
-        _size = size;
+        self.size = size;
         _rtl = rtl;
-        _tintColor = tintColor;
+        self.svgTintColor = tintColor;
         [self loadIconFromCDN];
     }
     return self;
 }
 
-- (void)loadIconFromCDN
+-(void)loadIconFromCDN
 {
-    NSURL *url = [[NSURL alloc] initWithString:_svgPayloadURL];
+    NSURL *svgURL = [[NSURL alloc] initWithString:_svgPayloadURL];
+    __weak ACRSVGImageView *weakSelf = self;
+    [self makeIconCDNRequestWithURL:svgURL
+                         completion:^(NSDictionary * _Nullable dict, NSError * _Nullable error) {
+        ACRSVGImageView *strongSelf = weakSelf;
+        if (dict != nil)
+        {
+            [strongSelf updateImageWithSVGData: dict];
+        }
+        else
+        {
+            [strongSelf showUnavailableIcon];
+        }
+    }];
+}
+
+- (void)makeIconCDNRequestWithURL:(NSURL *)url
+                       completion:(void (^)(NSDictionary * _Nullable object, NSError * _Nullable error))completion
+{
     if (url)
     {
-        __weak ACRSVGImageView *weakSelf = self;
         NSURLSessionDataTask *iconDataTask = [[NSURLSession sharedSession]
                                               dataTaskWithURL:url
                                               completionHandler:^(NSData * _Nullable data,
                                                                   NSURLResponse * _Nullable response,
                                                                   NSError * _Nullable error) {
-            ACRSVGImageView *strongSelf = weakSelf;
             NSInteger status = 200;
             if ([response isKindOfClass:[NSHTTPURLResponse class]])
             {
@@ -53,32 +67,22 @@
             }
             if (!error && status == 200)
             {
-                   NSError *err;
-                   NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
-                                                                       options:NSJSONReadingMutableContainers
-                                                                         error:&err];
-                   if(err) 
-                   {
-                       [strongSelf showUnavailableIcon];
-                   }
-                   else
-                   {
-                       NSArray<NSString *> *svgPathArray = dict[@"svgPaths"];
-                       BOOL flipInRTL = NO;
-                       flipInRTL = dict[@"flipInRtl"];
-                       if (svgPathArray && [svgPathArray count] != 0)
-                       {
-                           [strongSelf setImageWith:svgPathArray flipInRTL:flipInRTL];
-                       }
-                       else 
-                       {
-                           [strongSelf showUnavailableIcon];
-                       }
-                   }
+                NSError *err;
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
+                                                                     options:NSJSONReadingMutableContainers
+                                                                       error:&err];
+                if(err)
+                {
+                    completion(nil, err);
+                }
+                else
+                {
+                    completion(dict, nil);
+                }
             }
             else
             {
-                [strongSelf showUnavailableIcon];
+                completion(nil, error);
             }
         }];
         [iconDataTask resume];
@@ -87,12 +91,37 @@
     {
         [self showUnavailableIcon];
     }
-    
+}
+
+- (void)updateImageWithSVGData:(NSDictionary *)svgData
+{
+    NSArray<NSString *> *svgPathArray = svgData[@"svgPaths"];
+    BOOL flipInRTL = NO;
+    flipInRTL = svgData[@"flipInRtl"];
+    if (svgPathArray && [svgPathArray count] != 0)
+    {
+        [self setImageWith:svgPathArray flipInRTL:flipInRTL];
+    }
+    else
+    {
+        [self showUnavailableIcon];
+    }
 }
 
 - (void)showUnavailableIcon
 {
-    //TODO: Bundle Unavailable Icon with SDK and show here
+    // we will always show hardcoded square icon as fallback
+    NSString *fallbackURLName = @"Square";
+    NSString *fallBackURLString = [[NSString alloc] initWithFormat:@"%s%@/%@%ldFilled.json",AdaptiveCards::baseIconCDNUrl, fallbackURLName, fallbackURLName, (long)self.size.width];
+    NSURL *svgURL = [[NSURL alloc] initWithString:fallBackURLString];
+    __weak ACRSVGImageView *weakSelf = self;
+    [self makeIconCDNRequestWithURL:svgURL completion:^(NSDictionary * _Nullable dict, NSError * _Nullable error) {
+        ACRSVGImageView *strongSelf = weakSelf;
+        if (dict != nil)
+        {
+            [strongSelf updateImageWithSVGData: dict];
+        }
+    }];
 }
 
 - (void)setImageWith:(NSArray<NSString *> *)pathArray flipInRTL:(BOOL)flipInRTL
@@ -106,12 +135,16 @@
         SVGKImage *document = [SVGKImage imageWithSource:svgSource];
         UIImage *imageToRender = [self processImage:document.UIImage flipInRTL:flipInRTL];
         self.image = imageToRender;
+        if(self.svgImage)
+        {
+            self.image = self.svgImage;
+        }
     });
 }
 
 -(UIImage *)processImage:(UIImage *)img flipInRTL:(BOOL)flipInRTL
 {
-    self.tintColor = _tintColor;
+    self.tintColor = self.svgTintColor;
     UIImage *colored = [img imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     if (_rtl == ACRRtlRTL)

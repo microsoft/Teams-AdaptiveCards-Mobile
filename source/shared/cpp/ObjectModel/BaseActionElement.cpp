@@ -4,6 +4,7 @@
 #include "BaseActionElement.h"
 #include "BaseElement.h"
 #include "ParseUtil.h"
+#include "Icon.h"
 
 using namespace AdaptiveCards;
 
@@ -37,7 +38,7 @@ const std::string& BaseActionElement::GetIconUrl() const
     return m_iconUrl;
 }
 
-std::string BaseActionElement::GetSVGResourceURL() const
+std::string BaseActionElement::GetSVGResourceURL(unsigned int size) const
 {
     std::regex regex{R"([,:]+)"}; // split on ':' and ','
     std::sregex_token_iterator it{m_iconUrl.begin(), m_iconUrl.end(), regex, -1};
@@ -50,7 +51,7 @@ std::string BaseActionElement::GetSVGResourceURL() const
             iconStyle = config[config.size() - 1];
         }
     }
-    std::string m_url = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/" + iconName + "/" + iconName + std::to_string(24) + iconStyle + ".json";
+    std::string m_url = baseIconCDNUrl + iconName + "/" + iconName + std::to_string(size) + iconStyle + ".json";
     return m_url;
 }
 

@@ -145,9 +145,8 @@ void Icon::GetResourceInformation(std::vector<RemoteResourceInformation>& resour
 
 std::string Icon::GetSVGResourceURL() const
 {
-    // format: "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/<Icon Name>/<IconName><Size><Style>.json"
-
-    std::string m_url = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/" + GetName() + "/" + GetName() + std::to_string(getSize()) + IconStyleToString(getIconStyle()) + ".json";
+    // format: "<baseIconCDNUrl><Icon Name>/<IconName><Size><Style>.json"
+    std::string m_url = baseIconCDNUrl + GetName() + "/" + GetName() + std::to_string(getSize()) + IconStyleToString(getIconStyle()) + ".json";
     return m_url;
 }
 
