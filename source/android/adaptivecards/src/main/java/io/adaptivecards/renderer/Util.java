@@ -11,12 +11,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Dimension;
@@ -565,7 +565,7 @@ public final class Util {
         return new Pair<>(primaryActionElementVector,secondaryActionElementVector);
     }
 
-    public static void loadIcon(Context context, View view, String iconUrl, HostConfig hostConfig, RenderedAdaptiveCard renderedCard, IconPlacement iconPlacement)
+    public static void loadIcon(Context context, View view, String iconUrl, String svgResourceURL, HostConfig hostConfig, RenderedAdaptiveCard renderedCard, IconPlacement iconPlacement)
     {
         if (!iconUrl.startsWith(FLUENT_ICON_URL_PREFIX)) {
             ActionElementRendererIconImageLoaderAsync imageLoader = new ActionElementRendererIconImageLoaderAsync(
@@ -580,50 +580,26 @@ public final class Util {
             imageLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl);
         }
         else {
-            long iconSize = 20; // for testing purposes
-            String iconUrlToLoad = getFluentIconUrl(iconUrl, iconSize);
-            Log.d("Manpreet", "Creating Fluent Icon Url: " + iconUrlToLoad);
+            // intentionally kept this 24 so that it always loads
+            // irrespective of size given in host config.
+            // it is possible that host config has some size which is not available in CDN.
+            long fluentIconSize = 24;
+            int color = ((Button) view).getCurrentTextColor();
+            String hexColor = String.format("#%06X", (0xFFFFFF & color));
             ActionElementRendererFluentIconImageLoaderAsync fluentIconLoaderAsync = new ActionElementRendererFluentIconImageLoaderAsync(
                 renderedCard,
-                iconSize,
+                fluentIconSize,
                 view,
+                hexColor,
                 iconPlacement,
-                hostConfig.GetSpacing().getDefaultSpacing()
+                hostConfig.GetSpacing().getDefaultSpacing(),
+                hostConfig.GetActions().getIconSize()
             );
-            fluentIconLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrlToLoad);
+            fluentIconLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, svgResourceURL);
         }
-    }
-
-    private static String getFluentIconUrl(String iconUrl, long iconSize) {
-        Pair<String, String> parsedIconUrl = parseIconUrl(iconUrl);
-        String iconName = parsedIconUrl.first;
-        String iconStyle = parsedIconUrl.second;
-        if (iconStyle == null) {
-            iconStyle = DEFAULT_FLUENT_ICON_STYLE;
-        }
-        StringBuilder urlBuilder = new StringBuilder(BASE_FLUENT_ICON_URL);
-        urlBuilder.append(iconName)
-            .append("/")
-            .append(iconName)
-            .append(iconSize)
-            .append(iconStyle)
-            .append(".json");
-        return urlBuilder.toString();
-    }
-
-    private static Pair<String, String> parseIconUrl(String iconUrl) {
-        String[] splitUrl = iconUrl.split(",");
-        String iconName = splitUrl[0].replaceFirst(FLUENT_ICON_URL_PREFIX, "");
-        String iconStyle = null;
-        if (splitUrl.length > 1) {
-            iconStyle = splitUrl[1];
-        }
-        return new Pair<>(iconName, iconStyle);
     }
 
     private static final String FLUENT_ICON_URL_PREFIX = "icon:";
-    private static final String BASE_FLUENT_ICON_URL = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/";
-    private static final String DEFAULT_FLUENT_ICON_STYLE = "Regular";
 
     public static String getOpenUrlAnnouncement(Context context, String urlTitle) {
         return context.getResources().getString(R.string.open_url_announcement, urlTitle);

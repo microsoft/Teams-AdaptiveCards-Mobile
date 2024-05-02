@@ -42,7 +42,6 @@ public:
     void SetSelectAction(const std::shared_ptr<BaseActionElement> action);
 
     unsigned int getSize() const;
-    std::string getStyle() const;
     std::string GetSVGResourceURL() const;
 
     void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo) override;

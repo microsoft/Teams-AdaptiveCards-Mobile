@@ -100,10 +100,6 @@ public class Icon extends BaseCardElement {
     return AdaptiveCardObjectModelJNI.Icon_getSize(swigCPtr, this);
   }
 
-  public String getStyle() {
-    return AdaptiveCardObjectModelJNI.Icon_getStyle(swigCPtr, this);
-  }
-
   public String GetSVGResourceURL() {
     return AdaptiveCardObjectModelJNI.Icon_GetSVGResourceURL(swigCPtr, this);
   }

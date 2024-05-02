@@ -1,23 +1,31 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 package io.adaptivecards.renderer
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.PictureDrawable
 import android.os.AsyncTask
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.caverock.androidsvg.SVG
+import io.adaptivecards.objectmodel.AdaptiveCardObjectModel
 import io.adaptivecards.renderer.http.HttpRequestHelper
 import io.adaptivecards.renderer.http.HttpRequestResult
 import org.json.JSONObject
 import java.lang.ref.WeakReference
 import java.nio.charset.StandardCharsets
 
+/**
+ * Responsible for rendering the Fluent Icon element
+ **/
 open class FluentIconImageLoaderAsync(
     val renderedCard: RenderedAdaptiveCard,
     val iconSize: Long,
-    val foregroundColor: String,
+    private val iconColor: String,
     view: View
 ) : AsyncTask<String, Void, HttpRequestResult<String>>() {
 
@@ -26,13 +34,7 @@ open class FluentIconImageLoaderAsync(
         return if (args.isEmpty()) {
             null
         } else {
-            try {
-                val responseBytes = HttpRequestHelper.get(args[0])
-                HttpRequestResult<String>(String (responseBytes, StandardCharsets.UTF_8))
-            } catch (e: Exception) {
-                Log.e("Manpreet", "Error fetching icon svg path from url ${args[0]}")
-                null
-            }
+            fetchIcon(args[0])
         }
     }
 
@@ -43,32 +45,70 @@ open class FluentIconImageLoaderAsync(
                 val jsonResponse = JSONObject(result.result)
                 try {
                     val svgPath = jsonResponse.getJSONArray("svgPaths")
-                    val svgStringBuilder = StringBuilder("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 $iconSize $iconSize\"> <path d=\"${svgPath[0]}\"/></svg>")
-                    Log.d("Manpreet", svgStringBuilder.toString())
-                    val drawable = loadSVGIntoImageView(svgStringBuilder.toString(), view.context)
-                    renderFluentIcon(drawable)
+                    val flipRtl = jsonResponse.optBoolean("flipInRtl", false)
+                    val svgString = getSvgString(svgPath[0] as String)
+                    val drawable = getDrawableFromSVG(svgString, view.context)
+                    renderFluentIcon(drawable, flipRtl)
                 } catch (e: Exception) {
-                    Log.e("Manpreet", "Json exception or error parsing svg string ${e.message}")
-                    // Todo: render "Unavailable" fallback icon
+                    renderFluentIcon(null, false)
                 }
-            } else {
-                // Todo: render "Unavailable" fallback icon
             }
         }
     }
 
-    open fun renderFluentIcon(drawable: Drawable?) {
+    open fun renderFluentIcon(drawable: Drawable?, flipRtl: Boolean) {
         val view = viewReference.get()
         if (view != null && view is ImageView) {
             view.setImageDrawable(drawable)
+            if (renderedCard.adaptiveCard.GetRtl() == flipRtl) {
+                view.scaleX = -1f
+            }
         }
     }
 
-    private fun loadSVGIntoImageView(svgString: String, context: Context): Drawable {
+    /**
+     * If the provided icon url is invalid, fetch fallback unavailable icon
+     **/
+    private fun fetchIcon(svgURL: String): HttpRequestResult<String>? {
+        return try {
+            val responseBytes = HttpRequestHelper.get(svgURL)
+            HttpRequestResult<String>(String (responseBytes, StandardCharsets.UTF_8))
+        } catch (e: Exception) {
+            val invalidIconURL = "${AdaptiveCardObjectModel.getBaseIconCDNUrl()}/Square/Square${iconSize}Filled.json"
+            try {
+                val responseBytes = HttpRequestHelper.get(invalidIconURL)
+                HttpRequestResult(String (responseBytes, StandardCharsets.UTF_8))
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    private fun getSvgString(svgPath: String): String {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"$iconSize\" height=\"$iconSize\" viewBox=\"0 0 $iconSize $iconSize\"> <path d=\"$svgPath\"/></svg>"
+    }
+
+    /**
+     * creates the svg document from the svg string with the desired icon size
+     * for Icon in Action Element, the document width and height are set to the icon size from the host config
+     **/
+    open fun parseSvgString(context: Context, svgString: String): SVG {
         val svg = SVG.getFromString(svgString)
         svg.documentWidth = Util.dpToPixels(context, iconSize.toFloat()).toFloat()
         svg.documentHeight = Util.dpToPixels(context, iconSize.toFloat()).toFloat()
-        return PictureDrawable(svg.renderToPicture())
+        return svg
+    }
+
+    private fun getDrawableFromSVG(svgString: String, context: Context): BitmapDrawable {
+        val svg = parseSvgString(context, svgString)
+        val picture = svg.renderToPicture()
+        var bitmap = Bitmap.createBitmap(picture.width, picture.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        picture.draw(canvas)
+        var drawable = BitmapDrawable(context.resources, bitmap)
+        val color = Color.parseColor(iconColor)
+        drawable.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
+        return drawable
     }
 
 }
