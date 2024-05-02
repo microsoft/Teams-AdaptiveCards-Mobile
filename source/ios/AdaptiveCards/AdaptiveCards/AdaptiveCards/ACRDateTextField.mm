@@ -147,6 +147,7 @@ using namespace AdaptiveCards;
 #endif
         self.inputView = picker;
         self.hasValidationProperties = self.isRequired || self.max || self.min;
+        self.delegateSet = [NSMutableSet set];
     }
 
     return self;
@@ -192,6 +193,12 @@ using namespace AdaptiveCards;
     return isValidated;
 }
 
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
+{
+    [(UIDatePicker *)self.inputView addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [delegateSet addObject:delegate];
+}
+
 - (void)getInput:(NSMutableDictionary *)dictionary
 {
     dictionary[self.id] = (self.text.length == 0) ? self.text : [_encodeFormatter stringFromDate:[self getCurrentDate]];
@@ -224,12 +231,18 @@ using namespace AdaptiveCards;
     formatter.locale = [NSLocale currentLocale];
 }
 
+-(void)datePickerValueChanged:(UIDatePicker *)datePicker {
+    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
+        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
+            [delegate inputValueChanged];
+        }
+    }
+}
+
 @synthesize hasValidationProperties;
-
 @synthesize id;
-
 @synthesize isRequired;
-
 @synthesize hasVisibilityChanged;
+@synthesize delegateSet;
 
 @end

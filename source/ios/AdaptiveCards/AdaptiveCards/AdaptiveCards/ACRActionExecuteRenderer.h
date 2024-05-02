@@ -7,7 +7,7 @@
 
 #import "ACRBaseActionElementRenderer.h"
 
-@interface ACRActionExecuteRenderer : ACRBaseActionElementRenderer
+@interface ACRActionExecuteRenderer : ACRBaseActionElementRenderer <ACRInputChangeDelegate>
 
 + (ACRActionExecuteRenderer *)getInstance;
 

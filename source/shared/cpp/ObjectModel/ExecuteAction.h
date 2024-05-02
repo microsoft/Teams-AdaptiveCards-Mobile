@@ -22,14 +22,18 @@ public:
     Json::Value GetDataJsonAsValue() const;
     void SetDataJson(const Json::Value& value);
     void SetDataJson(const std::string value);
-
+    
     std::string GetVerb() const;
     void SetVerb(const std::string verb);
 
     virtual AssociatedInputs GetAssociatedInputs() const;
     virtual void SetAssociatedInputs(const AssociatedInputs value);
 
+    bool GetConditionallyEnabled() const;
+    void SetConditionallyEnabled(const bool value);
+
     Json::Value SerializeToJsonValue() const override;
+    bool m_conditionallyEnabled;
 
 private:
     void PopulateKnownPropertiesSet();

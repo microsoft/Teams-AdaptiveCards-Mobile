@@ -51,6 +51,15 @@ void ExecuteAction::SetAssociatedInputs(const AssociatedInputs value)
     m_associatedInputs = value;
 }
 
+bool ExecuteAction::GetConditionallyEnabled() const {
+    return m_conditionallyEnabled;
+}
+
+void ExecuteAction::SetConditionallyEnabled(bool value)
+{
+    m_conditionallyEnabled = value;
+}
+
 Json::Value ExecuteAction::SerializeToJsonValue() const
 {
     Json::Value root = BaseActionElement::SerializeToJsonValue();
@@ -81,6 +90,7 @@ std::shared_ptr<BaseActionElement> ExecuteActionParser::Deserialize(ParseContext
     executeAction->SetVerb(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Verb));
     executeAction->SetAssociatedInputs(ParseUtil::GetEnumValue<AssociatedInputs>(
         json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString));
+    executeAction->SetConditionallyEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ConditionallyEnabled, false, false));
 
     return executeAction;
 }

@@ -196,6 +196,10 @@
         button.heightConstraint = [button.heightAnchor constraintGreaterThanOrEqualToAnchor:button.titleLabel.heightAnchor constant:button.contentEdgeInsets.top + button.contentEdgeInsets.bottom];
         button.heightConstraint.active = YES;
     }
+    
+    if (button.isEnabled == NO) {
+        [button setBackgroundColor:[button.backgroundColor colorWithAlphaComponent:0.5]];
+    }
 
     return button;
 }

@@ -4,6 +4,8 @@ package io.adaptivecards.renderer;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -110,7 +112,8 @@ public class RenderedAdaptiveCard {
         submitActionCard.put(actionId, parentCardId);
     }
 
-    private Vector<IInputHandler> getInputsToValidate(long clickedActionId)
+    @NonNull
+    public Vector<IInputHandler> getInputsToValidate(long clickedActionId)
     {
         Long cardId = submitActionCard.get(clickedActionId);
         Vector<IInputHandler> inputHandlers = new Vector<>();
