@@ -95,6 +95,14 @@ public class ExecuteAction extends BaseActionElement {
     return new JsonValue(AdaptiveCardObjectModelJNI.ExecuteAction_SerializeToJsonValue(swigCPtr, this), true);
   }
 
+  public void setM_conditionallyEnabled(boolean value) {
+    AdaptiveCardObjectModelJNI.ExecuteAction_m_conditionallyEnabled_set(swigCPtr, this, value);
+  }
+
+  public boolean getM_conditionallyEnabled() {
+    return AdaptiveCardObjectModelJNI.ExecuteAction_m_conditionallyEnabled_get(swigCPtr, this);
+  }
+
   public static ExecuteAction dynamic_cast(BaseActionElement baseActionElement) {
     long cPtr = AdaptiveCardObjectModelJNI.ExecuteAction_dynamic_cast(BaseActionElement.getCPtr(baseActionElement), baseActionElement);
     return (cPtr == 0) ? null : new ExecuteAction(cPtr, true);
