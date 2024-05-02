@@ -43,6 +43,10 @@
                                         "title": "InputForm",
                                         "value": "v1.5/Scenarios/InputForm.json"
                                     },
+									{
+										"title": "ConditionallyEnabledAction",
+										"value": "v1.5/Scenarios/ConditionallyEnabled.json"
+									},
                                     {
                                         "title": "Inputs",
                                         "value": "v1.5/Scenarios/InputsWithValidation.json"

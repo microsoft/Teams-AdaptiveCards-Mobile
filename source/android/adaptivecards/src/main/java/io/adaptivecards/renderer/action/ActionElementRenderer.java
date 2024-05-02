@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.action;
 
+import static io.adaptivecards.renderer.inputhandler.InputUtils.isAnyInputValid;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -31,6 +33,10 @@ import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.inputhandler.IInputHandler;
+
+import java.util.List;
+
 
 public class ActionElementRenderer extends BaseActionElementRenderer
 {
@@ -109,13 +115,13 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         }
 
         Button button = getButtonForStyle(context, baseActionElement.GetStyle(), hostConfig);
-        button.setEnabled(baseActionElement.GetIsEnabled());
 
         if (Util.isOfType(baseActionElement, ExecuteAction.class) || Util.isOfType(baseActionElement, SubmitAction.class))
         {
             long actionId = Util.getViewId(button);
             renderedCard.setCardForSubmitAction(actionId, renderArgs.getContainerCardId());
         }
+        setButtonEnabledState(baseActionElement, button, renderedCard);
 
         button.setText(baseActionElement.GetTitle());
         if (!TextUtils.isEmpty(baseActionElement.GetTooltip()))
@@ -157,9 +163,50 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             Util.loadIcon(context, button, iconUrl, hostConfig, renderedCard, iconPlacement);
         }
 
+        if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
+            button.setContentDescription(Util.getOpenUrlAnnouncement(context, baseActionElement.GetTitle()));
+        }
+
         viewGroup.addView(button);
 
         return button;
+    }
+
+    /**
+     * Set Enable state of the button in ActionElement for ConditionallyEnabled property
+     * if baseActionElement.GetIsEnabled() is false ignore ConditionallyEnabled and disable the button
+     * Else if ConditionallyEnabled is true then disable the button if all of the required inputs
+     * are invalid.
+     * In any other case enable the button by default
+     * @param baseActionElement
+     * @param button
+     * @param adaptiveCard
+     * protected so that it cab be called from TeamsActionElementRenderer as it doesn't call super.
+     */
+    protected void setButtonEnabledState(BaseActionElement baseActionElement, Button button, RenderedAdaptiveCard adaptiveCard) {
+        if (!baseActionElement.GetIsEnabled()) {
+            button.setEnabled(false);
+        } else if (Util.isOfType(baseActionElement, ExecuteAction.class)) {
+            ExecuteAction executeAction = Util.castTo(baseActionElement, ExecuteAction.class);
+            if (executeAction.GetConditionallyEnabled()) {
+                addInputWatcherForConditionallyEnabledAction(adaptiveCard, button);
+            }
+        } else if (Util.isOfType(baseActionElement, SubmitAction.class)) {
+            SubmitAction submitAction = Util.castTo(baseActionElement, SubmitAction.class);
+            if (submitAction.GetConditionallyEnabled()) {
+                addInputWatcherForConditionallyEnabledAction(adaptiveCard, button);
+            }
+        } else {
+            button.setEnabled(true);
+        }
+    }
+
+    private void addInputWatcherForConditionallyEnabledAction(RenderedAdaptiveCard adaptiveCard, Button button) {
+        List<IInputHandler> inputHandlers = adaptiveCard.getInputsToValidate(Util.getViewId(button));
+        button.setEnabled(isAnyInputValid(inputHandlers));
+        for (IInputHandler inputHandler : inputHandlers) {
+            inputHandler.addInputWatcher((id, val) -> button.setEnabled(isAnyInputValid(inputHandlers)));
+        }
     }
 
     @Override
