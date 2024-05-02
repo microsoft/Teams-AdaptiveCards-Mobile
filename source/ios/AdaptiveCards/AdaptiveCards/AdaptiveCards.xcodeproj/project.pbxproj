@@ -30,7 +30,7 @@
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
 		30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */; };
 		463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C062BD8DB1F00A95C4E /* Icon.cpp */; };
-		463C3C0B2BD8DCC000A95C4E /* Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0A2BD8DCC000A95C4E /* Icon.h */; };
+		463C3C0B2BD8DCC000A95C4E /* Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0A2BD8DCC000A95C4E /* Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */; };
 		463C3C0F2BD8F7D200A95C4E /* ACRIconRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		463C4EDB2BDB666A00A95C4E /* ACRSVGImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C4EDA2BDB666A00A95C4E /* ACRSVGImageView.h */; };
