@@ -48,13 +48,15 @@
     NSString *svgPayloadURL = @(icon->GetSVGResourceURL().c_str());
     CGSize size = CGSizeMake(icon->getSize(), icon->getSize());
     
+    UIColor *imageTintColor = [acoConfig getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:icon->getForgroundColor() subtleOption:false];
+    
     ACRSVGImageView *iconView = [[ACRSVGImageView alloc] init:svgPayloadURL
                                                           rtl:rootView.context.rtl
-                                                         size:size];
+                                                         size:size
+                                                    tintColor:imageTintColor];
     
     ACRSVGIconHoldingView *wrappingView = [[ACRSVGIconHoldingView alloc] init:iconView size:size];
-    
-    
+
     wrappingView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [viewGroup addArrangedSubview:wrappingView];

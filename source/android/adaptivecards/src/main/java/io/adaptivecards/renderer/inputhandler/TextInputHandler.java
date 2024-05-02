@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.inputhandler;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.EditText;
 
@@ -62,6 +64,26 @@ public class TextInputHandler extends BaseInputHandler
         }
 
         return isValid;
+    }
+
+    @Override
+    public void registerInputObserver() {
+        getEditText().addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {}
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                notifyAllInputWatchers();
+            }
+        });
     }
 
     public void setFocusToView()

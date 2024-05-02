@@ -54,6 +54,7 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.action.ActionElementRenderer;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedEditText;
+import io.adaptivecards.renderer.inputhandler.InputUtils;
 import io.adaptivecards.renderer.inputhandler.TextInputHandler;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
@@ -235,27 +236,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
         {
             editText.setHint(placeHolder);
         }
-        editText.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(textInputHandler.getId(), textInputHandler.getInput());
-            }
-        });
-
+        InputUtils.updateInputHandlerInputWatcher(textInputHandler);
         LinearLayout textInputViewGroup = null;
 
         if (textInput != null)
@@ -312,6 +293,10 @@ public class TextInputRenderer extends BaseCardElementRenderer
                             renderedCard.setCardForSubmitAction(Util.getViewId(inlineButton), renderArgs.getContainerCardId());
                         }
 
+                        if (action.GetElementType() == ActionType.OpenUrl) {
+                            inlineButton.setContentDescription(Util.getOpenUrlAnnouncement(context, action.GetTitle()));
+                        }
+
                         textInputViewGroup.addView(inlineButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
                     }
                     else
@@ -343,6 +328,10 @@ public class TextInputRenderer extends BaseCardElementRenderer
                         if (Util.isOfType(action, ExecuteAction.class) || Util.isOfType(action, SubmitAction.class) || action.GetElementType() == ActionType.Custom)
                         {
                             renderedCard.setCardForSubmitAction(Util.getViewId(inlineButton), renderArgs.getContainerCardId());
+                        }
+
+                        if (action.GetElementType() == ActionType.OpenUrl) {
+                            inlineButton.setContentDescription(Util.getOpenUrlAnnouncement(context, action.GetTitle()));
                         }
 
                         textInputViewGroup.addView(inlineButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));

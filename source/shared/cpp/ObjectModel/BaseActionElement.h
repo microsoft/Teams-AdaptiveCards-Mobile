@@ -6,6 +6,7 @@
 #include "ParseUtil.h"
 #include "RemoteResourceInformation.h"
 #include "BaseElement.h"
+#include "Enums.h"
 
 void HandleUnknownProperties(const Json::Value& json, const std::unordered_set<std::string>& knownProperties, Json::Value& unknownProperties);
 
@@ -29,7 +30,7 @@ public:
     virtual void SetTitle(const std::string& value);
 
     const std::string& GetIconUrl() const;
-    std::string GetSVGResourceURL() const;
+    std::string GetSVGResourceURL(unsigned int size) const;
 
     void SetIconUrl(std::string&& value);
     void SetIconUrl(const std::string& value);

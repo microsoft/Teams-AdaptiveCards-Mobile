@@ -131,6 +131,7 @@ const CGFloat minimumRowHeight = 44.0;
         }
         
         self.hasValidationProperties = self.isRequired;
+        self.delegateSet = [NSMutableSet set];
     }
     return self;
 }
@@ -246,7 +247,7 @@ const CGFloat minimumRowHeight = 44.0;
             _userSelections[[NSNumber numberWithInteger:indexPath.row]] = [NSNumber numberWithBool:YES];
         }
     }
-
+    [self notifyDelegates];
     [tableView reloadData];
     _currentSelectedIndexPath = indexPath;
 }
@@ -287,6 +288,20 @@ const CGFloat minimumRowHeight = 44.0;
     
     return (rowHeight < minimumRowHeight) ? minimumRowHeight : rowHeight;
 }
+
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
+{
+    [delegateSet addObject:delegate];
+}
+
+- (void)notifyDelegates {
+    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
+        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
+            [delegate inputValueChanged];
+        }
+    }
+}
+
 
 - (BOOL)validate:(NSError **)error
 {
@@ -359,5 +374,6 @@ const CGFloat minimumRowHeight = 44.0;
 @synthesize isRequired;
 @synthesize hasValidationProperties;
 @synthesize hasVisibilityChanged;
+@synthesize delegateSet;
 
 @end

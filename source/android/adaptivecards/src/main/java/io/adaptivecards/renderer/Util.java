@@ -29,6 +29,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import io.adaptivecards.R;
 import io.adaptivecards.objectmodel.BaseActionElement;
 import io.adaptivecards.objectmodel.BaseActionElementVector;
 import io.adaptivecards.objectmodel.BaseCardElement;
@@ -623,4 +624,8 @@ public final class Util {
     private static final String FLUENT_ICON_URL_PREFIX = "icon:";
     private static final String BASE_FLUENT_ICON_URL = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/";
     private static final String DEFAULT_FLUENT_ICON_STYLE = "Regular";
+
+    public static String getOpenUrlAnnouncement(Context context, String urlTitle) {
+        return context.getResources().getString(R.string.open_url_announcement, urlTitle);
+    }
 }

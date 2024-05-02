@@ -73,6 +73,11 @@ public class CustomInput extends BaseInputElement
             m_view.requestFocusFromTouch();
             m_view.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
         }
+
+        @Override
+        public void registerInputObserver() {
+            // No need to register any observer for this input
+        }
     }
 
     /**

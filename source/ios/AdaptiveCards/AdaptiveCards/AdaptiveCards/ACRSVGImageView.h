@@ -13,8 +13,14 @@
 
 @interface ACRSVGImageView : UIImageView
 
+@property UIColor *svgTintColor;
+@property UIImage *svgImage;
+@property CGSize size;
+
 - (instancetype)init:(NSString *)iconURL
                  rtl:(ACRRtl)rtl
-                size:(CGSize)size;
+                size:(CGSize)size
+           tintColor:(UIColor *)tintColor;
+
 
 @end
