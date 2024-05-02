@@ -147,14 +147,16 @@
     UIImage *img = imageViewMap[key];
     button.iconPlacement = [ACRButton getIconPlacmentAtCurrentContext:rootView url:key];
 
-    if (img) {
+    if (img) 
+    {
         UIImageView *iconView = [[ACRUIImageView alloc] init];
         iconView.image = img;
         [button addSubview:iconView];
         button.iconView = iconView;
         [button setImageView:img withConfig:config];
-
-    } else if (key.length) {
+    } 
+    else if (key.length)
+    {
         NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
         NSString *key = [number stringValue];
         UIImageView *view = [rootView getImageView:key];
@@ -172,19 +174,25 @@
             [button addSubview:view];
             [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];
         }
-        else if (view) {
-            if (view.image) {
+        else if (view) 
+        {
+            if (view.image) 
+            {
                 button.iconView = view;
                 [button addSubview:view];
                 [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
                 [button setImageView:view.image withConfig:config];
-            } else {
+            } 
+            else
+            {
                 button.iconView = view;
                 [button addSubview:view];
                 [rootView setImageView:key view:button];
             }
         }
-    } else {
+    } 
+    else
+    {
         button.heightConstraint = [button.heightAnchor constraintGreaterThanOrEqualToAnchor:button.titleLabel.heightAnchor constant:button.contentEdgeInsets.top + button.contentEdgeInsets.bottom];
         button.heightConstraint.active = YES;
     }

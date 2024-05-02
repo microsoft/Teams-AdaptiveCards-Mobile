@@ -10,7 +10,6 @@
 #import "ACOHostConfig.h"
 #import "ACOEnums.h"
 #import <UIKit/UIKit.h>
-#import "Icon.h"
 
 @interface ACRSVGImageView : UIImageView
 

@@ -8,6 +8,7 @@
 
 #import "ACRSVGImageView.h"
 #import <SVGKit/SVGKit.h>
+#import "Icon.h"
 
 @implementation ACRSVGImageView
 {

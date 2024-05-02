@@ -56,10 +56,7 @@
                                                     tintColor:imageTintColor];
     
     ACRSVGIconHoldingView *wrappingView = [[ACRSVGIconHoldingView alloc] init:iconView size:size];
-    
-    
-   
-    
+
     wrappingView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [viewGroup addArrangedSubview:wrappingView];
