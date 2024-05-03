@@ -40,6 +40,7 @@
 #import "BaseCardElement.h"
 #import "FeatureRegistration.h"
 #import "HostConfig.h"
+#import "ACRIconRenderer.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -69,6 +70,7 @@ using namespace AdaptiveCards;
             [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                              [ACRMediaRenderer getInstance], [NSNumber numberWithInt:(int)[ACRMediaRenderer elemType]],
                                              [ACRImageRenderer getInstance], [NSNumber numberWithInt:(int)[ACRImageRenderer elemType]],
+                                            [ACRIconRenderer getInstance], [NSNumber numberWithInt:(int)[ACRIconRenderer elemType]],
                                              [ACRImageSetRenderer getInstance], [NSNumber numberWithInt:(int)[ACRImageSetRenderer elemType]],
                                              [ACRTextBlockRenderer getInstance], [NSNumber numberWithInt:(int)[ACRTextBlockRenderer elemType]],
                                              [ACRRichTextBlockRenderer getInstance], [NSNumber numberWithInt:(int)[ACRRichTextBlockRenderer elemType]],
