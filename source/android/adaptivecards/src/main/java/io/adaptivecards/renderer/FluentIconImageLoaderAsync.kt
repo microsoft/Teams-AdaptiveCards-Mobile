@@ -74,9 +74,9 @@ open class FluentIconImageLoaderAsync(
             val responseBytes = HttpRequestHelper.get(svgURL)
             HttpRequestResult<String>(String (responseBytes, StandardCharsets.UTF_8))
         } catch (e: Exception) {
-            val invalidIconURL = "${AdaptiveCardObjectModel.getBaseIconCDNUrl()}/Square/Square${iconSize}Filled.json"
+            val unavailableIconURL = "${AdaptiveCardObjectModel.getBaseIconCDNUrl()}/Square/Square${iconSize}Filled.json"
             try {
-                val responseBytes = HttpRequestHelper.get(invalidIconURL)
+                val responseBytes = HttpRequestHelper.get(unavailableIconURL)
                 HttpRequestResult(String (responseBytes, StandardCharsets.UTF_8))
             } catch (e: Exception) {
                 null
