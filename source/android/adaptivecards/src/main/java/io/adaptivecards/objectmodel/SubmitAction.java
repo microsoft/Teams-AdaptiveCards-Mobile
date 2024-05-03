@@ -75,8 +75,24 @@ public class SubmitAction extends BaseActionElement {
     AdaptiveCardObjectModelJNI.SubmitAction_SetAssociatedInputs(swigCPtr, this, value.swigValue());
   }
 
+  public boolean GetConditionallyEnabled() {
+    return AdaptiveCardObjectModelJNI.SubmitAction_GetConditionallyEnabled(swigCPtr, this);
+  }
+
+  public void SetConditionallyEnabled(boolean value) {
+    AdaptiveCardObjectModelJNI.SubmitAction_SetConditionallyEnabled(swigCPtr, this, value);
+  }
+
   public JsonValue SerializeToJsonValue() {
     return new JsonValue(AdaptiveCardObjectModelJNI.SubmitAction_SerializeToJsonValue(swigCPtr, this), true);
+  }
+
+  public void setM_conditionallyEnabled(boolean value) {
+    AdaptiveCardObjectModelJNI.SubmitAction_m_conditionallyEnabled_set(swigCPtr, this, value);
+  }
+
+  public boolean getM_conditionallyEnabled() {
+    return AdaptiveCardObjectModelJNI.SubmitAction_m_conditionallyEnabled_get(swigCPtr, this);
   }
 
   public static SubmitAction dynamic_cast(BaseActionElement baseActionElement) {

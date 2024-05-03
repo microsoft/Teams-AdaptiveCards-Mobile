@@ -41,6 +41,15 @@ void SubmitAction::SetAssociatedInputs(const AssociatedInputs value)
     m_associatedInputs = value;
 }
 
+bool SubmitAction::GetConditionallyEnabled() const {
+    return m_conditionallyEnabled;
+}
+
+void SubmitAction::SetConditionallyEnabled(bool value)
+{
+    m_conditionallyEnabled = value;
+}
+
 Json::Value SubmitAction::SerializeToJsonValue() const
 {
     Json::Value root = BaseActionElement::SerializeToJsonValue();
@@ -65,6 +74,7 @@ std::shared_ptr<BaseActionElement> SubmitActionParser::Deserialize(ParseContext&
     submitAction->SetDataJson(ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Data));
     submitAction->SetAssociatedInputs(ParseUtil::GetEnumValue<AssociatedInputs>(
         json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString));
+    submitAction->SetConditionallyEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ConditionallyEnabled, false, false));
 
     return submitAction;
 }

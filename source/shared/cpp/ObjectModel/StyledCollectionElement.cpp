@@ -42,6 +42,26 @@ void StyledCollectionElement::SetPadding(const bool value)
     m_hasPadding = value;
 }
 
+bool StyledCollectionElement::GetShowBorder() const
+{
+    return m_showBorder;
+}
+
+void StyledCollectionElement::SetShowBorder(const bool value)
+{
+    m_showBorder = value;
+}
+
+bool StyledCollectionElement::GetRoundedCorners() const
+{
+    return m_roundedCorners;
+}
+
+void StyledCollectionElement::SetRoundedCorners(const bool value)
+{
+    m_roundedCorners = value;
+}
+
 // Applies Padding Flag When appropriate
 void StyledCollectionElement::ConfigPadding(const ParseContext& context)
 {

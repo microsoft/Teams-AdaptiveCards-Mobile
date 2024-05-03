@@ -56,6 +56,8 @@
     columnSetView.rtl = rootView.context.rtl;
 
     [viewGroup addArrangedSubview:columnSetView];
+    
+    [self configureBorderForElement:acoElem container:columnSetView config:acoConfig];
 
     configBleed(rootView, elem, columnSetView, acoConfig);
 
@@ -105,7 +107,7 @@
     NSMutableArray<ACRColumnView *> *viewsWithRelativeWidth = [[NSMutableArray alloc] init];
 
     for (std::shared_ptr<Column> column : columns) {
-        if (*firstColumn != column) {
+        if (*firstColumn != column && column->MeetsTargetWidthRequirement(hostWidth)) {
             separator = [ACRSeparator renderSeparation:column forSuperview:columnSetView withHostConfig:config];
         }
 
@@ -234,6 +236,29 @@
     columnSetView.accessibilityElements = [columnSetView getArrangedSubviews];
 
     return columnSetView;
+}
+
+- (void)configureBorderForElement:(ACOBaseCardElement *)acoElem container:(ACRContentStackView *)container config:(ACOHostConfig *)acoConfig
+{
+    std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<ColumnSet> containerElem = std::dynamic_pointer_cast<ColumnSet>(elem);
+    bool shouldShowBorder = containerElem->GetShowBorder();
+    std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+    if(shouldShowBorder)
+    {
+        container.layer.borderWidth = config->GetBorderWidth(containerElem->GetElementType());
+        ACRContainerStyle style = (ACRContainerStyle)containerElem->GetStyle();
+        auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:style]);
+        UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
+        // we will add padding for any column element which has shouldShowBorder.
+        [container applyPadding:config->GetSpacing().paddingSpacing priority:1000];
+        [[container layer] setBorderColor:[color CGColor]];
+    }
+    bool roundedCorner = containerElem->GetRoundedCorners();
+    if (roundedCorner)
+    {
+        container.layer.cornerRadius = config->GetCornerRadius(containerElem->GetElementType());
+    }
 }
 
 @end

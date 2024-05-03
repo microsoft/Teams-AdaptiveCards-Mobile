@@ -14925,6 +14925,74 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_StyledCollectionElement_1GetShowBorder(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::StyledCollectionElement *arg1 = (AdaptiveCards::StyledCollectionElement *) 0 ;
+  std::shared_ptr< AdaptiveCards::StyledCollectionElement const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::StyledCollectionElement > **)&jarg1;
+  arg1 = (AdaptiveCards::StyledCollectionElement *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::StyledCollectionElement const *)arg1)->GetShowBorder();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_StyledCollectionElement_1SetShowBorder(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::StyledCollectionElement *arg1 = (AdaptiveCards::StyledCollectionElement *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::StyledCollectionElement > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::StyledCollectionElement > **)&jarg1;
+  arg1 = (AdaptiveCards::StyledCollectionElement *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetShowBorder(arg2);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_StyledCollectionElement_1GetRoundedCorners(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::StyledCollectionElement *arg1 = (AdaptiveCards::StyledCollectionElement *) 0 ;
+  std::shared_ptr< AdaptiveCards::StyledCollectionElement const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::StyledCollectionElement > **)&jarg1;
+  arg1 = (AdaptiveCards::StyledCollectionElement *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::StyledCollectionElement const *)arg1)->GetRoundedCorners();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_StyledCollectionElement_1SetRoundedCorners(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::StyledCollectionElement *arg1 = (AdaptiveCards::StyledCollectionElement *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::StyledCollectionElement > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::StyledCollectionElement > **)&jarg1;
+  arg1 = (AdaptiveCards::StyledCollectionElement *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetRoundedCorners(arg2);
+}
+
+
 SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_StyledCollectionElement_1GetBleed(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   AdaptiveCards::StyledCollectionElement *arg1 = (AdaptiveCards::StyledCollectionElement *) 0 ;
@@ -20551,6 +20619,40 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ExecuteAction_1GetConditionallyEnabled(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::ExecuteAction *arg1 = (AdaptiveCards::ExecuteAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::ExecuteAction const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::ExecuteAction > **)&jarg1;
+  arg1 = (AdaptiveCards::ExecuteAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::ExecuteAction const *)arg1)->GetConditionallyEnabled();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ExecuteAction_1SetConditionallyEnabled(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::ExecuteAction *arg1 = (AdaptiveCards::ExecuteAction *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::ExecuteAction > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::ExecuteAction > **)&jarg1;
+  arg1 = (AdaptiveCards::ExecuteAction *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetConditionallyEnabled(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ExecuteAction_1SerializeToJsonValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::ExecuteAction *arg1 = (AdaptiveCards::ExecuteAction *) 0 ;
@@ -20565,6 +20667,40 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   arg1 = (AdaptiveCards::ExecuteAction *)(smartarg1 ? smartarg1->get() : 0); 
   result = ((AdaptiveCards::ExecuteAction const *)arg1)->SerializeToJsonValue();
   *(Json::Value **)&jresult = new Json::Value((const Json::Value &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ExecuteAction_1m_1conditionallyEnabled_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::ExecuteAction *arg1 = (AdaptiveCards::ExecuteAction *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::ExecuteAction > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::ExecuteAction > **)&jarg1;
+  arg1 = (AdaptiveCards::ExecuteAction *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->m_conditionallyEnabled = arg2;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ExecuteAction_1m_1conditionallyEnabled_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::ExecuteAction *arg1 = (AdaptiveCards::ExecuteAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::ExecuteAction > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::ExecuteAction > **)&jarg1;
+  arg1 = (AdaptiveCards::ExecuteAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool) ((arg1)->m_conditionallyEnabled);
+  jresult = (jboolean)result; 
   return jresult;
 }
 
@@ -22667,6 +22803,40 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SubmitAction_1GetConditionallyEnabled(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::SubmitAction *arg1 = (AdaptiveCards::SubmitAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::SubmitAction const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::SubmitAction > **)&jarg1;
+  arg1 = (AdaptiveCards::SubmitAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::SubmitAction const *)arg1)->GetConditionallyEnabled();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SubmitAction_1SetConditionallyEnabled(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::SubmitAction *arg1 = (AdaptiveCards::SubmitAction *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::SubmitAction > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::SubmitAction > **)&jarg1;
+  arg1 = (AdaptiveCards::SubmitAction *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetConditionallyEnabled(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SubmitAction_1SerializeToJsonValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::SubmitAction *arg1 = (AdaptiveCards::SubmitAction *) 0 ;
@@ -22681,6 +22851,40 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   arg1 = (AdaptiveCards::SubmitAction *)(smartarg1 ? smartarg1->get() : 0); 
   result = ((AdaptiveCards::SubmitAction const *)arg1)->SerializeToJsonValue();
   *(Json::Value **)&jresult = new Json::Value((const Json::Value &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SubmitAction_1m_1conditionallyEnabled_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::SubmitAction *arg1 = (AdaptiveCards::SubmitAction *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::SubmitAction > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::SubmitAction > **)&jarg1;
+  arg1 = (AdaptiveCards::SubmitAction *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->m_conditionallyEnabled = arg2;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SubmitAction_1m_1conditionallyEnabled_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::SubmitAction *arg1 = (AdaptiveCards::SubmitAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::SubmitAction > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::SubmitAction > **)&jarg1;
+  arg1 = (AdaptiveCards::SubmitAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool) ((arg1)->m_conditionallyEnabled);
+  jresult = (jboolean)result; 
   return jresult;
 }
 
@@ -26866,34 +27070,6 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ContainerStyleDefinition_1borderThickness_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  AdaptiveCards::ContainerStyleDefinition *arg1 = (AdaptiveCards::ContainerStyleDefinition *) 0 ;
-  unsigned int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(AdaptiveCards::ContainerStyleDefinition **)&jarg1; 
-  arg2 = (unsigned int)jarg2; 
-  if (arg1) (arg1)->borderThickness = arg2;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ContainerStyleDefinition_1borderThickness_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  AdaptiveCards::ContainerStyleDefinition *arg1 = (AdaptiveCards::ContainerStyleDefinition *) 0 ;
-  unsigned int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(AdaptiveCards::ContainerStyleDefinition **)&jarg1; 
-  result = (unsigned int) ((arg1)->borderThickness);
-  jresult = (jlong)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ContainerStyleDefinition_1foregroundColors_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   AdaptiveCards::ContainerStyleDefinition *arg1 = (AdaptiveCards::ContainerStyleDefinition *) 0 ;
   AdaptiveCards::ColorsConfig *arg2 = (AdaptiveCards::ColorsConfig *) 0 ;
@@ -28799,18 +28975,35 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1GetBorderThickness(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1GetBorderWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   AdaptiveCards::HostConfig *arg1 = (AdaptiveCards::HostConfig *) 0 ;
-  AdaptiveCards::ContainerStyle arg2 ;
+  AdaptiveCards::CardElementType arg2 ;
   unsigned int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(AdaptiveCards::HostConfig **)&jarg1; 
-  arg2 = (AdaptiveCards::ContainerStyle)jarg2; 
-  result = (unsigned int)((AdaptiveCards::HostConfig const *)arg1)->GetBorderThickness(arg2);
+  arg2 = (AdaptiveCards::CardElementType)jarg2; 
+  result = (unsigned int)((AdaptiveCards::HostConfig const *)arg1)->GetBorderWidth(arg2);
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1GetCornerRadius(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jlong jresult = 0 ;
+  AdaptiveCards::HostConfig *arg1 = (AdaptiveCards::HostConfig *) 0 ;
+  AdaptiveCards::CardElementType arg2 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::HostConfig **)&jarg1; 
+  arg2 = (AdaptiveCards::CardElementType)jarg2; 
+  result = (unsigned int)((AdaptiveCards::HostConfig const *)arg1)->GetCornerRadius(arg2);
   jresult = (jlong)result; 
   return jresult;
 }
@@ -30838,6 +31031,40 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   arg1 = (AdaptiveCards::Table *)(smartarg1 ? smartarg1->get() : 0); 
   arg2 = jarg2 ? true : false; 
   (arg1)->SetFirstRowAsHeaders(arg2);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Table_1GetRoundedCorners(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::Table *arg1 = (AdaptiveCards::Table *) 0 ;
+  std::shared_ptr< AdaptiveCards::Table const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::Table > **)&jarg1;
+  arg1 = (AdaptiveCards::Table *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::Table const *)arg1)->GetRoundedCorners();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Table_1SetRoundedCorners(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::Table *arg1 = (AdaptiveCards::Table *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::Table > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::Table > **)&jarg1;
+  arg1 = (AdaptiveCards::Table *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetRoundedCorners(arg2);
 }
 
 

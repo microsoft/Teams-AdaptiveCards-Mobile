@@ -46,6 +46,8 @@
     container.rtl = rootView.context.rtl;
 
     [viewGroup addArrangedSubview:container];
+    
+    [self configureBorderForElement:acoElem container:container config:acoConfig];
 
     configBleed(rootView, elem, container, acoConfig);
 
@@ -84,6 +86,30 @@
     auto backgroundImageProperties = containerElem->GetBackgroundImage();
 
     renderBackgroundImage(rootView, backgroundImageProperties.get(), imageView, image);
+}
+
+- (void)configureBorderForElement:(ACOBaseCardElement *)acoElem container:(ACRContentStackView *)container config:(ACOHostConfig *)acoConfig
+{
+    std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
+    std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+    bool shouldShowBorder = containerElem->GetShowBorder();
+    if(shouldShowBorder)
+    {
+        ACRContainerStyle style = (ACRContainerStyle)containerElem->GetStyle();
+        container.layer.borderWidth = config->GetBorderWidth(containerElem->GetElementType());
+        auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:style]);
+        UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
+        // we will add padding for any column element which has shouldShowBorder.
+        [container applyPadding:config->GetSpacing().paddingSpacing priority:1000];
+        [[container layer] setBorderColor:[color CGColor]];
+    }
+    
+    bool roundedCorner = containerElem->GetRoundedCorners();
+    if (roundedCorner)
+    {
+        container.layer.cornerRadius = config->GetCornerRadius(containerElem->GetElementType());
+    }
 }
 
 @end
