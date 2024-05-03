@@ -45,10 +45,10 @@ open class FluentIconImageLoaderAsync(
                 val jsonResponse = JSONObject(result.result)
                 try {
                     val svgPath = jsonResponse.getJSONArray("svgPaths")
-                    val flipRtl = jsonResponse.optBoolean("flipInRtl", false)
+                    val flipInRtl = jsonResponse.optBoolean("flipInRtl", false)
                     val svgString = getSvgString(svgPath[0] as String)
                     val drawable = getDrawableFromSVG(svgString, view.context)
-                    renderFluentIcon(drawable, flipRtl)
+                    renderFluentIcon(drawable, flipInRtl)
                 } catch (e: Exception) {
                     renderFluentIcon(null, false)
                 }
@@ -56,11 +56,11 @@ open class FluentIconImageLoaderAsync(
         }
     }
 
-    open fun renderFluentIcon(drawable: Drawable?, flipRtl: Boolean) {
+    open fun renderFluentIcon(drawable: Drawable?, flipInRtl: Boolean) {
         val view = viewReference.get()
         if (view != null && view is ImageView) {
             view.setImageDrawable(drawable)
-            if (renderedCard.adaptiveCard.GetRtl() == flipRtl) {
+            if (renderedCard.adaptiveCard.GetRtl() == flipInRtl) {
                 view.scaleX = -1f
             }
         }

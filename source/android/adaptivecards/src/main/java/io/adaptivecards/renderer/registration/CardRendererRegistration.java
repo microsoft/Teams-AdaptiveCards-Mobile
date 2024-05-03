@@ -29,6 +29,7 @@ import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.HostWidth;
 import io.adaptivecards.objectmodel.HostWidthConfig;
+import io.adaptivecards.objectmodel.Icon;
 import io.adaptivecards.objectmodel.Image;
 import io.adaptivecards.objectmodel.ImageSet;
 import io.adaptivecards.objectmodel.Mode;
@@ -491,7 +492,8 @@ public class CardRendererRegistration
             {
                 // Column, container, image and imageSet handle their height on their own, so let's not add an extra view for them
                 if (renderedElement.GetHeight() == HeightType.Stretch && !isColumn && !Util.isOfType(renderedElement, Container.class)
-                    && !Util.isOfType(renderedElement, Image.class) && !Util.isOfType(renderedElement, ImageSet.class))
+                    && !Util.isOfType(renderedElement, Image.class) && !Util.isOfType(renderedElement, ImageSet.class)
+                    && !Util.isOfType(renderedElement, Icon.class))
                 {
                     // put the element in a StretchableElementLayout
                     HandleStretchHeight(mockLayout, viewGroup, renderedElement, context, tagContent);

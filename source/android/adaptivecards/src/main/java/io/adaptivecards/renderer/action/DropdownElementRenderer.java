@@ -78,7 +78,7 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
         long fluentIconSize = 24;
         String svgResourceURL = baseActionElement.GetSVGResourceURL(fluentIconSize);
 
-        Button dropDownItem = new Button(context, null);
+        Button dropDownItem = new Button(context, null, R.style.Widget_AppCompat_Light_ActionButton_Overflow);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int padding = Util.dpToPixels(context, PADDING);
         layoutParams.gravity = Gravity.CENTER;
