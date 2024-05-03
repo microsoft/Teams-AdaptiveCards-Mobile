@@ -107,9 +107,6 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
         constraints.constrainHeight(id, ConstraintSet.WRAP_CONTENT)
         constraints.connect(id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
 
-        constraints.setHorizontalBias(R.id.widthPlaceholder, 0f)
-        constraints.setHorizontalBias(id, 0f)
-
         applyHorizontalAlignment(constraints, id, renderArgs)
         applyHorizontalAlignment(constraints, R.id.widthPlaceholder, renderArgs)
 
@@ -118,9 +115,6 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
             R.id.widthPlaceholder,
             Util.dpToPixels(context, icon.size.toFloat())
         )
-
-        // Stretch image width up to the barriers
-        constraints.constrainDefaultWidth(id, ConstraintSet.MATCH_CONSTRAINT_SPREAD)
         return constraints
     }
 
