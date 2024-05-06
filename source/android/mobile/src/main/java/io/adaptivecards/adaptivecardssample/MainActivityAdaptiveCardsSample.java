@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,9 +54,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
 public class MainActivityAdaptiveCardsSample extends FragmentActivity
         implements ICardActionHandler, IInputWatcher
 {
@@ -68,9 +64,6 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
     }
 
     private static String IS_CARD = "isCard";
-    private RemoteClientConnection m_remoteClientConnection;
-    private Button m_buttonScanQr;
-    private Button m_buttonDisconnect;
     private EditText m_jsonEditText;
     private EditText m_configEditText;
     private TextView m_selectedCardText;
@@ -94,9 +87,6 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_adaptive_cards_sample);
-
-        m_buttonScanQr = findViewById(R.id.buttonScanQr);
-        m_buttonDisconnect = findViewById(R.id.buttonDisconnect);
 
         setupTabs();
         setupOptions();
@@ -571,10 +561,6 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (handleQrActivityResult(requestCode, resultCode, data)) {
-            return;
-        }
-
         switch (requestCode) {
             case FILE_SELECT_CARD:
                 if (resultCode == RESULT_OK)
@@ -810,180 +796,5 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         }
 
         this.runOnUiThread(new RunnableExtended(this, text, duration));
-    }
-
-    public void onScanQrClicked(View view)
-    {
-        goToConnectingState();
-
-        // Docs here: https://github.com/journeyapps/zxing-android-embedded
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setPrompt("Scan QR code from the Designer");
-        integrator.setBeepEnabled(false);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setOrientationLocked(true);
-        integrator.initiateScan();
-    }
-
-    private boolean handleQrActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        IntentResult qrResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (qrResult != null)
-        {
-            String contents = qrResult.getContents();
-            if (contents != null)
-            {
-                m_remoteClientConnection = new RemoteClientConnection(this, new RemoteClientConnection.Observer()
-                {
-                    @Override
-                    public void onConnecting(String status)
-                    {
-                        final String finalStatus = status;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), finalStatus, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onStateChanged(RemoteClientConnection.State state)
-                    {
-                        final RemoteClientConnection.State s = state;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                switch (s) {
-                                    // Connecting omitted because that's never hit, it's already
-                                    // connecting by the time we started observing
-                                    case CONNECTED:
-                                        goToConnectedState();
-                                        break;
-
-                                    case RECONNECTING:
-                                        goToReconnectingState();
-                                        break;
-
-                                    case CLOSED:
-                                        goToDisconnectedState();
-                                        break;
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onConnectFailed(String errorMessage)
-                    {
-                        m_remoteClientConnection = null;
-                        final String finalErrorMessage = errorMessage;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), finalErrorMessage, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onCardPayload(String cardPayload)
-                    {
-                        final String cPayload = cardPayload;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                loadAdaptiveCard("", cPayload);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onHostConfigPayload(String hostConfigPayload)
-                    {
-                        final String hPayload = hostConfigPayload;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                loadHostConfig("", hPayload);
-                            }
-                        });
-                    }
-                });
-
-                m_remoteClientConnection.connect(contents);
-            }
-
-            else
-            {
-                goToDisconnectedState();
-            }
-
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public void onDisconnectClicked(View view)
-    {
-        disconnect();
-        goToDisconnectedState();
-    }
-
-    private void disconnect()
-    {
-        if (m_remoteClientConnection != null)
-        {
-            m_remoteClientConnection.disconnect();
-            m_remoteClientConnection = null;
-        }
-    }
-
-    private void goToConnectingState()
-    {
-        m_buttonScanQr.setText("Connecting...");
-        m_buttonScanQr.setVisibility(View.VISIBLE);
-        m_buttonScanQr.setEnabled(false);
-        m_buttonDisconnect.setVisibility(View.GONE);
-        goToReadOnlyState();
-    }
-
-    private void goToConnectedState()
-    {
-        m_buttonScanQr.setVisibility(View.GONE);
-        m_buttonDisconnect.setVisibility(View.VISIBLE);
-        m_buttonDisconnect.setText("Connected! Click to disconnect");
-        goToReadOnlyState();
-    }
-
-    private void goToReconnectingState()
-    {
-        m_buttonScanQr.setVisibility(View.GONE);
-        m_buttonDisconnect.setVisibility(View.VISIBLE);
-        m_buttonDisconnect.setText("Reconnecting... Tap to disconnect");
-        goToReadOnlyState();
-    }
-
-    private void goToDisconnectedState()
-    {
-        m_buttonScanQr.setText("Connect via QR Code");
-        m_buttonScanQr.setVisibility(View.VISIBLE);
-        m_buttonScanQr.setEnabled(true);
-        m_buttonDisconnect.setVisibility(View.GONE);
-        goToEditableState();
-    }
-
-    private void goToReadOnlyState()
-    {
-        m_jsonEditText.setEnabled(false);
-        m_configEditText.setEnabled(false);
-    }
-
-    private void goToEditableState()
-    {
-        m_jsonEditText.setEnabled(true);
-        m_configEditText.setEnabled(true);
     }
 }
