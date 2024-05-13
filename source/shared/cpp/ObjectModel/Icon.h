@@ -25,10 +25,13 @@ public:
     ~Icon() = default;
 
     Json::Value SerializeToJsonValue() const override;
+
     ForegroundColor getForgroundColor() const;
     void setForgroundColor(const ForegroundColor value);
+
     IconSize getIconSize() const;
     void setIconSize(const IconSize value);
+
     IconStyle getIconStyle() const;
     void setIconStyle(const IconStyle value);
 
@@ -37,6 +40,7 @@ public:
 
     std::shared_ptr<BaseActionElement> GetSelectAction() const;
     void SetSelectAction(const std::shared_ptr<BaseActionElement> action);
+
     unsigned int getSize() const;
     std::string GetSVGResourceURL() const;
 
@@ -44,6 +48,7 @@ public:
 
 private:
     void PopulateKnownPropertiesSet();
+
 
     ForegroundColor m_foregroundColor;
     IconStyle m_iconStyle;
