@@ -21,6 +21,4 @@
                  rtl:(ACRRtl)rtl
                 size:(CGSize)size
            tintColor:(UIColor *)tintColor;
-
-
 @end

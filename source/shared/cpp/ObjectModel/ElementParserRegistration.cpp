@@ -57,6 +57,7 @@ ElementParserRegistration::ElementParserRegistration()
          CardElementTypeToString(CardElementType::DateInput),
          CardElementTypeToString(CardElementType::FactSet),
          CardElementTypeToString(CardElementType::Image),
+         CardElementTypeToString(CardElementType::Icon),
          CardElementTypeToString(CardElementType::ImageSet),
          CardElementTypeToString(CardElementType::Media),
          CardElementTypeToString(CardElementType::NumberInput),

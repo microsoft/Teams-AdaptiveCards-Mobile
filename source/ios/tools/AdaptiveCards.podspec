@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name             = 'AdaptiveCards'
 
-  spec.version          = '2.9.6'
+  spec.version          = '2.9.7'
 
   spec.license          = { :type => 'Adaptive Cards Binary EULA', :file => 'source/EULA-Non-Windows.txt' } 
 
@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
 
   spec.summary          = 'Adaptive Cards are a new way for developers to exchange card content in a common and consistent way'
   
-  spec.source       = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.9.6' }
+  spec.source       = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.9.7' }
 
   spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders'
 
@@ -41,7 +41,7 @@ Pod::Spec.new do |spec|
   spec.subspec 'UIProviders' do | sspec |
     sspec.dependency 'MicrosoftFluentUI/Tooltip_ios', '~> 0.3.6'
     sspec.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'ADAPTIVECARDS_USE_FLUENT_TOOLTIPS=1' }
-    sspec.dependency 'SVGKit', '~> 2.1.0'
+    sspec.dependency 'SVGKit', '~> 3.0.0'
   end
 
   spec.platform         = :ios, '14'
