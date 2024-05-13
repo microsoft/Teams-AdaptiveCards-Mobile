@@ -183,6 +183,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TableCell, "tableCell"},
             {AdaptiveCardSchemaKey::TableRow, "tableRow"},
             {AdaptiveCardSchemaKey::TargetElements, "targetElements"},
+            {AdaptiveCardSchemaKey::TargetInputIds, "targetInputIds"},
             {AdaptiveCardSchemaKey::TargetWidth, "targetWidth"},
             {AdaptiveCardSchemaKey::Text, "text"},
             {AdaptiveCardSchemaKey::TextBlock, "textBlock"},
@@ -203,6 +204,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Url, "url"},
             {AdaptiveCardSchemaKey::UserIds, "userIds"},
             {AdaptiveCardSchemaKey::Value, "value"},
+            {AdaptiveCardSchemaKey::ValueChangedAction, "valueChangedAction"},
+            {AdaptiveCardSchemaKey::ValueChangedActionType, "type"},
             {AdaptiveCardSchemaKey::ValueOff, "valueOff"},
             {AdaptiveCardSchemaKey::ValueOn, "valueOn"},
             {AdaptiveCardSchemaKey::Verb, "verb"},
@@ -426,4 +429,7 @@ namespace AdaptiveCards
         {TargetWidthType::AtLeastNarrow, "atLeast:narrow"},
         {TargetWidthType::AtLeastStandard, "atLeast:standard"},
         {TargetWidthType::AtLeastWide, "atLeast:wide"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(ValueChangedActionType, {
+            {ValueChangedActionType::ResetInputs, "Action.ResetInputs"},});
 }
