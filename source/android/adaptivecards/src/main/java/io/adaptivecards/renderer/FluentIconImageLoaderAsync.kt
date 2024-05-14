@@ -40,14 +40,14 @@ open class FluentIconImageLoaderAsync(
 
     override fun onPostExecute(result: HttpRequestResult<String>?) {
         val view = viewReference.get()
-        if (view != null) {
+        view?.let {
             if (result?.isSuccessful == true) {
                 val jsonResponse = JSONObject(result.result)
                 try {
                     val svgPath = jsonResponse.getJSONArray("svgPaths")
                     val flipInRtl = jsonResponse.optBoolean("flipInRtl", false)
                     val svgString = getSvgString(svgPath[0] as String)
-                    val drawable = getDrawableFromSVG(svgString, view.context)
+                    val drawable = getDrawableFromSVG(svgString, it.context)
                     renderFluentIcon(drawable, flipInRtl)
                 } catch (e: Exception) {
                     renderFluentIcon(null, false)
