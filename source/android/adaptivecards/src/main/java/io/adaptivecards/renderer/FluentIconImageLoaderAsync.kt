@@ -56,6 +56,11 @@ open class FluentIconImageLoaderAsync(
         }
     }
 
+    /**
+     * renders the fluent icon
+     * drawable - the drawable object created from the svg string
+     * flipInRtl - value received from the CDN to determine if the icon can be flipped in RTL
+     **/
     open fun renderFluentIcon(drawable: Drawable?, flipInRtl: Boolean) {
         val view = viewReference.get()
         if (view != null && view is ImageView) {
