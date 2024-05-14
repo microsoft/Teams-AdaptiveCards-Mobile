@@ -146,6 +146,7 @@ enum class AdaptiveCardSchemaKey
     Monospace,
     Narrow,
     NumberInput,
+    RatingInput,
     OptionalInputs,
     Padding,
     Placeholder,
@@ -242,6 +243,7 @@ enum class CardElementType
     ImageSet,
     Media,
     NumberInput,
+    RatingInput,
     RichTextBlock,
     Table,
     TableCell,
@@ -591,6 +593,20 @@ enum class HeightType
     Stretch
 };
 DECLARE_ADAPTIVECARD_ENUM(HeightType);
+
+enum class RatingSize
+{
+    Medium = 0,
+    Large
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingSize);
+
+enum class RatingColor
+{
+    Neutral = 0,
+    Marigold
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingColor);
 
 // Important: "Content" below is a placeholder for a JSON value -- we can't perform automatic mapping.
 enum class FallbackType

@@ -37,6 +37,10 @@
 		463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */; };
 		463C4EDF2BDF63E700A95C4E /* ACRSVGIconHoldingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */; };
 		463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */; };
+		46B329162BF32057009671AE /* RatingInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B329152BF32057009671AE /* RatingInput.h */; };
+		46B329182BF3228F009671AE /* RatingInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B329172BF3228F009671AE /* RatingInput.cpp */; };
+		46B3291A2BF32E0E009671AE /* ACRRatingInputRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B329192BF32E0E009671AE /* ACRRatingInputRenderer.h */; };
+		46B3291C2BF32EA9009671AE /* ACRRatingInputRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46B3291B2BF32EA9009671AE /* ACRRatingInputRenderer.mm */; };
 		6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */; };
 		6B096D4E225431D0006CC034 /* ACRRichTextBlockRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B096D4D225431D0006CC034 /* ACRRichTextBlockRenderer.mm */; };
@@ -524,6 +528,10 @@
 		463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGImageView.mm; sourceTree = "<group>"; };
 		463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRSVGIconHoldingView.h; sourceTree = "<group>"; };
 		463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGIconHoldingView.mm; sourceTree = "<group>"; };
+		46B329152BF32057009671AE /* RatingInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RatingInput.h; path = ../../../../shared/cpp/ObjectModel/RatingInput.h; sourceTree = "<group>"; };
+		46B329172BF3228F009671AE /* RatingInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RatingInput.cpp; path = ../../../../shared/cpp/ObjectModel/RatingInput.cpp; sourceTree = "<group>"; };
+		46B329192BF32E0E009671AE /* ACRRatingInputRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRRatingInputRenderer.h; sourceTree = "<group>"; };
+		46B3291B2BF32EA9009671AE /* ACRRatingInputRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingInputRenderer.mm; sourceTree = "<group>"; };
 		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRTypeaheadSearchViewControllerPrivate.h; path = PrivateHeaders/ACRTypeaheadSearchViewControllerPrivate.h; sourceTree = "<group>"; };
 		6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRichTextBlockRenderer.h; sourceTree = "<group>"; };
@@ -1086,6 +1094,8 @@
 				F4C1F5D81F218ABC0018CB78 /* ACRInputTimeRenderer.mm */,
 				F43A94161F20502D0001920B /* ACRInputToggleRenderer.h */,
 				F43A94171F20502D0001920B /* ACRInputToggleRenderer.mm */,
+				46B329192BF32E0E009671AE /* ACRRatingInputRenderer.h */,
+				46B3291B2BF32EA9009671AE /* ACRRatingInputRenderer.mm */,
 			);
 			name = InputRenderers;
 			sourceTree = "<group>";
@@ -1553,6 +1563,8 @@
 				F4F6BA27204E107F003741B6 /* UnknownElement.h */,
 				F4F44B7F20478C6F00A2F24C /* Util.cpp */,
 				F4F44B7E20478C6F00A2F24C /* Util.h */,
+				46B329152BF32057009671AE /* RatingInput.h */,
+				46B329172BF3228F009671AE /* RatingInput.cpp */,
 			);
 			name = SharedLib;
 			sourceTree = "<group>";
@@ -1794,6 +1806,7 @@
 				F4F44B96204A15C500A2F24C /* ACRInputChoiceSetRenderer.h in Headers */,
 				F4F44B97204A15DF00A2F24C /* ACRInputDateRenderer.h in Headers */,
 				F4F44B98204A160B00A2F24C /* ACRInputRenderer.h in Headers */,
+				46B3291A2BF32E0E009671AE /* ACRRatingInputRenderer.h in Headers */,
 				F4F44B95204A159A00A2F24C /* ACRImageSetRenderer.h in Headers */,
 				F4F44B90204A14EF00A2F24C /* ACRColumnRenderer.h in Headers */,
 				F4F44B92204A153D00A2F24C /* ACRContainerRenderer.h in Headers */,
@@ -1868,6 +1881,7 @@
 				6B9D650A21095C7A00BB5C7B /* ACOMediaEvent.h in Headers */,
 				6B5D240D212C89E70010EB07 /* ACORemoteResourceInformation.h in Headers */,
 				6B9D650E21095CBF00BB5C7B /* ACRMediaTarget.h in Headers */,
+				46B329162BF32057009671AE /* RatingInput.h in Headers */,
 				6BCE4B222108EB4E00021A62 /* ACRAVPlayerViewHoldingUIView.h in Headers */,
 				F4C1F5EB1F2ABD6B0018CB78 /* ACRBaseActionElementRenderer.h in Headers */,
 				6B1147D11F32E53A008846EC /* ACRActionDelegate.h in Headers */,
@@ -2270,6 +2284,7 @@
 				6BDE5C4326FEA7DC003A1DDB /* ACRBaseTarget.mm in Sources */,
 				6B22425F21E80647000ACDA1 /* ACOParseContext.mm in Sources */,
 				F4071C7E1FCCBAEF00AF4FEA /* ActionParserRegistration.cpp in Sources */,
+				46B3291C2BF32EA9009671AE /* ACRRatingInputRenderer.mm in Sources */,
 				6B2242A72233442C000ACDA1 /* RichTextBlock.cpp in Sources */,
 				F4FE456B1F196F3D0071D9E5 /* ACRContentStackView.mm in Sources */,
 				F429793F1F3155EF00E89914 /* ACRTextField.mm in Sources */,
@@ -2299,6 +2314,7 @@
 				6B5D240E212C89E70010EB07 /* ACORemoteResourceInformation.mm in Sources */,
 				F401A8801F1045CA006D7AF2 /* ACRContentHoldingUIView.mm in Sources */,
 				F44873121EE2261F00FCAFAE /* Image.cpp in Sources */,
+				46B329182BF3228F009671AE /* RatingInput.cpp in Sources */,
 				F4CAE77B1F7325DF00545555 /* Separator.cpp in Sources */,
 				F448731F1EE2261F00FCAFAE /* ShowCardAction.cpp in Sources */,
 				6B8C766626461E98009548FA /* ACRInputTableView.m in Sources */,

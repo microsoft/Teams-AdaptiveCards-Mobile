@@ -144,6 +144,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Monospace, "monospace"},
             {AdaptiveCardSchemaKey::Narrow, "narrow"},
             {AdaptiveCardSchemaKey::NumberInput, "numberInput"},
+            {AdaptiveCardSchemaKey::NumberInput, "ratingInput"},
             {AdaptiveCardSchemaKey::OptionalInputs, "optionalInputs"},
             {AdaptiveCardSchemaKey::Padding, "padding"},
             {AdaptiveCardSchemaKey::Placeholder, "placeholder"},
@@ -235,6 +236,7 @@ namespace AdaptiveCards
             {CardElementType::ImageSet, "ImageSet"},
             {CardElementType::Media, "Media"},
             {CardElementType::NumberInput, "Input.Number"},
+            {CardElementType::RatingInput, "Input.Rating"},
             {CardElementType::RichTextBlock, "RichTextBlock"},
             {CardElementType::Table, "Table"},
             {CardElementType::TableCell, "TableCell"},
@@ -259,6 +261,14 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(HeightType, {
             {HeightType::Auto, "Auto"},
             {HeightType::Stretch, "Stretch"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(RatingSize, {
+            {RatingSize::Medium, "medium"},
+            {RatingSize::Large, "large"}});
+    
+    DEFINE_ADAPTIVECARD_ENUM(RatingColor, {
+            {RatingColor::Neutral, "neutral"},
+            {RatingColor::Marigold, "marigold"}});
 
     DEFINE_ADAPTIVECARD_ENUM(Spacing, {
             {Spacing::Default, "default"},
