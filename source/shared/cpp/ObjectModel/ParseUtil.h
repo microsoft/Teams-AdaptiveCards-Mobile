@@ -48,6 +48,8 @@ namespace ParseUtil
 
     int GetInt(const Json::Value& json, AdaptiveCardSchemaKey key, int defaultValue, bool isRequired = false);
 
+    double GetDouble(const Json::Value& json, AdaptiveCardSchemaKey key, double defaultValue, bool isRequired = false);
+
     std::optional<int> GetOptionalInt(const Json::Value& json, AdaptiveCardSchemaKey key);
 
     std::optional<double> GetOptionalDouble(const Json::Value& json, AdaptiveCardSchemaKey key);
