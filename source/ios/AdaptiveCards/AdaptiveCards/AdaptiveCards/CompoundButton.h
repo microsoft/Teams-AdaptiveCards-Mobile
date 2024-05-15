@@ -40,7 +40,6 @@ private:
     std::string m_badge;
     std::string m_title;
     std::string m_description;
-    std::shared_ptr<BaseActionElement> m_selectAction;
 };
 
 class CompoundButtonParser : public BaseCardElementParser
@@ -58,4 +57,3 @@ public:
     std::shared_ptr<BaseCardElement> DeserializeFromString(ParseContext& context, const std::string& jsonString) override;
 };
 } // namespace AdaptiveCards
-

@@ -33,12 +33,6 @@ Json::Value CompoundButton::SerializeToJsonValue() const
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Description)] = m_description;
     }
     
-    if (m_selectAction != nullptr)
-    {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)] =
-            BaseCardElement::SerializeSelectAction(m_selectAction);
-    }
-    
     return root;
 }
 
@@ -72,15 +66,6 @@ void CompoundButton::setDescription(const std::string value)
     m_description = value;
 }
 
-std::shared_ptr<BaseActionElement> CompoundButton::GetSelectAction() const
-{
-    return m_selectAction;
-}
-
-void Icon::SetSelectAction(const std::shared_ptr<BaseActionElement> action)
-{
-    m_selectAction = action;
-}
 
 std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeFromString(ParseContext& context, const std::string& jsonString)
 {
