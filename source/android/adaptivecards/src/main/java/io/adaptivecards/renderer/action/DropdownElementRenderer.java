@@ -72,6 +72,12 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
         Button button = actionRenderer.render(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
         viewGroup.removeView(button);
 
+        // intentionally kept this 24 so that it always loads
+        // irrespective of size given in host config.
+        // it is possible that host config has some size which is not available in CDN.
+        long fluentIconSize = 24;
+        String svgResourceURL = baseActionElement.GetSVGResourceURL(fluentIconSize);
+
         Button dropDownItem = new Button(context, null, R.style.Widget_AppCompat_Light_ActionButton_Overflow);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int padding = Util.dpToPixels(context, PADDING);
@@ -88,7 +94,7 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
 
         if (!iconUrl.isEmpty())
         {
-            Util.loadIcon(context, dropDownItem, iconUrl, hostConfig, renderedCard, IconPlacement.LeftOfTitle);
+            Util.loadIcon(context, dropDownItem, iconUrl, svgResourceURL, hostConfig, renderedCard, IconPlacement.LeftOfTitle);
         }
 
         dropDownItem.setOnClickListener(view ->
