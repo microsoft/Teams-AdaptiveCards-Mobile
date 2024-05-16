@@ -8,62 +8,37 @@
 
 package io.adaptivecards.objectmodel;
 
-public enum CardElementType {
-  ActionSet(0),
-  AdaptiveCard,
-  ChoiceInput,
-  ChoiceSetInput,
-  Column,
-  ColumnSet,
-  Container,
-  Custom,
-  DateInput,
-  Fact,
-  FactSet,
-  Image,
-  Icon,
-  ImageSet,
-  Media,
-  NumberInput,
-  RatingInput,
-  RatingLabel,
-  RichTextBlock,
-  Table,
-  TableCell,
-  TableRow,
-  TextBlock,
-  TextInput,
-  TimeInput,
-  ToggleInput,
-  Unknown;
+public enum RatingColor {
+  Neutral(0),
+  Marigold;
 
   public final int swigValue() {
     return swigValue;
   }
 
-  public static CardElementType swigToEnum(int swigValue) {
-    CardElementType[] swigValues = CardElementType.class.getEnumConstants();
+  public static RatingColor swigToEnum(int swigValue) {
+    RatingColor[] swigValues = RatingColor.class.getEnumConstants();
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
-    for (CardElementType swigEnum : swigValues)
+    for (RatingColor swigEnum : swigValues)
       if (swigEnum.swigValue == swigValue)
         return swigEnum;
-    throw new IllegalArgumentException("No enum " + CardElementType.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + RatingColor.class + " with value " + swigValue);
   }
 
   @SuppressWarnings("unused")
-  private CardElementType() {
+  private RatingColor() {
     this.swigValue = SwigNext.next++;
   }
 
   @SuppressWarnings("unused")
-  private CardElementType(int swigValue) {
+  private RatingColor(int swigValue) {
     this.swigValue = swigValue;
     SwigNext.next = swigValue+1;
   }
 
   @SuppressWarnings("unused")
-  private CardElementType(CardElementType swigEnum) {
+  private RatingColor(RatingColor swigEnum) {
     this.swigValue = swigEnum.swigValue;
     SwigNext.next = this.swigValue+1;
   }
