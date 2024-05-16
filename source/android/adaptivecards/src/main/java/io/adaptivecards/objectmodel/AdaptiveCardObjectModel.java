@@ -385,6 +385,30 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return HeightType.swigToEnum(AdaptiveCardObjectModelJNI.HeightTypeFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingSize_t getRatingSizeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingSize_t(AdaptiveCardObjectModelJNI.getRatingSizeEnum(), false);
+  }
+
+  public static String RatingSizeToString(RatingSize t) {
+    return AdaptiveCardObjectModelJNI.RatingSizeToString(t.swigValue());
+  }
+
+  public static RatingSize RatingSizeFromString(String t) {
+    return RatingSize.swigToEnum(AdaptiveCardObjectModelJNI.RatingSizeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingColor_t getRatingColorEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingColor_t(AdaptiveCardObjectModelJNI.getRatingColorEnum(), false);
+  }
+
+  public static String RatingColorToString(RatingColor t) {
+    return AdaptiveCardObjectModelJNI.RatingColorToString(t.swigValue());
+  }
+
+  public static RatingColor RatingColorFromString(String t) {
+    return RatingColor.swigToEnum(AdaptiveCardObjectModelJNI.RatingColorFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TargetWidthType_t getTargetWidthTypeEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TargetWidthType_t(AdaptiveCardObjectModelJNI.getTargetWidthTypeEnum(), false);
   }
