@@ -10,6 +10,7 @@
 #include "DateInput.h"
 #include "FactSet.h"
 #include "Image.h"
+#include "Icon.h"
 #include "ImageSet.h"
 #include "Media.h"
 #include "NumberInput.h"
@@ -20,6 +21,8 @@
 #include "TimeInput.h"
 #include "ToggleInput.h"
 #include "UnknownElement.h"
+#include "RatingInput.h"
+#include "RatingLabel.h"
 
 namespace AdaptiveCards
 {
@@ -56,9 +59,12 @@ ElementParserRegistration::ElementParserRegistration()
          CardElementTypeToString(CardElementType::DateInput),
          CardElementTypeToString(CardElementType::FactSet),
          CardElementTypeToString(CardElementType::Image),
+         CardElementTypeToString(CardElementType::Icon),
          CardElementTypeToString(CardElementType::ImageSet),
          CardElementTypeToString(CardElementType::Media),
          CardElementTypeToString(CardElementType::NumberInput),
+         CardElementTypeToString(CardElementType::RatingInput),
+         CardElementTypeToString(CardElementType::RatingLabel),
          CardElementTypeToString(CardElementType::RichTextBlock),
          CardElementTypeToString(CardElementType::Table),
          CardElementTypeToString(CardElementType::TextBlock),
@@ -76,9 +82,12 @@ ElementParserRegistration::ElementParserRegistration()
          {CardElementTypeToString(CardElementType::DateInput), std::make_shared<DateInputParser>()},
          {CardElementTypeToString(CardElementType::FactSet), std::make_shared<FactSetParser>()},
          {CardElementTypeToString(CardElementType::Image), std::make_shared<ImageParser>()},
+         {CardElementTypeToString(CardElementType::Icon), std::make_shared<IconParser>()},
          {CardElementTypeToString(CardElementType::ImageSet), std::make_shared<ImageSetParser>()},
          {CardElementTypeToString(CardElementType::Media), std::make_shared<MediaParser>()},
          {CardElementTypeToString(CardElementType::NumberInput), std::make_shared<NumberInputParser>()},
+         {CardElementTypeToString(CardElementType::RatingInput), std::make_shared<RatingInputParser>()},
+         {CardElementTypeToString(CardElementType::RatingLabel), std::make_shared<RatingLabelParser>()},
          {CardElementTypeToString(CardElementType::RichTextBlock), std::make_shared<RichTextBlockParser>()},
          {CardElementTypeToString(CardElementType::Table), std::make_shared<TableParser>()},
          {CardElementTypeToString(CardElementType::TextBlock), std::make_shared<TextBlockParser>()},

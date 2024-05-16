@@ -22,6 +22,7 @@ enum class AdaptiveCardSchemaKey
     AllowCustomStyle,
     AllowInlinePlayback,
     AltText,
+    Name,
     AssociatedInputs,
     Attention,
     Authentication,
@@ -65,6 +66,7 @@ enum class AdaptiveCardSchemaKey
     DateInput,
     Default,
     DefaultPoster,
+    Count,
     ElementId,
     Emphasis,
     ErrorMessage,
@@ -98,6 +100,7 @@ enum class AdaptiveCardSchemaKey
     IconUrl,
     Id,
     Image,
+    Icon,
     ImageBaseUrl,
     ImageSet,
     ImageSize,
@@ -144,6 +147,8 @@ enum class AdaptiveCardSchemaKey
     Monospace,
     Narrow,
     NumberInput,
+    RatingInput,
+    RatingLabel,
     OptionalInputs,
     Padding,
     Placeholder,
@@ -236,9 +241,12 @@ enum class CardElementType
     Fact,
     FactSet,
     Image,
+    Icon,
     ImageSet,
     Media,
     NumberInput,
+    RatingInput,
+    RatingLabel,
     RichTextBlock,
     Table,
     TableCell,
@@ -316,6 +324,26 @@ enum class VerticalAlignment
     Bottom
 };
 DECLARE_ADAPTIVECARD_ENUM(VerticalAlignment);
+
+enum class IconSize
+{
+    xxSmall = 0,
+    xSmall,
+    Small,
+    Standard,
+    Medium,
+    Large,
+    xLarge,
+    xxLarge
+};
+DECLARE_ADAPTIVECARD_ENUM(IconSize);
+
+enum class IconStyle
+{
+    Regular = 0,
+    Filled
+};
+DECLARE_ADAPTIVECARD_ENUM(IconStyle);
 
 enum class ImageFillMode
 {
@@ -568,6 +596,20 @@ enum class HeightType
     Stretch
 };
 DECLARE_ADAPTIVECARD_ENUM(HeightType);
+
+enum class RatingSize
+{
+    Medium = 0,
+    Large
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingSize);
+
+enum class RatingColor
+{
+    Neutral = 0,
+    Marigold
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingColor);
 
 // Important: "Content" below is a placeholder for a JSON value -- we can't perform automatic mapping.
 enum class FallbackType
