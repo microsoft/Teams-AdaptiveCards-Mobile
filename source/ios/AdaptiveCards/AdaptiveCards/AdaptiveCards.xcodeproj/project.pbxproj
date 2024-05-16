@@ -29,6 +29,7 @@
 		300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
 		30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */; };
+		46338D952BF5F43900A169E8 /* IconInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46338D922BF5F43900A169E8 /* IconInfo.cpp */; };
 		463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C062BD8DB1F00A95C4E /* Icon.cpp */; };
 		463C3C0B2BD8DCC000A95C4E /* Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0A2BD8DCC000A95C4E /* Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */; };
@@ -518,6 +519,8 @@
 		30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsTextBlockTests.mm; sourceTree = "<group>"; };
 		3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		46338D912BF5EFDC00A169E8 /* IconInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconInfo.h; sourceTree = "<group>"; };
+		46338D922BF5F43900A169E8 /* IconInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IconInfo.cpp; sourceTree = "<group>"; };
 		463C3C062BD8DB1F00A95C4E /* Icon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Icon.cpp; path = ../../../../shared/cpp/ObjectModel/Icon.cpp; sourceTree = "<group>"; };
 		463C3C0A2BD8DCC000A95C4E /* Icon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Icon.h; path = ../../../../shared/cpp/ObjectModel/Icon.h; sourceTree = "<group>"; };
 		463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRIconRenderer.h; sourceTree = "<group>"; };
@@ -1558,6 +1561,8 @@
 				F4F44B7F20478C6F00A2F24C /* Util.cpp */,
 				F4F44B7E20478C6F00A2F24C /* Util.h */,
 				4688CB782BF4B331001B1D4C /* CompoundButton.h */,
+				46338D912BF5EFDC00A169E8 /* IconInfo.h */,
+				46338D922BF5F43900A169E8 /* IconInfo.cpp */,
 				4688CB792BF4B345001B1D4C /* CompoundButton.cpp */,
 			);
 			name = SharedLib;
@@ -2217,6 +2222,7 @@
 				F44873071EE2261F00FCAFAE /* DateInput.cpp in Sources */,
 				F43110461F357487001AAE30 /* ACOHostConfig.mm in Sources */,
 				F4F6BA2F204F18D8003741B6 /* ParseResult.cpp in Sources */,
+				46338D952BF5F43900A169E8 /* IconInfo.cpp in Sources */,
 				F4C1F5F21F2BC6840018CB78 /* ACRButton.mm in Sources */,
 				F9A9E55126FE9FA000D13410 /* CollectionCoreElement.cpp in Sources */,
 				6BFCA142264F54B500195CA7 /* ACRTableRow.mm in Sources */,

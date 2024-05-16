@@ -6,6 +6,7 @@
 #include "BaseActionElement.h"
 #include "BaseCardElement.h"
 #include "ElementParserRegistration.h"
+#include "IconInfo.h"
 
 namespace AdaptiveCards
 {
@@ -19,7 +20,7 @@ public:
     CompoundButton& operator=(CompoundButton&&) = default;
     ~CompoundButton() = default;
 
-    Json::Value SerializeToJsonValue() const override;
+    Json::Value SerializeToJsonValue() const ;
     
     std::string getBadge() const;
     void setBadge(const std::string value);
@@ -33,6 +34,9 @@ public:
     std::shared_ptr<BaseActionElement> GetSelectAction() const;
     void SetSelectAction(const std::shared_ptr<BaseActionElement> action);
     
+    std::shared_ptr<IconInfo> getIcon() const;
+    void setIcon(const std::shared_ptr<IconInfo> value);
+    
 private:
     void PopulateKnownPropertiesSet();
     
@@ -40,6 +44,7 @@ private:
     std::string m_badge;
     std::string m_title;
     std::string m_description;
+    std::shared_ptr<IconInfo> m_icon;
 };
 
 class CompoundButtonParser : public BaseCardElementParser

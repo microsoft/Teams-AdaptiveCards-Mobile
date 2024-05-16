@@ -9,16 +9,17 @@
             "title": "Summarize",
 
             "icon": {
-
-                "name": "TextBulletList"
-
+                "name": "Calendar",
+                "size": "Large",
+                "style": "Filled",
+                "color": "attention"
             },
-            "subTitle": "Review key points in file",
+            
+            "description": "Review key points in file",
 
             "height": "stretch",
 
             "badge": "New"
-
         }
 
     ]

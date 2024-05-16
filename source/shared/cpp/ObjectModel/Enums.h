@@ -236,7 +236,6 @@ enum class CardElementType
     ColumnSet,
     Container,
     Custom,
-    CompoundButton,
     DateInput,
     Fact,
     FactSet,
@@ -253,6 +252,7 @@ enum class CardElementType
     TextInput,
     TimeInput,
     ToggleInput,
+    CompoundButton,
     Unknown,
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);

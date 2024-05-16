@@ -33,6 +33,11 @@ Json::Value CompoundButton::SerializeToJsonValue() const
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Description)] = m_description;
     }
     
+    if(m_icon != nullptr)
+    {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon)] = m_icon -> SerializeToJsonValue();
+    }
+    
     return root;
 }
 
@@ -66,6 +71,15 @@ void CompoundButton::setDescription(const std::string value)
     m_description = value;
 }
 
+std::shared_ptr<IconInfo> CompoundButton::getIcon() const
+{
+    return m_icon;
+}
+
+void CompoundButton::setIcon(const std::shared_ptr<IconInfo> value)
+{
+    m_icon = value;
+}
 
 std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeFromString(ParseContext& context, const std::string& jsonString)
 {
@@ -81,14 +95,24 @@ std::shared_ptr<BaseCardElement> CompoundButtonParser::Deserialize(ParseContext&
 std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& json)
 {
     std::shared_ptr<CompoundButton> compoundButton = BaseCardElement::Deserialize<CompoundButton>(context, json);
+    compoundButton->setBadge(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Badge));
+    compoundButton->setTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title));
+    compoundButton-> setDescription(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Description));
+    auto icon = ParseUtil::DeserializeValue<IconInfo>(context,
+                                                      json,
+                                                      AdaptiveCardSchemaKey::Icon,
+                                                      IconInfo::Deserialize,
+                                                      false);
+    compoundButton->setIcon(icon);
     return compoundButton;
 }
 
 void CompoundButton::PopulateKnownPropertiesSet()
 {
     m_knownProperties.insert(
-        {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Badge),
+         {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Badge),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Description),
+         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)});
 }
