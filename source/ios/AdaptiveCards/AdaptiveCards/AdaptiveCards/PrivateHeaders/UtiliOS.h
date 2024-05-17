@@ -135,6 +135,10 @@ ACRImageSize getACRImageSize(ImageSize adaptiveImageSize, BOOL hasExplicitDimens
 
 ACRHorizontalAlignment getACRHorizontalAlignment(HorizontalAlignment horizontalAlignment);
 
+ACRRatingSize getRatingSize(RatingSize ratingSize);
+
+ACRRatingColor getRatingColor(RatingColor ratingColor);
+
 ACRHeightType GetACRHeight(HeightType adaptiveHeight);
 
 ACRVerticalContentAlignment GetACRVerticalContentAlignment(VerticalContentAlignment adaptiveVerticalContentAlignment);

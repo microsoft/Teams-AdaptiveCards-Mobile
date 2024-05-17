@@ -85,6 +85,15 @@ typedef NS_ENUM(NSUInteger, ACRHorizontalAlignment) {
     ACRRight
 };
 
+typedef NS_ENUM(NSUInteger, ACRRatingSize) {
+    ACRMedium = 0,
+    ACRLarge
+};
+
+typedef NS_ENUM(NSUInteger, ACRRatingColor) {
+    ACRNeutral = 0,
+    ACRMarigold
+};
 
 typedef NS_ENUM(NSUInteger, ACRVerticalContentAlignment) {
     ACRVerticalContentAlignmentTop = 0,

@@ -43,6 +43,9 @@
 		463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */; };
 		463C4EDF2BDF63E700A95C4E /* ACRSVGIconHoldingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */; };
 		463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */; };
+		46445D872BF7242700831973 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46445D862BF7242700831973 /* FluentAssets.xcassets */; };
+		46445D892BF72A5300831973 /* ACRRatingInputView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46445D882BF72A5300831973 /* ACRRatingInputView.h */; };
+		46445D8B2BF7324100831973 /* ACRRatingInputView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46445D8A2BF7324100831973 /* ACRRatingInputView.mm */; };
 		46B329162BF32057009671AE /* RatingInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B329152BF32057009671AE /* RatingInput.h */; };
 		46B329182BF3228F009671AE /* RatingInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B329172BF3228F009671AE /* RatingInput.cpp */; };
 		6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */; };
@@ -538,6 +541,9 @@
 		463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGImageView.mm; sourceTree = "<group>"; };
 		463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRSVGIconHoldingView.h; sourceTree = "<group>"; };
 		463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGIconHoldingView.mm; sourceTree = "<group>"; };
+		46445D862BF7242700831973 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
+		46445D882BF72A5300831973 /* ACRRatingInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRRatingInputView.h; sourceTree = "<group>"; };
+		46445D8A2BF7324100831973 /* ACRRatingInputView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingInputView.mm; sourceTree = "<group>"; };
 		46B329152BF32057009671AE /* RatingInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RatingInput.h; path = ../../../../shared/cpp/ObjectModel/RatingInput.h; sourceTree = "<group>"; };
 		46B329172BF3228F009671AE /* RatingInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RatingInput.cpp; path = ../../../../shared/cpp/ObjectModel/RatingInput.cpp; sourceTree = "<group>"; };
 		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
@@ -1134,6 +1140,7 @@
 				6B8C767A26461F1A009548FA /* ACRToggleInputView.xib */,
 				6B8C766C26461F1A009548FA /* Images */,
 				6B3A231B2755A3EF00764971 /* Localizable.strings */,
+				46445D862BF7242700831973 /* FluentAssets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1610,6 +1617,8 @@
 				6B9AB30F20DD82A2005C8E15 /* ACRTextView.mm */,
 				6BFF24052714E26900183C59 /* ACRToggleInputDataSource.h */,
 				6B9BDF7120E1BD0E00F13155 /* ACRToggleInputDataSource.mm */,
+				46445D882BF72A5300831973 /* ACRRatingInputView.h */,
+				46445D8A2BF7324100831973 /* ACRRatingInputView.mm */,
 				6BE8DFD5249C5126005EFE66 /* ACRToggleInputView.h */,
 				6BE8DFD3249C4C1B005EFE66 /* ACRToggleInputView.mm */,
 				CFF954CC29819A6B00F321C3 /* DynamicTypeahead */,
@@ -1967,6 +1976,7 @@
 				6B92A7E62677DFAB00CAE3BF /* ACRChoiceSetCompactStyleView.h in Headers */,
 				6BD859FB26F2CA7B0086F5BA /* ACOFillerSpaceManager.h in Headers */,
 				0D45F5A7261731E400EF03C5 /* ACRActionOverflowRenderer.h in Headers */,
+				46445D892BF72A5300831973 /* ACRRatingInputView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2090,6 +2100,7 @@
 				6B8C768726461F1A009548FA /* unchecked-checkbox-24.png in Resources */,
 				6B8C769426461F1A009548FA /* ACRQuickActionView.xib in Resources */,
 				6B8C769026461F1A009548FA /* ACRInputTableView.xib in Resources */,
+				46445D872BF7242700831973 /* FluentAssets.xcassets in Resources */,
 				6B8C769826461F1A009548FA /* ACRQuickActionMultilineView.xib in Resources */,
 				6B8C769926461F1A009548FA /* ACRChoiceSetCellUnchecked.xib in Resources */,
 				6B8C769226461F1A009548FA /* ACRToggleInputView.xib in Resources */,
@@ -2247,6 +2258,7 @@
 				F4F6BA2A204E107F003741B6 /* UnknownElement.cpp in Sources */,
 				CFF954DC2981B2A700F321C3 /* ACRTypeaheadSearchParameters.mm in Sources */,
 				F49683531F6CA24600DF0D3A /* ACRRenderer.mm in Sources */,
+				46445D8B2BF7324100831973 /* ACRRatingInputView.mm in Sources */,
 				F42741211EF9DB8000399FBB /* ACRContainerRenderer.mm in Sources */,
 				6B616C4021CB1878003E29CE /* ACRToggleVisibilityTarget.mm in Sources */,
 				CA1218C821C4509400152EA8 /* ToggleVisibilityTarget.cpp in Sources */,

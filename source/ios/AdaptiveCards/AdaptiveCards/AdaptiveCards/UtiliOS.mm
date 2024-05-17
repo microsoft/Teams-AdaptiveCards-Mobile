@@ -1004,6 +1004,30 @@ ACRHorizontalAlignment getACRHorizontalAlignment(HorizontalAlignment horizontalA
     }
 }
 
+ACRRatingSize getRatingSize(RatingSize ratingSize)
+{
+    switch (ratingSize) {
+        case RatingSize::Medium:
+            return ACRMedium;
+        case RatingSize::Large:
+            return ACRLarge;
+        default:
+            return ACRMedium;
+    }
+}
+
+ACRRatingColor getRatingColor(RatingColor ratingColor)
+{
+    switch (ratingColor) {
+        case RatingColor::Neutral:
+            return ACRNeutral;
+        case RatingColor::Marigold:
+            return ACRMarigold;
+        default:
+            return ACRNeutral;
+    }
+}
+
 ACRHeightType GetACRHeight(HeightType adaptiveHeight)
 {
     ACRHeightType height = ACRHeightAuto;
