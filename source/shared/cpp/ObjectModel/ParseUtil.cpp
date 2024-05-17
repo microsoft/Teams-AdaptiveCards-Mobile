@@ -267,6 +267,22 @@ std::optional<int> ParseUtil::GetOptionalInt(const Json::Value& json, AdaptiveCa
     return propertyValue.asInt();
 }
 
+double ParseUtil:: GetDouble(const Json::Value& json, AdaptiveCardSchemaKey key, double defaultValue, bool isRequired)
+{
+    auto optionalDouble = GetOptionalDouble(json, key);
+
+    if (isRequired && !optionalDouble.has_value())
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::RequiredPropertyMissing,
+            "Property is required but was found empty: " + AdaptiveCardSchemaKeyToString(key));
+    }
+    else
+    {
+        return optionalDouble.value_or(defaultValue);
+    }
+}
+
 std::optional<double> ParseUtil::GetOptionalDouble(const Json::Value& json, AdaptiveCardSchemaKey key)
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);

@@ -12,6 +12,7 @@
 @protocol ACRInputChangeDelegate <NSObject>
 
 -(void)inputValueChanged;
+
 @end
 
 @protocol ACRIBaseInputHandler
@@ -25,5 +26,5 @@
 - (BOOL)validate:(NSError *_Nullable *_Nullable)error;
 - (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *_Nullable)view;
 - (void)getInput:(NSMutableDictionary *_Nonnull)dictionary;
--(void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nonnull)delegate;
+- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nonnull)delegate;
 @end

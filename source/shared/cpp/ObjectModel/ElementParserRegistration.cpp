@@ -21,6 +21,8 @@
 #include "TimeInput.h"
 #include "ToggleInput.h"
 #include "UnknownElement.h"
+#include "RatingInput.h"
+#include "RatingLabel.h"
 
 namespace AdaptiveCards
 {
@@ -61,6 +63,8 @@ ElementParserRegistration::ElementParserRegistration()
          CardElementTypeToString(CardElementType::ImageSet),
          CardElementTypeToString(CardElementType::Media),
          CardElementTypeToString(CardElementType::NumberInput),
+         CardElementTypeToString(CardElementType::RatingInput),
+         CardElementTypeToString(CardElementType::RatingLabel),
          CardElementTypeToString(CardElementType::RichTextBlock),
          CardElementTypeToString(CardElementType::Table),
          CardElementTypeToString(CardElementType::TextBlock),
@@ -82,6 +86,8 @@ ElementParserRegistration::ElementParserRegistration()
          {CardElementTypeToString(CardElementType::ImageSet), std::make_shared<ImageSetParser>()},
          {CardElementTypeToString(CardElementType::Media), std::make_shared<MediaParser>()},
          {CardElementTypeToString(CardElementType::NumberInput), std::make_shared<NumberInputParser>()},
+         {CardElementTypeToString(CardElementType::RatingInput), std::make_shared<RatingInputParser>()},
+         {CardElementTypeToString(CardElementType::RatingLabel), std::make_shared<RatingLabelParser>()},
          {CardElementTypeToString(CardElementType::RichTextBlock), std::make_shared<RichTextBlockParser>()},
          {CardElementTypeToString(CardElementType::Table), std::make_shared<TableParser>()},
          {CardElementTypeToString(CardElementType::TextBlock), std::make_shared<TextBlockParser>()},
