@@ -1991,6 +1991,9 @@ SWIGINTERN AdaptiveCards::RichTextBlock *AdaptiveCards_RichTextBlock_dynamic_cas
 SWIGINTERN AdaptiveCards::TextRun *AdaptiveCards_TextRun_dynamic_cast(AdaptiveCards::Inline *inlineVar){
         return dynamic_cast<AdaptiveCards::TextRun *>(inlineVar);
     }
+SWIGINTERN AdaptiveCards::ValueChangedAction *AdaptiveCards_ValueChangedAction_dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement){
+            return dynamic_cast<AdaptiveCards::ValueChangedAction *>(baseCardElement);
+        }
 
 
 /* ---------------------------------------------------
@@ -36489,6 +36492,34 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   result = AdaptiveCards::ValueChangedAction::DeserializeFromString((std::string const &)*arg1);
   *(std::shared_ptr< AdaptiveCards::ValueChangedAction > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::ValueChangedAction >(result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ValueChangedAction_1dynamic_1cast(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::BaseCardElement *arg1 = (AdaptiveCards::BaseCardElement *) 0 ;
+  std::shared_ptr< AdaptiveCards::BaseCardElement > *smartarg1 = 0 ;
+  AdaptiveCards::ValueChangedAction *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::BaseCardElement > **)&jarg1;
+  arg1 = (AdaptiveCards::BaseCardElement *)(smartarg1 ? smartarg1->get() : 0); 
+  {
+    result = (AdaptiveCards::ValueChangedAction *)AdaptiveCards_ValueChangedAction_dynamic_cast(arg1);
+    if (!result) {
+      jclass excep = jenv->FindClass("java/lang/ClassCastException");
+      if (excep) {
+        jenv->ThrowNew(excep, "dynamic_cast exception");
+      }
+    }
+  }
+  
+  *(std::shared_ptr<  AdaptiveCards::ValueChangedAction > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ValueChangedAction >(result SWIG_NO_NULL_DELETER_0) : 0;
+  
   return jresult;
 }
 

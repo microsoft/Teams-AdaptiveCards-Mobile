@@ -850,6 +850,21 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::ValueChangedAction::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::ValueChangedAction {
+        static AdaptiveCards::ValueChangedAction *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::ValueChangedAction *>(baseCardElement);
+        }
+};
+
 %exception AdaptiveCards::ActionSet::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {

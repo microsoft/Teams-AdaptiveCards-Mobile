@@ -90,4 +90,9 @@ public class ValueChangedAction {
     return (cPtr == 0) ? null : new ValueChangedAction(cPtr, true);
   }
 
+  public static ValueChangedAction dynamic_cast(BaseCardElement baseCardElement) {
+    long cPtr = AdaptiveCardObjectModelJNI.ValueChangedAction_dynamic_cast(BaseCardElement.getCPtr(baseCardElement), baseCardElement);
+    return (cPtr == 0) ? null : new ValueChangedAction(cPtr, true);
+  }
+
 }

@@ -1808,6 +1808,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long ValueChangedAction_SerializeToJsonValue(long jarg1, ValueChangedAction jarg1_);
   public final static native long ValueChangedAction_Deserialize(long jarg1, JsonValue jarg1_);
   public final static native long ValueChangedAction_DeserializeFromString(String jarg1);
+  public final static native long ValueChangedAction_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native void delete_ValueChangedAction(long jarg1);
   public final static native long ActionElementParserWrapper_SWIGSmartPtrUpcast(long jarg1);
   public final static native long BaseCardElementParserWrapper_SWIGSmartPtrUpcast(long jarg1);
