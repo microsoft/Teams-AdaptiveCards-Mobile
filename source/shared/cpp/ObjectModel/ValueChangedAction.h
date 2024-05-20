@@ -20,8 +20,8 @@ namespace AdaptiveCards
         ValueChangedAction(std::vector<std::string> targetInputIds, ValueChangedActionType type) : m_targetInputIds(targetInputIds), m_valueChangedActionType(type)
         {
         }
+
         std::vector<std::string>& GetTargetInputIds();
-        const std::vector<std::string> & GetTargetInputIds() const;
         void SetTargetInputIds(std::vector<std::string>);
 
         ValueChangedActionType GetValueChangedActionType() const;

@@ -53,7 +53,7 @@ public class ValueChangedAction {
   }
 
   public StringVector GetTargetInputIds() {
-    return new StringVector(AdaptiveCardObjectModelJNI.ValueChangedAction_GetTargetInputIds__SWIG_0(swigCPtr, this), false);
+    return new StringVector(AdaptiveCardObjectModelJNI.ValueChangedAction_GetTargetInputIds(swigCPtr, this), false);
   }
 
   public void SetTargetInputIds(StringVector arg0) {

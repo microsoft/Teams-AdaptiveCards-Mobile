@@ -7,11 +7,10 @@
 
 using namespace AdaptiveCards;
 
-const std::vector<std::string> & ValueChangedAction::GetTargetInputIds() const
+std::vector<std::string>& ValueChangedAction::GetTargetInputIds()
 {
     return m_targetInputIds;
 }
-
 
 void ValueChangedAction::SetTargetInputIds(std::vector<std::string> targetInputIds)
 {

@@ -664,7 +664,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native String BaseInputElement_GetErrorMessage(long jarg1, BaseInputElement jarg1_);
   public final static native void BaseInputElement_SetErrorMessage(long jarg1, BaseInputElement jarg1_, String jarg2);
   public final static native long BaseInputElement_GetValueChangedAction(long jarg1, BaseInputElement jarg1_);
-  public final static native void BaseInputElement_SetValueChangedAction(long jarg1, BaseInputElement jarg1_, long jarg2);
+  public final static native void BaseInputElement_SetValueChangedAction(long jarg1, BaseInputElement jarg1_, long jarg2, ValueChangedAction jarg2_);
   public final static native long BaseInputElement_DeserializeBasePropertiesFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native long BaseInputElement_DeserializeBaseProperties(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native long BaseInputElement_SerializeToJsonValue(long jarg1, BaseInputElement jarg1_);
@@ -1799,7 +1799,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long new_ValueChangedAction__SWIG_0();
   public final static native long new_ValueChangedAction__SWIG_1(long jarg1, StringVector jarg1_);
   public final static native long new_ValueChangedAction__SWIG_2(long jarg1, StringVector jarg1_, int jarg2);
-  public final static native long ValueChangedAction_GetTargetInputIds__SWIG_0(long jarg1, ValueChangedAction jarg1_);
+  public final static native long ValueChangedAction_GetTargetInputIds(long jarg1, ValueChangedAction jarg1_);
   public final static native void ValueChangedAction_SetTargetInputIds(long jarg1, ValueChangedAction jarg1_, long jarg2, StringVector jarg2_);
   public final static native int ValueChangedAction_GetValueChangedActionType(long jarg1, ValueChangedAction jarg1_);
   public final static native void ValueChangedAction_SetValueChangedActionType(long jarg1, ValueChangedAction jarg1_, int jarg2);

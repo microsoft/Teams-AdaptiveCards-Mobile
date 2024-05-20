@@ -29,8 +29,8 @@ public:
     std::string GetErrorMessage() const;
     void SetErrorMessage(const std::string errorMessage);
 
-    std::shared_ptr<ValueChangedAction> GetValueChangedAction() const;
-    void SetValueChangedAction(const std::shared_ptr<ValueChangedAction> value);
+    std::shared_ptr<AdaptiveCards::ValueChangedAction> GetValueChangedAction() const;
+    void SetValueChangedAction(const std::shared_ptr<AdaptiveCards::ValueChangedAction> value);
 
     static std::shared_ptr<BaseInputElement> DeserializeBasePropertiesFromString(ParseContext& context, const std::string& jsonString);
     static std::shared_ptr<BaseInputElement> DeserializeBaseProperties(ParseContext& context, const Json::Value& json);

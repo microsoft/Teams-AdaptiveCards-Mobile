@@ -14375,7 +14375,7 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   jlong jresult = 0 ;
   AdaptiveCards::BaseInputElement *arg1 = (AdaptiveCards::BaseInputElement *) 0 ;
   std::shared_ptr< AdaptiveCards::BaseInputElement const > *smartarg1 = 0 ;
-  SwigValueWrapper< std::shared_ptr< ValueChangedAction > > result;
+  std::shared_ptr< AdaptiveCards::ValueChangedAction > result;
   
   (void)jenv;
   (void)jcls;
@@ -14384,29 +14384,26 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::BaseInputElement > **)&jarg1;
   arg1 = (AdaptiveCards::BaseInputElement *)(smartarg1 ? smartarg1->get() : 0); 
   result = ((AdaptiveCards::BaseInputElement const *)arg1)->GetValueChangedAction();
-  *(std::shared_ptr< ValueChangedAction > **)&jresult = new std::shared_ptr< ValueChangedAction >((const std::shared_ptr< ValueChangedAction > &)result); 
+  *(std::shared_ptr< AdaptiveCards::ValueChangedAction > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::ValueChangedAction >(result) : 0; 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseInputElement_1SetValueChangedAction(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseInputElement_1SetValueChangedAction(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   AdaptiveCards::BaseInputElement *arg1 = (AdaptiveCards::BaseInputElement *) 0 ;
-  SwigValueWrapper< std::shared_ptr< ValueChangedAction > > arg2 ;
+  std::shared_ptr< AdaptiveCards::ValueChangedAction > arg2 ;
   std::shared_ptr< AdaptiveCards::BaseInputElement > *smartarg1 = 0 ;
-  std::shared_ptr< ValueChangedAction > const *argp2 ;
+  std::shared_ptr< AdaptiveCards::ValueChangedAction > const *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
+  (void)jarg2_;
   
   smartarg1 = *(std::shared_ptr<  AdaptiveCards::BaseInputElement > **)&jarg1;
   arg1 = (AdaptiveCards::BaseInputElement *)(smartarg1 ? smartarg1->get() : 0); 
-  argp2 = *(std::shared_ptr< ValueChangedAction > **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null std::shared_ptr< ValueChangedAction > const");
-    return ;
-  }
-  arg2 = *argp2; 
+  argp2 = *(std::shared_ptr< AdaptiveCards::ValueChangedAction > **)&jarg2;
+  if (argp2) arg2 = *argp2; 
   (arg1)->SetValueChangedAction(arg2);
 }
 
@@ -36324,7 +36321,7 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ValueChangedAction_1GetTargetInputIds_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ValueChangedAction_1GetTargetInputIds(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::ValueChangedAction *arg1 = (AdaptiveCards::ValueChangedAction *) 0 ;
   std::shared_ptr< AdaptiveCards::ValueChangedAction > *smartarg1 = 0 ;
