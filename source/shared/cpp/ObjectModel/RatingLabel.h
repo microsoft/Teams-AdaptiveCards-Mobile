@@ -30,8 +30,8 @@ public:
     double GetValue() const;
     void SetValue(const double value);
 
-    std::optional<double> GetMax() const;
-    void SetMax(const std::optional<double>& value);
+    double GetMax() const;
+    void SetMax(const double value);
     
     RatingSize GetRatingSize() const;
     void SetRatingSize(RatingSize value);
@@ -47,7 +47,7 @@ private:
     
     std::optional<HorizontalAlignment> m_hAlignment;
     double m_value;
-    std::optional<double> m_max;
+    double m_max;
     RatingSize m_size;
     RatingColor m_color;
     std::optional<unsigned int>m_count;
