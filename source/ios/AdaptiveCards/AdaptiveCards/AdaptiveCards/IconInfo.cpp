@@ -10,6 +10,7 @@
 #include "ParseContext.h"
 #include "Util.h"
 #include "CompoundButton.h"
+#include "Icon.h"
 
 using namespace AdaptiveCards;
 
@@ -105,4 +106,44 @@ void IconInfo::PopulateKnownPropertiesSet()
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Color),
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)});
+}
+
+std::string IconInfo::GetSVGResourceURL() const
+{
+    // format: "<baseIconCDNUrl><Icon Name>/<IconName><Size><Style>.json"
+    std::string m_url =  AdaptiveCards::baseIconCDNUrl + GetName() + "/" + GetName() + std::to_string(getSize()) + IconStyleToString(getIconStyle()) + ".json";
+    return m_url;
+}
+
+unsigned int IconInfo::getSize() const
+{
+    unsigned int _size = 24;
+    switch (getIconSize())
+    {
+        case IconSize::xxSmall:
+            _size = 12;
+            break;
+        case IconSize::xSmall:
+            _size = 16;
+            break;
+        case IconSize::Small:
+            _size = 20;
+            break;
+        case IconSize::Standard:
+            _size = 24;
+            break;
+        case IconSize::Medium:
+            _size = 28;
+            break;
+        case IconSize::Large:
+            _size = 32;
+            break;
+        case IconSize::xLarge:
+            _size = 40;
+            break;
+        case IconSize::xxLarge:
+            _size = 48;
+            break;
+    }
+    return _size;
 }

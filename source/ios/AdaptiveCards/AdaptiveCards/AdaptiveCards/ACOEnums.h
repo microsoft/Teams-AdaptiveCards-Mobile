@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, ACRCardElementType) {
     ACRTextInput,
     ACRTimeInput,
     ACRToggleInput,
+    ACRCompoundButton,
     ACRUnknown
 };
 

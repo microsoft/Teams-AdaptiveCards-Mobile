@@ -17,7 +17,9 @@ public:
     ~IconInfo() = default;
     Json::Value SerializeToJsonValue() const;
     static std::shared_ptr<IconInfo> Deserialize(ParseContext& context, const Json::Value& json);
-    
+    std::string GetSVGResourceURL() const;
+    unsigned int getSize() const;
+
     ForegroundColor getForgroundColor() const;
     void setForgroundColor(const ForegroundColor value);
 

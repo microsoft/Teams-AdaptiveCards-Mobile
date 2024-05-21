@@ -40,6 +40,8 @@
 		463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */; };
 		4688CB7B2BF4B345001B1D4C /* CompoundButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4688CB792BF4B345001B1D4C /* CompoundButton.cpp */; };
 		4688CB7D2BF4B3FA001B1D4C /* CompoundButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 4688CB782BF4B331001B1D4C /* CompoundButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		46D3D0032BFA8E9B002D84BE /* ACRCompoundButtonRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D0022BFA8E9B002D84BE /* ACRCompoundButtonRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		46D3D0052BFA8EE7002D84BE /* ACRCompoundButtonRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D0042BFA8EE7002D84BE /* ACRCompoundButtonRenderer.mm */; };
 		6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */; };
 		6B096D4E225431D0006CC034 /* ACRRichTextBlockRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B096D4D225431D0006CC034 /* ACRRichTextBlockRenderer.mm */; };
@@ -531,6 +533,8 @@
 		463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGIconHoldingView.mm; sourceTree = "<group>"; };
 		4688CB782BF4B331001B1D4C /* CompoundButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompoundButton.h; sourceTree = "<group>"; };
 		4688CB792BF4B345001B1D4C /* CompoundButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CompoundButton.cpp; sourceTree = "<group>"; };
+		46D3D0022BFA8E9B002D84BE /* ACRCompoundButtonRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCompoundButtonRenderer.h; sourceTree = "<group>"; };
+		46D3D0042BFA8EE7002D84BE /* ACRCompoundButtonRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCompoundButtonRenderer.mm; sourceTree = "<group>"; };
 		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRTypeaheadSearchViewControllerPrivate.h; path = PrivateHeaders/ACRTypeaheadSearchViewControllerPrivate.h; sourceTree = "<group>"; };
 		6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRichTextBlockRenderer.h; sourceTree = "<group>"; };
@@ -1672,6 +1676,8 @@
 				463C4EDA2BDB666A00A95C4E /* ACRSVGImageView.h */,
 				463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */,
 				463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */,
+				46D3D0022BFA8E9B002D84BE /* ACRCompoundButtonRenderer.h */,
+				46D3D0042BFA8EE7002D84BE /* ACRCompoundButtonRenderer.mm */,
 				F42741101EF873A600399FBB /* ACRImageRenderer.h */,
 				F42741111EF873A600399FBB /* ACRImageRenderer.mm */,
 				6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */,
@@ -1756,6 +1762,7 @@
 				F44873281EE2261F00FCAFAE /* TimeInput.h in Headers */,
 				F44873261EE2261F00FCAFAE /* TextInput.h in Headers */,
 				F44873221EE2261F00FCAFAE /* SubmitAction.h in Headers */,
+				46D3D0032BFA8E9B002D84BE /* ACRCompoundButtonRenderer.h in Headers */,
 				6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */,
 				F44873201EE2261F00FCAFAE /* ShowCardAction.h in Headers */,
 				7EF8879D21F14CDD00BAFF02 /* BackgroundImage.h in Headers */,
@@ -2248,6 +2255,7 @@
 				6B7B1A9220B4D2AB00260731 /* MediaSource.cpp in Sources */,
 				F44873011EE2261F00FCAFAE /* Column.cpp in Sources */,
 				CFB972022941C07A008E3795 /* ChoicesData.cpp in Sources */,
+				46D3D0052BFA8EE7002D84BE /* ACRCompoundButtonRenderer.mm in Sources */,
 				463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */,
 				F448730D1EE2261F00FCAFAE /* FactSet.cpp in Sources */,
 				F44873031EE2261F00FCAFAE /* ColumnSet.cpp in Sources */,
