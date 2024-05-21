@@ -41,12 +41,12 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
     if(action->m_conditionallyEnabled && button.isEnabled)
     {
         _inputsArray = [[NSMutableArray<ACRIBaseInputHandler> alloc] initWithArray:inputs];
-        BOOL atleastOneInputRequired = false;
-        for (id<ACRIBaseInputHandler> input in _inputsArray) 
+        BOOL atleastOneInputRequired = NO;
+        for (id<ACRIBaseInputHandler> input in _inputsArray)
         {
             if (input.isRequired)
             {
-                atleastOneInputRequired = true;
+                atleastOneInputRequired = YES;
                 [input addObserverForValueChange:self];
             }
         }
@@ -72,7 +72,7 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
 
 - (BOOL)validateInputs
 {
-    BOOL validationResult = false;
+    BOOL validationResult = NO;
     for (id<ACRIBaseInputHandler> input in _inputsArray) {
         if(input.isRequired && !validationResult)
         {

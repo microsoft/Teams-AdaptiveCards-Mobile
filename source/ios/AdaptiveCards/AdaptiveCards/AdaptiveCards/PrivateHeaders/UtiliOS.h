@@ -139,6 +139,8 @@ ACRRatingSize getRatingSize(RatingSize ratingSize);
 
 ACRRatingColor getRatingColor(RatingColor ratingColor);
 
+ACRRatingStyle getRatingStyle(RatingStyle ratingStyle);
+
 ACRHeightType GetACRHeight(HeightType adaptiveHeight);
 
 ACRVerticalContentAlignment GetACRVerticalContentAlignment(VerticalContentAlignment adaptiveVerticalContentAlignment);

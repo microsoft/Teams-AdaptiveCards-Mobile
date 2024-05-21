@@ -81,6 +81,16 @@ void RatingLabel::SetRatingColor(RatingColor value)
     m_color = value;
 }
 
+RatingStyle RatingLabel::GetRatingStyle() const
+{
+    return m_style;
+}
+
+void RatingLabel::SetRatingStyle(RatingStyle value)
+{
+    m_style = value;
+}
+
 double RatingLabel::GetValue() const
 {
     return m_value;
@@ -123,6 +133,7 @@ std::shared_ptr<BaseCardElement> RatingLabelParser::Deserialize(ParseContext& co
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));
     ratingLabel->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString));
     ratingLabel->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString));
+    ratingLabel->SetRatingStyle(ParseUtil::GetEnumValue<RatingStyle>(json, AdaptiveCardSchemaKey::Style, RatingStyle::Default, RatingStyleFromString));
 
     return ratingLabel;
 }

@@ -15,7 +15,7 @@
 #import "ACRRatingLabelRenderer.h"
 #import "UtiliOS.h"
 #import "RatingLabel.h"
-#import "ACRRatingInputView.h"
+#import "ACRRatingView.h"
 
 @implementation ACRRatingLabelRenderer
 
@@ -40,7 +40,13 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<RatingLabel> ratingLabel = std::dynamic_pointer_cast<RatingLabel>(elem);
     
-    ACRRatingInputView *ratingView = [[ACRRatingInputView alloc] init:ratingLabel->GetValue() max:ratingLabel->GetMax() size:getRatingSize(ratingLabel->GetRatingSize()) ratingColor:getRatingColor(ratingLabel->GetRatingColor()) readOnly:YES];
+    ACRRatingView *ratingView = [[ACRRatingView alloc] initWithReadonlyValue:ratingLabel->GetValue()
+                                                                         max:ratingLabel->GetMax()
+                                                                        size:getRatingSize(ratingLabel->GetRatingSize())
+                                                                 ratingColor:getRatingColor(ratingLabel->GetRatingColor())
+                                                                       style:getRatingStyle(ratingLabel->GetRatingStyle())
+                                                                       count:ratingLabel->GetCount().value_or(0)
+                                                                  hostConfig:acoConfig];
     
     UIView *wrapperView = [[UIView alloc] initWithFrame:CGRectZero];
     wrapperView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -54,7 +60,8 @@
         
     ACRHorizontalAlignment acrHorizontalAlignment = getACRHorizontalAlignment(ratingLabel->GetHorizontalAlignment().value_or(HorizontalAlignment::Right));
     
-    switch (acrHorizontalAlignment) {
+    switch (acrHorizontalAlignment) 
+    {
         case ACRCenter:
             [NSLayoutConstraint activateConstraints:@[
                 [wrapperView.centerXAnchor constraintEqualToAnchor:ratingView.centerXAnchor]

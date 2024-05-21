@@ -94,7 +94,7 @@ std::shared_ptr<BaseCardElement> RatingInputParser::Deserialize(ParseContext& co
     ParseUtil::ExpectTypeString(json, CardElementType::RatingInput);
 
     std::shared_ptr<RatingInput> ratingInput = BaseInputElement::Deserialize<RatingInput>(context, json);
-    ratingInput->SetValue(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Value, 0));
+    ratingInput->SetValue(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Value, -1));
     ratingInput->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 5));
     ratingInput->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));

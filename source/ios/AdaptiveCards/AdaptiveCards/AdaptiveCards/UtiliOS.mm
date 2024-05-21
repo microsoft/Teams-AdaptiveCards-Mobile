@@ -1028,6 +1028,18 @@ ACRRatingColor getRatingColor(RatingColor ratingColor)
     }
 }
 
+ACRRatingStyle getRatingStyle(RatingStyle ratingStyle)
+{
+    switch (ratingStyle) {
+        case RatingStyle::Default:
+            return ACRDefaultStyle;
+        case RatingStyle::Compact:
+            return ACRCompactStyle;
+        default:
+            return ACRDefaultStyle;
+    }
+}
+
 ACRHeightType GetACRHeight(HeightType adaptiveHeight)
 {
     ACRHeightType height = ACRHeightAuto;

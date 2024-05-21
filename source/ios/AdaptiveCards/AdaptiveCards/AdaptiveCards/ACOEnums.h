@@ -95,6 +95,11 @@ typedef NS_ENUM(NSUInteger, ACRRatingColor) {
     ACRMarigold
 };
 
+typedef NS_ENUM(NSUInteger, ACRRatingStyle) {
+    ACRDefaultStyle = 0,
+    ACRCompactStyle
+};
+
 typedef NS_ENUM(NSUInteger, ACRVerticalContentAlignment) {
     ACRVerticalContentAlignmentTop = 0,
     ACRVerticalContentAlignmentCenter,

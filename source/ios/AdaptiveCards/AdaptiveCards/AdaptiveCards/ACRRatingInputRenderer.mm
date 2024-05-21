@@ -17,7 +17,8 @@
 #import "ACRRatingInputRenderer.h"
 #import "UtiliOS.h"
 #import "RatingInput.h"
-#import "ACRRatingInputView.h"
+#import "ACRRatingView.h"
+#import "ACRRatingInputDataSource.h"
 
 @implementation ACRRatingInputRenderer
 
@@ -42,7 +43,7 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<RatingInput> ratingInput = std::dynamic_pointer_cast<RatingInput>(elem);
         
-    ACRRatingInputView *ratingView = [[ACRRatingInputView alloc] init:ratingInput->GetValue() max:ratingInput->GetMax() size:getRatingSize(ratingInput->GetRatingSize()) ratingColor:getRatingColor(ratingInput->GetRatingColor()) readOnly:NO];
+    ACRRatingView *ratingView = [[ACRRatingView alloc] initWithEditableValue:ratingInput->GetValue() max:ratingInput->GetMax() size:getRatingSize(ratingInput->GetRatingSize()) ratingColor:getRatingColor(ratingInput->GetRatingColor()) hostConfig:acoConfig];
     
     UIView *wrapperView = [[UIView alloc] initWithFrame:CGRectZero];
     wrapperView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -56,7 +57,8 @@
         
     ACRHorizontalAlignment acrHorizontalAlignment = getACRHorizontalAlignment(ratingInput->GetHorizontalAlignment().value_or(HorizontalAlignment::Right));
     
-    switch (acrHorizontalAlignment) {
+    switch (acrHorizontalAlignment) 
+    {
         case ACRCenter:
             [NSLayoutConstraint activateConstraints:@[
                 [wrapperView.centerXAnchor constraintEqualToAnchor:ratingView.centerXAnchor]
@@ -73,9 +75,16 @@
             ]];
     }
     
-    [viewGroup addArrangedSubview:wrapperView];
+    ACRRatingInputDataSource *ratingInputDataSource = [[ACRRatingInputDataSource alloc] initWithInputRating:ratingInput WithHostConfig:config];
+    ratingInputDataSource.ratingView = ratingView;
+    
+    ACRInputLabelView *inputLabelView = [[ACRInputLabelView alloc] initInputLabelView:rootView acoConfig:acoConfig adaptiveInputElement:ratingInput inputView:wrapperView accessibilityItem:ratingView viewGroup:viewGroup dataSource:ratingInputDataSource];
+    
+    [inputs addObject:inputLabelView];
+    
+    [viewGroup addArrangedSubview:inputLabelView];
   
-    return wrapperView;
+    return inputLabelView;
 }
 
 @end

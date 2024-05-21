@@ -611,6 +611,13 @@ enum class RatingColor
 };
 DECLARE_ADAPTIVECARD_ENUM(RatingColor);
 
+enum class RatingStyle
+{
+    Default = 0,
+    Compact
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingStyle);
+
 // Important: "Content" below is a placeholder for a JSON value -- we can't perform automatic mapping.
 enum class FallbackType
 {

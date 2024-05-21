@@ -56,7 +56,8 @@
   "actions": [
     {
       "type": "Action.Execute",
-      "title": "Submit"
+      "title": "Submit",
+      "conditionallyEnabled": true
     }
   ]
 }

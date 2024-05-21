@@ -272,6 +272,10 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(RatingColor, {
             {RatingColor::Neutral, "neutral"},
             {RatingColor::Marigold, "marigold"}});
+    
+    DEFINE_ADAPTIVECARD_ENUM(RatingStyle, {
+            {RatingStyle::Default, "default"},
+            {RatingStyle::Compact, "compact"}});
 
     DEFINE_ADAPTIVECARD_ENUM(Spacing, {
             {Spacing::Default, "default"},

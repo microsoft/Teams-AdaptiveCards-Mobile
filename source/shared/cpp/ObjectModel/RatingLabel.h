@@ -39,6 +39,9 @@ public:
     RatingColor GetRatingColor() const;
     void SetRatingColor(RatingColor value);
     
+    RatingStyle GetRatingStyle() const;
+    void SetRatingStyle(RatingStyle value);
+    
     std::optional<unsigned int> GetCount() const;
     void SetCount(const std::optional<unsigned int>& value);
 
@@ -50,6 +53,7 @@ private:
     double m_max;
     RatingSize m_size;
     RatingColor m_color;
+    RatingStyle m_style;
     std::optional<unsigned int>m_count;
 };
 
