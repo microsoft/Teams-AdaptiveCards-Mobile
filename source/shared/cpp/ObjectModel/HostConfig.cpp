@@ -72,6 +72,9 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
 
     result._textStyles = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStylesConfig>(
         json, AdaptiveCardSchemaKey::TextStyles, result._textStyles, TextStylesConfig::Deserialize);
+    
+    result._ratingElementConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
+        json, AdaptiveCardSchemaKey::RatingElement, result._ratingElementConfig, RatingElementConfig::Deserialize);
 
     result._table = ParseUtil::ExtractJsonValueAndMergeWithDefault<TableConfig>(
         json, AdaptiveCardSchemaKey::Table, result._table, TableConfig::Deserialize);
@@ -192,6 +195,14 @@ TextStyleConfig TextStyleConfig::Deserialize(const Json::Value& json, const Text
     return result;
 }
 
+RatingStarCofig RatingStarCofig::Deserialize(const Json::Value& json, const RatingStarCofig& defaultValue)
+{
+    RatingStarCofig result;
+    result.marigoldColor =  ParseUtil::GetString(json, AdaptiveCardSchemaKey::MarigoldColor, defaultValue.marigoldColor);
+    result.neutralColor =  ParseUtil::GetString(json, AdaptiveCardSchemaKey::NeutralColor, defaultValue.neutralColor);
+    return result;
+}
+
 FactSetTextConfig FactSetTextConfig::Deserialize(const Json::Value& json, const FactSetTextConfig& defaultValue)
 {
     FactSetTextConfig result;
@@ -210,6 +221,25 @@ TextStylesConfig TextStylesConfig::Deserialize(const Json::Value& json, const Te
 
     result.columnHeader = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStyleConfig>(
         json, AdaptiveCardSchemaKey::ColumnHeader, defaultValue.columnHeader, TextStyleConfig::Deserialize);
+
+    return result;
+}
+
+RatingElementConfig RatingElementConfig::Deserialize(const Json::Value& json, const RatingElementConfig& defaultValue)
+{
+    RatingElementConfig result;
+    result.filledStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
+        json, AdaptiveCardSchemaKey::FilledStar, defaultValue.filledStar, RatingStarCofig::Deserialize);
+    
+    result.emptyStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
+        json, AdaptiveCardSchemaKey::EmptyStar, defaultValue.emptyStar, RatingStarCofig::Deserialize);
+    
+    result.disabledStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
+        json, AdaptiveCardSchemaKey::DisabledStar, defaultValue.disabledStar, RatingStarCofig::Deserialize);
+    
+    result.ratingTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::RatingTextColor, defaultValue.ratingTextColor);
+    
+    result.countTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::CountTextColor, defaultValue.countTextColor);
 
     return result;
 }
@@ -961,6 +991,16 @@ TextStylesConfig HostConfig::GetTextStyles() const
 void HostConfig::SetTextStyles(const TextStylesConfig value)
 {
     _textStyles = value;
+}
+
+RatingElementConfig HostConfig::GetRatingElementConfig() const
+{
+    return _ratingElementConfig;
+}
+
+void HostConfig::SetRatingElementConfig(const RatingElementConfig value)
+{
+    _ratingElementConfig = value;
 }
 
 TableConfig HostConfig::GetTable() const

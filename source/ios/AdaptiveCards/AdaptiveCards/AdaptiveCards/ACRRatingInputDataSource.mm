@@ -32,7 +32,7 @@ using namespace AdaptiveCards;
 - (BOOL)validate:(NSError **)error
 {
     if (self.isRequired) {
-        return [_ratingView getValue] != -1;
+        return [_ratingView getValue] != 0;
     }
     return YES;
 }

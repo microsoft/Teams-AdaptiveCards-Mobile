@@ -67,7 +67,7 @@
         _readOnly = YES;
         _count = count;
         _style = style;
-        hostConfig = hostConfig;
+        _hostConfig = hostConfig;
         [self setupReadOnlyView];
     }
     return self;
@@ -80,7 +80,6 @@
     for (NSInteger i = 0; i < _max; i++)
     {
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
-        starImageView.tintColor = [self colorForStars];
         starImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:starImageView];
         [_starImageViews addObject:starImageView];
@@ -99,7 +98,6 @@
     if(_style == ACRCompactStyle)
     {
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
-        starImageView.tintColor = [self colorForStars];
         starImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:starImageView];
         [_starImageViews addObject:starImageView];
@@ -109,7 +107,6 @@
         for (NSInteger i = 0; i < _max; i++)
         {
             UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
-            starImageView.tintColor = [self colorForStars];
             starImageView.translatesAutoresizingMaskIntoConstraints = NO;
             [self addSubview:starImageView];
             [_starImageViews addObject:starImageView];
@@ -127,7 +124,8 @@
 
 - (void)setupConstraints 
 {
-    for (NSInteger i = 0; i < _starImageViews.count; i++) 
+    CGFloat gap = _readOnly ? 4 : 12;
+    for (NSInteger i = 0; i < _starImageViews.count; i++)
     {
         UIImageView *starImageView = _starImageViews[i];
         
@@ -149,7 +147,7 @@
             // Horizontal spacing between stars
             UIImageView *previousStarImageView = _starImageViews[i - 1];
             [NSLayoutConstraint activateConstraints:@[
-                [starImageView.leadingAnchor constraintEqualToAnchor:previousStarImageView.trailingAnchor constant:12]
+                [starImageView.leadingAnchor constraintEqualToAnchor:previousStarImageView.trailingAnchor constant:gap]
             ]];
         }
         
@@ -159,7 +157,8 @@
             [starImageView.heightAnchor constraintEqualToConstant:[self sizeOfStar].height]
         ]];
         
-        if (i == _starImageViews.count - 1) {
+        if (i == _starImageViews.count - 1) 
+        {
             // Trailing constraint for the last star
             if(_ratingLabel != nil)
             {
@@ -170,7 +169,7 @@
                     [_ratingLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor]
                 ]];
                 [NSLayoutConstraint activateConstraints:@[
-                    [starImageView.trailingAnchor constraintEqualToAnchor:_ratingLabel.leadingAnchor constant:-12]
+                    [starImageView.trailingAnchor constraintEqualToAnchor:_ratingLabel.leadingAnchor constant:-(gap)]
                 ]];
             }
             else
@@ -190,7 +189,8 @@
 
 - (UIImage *)emptyStarImage 
 {
-    NSString *nameOfStar = [[NSString alloc] initWithFormat:@"ic_fluent_star_%ld_regular", (long)([self sizeOfStar].width)];
+    NSString *emptyStarFormat = _readOnly ? @"ic_fluent_star_%ld_filled" : @"ic_fluent_star_%ld_regular";
+    NSString *nameOfStar = [[NSString alloc] initWithFormat:emptyStarFormat, (long)([self sizeOfStar].width)];
     UIImage *emptyStarImage = [UIImage imageNamed:nameOfStar inBundle:[[ACOBundle getInstance] getBundle] compatibleWithTraitCollection:nil];
     return emptyStarImage;
 }
@@ -214,33 +214,74 @@
 - (void)updateStarImages 
 {
     NSInteger totalFilledStars = (NSInteger)_value;
-    for (NSInteger i = 0; i < _starImageViews.count; i++) {
+    for (NSInteger i = 0; i < _starImageViews.count; i++) 
+    {
         UIImageView *starImageView = _starImageViews[i];
-        if (i < totalFilledStars) {
+        if (i < totalFilledStars) 
+        {
             starImageView.image = [self filledStarImage];
-        } else {
+            starImageView.tintColor = [self colorForFilledStars];
+        }
+        else
+        {
             starImageView.image = [self emptyStarImage];
+            starImageView.tintColor = [self colorForEmptyStars];
         }
     }
 }
 
-- (UIColor *)colorForStars
+- (UIColor *)colorForFilledStars
 {
-    switch (_ratingColor) {
+    RatingElementConfig ratingElementConfig = [_hostConfig getHostConfig]->GetRatingElementConfig();
+    
+    switch (_ratingColor)
+    {
         case ACRMarigold:
-            return [ACOHostConfig convertHexColorCodeToUIColor: "#EAA300"];
+            return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.filledStar.marigoldColor.c_str()];
             
         case ACRNeutral:
-            return [ACOHostConfig convertHexColorCodeToUIColor: "#242424"];
+            return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.filledStar.neutralColor.c_str()];
             
         default:
-            return [ACOHostConfig convertHexColorCodeToUIColor: "#242424"];
+            return [ACOHostConfig convertHexColorCodeToUIColor:ratingElementConfig.filledStar.marigoldColor.c_str()];
+    }
+}
+
+- (UIColor *)colorForEmptyStars
+{
+    RatingElementConfig ratingElementConfig = [_hostConfig getHostConfig]->GetRatingElementConfig();
+    
+    switch (_ratingColor)
+    {
+        case ACRMarigold:
+            if (_readOnly)
+            {
+                return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.disabledStar.marigoldColor.c_str()];
+            }
+            else
+            {
+                return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.emptyStar.marigoldColor.c_str()];
+            }
+            
+        case ACRNeutral:
+            if (_readOnly)
+            {
+                return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.disabledStar. neutralColor.c_str()];
+            }
+            else
+            {
+                return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.emptyStar.neutralColor.c_str()];
+            }
+            
+        default:
+            return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.emptyStar.marigoldColor.c_str()];
     }
 }
 
 - (CGSize)sizeOfStar
 {
-    switch (_ratingSize) {
+    switch (_ratingSize) 
+    {
         case ACRMedium:
             return _readOnly ? CGSizeMake(24, 24) : CGSizeMake(28, 28);
             
@@ -254,26 +295,32 @@
 
 - (NSAttributedString *)atrributedStringForLabel
 {
+    RatingElementConfig ratingElementConfig = [_hostConfig getHostConfig]->GetRatingElementConfig();
+    CGFloat fontSize = _ratingSize == ACRMedium ? 15 : 17;
     NSString *ratingValue = [[NSString alloc] initWithFormat:@"%.1f", _value];
     NSMutableAttributedString *ratingAttributedStr = [[NSMutableAttributedString alloc] initWithString:ratingValue];
-    [ratingAttributedStr addAttribute:NSUnderlineStyleAttributeName
-                            value:[NSNumber numberWithInt:NSUnderlineStyleDouble]
+    UIFont *boldFont = [UIFont systemFontOfSize:fontSize weight:UIFontWeightBold];
+    [ratingAttributedStr addAttribute:NSFontAttributeName
+                            value:boldFont
                             range:NSMakeRange(0, ratingAttributedStr.length)];
-
+    
+    
+    UIColor *ratingTextColor = [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.ratingTextColor.c_str()];
      [ratingAttributedStr addAttribute:NSForegroundColorAttributeName
-                            value:[UIColor blueColor]
+                            value:ratingTextColor
                             range:NSMakeRange(0, ratingAttributedStr.length)];
     
     if(_count != 0)
     {
-        NSMutableAttributedString *ratingCountStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"• %ld", (long)_count]];
-        
-        [ratingCountStr addAttribute:NSUnderlineStyleAttributeName
-                                value:[NSNumber numberWithInt:NSUnderlineStyleDouble]
+        NSMutableAttributedString *ratingCountStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"•%ld", (long)_count]];
+        UIFont *ratingFont = [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+        [ratingCountStr addAttribute:NSFontAttributeName
+                                value:ratingFont
                                 range:NSMakeRange(0, ratingCountStr.length)];
 
+        UIColor *countTextColor = [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.ratingTextColor.c_str()];
          [ratingCountStr addAttribute:NSForegroundColorAttributeName
-                                value:[UIColor redColor]
+                                value:countTextColor
                                 range:NSMakeRange(0, ratingCountStr.length)];
         
         [ratingAttributedStr appendAttributedString:ratingCountStr];

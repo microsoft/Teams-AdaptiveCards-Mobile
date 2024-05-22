@@ -42,8 +42,9 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<RatingInput> ratingInput = std::dynamic_pointer_cast<RatingInput>(elem);
-        
-    ACRRatingView *ratingView = [[ACRRatingView alloc] initWithEditableValue:ratingInput->GetValue() max:ratingInput->GetMax() size:getRatingSize(ratingInput->GetRatingSize()) ratingColor:getRatingColor(ratingInput->GetRatingColor()) hostConfig:acoConfig];
+    
+    NSInteger maxValue = ratingInput->GetMax() > 5 ? 5: ratingInput->GetMax();
+    ACRRatingView *ratingView = [[ACRRatingView alloc] initWithEditableValue:ratingInput->GetValue() max:maxValue size:getRatingSize(ratingInput->GetRatingSize()) ratingColor:getRatingColor(ratingInput->GetRatingColor()) hostConfig:acoConfig];
     
     UIView *wrapperView = [[UIView alloc] initWithFrame:CGRectZero];
     wrapperView.translatesAutoresizingMaskIntoConstraints = NO;

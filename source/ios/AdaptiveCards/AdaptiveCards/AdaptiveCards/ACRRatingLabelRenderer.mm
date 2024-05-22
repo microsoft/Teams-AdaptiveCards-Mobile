@@ -39,9 +39,9 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<RatingLabel> ratingLabel = std::dynamic_pointer_cast<RatingLabel>(elem);
-    
+    NSInteger maxValue = ratingLabel->GetMax() > 5 ? 5: ratingLabel->GetMax();
     ACRRatingView *ratingView = [[ACRRatingView alloc] initWithReadonlyValue:ratingLabel->GetValue()
-                                                                         max:ratingLabel->GetMax()
+                                                                         max:maxValue
                                                                         size:getRatingSize(ratingLabel->GetRatingSize())
                                                                  ratingColor:getRatingColor(ratingLabel->GetRatingColor())
                                                                        style:getRatingStyle(ratingLabel->GetRatingStyle())
