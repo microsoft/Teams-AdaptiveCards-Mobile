@@ -240,6 +240,14 @@ public class HostConfig {
     AdaptiveCardObjectModelJNI.HostConfig_SetTextStyles(swigCPtr, this, TextStylesConfig.getCPtr(value), value);
   }
 
+  public RatingElementConfig GetRatingElementConfig() {
+    return new RatingElementConfig(AdaptiveCardObjectModelJNI.HostConfig_GetRatingElementConfig(swigCPtr, this), true);
+  }
+
+  public void SetRatingElementConfig(RatingElementConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetRatingElementConfig(swigCPtr, this, RatingElementConfig.getCPtr(value), value);
+  }
+
   public TextBlockConfig GetTextBlock() {
     return new TextBlockConfig(AdaptiveCardObjectModelJNI.HostConfig_GetTextBlock(swigCPtr, this), true);
   }
