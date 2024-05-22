@@ -196,6 +196,14 @@ enum class AdaptiveCardSchemaKey
     TextConfig,
     TextInput,
     TextStyles,
+    RatingElement,
+    MarigoldColor,
+    NeutralColor,
+    FilledStar,
+    EmptyStar,
+    DisabledStar,
+    RatingTextColor,
+    CountTextColor,
     TextWeight,
     Thickness,
     TimeInput,
@@ -610,6 +618,13 @@ enum class RatingColor
     Marigold
 };
 DECLARE_ADAPTIVECARD_ENUM(RatingColor);
+
+enum class RatingStyle
+{
+    Default = 0,
+    Compact
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingStyle);
 
 // Important: "Content" below is a placeholder for a JSON value -- we can't perform automatic mapping.
 enum class FallbackType

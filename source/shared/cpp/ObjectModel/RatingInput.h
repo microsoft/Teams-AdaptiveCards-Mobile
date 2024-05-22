@@ -23,11 +23,11 @@ public:
     std::optional<HorizontalAlignment> GetHorizontalAlignment() const;
     void SetHorizontalAlignment(const std::optional<HorizontalAlignment> value);
 
-    std::optional<double> GetValue() const;
-    void SetValue(const std::optional<double>& value);
+    double GetValue() const;
+    void SetValue(const double value);
 
-    std::optional<double> GetMax() const;
-    void SetMax(const std::optional<double>& value);
+    double GetMax() const;
+    void SetMax(const double value);
     
     RatingSize GetRatingSize() const;
     void SetRatingSize(RatingSize value);
@@ -39,8 +39,8 @@ private:
     void PopulateKnownPropertiesSet();
 
     std::optional<HorizontalAlignment> m_hAlignment;
-    std::optional<double> m_value;
-    std::optional<double> m_max;
+    double m_value;
+    double m_max;
     RatingSize m_size;
     RatingColor m_color;
 };
