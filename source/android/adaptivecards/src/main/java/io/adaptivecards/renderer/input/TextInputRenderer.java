@@ -44,6 +44,7 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.TextInput;
 import io.adaptivecards.objectmodel.TextInputStyle;
+import io.adaptivecards.objectmodel.ValueChangedAction;
 import io.adaptivecards.renderer.AdaptiveWarning;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
 import io.adaptivecards.renderer.InnerImageLoaderAsync;
@@ -54,8 +55,10 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.action.ActionElementRenderer;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedEditText;
+import io.adaptivecards.renderer.inputhandler.IInputHandler;
 import io.adaptivecards.renderer.inputhandler.InputUtils;
 import io.adaptivecards.renderer.inputhandler.TextInputHandler;
+import io.adaptivecards.renderer.inputhandler.ValueChangedActionInputWatcher;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
@@ -237,6 +240,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
             editText.setHint(placeHolder);
         }
         InputUtils.updateInputHandlerInputWatcher(textInputHandler);
+        updateValueChangedAction(baseInputElement, textInputHandler, renderedCard, renderArgs);
         LinearLayout textInputViewGroup = null;
 
         if (textInput != null)
@@ -351,6 +355,13 @@ public class TextInputRenderer extends BaseCardElementRenderer
         viewGroup.addView(returnableView);
 
         return editText;
+    }
+
+    private void updateValueChangedAction(BaseInputElement baseInputElement, IInputHandler inputHandler, RenderedAdaptiveCard renderedCard, RenderArgs renderArgs) {
+        ValueChangedAction valueChangedAction = baseInputElement.GetValueChangedAction();
+        if(valueChangedAction != null) {
+            inputHandler.addInputWatcher(new ValueChangedActionInputWatcher(valueChangedAction.GetTargetInputIds(), renderedCard, renderArgs.getContainerCardId()));
+        }
     }
 
     @Override

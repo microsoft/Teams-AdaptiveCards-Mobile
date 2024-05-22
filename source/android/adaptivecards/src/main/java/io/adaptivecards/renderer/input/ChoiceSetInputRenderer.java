@@ -27,11 +27,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import io.adaptivecards.R;
+import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ChoiceInput;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetStyle;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.ForegroundColor;
+import io.adaptivecards.objectmodel.StringVector;
+import io.adaptivecards.objectmodel.ValueChangedAction;
 import io.adaptivecards.renderer.AdaptiveWarning;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
@@ -45,15 +48,16 @@ import io.adaptivecards.renderer.input.customcontrols.ValidatedRadioGroup;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedSpinner;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedSpinnerLayout;
 import io.adaptivecards.renderer.inputhandler.AutoCompleteTextViewHandler;
+import io.adaptivecards.renderer.inputhandler.BaseInputHandler;
 import io.adaptivecards.renderer.inputhandler.CheckBoxSetInputHandler;
 import io.adaptivecards.renderer.inputhandler.ComboBoxInputHandler;
 import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
+import io.adaptivecards.renderer.inputhandler.IInputHandler;
 import io.adaptivecards.renderer.inputhandler.InputUtils;
 import io.adaptivecards.renderer.inputhandler.RadioGroupInputHandler;
-import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -167,7 +171,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
             }
             checkBoxList.add(checkBox);
             InputUtils.updateInputHandlerInputWatcher(checkBoxSetInputHandler);
-
+            updateValueChangedAction(choiceSetInput, checkBoxSetInputHandler, renderedCard, renderArgs);
             // Only for the first checkbox we'll add some extra behaviour as it's going to be the element to receive focus
             // When validation fails we'll set the first checkbox with focusableInTouchMode = true, this makes the clicking
             // inconsistent as it needs two clicks to check/uncheck, so once it's clicked, we'll remove the property to false
@@ -226,6 +230,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         }
         renderedCard.registerInputHandler(radioGroupInputHandler, renderArgs.getContainerCardId());
         InputUtils.updateInputHandlerInputWatcher(radioGroupInputHandler);
+        updateValueChangedAction(choiceSetInput, radioGroupInputHandler, renderedCard, renderArgs);
 
         return radioGroup;
     }
@@ -373,11 +378,13 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         {
             inputLayout.addView(spinner);
             InputUtils.updateInputHandlerInputWatcher(comboBoxInputHandler);
+            updateValueChangedAction(choiceSetInput, comboBoxInputHandler, renderedCard, renderArgs);
             return inputLayout;
         }
         else
         {
             InputUtils.updateInputHandlerInputWatcher(comboBoxInputHandler);
+            updateValueChangedAction(choiceSetInput, comboBoxInputHandler, renderedCard, renderArgs);
             return spinner;
         }
     }
@@ -577,11 +584,13 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         {
             inputLayout.addView(autoCompleteTextView);
             InputUtils.updateInputHandlerInputWatcher(autoCompleteTextInputHandler);
+            updateValueChangedAction(choiceSetInput, autoCompleteTextInputHandler, renderedCard, renderArgs);
             return inputLayout;
         }
         else
         {
             InputUtils.updateInputHandlerInputWatcher(autoCompleteTextInputHandler);
+            updateValueChangedAction(choiceSetInput, autoCompleteTextInputHandler, renderedCard, renderArgs);
             return autoCompleteTextView;
         }
     }
@@ -637,6 +646,23 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         viewGroup.addView(inputView);
 
         return inputView;
+    }
+    private void updateValueChangedAction(BaseInputElement baseInputElement, BaseInputHandler textInputHandler, RenderedAdaptiveCard renderedCard, RenderArgs renderArgs) {
+        ValueChangedAction valueChangedAction = baseInputElement.GetValueChangedAction();
+        if(valueChangedAction != null) {
+            StringVector targetIds = valueChangedAction.GetTargetInputIds();
+            textInputHandler.addInputWatcher((id, value) -> {
+                for (String target: targetIds) {
+                    Vector<IInputHandler> inputHandlers = renderedCard.getInputsHandlerFromCardId(renderArgs.getContainerCardId());
+                    for (IInputHandler inputHandler: inputHandlers) {
+                        if (inputHandler.getId().equals(target)) {
+                            inputHandler.setDefaultValue();
+                            break;
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private static ChoiceSetInputRenderer s_instance = null;

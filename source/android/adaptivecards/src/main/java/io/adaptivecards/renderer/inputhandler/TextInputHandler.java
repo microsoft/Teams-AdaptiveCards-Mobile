@@ -86,6 +86,12 @@ public class TextInputHandler extends BaseInputHandler
         });
     }
 
+    @Override
+    public void setDefaultValue() {
+        TextInput textInput = Util.castTo(m_baseInputElement, TextInput.class);
+        setInput(textInput.GetValue());
+    }
+
     public void setFocusToView()
     {
         Util.forceFocus(m_view);

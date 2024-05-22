@@ -90,5 +90,11 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
         }
     }
 
+    @Override
+    public void setDefaultValue() {
+        ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
+        setInput(choiceSetInput.GetValue());
+    }
+
     private List<CheckBox> m_checkBoxList;
 }

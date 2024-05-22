@@ -89,6 +89,11 @@ public abstract class BaseInputHandler implements IInputHandler
         // Default implementation does nothing
     }
 
+    @Override
+    public void setDefaultValue() {
+
+    }
+
     protected void notifyAllInputWatchers(){
         for (IInputWatcher watcher : m_inputWatchers)
         {

@@ -112,6 +112,12 @@ public class RenderedAdaptiveCard {
         submitActionCard.put(actionId, parentCardId);
     }
 
+    /**
+     * from buttonId it fetches card Id
+     * from cardId it fetches the list of input handler
+     * @param clickedActionId
+     * @return list of input handlers
+     */
     @NonNull
     public Vector<IInputHandler> getInputsToValidate(long clickedActionId)
     {
@@ -120,16 +126,26 @@ public class RenderedAdaptiveCard {
 
         while ((cardId != null) && (cardId != View.NO_ID))
         {
-            Vector<IInputHandler> handlersInCard = inputsInCard.get(cardId);
-
-            if (handlersInCard != null)
-            {
-                inputHandlers.addAll(handlersInCard);
-            }
-
+            inputHandlers.addAll(getInputsHandlerFromCardId(cardId));
             cardId = parentCardForCard.get(cardId);
         }
 
+        return inputHandlers;
+    }
+
+    /**
+     * from cardId it fetches the list of input handler
+     * @return list of input handlers
+     */
+    @NonNull
+    public Vector<IInputHandler> getInputsHandlerFromCardId(long cardId)
+    {
+        Vector<IInputHandler> inputHandlers = new Vector<>();
+        Vector<IInputHandler> handlersInCard = inputsInCard.get(cardId);
+        if (handlersInCard != null)
+        {
+            inputHandlers.addAll(handlersInCard);
+        }
         return inputHandlers;
     }
 

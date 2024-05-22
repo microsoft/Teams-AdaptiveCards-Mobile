@@ -85,7 +85,11 @@ public class ComboBoxInputHandler extends BaseInputHandler
             }
         });
     }
-
+    @Override
+    public void setDefaultValue() {
+        ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
+        setInput(choiceSetInput.GetValue());
+    }
     @Override
     public void setFocusToView()
     {

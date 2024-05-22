@@ -66,6 +66,12 @@ public class ToggleInputHandler extends BaseInputHandler
     }
 
     @Override
+    public void setDefaultValue() {
+        ToggleInput toggleInput = Util.castTo(m_baseInputElement, ToggleInput.class);
+        setInput(toggleInput.GetValue());
+    }
+
+    @Override
     public void setFocusToView()
     {
         Util.forceFocus(m_view);

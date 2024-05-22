@@ -78,6 +78,11 @@ public class RadioGroupInputHandler extends BaseInputHandler
         getRadioGroup().setOnCheckedChangeListener((group, checkedId) -> notifyAllInputWatchers());
     }
 
+    @Override
+    public void setDefaultValue() {
+        ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
+        setInput(choiceSetInput.GetValue());
+    }
 
     @Override
     public void setFocusToView()
