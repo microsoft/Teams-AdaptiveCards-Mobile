@@ -7,13 +7,14 @@ import android.widget.CheckBox;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ToggleInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 
 public class ToggleInputHandler extends BaseInputHandler
 {
-    public ToggleInputHandler(BaseInputElement baseInputElement)
+    public ToggleInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
     }
 
     protected CheckBox getCheckBox()
@@ -66,7 +67,7 @@ public class ToggleInputHandler extends BaseInputHandler
     }
 
     @Override
-    public void setDefaultValue() {
+    public void resetValue() {
         ToggleInput toggleInput = Util.castTo(m_baseInputElement, ToggleInput.class);
         setInput(toggleInput.GetValue());
     }

@@ -28,7 +28,7 @@ class ValueChangedActionInputWatcher(
                 renderedCard.getInputsHandlerFromCardId(cardId)
             for (handler in inputHandlers) {
                 if (handler.getId() == target) {
-                    handler.setDefaultValue()
+                    handler.resetValue()
                     break
                 }
             }

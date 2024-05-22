@@ -240,7 +240,6 @@ public class TextInputRenderer extends BaseCardElementRenderer
             editText.setHint(placeHolder);
         }
         InputUtils.updateInputHandlerInputWatcher(textInputHandler);
-        updateValueChangedAction(baseInputElement, textInputHandler, renderedCard, renderArgs);
         LinearLayout textInputViewGroup = null;
 
         if (textInput != null)
@@ -357,13 +356,6 @@ public class TextInputRenderer extends BaseCardElementRenderer
         return editText;
     }
 
-    private void updateValueChangedAction(BaseInputElement baseInputElement, IInputHandler inputHandler, RenderedAdaptiveCard renderedCard, RenderArgs renderArgs) {
-        ValueChangedAction valueChangedAction = baseInputElement.GetValueChangedAction();
-        if(valueChangedAction != null) {
-            inputHandler.addInputWatcher(new ValueChangedActionInputWatcher(valueChangedAction.GetTargetInputIds(), renderedCard, renderArgs.getContainerCardId()));
-        }
-    }
-
     @Override
     public @Nullable View render(
             RenderedAdaptiveCard renderedCard,
@@ -383,7 +375,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
 
         TextInput textInput = Util.castTo(baseCardElement, TextInput.class);
 
-        TextInputHandler textInputHandler = new TextInputHandler(textInput);
+        TextInputHandler textInputHandler = new TextInputHandler(textInput, renderedCard, renderArgs.getContainerCardId());
         TagContent tagContent = new TagContent(textInput, textInputHandler);
         final EditText editText = renderInternal(
                 renderedCard,

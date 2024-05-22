@@ -11,13 +11,13 @@ import java.util.regex.Pattern;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.TextInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 
 public class TextInputHandler extends BaseInputHandler
 {
-    public TextInputHandler(BaseInputElement baseInputElement)
-    {
-        super(baseInputElement);
+    public TextInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, Long cardId){
+        super(baseInputElement, renderedAdaptiveCard, cardId);
     }
 
     protected EditText getEditText()
@@ -87,7 +87,7 @@ public class TextInputHandler extends BaseInputHandler
     }
 
     @Override
-    public void setDefaultValue() {
+    public void resetValue() {
         TextInput textInput = Util.castTo(m_baseInputElement, TextInput.class);
         setInput(textInput.GetValue());
     }

@@ -4,7 +4,10 @@ package io.adaptivecards.renderer.inputhandler;
 
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import io.adaptivecards.objectmodel.BaseInputElement;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.layout.StretchableInputLayout;
 
 import java.util.ArrayList;
@@ -12,9 +15,10 @@ import java.util.List;
 
 public abstract class BaseInputHandler implements IInputHandler
 {
-    public BaseInputHandler(BaseInputElement baseInputElement)
-    {
+    public BaseInputHandler(@Nullable BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
         m_baseInputElement = baseInputElement;
+        m_renderedAdaptiveCard = renderedAdaptiveCard;
+        m_cardId = cardId;
         m_inputWatchers = new ArrayList<>();
     }
 
@@ -85,13 +89,20 @@ public abstract class BaseInputHandler implements IInputHandler
     }
 
     @Override
+    public void addValueChangedActionInputWatcher() {
+        if(m_baseInputElement.GetValueChangedAction() != null && m_renderedAdaptiveCard != null){
+            addInputWatcher(new ValueChangedActionInputWatcher(m_baseInputElement.GetValueChangedAction().GetTargetInputIds(), m_renderedAdaptiveCard, m_cardId));
+        }
+    }
+
+    @Override
     public void registerInputObserver() {
         // Default implementation does nothing
     }
 
     @Override
-    public void setDefaultValue() {
-
+    public void resetValue() {
+    // Default implementation does nothing
     }
 
     protected void notifyAllInputWatchers(){
@@ -105,5 +116,7 @@ public abstract class BaseInputHandler implements IInputHandler
     protected View m_view = null;
     private StretchableInputLayout m_inputLayout = null;
     List<IInputWatcher> m_inputWatchers;
+    private RenderedAdaptiveCard m_renderedAdaptiveCard;
+    private Long m_cardId;
 
 }

@@ -12,17 +12,16 @@ import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ChoiceInput;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedSpinnerLayout;
 
-import java.text.ParseException;
-import java.util.Map;
 
 public class ComboBoxInputHandler extends BaseInputHandler
 {
-    public ComboBoxInputHandler(BaseInputElement baseInputElement)
+    public ComboBoxInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
     }
 
     protected Spinner getSpinner()
@@ -85,11 +84,13 @@ public class ComboBoxInputHandler extends BaseInputHandler
             }
         });
     }
+
     @Override
-    public void setDefaultValue() {
+    public void resetValue() {
         ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
         setInput(choiceSetInput.GetValue());
     }
+
     @Override
     public void setFocusToView()
     {

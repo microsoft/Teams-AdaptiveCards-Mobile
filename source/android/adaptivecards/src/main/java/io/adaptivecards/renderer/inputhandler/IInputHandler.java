@@ -52,5 +52,13 @@ public interface IInputHandler
      */
     void registerInputObserver();
 
-    void setDefaultValue();
+    /**
+     * reset value of the input field to default.
+     */
+    void resetValue();
+
+    /**
+     * Add InputWatcher for [ValueChangedAction]
+     */
+    void addValueChangedActionInputWatcher();
 }

@@ -49,9 +49,9 @@ public class CustomInput extends BaseInputElement
      */
     public static class CustomInputHandler extends BaseInputHandler
     {
-        public CustomInputHandler(BaseInputElement baseInputElement, EditText editText)
+        public CustomInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, long cardId, EditText editText)
         {
-            super(baseInputElement);
+            super(baseInputElement, renderedAdaptiveCard, cardId);
             m_view = editText;
         }
 
@@ -105,7 +105,7 @@ public class CustomInput extends BaseInputElement
             viewGroup.addView(renderedInput);
 
             BaseInputElement inputElement = Util.castTo(baseCardElement, BaseInputElement.class);
-            renderedCard.registerInputHandler(new CustomInputHandler(inputElement, renderedInput), renderArgs);
+            renderedCard.registerInputHandler(new CustomInputHandler(inputElement, renderedCard, renderArgs.getContainerCardId(), renderedInput), renderArgs);
             return renderedInput;
         }
     }
