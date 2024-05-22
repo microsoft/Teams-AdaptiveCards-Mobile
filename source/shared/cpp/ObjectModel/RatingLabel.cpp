@@ -20,10 +20,7 @@ Json::Value RatingLabel::SerializeToJsonValue() const
 {
     Json::Value root = BaseCardElement::SerializeToJsonValue();
 
-    if (m_max)
-    {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = *m_max;
-    }
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = m_max;
     
     if (m_count)
     {
@@ -84,6 +81,16 @@ void RatingLabel::SetRatingColor(RatingColor value)
     m_color = value;
 }
 
+RatingStyle RatingLabel::GetRatingStyle() const
+{
+    return m_style;
+}
+
+void RatingLabel::SetRatingStyle(RatingStyle value)
+{
+    m_style = value;
+}
+
 double RatingLabel::GetValue() const
 {
     return m_value;
@@ -94,12 +101,12 @@ void RatingLabel::SetValue(const double value)
     m_value = value;
 }
 
-std::optional<double> RatingLabel::GetMax() const
+double RatingLabel::GetMax() const
 {
     return m_max;
 }
 
-void RatingLabel::SetMax(const std::optional<double>& value)
+void RatingLabel::SetMax(const double value)
 {
     m_max = value;
 }
@@ -120,12 +127,13 @@ std::shared_ptr<BaseCardElement> RatingLabelParser::Deserialize(ParseContext& co
 
     std::shared_ptr<RatingLabel> ratingLabel = BaseCardElement::Deserialize<RatingLabel>(context, json);
     ratingLabel->SetValue(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Value, 0, true));
-    ratingLabel->SetMax(ParseUtil::GetOptionalDouble(json, AdaptiveCardSchemaKey::Max));
+    ratingLabel->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 5));
     ratingLabel->SetCount(ParseUtil::GetOptionalInt(json, AdaptiveCardSchemaKey::Count));
     ratingLabel->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));
     ratingLabel->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString));
     ratingLabel->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString));
+    ratingLabel->SetRatingStyle(ParseUtil::GetEnumValue<RatingStyle>(json, AdaptiveCardSchemaKey::Style, RatingStyle::Default, RatingStyleFromString));
 
     return ratingLabel;
 }
