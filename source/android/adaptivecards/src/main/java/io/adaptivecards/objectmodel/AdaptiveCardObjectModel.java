@@ -409,6 +409,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return RatingColor.swigToEnum(AdaptiveCardObjectModelJNI.RatingColorFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingStyle_t getRatingStyleEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingStyle_t(AdaptiveCardObjectModelJNI.getRatingStyleEnum(), false);
+  }
+
+  public static String RatingStyleToString(RatingStyle t) {
+    return AdaptiveCardObjectModelJNI.RatingStyleToString(t.swigValue());
+  }
+
+  public static RatingStyle RatingStyleFromString(String t) {
+    return RatingStyle.swigToEnum(AdaptiveCardObjectModelJNI.RatingStyleFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TargetWidthType_t getTargetWidthTypeEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TargetWidthType_t(AdaptiveCardObjectModelJNI.getTargetWidthTypeEnum(), false);
   }
