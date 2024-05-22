@@ -15,16 +15,10 @@ RatingInput::RatingInput() : BaseInputElement(CardElementType::RatingInput)
 Json::Value RatingInput::SerializeToJsonValue() const
 {
     Json::Value root = BaseInputElement::SerializeToJsonValue();
+    
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = m_max;
 
-    if (m_max)
-    {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = *m_max;
-    }
-
-    if (m_value)
-    {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = *m_value;
-    }
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)] = m_value;
     
     if (m_hAlignment.has_value())
     {
@@ -75,22 +69,22 @@ void RatingInput::SetRatingColor(RatingColor value)
     m_color = value;
 }
 
-std::optional<double> RatingInput::GetValue() const
+double RatingInput::GetValue() const
 {
     return m_value;
 }
 
-void RatingInput::SetValue(const std::optional<double>& value)
+void RatingInput::SetValue(const double value)
 {
     m_value = value;
 }
 
-std::optional<double> RatingInput::GetMax() const
+double RatingInput::GetMax() const
 {
     return m_max;
 }
 
-void RatingInput::SetMax(const std::optional<double>& value)
+void RatingInput::SetMax(const double value)
 {
     m_max = value;
 }
@@ -100,8 +94,8 @@ std::shared_ptr<BaseCardElement> RatingInputParser::Deserialize(ParseContext& co
     ParseUtil::ExpectTypeString(json, CardElementType::RatingInput);
 
     std::shared_ptr<RatingInput> ratingInput = BaseInputElement::Deserialize<RatingInput>(context, json);
-    ratingInput->SetValue(ParseUtil::GetOptionalDouble(json, AdaptiveCardSchemaKey::Value));
-    ratingInput->SetMax(ParseUtil::GetOptionalDouble(json, AdaptiveCardSchemaKey::Max));
+    ratingInput->SetValue(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Value, 0));
+    ratingInput->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 5));
     ratingInput->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));
     ratingInput->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString));

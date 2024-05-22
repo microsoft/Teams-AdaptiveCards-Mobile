@@ -194,6 +194,14 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TextConfig, "textConfig"},
             {AdaptiveCardSchemaKey::TextInput, "textInput"},
             {AdaptiveCardSchemaKey::TextStyles, "textStyles"},
+            {AdaptiveCardSchemaKey::RatingElement, "RatingElement"},
+            {AdaptiveCardSchemaKey::MarigoldColor, "marigoldColor"},
+            {AdaptiveCardSchemaKey::NeutralColor, "neutralColor"},
+            {AdaptiveCardSchemaKey::FilledStar, "filledStar"},
+            {AdaptiveCardSchemaKey::EmptyStar, "emptyStar"},
+            {AdaptiveCardSchemaKey::DisabledStar, "disabledStar"},
+            {AdaptiveCardSchemaKey::RatingTextColor, "ratingTextColor"},
+            {AdaptiveCardSchemaKey::CountTextColor, "countTextColor"},
             {AdaptiveCardSchemaKey::TextWeight, "weight"},
             {AdaptiveCardSchemaKey::Thickness, "thickness"},
             {AdaptiveCardSchemaKey::TimeInput, "timeInput"},
@@ -272,6 +280,10 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(RatingColor, {
             {RatingColor::Neutral, "neutral"},
             {RatingColor::Marigold, "marigold"}});
+    
+    DEFINE_ADAPTIVECARD_ENUM(RatingStyle, {
+            {RatingStyle::Default, "default"},
+            {RatingStyle::Compact, "compact"}});
 
     DEFINE_ADAPTIVECARD_ENUM(Spacing, {
             {Spacing::Default, "default"},
