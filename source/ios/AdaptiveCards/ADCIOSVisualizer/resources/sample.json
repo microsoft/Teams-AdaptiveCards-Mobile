@@ -300,7 +300,22 @@
 		"allowInlinePlayback" : true
 	},
     
-    "RatingElement": {
+    "ratingLabel": {
+        "filledStar": {
+            "marigoldColor": "#EAA300",
+            "neutralColor": "#212121"
+        },
+        
+        "emptyStar": {
+            "marigoldColor": "#F9E2AE",
+            "neutralColor": "#E1E1E1"
+        },
+        
+        "ratingTextColor": "#000000",
+        "countTextColor": "#000000"
+    },
+    
+    "ratingInput": {
         "filledStar": {
             "marigoldColor": "#EAA300",
             "neutralColor": "#212121"
@@ -309,14 +324,6 @@
         "emptyStar": {
             "marigoldColor": "#EAA300",
             "neutralColor": "#212121"
-        },
-        
-        "disabledStar": {
-            "marigoldColor": "#F9E2AE",
-            "neutralColor": "#E1E1E1"
-        },
-
-        "ratingTextColor": "#000000",
-        "countTextColor": "#000000"
+        }
     }
 }

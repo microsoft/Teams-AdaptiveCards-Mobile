@@ -232,7 +232,7 @@
 
 - (UIColor *)colorForFilledStars
 {
-    RatingElementConfig ratingElementConfig = [_hostConfig getHostConfig]->GetRatingElementConfig();
+    RatingElementConfig ratingElementConfig = [self ratingElementConfig];
     
     switch (_ratingColor)
     {
@@ -249,29 +249,15 @@
 
 - (UIColor *)colorForEmptyStars
 {
-    RatingElementConfig ratingElementConfig = [_hostConfig getHostConfig]->GetRatingElementConfig();
+    RatingElementConfig ratingElementConfig = [self ratingElementConfig];
     
     switch (_ratingColor)
     {
         case ACRMarigold:
-            if (_readOnly)
-            {
-                return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.disabledStar.marigoldColor.c_str()];
-            }
-            else
-            {
-                return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.emptyStar.marigoldColor.c_str()];
-            }
+            return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.emptyStar.marigoldColor.c_str()];
             
         case ACRNeutral:
-            if (_readOnly)
-            {
-                return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.disabledStar. neutralColor.c_str()];
-            }
-            else
-            {
-                return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.emptyStar.neutralColor.c_str()];
-            }
+            return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.emptyStar.neutralColor.c_str()];
             
         default:
             return [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.emptyStar.marigoldColor.c_str()];
@@ -295,7 +281,7 @@
 
 - (NSAttributedString *)atrributedStringForLabel
 {
-    RatingElementConfig ratingElementConfig = [_hostConfig getHostConfig]->GetRatingElementConfig();
+    RatingElementConfig ratingElementConfig = [self ratingElementConfig];
     CGFloat fontSize = _ratingSize == ACRMedium ? 15 : 17;
     NSString *ratingValue = [[NSString alloc] initWithFormat:@"%.1f", _value];
     NSMutableAttributedString *ratingAttributedStr = [[NSMutableAttributedString alloc] initWithString:ratingValue];
@@ -327,6 +313,12 @@
     }
     
     return ratingAttributedStr;
+}
+
+- (RatingElementConfig) ratingElementConfig
+{
+    RatingElementConfig ratingElementConfig = _readOnly ?  [_hostConfig getHostConfig]->GetRatingLabelConfig() : [_hostConfig getHostConfig]->GetRatingInputConfig();
+    return ratingElementConfig;
 }
 
 @end
