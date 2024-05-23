@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.inputhandler
 
-import io.adaptivecards.objectmodel.StringVector
+import io.adaptivecards.objectmodel.ValueChangedAction
+import io.adaptivecards.objectmodel.ValueChangedActionType
 import io.adaptivecards.renderer.RenderedAdaptiveCard
 import java.util.Vector
 
@@ -10,7 +11,7 @@ import java.util.Vector
  * input watcher for value changed action
  */
 class ValueChangedActionInputWatcher(
-    private val targetIds: StringVector,
+    private val valueChangedAction: ValueChangedAction,
     private val renderedCard: RenderedAdaptiveCard,
     private val cardId: Long
 ): IInputWatcher {
@@ -23,13 +24,15 @@ class ValueChangedActionInputWatcher(
      * and setting the default value of the input field where input id matches the target id
      */
     override fun onInputChange(id: String?, value: String?) {
-        for (target in targetIds) {
-            val inputHandlers: Vector<IInputHandler> =
-                renderedCard.getInputsHandlerFromCardId(cardId)
-            for (handler in inputHandlers) {
-                if (handler.getId() == target) {
-                    handler.resetValue()
-                    break
+        if(valueChangedAction.GetValueChangedActionType() == ValueChangedActionType.ResetInputs) {
+            for (target in valueChangedAction.GetTargetInputIds()) {
+                val inputHandlers: Vector<IInputHandler> =
+                    renderedCard.getInputsHandlerFromCardId(cardId)
+                for (handler in inputHandlers) {
+                    if (handler.getId() == target) {
+                        handler.resetValue()
+                        break
+                    }
                 }
             }
         }

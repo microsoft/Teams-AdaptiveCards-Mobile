@@ -15,11 +15,15 @@ import java.util.List;
 
 public abstract class BaseInputHandler implements IInputHandler
 {
-    public BaseInputHandler(@Nullable BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
+    public BaseInputHandler(BaseInputElement baseInputElement) {
         m_baseInputElement = baseInputElement;
+        m_inputWatchers = new ArrayList<>();
+    }
+
+    public BaseInputHandler(@Nullable BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
+        this(baseInputElement);
         m_renderedAdaptiveCard = renderedAdaptiveCard;
         m_cardId = cardId;
-        m_inputWatchers = new ArrayList<>();
     }
 
     public void setView(View view)
@@ -90,7 +94,7 @@ public abstract class BaseInputHandler implements IInputHandler
 
     protected void addValueChangedActionInputWatcher() {
         if(m_baseInputElement.GetValueChangedAction() != null && m_renderedAdaptiveCard != null){
-            addInputWatcher(new ValueChangedActionInputWatcher(m_baseInputElement.GetValueChangedAction().GetTargetInputIds(), m_renderedAdaptiveCard, m_cardId));
+            addInputWatcher(new ValueChangedActionInputWatcher(m_baseInputElement.GetValueChangedAction(), m_renderedAdaptiveCard, m_cardId));
         }
     }
 
@@ -115,6 +119,7 @@ public abstract class BaseInputHandler implements IInputHandler
     protected View m_view = null;
     private StretchableInputLayout m_inputLayout = null;
     List<IInputWatcher> m_inputWatchers;
+    @Nullable
     private RenderedAdaptiveCard m_renderedAdaptiveCard;
     private Long m_cardId;
 

@@ -13,6 +13,7 @@ import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.TextInput;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
+import io.adaptivecards.renderer.actionhandler.AfterTextChangedListener;
 
 public class TextInputHandler extends BaseInputHandler
 {
@@ -68,19 +69,9 @@ public class TextInputHandler extends BaseInputHandler
 
     @Override
     public void registerInputObserver() {
-        getEditText().addTextChangedListener(new TextWatcher()
-        {
+        getEditText().addTextChangedListener(new AfterTextChangedListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {}
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
+            public void afterTextChanged(Editable editable) {
                 notifyAllInputWatchers();
             }
         });
