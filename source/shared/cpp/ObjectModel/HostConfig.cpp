@@ -73,8 +73,11 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._textStyles = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStylesConfig>(
         json, AdaptiveCardSchemaKey::TextStyles, result._textStyles, TextStylesConfig::Deserialize);
     
-    result._ratingElementConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
-        json, AdaptiveCardSchemaKey::RatingElement, result._ratingElementConfig, RatingElementConfig::Deserialize);
+    result._ratingLabelConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
+        json, AdaptiveCardSchemaKey::RatingLabel, result._ratingLabelConfig, RatingElementConfig::Deserialize);
+    
+    result._ratingInputConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
+        json, AdaptiveCardSchemaKey::RatingInput, result._ratingInputConfig, RatingElementConfig::Deserialize);
 
     result._table = ParseUtil::ExtractJsonValueAndMergeWithDefault<TableConfig>(
         json, AdaptiveCardSchemaKey::Table, result._table, TableConfig::Deserialize);
@@ -233,9 +236,6 @@ RatingElementConfig RatingElementConfig::Deserialize(const Json::Value& json, co
     
     result.emptyStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
         json, AdaptiveCardSchemaKey::EmptyStar, defaultValue.emptyStar, RatingStarCofig::Deserialize);
-    
-    result.disabledStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
-        json, AdaptiveCardSchemaKey::DisabledStar, defaultValue.disabledStar, RatingStarCofig::Deserialize);
     
     result.ratingTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::RatingTextColor, defaultValue.ratingTextColor);
     
@@ -993,14 +993,24 @@ void HostConfig::SetTextStyles(const TextStylesConfig value)
     _textStyles = value;
 }
 
-RatingElementConfig HostConfig::GetRatingElementConfig() const
+RatingElementConfig HostConfig::GetRatingLabelConfig() const
 {
-    return _ratingElementConfig;
+    return _ratingLabelConfig;
 }
 
-void HostConfig::SetRatingElementConfig(const RatingElementConfig value)
+void HostConfig::SetRatingLabelConfig(const RatingElementConfig value)
 {
-    _ratingElementConfig = value;
+    _ratingLabelConfig = value;
+}
+
+RatingElementConfig HostConfig::GetRatingInputConfig() const
+{
+    return _ratingInputConfig;
+}
+
+void HostConfig::SetRatingInputConfig(const RatingElementConfig value)
+{
+    _ratingInputConfig = value;
 }
 
 TableConfig HostConfig::GetTable() const
