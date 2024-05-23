@@ -3,6 +3,7 @@
 #pragma once
 
 #include "pch.h"
+#include "ParseContext.h"
 
 namespace AdaptiveCards
 {

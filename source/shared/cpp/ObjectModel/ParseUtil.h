@@ -5,7 +5,6 @@
 #include "pch.h"
 #include "AdaptiveCardParseException.h"
 #include "BackgroundImage.h"
-#include "ValueChangedAction.h"
 #include "ParseContext.h"
 
 namespace AdaptiveCards
@@ -17,6 +16,7 @@ class BackgroundImage;
 class ParseContext;
 class SemanticVersion;
 class FeatureRegistration;
+class ValueChangedAction;
 
 namespace ParseUtil
 {

@@ -8,6 +8,7 @@
 #include "TextBlock.h"
 #include "Container.h"
 #include "ShowCardAction.h"
+#include "ValueChangedAction.h"
 
 namespace
 {

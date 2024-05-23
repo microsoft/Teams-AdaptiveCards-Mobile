@@ -29,6 +29,8 @@
 		300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
 		30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */; };
+		46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */; };
+		46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */; };
 		6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */; };
 		6B096D4E225431D0006CC034 /* ACRRichTextBlockRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B096D4D225431D0006CC034 /* ACRRichTextBlockRenderer.mm */; };
@@ -259,8 +261,6 @@
 		84AE295A27FFA26F00D01B82 /* ContentSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295527FFA26F00D01B82 /* ContentSource.h */; };
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
-		9B0529BA2BFF10C800453ABE /* ValueChangedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B0529B82BFF10C800453ABE /* ValueChangedAction.h */; };
-		9B0529BB2BFF10C800453ABE /* ValueChangedAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B0529B92BFF10C800453ABE /* ValueChangedAction.cpp */; };
 		C8DEDF39220CDEB00001AAED /* ActionSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8DEDF37220CDEB00001AAED /* ActionSet.cpp */; };
 		C8DEDF3A220CDEB00001AAED /* ActionSet.h in Headers */ = {isa = PBXBuildFile; fileRef = C8DEDF38220CDEB00001AAED /* ActionSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA1218C621C4509400152EA8 /* ToggleVisibilityTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = CA1218C221C4509300152EA8 /* ToggleVisibilityTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -510,6 +510,8 @@
 		30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsTextBlockTests.mm; sourceTree = "<group>"; };
 		3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
+		46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
 		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRTypeaheadSearchViewControllerPrivate.h; path = PrivateHeaders/ACRTypeaheadSearchViewControllerPrivate.h; sourceTree = "<group>"; };
 		6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRichTextBlockRenderer.h; sourceTree = "<group>"; };
@@ -753,8 +755,6 @@
 		84AE295727FFA26F00D01B82 /* CaptionSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CaptionSource.cpp; path = ../../../../shared/cpp/ObjectModel/CaptionSource.cpp; sourceTree = "<group>"; };
 		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
 		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
-		9B0529B82BFF10C800453ABE /* ValueChangedAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
-		9B0529B92BFF10C800453ABE /* ValueChangedAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
 		C1BFE0C10A542B2DABBE89DC /* Pods-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests/Pods-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8DEDF37220CDEB00001AAED /* ActionSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActionSet.cpp; path = ../../../../shared/cpp/ObjectModel/ActionSet.cpp; sourceTree = "<group>"; };
 		C8DEDF38220CDEB00001AAED /* ActionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionSet.h; path = ../../../../shared/cpp/ObjectModel/ActionSet.h; sourceTree = "<group>"; };
@@ -1387,8 +1387,6 @@
 		F423C0D71EE1FF2F00905679 /* SharedLib */ = {
 			isa = PBXGroup;
 			children = (
-				9B0529B92BFF10C800453ABE /* ValueChangedAction.cpp */,
-				9B0529B82BFF10C800453ABE /* ValueChangedAction.h */,
 				CFB972002941C079008E3795 /* ChoicesData.cpp */,
 				CFB971FF2941C079008E3795 /* ChoicesData.h */,
 				84AE295727FFA26F00D01B82 /* CaptionSource.cpp */,
@@ -1541,6 +1539,8 @@
 				F4F6BA27204E107F003741B6 /* UnknownElement.h */,
 				F4F44B7F20478C6F00A2F24C /* Util.cpp */,
 				F4F44B7E20478C6F00A2F24C /* Util.h */,
+				46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */,
+				46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */,
 			);
 			name = SharedLib;
 			sourceTree = "<group>";
@@ -1821,7 +1821,7 @@
 				300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */,
 				6B616C4321CB20D2003E29CE /* ACRActionToggleVisibilityRenderer.h in Headers */,
 				F4CA74A12016B3B9002041DF /* ACRTapGestureRecognizerEventHandler.h in Headers */,
-				9B0529BA2BFF10C800453ABE /* ValueChangedAction.h in Headers */,
+				46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */,
 				6B7B1A9820BE2CBC00260731 /* ACRUIImageView.h in Headers */,
 				F429793E1F3155EF00E89914 /* ACRTextField.h in Headers */,
 				6B2242A42233439E000ACDA1 /* TextElementProperties.h in Headers */,
@@ -2241,7 +2241,7 @@
 				0D3485F126180F8F00614EB9 /* ACOActionOverflow.mm in Sources */,
 				6BCE4B232108EB4E00021A62 /* ACRAVPlayerViewHoldingUIView.mm in Sources */,
 				6BDE5C4326FEA7DC003A1DDB /* ACRBaseTarget.mm in Sources */,
-				9B0529BB2BFF10C800453ABE /* ValueChangedAction.cpp in Sources */,
+				46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */,
 				6B22425F21E80647000ACDA1 /* ACOParseContext.mm in Sources */,
 				F4071C7E1FCCBAEF00AF4FEA /* ActionParserRegistration.cpp in Sources */,
 				6B2242A72233442C000ACDA1 /* RichTextBlock.cpp in Sources */,
