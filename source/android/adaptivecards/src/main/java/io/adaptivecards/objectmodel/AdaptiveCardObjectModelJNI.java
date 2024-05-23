@@ -1377,8 +1377,6 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long RatingElementConfig_filledStar_get(long jarg1, RatingElementConfig jarg1_);
   public final static native void RatingElementConfig_emptyStar_set(long jarg1, RatingElementConfig jarg1_, long jarg2, RatingStarCofig jarg2_);
   public final static native long RatingElementConfig_emptyStar_get(long jarg1, RatingElementConfig jarg1_);
-  public final static native void RatingElementConfig_disabledStar_set(long jarg1, RatingElementConfig jarg1_, long jarg2, RatingStarCofig jarg2_);
-  public final static native long RatingElementConfig_disabledStar_get(long jarg1, RatingElementConfig jarg1_);
   public final static native void RatingElementConfig_ratingTextColor_set(long jarg1, RatingElementConfig jarg1_, String jarg2);
   public final static native String RatingElementConfig_ratingTextColor_get(long jarg1, RatingElementConfig jarg1_);
   public final static native void RatingElementConfig_countTextColor_set(long jarg1, RatingElementConfig jarg1_, String jarg2);
@@ -1619,8 +1617,10 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void HostConfig_SetHostWidth(long jarg1, HostConfig jarg1_, long jarg2, HostWidthConfig jarg2_);
   public final static native long HostConfig_GetTextStyles(long jarg1, HostConfig jarg1_);
   public final static native void HostConfig_SetTextStyles(long jarg1, HostConfig jarg1_, long jarg2, TextStylesConfig jarg2_);
-  public final static native long HostConfig_GetRatingElementConfig(long jarg1, HostConfig jarg1_);
-  public final static native void HostConfig_SetRatingElementConfig(long jarg1, HostConfig jarg1_, long jarg2, RatingElementConfig jarg2_);
+  public final static native long HostConfig_GetRatingLabelConfig(long jarg1, HostConfig jarg1_);
+  public final static native void HostConfig_SetRatingLabelConfig(long jarg1, HostConfig jarg1_, long jarg2, RatingElementConfig jarg2_);
+  public final static native long HostConfig_GetRatingInputConfig(long jarg1, HostConfig jarg1_);
+  public final static native void HostConfig_SetRatingInputConfig(long jarg1, HostConfig jarg1_, long jarg2, RatingElementConfig jarg2_);
   public final static native long HostConfig_GetTextBlock(long jarg1, HostConfig jarg1_);
   public final static native void HostConfig_SetTextBlock(long jarg1, HostConfig jarg1_, long jarg2, TextBlockConfig jarg2_);
   public final static native long HostConfig_GetTable(long jarg1, HostConfig jarg1_);

@@ -28813,35 +28813,6 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_RatingElementConfig_1disabledStar_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  AdaptiveCards::RatingElementConfig *arg1 = (AdaptiveCards::RatingElementConfig *) 0 ;
-  AdaptiveCards::RatingStarCofig *arg2 = (AdaptiveCards::RatingStarCofig *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  arg1 = *(AdaptiveCards::RatingElementConfig **)&jarg1; 
-  arg2 = *(AdaptiveCards::RatingStarCofig **)&jarg2; 
-  if (arg1) (arg1)->disabledStar = *arg2;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_RatingElementConfig_1disabledStar_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  AdaptiveCards::RatingElementConfig *arg1 = (AdaptiveCards::RatingElementConfig *) 0 ;
-  AdaptiveCards::RatingStarCofig *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(AdaptiveCards::RatingElementConfig **)&jarg1; 
-  result = (AdaptiveCards::RatingStarCofig *)& ((arg1)->disabledStar);
-  *(AdaptiveCards::RatingStarCofig **)&jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_RatingElementConfig_1ratingTextColor_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   AdaptiveCards::RatingElementConfig *arg1 = (AdaptiveCards::RatingElementConfig *) 0 ;
   std::string *arg2 = 0 ;
@@ -32589,7 +32560,7 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1GetRatingElementConfig(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1GetRatingLabelConfig(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::HostConfig *arg1 = (AdaptiveCards::HostConfig *) 0 ;
   AdaptiveCards::RatingElementConfig result;
@@ -32598,13 +32569,13 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   (void)jcls;
   (void)jarg1_;
   arg1 = *(AdaptiveCards::HostConfig **)&jarg1; 
-  result = ((AdaptiveCards::HostConfig const *)arg1)->GetRatingElementConfig();
+  result = ((AdaptiveCards::HostConfig const *)arg1)->GetRatingLabelConfig();
   *(AdaptiveCards::RatingElementConfig **)&jresult = new AdaptiveCards::RatingElementConfig((const AdaptiveCards::RatingElementConfig &)result); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1SetRatingElementConfig(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1SetRatingLabelConfig(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   AdaptiveCards::HostConfig *arg1 = (AdaptiveCards::HostConfig *) 0 ;
   AdaptiveCards::RatingElementConfig arg2 ;
   AdaptiveCards::RatingElementConfig const *argp2 ;
@@ -32620,7 +32591,42 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
     return ;
   }
   arg2 = *argp2; 
-  (arg1)->SetRatingElementConfig(arg2);
+  (arg1)->SetRatingLabelConfig(arg2);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1GetRatingInputConfig(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::HostConfig *arg1 = (AdaptiveCards::HostConfig *) 0 ;
+  AdaptiveCards::RatingElementConfig result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::HostConfig **)&jarg1; 
+  result = ((AdaptiveCards::HostConfig const *)arg1)->GetRatingInputConfig();
+  *(AdaptiveCards::RatingElementConfig **)&jresult = new AdaptiveCards::RatingElementConfig((const AdaptiveCards::RatingElementConfig &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1SetRatingInputConfig(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  AdaptiveCards::HostConfig *arg1 = (AdaptiveCards::HostConfig *) 0 ;
+  AdaptiveCards::RatingElementConfig arg2 ;
+  AdaptiveCards::RatingElementConfig const *argp2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(AdaptiveCards::HostConfig **)&jarg1; 
+  argp2 = *(AdaptiveCards::RatingElementConfig **)&jarg2; 
+  if (!argp2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null AdaptiveCards::RatingElementConfig const");
+    return ;
+  }
+  arg2 = *argp2; 
+  (arg1)->SetRatingInputConfig(arg2);
 }
 
 
