@@ -4,6 +4,7 @@
 #include "BaseActionElement.h"
 #include "BaseElement.h"
 #include "ParseUtil.h"
+#include "Icon.h"
 
 using namespace AdaptiveCards;
 
@@ -35,6 +36,23 @@ void BaseActionElement::SetTitle(const std::string& value)
 const std::string& BaseActionElement::GetIconUrl() const
 {
     return m_iconUrl;
+}
+
+std::string BaseActionElement::GetSVGResourceURL(unsigned int size) const
+{
+    std::regex regex{R"([,:]+)"}; // split on ':' and ','
+    std::sregex_token_iterator it{m_iconUrl.begin(), m_iconUrl.end(), regex, -1};
+    std::vector<std::string> config{it, {}};
+    std::string iconStyle = IconStyleToString(IconStyle::Regular);
+    std::string iconName = "";
+    if(config.size() >= 2) {
+        iconName = config[1];
+        if(config.size() > 2) {
+            iconStyle = config[config.size() - 1];
+        }
+    }
+    std::string m_url = baseIconCDNUrl + iconName + "/" + iconName + std::to_string(size) + iconStyle + ".json";
+    return m_url;
 }
 
 void BaseActionElement::SetIconUrl(std::string&& value)
