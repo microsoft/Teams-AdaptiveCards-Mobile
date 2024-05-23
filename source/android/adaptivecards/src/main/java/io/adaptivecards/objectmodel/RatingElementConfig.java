@@ -54,15 +54,6 @@ public class RatingElementConfig {
     return (cPtr == 0) ? null : new RatingStarCofig(cPtr, false);
   }
 
-  public void setDisabledStar(RatingStarCofig value) {
-    AdaptiveCardObjectModelJNI.RatingElementConfig_disabledStar_set(swigCPtr, this, RatingStarCofig.getCPtr(value), value);
-  }
-
-  public RatingStarCofig getDisabledStar() {
-    long cPtr = AdaptiveCardObjectModelJNI.RatingElementConfig_disabledStar_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new RatingStarCofig(cPtr, false);
-  }
-
   public void setRatingTextColor(String value) {
     AdaptiveCardObjectModelJNI.RatingElementConfig_ratingTextColor_set(swigCPtr, this, value);
   }
