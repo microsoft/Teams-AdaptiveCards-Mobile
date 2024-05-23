@@ -73,7 +73,7 @@ public class RadioGroupInputHandler extends BaseInputHandler
     @Override
     public void registerInputObserver() {
         getRadioGroup().setOnCheckedChangeListener((group, checkedId) -> notifyAllInputWatchers());
-        super.registerInputObserver();
+        addValueChangedActionInputWatcher();
     }
 
     @Override

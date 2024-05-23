@@ -84,6 +84,7 @@ public class TextInputHandler extends BaseInputHandler
                 notifyAllInputWatchers();
             }
         });
+        addValueChangedActionInputWatcher();
     }
 
     @Override

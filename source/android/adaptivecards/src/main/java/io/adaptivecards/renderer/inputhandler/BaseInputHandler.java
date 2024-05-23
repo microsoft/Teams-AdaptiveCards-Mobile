@@ -88,8 +88,7 @@ public abstract class BaseInputHandler implements IInputHandler
         m_inputWatchers.add(observer);
     }
 
-    @Override
-    public void addValueChangedActionInputWatcher() {
+    protected void addValueChangedActionInputWatcher() {
         if(m_baseInputElement.GetValueChangedAction() != null && m_renderedAdaptiveCard != null){
             addInputWatcher(new ValueChangedActionInputWatcher(m_baseInputElement.GetValueChangedAction().GetTargetInputIds(), m_renderedAdaptiveCard, m_cardId));
         }

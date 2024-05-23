@@ -79,6 +79,7 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
         for (CheckBox checkBox : m_checkBoxList) {
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> notifyAllInputWatchers());
         }
+        addValueChangedActionInputWatcher();
     }
 
     @Override

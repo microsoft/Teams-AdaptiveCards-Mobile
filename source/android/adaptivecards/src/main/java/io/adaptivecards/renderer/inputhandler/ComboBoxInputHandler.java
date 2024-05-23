@@ -83,6 +83,7 @@ public class ComboBoxInputHandler extends BaseInputHandler
                 notifyAllInputWatchers();
             }
         });
+        addValueChangedActionInputWatcher();
     }
 
     @Override

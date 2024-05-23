@@ -19,7 +19,6 @@ object InputUtils {
         this.addInputWatcher { id, value ->
             CardRendererRegistration.getInstance().notifyInputChange(id, value)
         }
-        this.addValueChangedActionInputWatcher()
     }
 
     /**
