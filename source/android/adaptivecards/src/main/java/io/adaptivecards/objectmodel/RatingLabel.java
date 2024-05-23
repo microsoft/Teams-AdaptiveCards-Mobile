@@ -75,16 +75,12 @@ public class RatingLabel extends BaseCardElement {
     AdaptiveCardObjectModelJNI.RatingLabel_SetValue(swigCPtr, this, value);
   }
 
-  public @androidx.annotation.Nullable Double GetMax() {
-    StdOptionalDouble optvalue = new StdOptionalDouble(AdaptiveCardObjectModelJNI.RatingLabel_GetMax(swigCPtr, this), false);
-    return optvalue.has_value() ? optvalue.value() : null;
+  public double GetMax() {
+    return AdaptiveCardObjectModelJNI.RatingLabel_GetMax(swigCPtr, this);
   }
 
-  public void SetMax(@androidx.annotation.Nullable Double value) {
-    StdOptionalDouble optvalue = (value == null) ? new StdOptionalDouble() : new StdOptionalDouble(value);
-    {
-      AdaptiveCardObjectModelJNI.RatingLabel_SetMax(swigCPtr, this, StdOptionalDouble.getCPtr(optvalue), optvalue);
-    }
+  public void SetMax(double value) {
+    AdaptiveCardObjectModelJNI.RatingLabel_SetMax(swigCPtr, this, value);
   }
 
   public RatingSize GetRatingSize() {
@@ -101,6 +97,14 @@ public class RatingLabel extends BaseCardElement {
 
   public void SetRatingColor(RatingColor value) {
     AdaptiveCardObjectModelJNI.RatingLabel_SetRatingColor(swigCPtr, this, value.swigValue());
+  }
+
+  public RatingStyle GetRatingStyle() {
+    return RatingStyle.swigToEnum(AdaptiveCardObjectModelJNI.RatingLabel_GetRatingStyle(swigCPtr, this));
+  }
+
+  public void SetRatingStyle(RatingStyle value) {
+    AdaptiveCardObjectModelJNI.RatingLabel_SetRatingStyle(swigCPtr, this, value.swigValue());
   }
 
   public @androidx.annotation.Nullable Long GetCount() {

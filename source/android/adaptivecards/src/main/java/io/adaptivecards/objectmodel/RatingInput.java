@@ -67,28 +67,20 @@ public class RatingInput extends BaseInputElement {
     }
   }
 
-  public @androidx.annotation.Nullable Double GetValue() {
-    StdOptionalDouble optvalue = new StdOptionalDouble(AdaptiveCardObjectModelJNI.RatingInput_GetValue(swigCPtr, this), false);
-    return optvalue.has_value() ? optvalue.value() : null;
+  public double GetValue() {
+    return AdaptiveCardObjectModelJNI.RatingInput_GetValue(swigCPtr, this);
   }
 
-  public void SetValue(@androidx.annotation.Nullable Double value) {
-    StdOptionalDouble optvalue = (value == null) ? new StdOptionalDouble() : new StdOptionalDouble(value);
-    {
-      AdaptiveCardObjectModelJNI.RatingInput_SetValue(swigCPtr, this, StdOptionalDouble.getCPtr(optvalue), optvalue);
-    }
+  public void SetValue(double value) {
+    AdaptiveCardObjectModelJNI.RatingInput_SetValue(swigCPtr, this, value);
   }
 
-  public @androidx.annotation.Nullable Double GetMax() {
-    StdOptionalDouble optvalue = new StdOptionalDouble(AdaptiveCardObjectModelJNI.RatingInput_GetMax(swigCPtr, this), false);
-    return optvalue.has_value() ? optvalue.value() : null;
+  public double GetMax() {
+    return AdaptiveCardObjectModelJNI.RatingInput_GetMax(swigCPtr, this);
   }
 
-  public void SetMax(@androidx.annotation.Nullable Double value) {
-    StdOptionalDouble optvalue = (value == null) ? new StdOptionalDouble() : new StdOptionalDouble(value);
-    {
-      AdaptiveCardObjectModelJNI.RatingInput_SetMax(swigCPtr, this, StdOptionalDouble.getCPtr(optvalue), optvalue);
-    }
+  public void SetMax(double value) {
+    AdaptiveCardObjectModelJNI.RatingInput_SetMax(swigCPtr, this, value);
   }
 
   public RatingSize GetRatingSize() {
