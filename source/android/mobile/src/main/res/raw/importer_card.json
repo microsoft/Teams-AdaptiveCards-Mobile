@@ -19,6 +19,10 @@
 										"title": "FluentIcon",
 										"value": "v1.5/Scenarios/FluentIcon.json"
 									},
+									{
+										"title": "RatingInput",
+										"value": "v1.5/Scenarios/RatingInput.json"
+									},
                                     {
                                         "title": "ActivityUpdate",
                                         "value": "v1.5/Scenarios/ActivityUpdate.json"

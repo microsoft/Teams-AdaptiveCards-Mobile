@@ -58,6 +58,11 @@ public class StretchableInputLayout extends StretchableElementLayout
             m_inputView = layout.getChildAt(0);
             m_viewWithVisualCues = input;
         }
+        else if (input instanceof RatingStarInputView || input instanceof RatingStarDisplayView) {
+            LinearLayout layout = (LinearLayout) input;
+            m_inputView = layout;
+            m_viewWithVisualCues = layout;
+        }
         // Input.Text with an inline action render inside a regular LinearLayout, but in this case
         // the view inside of the Layout has the visual cue. We have to verify that the expanded
         // ChoiceSet are not considered in this step as in that case they both use LinearLayout but
