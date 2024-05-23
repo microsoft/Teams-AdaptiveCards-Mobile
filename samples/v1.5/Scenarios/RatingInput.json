@@ -28,7 +28,7 @@
 			"color": "marigold",
 			"value": 2,
 			"horizontalAlignment": "left",
-			"max": 4
+			"max": 5
 		},
 		{
 			"type": "TextBlock",
@@ -39,17 +39,19 @@
 		},
 		{
 			"type": "Rating",
-			"value": 3,
+			"value": 3.2,
 			"size": "medium",
-			"horizontalAlignment": "left"
+			"horizontalAlignment": "left",
+			"count": 10
 		},
 		{
 			"type": "Rating",
 			"max": 20,
-			"value": 30,
+			"value": 3.2,
 			"color": "marigold",
 			"size": "large",
-			"horizontalAlignment": "left"
+			"horizontalAlignment": "left",
+			"count": 150
 		},
 		{
 			"type": "Rating",

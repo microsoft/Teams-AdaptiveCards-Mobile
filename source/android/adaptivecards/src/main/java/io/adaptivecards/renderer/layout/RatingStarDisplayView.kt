@@ -79,17 +79,14 @@ class RatingStarDisplayView: LinearLayout {
         for (i in 0 until maxStarsCount) {
             val star = ImageView(context)
             star.setImageDrawable(getStarDrawable())
-            star.isActivated = true
+            star.isActivated = i < value.toInt()
             star.setColorFilter(RatingElementRendererUtil.getReadOnlyStarColor(color, i < value.toInt(), hostConfig))
             star.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
             ratingStars.add(star)
             val rightMargin = if (i < maxStarsCount - 1) MARGIN_BETWEEN_STARS else MARGIN_BETWEEN_STARS_AND_RATING_TEXT
             addViewWithMargin(star, rightMargin)
         }
-
-        val rating = if (value.rem(1.0) == 0.0) value.toInt() else value
-        val ratingTextView = createTextView(rating.toString(), hostConfig.GetRatingLabelConfig().ratingTextColor, Typeface.BOLD)
-        addView(ratingTextView)
+        addRatingAndCount()
     }
 
     /**
@@ -104,19 +101,7 @@ class RatingStarDisplayView: LinearLayout {
         star.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         ratingStars.add(star)
         addViewWithMargin(star, MARGIN_BETWEEN_STARS_AND_RATING_TEXT)
-
-        val rating = if (value.rem(1.0) == 0.0) value.toInt() else value
-        val ratingTextView = createTextView(rating.toString(), hostConfig.GetRatingLabelConfig().ratingTextColor, Typeface.BOLD)
-
-        count?.let {
-            if (it == 0L) {
-                addView(ratingTextView)
-            } else {
-                addViewWithMargin(ratingTextView, MARGIN_BETWEEN_RATING_TEXT_AND_DOT_COUNT)
-                addUsersCountTextView(it)
-            }
-        } ?: addView(ratingTextView)
-
+        addRatingAndCount()
     }
 
     private fun addUsersCountTextView(countValue: Long) {
@@ -126,6 +111,22 @@ class RatingStarDisplayView: LinearLayout {
         val formattedCount = RatingElementRendererUtil.formatNumberWithCommas(countValue)
         val countTextView = createTextView(formattedCount, hostConfig.GetRatingLabelConfig().countTextColor, Typeface.NORMAL)
         addView(countTextView)
+    }
+
+    /**
+     * adds the rating and count value to the stars
+     **/
+    private fun addRatingAndCount() {
+        val rating = if (value.rem(1.0) == 0.0) value.toInt() else value
+        val ratingTextView = createTextView(rating.toString(), hostConfig.GetRatingLabelConfig().ratingTextColor, Typeface.BOLD)
+        count?.let {
+            if (it == 0L) {
+                addView(ratingTextView)
+            } else {
+                addViewWithMargin(ratingTextView, MARGIN_BETWEEN_RATING_TEXT_AND_DOT_COUNT)
+                addUsersCountTextView(it)
+            }
+        } ?: addView(ratingTextView)
     }
 
     private fun createTextView(text: String, textColor: String, style: Int): TextView {
