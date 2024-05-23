@@ -79,7 +79,7 @@ class RatingStarDisplayView: LinearLayout {
         for (i in 0 until maxStarsCount) {
             val star = ImageView(context)
             star.setImageDrawable(getStarDrawable())
-            star.isActivated = i < value.toInt()
+            star.isActivated = true
             star.setColorFilter(RatingElementRendererUtil.getReadOnlyStarColor(color, i < value.toInt(), hostConfig))
             star.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
             ratingStars.add(star)
