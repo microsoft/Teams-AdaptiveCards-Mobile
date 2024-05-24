@@ -79,6 +79,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     UIButton *_button;
     __weak ACRView *_rootView;
     NSInteger _wrapLines;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
 - (instancetype)initWithInputChoiceSet:(ACOBaseCardElement *)acoElem
@@ -117,7 +118,6 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
                                      encoding:NSUTF8StringEncoding];
         self.isRequired = _validator.isRequired;
         self.hasValidationProperties = self.isRequired;
-        self.delegateSet = [NSMutableSet set];
         auto inputLabel = choiceSet->GetLabel();
         _inputLabel = (!inputLabel.empty()) ? [NSString stringWithCString:inputLabel.c_str() encoding:NSUTF8StringEncoding] : @"";
 
@@ -127,7 +127,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         _listView.dataSource = self;
         _listView.delegate = self;
         _listView.accessibilityIdentifier = [NSString stringWithUTF8String:choiceSet->GetId().c_str()];
-
+        _completionHandlers = [[NSMutableArray alloc] init];
         self.filteredListView = _listView;
 
         _view = [[UIView alloc] init];
@@ -386,16 +386,16 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     dictionary[self.id] = [_validator getValue:self.text];
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
-{
-    [delegateSet addObject:delegate];
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [_completionHandlers addObject:completion];
+}
+
+- (void)resetInput {
 }
 
 - (void)notifyDelegates {
-    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
-            [delegate inputValueChanged];
-        }
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
     }
 }
 
@@ -444,7 +444,6 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 @synthesize isRequired;
 
 @synthesize hasVisibilityChanged;
-@synthesize delegateSet;
 @end
 
 @implementation ACOFilteredDataSource {

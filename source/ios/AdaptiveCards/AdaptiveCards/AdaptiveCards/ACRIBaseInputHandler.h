@@ -9,10 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol ACRInputChangeDelegate <NSObject>
-
--(void)inputValueChanged;
-@end
+typedef void (^CompletionHandler)(void);
 
 @protocol ACRIBaseInputHandler
 
@@ -20,10 +17,10 @@
 @property BOOL hasValidationProperties;
 @property BOOL hasVisibilityChanged;
 @property NSString *_Nonnull id;
-@property NSMutableSet<id<ACRInputChangeDelegate>> * _Nonnull delegateSet;
 
 - (BOOL)validate:(NSError *_Nullable *_Nullable)error;
 - (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *_Nullable)view;
 - (void)getInput:(NSMutableDictionary *_Nonnull)dictionary;
--(void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nonnull)delegate;
+- (void)addObserverWithCompletion:(CompletionHandler _Nonnull)completion;
+-(void)resetInput;
 @end

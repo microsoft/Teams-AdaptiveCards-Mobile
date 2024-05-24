@@ -17,8 +17,6 @@
 
 @implementation ACRActionSubmitRenderer
 NSMutableArray<ACRIBaseInputHandler> *_inputs;
-NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerFunctionsWeakMemory];
-
 
 + (ACRActionSubmitRenderer *)getInstance
 {
@@ -46,13 +44,14 @@ NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerF
             if (input.isRequired) 
             {
                 atleastOneInputRequired = true;
-                [input addObserverForValueChange:self];
+                [input addObserverWithCompletion:^{
+                    [button setEnabled:[self validateInputs]];
+                }];
             }
         }
         // update button enable state only if alteast one input is required
         if(atleastOneInputRequired) 
         {
-            [buttons addObject:button];
             [button setEnabled:[self validateInputs]];
         }
     }
@@ -86,14 +85,5 @@ NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerF
     }
     return  validationResult;
 }
-
-- (void)inputValueChanged 
-{
-    for (UIButton *button in buttons)
-    {
-        [button setEnabled:[self validateInputs]];
-    }
-}
-
 @end
 

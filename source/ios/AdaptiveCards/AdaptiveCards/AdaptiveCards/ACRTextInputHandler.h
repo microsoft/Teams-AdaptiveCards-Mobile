@@ -15,6 +15,7 @@
 @property NSUInteger maxLength;
 @property NSString *text;
 @property BOOL hasText;
+@property NSMutableArray<CompletionHandler> *_completionHandlers;
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem;
 @end

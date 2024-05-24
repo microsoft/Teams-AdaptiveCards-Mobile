@@ -18,6 +18,7 @@ using namespace AdaptiveCards;
     NSDateFormatter *_encodeFormatter;
     NSDateFormatter *_decodeFormatter;
     NSString *_dateFormatString;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -147,7 +148,7 @@ using namespace AdaptiveCards;
 #endif
         self.inputView = picker;
         self.hasValidationProperties = self.isRequired || self.max || self.min;
-        self.delegateSet = [NSMutableSet set];
+        _completionHandlers = [[NSMutableArray alloc] init];
     }
 
     return self;
@@ -193,10 +194,12 @@ using namespace AdaptiveCards;
     return isValidated;
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
-{
+- (void)resetInput {
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
     [(UIDatePicker *)self.inputView addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [delegateSet addObject:delegate];
+    [_completionHandlers addObject:completion];
 }
 
 - (void)getInput:(NSMutableDictionary *)dictionary
@@ -232,10 +235,8 @@ using namespace AdaptiveCards;
 }
 
 -(void)datePickerValueChanged:(UIDatePicker *)datePicker {
-    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
-            [delegate inputValueChanged];
-        }
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
     }
 }
 
@@ -243,6 +244,5 @@ using namespace AdaptiveCards;
 @synthesize id;
 @synthesize isRequired;
 @synthesize hasVisibilityChanged;
-@synthesize delegateSet;
 
 @end

@@ -29,7 +29,7 @@ using namespace AdaptiveCards;
     self.valueOff = [[NSString alloc] initWithCString:toggleInput->GetValueOff().c_str()
                                              encoding:NSUTF8StringEncoding];
     self.hasValidationProperties = self.isRequired;
-    self.delegateSet = [NSMutableSet set];
+    self._completionHandlers = [[NSMutableArray alloc] init];
     return self;
 }
 
@@ -52,23 +52,27 @@ using namespace AdaptiveCards;
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _toggleSwitch);
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
-{
+- (void)resetInput {
+    if(self.valueOn) {
+        [_toggleSwitch setOn:YES animated:YES];
+    } else {
+        [_toggleSwitch setOn:NO animated:YES];
+    }
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
     [_toggleSwitch addTarget:self action:@selector(onSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [delegateSet addObject:delegate];
+    [self._completionHandlers addObject:completion];
 }
 
 - (void)onSwitchValueChanged:(UISwitch *)sender {
-    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
-            [delegate inputValueChanged];
-        }
+    for(CompletionHandler completion in self._completionHandlers) {
+        completion();
     }
 }
 
 @synthesize isRequired;
 @synthesize hasValidationProperties;
 @synthesize hasVisibilityChanged;
-@synthesize delegateSet;
 
 @end

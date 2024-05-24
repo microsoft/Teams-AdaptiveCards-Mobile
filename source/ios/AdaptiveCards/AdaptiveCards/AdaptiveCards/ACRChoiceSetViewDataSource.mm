@@ -93,6 +93,7 @@ const CGFloat minimumRowHeight = 44.0;
     std::shared_ptr<HostConfig> _config;
     CGSize _contentSize;
     NSString *_accessibilityString;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
 - (instancetype)initWithInputChoiceSet:(std::shared_ptr<AdaptiveCards::ChoiceSetInput> const &)choiceSet WithHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)hostConfig;
@@ -131,7 +132,7 @@ const CGFloat minimumRowHeight = 44.0;
         }
         
         self.hasValidationProperties = self.isRequired;
-        self.delegateSet = [NSMutableSet set];
+        _completionHandlers = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -189,7 +190,7 @@ const CGFloat minimumRowHeight = 44.0;
     {
         cell.accessibilityLabel = [NSString stringWithFormat:@"%@ %@, %@, %@", _accessibilityString, @"(Required)", cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
         cell.accessibilityLabel = [cell.accessibilityLabel stringByReplacingOccurrencesOfString:@"*" withString:@""];
-    } 
+    }
     else
     {
         cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@, %@", _accessibilityString, cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
@@ -289,19 +290,15 @@ const CGFloat minimumRowHeight = 44.0;
     return (rowHeight < minimumRowHeight) ? minimumRowHeight : rowHeight;
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
-{
-    [delegateSet addObject:delegate];
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [_completionHandlers addObject:completion];
 }
 
 - (void)notifyDelegates {
-    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
-            [delegate inputValueChanged];
-        }
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
     }
 }
-
 
 - (BOOL)validate:(NSError **)error
 {
@@ -348,6 +345,10 @@ const CGFloat minimumRowHeight = 44.0;
     }
 }
 
+- (void)resetInput {
+}
+
+
 - (NSString *)getTitlesOfChoices
 {
     NSMutableArray *values = [[NSMutableArray alloc] init];
@@ -374,6 +375,5 @@ const CGFloat minimumRowHeight = 44.0;
 @synthesize isRequired;
 @synthesize hasValidationProperties;
 @synthesize hasVisibilityChanged;
-@synthesize delegateSet;
 
 @end
