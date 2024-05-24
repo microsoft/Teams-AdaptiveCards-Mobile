@@ -120,6 +120,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/FeatureRegistration.h"
 #include "../../../shared/cpp/ObjectModel/BackgroundImage.h"
 #include "../../../shared/cpp/ObjectModel/Container.h"
+#include "../../../shared/cpp/ObjectModel/Icon.h"
 #include "../../../shared/cpp/ObjectModel/Image.h"
 #include "../../../shared/cpp/ObjectModel/ImageSet.h"
 #include "../../../shared/cpp/ObjectModel/InternalId.h"
@@ -194,6 +195,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::BackgroundImage)
 %shared_ptr(AdaptiveCards::Container)
 %shared_ptr(AdaptiveCards::TextBlock)
+%shared_ptr(AdaptiveCards::Icon)
 %shared_ptr(AdaptiveCards::Image)
 %shared_ptr(AdaptiveCards::ImageSet)
 %shared_ptr(AdaptiveCards::Column)
@@ -217,6 +219,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::AdaptiveCard)
 %shared_ptr(AdaptiveCards::ContainerParser)
 %shared_ptr(AdaptiveCards::TextBlockParser)
+%shared_ptr(AdaptiveCards::IconParser)
 %shared_ptr(AdaptiveCards::ImageParser)
 %shared_ptr(AdaptiveCards::ColumnParser)
 %shared_ptr(AdaptiveCards::ColumnSetParser)
@@ -471,6 +474,7 @@ namespace Json {
 %template(RemoteResourceInformationVector) std::vector<AdaptiveCards::RemoteResourceInformation>;
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;
 %template(BaseCardElementVector) std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement> >;
+%template(IconVector) std::vector<std::shared_ptr<AdaptiveCards::Icon> >;
 %template(ImageVector) std::vector<std::shared_ptr<AdaptiveCards::Image> >;
 %template(FactVector) std::vector<std::shared_ptr<AdaptiveCards::Fact> >;
 %template(ColumnVector) std::vector<std::shared_ptr<AdaptiveCards::Column> >;
@@ -563,6 +567,21 @@ namespace Json {
     static AdaptiveCards::TextBlock *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
         return dynamic_cast<AdaptiveCards::TextBlock *>(baseCardElement);
     }
+};
+
+%exception AdaptiveCards::Icon::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::Icon {
+        static AdaptiveCards::Icon *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::Icon *>(baseCardElement);
+        }
 };
 
 %exception AdaptiveCards::Image::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
@@ -932,6 +951,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/FeatureRegistration.h"
 %include "../../../shared/cpp/ObjectModel/SemanticVersion.h"
 %include "../../../shared/cpp/ObjectModel/Container.h"
+%include "../../../shared/cpp/ObjectModel/Icon.h"
 %include "../../../shared/cpp/ObjectModel/Image.h"
 %include "../../../shared/cpp/ObjectModel/ImageSet.h"
 %include "../../../shared/cpp/ObjectModel/Column.h"

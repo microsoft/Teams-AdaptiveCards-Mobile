@@ -10,6 +10,7 @@
 #include "DateInput.h"
 #include "FactSet.h"
 #include "Image.h"
+#include "Icon.h"
 #include "ImageSet.h"
 #include "Media.h"
 #include "NumberInput.h"
@@ -56,6 +57,7 @@ ElementParserRegistration::ElementParserRegistration()
          CardElementTypeToString(CardElementType::DateInput),
          CardElementTypeToString(CardElementType::FactSet),
          CardElementTypeToString(CardElementType::Image),
+         CardElementTypeToString(CardElementType::Icon),
          CardElementTypeToString(CardElementType::ImageSet),
          CardElementTypeToString(CardElementType::Media),
          CardElementTypeToString(CardElementType::NumberInput),
@@ -76,6 +78,7 @@ ElementParserRegistration::ElementParserRegistration()
          {CardElementTypeToString(CardElementType::DateInput), std::make_shared<DateInputParser>()},
          {CardElementTypeToString(CardElementType::FactSet), std::make_shared<FactSetParser>()},
          {CardElementTypeToString(CardElementType::Image), std::make_shared<ImageParser>()},
+         {CardElementTypeToString(CardElementType::Icon), std::make_shared<IconParser>()},
          {CardElementTypeToString(CardElementType::ImageSet), std::make_shared<ImageSetParser>()},
          {CardElementTypeToString(CardElementType::Media), std::make_shared<MediaParser>()},
          {CardElementTypeToString(CardElementType::NumberInput), std::make_shared<NumberInputParser>()},
