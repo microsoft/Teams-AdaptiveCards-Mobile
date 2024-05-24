@@ -25,11 +25,11 @@ class ValueChangedActionInputWatcher(
      */
     override fun onInputChange(id: String?, value: String?) {
         if(valueChangedAction.GetValueChangedActionType() == ValueChangedActionType.ResetInputs) {
-            val target = valueChangedAction.GetTargetInputIds()
+            val targetInputIds = valueChangedAction.GetTargetInputIds()
             val inputHandlers: Vector<IInputHandler> =
                 renderedCard.getInputsHandlerFromCardId(cardId)
             for (handler in inputHandlers) {
-                if (target.contains(handler.id)) {
+                if (targetInputIds.contains(handler.id)) {
                     handler.resetValue()
                 }
             }
