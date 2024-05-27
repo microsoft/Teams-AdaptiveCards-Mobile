@@ -29,6 +29,7 @@ import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.HostWidth;
 import io.adaptivecards.objectmodel.HostWidthConfig;
+import io.adaptivecards.objectmodel.Icon;
 import io.adaptivecards.objectmodel.Image;
 import io.adaptivecards.objectmodel.ImageSet;
 import io.adaptivecards.objectmodel.Mode;
@@ -68,6 +69,7 @@ import io.adaptivecards.renderer.readonly.ColumnRenderer;
 import io.adaptivecards.renderer.readonly.ColumnSetRenderer;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 import io.adaptivecards.renderer.readonly.FactSetRenderer;
+import io.adaptivecards.renderer.readonly.FluentIconsRenderer;
 import io.adaptivecards.renderer.readonly.ImageRenderer;
 import io.adaptivecards.renderer.readonly.ImageSetRenderer;
 import io.adaptivecards.renderer.readonly.MediaRenderer;
@@ -84,6 +86,7 @@ public class CardRendererRegistration
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.ColumnSet), ColumnSetRenderer.getInstance());
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Container), ContainerRenderer.getInstance());
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.FactSet), FactSetRenderer.getInstance());
+        registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Icon), FluentIconsRenderer.INSTANCE);
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Image), ImageRenderer.getInstance());
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.ImageSet), ImageSetRenderer.getInstance());
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Media), MediaRenderer.getInstance());
@@ -489,7 +492,8 @@ public class CardRendererRegistration
             {
                 // Column, container, image and imageSet handle their height on their own, so let's not add an extra view for them
                 if (renderedElement.GetHeight() == HeightType.Stretch && !isColumn && !Util.isOfType(renderedElement, Container.class)
-                    && !Util.isOfType(renderedElement, Image.class) && !Util.isOfType(renderedElement, ImageSet.class))
+                    && !Util.isOfType(renderedElement, Image.class) && !Util.isOfType(renderedElement, ImageSet.class)
+                    && !Util.isOfType(renderedElement, Icon.class))
                 {
                     // put the element in a StretchableElementLayout
                     HandleStretchHeight(mockLayout, viewGroup, renderedElement, context, tagContent);
