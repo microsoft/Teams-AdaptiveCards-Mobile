@@ -267,7 +267,6 @@ static NSString *pickerCell = @"pickerCell";
 }
 
 - (void)resetInput {
-    _userSelectedTitle = @"";
 }
 
 - (void)notifyDelegates {

@@ -28,6 +28,7 @@
 @property NSString *id;
 @property NSString *valueOn;
 @property NSString *valueOff;
+@property NSString *defaultValue;
 @property (weak) UISwitch *toggleSwitch;
 @property NSMutableArray<CompletionHandler> *_completionHandlers;
 

@@ -346,8 +346,19 @@ const CGFloat minimumRowHeight = 44.0;
 }
 
 - (void)resetInput {
-}
+    [_userSelections removeAllObjects];
+    NSUInteger index = 0;
+    for (const auto &choice : _choiceSetDataSource->GetChoices()) {
+        NSString *keyForDefaultValue = [NSString stringWithCString:choice->GetValue().c_str()
+                                                          encoding:NSUTF8StringEncoding];
 
+        if ([_defaultValuesSet containsObject:keyForDefaultValue]) {
+            _userSelections[[NSNumber numberWithInteger:index]] = [NSNumber numberWithBool:YES];
+        }
+        ++index;
+    }
+    [_tableView reloadData];
+}
 
 - (NSString *)getTitlesOfChoices
 {

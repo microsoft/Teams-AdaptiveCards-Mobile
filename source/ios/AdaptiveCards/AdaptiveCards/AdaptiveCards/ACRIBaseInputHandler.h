@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@protocol ACRInputChangeDelegate <NSObject>
+
+-(void)inputValueChanged;
+@end
+
 typedef void (^CompletionHandler)(void);
 
 @protocol ACRIBaseInputHandler
@@ -23,4 +28,8 @@ typedef void (^CompletionHandler)(void);
 - (void)getInput:(NSMutableDictionary *_Nonnull)dictionary;
 - (void)addObserverWithCompletion:(CompletionHandler _Nonnull)completion;
 -(void)resetInput;
+
+@optional
+// should be removed in future as addObserverWithCompletion will be used. Not rmeoving right now because it will break Teams changes using this method.
+-(void)addObserverForValueChange:(id<ACRInputChangeDelegate>_Nonnull)delegate;
 @end

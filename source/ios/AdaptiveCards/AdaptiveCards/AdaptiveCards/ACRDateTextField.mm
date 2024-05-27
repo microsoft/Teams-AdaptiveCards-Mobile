@@ -19,6 +19,7 @@ using namespace AdaptiveCards;
     NSDateFormatter *_decodeFormatter;
     NSString *_dateFormatString;
     NSMutableArray<CompletionHandler> *_completionHandlers;
+    NSString *_defaultValue;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -82,7 +83,9 @@ using namespace AdaptiveCards;
             if (preparser.TryParseSimpleDate(dateInput->GetMax(), year, month, day)) {
                 maxDateStr = [NSString stringWithFormat:@"%u-%u-%u", year, month, day];
             }
-
+            
+            _defaultValue = [[NSString alloc] initWithCString:dateInput->GetValue().c_str()
+                                                     encoding:NSUTF8StringEncoding];
             _dateFormatString = @"yyyy-MM-dd";
             picker.datePickerMode = UIDatePickerModeDate;
             picker.calendar = [NSCalendar currentCalendar];
@@ -120,6 +123,8 @@ using namespace AdaptiveCards;
             picker.datePickerMode = UIDatePickerModeTime;
             _dateFormatString = @"HH:mm";
             [_encodeFormatter setDateFormat:_dateFormatString];
+            _defaultValue = [[NSString alloc] initWithCString:timeInput->GetValue().c_str()
+                                                     encoding:NSUTF8StringEncoding];
         }
 
         self.placeholder = placeHolderStr;
@@ -195,6 +200,7 @@ using namespace AdaptiveCards;
 }
 
 - (void)resetInput {
+    self.text = _defaultValue;
 }
 
 - (void)addObserverWithCompletion:(CompletionHandler)completion {

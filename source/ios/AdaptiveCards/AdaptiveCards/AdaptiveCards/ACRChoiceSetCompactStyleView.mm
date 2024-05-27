@@ -391,6 +391,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 }
 
 - (void)resetInput {
+    self.text = _validator.userInitialChoice;
 }
 
 - (void)notifyDelegates {

@@ -30,6 +30,7 @@
         }
         self.hasValidationProperties = self.isRequired || self.maxLength || self.regexPredicate;
         self.text = [NSString stringWithCString:inputBlock->GetValue().c_str() encoding:NSUTF8StringEncoding];
+        self.defaultValue = self.text;
         if (self.text && self.text.length) {
             self.hasText = YES;
         }
@@ -64,7 +65,7 @@
 }
 
 - (void)resetInput {
-    self.text = @"";
+    _textField.text = self.defaultValue;
 }
 
 - (void)addObserverWithCompletion:(CompletionHandler)completion {

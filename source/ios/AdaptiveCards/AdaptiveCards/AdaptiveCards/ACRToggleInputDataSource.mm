@@ -28,6 +28,8 @@ using namespace AdaptiveCards;
                                             encoding:NSUTF8StringEncoding];
     self.valueOff = [[NSString alloc] initWithCString:toggleInput->GetValueOff().c_str()
                                              encoding:NSUTF8StringEncoding];
+    self.defaultValue = [[NSString alloc] initWithCString:toggleInput->GetValue().c_str()
+                                             encoding:NSUTF8StringEncoding];
     self.hasValidationProperties = self.isRequired;
     self._completionHandlers = [[NSMutableArray alloc] init];
     return self;
@@ -53,11 +55,7 @@ using namespace AdaptiveCards;
 }
 
 - (void)resetInput {
-    if(self.valueOn) {
-        [_toggleSwitch setOn:YES animated:YES];
-    } else {
-        [_toggleSwitch setOn:NO animated:YES];
-    }
+    [_toggleSwitch setOn:self.defaultValue animated:YES];
 }
 
 - (void)addObserverWithCompletion:(CompletionHandler)completion {

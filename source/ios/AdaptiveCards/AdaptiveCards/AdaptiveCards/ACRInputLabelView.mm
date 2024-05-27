@@ -88,7 +88,6 @@
         }
         
         self.label.attributedText = attributedLabel;
-        
         std::string errorMessage = inputBlck->GetErrorMessage();
         if (!errorMessage.empty()) {
             AdaptiveCards::ErrorMessageConfig *pLabelConfig = &inputConfig.errorMessage;
@@ -158,7 +157,6 @@
                                 [input resetInput];
                             }
                         }
-                        
                     }
                 }];
                 
