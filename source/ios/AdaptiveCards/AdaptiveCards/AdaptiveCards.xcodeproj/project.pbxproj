@@ -29,6 +29,8 @@
 		300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
 		30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */; };
+		46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */; };
+		46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */; };
 		463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C062BD8DB1F00A95C4E /* Icon.cpp */; };
 		463C3C0B2BD8DCC000A95C4E /* Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0A2BD8DCC000A95C4E /* Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */; };
@@ -516,6 +518,8 @@
 		30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsTextBlockTests.mm; sourceTree = "<group>"; };
 		3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
+		46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
 		463C3C062BD8DB1F00A95C4E /* Icon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Icon.cpp; path = ../../../../shared/cpp/ObjectModel/Icon.cpp; sourceTree = "<group>"; };
 		463C3C0A2BD8DCC000A95C4E /* Icon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Icon.h; path = ../../../../shared/cpp/ObjectModel/Icon.h; sourceTree = "<group>"; };
 		463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRIconRenderer.h; sourceTree = "<group>"; };
@@ -1553,6 +1557,8 @@
 				F4F6BA27204E107F003741B6 /* UnknownElement.h */,
 				F4F44B7F20478C6F00A2F24C /* Util.cpp */,
 				F4F44B7E20478C6F00A2F24C /* Util.h */,
+				46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */,
+				46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */,
 			);
 			name = SharedLib;
 			sourceTree = "<group>";
@@ -1841,6 +1847,7 @@
 				300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */,
 				6B616C4321CB20D2003E29CE /* ACRActionToggleVisibilityRenderer.h in Headers */,
 				F4CA74A12016B3B9002041DF /* ACRTapGestureRecognizerEventHandler.h in Headers */,
+				46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */,
 				6B7B1A9820BE2CBC00260731 /* ACRUIImageView.h in Headers */,
 				F429793E1F3155EF00E89914 /* ACRTextField.h in Headers */,
 				6B2242A42233439E000ACDA1 /* TextElementProperties.h in Headers */,
@@ -2268,6 +2275,7 @@
 				0D3485F126180F8F00614EB9 /* ACOActionOverflow.mm in Sources */,
 				6BCE4B232108EB4E00021A62 /* ACRAVPlayerViewHoldingUIView.mm in Sources */,
 				6BDE5C4326FEA7DC003A1DDB /* ACRBaseTarget.mm in Sources */,
+				46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */,
 				6B22425F21E80647000ACDA1 /* ACOParseContext.mm in Sources */,
 				F4071C7E1FCCBAEF00AF4FEA /* ActionParserRegistration.cpp in Sources */,
 				6B2242A72233442C000ACDA1 /* RichTextBlock.cpp in Sources */,

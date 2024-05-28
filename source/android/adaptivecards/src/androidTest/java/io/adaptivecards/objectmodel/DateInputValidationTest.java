@@ -8,6 +8,7 @@ import org.junit.Assert;
 
 import org.junit.Test;
 
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.inputhandler.DateInputHandler;
 
 public class DateInputValidationTest
@@ -32,7 +33,7 @@ public class DateInputValidationTest
 
     private DateInputHandler createInputHandler(DateInput dateInput)
     {
-        DateInputHandler dateInputHandler = new DateInputHandler(dateInput, null);
+        DateInputHandler dateInputHandler = new DateInputHandler(dateInput, null, null, 0);
         dateInputHandler.setView(new EditText(InstrumentationRegistry.getContext()));
         return dateInputHandler;
     }
@@ -41,7 +42,9 @@ public class DateInputValidationTest
     {
         class CustomDateInputHandler extends DateInputHandler
         {
-            public CustomDateInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager) { super(baseInputElement, fragmentManager); }
+            public CustomDateInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager) {
+                super(baseInputElement, fragmentManager, null, 0);
+            }
 
             @Override
             public boolean isValidOnSpecifics(String dateInputValue) { return true; }

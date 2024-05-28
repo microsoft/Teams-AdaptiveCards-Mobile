@@ -16,6 +16,7 @@ class BackgroundImage;
 class ParseContext;
 class SemanticVersion;
 class FeatureRegistration;
+class ValueChangedAction;
 
 namespace ParseUtil
 {
@@ -57,6 +58,8 @@ namespace ParseUtil
     std::vector<std::string> GetStringArray(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
     Json::Value GetJsonValueFromString(const std::string& jsonString);
+
+    std::shared_ptr<ValueChangedAction> GetValueChangedAction(const Json::Value& json);
 
     Json::Value ExtractJsonValue(const Json::Value& jsonRoot, AdaptiveCardSchemaKey key, bool isRequired = false);
 

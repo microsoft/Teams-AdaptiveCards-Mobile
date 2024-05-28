@@ -172,6 +172,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/Authentication.h"
 #include "../../../shared/cpp/ObjectModel/TokenExchangeResource.h"
 #include "../../../shared/cpp/ObjectModel/AuthCardButton.h"
+#include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
 %}
 
 
@@ -266,6 +267,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::TableColumnDefinition)
 %shared_ptr(AdaptiveCards::TableRow)
 %shared_ptr(AdaptiveCards::Table)
+%shared_ptr(AdaptiveCards::ValueChangedAction)
 
 
 %apply unsigned int& INOUT { unsigned int& };
@@ -867,6 +869,21 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::ValueChangedAction::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::ValueChangedAction {
+        static AdaptiveCards::ValueChangedAction *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::ValueChangedAction *>(baseCardElement);
+        }
+};
+
 %exception AdaptiveCards::ActionSet::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {
@@ -983,3 +1000,4 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/RichTextBlock.h"
 %include "../../../shared/cpp/ObjectModel/TextRun.h"
 %include "../../../shared/cpp/ObjectModel/RichTextElementProperties.h"
+%include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"

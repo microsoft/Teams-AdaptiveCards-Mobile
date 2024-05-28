@@ -44,6 +44,7 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.TextInput;
 import io.adaptivecards.objectmodel.TextInputStyle;
+import io.adaptivecards.objectmodel.ValueChangedAction;
 import io.adaptivecards.renderer.AdaptiveWarning;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
 import io.adaptivecards.renderer.InnerImageLoaderAsync;
@@ -54,8 +55,10 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.action.ActionElementRenderer;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedEditText;
+import io.adaptivecards.renderer.inputhandler.IInputHandler;
 import io.adaptivecards.renderer.inputhandler.InputUtils;
 import io.adaptivecards.renderer.inputhandler.TextInputHandler;
+import io.adaptivecards.renderer.inputhandler.ValueChangedActionInputWatcher;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
@@ -159,35 +162,6 @@ public class TextInputRenderer extends BaseCardElementRenderer
         private ICardActionHandler m_cardActionHandler;
         private RenderedAdaptiveCard m_renderedAdaptiveCard = null;
         private BaseActionElement m_action = null;
-    }
-
-    private class UnvalidatedTextWatcher implements TextWatcher
-    {
-
-        public UnvalidatedTextWatcher(TextInputHandler inputHandler)
-        {
-            m_textInputHandler = inputHandler;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after)
-        {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count)
-        {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s)
-        {
-            CardRendererRegistration.getInstance().notifyInputChange(m_textInputHandler.getId(), m_textInputHandler.getInput());
-        }
-
-        private TextInputHandler m_textInputHandler;
     }
 
     protected EditText renderInternal(
@@ -372,7 +346,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
 
         TextInput textInput = Util.castTo(baseCardElement, TextInput.class);
 
-        TextInputHandler textInputHandler = new TextInputHandler(textInput);
+        TextInputHandler textInputHandler = new TextInputHandler(textInput, renderedCard, renderArgs.getContainerCardId());
         TagContent tagContent = new TagContent(textInput, textInputHandler);
         final EditText editText = renderInternal(
                 renderedCard,

@@ -51,6 +51,10 @@
 										"title": "ConditionallyEnabledAction",
 										"value": "v1.5/Scenarios/ConditionallyEnabled.json"
 									},
+									{
+										"title": "ValueChangedAction",
+										"value": "v1.5/Scenarios/ValueChangedAction.json"
+									},
                                     {
                                         "title": "Inputs",
                                         "value": "v1.5/Scenarios/InputsWithValidation.json"
