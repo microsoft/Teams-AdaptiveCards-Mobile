@@ -141,25 +141,23 @@
             for (std::string &targetInputId : inputBlck->GetValueChangedAction()->GetTargetInputIds()) {
                 [targetInputIds addObject:[NSString stringWithCString:targetInputId.c_str() encoding:NSUTF8StringEncoding]];
             }
-            if(targetInputIds != nil) {
-                self.targetInputIds = [NSArray arrayWithArray:targetInputIds];
+            if(targetInputIds.count > 0) {
                 [inputHandler addObserverWithCompletion:^{
                     NSArray<ACRIBaseInputHandler> *_allInputHandlers = [rootView.card getInputs];
                     for (NSObject<ACRIBaseInputHandler> *input in _allInputHandlers) {
                         ACRInputLabelView *labelView = (ACRInputLabelView *)input;
                         if (labelView) {
-                            if([self.targetInputIds containsObject:labelView.getInputHandler.id]) {
+                            if([targetInputIds containsObject:labelView.getInputHandler.id]) {
                                 [labelView.getInputHandler resetInput];
                             }
                         } else
                         {
-                            if([self.targetInputIds containsObject:input.id]) {
+                            if([targetInputIds containsObject:input.id]) {
                                 [input resetInput];
                             }
                         }
                     }
                 }];
-                
             }
         }
     }

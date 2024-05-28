@@ -29,7 +29,6 @@
 @property IBInspectable UIColor *validationFailBorderColor;
 @property IBInspectable CGFloat validationFailBorderRadius;
 @property IBInspectable CGFloat validationFailBorderWidth;
-@property (nonatomic, strong) NSArray *targetInputIds;
 
 @property CGColorRef validationSuccessBorderColor;
 @property CGFloat validationSuccessBorderRadius;

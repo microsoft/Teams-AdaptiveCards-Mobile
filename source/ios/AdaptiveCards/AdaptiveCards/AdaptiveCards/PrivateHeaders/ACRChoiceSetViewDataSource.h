@@ -35,7 +35,7 @@ extern NSString *uncheckedRadioButtonReuseID;
 @property BOOL isMultiChoicesAllowed;
 @property ACRContainerStyle parentStyle;
 @property CGFloat spacing;
-@property (strong, nonatomic) UITableView *tableView;
+@property (weak) UITableView *tableView;
 
 - (instancetype)initWithInputChoiceSet:(std::shared_ptr<AdaptiveCards::ChoiceSetInput> const &)choiceSet WithHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)hostConfig;
 
