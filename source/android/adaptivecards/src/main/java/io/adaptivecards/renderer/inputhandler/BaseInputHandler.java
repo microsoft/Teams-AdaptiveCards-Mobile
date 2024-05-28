@@ -63,6 +63,11 @@ public abstract class BaseInputHandler implements IInputHandler
         return isValid;
     }
 
+    @Override
+    public boolean isRequiredInput() {
+        return m_baseInputElement.GetIsRequired();
+    }
+
     public boolean isValidOnSpecifics(String inputValue)
     {
         // By default return true as some inputs don't have any specific inputs (regex, min/max)
