@@ -36,6 +36,7 @@ NSMutableArray<ACRIBaseInputHandler> *_inputsArray;
     NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
 
     UIButton *button = [ACRButton rootView:view baseActionElement:acoElem title:title andHostConfig:acoConfig];
+    __weak __typeof(self) weakSelf = self;
     
     if(action->m_conditionallyEnabled && button.isEnabled)
     {
@@ -47,7 +48,8 @@ NSMutableArray<ACRIBaseInputHandler> *_inputsArray;
             {
                 atleastOneInputRequired = true;
                 [input addObserverWithCompletion:^{ 
-                    [button setEnabled:[self validateInputs]];
+                    __strong __typeof(self) strongSelf = weakSelf;
+                    [button setEnabled:[strongSelf validateInputs]];
                 }];
             }
         }
