@@ -5,7 +5,6 @@ package io.adaptivecards.renderer.inputhandler
 import io.adaptivecards.objectmodel.ValueChangedAction
 import io.adaptivecards.objectmodel.ValueChangedActionType
 import io.adaptivecards.renderer.RenderedAdaptiveCard
-import java.util.Vector
 
 /**
  * input watcher for value changed action
@@ -26,11 +25,9 @@ class ValueChangedActionInputWatcher(
     override fun onInputChange(id: String?, value: String?) {
         if(valueChangedAction.GetValueChangedActionType() == ValueChangedActionType.ResetInputs) {
             val targetInputIds = valueChangedAction.GetTargetInputIds()
-            val inputHandlers: Vector<IInputHandler> =
-                renderedCard.getInputsHandlerFromCardId(cardId)
-            for (handler in inputHandlers) {
-                if (targetInputIds.contains(handler.id)) {
-                    handler.resetValue()
+            renderedCard.getInputsHandlerFromCardId(cardId)?.let{
+                for (targetInputId in targetInputIds) {
+                    it[targetInputId]?.resetValue()
                 }
             }
         }
