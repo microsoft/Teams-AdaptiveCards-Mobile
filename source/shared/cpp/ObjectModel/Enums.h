@@ -187,6 +187,7 @@ enum class AdaptiveCardSchemaKey
     TableCell,
     TableRow,
     TargetElements,
+    TargetInputIds,
     TargetWidth,
     Text,
     TextBlock,
@@ -207,6 +208,8 @@ enum class AdaptiveCardSchemaKey
     Url,
     UserIds,
     Value,
+    ValueChangedAction,
+    ValueChangedActionType,
     ValueOff,
     ValueOn,
     Verb,
@@ -626,4 +629,11 @@ enum class TargetWidthType
     AtLeastWide
 };
 DECLARE_ADAPTIVECARD_ENUM(TargetWidthType);
+
+enum class ValueChangedActionType
+{
+    ResetInputs
+};
+DECLARE_ADAPTIVECARD_ENUM(ValueChangedActionType);
+
 } // namespace AdaptiveCards

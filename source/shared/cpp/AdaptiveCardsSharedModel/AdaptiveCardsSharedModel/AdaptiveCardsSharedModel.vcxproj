@@ -291,6 +291,7 @@
     <ClCompile Include="..\..\ObjectModel\TokenExchangeResource.cpp" />
     <ClCompile Include="..\..\ObjectModel\UnknownAction.cpp" />
     <ClCompile Include="..\..\ObjectModel\UnknownElement.cpp" />
+    <ClCompile Include="..\..\ObjectModel\ValueChangedAction.cpp" />
     <ClCompile Include="..\..\ObjectModel\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -366,6 +367,7 @@
     <ClInclude Include="..\..\ObjectModel\TokenExchangeResource.h" />
     <ClInclude Include="..\..\ObjectModel\UnknownAction.h" />
     <ClInclude Include="..\..\ObjectModel\UnknownElement.h" />
+    <ClInclude Include="..\..\ObjectModel\ValueChangedAction.h" />
     <ClInclude Include="..\..\ObjectModel\RemoteResourceInformation.h" />
     <ClInclude Include="..\..\ObjectModel\Util.h" />
   </ItemGroup>

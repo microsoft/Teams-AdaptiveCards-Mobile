@@ -56,4 +56,9 @@ public interface IInputHandler
      * in that case explicit call to add observer is required after adding child views.
      */
     void registerInputObserver();
+
+    /**
+     * reset value of the input field to default.
+     */
+    void resetValue();
 }
