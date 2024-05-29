@@ -33,6 +33,11 @@ public interface IInputHandler
     boolean isValid(boolean showError);
 
     /**
+     * @return true if the inputElement is a required value
+     */
+    boolean isRequiredInput();
+
+    /**
      * request focus on the given input view
      */
     void setFocusToView();
