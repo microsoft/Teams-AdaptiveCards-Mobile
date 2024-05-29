@@ -11,6 +11,7 @@
 #import "ACRInputLabelViewPrivate.h"
 #import "ACRQuickReplyView.h"
 #import "UtiliOS.h"
+#import "ValueChangedAction.h"
 
 @implementation ACRInputLabelView
 
