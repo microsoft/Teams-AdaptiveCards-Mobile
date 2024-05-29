@@ -15,11 +15,15 @@ import java.util.List;
 
 public abstract class BaseInputHandler implements IInputHandler
 {
-    public BaseInputHandler(@Nullable BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
+    public BaseInputHandler(BaseInputElement baseInputElement) {
         m_baseInputElement = baseInputElement;
+        m_inputWatchers = new ArrayList<>();
+    }
+
+    public BaseInputHandler(@Nullable BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
+        this(baseInputElement);
         m_renderedAdaptiveCard = renderedAdaptiveCard;
         m_cardId = cardId;
-        m_inputWatchers = new ArrayList<>();
     }
 
     public void setView(View view)
@@ -67,6 +71,11 @@ public abstract class BaseInputHandler implements IInputHandler
         return isValid;
     }
 
+    @Override
+    public boolean isRequiredInput() {
+        return m_baseInputElement.GetIsRequired();
+    }
+
     public boolean isValidOnSpecifics(String inputValue)
     {
         // By default return true as some inputs don't have any specific inputs (regex, min/max)
@@ -88,10 +97,9 @@ public abstract class BaseInputHandler implements IInputHandler
         m_inputWatchers.add(observer);
     }
 
-    @Override
-    public void addValueChangedActionInputWatcher() {
+    protected void addValueChangedActionInputWatcher() {
         if(m_baseInputElement.GetValueChangedAction() != null && m_renderedAdaptiveCard != null){
-            addInputWatcher(new ValueChangedActionInputWatcher(m_baseInputElement.GetValueChangedAction().GetTargetInputIds(), m_renderedAdaptiveCard, m_cardId));
+            addInputWatcher(new ValueChangedActionInputWatcher(m_baseInputElement.GetValueChangedAction(), m_renderedAdaptiveCard, m_cardId));
         }
     }
 
@@ -116,6 +124,7 @@ public abstract class BaseInputHandler implements IInputHandler
     protected View m_view = null;
     private StretchableInputLayout m_inputLayout = null;
     List<IInputWatcher> m_inputWatchers;
+    @Nullable
     private RenderedAdaptiveCard m_renderedAdaptiveCard;
     private Long m_cardId;
 

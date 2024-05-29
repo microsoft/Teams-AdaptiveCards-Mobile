@@ -64,6 +64,7 @@ public class ToggleInputHandler extends BaseInputHandler
     @Override
     public void registerInputObserver() {
         getCheckBox().setOnCheckedChangeListener((buttonView, isChecked) -> notifyAllInputWatchers());
+        addValueChangedActionInputWatcher();
     }
 
     @Override

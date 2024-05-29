@@ -164,35 +164,6 @@ public class TextInputRenderer extends BaseCardElementRenderer
         private BaseActionElement m_action = null;
     }
 
-    private class UnvalidatedTextWatcher implements TextWatcher
-    {
-
-        public UnvalidatedTextWatcher(TextInputHandler inputHandler)
-        {
-            m_textInputHandler = inputHandler;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after)
-        {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count)
-        {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s)
-        {
-            CardRendererRegistration.getInstance().notifyInputChange(m_textInputHandler.getId(), m_textInputHandler.getInput());
-        }
-
-        private TextInputHandler m_textInputHandler;
-    }
-
     protected EditText renderInternal(
             RenderedAdaptiveCard renderedCard,
             Context context,

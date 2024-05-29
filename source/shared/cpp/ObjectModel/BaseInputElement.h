@@ -6,10 +6,11 @@
 #include "ParseUtil.h"
 #include "BaseCardElement.h"
 #include "TextBlock.h"
-#include "ValueChangedAction.h"
 
 namespace AdaptiveCards
 {
+class ValueChangedAction;
+
 class BaseInputElement : public BaseCardElement
 {
 public:

@@ -57,6 +57,7 @@ class AutoCompleteTextViewHandler(baseInputElement: BaseInputElement?,
                 notifyAllInputWatchers()
             }
         }
+        addValueChangedActionInputWatcher()
     }
 
     override fun setFocusToView() {

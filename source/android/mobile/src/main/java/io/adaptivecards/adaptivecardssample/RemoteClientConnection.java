@@ -167,7 +167,8 @@ public class RemoteClientConnection
             };
         for (String turnServer : turnServers)
         {
-            iceServers.add(PeerConnection.IceServer.builder(turnServer).setUsername("e-HcX5lqoTEzSQetY5biyT3YzM45GIl3HK4FQuo3y73xvsLAmts_gF8PylqkwBR6AAAAAFyoMKphbGVhZGVy").setPassword("d97cbeee-5827-11e9-bef6-069f0817bf63").createIceServer());
+            //Credentials were removed
+            iceServers.add(PeerConnection.IceServer.builder(turnServer).createIceServer());
         }
         final ArrayList<IceCandidate> iceCandidates = new ArrayList<>();
 

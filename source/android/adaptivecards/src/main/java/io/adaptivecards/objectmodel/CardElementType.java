@@ -21,6 +21,7 @@ public enum CardElementType {
   Fact,
   FactSet,
   Image,
+  Icon,
   ImageSet,
   Media,
   NumberInput,
