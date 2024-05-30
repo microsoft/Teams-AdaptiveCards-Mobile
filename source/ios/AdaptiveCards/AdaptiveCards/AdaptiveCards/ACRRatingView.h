@@ -35,6 +35,7 @@
                            hostConfig:(ACOHostConfig *)hostConfig;
 
 - (NSInteger)getValue;
+- (void)setValue:(NSInteger)value;
 
 
 @end

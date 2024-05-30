@@ -187,6 +187,12 @@
     return _value;
 }
 
+- (void)setValue:(NSInteger)value
+{
+    _value = value;
+    [self updateStarImages];
+}
+
 - (UIImage *)emptyStarImage 
 {
     NSString *emptyStarFormat = _readOnly ? @"ic_fluent_star_%ld_filled" : @"ic_fluent_star_%ld_regular";

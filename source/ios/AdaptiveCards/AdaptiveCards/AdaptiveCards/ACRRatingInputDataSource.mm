@@ -16,6 +16,10 @@
 using namespace AdaptiveCards;
 
 @implementation ACRRatingInputDataSource
+{
+    NSMutableArray<CompletionHandler> *_completionHandlers;
+    double _defaultValue;
+}
 
 - (instancetype)initWithInputRating:(std::shared_ptr<RatingInput> const &)ratingInput
                      WithHostConfig:(std::shared_ptr<HostConfig> const &)hostConfig
@@ -25,7 +29,8 @@ using namespace AdaptiveCards;
     self.id = [[NSString alloc] initWithCString:ratingInput->GetId().c_str()
                                        encoding:NSUTF8StringEncoding];
     self.hasValidationProperties = self.isRequired;
-    self.delegateSet = [NSMutableSet set];
+    _defaultValue = ratingInput->GetValue();
+    _completionHandlers = [[NSMutableArray alloc] init];
     return self;
 }
 
@@ -48,24 +53,26 @@ using namespace AdaptiveCards;
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _ratingView);
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate
+- (void)addObserverWithCompletion:(CompletionHandler)completion
 {
     _ratingView.ratingValueChangeDelegate = self;
-    [delegateSet addObject:delegate];
+    [_completionHandlers addObject:completion];
 }
 
+- (void)resetInput { 
+    [_ratingView setValue:(NSInteger)_defaultValue];
+}
+
+
 - (void)didChangeValueTo:(NSInteger)newValue {
-    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
-            [delegate inputValueChanged];
-        }
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
     }
 }
 
 @synthesize isRequired;
 @synthesize hasValidationProperties;
 @synthesize hasVisibilityChanged;
-@synthesize delegateSet;
 
 
 
