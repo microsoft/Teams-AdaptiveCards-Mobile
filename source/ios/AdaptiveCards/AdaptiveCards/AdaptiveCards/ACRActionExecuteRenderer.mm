@@ -41,8 +41,8 @@ NSMutableArray<ACRIBaseInputHandler> *_inputsArray;
     if(action->m_conditionallyEnabled && button.isEnabled)
     {
         _inputsArray = [[NSMutableArray<ACRIBaseInputHandler> alloc] initWithArray:inputs];
-        BOOL atleastOneInputRequired = false;
-        for (id<ACRIBaseInputHandler> input in _inputsArray) 
+        BOOL atleastOneInputRequired = NO;
+        for (id<ACRIBaseInputHandler> input in _inputsArray)
         {
             if (input.isRequired)
             {
@@ -74,7 +74,7 @@ NSMutableArray<ACRIBaseInputHandler> *_inputsArray;
 
 - (BOOL)validateInputs
 {
-    BOOL validationResult = false;
+    BOOL validationResult = NO;
     for (id<ACRIBaseInputHandler> input in _inputsArray) {
         if(input.isRequired && !validationResult)
         {

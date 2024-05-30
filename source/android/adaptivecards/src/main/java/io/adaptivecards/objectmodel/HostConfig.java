@@ -240,6 +240,22 @@ public class HostConfig {
     AdaptiveCardObjectModelJNI.HostConfig_SetTextStyles(swigCPtr, this, TextStylesConfig.getCPtr(value), value);
   }
 
+  public RatingElementConfig GetRatingLabelConfig() {
+    return new RatingElementConfig(AdaptiveCardObjectModelJNI.HostConfig_GetRatingLabelConfig(swigCPtr, this), true);
+  }
+
+  public void SetRatingLabelConfig(RatingElementConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetRatingLabelConfig(swigCPtr, this, RatingElementConfig.getCPtr(value), value);
+  }
+
+  public RatingElementConfig GetRatingInputConfig() {
+    return new RatingElementConfig(AdaptiveCardObjectModelJNI.HostConfig_GetRatingInputConfig(swigCPtr, this), true);
+  }
+
+  public void SetRatingInputConfig(RatingElementConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetRatingInputConfig(swigCPtr, this, RatingElementConfig.getCPtr(value), value);
+  }
+
   public TextBlockConfig GetTextBlock() {
     return new TextBlockConfig(AdaptiveCardObjectModelJNI.HostConfig_GetTextBlock(swigCPtr, this), true);
   }

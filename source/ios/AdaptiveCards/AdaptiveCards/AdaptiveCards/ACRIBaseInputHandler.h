@@ -12,6 +12,7 @@
 @protocol ACRInputChangeDelegate <NSObject>
 
 -(void)inputValueChanged;
+
 @end
 
 typedef void (^CompletionHandler)(void);

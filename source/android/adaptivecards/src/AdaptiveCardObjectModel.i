@@ -121,6 +121,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/BackgroundImage.h"
 #include "../../../shared/cpp/ObjectModel/Container.h"
 #include "../../../shared/cpp/ObjectModel/Icon.h"
+#include "../../../shared/cpp/ObjectModel/RatingLabel.h"
 #include "../../../shared/cpp/ObjectModel/Image.h"
 #include "../../../shared/cpp/ObjectModel/ImageSet.h"
 #include "../../../shared/cpp/ObjectModel/InternalId.h"
@@ -132,6 +133,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/DateInput.h"
 #include "../../../shared/cpp/ObjectModel/NumberInput.h"
 #include "../../../shared/cpp/ObjectModel/TextInput.h"
+#include "../../../shared/cpp/ObjectModel/RatingInput.h"
 #include "../../../shared/cpp/ObjectModel/TimeInput.h"
 #include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 #include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
@@ -196,6 +198,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::Container)
 %shared_ptr(AdaptiveCards::TextBlock)
 %shared_ptr(AdaptiveCards::Icon)
+%shared_ptr(AdaptiveCards::RatingLabel)
 %shared_ptr(AdaptiveCards::Image)
 %shared_ptr(AdaptiveCards::ImageSet)
 %shared_ptr(AdaptiveCards::Column)
@@ -208,6 +211,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::DateInput)
 %shared_ptr(AdaptiveCards::NumberInput)
 %shared_ptr(AdaptiveCards::TextInput)
+%shared_ptr(AdaptiveCards::RatingInput)
 %shared_ptr(AdaptiveCards::TimeInput)
 %shared_ptr(AdaptiveCards::ToggleInput)
 %shared_ptr(AdaptiveCards::ExecuteAction)
@@ -220,6 +224,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ContainerParser)
 %shared_ptr(AdaptiveCards::TextBlockParser)
 %shared_ptr(AdaptiveCards::IconParser)
+%shared_ptr(AdaptiveCards::RatingLabelParser)
 %shared_ptr(AdaptiveCards::ImageParser)
 %shared_ptr(AdaptiveCards::ColumnParser)
 %shared_ptr(AdaptiveCards::ColumnSetParser)
@@ -230,6 +235,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::TableCellParser)
 %shared_ptr(AdaptiveCards::TableRowParser)
 %shared_ptr(AdaptiveCards::TextInputParser)
+%shared_ptr(AdaptiveCards::RatingInputParser)
 %shared_ptr(AdaptiveCards::TimeInputParser)
 %shared_ptr(AdaptiveCards::ToggleInputParser)
 %shared_ptr(AdaptiveCards::ExecuteActionParser)
@@ -475,6 +481,8 @@ namespace Json {
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;
 %template(BaseCardElementVector) std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement> >;
 %template(IconVector) std::vector<std::shared_ptr<AdaptiveCards::Icon> >;
+%template(RatingInputVector) std::vector<std::shared_ptr<AdaptiveCards::RatingInput> >;
+%template(RatingLabelVector) std::vector<std::shared_ptr<AdaptiveCards::RatingLabel> >;
 %template(ImageVector) std::vector<std::shared_ptr<AdaptiveCards::Image> >;
 %template(FactVector) std::vector<std::shared_ptr<AdaptiveCards::Fact> >;
 %template(ColumnVector) std::vector<std::shared_ptr<AdaptiveCards::Column> >;
@@ -581,6 +589,21 @@ namespace Json {
 %extend AdaptiveCards::Icon {
         static AdaptiveCards::Icon *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
             return dynamic_cast<AdaptiveCards::Icon *>(baseCardElement);
+        }
+};
+
+%exception AdaptiveCards::RatingLabel::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::RatingLabel {
+        static AdaptiveCards::RatingLabel *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::RatingLabel *>(baseCardElement);
         }
 };
 
@@ -747,6 +770,21 @@ namespace Json {
     static AdaptiveCards::TextInput *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
         return dynamic_cast<AdaptiveCards::TextInput *>(baseCardElement);
     }
+};
+
+%exception AdaptiveCards::RatingInput::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::RatingInput {
+        static AdaptiveCards::RatingInput *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::RatingInput *>(baseCardElement);
+        }
 };
 
 %exception AdaptiveCards::TimeInput::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
@@ -952,6 +990,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/SemanticVersion.h"
 %include "../../../shared/cpp/ObjectModel/Container.h"
 %include "../../../shared/cpp/ObjectModel/Icon.h"
+%include "../../../shared/cpp/ObjectModel/RatingLabel.h"
 %include "../../../shared/cpp/ObjectModel/Image.h"
 %include "../../../shared/cpp/ObjectModel/ImageSet.h"
 %include "../../../shared/cpp/ObjectModel/Column.h"
@@ -962,6 +1001,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/DateInput.h"
 %include "../../../shared/cpp/ObjectModel/NumberInput.h"
 %include "../../../shared/cpp/ObjectModel/TextInput.h"
+%include "../../../shared/cpp/ObjectModel/RatingInput.h"
 %include "../../../shared/cpp/ObjectModel/TimeInput.h"
 %include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 %include "../../../shared/cpp/ObjectModel/ExecuteAction.h"
