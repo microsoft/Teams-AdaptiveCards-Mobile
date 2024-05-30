@@ -880,6 +880,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void ChoicesData_SetChoicesDataType(long jarg1, ChoicesData jarg1_, String jarg2);
   public final static native String ChoicesData_GetDataset(long jarg1, ChoicesData jarg1_);
   public final static native void ChoicesData_SetDataset(long jarg1, ChoicesData jarg1_, String jarg2);
+  public final static native int ChoicesData_GetAssociatedInputs(long jarg1, ChoicesData jarg1_);
+  public final static native void ChoicesData_SetAssociatedInputs(long jarg1, ChoicesData jarg1_, int jarg2);
   public final static native long ChoicesData_Deserialize(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native long ChoicesData_DeserializeFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native void delete_ChoicesData(long jarg1);
