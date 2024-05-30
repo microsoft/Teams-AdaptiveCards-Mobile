@@ -15,6 +15,9 @@
 @property NSUInteger maxLength;
 @property NSString *text;
 @property BOOL hasText;
+@property (weak) UITextField *textField;
+@property NSString *defaultValue;
+@property NSMutableArray<CompletionHandler> *_completionHandlers;
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem;
 @end

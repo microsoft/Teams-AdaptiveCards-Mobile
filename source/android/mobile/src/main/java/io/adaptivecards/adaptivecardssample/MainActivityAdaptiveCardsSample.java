@@ -33,6 +33,7 @@ import io.adaptivecards.renderer.AdaptiveCardRenderer;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
 import io.adaptivecards.renderer.Util;
+import io.adaptivecards.renderer.actionhandler.AfterTextChangedListener;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.readonly.TextRendererUtil;
@@ -108,19 +109,11 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         m_jsonEditText = findViewById(R.id.jsonAdaptiveCard);
         m_configEditText = findViewById(R.id.hostConfig);
 
-        TextWatcher watcher = new TextWatcher()
-        {
+        TextWatcher watcher = new AfterTextChangedListener() {
             @Override
-            public void afterTextChanged(Editable editable)
-            {
+            public void afterTextChanged(Editable editable) {
                 renderAdaptiveCardAfterDelay(true);
             }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
         };
 
         m_jsonEditText.addTextChangedListener(watcher);

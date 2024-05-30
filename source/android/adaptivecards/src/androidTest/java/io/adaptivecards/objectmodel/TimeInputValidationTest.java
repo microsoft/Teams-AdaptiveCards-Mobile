@@ -8,6 +8,7 @@ import org.junit.Assert;
 
 import org.junit.Test;
 
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.inputhandler.TimeInputHandler;
 
 public class TimeInputValidationTest
@@ -33,7 +34,7 @@ public class TimeInputValidationTest
 
     private TimeInputHandler createInputHandler(TimeInput dateInput)
     {
-        TimeInputHandler dateInputHandler = new TimeInputHandler(dateInput, null);
+        TimeInputHandler dateInputHandler = new TimeInputHandler(dateInput, null, null, 0);
         dateInputHandler.setView(new EditText(InstrumentationRegistry.getContext()));
         return dateInputHandler;
     }
@@ -42,13 +43,16 @@ public class TimeInputValidationTest
     {
         class CustomTimeInputHandler extends TimeInputHandler
         {
-            public CustomTimeInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager) { super(baseInputElement, fragmentManager); }
+            public CustomTimeInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
+            {
+                super(baseInputElement, fragmentManager, renderedAdaptiveCard, cardId);
+            }
 
             @Override
             public boolean isValidOnSpecifics(String dateInputValue) { return true; }
         }
 
-        TimeInputHandler dateInputHandler = new CustomTimeInputHandler(dateInput, null);
+        TimeInputHandler dateInputHandler = new CustomTimeInputHandler(dateInput, null, null, 0);
         dateInputHandler.setView(new EditText(InstrumentationRegistry.getContext()));
 
         return dateInputHandler;

@@ -13,7 +13,6 @@
 		{
 			"type": "Input.Date",
 			"label": "Required date input",
-			"isRequired": true,
 			"id": "date"
 		},
 		{
