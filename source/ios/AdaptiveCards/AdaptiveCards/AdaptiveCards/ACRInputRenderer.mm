@@ -168,6 +168,7 @@
             txtInput = [ACRInputRenderer configTextFiled:inputBlck renderAction:renderAction rootView:rootView viewGroup:viewGroup];
             inputview = [[ACRInputLabelView alloc] initInputLabelView:rootView acoConfig:acoConfig adaptiveInputElement:inputBlck inputView:txtInput accessibilityItem:txtInput viewGroup:viewGroup dataSource:textInputHandler];
         }
+        textInputHandler.textField = txtInput;
         txtInput.delegate = textInputHandler;
         if ([textInputHandler respondsToSelector:@selector(textFieldDidChange:)]) {
             [txtInput addTarget:textInputHandler action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];

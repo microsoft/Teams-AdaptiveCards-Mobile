@@ -66,6 +66,7 @@ enum class AdaptiveCardSchemaKey
     DateInput,
     Default,
     DefaultPoster,
+    Count,
     ElementId,
     Emphasis,
     ErrorMessage,
@@ -146,6 +147,8 @@ enum class AdaptiveCardSchemaKey
     Monospace,
     Narrow,
     NumberInput,
+    RatingInput,
+    RatingLabel,
     OptionalInputs,
     Padding,
     Placeholder,
@@ -187,12 +190,19 @@ enum class AdaptiveCardSchemaKey
     TableCell,
     TableRow,
     TargetElements,
+    TargetInputIds,
     TargetWidth,
     Text,
     TextBlock,
     TextConfig,
     TextInput,
     TextStyles,
+    MarigoldColor,
+    NeutralColor,
+    FilledStar,
+    EmptyStar,
+    RatingTextColor,
+    CountTextColor,
     TextWeight,
     Thickness,
     TimeInput,
@@ -207,6 +217,8 @@ enum class AdaptiveCardSchemaKey
     Url,
     UserIds,
     Value,
+    ValueChangedAction,
+    ValueChangedActionType,
     ValueOff,
     ValueOn,
     Verb,
@@ -242,6 +254,8 @@ enum class CardElementType
     ImageSet,
     Media,
     NumberInput,
+    RatingInput,
+    RatingLabel,
     RichTextBlock,
     Table,
     TableCell,
@@ -592,6 +606,27 @@ enum class HeightType
 };
 DECLARE_ADAPTIVECARD_ENUM(HeightType);
 
+enum class RatingSize
+{
+    Medium = 0,
+    Large
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingSize);
+
+enum class RatingColor
+{
+    Neutral = 0,
+    Marigold
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingColor);
+
+enum class RatingStyle
+{
+    Default = 0,
+    Compact
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingStyle);
+
 // Important: "Content" below is a placeholder for a JSON value -- we can't perform automatic mapping.
 enum class FallbackType
 {
@@ -626,4 +661,11 @@ enum class TargetWidthType
     AtLeastWide
 };
 DECLARE_ADAPTIVECARD_ENUM(TargetWidthType);
+
+enum class ValueChangedActionType
+{
+    ResetInputs
+};
+DECLARE_ADAPTIVECARD_ENUM(ValueChangedActionType);
+
 } // namespace AdaptiveCards

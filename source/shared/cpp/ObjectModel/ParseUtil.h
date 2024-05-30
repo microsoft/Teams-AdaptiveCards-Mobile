@@ -16,6 +16,7 @@ class BackgroundImage;
 class ParseContext;
 class SemanticVersion;
 class FeatureRegistration;
+class ValueChangedAction;
 
 namespace ParseUtil
 {
@@ -48,6 +49,8 @@ namespace ParseUtil
 
     int GetInt(const Json::Value& json, AdaptiveCardSchemaKey key, int defaultValue, bool isRequired = false);
 
+    double GetDouble(const Json::Value& json, AdaptiveCardSchemaKey key, double defaultValue, bool isRequired = false);
+
     std::optional<int> GetOptionalInt(const Json::Value& json, AdaptiveCardSchemaKey key);
 
     std::optional<double> GetOptionalDouble(const Json::Value& json, AdaptiveCardSchemaKey key);
@@ -57,6 +60,8 @@ namespace ParseUtil
     std::vector<std::string> GetStringArray(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
     Json::Value GetJsonValueFromString(const std::string& jsonString);
+
+    std::shared_ptr<ValueChangedAction> GetValueChangedAction(const Json::Value& json);
 
     Json::Value ExtractJsonValue(const Json::Value& jsonRoot, AdaptiveCardSchemaKey key, bool isRequired = false);
 

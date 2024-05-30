@@ -72,6 +72,14 @@ public class ChoicesData {
     AdaptiveCardObjectModelJNI.ChoicesData_SetDataset(swigCPtr, this, dataset);
   }
 
+  public AssociatedInputs GetAssociatedInputs() {
+    return AssociatedInputs.swigToEnum(AdaptiveCardObjectModelJNI.ChoicesData_GetAssociatedInputs(swigCPtr, this));
+  }
+
+  public void SetAssociatedInputs(AssociatedInputs value) {
+    AdaptiveCardObjectModelJNI.ChoicesData_SetAssociatedInputs(swigCPtr, this, value.swigValue());
+  }
+
   public static ChoicesData Deserialize(ParseContext context, JsonValue root) {
     long cPtr = AdaptiveCardObjectModelJNI.ChoicesData_Deserialize(ParseContext.getCPtr(context), context, JsonValue.getCPtr(root), root);
     return (cPtr == 0) ? null : new ChoicesData(cPtr, true);

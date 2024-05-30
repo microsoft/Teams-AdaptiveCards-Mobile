@@ -1,0 +1,23 @@
+
+{
+  "type": "AdaptiveCard",
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "Rating",
+      "max": 20,
+      "value": 3.2,
+      "color": "marigold",
+      "size": "large",
+      "count": 150
+    },
+    {
+      "type": "Rating",
+      "style": "compact",
+      "value": 3.2,
+      "color": "marigold",
+      "count": 1000
+    }
+  ]
+}

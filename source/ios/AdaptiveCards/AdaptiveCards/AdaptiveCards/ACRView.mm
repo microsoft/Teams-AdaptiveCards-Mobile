@@ -420,6 +420,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case AdaptiveCards::CardElementType::DateInput:
         case AdaptiveCards::CardElementType::Fact:
         case AdaptiveCards::CardElementType::NumberInput:
+        case AdaptiveCards::CardElementType::RatingInput:
+        case AdaptiveCards::CardElementType::Icon:
         case AdaptiveCards::CardElementType::TimeInput:
         case AdaptiveCards::CardElementType::ToggleInput:
         case AdaptiveCards::CardElementType::Unknown:

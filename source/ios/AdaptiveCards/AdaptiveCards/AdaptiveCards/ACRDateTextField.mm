@@ -18,6 +18,8 @@ using namespace AdaptiveCards;
     NSDateFormatter *_encodeFormatter;
     NSDateFormatter *_decodeFormatter;
     NSString *_dateFormatString;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
+    NSString *_defaultValue;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -81,7 +83,9 @@ using namespace AdaptiveCards;
             if (preparser.TryParseSimpleDate(dateInput->GetMax(), year, month, day)) {
                 maxDateStr = [NSString stringWithFormat:@"%u-%u-%u", year, month, day];
             }
-
+            
+            _defaultValue = [[NSString alloc] initWithCString:dateInput->GetValue().c_str()
+                                                     encoding:NSUTF8StringEncoding];
             _dateFormatString = @"yyyy-MM-dd";
             picker.datePickerMode = UIDatePickerModeDate;
             picker.calendar = [NSCalendar currentCalendar];
@@ -119,6 +123,8 @@ using namespace AdaptiveCards;
             picker.datePickerMode = UIDatePickerModeTime;
             _dateFormatString = @"HH:mm";
             [_encodeFormatter setDateFormat:_dateFormatString];
+            _defaultValue = [[NSString alloc] initWithCString:timeInput->GetValue().c_str()
+                                                     encoding:NSUTF8StringEncoding];
         }
 
         self.placeholder = placeHolderStr;
@@ -147,7 +153,7 @@ using namespace AdaptiveCards;
 #endif
         self.inputView = picker;
         self.hasValidationProperties = self.isRequired || self.max || self.min;
-        self.delegateSet = [NSMutableSet set];
+        _completionHandlers = [[NSMutableArray alloc] init];
     }
 
     return self;
@@ -193,10 +199,13 @@ using namespace AdaptiveCards;
     return isValidated;
 }
 
-- (void)addObserverForValueChange:(id<ACRInputChangeDelegate>)delegate 
-{
+- (void)resetInput {
+    self.text = _defaultValue;
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
     [(UIDatePicker *)self.inputView addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [delegateSet addObject:delegate];
+    [_completionHandlers addObject:completion];
 }
 
 - (void)getInput:(NSMutableDictionary *)dictionary
@@ -232,10 +241,8 @@ using namespace AdaptiveCards;
 }
 
 -(void)datePickerValueChanged:(UIDatePicker *)datePicker {
-    for (NSObject<ACRInputChangeDelegate> *delegate in delegateSet) {
-        if (delegate && [delegate respondsToSelector:@selector(inputValueChanged)]) {
-            [delegate inputValueChanged];
-        }
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
     }
 }
 
@@ -243,6 +250,5 @@ using namespace AdaptiveCards;
 @synthesize id;
 @synthesize isRequired;
 @synthesize hasVisibilityChanged;
-@synthesize delegateSet;
 
 @end

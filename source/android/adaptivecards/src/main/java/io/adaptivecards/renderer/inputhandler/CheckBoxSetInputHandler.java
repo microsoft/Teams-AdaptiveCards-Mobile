@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 
 import java.util.Arrays;
@@ -17,9 +18,9 @@ import java.util.Vector;
 
 public class CheckBoxSetInputHandler extends BaseInputHandler
 {
-    public CheckBoxSetInputHandler(BaseInputElement baseInputElement, List<CheckBox> checkBoxList)
+    public CheckBoxSetInputHandler(BaseInputElement baseInputElement, List<CheckBox> checkBoxList, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
         m_checkBoxList = checkBoxList;
     }
 
@@ -78,6 +79,7 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
         for (CheckBox checkBox : m_checkBoxList) {
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> notifyAllInputWatchers());
         }
+        addValueChangedActionInputWatcher();
     }
 
     @Override
@@ -88,6 +90,12 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
             Util.forceFocus(m_checkBoxList.get(0));
             m_checkBoxList.get(0).sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
         }
+    }
+
+    @Override
+    public void resetValue() {
+        ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
+        setInput(choiceSetInput.GetValue());
     }
 
     private List<CheckBox> m_checkBoxList;

@@ -25,6 +25,8 @@ public enum CardElementType {
   ImageSet,
   Media,
   NumberInput,
+  RatingInput,
+  RatingLabel,
   RichTextBlock,
   Table,
   TableCell,

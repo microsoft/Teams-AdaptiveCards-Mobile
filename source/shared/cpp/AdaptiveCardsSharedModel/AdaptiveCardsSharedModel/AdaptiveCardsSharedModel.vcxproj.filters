@@ -69,6 +69,12 @@
     <ClCompile Include="..\..\ObjectModel\Icon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ObjectModel\RatingInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ObjectModel\RatingLabel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ObjectModel\ImageSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -234,6 +240,9 @@
     <ClCompile Include="..\..\ObjectModel\ChoicesData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ObjectModel\ValueChangedAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ObjectModel\AdaptiveCardParseWarning.h">
@@ -306,6 +315,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ObjectModel\Icon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ObjectModel\RatingInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ObjectModel\RatingLabel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ObjectModel\ImageSet.h">
@@ -486,6 +501,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ObjectModel\ChoicesData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ObjectModel\ValueChangedAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

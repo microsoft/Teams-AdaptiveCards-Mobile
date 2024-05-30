@@ -25,12 +25,16 @@ public:
     std::string GetDataset() const;
     void SetDataset(const std::string& dataset);
 
+    AssociatedInputs GetAssociatedInputs() const;
+    void SetAssociatedInputs(const AssociatedInputs value);
+
     static std::shared_ptr<ChoicesData> Deserialize(ParseContext& context, const Json::Value& root);
     static std::shared_ptr<ChoicesData> DeserializeFromString(ParseContext& context, const std::string& jsonString);
 
 private:
     std::string m_type;
     std::string m_dataset;
+    AssociatedInputs m_associatedInputs;
 };
 
 } // namespace AdaptiveCards
