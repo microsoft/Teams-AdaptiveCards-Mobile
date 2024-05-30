@@ -37,26 +37,30 @@
     {
       "type": "Rating",
       "value": 3.2,
-      "size": "medium"
+      "size": "medium",
+      "count": 10
     },
     {
       "type": "Rating",
       "max": 20,
       "value": 3.2,
-      "color": "marigold"
+      "color": "marigold",
+      "size": "large",
+      "count": 150
     },
     {
       "type": "Rating",
       "style": "compact",
       "value": 3.2,
       "color": "marigold",
-      "count": 150
+      "count": 1000
     }
   ],
   "actions": [
     {
       "type": "Action.Execute",
-      "title": "Submit"
+      "title": "Submit",
+      "conditionallyEnabled": true
     }
   ]
 }

@@ -44,6 +44,7 @@
 
     ACRNumberInputHandler *numberInputHandler = [[ACRNumberInputHandler alloc] init:acoElem];
 
+    numberInputHandler.textField = numInput;
     numInput.delegate = numberInputHandler;
     numInput.text = numberInputHandler.text;
     if ([numberInputHandler respondsToSelector:@selector(textFieldDidChange:)]) {

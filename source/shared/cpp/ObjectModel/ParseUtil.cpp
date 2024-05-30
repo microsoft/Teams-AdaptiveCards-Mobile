@@ -8,6 +8,7 @@
 #include "TextBlock.h"
 #include "Container.h"
 #include "ShowCardAction.h"
+#include "ValueChangedAction.h"
 
 namespace
 {
@@ -167,6 +168,11 @@ std::string ParseUtil::GetValueAsString(const Json::Value& json, AdaptiveCardSch
 [[deprecated("Use generalized DeserializeValue<T> instead")]] std::shared_ptr<BackgroundImage> ParseUtil::GetBackgroundImage(const Json::Value& json)
 {
     return DeserializeValue<BackgroundImage>(json, AdaptiveCardSchemaKey::BackgroundImage, BackgroundImage::Deserialize);
+}
+
+[[deprecated("Use generalized DeserializeValue<T> instead")]] std::shared_ptr<ValueChangedAction> ParseUtil::GetValueChangedAction(
+        const Json::Value &json) {
+    return DeserializeValue<ValueChangedAction>(json, AdaptiveCardSchemaKey::ValueChangedAction, ValueChangedAction::Deserialize);
 }
 
 bool ParseUtil::GetBool(const Json::Value& json, AdaptiveCardSchemaKey key, bool defaultValue, bool isRequired)

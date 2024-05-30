@@ -17,8 +17,6 @@
 
 @implementation ACRActionSubmitRenderer
 NSMutableArray<ACRIBaseInputHandler> *_inputs;
-NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerFunctionsWeakMemory];
-
 
 + (ACRActionSubmitRenderer *)getInstance
 {
@@ -36,23 +34,26 @@ NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerF
     std::shared_ptr<SubmitAction> action = std::dynamic_pointer_cast<SubmitAction>(elem);
     NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
     UIButton *button = [ACRButton rootView:view baseActionElement:acoElem title:title andHostConfig:acoConfig];
+    __weak __typeof(self) weakSelf = self;
     
     if(action->m_conditionallyEnabled && button.isEnabled)
     {
         _inputs = [[NSMutableArray<ACRIBaseInputHandler> alloc] initWithArray:inputs];
-        BOOL atleastOneInputRequired = false;
-        for (id<ACRIBaseInputHandler> input in _inputs) 
+        BOOL atleastOneInputRequired = NO;
+        for (id<ACRIBaseInputHandler> input in _inputs)
         {
             if (input.isRequired) 
             {
-                atleastOneInputRequired = true;
-                [input addObserverForValueChange:self];
+                atleastOneInputRequired = YES;
+                [input addObserverWithCompletion:^{
+                    __strong __typeof(self) strongSelf = weakSelf;
+                    [button setEnabled:[strongSelf validateInputs]];
+                }];
             }
         }
         // update button enable state only if alteast one input is required
         if(atleastOneInputRequired) 
         {
-            [buttons addObject:button];
             [button setEnabled:[self validateInputs]];
         }
     }
@@ -71,7 +72,7 @@ NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerF
 
 - (BOOL)validateInputs 
 {
-    BOOL validationResult = false;
+    BOOL validationResult = NO;
     for (id<ACRIBaseInputHandler> input in _inputs) {
         if(input.isRequired && !validationResult)
         {
@@ -86,14 +87,5 @@ NSHashTable<UIButton *> * buttons = [NSHashTable hashTableWithOptions:NSPointerF
     }
     return  validationResult;
 }
-
-- (void)inputValueChanged 
-{
-    for (UIButton *button in buttons)
-    {
-        [button setEnabled:[self validateInputs]];
-    }
-}
-
 @end
 

@@ -30,7 +30,7 @@ object InputUtils {
     fun isAnyInputValid(inputHandlers: List<IInputHandler>): Boolean {
         if (inputHandlers.isEmpty()) return true
         for (i in inputHandlers) {
-            if (i.isValid(false)) {
+            if (i.isRequiredInput() && i.isValid(false)) {
                 return true
             }
         }

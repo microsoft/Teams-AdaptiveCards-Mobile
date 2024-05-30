@@ -29,8 +29,14 @@
 		300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
 		30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */; };
+		4608EE892BF5C1AB00543095 /* ACRRatingLabelRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4608EE872BF5C1AB00543095 /* ACRRatingLabelRenderer.h */; };
+		4608EE8A2BF5C1AB00543095 /* ACRRatingLabelRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4608EE882BF5C1AB00543095 /* ACRRatingLabelRenderer.mm */; };
+		4608EE8D2BF5C1B800543095 /* ACRRatingInputRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4608EE8B2BF5C1B800543095 /* ACRRatingInputRenderer.h */; };
+		4608EE8E2BF5C1B800543095 /* ACRRatingInputRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4608EE8C2BF5C1B800543095 /* ACRRatingInputRenderer.mm */; };
 		4621E12C2BF3557C004F03F3 /* RatingLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4621E12B2BF3557C004F03F3 /* RatingLabel.h */; };
 		4621E12E2BF35784004F03F3 /* RatingLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4621E12D2BF35784004F03F3 /* RatingLabel.cpp */; };
+		46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */; };
+		46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */; };
 		463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C062BD8DB1F00A95C4E /* Icon.cpp */; };
 		463C3C0B2BD8DCC000A95C4E /* Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0A2BD8DCC000A95C4E /* Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */; };
@@ -39,8 +45,17 @@
 		463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */; };
 		463C4EDF2BDF63E700A95C4E /* ACRSVGIconHoldingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */; };
 		463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */; };
+		46445D872BF7242700831973 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46445D862BF7242700831973 /* FluentAssets.xcassets */; };
+		46445D892BF72A5300831973 /* ACRRatingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46445D882BF72A5300831973 /* ACRRatingView.h */; };
+		46445D8B2BF7324100831973 /* ACRRatingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46445D8A2BF7324100831973 /* ACRRatingView.mm */; };
+		468F1F182BFC5B3400C2F561 /* ACRRatingInputDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 468F1F172BFC5B3400C2F561 /* ACRRatingInputDataSource.h */; };
+		468F1F1A2BFC5BC500C2F561 /* ACRRatingInputDataSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 468F1F192BFC5BC500C2F561 /* ACRRatingInputDataSource.mm */; };
 		46B329162BF32057009671AE /* RatingInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B329152BF32057009671AE /* RatingInput.h */; };
 		46B329182BF3228F009671AE /* RatingInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B329172BF3228F009671AE /* RatingInput.cpp */; };
+		46B78E642C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46B78E632C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm */; };
+		46B78E662C0586D500EF4566 /* RatingInputValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E652C0586D500EF4566 /* RatingInputValid.json */; };
+		46B78E682C0587B700EF4566 /* RatingLabelValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E672C0587B700EF4566 /* RatingLabelValid.json */; };
+		46B78E6A2C058A8200EF4566 /* RatingInputInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E692C058A8200EF4566 /* RatingInputInvalid.json */; };
 		6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */; };
 		6B096D4E225431D0006CC034 /* ACRRichTextBlockRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B096D4D225431D0006CC034 /* ACRRichTextBlockRenderer.mm */; };
@@ -271,6 +286,9 @@
 		84AE295A27FFA26F00D01B82 /* ContentSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295527FFA26F00D01B82 /* ContentSource.h */; };
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
+		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
+		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
+		B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */; };
 		C8DEDF39220CDEB00001AAED /* ActionSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8DEDF37220CDEB00001AAED /* ActionSet.cpp */; };
 		C8DEDF3A220CDEB00001AAED /* ActionSet.h in Headers */ = {isa = PBXBuildFile; fileRef = C8DEDF38220CDEB00001AAED /* ActionSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA1218C621C4509400152EA8 /* ToggleVisibilityTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = CA1218C221C4509300152EA8 /* ToggleVisibilityTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -520,8 +538,14 @@
 		30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsTextBlockTests.mm; sourceTree = "<group>"; };
 		3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		4608EE872BF5C1AB00543095 /* ACRRatingLabelRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRatingLabelRenderer.h; sourceTree = "<group>"; };
+		4608EE882BF5C1AB00543095 /* ACRRatingLabelRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingLabelRenderer.mm; sourceTree = "<group>"; };
+		4608EE8B2BF5C1B800543095 /* ACRRatingInputRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRatingInputRenderer.h; sourceTree = "<group>"; };
+		4608EE8C2BF5C1B800543095 /* ACRRatingInputRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingInputRenderer.mm; sourceTree = "<group>"; };
 		4621E12B2BF3557C004F03F3 /* RatingLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RatingLabel.h; path = ../../../../shared/cpp/ObjectModel/RatingLabel.h; sourceTree = "<group>"; };
 		4621E12D2BF35784004F03F3 /* RatingLabel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RatingLabel.cpp; path = ../../../../shared/cpp/ObjectModel/RatingLabel.cpp; sourceTree = "<group>"; };
+		46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
+		46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
 		463C3C062BD8DB1F00A95C4E /* Icon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Icon.cpp; path = ../../../../shared/cpp/ObjectModel/Icon.cpp; sourceTree = "<group>"; };
 		463C3C0A2BD8DCC000A95C4E /* Icon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Icon.h; path = ../../../../shared/cpp/ObjectModel/Icon.h; sourceTree = "<group>"; };
 		463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRIconRenderer.h; sourceTree = "<group>"; };
@@ -530,8 +554,17 @@
 		463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGImageView.mm; sourceTree = "<group>"; };
 		463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRSVGIconHoldingView.h; sourceTree = "<group>"; };
 		463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGIconHoldingView.mm; sourceTree = "<group>"; };
+		46445D862BF7242700831973 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
+		46445D882BF72A5300831973 /* ACRRatingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRRatingView.h; sourceTree = "<group>"; };
+		46445D8A2BF7324100831973 /* ACRRatingView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingView.mm; sourceTree = "<group>"; };
+		468F1F172BFC5B3400C2F561 /* ACRRatingInputDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRRatingInputDataSource.h; sourceTree = "<group>"; };
+		468F1F192BFC5BC500C2F561 /* ACRRatingInputDataSource.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingInputDataSource.mm; sourceTree = "<group>"; };
 		46B329152BF32057009671AE /* RatingInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RatingInput.h; path = ../../../../shared/cpp/ObjectModel/RatingInput.h; sourceTree = "<group>"; };
 		46B329172BF3228F009671AE /* RatingInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RatingInput.cpp; path = ../../../../shared/cpp/ObjectModel/RatingInput.cpp; sourceTree = "<group>"; };
+		46B78E632C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsRatingElementTests.mm; sourceTree = "<group>"; };
+		46B78E652C0586D500EF4566 /* RatingInputValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingInputValid.json; sourceTree = "<group>"; };
+		46B78E672C0587B700EF4566 /* RatingLabelValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingLabelValid.json; sourceTree = "<group>"; };
+		46B78E692C058A8200EF4566 /* RatingInputInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingInputInvalid.json; sourceTree = "<group>"; };
 		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRTypeaheadSearchViewControllerPrivate.h; path = PrivateHeaders/ACRTypeaheadSearchViewControllerPrivate.h; sourceTree = "<group>"; };
 		6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRichTextBlockRenderer.h; sourceTree = "<group>"; };
@@ -775,6 +808,9 @@
 		84AE295727FFA26F00D01B82 /* CaptionSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CaptionSource.cpp; path = ../../../../shared/cpp/ObjectModel/CaptionSource.cpp; sourceTree = "<group>"; };
 		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
 		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
+		B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionValid.json; sourceTree = "<group>"; };
+		B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionInvalid.json; sourceTree = "<group>"; };
 		C1BFE0C10A542B2DABBE89DC /* Pods-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests/Pods-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8DEDF37220CDEB00001AAED /* ActionSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActionSet.cpp; path = ../../../../shared/cpp/ObjectModel/ActionSet.cpp; sourceTree = "<group>"; };
 		C8DEDF38220CDEB00001AAED /* ActionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionSet.h; path = ../../../../shared/cpp/ObjectModel/ActionSet.h; sourceTree = "<group>"; };
@@ -1082,6 +1118,8 @@
 		6B70ABA425797B720095D925 /* InputRenderers */ = {
 			isa = PBXGroup;
 			children = (
+				4608EE8B2BF5C1B800543095 /* ACRRatingInputRenderer.h */,
+				4608EE8C2BF5C1B800543095 /* ACRRatingInputRenderer.mm */,
 				6B6840F61F25EC2D008A933F /* ACRInputChoiceSetRenderer.h */,
 				6B6840F71F25EC2D008A933F /* ACRInputChoiceSetRenderer.mm */,
 				F4C1F5D31F2187900018CB78 /* ACRInputDateRenderer.h */,
@@ -1124,6 +1162,7 @@
 				6B8C767A26461F1A009548FA /* ACRToggleInputView.xib */,
 				6B8C766C26461F1A009548FA /* Images */,
 				6B3A231B2755A3EF00764971 /* Localizable.strings */,
+				46445D862BF7242700831973 /* FluentAssets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1258,6 +1297,11 @@
 				6BE6C7B726E2E30A009E9171 /* Container.VerticalContentAlignment.json */,
 				6BE6C7B126E2DF29009E9171 /* Container.VerticalContentAlignment2.json */,
 				6BE6C7C226E2F07C009E9171 /* sample.json */,
+				46B78E652C0586D500EF4566 /* RatingInputValid.json */,
+				46B78E672C0587B700EF4566 /* RatingLabelValid.json */,
+				46B78E692C058A8200EF4566 /* RatingInputInvalid.json */,
+				B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */,
+				B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */,
 			);
 			path = TestFiles;
 			sourceTree = "<group>";
@@ -1397,6 +1441,8 @@
 				30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */,
 				30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */,
 				6B124CA326D04CA9007E9641 /* AdaptiveCardsUtiliOSTest.mm */,
+				46B78E632C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm */,
+				B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */,
 				6BE6C79426E1560A009E9171 /* Helpers */,
 				6B124C9226B8AE3B007E9641 /* Mocks */,
 				6BE6C79F26E17077009E9171 /* TestFiles */,
@@ -1565,6 +1611,8 @@
 				46B329172BF3228F009671AE /* RatingInput.cpp */,
 				4621E12B2BF3557C004F03F3 /* RatingLabel.h */,
 				4621E12D2BF35784004F03F3 /* RatingLabel.cpp */,
+				46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */,
+				46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */,
 			);
 			name = SharedLib;
 			sourceTree = "<group>";
@@ -1600,6 +1648,10 @@
 				6B9AB30F20DD82A2005C8E15 /* ACRTextView.mm */,
 				6BFF24052714E26900183C59 /* ACRToggleInputDataSource.h */,
 				6B9BDF7120E1BD0E00F13155 /* ACRToggleInputDataSource.mm */,
+				468F1F172BFC5B3400C2F561 /* ACRRatingInputDataSource.h */,
+				468F1F192BFC5BC500C2F561 /* ACRRatingInputDataSource.mm */,
+				46445D882BF72A5300831973 /* ACRRatingView.h */,
+				46445D8A2BF7324100831973 /* ACRRatingView.mm */,
 				6BE8DFD5249C5126005EFE66 /* ACRToggleInputView.h */,
 				6BE8DFD3249C4C1B005EFE66 /* ACRToggleInputView.mm */,
 				CFF954CC29819A6B00F321C3 /* DynamicTypeahead */,
@@ -1654,6 +1706,8 @@
 		F42979341F3007C500E89914 /* ReadOnlyObjects */ = {
 			isa = PBXGroup;
 			children = (
+				4608EE872BF5C1AB00543095 /* ACRRatingLabelRenderer.h */,
+				4608EE882BF5C1AB00543095 /* ACRRatingLabelRenderer.mm */,
 				F42741081EF864A900399FBB /* ACRBaseCardElementRenderer.h */,
 				F42741091EF864A900399FBB /* ACRBaseCardElementRenderer.mm */,
 				F42741261EFB374A00399FBB /* ACRColumnSetRenderer.h */,
@@ -1853,6 +1907,7 @@
 				300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */,
 				6B616C4321CB20D2003E29CE /* ACRActionToggleVisibilityRenderer.h in Headers */,
 				F4CA74A12016B3B9002041DF /* ACRTapGestureRecognizerEventHandler.h in Headers */,
+				46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */,
 				6B7B1A9820BE2CBC00260731 /* ACRUIImageView.h in Headers */,
 				F429793E1F3155EF00E89914 /* ACRTextField.h in Headers */,
 				6B2242A42233439E000ACDA1 /* TextElementProperties.h in Headers */,
@@ -1929,6 +1984,7 @@
 				6B8C765726449B09009548FA /* TableRow.h in Headers */,
 				6B25D3E226138E3700A47AFB /* ACOEnums.h in Headers */,
 				6B25D3EB2613D83700A47AFB /* ACORenderContext.h in Headers */,
+				468F1F182BFC5B3400C2F561 /* ACRRatingInputDataSource.h in Headers */,
 				6BFF23F02714C0F000183C59 /* ACRViewPrivate.h in Headers */,
 				6BFF23F12714C0F000183C59 /* ACOAuthenticationPrivate.h in Headers */,
 				6BFF23EF2714C0F000183C59 /* ACRInputLabelViewPrivate.h in Headers */,
@@ -1942,6 +1998,7 @@
 				4621E12C2BF3557C004F03F3 /* RatingLabel.h in Headers */,
 				6BFF240E2714E42800183C59 /* ACRTableCellView.h in Headers */,
 				6BFF23FB2714C0F000183C59 /* ACOTokenExchangeResourcePrivate.h in Headers */,
+				4608EE892BF5C1AB00543095 /* ACRRatingLabelRenderer.h in Headers */,
 				6B250FB2253F5F8F007FFCFB /* ACRTargetBuilder.h in Headers */,
 				6B8C76432641D8D6009548FA /* InternalId.h in Headers */,
 				6BDE5C4226FEA7DC003A1DDB /* ACROverflowTarget.h in Headers */,
@@ -1949,10 +2006,12 @@
 				6BDE5C4026FEA7DC003A1DDB /* ACRAggregateTarget.h in Headers */,
 				6BDE5C4426FEA7DC003A1DDB /* ACRBaseTarget.h in Headers */,
 				6B8C766726461E98009548FA /* ACOBundle.h in Headers */,
+				4608EE8D2BF5C1B800543095 /* ACRRatingInputRenderer.h in Headers */,
 				6B124C9F26BCB2FE007E9641 /* ACOVisibilityManager.h in Headers */,
 				6B92A7E62677DFAB00CAE3BF /* ACRChoiceSetCompactStyleView.h in Headers */,
 				6BD859FB26F2CA7B0086F5BA /* ACOFillerSpaceManager.h in Headers */,
 				0D45F5A7261731E400EF03C5 /* ACRActionOverflowRenderer.h in Headers */,
+				46445D892BF72A5300831973 /* ACRRatingView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2076,6 +2135,7 @@
 				6B8C768726461F1A009548FA /* unchecked-checkbox-24.png in Resources */,
 				6B8C769426461F1A009548FA /* ACRQuickActionView.xib in Resources */,
 				6B8C769026461F1A009548FA /* ACRInputTableView.xib in Resources */,
+				46445D872BF7242700831973 /* FluentAssets.xcassets in Resources */,
 				6B8C769826461F1A009548FA /* ACRQuickActionMultilineView.xib in Resources */,
 				6B8C769926461F1A009548FA /* ACRChoiceSetCellUnchecked.xib in Resources */,
 				6B8C769226461F1A009548FA /* ACRToggleInputView.xib in Resources */,
@@ -2088,14 +2148,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B654C752708168D00DF6A5F /* Action.ToggleVisibilityExhaustive.json in Resources */,
+				46B78E662C0586D500EF4566 /* RatingInputValid.json in Resources */,
+				46B78E6A2C058A8200EF4566 /* RatingInputInvalid.json in Resources */,
 				6BE6C7C526E7CDD0009E9171 /* ColumnSet.Input.ChoiceSet.VerticalStretch.json in Resources */,
 				6BE6C7BA26E2E30A009E9171 /* Container.VerticalContentAlignment.json in Resources */,
+				46B78E682C0587B700EF4566 /* RatingLabelValid.json in Resources */,
 				6BE6C7BE26E2E4EC009E9171 /* ColumnSet.VerticalStretch.json in Resources */,
 				6BE6C7BB26E2E30A009E9171 /* ColumnSet.Image.VerticalStretch.json in Resources */,
 				6BE6C7C326E2F07C009E9171 /* sample.json in Resources */,
 				6BE6C7BC26E2E30A009E9171 /* ColumnSet.FactSet.VerticalStretch.json in Resources */,
 				6BE6C7B626E2E140009E9171 /* Column.VerticalAlignment.json in Resources */,
+				B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */,
 				6BE6C7B226E2DF29009E9171 /* Container.VerticalContentAlignment2.json in Resources */,
+				B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2199,12 +2264,14 @@
 				F44873291EE2261F00FCAFAE /* ToggleInput.cpp in Sources */,
 				6B616C4421CB20D2003E29CE /* ACRActionToggleVisibilityRenderer.mm in Sources */,
 				CA1218C921C4509400152EA8 /* ToggleVisibilityAction.cpp in Sources */,
+				468F1F1A2BFC5BC500C2F561 /* ACRRatingInputDataSource.mm in Sources */,
 				6BFCA143264F54B500195CA7 /* ACRTableView.mm in Sources */,
 				F401A8781F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm in Sources */,
 				F42979461F322C9000E89914 /* ACRNumericTextField.mm in Sources */,
 				F43A94111F1D60E30001920B /* ACRFactSetRenderer.mm in Sources */,
 				F44873141EE2261F00FCAFAE /* ImageSet.cpp in Sources */,
 				F4C1F5D61F2187900018CB78 /* ACRInputDateRenderer.mm in Sources */,
+				4608EE8A2BF5C1AB00543095 /* ACRRatingLabelRenderer.mm in Sources */,
 				F44872F71EE2261F00FCAFAE /* BaseActionElement.cpp in Sources */,
 				F44872FB1EE2261F00FCAFAE /* BaseInputElement.cpp in Sources */,
 				F974C5362800B8E100C1B3C7 /* CaptionSource.cpp in Sources */,
@@ -2232,6 +2299,7 @@
 				F4F6BA2A204E107F003741B6 /* UnknownElement.cpp in Sources */,
 				CFF954DC2981B2A700F321C3 /* ACRTypeaheadSearchParameters.mm in Sources */,
 				F49683531F6CA24600DF0D3A /* ACRRenderer.mm in Sources */,
+				46445D8B2BF7324100831973 /* ACRRatingView.mm in Sources */,
 				F42741211EF9DB8000399FBB /* ACRContainerRenderer.mm in Sources */,
 				6B616C4021CB1878003E29CE /* ACRToggleVisibilityTarget.mm in Sources */,
 				CA1218C821C4509400152EA8 /* ToggleVisibilityTarget.cpp in Sources */,
@@ -2282,6 +2350,7 @@
 				0D3485F126180F8F00614EB9 /* ACOActionOverflow.mm in Sources */,
 				6BCE4B232108EB4E00021A62 /* ACRAVPlayerViewHoldingUIView.mm in Sources */,
 				6BDE5C4326FEA7DC003A1DDB /* ACRBaseTarget.mm in Sources */,
+				46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */,
 				6B22425F21E80647000ACDA1 /* ACOParseContext.mm in Sources */,
 				F4071C7E1FCCBAEF00AF4FEA /* ActionParserRegistration.cpp in Sources */,
 				6B2242A72233442C000ACDA1 /* RichTextBlock.cpp in Sources */,
@@ -2344,6 +2413,7 @@
 				F42741251EFB274C00399FBB /* ACRColumnRenderer.mm in Sources */,
 				F4F255701F98247600A80D39 /* ACOBaseActionElement.mm in Sources */,
 				6BFF99C525FFF53E0028069F /* AuthCardButton.cpp in Sources */,
+				4608EE8E2BF5C1B800543095 /* ACRRatingInputRenderer.mm in Sources */,
 				6BF43080219129600068E432 /* ACRQuickReplyMultilineView.mm in Sources */,
 				6BDE5C4726FEA7DC003A1DDB /* ACRAggregateTarget.mm in Sources */,
 				6B9BDF7320E1BD0E00F13155 /* ACRToggleInputDataSource.mm in Sources */,
@@ -2377,6 +2447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B124C8C26B4AA07007E9641 /* AdaptiveCardsActionsTest.mm in Sources */,
+				46B78E642C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm in Sources */,
 				6BE6C7C126E2ECEA009E9171 /* ADCMockResolver.m in Sources */,
 				CFF95C092982E34300F321C3 /* ACRChoiceSetFilteredStyleViewTests.mm in Sources */,
 				6B124CA426D04CA9007E9641 /* AdaptiveCardsUtiliOSTest.mm in Sources */,
@@ -2388,6 +2459,7 @@
 				CFF95C072982E30E00F321C3 /* ACRTypeaheadSearchParametersTests.mm in Sources */,
 				CFF95C0D2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm in Sources */,
 				6B124C9026B8AC37007E9641 /* ACRMockViews.mm in Sources */,
+				B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */,
 				CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */,
 				6B124C9826B9F5FC007E9641 /* AdaptiveCardsColumnTests.mm in Sources */,
 				6B4C05BF27864B0800882387 /* ACRImagePropertiesTests.mm in Sources */,

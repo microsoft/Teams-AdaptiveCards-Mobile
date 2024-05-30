@@ -4,7 +4,10 @@ package io.adaptivecards.renderer.inputhandler;
 
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import io.adaptivecards.objectmodel.BaseInputElement;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.layout.StretchableInputLayout;
 
 import java.util.ArrayList;
@@ -12,10 +15,15 @@ import java.util.List;
 
 public abstract class BaseInputHandler implements IInputHandler
 {
-    public BaseInputHandler(BaseInputElement baseInputElement)
-    {
+    public BaseInputHandler(BaseInputElement baseInputElement) {
         m_baseInputElement = baseInputElement;
         m_inputWatchers = new ArrayList<>();
+    }
+
+    public BaseInputHandler(@Nullable BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
+        this(baseInputElement);
+        m_renderedAdaptiveCard = renderedAdaptiveCard;
+        m_cardId = cardId;
     }
 
     public void setView(View view)
@@ -63,6 +71,11 @@ public abstract class BaseInputHandler implements IInputHandler
         return isValid;
     }
 
+    @Override
+    public boolean isRequiredInput() {
+        return m_baseInputElement.GetIsRequired();
+    }
+
     public boolean isValidOnSpecifics(String inputValue)
     {
         // By default return true as some inputs don't have any specific inputs (regex, min/max)
@@ -84,9 +97,20 @@ public abstract class BaseInputHandler implements IInputHandler
         m_inputWatchers.add(observer);
     }
 
+    protected void addValueChangedActionInputWatcher() {
+        if(m_baseInputElement.GetValueChangedAction() != null && m_renderedAdaptiveCard != null){
+            addInputWatcher(new ValueChangedActionInputWatcher(m_baseInputElement.GetValueChangedAction(), m_renderedAdaptiveCard, m_cardId));
+        }
+    }
+
     @Override
     public void registerInputObserver() {
         // Default implementation does nothing
+    }
+
+    @Override
+    public void resetValue() {
+    // Default implementation does nothing
     }
 
     protected void notifyAllInputWatchers(){
@@ -100,5 +124,8 @@ public abstract class BaseInputHandler implements IInputHandler
     protected View m_view = null;
     private StretchableInputLayout m_inputLayout = null;
     List<IInputWatcher> m_inputWatchers;
+    @Nullable
+    private RenderedAdaptiveCard m_renderedAdaptiveCard;
+    private Long m_cardId;
 
 }
