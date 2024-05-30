@@ -70,15 +70,17 @@ class RatingStarInputView: LinearLayout {
         val rightMargin = Util.dpToPixels(context, RIGHT_MARGIN.toFloat())
         for (index in 0 until maxStarsCount) {
             val star = ImageView(context)
-            star.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0f)
-            star.contentDescription = "Rating Star $index+1"
-            star.setImageDrawable(getStarDrawable())
-            star.setColorFilter(RatingElementRendererUtil.getInputStarColor(color, index < value, hostConfig))
-            star.isActivated = index < value
-            ratingStars.add(star)
-            star.setOnClickListener {
-                handleClick(index)
+            star.apply {
+                layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0f)
+                contentDescription = "Rating Star $index+1"
+                setImageDrawable(getStarDrawable())
+                setColorFilter(RatingElementRendererUtil.getInputStarColor(color, index < value, hostConfig))
+                isActivated = index < value
+                setOnClickListener {
+                    handleClick(index)
+                }
             }
+            ratingStars.add(star)
             val params = star.layoutParams as LayoutParams
             if (index < maxStarsCount - 1) {
                 params.rightMargin = rightMargin
@@ -97,8 +99,8 @@ class RatingStarInputView: LinearLayout {
 
     private fun getStarDrawable(): Drawable? {
         return when (size) {
-            RatingSize.Medium -> ResourcesCompat.getDrawable(resources, R.drawable.rating_star_selector_medium, null)
             RatingSize.Large -> ResourcesCompat.getDrawable(resources, R.drawable.rating_star_selector_large, null)
+            else -> ResourcesCompat.getDrawable(resources, R.drawable.rating_star_selector_medium, null)
         }
     }
 

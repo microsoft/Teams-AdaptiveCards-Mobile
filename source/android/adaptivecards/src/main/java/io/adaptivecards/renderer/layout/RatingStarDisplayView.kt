@@ -78,10 +78,12 @@ class RatingStarDisplayView: LinearLayout {
     private fun defaultStyle() {
         for (i in 0 until maxStarsCount) {
             val star = ImageView(context)
-            star.setImageDrawable(getStarDrawable())
-            star.isActivated = true
-            star.setColorFilter(RatingElementRendererUtil.getReadOnlyStarColor(color, i < value.toInt(), hostConfig))
-            star.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+            star.apply {
+                setImageDrawable(getStarDrawable())
+                isActivated = true
+                setColorFilter(RatingElementRendererUtil.getReadOnlyStarColor(color, i < value.toInt(), hostConfig))
+                layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+            }
             ratingStars.add(star)
             val rightMargin = if (i < maxStarsCount - 1) MARGIN_BETWEEN_STARS else MARGIN_BETWEEN_STARS_AND_RATING_TEXT
             addViewWithMargin(star, rightMargin)
@@ -95,10 +97,12 @@ class RatingStarDisplayView: LinearLayout {
      **/
     private fun compactStyle() {
         val star = ImageView(context)
-        star.setImageDrawable(getStarDrawable())
-        star.isActivated = true
-        star.setColorFilter(RatingElementRendererUtil.getReadOnlyStarColor(color, true, hostConfig))
-        star.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        star.apply {
+            setImageDrawable(getStarDrawable())
+            isActivated = true
+            setColorFilter(RatingElementRendererUtil.getReadOnlyStarColor(color, true, hostConfig))
+            layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        }
         ratingStars.add(star)
         addViewWithMargin(star, MARGIN_BETWEEN_STARS_AND_RATING_TEXT)
         addRatingAndCount()
@@ -132,12 +136,14 @@ class RatingStarDisplayView: LinearLayout {
     private fun createTextView(text: String, textColor: String, style: Int): TextView {
         val color = RatingElementRendererUtil.getColorFromHexCode(textColor)
         val textView = TextView(context)
-        textView.text = text
-        textView.setTextColor(color)
-        textView.textSize = 16F
-        textView.setTypeface(null, style)
-        textView.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
-        textView.gravity = Gravity.CENTER_VERTICAL
+        textView.apply {
+            setText(text)
+            setTextColor(color)
+            textSize = 16F
+            setTypeface(null, style)
+            layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT)
+            gravity = Gravity.CENTER_VERTICAL
+        }
         return textView
     }
 
@@ -153,8 +159,8 @@ class RatingStarDisplayView: LinearLayout {
      **/
     private fun getStarDrawable(): Drawable? {
         return when (size) {
-            RatingSize.Medium -> ResourcesCompat.getDrawable(resources, R.drawable.rating_star_selector_small, null)
             RatingSize.Large -> ResourcesCompat.getDrawable(resources, R.drawable.rating_star_selector_medium, null)
+            else -> ResourcesCompat.getDrawable(resources, R.drawable.rating_star_selector_small, null)
         }
     }
 

@@ -20,13 +20,13 @@ object RatingElementRendererUtil {
      fun getInputStarColor(color: RatingColor, isActivated: Boolean, hostConfig: HostConfig): Int {
         return if (isActivated) {
             when (color) {
-                RatingColor.Neutral -> getColorFromHexCode(hostConfig.GetRatingInputConfig().filledStar.neutralColor)
                 RatingColor.Marigold -> getColorFromHexCode(hostConfig.GetRatingInputConfig().filledStar.marigoldColor)
+                else -> getColorFromHexCode(hostConfig.GetRatingInputConfig().filledStar.neutralColor)
             }
         } else {
             when (color) {
-                RatingColor.Neutral -> getColorFromHexCode(hostConfig.GetRatingInputConfig().emptyStar.neutralColor)
                 RatingColor.Marigold -> getColorFromHexCode(hostConfig.GetRatingInputConfig().emptyStar.marigoldColor)
+                else -> getColorFromHexCode(hostConfig.GetRatingInputConfig().emptyStar.neutralColor)
             }
         }
     }
@@ -38,13 +38,13 @@ object RatingElementRendererUtil {
     fun getReadOnlyStarColor(color: RatingColor, isActivated: Boolean, hostConfig: HostConfig): Int {
         return if (isActivated) {
             when (color) {
-                RatingColor.Neutral -> getColorFromHexCode(hostConfig.GetRatingLabelConfig().filledStar.neutralColor)
                 RatingColor.Marigold -> getColorFromHexCode(hostConfig.GetRatingLabelConfig().filledStar.marigoldColor)
+                else -> getColorFromHexCode(hostConfig.GetRatingLabelConfig().filledStar.neutralColor)
             }
         } else {
             when (color) {
-                RatingColor.Neutral -> getColorFromHexCode(hostConfig.GetRatingLabelConfig().emptyStar.neutralColor)
                 RatingColor.Marigold -> getColorFromHexCode(hostConfig.GetRatingLabelConfig().emptyStar.marigoldColor)
+                else -> getColorFromHexCode(hostConfig.GetRatingLabelConfig().emptyStar.neutralColor)
             }
         }
     }
