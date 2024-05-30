@@ -9,6 +9,8 @@
 
 namespace AdaptiveCards
 {
+class ValueChangedAction;
+
 class BaseInputElement : public BaseCardElement
 {
 public:
@@ -28,6 +30,9 @@ public:
     std::string GetErrorMessage() const;
     void SetErrorMessage(const std::string errorMessage);
 
+    std::shared_ptr<AdaptiveCards::ValueChangedAction> GetValueChangedAction() const;
+    void SetValueChangedAction(const std::shared_ptr<AdaptiveCards::ValueChangedAction> value);
+
     static std::shared_ptr<BaseInputElement> DeserializeBasePropertiesFromString(ParseContext& context, const std::string& jsonString);
     static std::shared_ptr<BaseInputElement> DeserializeBaseProperties(ParseContext& context, const Json::Value& json);
 
@@ -40,6 +45,7 @@ private:
     bool m_isRequired;
     std::string m_errorMessage;
     std::string m_label;
+    std::shared_ptr<ValueChangedAction> m_valueChangedAction;
 };
 
 template <typename T>

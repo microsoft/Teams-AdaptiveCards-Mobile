@@ -28,7 +28,9 @@
 @property NSString *id;
 @property NSString *valueOn;
 @property NSString *valueOff;
+@property NSString *defaultValue;
 @property (weak) UISwitch *toggleSwitch;
+@property NSMutableArray<CompletionHandler> *_completionHandlers;
 
 - (instancetype)initWithInputToggle:(std::shared_ptr<AdaptiveCards::ToggleInput> const &)toggleInput
                      WithHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)hostConfig;

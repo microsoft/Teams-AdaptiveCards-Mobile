@@ -17,7 +17,6 @@
 
 @implementation ACRActionExecuteRenderer
 NSMutableArray<ACRIBaseInputHandler> *_inputsArray;
-NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSPointerFunctionsWeakMemory];
 
 + (ACRActionExecuteRenderer *)getInstance
 {
@@ -37,6 +36,7 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
     NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
 
     UIButton *button = [ACRButton rootView:view baseActionElement:acoElem title:title andHostConfig:acoConfig];
+    __weak __typeof(self) weakSelf = self;
     
     if(action->m_conditionallyEnabled && button.isEnabled)
     {
@@ -47,13 +47,15 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
             if (input.isRequired)
             {
                 atleastOneInputRequired = true;
-                [input addObserverForValueChange:self];
+                [input addObserverWithCompletion:^{ 
+                    __strong __typeof(self) strongSelf = weakSelf;
+                    [button setEnabled:[strongSelf validateInputs]];
+                }];
             }
         }
         // update button enable state only if alteast one input is required
         if(atleastOneInputRequired) 
         {
-            [executeButtons addObject:button];
             [button setEnabled:[self validateInputs]];
         }
     }
@@ -86,13 +88,5 @@ NSHashTable<UIButton *> * executeButtons = [NSHashTable hashTableWithOptions:NSP
         }
     }
     return  validationResult;
-}
-
-- (void)inputValueChanged 
-{
-    for (UIButton *button in executeButtons)
-    {
-        [button setEnabled:[self validateInputs]];
-    }
 }
 @end
