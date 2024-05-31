@@ -14,16 +14,14 @@ import io.adaptivecards.objectmodel.RatingColor
 import io.adaptivecards.objectmodel.RatingInput
 import io.adaptivecards.objectmodel.RatingSize
 import io.adaptivecards.renderer.Util
-import io.adaptivecards.renderer.inputhandler.RatingInputHandler
 import io.adaptivecards.renderer.readonly.RatingElementRendererUtil
-import java.lang.ref.WeakReference
 
 /**
  * View to display the input rating stars
  **/
 class RatingStarInputView: LinearLayout {
 
-    private var value = 0
+    private var value: Double = 0.0
 
     private var maxStarsCount = 5
 
@@ -33,26 +31,24 @@ class RatingStarInputView: LinearLayout {
 
     private val ratingStars: MutableList<ImageView> = ArrayList()
 
-    private var rating = 0
+    var rating: Double = 0.0
 
     private lateinit var hostConfig: HostConfig
 
-    private var ratingInputHandler: WeakReference<RatingInputHandler>? = null
+    private var listener: RatingStarInputViewListener? = null
 
     constructor(
         context: Context,
         hostConfig: HostConfig,
-        ratingInput: RatingInput,
-        ratingInputHandler: RatingInputHandler
+        ratingInput: RatingInput
     ) : super(context) {
         isSaveEnabled = true
         this.maxStarsCount = (ratingInput.GetMax().toInt()).coerceAtMost(5)
-        this.value = (ratingInput.GetValue().toInt()).coerceAtMost(5)
+        this.value = (ratingInput.GetValue()).coerceAtMost(5.0)
         this.color = ratingInput.GetRatingColor()
         this.rating = value
         this.size = ratingInput.GetRatingSize()
         this.hostConfig = hostConfig
-        this.ratingInputHandler = WeakReference(ratingInputHandler)
         initStars(context)
     }
 
@@ -75,9 +71,9 @@ class RatingStarInputView: LinearLayout {
                 contentDescription = "Rating Star $index+1"
                 setImageDrawable(getStarDrawable())
                 setColorFilter(RatingElementRendererUtil.getInputStarColor(color, index < value, hostConfig))
-                isActivated = index < value
+                isActivated = index < value.toInt()
                 setOnClickListener {
-                    handleClick(index)
+                    handleRatingChange((index+1).toDouble())
                 }
             }
             ratingStars.add(star)
@@ -89,12 +85,16 @@ class RatingStarInputView: LinearLayout {
         }
     }
 
-    private fun handleClick(index: Int) {
-        rating = index + 1
+    fun setRatingStarInputViewListener(listener: RatingStarInputViewListener) {
+        this.listener = listener
+    }
+
+    fun handleRatingChange(rating: Double) {
+        this.rating = rating
         for (i in 0 until maxStarsCount) {
-            ratingStars[i].isActivated = i < rating
+            ratingStars[i].isActivated = i < rating.toInt()
         }
-        ratingInputHandler?.get()?.registerInputObserver()
+        listener?.onRatingChanged()
     }
 
     private fun getStarDrawable(): Drawable? {
@@ -104,11 +104,11 @@ class RatingStarInputView: LinearLayout {
         }
     }
 
-    fun getRating(): Int {
-        return rating
-    }
-
     companion object {
         private const val RIGHT_MARGIN = 12
     }
+}
+
+interface RatingStarInputViewListener {
+    fun onRatingChanged()
 }

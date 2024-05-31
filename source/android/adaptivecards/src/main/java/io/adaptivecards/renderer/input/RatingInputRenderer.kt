@@ -40,8 +40,7 @@ object RatingInputRenderer: BaseCardElementRenderer() {
         val view = RatingStarInputView(
             context,
             hostConfig,
-            ratingInput,
-            ratingInputHandler
+            ratingInput
         ) as LinearLayout
         RatingElementRendererUtil.applyHorizontalAlignment(view, ratingInput.GetHorizontalAlignment(), renderArgs)
         ratingInputHandler.setView(view)

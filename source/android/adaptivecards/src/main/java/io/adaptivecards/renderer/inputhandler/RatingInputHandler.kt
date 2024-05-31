@@ -4,8 +4,10 @@ package io.adaptivecards.renderer.inputhandler
 
 import android.view.accessibility.AccessibilityEvent
 import io.adaptivecards.objectmodel.BaseInputElement
+import io.adaptivecards.objectmodel.RatingInput
 import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.layout.RatingStarInputView
+import io.adaptivecards.renderer.layout.RatingStarInputViewListener
 
 /**
  * Input handler for Rating input
@@ -13,15 +15,18 @@ import io.adaptivecards.renderer.layout.RatingStarInputView
 class RatingInputHandler(
     baseInputElement: BaseInputElement
 ): BaseInputHandler(baseInputElement) {
-    override fun getInput() = (m_view as RatingStarInputView).getRating().toString()
+    override fun getInput() = (m_view as RatingStarInputView).rating.toString()
 
-    override fun setInput(input: String?) {
-        // no-op
+    override fun setInput(input: String) {
+        try {
+            (m_view as RatingStarInputView).handleRatingChange(input.toDouble())
+        } catch(e: NumberFormatException) {
+            return
+        }
     }
 
     override fun setFocusToView() {
-        val rating = (m_view as RatingStarInputView).getRating()
-        val focusView = (m_view as RatingStarInputView).getChildAt(if (rating == 0) 0 else rating - 1)
+        val focusView = (m_view as RatingStarInputView).getChildAt(0)
         Util.forceFocus(focusView)
         focusView.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED)
     }
@@ -42,8 +47,16 @@ class RatingInputHandler(
         return isValid
     }
 
-    override fun registerInputObserver() {
-        notifyAllInputWatchers()
+    override fun resetValue() {
+        val ratingInput = Util.castTo(m_baseInputElement, RatingInput::class.java)
+        input = ratingInput.GetValue().toString()
     }
 
+    override fun registerInputObserver() {
+        (m_view as RatingStarInputView).setRatingStarInputViewListener(object: RatingStarInputViewListener {
+            override fun onRatingChanged() {
+                notifyAllInputWatchers()
+            }
+        })
+    }
 }
