@@ -70,8 +70,8 @@ class RatingStarDisplayView: LinearLayout {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
         when (style) {
-            RatingStyle.Default -> defaultStyle()
             RatingStyle.Compact -> compactStyle()
+            else -> defaultStyle()
         }
     }
 
