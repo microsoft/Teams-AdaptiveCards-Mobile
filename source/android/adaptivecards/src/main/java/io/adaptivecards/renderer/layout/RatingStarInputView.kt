@@ -31,7 +31,7 @@ class RatingStarInputView: LinearLayout {
 
     private val ratingStars: MutableList<ImageView> = ArrayList()
 
-    var rating: Double = 0.0
+    private var rating: Double = 0.0
 
     private lateinit var hostConfig: HostConfig
 
@@ -73,7 +73,7 @@ class RatingStarInputView: LinearLayout {
                 setColorFilter(RatingElementRendererUtil.getInputStarColor(color, index < value, hostConfig))
                 isActivated = index < value.toInt()
                 setOnClickListener {
-                    handleRatingChange((index+1).toDouble())
+                    setRating((index+1).toDouble())
                 }
             }
             ratingStars.add(star)
@@ -85,11 +85,15 @@ class RatingStarInputView: LinearLayout {
         }
     }
 
+    fun getRating(): Double {
+        return rating
+    }
+
     fun setRatingStarInputViewListener(listener: RatingStarInputViewListener) {
         this.listener = listener
     }
 
-    fun handleRatingChange(rating: Double) {
+    fun setRating(rating: Double) {
         this.rating = rating
         for (i in 0 until maxStarsCount) {
             ratingStars[i].isActivated = i < rating.toInt()

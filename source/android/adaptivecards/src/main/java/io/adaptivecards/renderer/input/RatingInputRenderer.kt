@@ -36,7 +36,7 @@ object RatingInputRenderer: BaseCardElementRenderer() {
         renderArgs: RenderArgs
     ): View {
         val ratingInput = Util.castTo(baseCardElement, RatingInput::class.java)
-        val ratingInputHandler = RatingInputHandler(ratingInput)
+        val ratingInputHandler = RatingInputHandler(ratingInput, renderedCard, renderArgs.containerCardId)
         val view = RatingStarInputView(
             context,
             hostConfig,
