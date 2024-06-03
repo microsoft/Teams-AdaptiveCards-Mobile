@@ -107,11 +107,15 @@ open class FluentIconImageLoaderAsync(
     private fun getDrawableFromSVG(svgString: String, context: Context): BitmapDrawable {
         val svg = parseSvgString(context, svgString)
         val picture = svg.renderToPicture()
-        var bitmap = Bitmap.createBitmap(picture.width, picture.height, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(picture.width, picture.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         picture.draw(canvas)
-        var drawable = BitmapDrawable(context.resources, bitmap)
-        val color = Color.parseColor(iconColor)
+        val drawable = BitmapDrawable(context.resources, bitmap)
+        val color = try {
+            Color.parseColor(iconColor)
+        } catch (e: IllegalArgumentException) {
+            Color.BLACK
+        }
         drawable.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
         return drawable
     }
