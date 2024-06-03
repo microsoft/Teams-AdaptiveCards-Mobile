@@ -7,7 +7,7 @@
 
 using namespace AdaptiveCards;
 
-ChoicesData::ChoicesData()
+ChoicesData::ChoicesData() : m_associatedInputs(AssociatedInputs::Auto)
 {
 }
 
