@@ -11,6 +11,7 @@
 #include "Util.h"
 #include "CompoundButton.h"
 #include "Icon.h"
+#include "IconInfo.h"
 
 using namespace AdaptiveCards;
 
@@ -42,7 +43,7 @@ Json::Value IconInfo::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Name)] = m_name;
     }
-    
+
     return root;
 }
 

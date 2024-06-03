@@ -24,6 +24,7 @@
 #include "UnknownElement.h"
 #include "RatingInput.h"
 #include "RatingLabel.h"
+#include "CompoundButton.h"
 
 namespace AdaptiveCards
 {

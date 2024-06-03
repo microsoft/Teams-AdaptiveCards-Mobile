@@ -1,4 +1,3 @@
-
 //
 //  IconInfo.h
 //  AdaptiveCards

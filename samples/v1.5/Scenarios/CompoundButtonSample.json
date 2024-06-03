@@ -1,0 +1,35 @@
+{
+	"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+	"type": "AdaptiveCard",
+	"version": "1.5",
+	"body": [
+		{
+			"type": "CompoundButton",
+			"title": "Summarize",
+			"icon": {
+				"name": "TextBulletList"
+			},
+			"description": "Review key points in file",
+			"height": "stretch",
+			"badge": "New",
+			"selectAction": {
+				"type": "Action.OpenUrl",
+				"url": "https://www.microsoft.com",
+				"title": "Click me!",
+				"tooltip": "Icons can handle actions"
+			}
+		},
+		{
+			"type": "CompoundButton",
+			"title": "Summarize",
+			"description": "Review key points in file",
+			"height": "stretch",
+			"badge": "New",
+			"selectAction": {
+				"type": "Action.OpenUrl",
+				"tooltip": "cool link",
+				"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+			}
+		}
+	]
+}
