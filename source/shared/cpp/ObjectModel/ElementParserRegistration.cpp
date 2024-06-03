@@ -20,6 +20,7 @@
 #include "TextInput.h"
 #include "TimeInput.h"
 #include "ToggleInput.h"
+#include "CompoundButton.h"
 #include "UnknownElement.h"
 #include "RatingInput.h"
 #include "RatingLabel.h"
@@ -51,27 +52,28 @@ std::shared_ptr<BaseCardElement> BaseCardElementParserWrapper::DeserializeFromSt
 ElementParserRegistration::ElementParserRegistration()
 {
     m_knownElements.insert(
-        {CardElementTypeToString(CardElementType::ActionSet),
-         CardElementTypeToString(CardElementType::ChoiceSetInput),
-         CardElementTypeToString(CardElementType::Column),
-         CardElementTypeToString(CardElementType::ColumnSet),
-         CardElementTypeToString(CardElementType::Container),
-         CardElementTypeToString(CardElementType::DateInput),
-         CardElementTypeToString(CardElementType::FactSet),
-         CardElementTypeToString(CardElementType::Image),
-         CardElementTypeToString(CardElementType::Icon),
-         CardElementTypeToString(CardElementType::ImageSet),
-         CardElementTypeToString(CardElementType::Media),
-         CardElementTypeToString(CardElementType::NumberInput),
+                           {CardElementTypeToString(CardElementType::ActionSet),
+                               CardElementTypeToString(CardElementType::ChoiceSetInput),
+                               CardElementTypeToString(CardElementType::Column),
+                               CardElementTypeToString(CardElementType::ColumnSet),
+                               CardElementTypeToString(CardElementType::CompoundButton),
+                               CardElementTypeToString(CardElementType::Container),
+                               CardElementTypeToString(CardElementType::DateInput),
+                               CardElementTypeToString(CardElementType::FactSet),
+                               CardElementTypeToString(CardElementType::Image),
+                               CardElementTypeToString(CardElementType::Icon),
+                               CardElementTypeToString(CardElementType::ImageSet),
+                               CardElementTypeToString(CardElementType::Media),
+                               CardElementTypeToString(CardElementType::NumberInput),
          CardElementTypeToString(CardElementType::RatingInput),
          CardElementTypeToString(CardElementType::RatingLabel),
-         CardElementTypeToString(CardElementType::RichTextBlock),
-         CardElementTypeToString(CardElementType::Table),
-         CardElementTypeToString(CardElementType::TextBlock),
-         CardElementTypeToString(CardElementType::TextInput),
-         CardElementTypeToString(CardElementType::TimeInput),
-         CardElementTypeToString(CardElementType::ToggleInput),
-         CardElementTypeToString(CardElementType::Unknown)});
+                               CardElementTypeToString(CardElementType::RichTextBlock),
+                               CardElementTypeToString(CardElementType::Table),
+                               CardElementTypeToString(CardElementType::TextBlock),
+                               CardElementTypeToString(CardElementType::TextInput),
+                               CardElementTypeToString(CardElementType::TimeInput),
+                               CardElementTypeToString(CardElementType::ToggleInput),
+                               CardElementTypeToString(CardElementType::Unknown)});
 
     m_cardElementParsers.insert(
         {{CardElementTypeToString(CardElementType::ActionSet), std::make_shared<ActionSetParser>()},
@@ -94,6 +96,7 @@ ElementParserRegistration::ElementParserRegistration()
          {CardElementTypeToString(CardElementType::TextInput), std::make_shared<TextInputParser>()},
          {CardElementTypeToString(CardElementType::TimeInput), std::make_shared<TimeInputParser>()},
          {CardElementTypeToString(CardElementType::ToggleInput), std::make_shared<ToggleInputParser>()},
+         {CardElementTypeToString(CardElementType::CompoundButton), std::make_shared<CompoundButtonParser>()},
          {CardElementTypeToString(CardElementType::Unknown), std::make_shared<UnknownElementParser>()}});
 }
 

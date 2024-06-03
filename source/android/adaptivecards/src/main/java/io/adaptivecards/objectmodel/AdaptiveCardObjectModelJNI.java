@@ -1573,6 +1573,16 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long TableConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, TableConfig jarg2_);
   public final static native long new_TableConfig();
   public final static native void delete_TableConfig(long jarg1);
+  public final static native void BadgeConfig_backgroundColor_set(long jarg1, BadgeConfig jarg1_, String jarg2);
+  public final static native String BadgeConfig_backgroundColor_get(long jarg1, BadgeConfig jarg1_);
+  public final static native long BadgeConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, BadgeConfig jarg2_);
+  public final static native long new_BadgeConfig();
+  public final static native void delete_BadgeConfig(long jarg1);
+  public final static native void CompoundButtonConfig_badgeConfig_set(long jarg1, CompoundButtonConfig jarg1_, long jarg2, BadgeConfig jarg2_);
+  public final static native long CompoundButtonConfig_badgeConfig_get(long jarg1, CompoundButtonConfig jarg1_);
+  public final static native long CompoundButtonConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, CompoundButtonConfig jarg2_);
+  public final static native long new_CompoundButtonConfig();
+  public final static native void delete_CompoundButtonConfig(long jarg1);
   public final static native long new_HostConfig();
   public final static native long HostConfig_Deserialize(long jarg1, JsonValue jarg1_);
   public final static native long HostConfig_DeserializeFromString(String jarg1);
@@ -1632,6 +1642,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void HostConfig_SetTextBlock(long jarg1, HostConfig jarg1_, long jarg2, TextBlockConfig jarg2_);
   public final static native long HostConfig_GetTable(long jarg1, HostConfig jarg1_);
   public final static native void HostConfig_SetTable(long jarg1, HostConfig jarg1_, long jarg2, TableConfig jarg2_);
+  public final static native long HostConfig_GetCompoundButtonConfig(long jarg1, HostConfig jarg1_);
+  public final static native void HostConfig_SetCompoundButtonConfig(long jarg1, HostConfig jarg1_, long jarg2, CompoundButtonConfig jarg2_);
   public final static native void delete_HostConfig(long jarg1);
   public final static native long new_MarkDownParser(String jarg1);
   public final static native String MarkDownParser_TransformToHtml(long jarg1, MarkDownParser jarg1_);
