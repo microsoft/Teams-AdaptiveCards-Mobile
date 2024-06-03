@@ -219,6 +219,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::WebUrl, "webUrl"},
             {AdaptiveCardSchemaKey::Weight, "weight"},
             {AdaptiveCardSchemaKey::Width, "width"},
+            {AdaptiveCardSchemaKey::CompoundButton,"compoundButton"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {

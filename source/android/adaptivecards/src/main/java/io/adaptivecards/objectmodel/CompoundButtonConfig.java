@@ -8,20 +8,20 @@
 
 package io.adaptivecards.objectmodel;
 
-public class InternalIdKeyHash {
+public class CompoundButtonConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected InternalIdKeyHash(long cPtr, boolean cMemoryOwn) {
+  protected CompoundButtonConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(InternalIdKeyHash obj) {
+  protected static long getCPtr(CompoundButtonConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
-  protected static long swigRelease(InternalIdKeyHash obj) {
+  protected static long swigRelease(CompoundButtonConfig obj) {
     long ptr = 0;
     if (obj != null) {
       if (!obj.swigCMemOwn)
@@ -42,14 +42,27 @@ public class InternalIdKeyHash {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_InternalIdKeyHash(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_CompoundButtonConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public InternalIdKeyHash() {
-    this(AdaptiveCardObjectModelJNI.new_InternalIdKeyHash(), true);
+  public void setBadgeConfig(BadgeConfig value) {
+    AdaptiveCardObjectModelJNI.CompoundButtonConfig_badgeConfig_set(swigCPtr, this, BadgeConfig.getCPtr(value), value);
+  }
+
+  public BadgeConfig getBadgeConfig() {
+    long cPtr = AdaptiveCardObjectModelJNI.CompoundButtonConfig_badgeConfig_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new BadgeConfig(cPtr, false);
+  }
+
+  public static CompoundButtonConfig Deserialize(JsonValue json, CompoundButtonConfig defaultValue) {
+    return new CompoundButtonConfig(AdaptiveCardObjectModelJNI.CompoundButtonConfig_Deserialize(JsonValue.getCPtr(json), json, CompoundButtonConfig.getCPtr(defaultValue), defaultValue), true);
+  }
+
+  public CompoundButtonConfig() {
+    this(AdaptiveCardObjectModelJNI.new_CompoundButtonConfig(), true);
   }
 
 }

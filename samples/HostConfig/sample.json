@@ -347,5 +347,8 @@
 			"size": "small",
 			"weight": "bolder"
 		}
-	}
+	},
+    "compoundButton":{
+        "badgeBackgroundColor":""
+    }
 }

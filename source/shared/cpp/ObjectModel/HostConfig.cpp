@@ -79,7 +79,11 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._borderWidth = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::BorderWidth);
     
     result._cornerRadius = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::CornerRadius);
-
+    
+    result._compoundButtonConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<CompoundButtonConfig>(json,
+                                                                                  AdaptiveCardSchemaKey::CompoundButton,
+                                                                                  result._compoundButtonConfig, 
+                                                                                  CompoundButtonConfig::Deserialize);
     return result;
 }
 
@@ -494,6 +498,25 @@ TableConfig TableConfig::Deserialize(const Json::Value& json, const TableConfig&
 
     result.cellSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::CellSpacing, defaultValue.cellSpacing);
 
+    return result;
+}
+
+CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, const CompoundButtonConfig &defaultValue)
+{
+    CompoundButtonConfig result;
+    result.badgeConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeConfig>(json,
+                                                                                     AdaptiveCardSchemaKey::Badge,
+                                                                                     defaultValue.badgeConfig,
+                                                                                     BadgeConfig::Deserialize);
+    return result;
+}
+
+BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig &defaultValue)
+{
+    BadgeConfig result;
+    result.backgroundColor = ParseUtil::GetString(json, 
+                                                  AdaptiveCardSchemaKey::BackgroundColor,
+                                                  result.backgroundColor);
     return result;
 }
 
@@ -971,4 +994,14 @@ TableConfig HostConfig::GetTable() const
 void HostConfig::SetTable(const TableConfig value)
 {
     _table = value;
+}
+
+CompoundButtonConfig HostConfig::GetCompoundButtonConfig() const
+{
+    return _compoundButtonConfig;
+}
+
+void  HostConfig::SetCompoundButtonConfig(const CompoundButtonConfig value)
+{
+    _compoundButtonConfig = value;
 }

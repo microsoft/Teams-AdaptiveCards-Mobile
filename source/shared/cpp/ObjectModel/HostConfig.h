@@ -377,6 +377,18 @@ struct TableConfig
     static TableConfig Deserialize(const Json::Value& json, const TableConfig& defaultValue);
 };
 
+struct BadgeConfig
+{
+    std::string backgroundColor = "#DCECFC";
+    static BadgeConfig Deserialize(const Json::Value& json, const BadgeConfig& defaultValue);
+};
+
+struct CompoundButtonConfig
+{
+    BadgeConfig badgeConfig;
+    static CompoundButtonConfig Deserialize(const Json::Value& json, const CompoundButtonConfig& defaultValue);
+};
+
 class HostConfig
 {
 public:
@@ -458,6 +470,9 @@ public:
 
     TableConfig GetTable() const;
     void SetTable(const TableConfig value);
+    
+    CompoundButtonConfig GetCompoundButtonConfig() const;
+    void SetCompoundButtonConfig(const CompoundButtonConfig value);
 
 private:
     const ContainerStyleDefinition& GetContainerStyle(ContainerStyle style) const;
@@ -486,5 +501,6 @@ private:
     TableConfig _table;
     Json::Value _borderWidth;
     Json::Value _cornerRadius;
+    CompoundButtonConfig _compoundButtonConfig;
 };
 } // namespace AdaptiveCards

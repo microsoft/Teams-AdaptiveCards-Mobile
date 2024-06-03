@@ -45,6 +45,7 @@ private:
     std::string m_title;
     std::string m_description;
     std::shared_ptr<IconInfo> m_icon;
+    std::shared_ptr<BaseActionElement> m_selectAction;
 };
 
 class CompoundButtonParser : public BaseCardElementParser

@@ -222,6 +222,7 @@ enum class AdaptiveCardSchemaKey
     Weight,
     Width,
     Wrap,
+    CompoundButton
 };
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 

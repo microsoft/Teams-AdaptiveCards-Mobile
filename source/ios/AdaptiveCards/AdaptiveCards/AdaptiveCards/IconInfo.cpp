@@ -88,6 +88,11 @@ void IconInfo::SetName(const std::string& value)
 
 std::shared_ptr<IconInfo> IconInfo::Deserialize(ParseContext& context, const Json::Value& json)
 {
+    if(json.empty() || !json.isObject())
+    {
+        return nullptr;
+    }
+    
     std::shared_ptr<IconInfo> iconInfo = std::make_shared<IconInfo>();
     iconInfo->setIconSize(ParseUtil::GetEnumValue<IconSize>(json, AdaptiveCardSchemaKey::Size, IconSize::Standard, IconSizeFromString));
     
@@ -95,7 +100,7 @@ std::shared_ptr<IconInfo> IconInfo::Deserialize(ParseContext& context, const Jso
     
     iconInfo->setForgroundColor(ParseUtil::GetEnumValue<ForegroundColor>(json, AdaptiveCardSchemaKey::Color, ForegroundColor::Default, ForegroundColorFromString));
     
-    iconInfo->SetName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Name));
+    iconInfo->SetName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Name,true));
     return iconInfo;
 }
 

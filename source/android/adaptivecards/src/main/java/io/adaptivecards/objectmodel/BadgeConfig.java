@@ -8,20 +8,20 @@
 
 package io.adaptivecards.objectmodel;
 
-public class InternalIdKeyHash {
+public class BadgeConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected InternalIdKeyHash(long cPtr, boolean cMemoryOwn) {
+  protected BadgeConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(InternalIdKeyHash obj) {
+  protected static long getCPtr(BadgeConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
-  protected static long swigRelease(InternalIdKeyHash obj) {
+  protected static long swigRelease(BadgeConfig obj) {
     long ptr = 0;
     if (obj != null) {
       if (!obj.swigCMemOwn)
@@ -42,14 +42,26 @@ public class InternalIdKeyHash {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_InternalIdKeyHash(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_BadgeConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public InternalIdKeyHash() {
-    this(AdaptiveCardObjectModelJNI.new_InternalIdKeyHash(), true);
+  public void setBackgroundColor(String value) {
+    AdaptiveCardObjectModelJNI.BadgeConfig_backgroundColor_set(swigCPtr, this, value);
+  }
+
+  public String getBackgroundColor() {
+    return AdaptiveCardObjectModelJNI.BadgeConfig_backgroundColor_get(swigCPtr, this);
+  }
+
+  public static BadgeConfig Deserialize(JsonValue json, BadgeConfig defaultValue) {
+    return new BadgeConfig(AdaptiveCardObjectModelJNI.BadgeConfig_Deserialize(JsonValue.getCPtr(json), json, BadgeConfig.getCPtr(defaultValue), defaultValue), true);
+  }
+
+  public BadgeConfig() {
+    this(AdaptiveCardObjectModelJNI.new_BadgeConfig(), true);
   }
 
 }

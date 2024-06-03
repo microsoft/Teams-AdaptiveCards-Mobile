@@ -37,6 +37,7 @@ Json::Value CompoundButton::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon)] = m_icon -> SerializeToJsonValue();
     }
+
     
     return root;
 }
@@ -81,6 +82,16 @@ void CompoundButton::setIcon(const std::shared_ptr<IconInfo> value)
     m_icon = value;
 }
 
+std::shared_ptr<BaseActionElement> CompoundButton::GetSelectAction() const
+{
+    return m_selectAction;
+}
+
+void CompoundButton::SetSelectAction(const std::shared_ptr<BaseActionElement> action)
+{
+    m_selectAction = action;
+}
+
 std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeFromString(ParseContext& context, const std::string& jsonString)
 {
     return CompoundButtonParser::Deserialize(context, ParseUtil::GetJsonValueFromString(jsonString));
@@ -96,7 +107,7 @@ std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeWithoutCheckin
 {
     std::shared_ptr<CompoundButton> compoundButton = BaseCardElement::Deserialize<CompoundButton>(context, json);
     compoundButton->setBadge(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Badge));
-    compoundButton->setTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title));
+    compoundButton->setTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title,true));
     compoundButton-> setDescription(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Description));
     auto icon = ParseUtil::DeserializeValue<IconInfo>(context,
                                                       json,
@@ -104,6 +115,7 @@ std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeWithoutCheckin
                                                       IconInfo::Deserialize,
                                                       false);
     compoundButton->setIcon(icon);
+    compoundButton->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
     return compoundButton;
 }
 
