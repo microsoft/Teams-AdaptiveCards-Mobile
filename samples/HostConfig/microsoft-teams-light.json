@@ -304,5 +304,33 @@
             "warp": true
         },
         "spacing": 16
-    }
+    },
+	"ratingInput": {
+		"filledStar": {
+			"marigoldColor": "#EAA300",
+			"neutralColor": "#212121"
+		},
+
+		"emptyStar": {
+			"marigoldColor": "#EAA300",
+			"neutralColor": "#212121"
+		},
+
+		"ratingTextColor": "#000000",
+		"countTextColor": "#000000"
+	},
+	"ratingLabel": {
+		"filledStar": {
+			"marigoldColor": "#EAA300",
+			"neutralColor": "#242424"
+		},
+
+		"emptyStar": {
+			"marigoldColor": "#F9E2AE",
+			"neutralColor": "#E1E1E1"
+		},
+
+		"ratingTextColor": "#000000",
+		"countTextColor": "#000000"
+	}
 }
