@@ -39,6 +39,9 @@
 		4632ECC32C0DB03600A2A3D2 /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4632ECC22C0DB03600A2A3D2 /* Container.cpp */; };
 		4632ECC52C0DB04200A2A3D2 /* IconInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4632ECC42C0DB04200A2A3D2 /* IconInfo.cpp */; };
 		4632ECC72C0DB08000A2A3D2 /* IconInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4632ECC62C0DB08000A2A3D2 /* IconInfo.h */; };
+		4632ECC92C0DB17F00A2A3D2 /* ACRCompoundButtonRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4632ECC82C0DB17F00A2A3D2 /* ACRCompoundButtonRenderer.h */; };
+		4632ECCB2C0DB18600A2A3D2 /* ACRCompoundButtonRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4632ECCA2C0DB18600A2A3D2 /* ACRCompoundButtonRenderer.mm */; };
+		4632ECCD2C0DB2B100A2A3D2 /* CompoundButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4632ECCC2C0DB2B100A2A3D2 /* CompoundButton.cpp */; };
 		463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C062BD8DB1F00A95C4E /* Icon.cpp */; };
 		463C3C0B2BD8DCC000A95C4E /* Icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C3C0A2BD8DCC000A95C4E /* Icon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */; };
@@ -552,6 +555,9 @@
 		4632ECC22C0DB03600A2A3D2 /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Container.cpp; path = ../../../../shared/cpp/ObjectModel/Container.cpp; sourceTree = "<group>"; };
 		4632ECC42C0DB04200A2A3D2 /* IconInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IconInfo.cpp; path = ../../../../shared/cpp/ObjectModel/IconInfo.cpp; sourceTree = "<group>"; };
 		4632ECC62C0DB08000A2A3D2 /* IconInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IconInfo.h; path = ../../../../shared/cpp/ObjectModel/IconInfo.h; sourceTree = "<group>"; };
+		4632ECC82C0DB17F00A2A3D2 /* ACRCompoundButtonRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRCompoundButtonRenderer.h; sourceTree = "<group>"; };
+		4632ECCA2C0DB18600A2A3D2 /* ACRCompoundButtonRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCompoundButtonRenderer.mm; sourceTree = "<group>"; };
+		4632ECCC2C0DB2B100A2A3D2 /* CompoundButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompoundButton.cpp; path = ../../../../shared/cpp/ObjectModel/CompoundButton.cpp; sourceTree = "<group>"; };
 		463C3C062BD8DB1F00A95C4E /* Icon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Icon.cpp; path = ../../../../shared/cpp/ObjectModel/Icon.cpp; sourceTree = "<group>"; };
 		463C3C0A2BD8DCC000A95C4E /* Icon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Icon.h; path = ../../../../shared/cpp/ObjectModel/Icon.h; sourceTree = "<group>"; };
 		463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRIconRenderer.h; sourceTree = "<group>"; };
@@ -1468,6 +1474,7 @@
 				84AE295427FFA26F00D01B82 /* CMakeLists.txt */,
 				84AE295327FFA26F00D01B82 /* ContentSource.cpp */,
 				84AE295527FFA26F00D01B82 /* ContentSource.h */,
+				4632ECCC2C0DB2B100A2A3D2 /* CompoundButton.cpp */,
 				4632ECC02C0DB02E00A2A3D2 /* CompoundButton.h */,
 				4632ECC22C0DB03600A2A3D2 /* Container.cpp */,
 				F4071C781FCCBAEF00AF4FEA /* ActionParserRegistration.cpp */,
@@ -1731,11 +1738,13 @@
 				F43A940E1F1D60E30001920B /* ACRFactSetRenderer.h */,
 				F43A940F1F1D60E30001920B /* ACRFactSetRenderer.mm */,
 				F42741061EF8624F00399FBB /* ACRIBaseCardElementRenderer.h */,
+				4632ECC82C0DB17F00A2A3D2 /* ACRCompoundButtonRenderer.h */,
 				6B74403725BA71B60051F2A1 /* ACRImageProperties.h */,
 				6B74403825BA71B60051F2A1 /* ACRImageProperties.mm */,
 				463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */,
 				463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */,
 				463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */,
+				4632ECCA2C0DB18600A2A3D2 /* ACRCompoundButtonRenderer.mm */,
 				463C4EDA2BDB666A00A95C4E /* ACRSVGImageView.h */,
 				463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */,
 				463C3C0D2BD8F6D100A95C4E /* ACRIconRenderer.mm */,
@@ -1979,6 +1988,7 @@
 				6BFF24062714E26900183C59 /* ACRToggleInputDataSource.h in Headers */,
 				6B377284260194000024E527 /* ACRActionExecuteRenderer.h in Headers */,
 				6B8C765526449B09009548FA /* TableColumnDefinition.h in Headers */,
+				4632ECC92C0DB17F00A2A3D2 /* ACRCompoundButtonRenderer.h in Headers */,
 				6B8C765326449B09009548FA /* Table.h in Headers */,
 				6BFCA141264F54B500195CA7 /* ACRTableView.h in Headers */,
 				CFF954D029819AC300F321C3 /* ACOTypeaheadDebouncer.h in Headers */,
@@ -2335,6 +2345,7 @@
 				463C3C0E2BD8F6D100A95C4E /* ACRIconRenderer.mm in Sources */,
 				F448730D1EE2261F00FCAFAE /* FactSet.cpp in Sources */,
 				F44873031EE2261F00FCAFAE /* ColumnSet.cpp in Sources */,
+				4632ECCD2C0DB2B100A2A3D2 /* CompoundButton.cpp in Sources */,
 				F4FE456F1F1985200071D9E5 /* ACRColumnSetView.mm in Sources */,
 				F44872FD1EE2261F00FCAFAE /* ChoiceInput.cpp in Sources */,
 				F42E51761FEC3840008F9642 /* MarkDownParsedResult.cpp in Sources */,
@@ -2421,6 +2432,7 @@
 				6B7B1A9120B4D2AB00260731 /* Media.cpp in Sources */,
 				7EDC0F68213878E800077A13 /* SemanticVersion.cpp in Sources */,
 				84AE295827FFA26F00D01B82 /* ContentSource.cpp in Sources */,
+				4632ECCB2C0DB18600A2A3D2 /* ACRCompoundButtonRenderer.mm in Sources */,
 				F42E517A1FEC3840008F9642 /* MarkDownParser.cpp in Sources */,
 				463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */,
 				6B7B1A9720BE2CBC00260731 /* ACRUIImageView.mm in Sources */,
