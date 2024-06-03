@@ -81,7 +81,12 @@
                                               hostConfig:acoConfig];
     
     [horizontalStack addArrangedSubview:titleLabel];
-    [horizontalStack addArrangedSubview:badgeLabel];
+    
+    if(! isNullOrEmpty(badgeLabel.text))
+    {
+        [horizontalStack addArrangedSubview:badgeLabel];
+    }
+    
     [verticalStack addArrangedSubview:horizontalStack];
     [verticalStack addArrangedSubview:descriptionLabel];
     
