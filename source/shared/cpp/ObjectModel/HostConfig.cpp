@@ -546,7 +546,7 @@ BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig 
     BadgeConfig result;
     result.backgroundColor = ParseUtil::GetString(json, 
                                                   AdaptiveCardSchemaKey::BackgroundColor,
-                                                  result.backgroundColor);
+                                                  defaultValue.backgroundColor);
     return result;
 }
 
