@@ -1,14 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 #include "pch.h"
+#include "Icon.h"
 #include "ParseUtil.h"
 #include "ParseContext.h"
 #include "Util.h"
 #include "CompoundButton.h"
+
+
 using namespace AdaptiveCards;
 
 CompoundButton::CompoundButton() :
-    BaseCardElement(CardElementType::CompoundButton)
+        BaseCardElement(CardElementType::CompoundButton)
 {
     PopulateKnownPropertiesSet();
 }
@@ -31,13 +34,18 @@ Json::Value CompoundButton::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Description)] = m_description;
     }
-    
+
     if(m_icon != nullptr)
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon)] = m_icon -> SerializeToJsonValue();
     }
 
-    
+    if (m_selectAction != nullptr)
+    {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)] =
+                BaseCardElement::SerializeSelectAction(m_selectAction);
+    }
+
     return root;
 }
 
@@ -71,24 +79,23 @@ void CompoundButton::setDescription(const std::string value)
     m_description = value;
 }
 
-std::shared_ptr<IconInfo> CompoundButton::getIcon() const
-{
-    return m_icon;
-}
-
-void CompoundButton::setIcon(const std::shared_ptr<IconInfo> value)
-{
-    m_icon = value;
-}
-
 std::shared_ptr<BaseActionElement> CompoundButton::GetSelectAction() const
 {
     return m_selectAction;
 }
 
-void CompoundButton::SetSelectAction(const std::shared_ptr<BaseActionElement> action)
-{
+void CompoundButton::SetSelectAction(const std::shared_ptr<BaseActionElement> action) {
     m_selectAction = action;
+}
+
+std::shared_ptr<AdaptiveCards::IconInfo> CompoundButton::getIcon() const
+{
+    return m_icon;
+}
+
+void CompoundButton::setIcon(const std::shared_ptr<AdaptiveCards::IconInfo> value)
+{
+    m_icon = value;
 }
 
 std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeFromString(ParseContext& context, const std::string& jsonString)
@@ -106,22 +113,22 @@ std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeWithoutCheckin
 {
     std::shared_ptr<CompoundButton> compoundButton = BaseCardElement::Deserialize<CompoundButton>(context, json);
     compoundButton->setBadge(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Badge));
-    compoundButton->setTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title,true));
+    compoundButton->setTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title));
     compoundButton-> setDescription(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Description));
     auto icon = ParseUtil::DeserializeValue<IconInfo>(json,
                                                       AdaptiveCardSchemaKey::Icon,
-                                                      IconInfo::Deserialize);
+                                                      IconInfo::Deserialize,
+                                                      false);
     compoundButton->setIcon(icon);
-    compoundButton->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
     return compoundButton;
 }
 
 void CompoundButton::PopulateKnownPropertiesSet()
 {
     m_knownProperties.insert(
-         {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Badge),
-         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title),
-         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Description),
-         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon),
-         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)});
+            {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Badge),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Description),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::SelectAction)});
 }

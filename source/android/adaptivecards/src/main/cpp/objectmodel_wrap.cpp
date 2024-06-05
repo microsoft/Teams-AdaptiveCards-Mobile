@@ -39964,7 +39964,7 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   jlong jresult = 0 ;
   AdaptiveCards::CompoundButton *arg1 = (AdaptiveCards::CompoundButton *) 0 ;
   std::shared_ptr< AdaptiveCards::CompoundButton const > *smartarg1 = 0 ;
-  SwigValueWrapper< std::shared_ptr< IconInfo > > result;
+  std::shared_ptr< AdaptiveCards::IconInfo > result;
   
   (void)jenv;
   (void)jcls;
@@ -39973,29 +39973,26 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::CompoundButton > **)&jarg1;
   arg1 = (AdaptiveCards::CompoundButton *)(smartarg1 ? smartarg1->get() : 0); 
   result = ((AdaptiveCards::CompoundButton const *)arg1)->getIcon();
-  *(std::shared_ptr< IconInfo > **)&jresult = new std::shared_ptr< IconInfo >((const std::shared_ptr< IconInfo > &)result); 
+  *(std::shared_ptr< AdaptiveCards::IconInfo > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::IconInfo >(result) : 0; 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_CompoundButton_1setIcon(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_CompoundButton_1setIcon(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   AdaptiveCards::CompoundButton *arg1 = (AdaptiveCards::CompoundButton *) 0 ;
-  SwigValueWrapper< std::shared_ptr< IconInfo > > arg2 ;
+  std::shared_ptr< AdaptiveCards::IconInfo > arg2 ;
   std::shared_ptr< AdaptiveCards::CompoundButton > *smartarg1 = 0 ;
-  std::shared_ptr< IconInfo > const *argp2 ;
+  std::shared_ptr< AdaptiveCards::IconInfo > const *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
+  (void)jarg2_;
   
   smartarg1 = *(std::shared_ptr<  AdaptiveCards::CompoundButton > **)&jarg1;
   arg1 = (AdaptiveCards::CompoundButton *)(smartarg1 ? smartarg1->get() : 0); 
-  argp2 = *(std::shared_ptr< IconInfo > **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null std::shared_ptr< IconInfo > const");
-    return ;
-  }
-  arg2 = *argp2; 
+  argp2 = *(std::shared_ptr< AdaptiveCards::IconInfo > **)&jarg2;
+  if (argp2) arg2 = *argp2; 
   (arg1)->setIcon(arg2);
 }
 

@@ -1989,7 +1989,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long CompoundButton_GetSelectAction(long jarg1, CompoundButton jarg1_);
   public final static native void CompoundButton_SetSelectAction(long jarg1, CompoundButton jarg1_, long jarg2, BaseActionElement jarg2_);
   public final static native long CompoundButton_getIcon(long jarg1, CompoundButton jarg1_);
-  public final static native void CompoundButton_setIcon(long jarg1, CompoundButton jarg1_, long jarg2);
+  public final static native void CompoundButton_setIcon(long jarg1, CompoundButton jarg1_, long jarg2, IconInfo jarg2_);
   public final static native long CompoundButton_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_CompoundButtonParser__SWIG_0();
   public final static native long new_CompoundButtonParser__SWIG_1(long jarg1, CompoundButtonParser jarg1_);

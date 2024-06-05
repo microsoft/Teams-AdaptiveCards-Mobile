@@ -88,12 +88,13 @@ public class CompoundButton extends BaseCardElement {
     AdaptiveCardObjectModelJNI.CompoundButton_SetSelectAction(swigCPtr, this, BaseActionElement.getCPtr(action), action);
   }
 
-  public SWIGTYPE_p_std__shared_ptrT_IconInfo_t getIcon() {
-    return new SWIGTYPE_p_std__shared_ptrT_IconInfo_t(AdaptiveCardObjectModelJNI.CompoundButton_getIcon(swigCPtr, this), true);
+  public IconInfo getIcon() {
+    long cPtr = AdaptiveCardObjectModelJNI.CompoundButton_getIcon(swigCPtr, this);
+    return (cPtr == 0) ? null : new IconInfo(cPtr, true);
   }
 
-  public void setIcon(SWIGTYPE_p_std__shared_ptrT_IconInfo_t value) {
-    AdaptiveCardObjectModelJNI.CompoundButton_setIcon(swigCPtr, this, SWIGTYPE_p_std__shared_ptrT_IconInfo_t.getCPtr(value));
+  public void setIcon(IconInfo value) {
+    AdaptiveCardObjectModelJNI.CompoundButton_setIcon(swigCPtr, this, IconInfo.getCPtr(value), value);
   }
 
   public static CompoundButton dynamic_cast(BaseCardElement baseCardElement) {
