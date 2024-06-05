@@ -8,7 +8,6 @@
 //
 #pragma once
 
-#include "json.h"
 #include "ParseContext.h"
 
 namespace AdaptiveCards {
