@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 #include "pch.h"
-#include "Icon.h"
 #include "ParseUtil.h"
 #include "ParseContext.h"
 #include "Util.h"

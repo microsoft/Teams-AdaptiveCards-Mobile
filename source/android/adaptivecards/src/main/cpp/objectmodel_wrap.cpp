@@ -836,6 +836,7 @@ namespace Swig {
 #include "../../../shared/cpp/ObjectModel/TokenExchangeResource.h"
 #include "../../../shared/cpp/ObjectModel/AuthCardButton.h"
 #include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
+#include "../../../shared/cpp/ObjectModel/CompoundButton.h"
 
 SWIGINTERN std::string Json_Value_getString(Json::Value *self){
             Json::StreamWriterBuilder builder;
