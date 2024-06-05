@@ -16,7 +16,7 @@ public:
     IconInfo& operator=(IconInfo&&) = default;
     ~IconInfo() = default;
     Json::Value SerializeToJsonValue() const;
-    static std::shared_ptr<IconInfo> Deserialize(ParseContext& context, const Json::Value& json);
+    static std::shared_ptr<IconInfo> Deserialize(const Json::Value& json);
     std::string GetSVGResourceURL() const;
     unsigned int getSize() const;
 

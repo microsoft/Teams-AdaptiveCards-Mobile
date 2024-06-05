@@ -86,7 +86,7 @@ void IconInfo::SetName(const std::string& value)
     m_name = value;
 }
 
-std::shared_ptr<IconInfo> IconInfo::Deserialize(ParseContext& context, const Json::Value& json)
+std::shared_ptr<IconInfo> IconInfo::Deserialize(const Json::Value& json)
 {
     if(json.empty() || !json.isObject())
     {
