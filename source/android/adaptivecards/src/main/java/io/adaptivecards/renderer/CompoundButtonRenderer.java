@@ -81,8 +81,8 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         );
-        imageParams.addRule(RelativeLayout.ALIGN_PARENT_START);
-        imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
+        imageParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         imageView.setPadding(dpToPx(2, context), dpToPx(2, context), dpToPx(2, context), dpToPx(2, context));
         imageView.setLayoutParams(imageParams);
         layout.addView(imageView);
@@ -113,7 +113,6 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
             ViewGroup.LayoutParams.WRAP_CONTENT
         );
         titleParams.addRule(RelativeLayout.END_OF, imageView.getId());
-        titleParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         titleParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         int leftPadding = isIconSet ? dpToPx(8, context) : dpToPx(0, context);
         titleTextView.setPadding(leftPadding, dpToPx(8, context), dpToPx(8, context), dpToPx(8, context));
@@ -126,13 +125,12 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         badgeTextView.setText(compoundButton.getBadge());
         badgeTextView.setTextColor(Color.parseColor(backgroundColor));
         badgeTextView.setBackground(getBadgeBackground(context, hostConfig.GetCompoundButtonConfig().getBadgeConfig().getBackgroundColor()));
-        badgeTextView.setPadding(dpToPx(8, context), dpToPx(8, context), dpToPx(8, context), dpToPx(8, context));
+        badgeTextView.setPadding(dpToPx(4, context), dpToPx(4, context), dpToPx(4, context), dpToPx(4, context));
         RelativeLayout.LayoutParams badgeParams = new RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         );
         badgeParams.addRule(RelativeLayout.END_OF, titleTextView.getId());
-        badgeParams.addRule(RelativeLayout.ALIGN_BASELINE, titleTextView.getId());
         badgeParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         badgeTextView.setLayoutParams(badgeParams);
         if (compoundButton.getBadge().isEmpty()) {
@@ -151,6 +149,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
             ViewGroup.LayoutParams.WRAP_CONTENT
         );
         descriptionParams.addRule(RelativeLayout.BELOW, titleTextView.getId());
+        descriptionParams.topMargin = isIconSet ? dpToPx(36, context) : dpToPx(30, context);
         descriptionTextView.setPadding(dpToPx(2, context), dpToPx(2, context), dpToPx(2, context), dpToPx(2, context));
         descriptionTextView.setLayoutParams(descriptionParams);
         if (compoundButton.getDescription().isEmpty()){
