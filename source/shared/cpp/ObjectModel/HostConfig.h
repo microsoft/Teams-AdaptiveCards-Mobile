@@ -128,7 +128,7 @@ struct RatingStarCofig
 {
     std::string marigoldColor = "#EAA300";
     std::string neutralColor = "#242424";
-    
+
     static RatingStarCofig Deserialize(const Json::Value& json, const RatingStarCofig& defaultValue);
 };
 
@@ -138,15 +138,15 @@ struct RatingElementConfig
         "#EAA300",
         "#212121"
     };
-    
+
     RatingStarCofig emptyStar = {
         "#EAA300",
         "#212121"
     };
-    
+
     std::string ratingTextColor = "#000000";
     std::string countTextColor = "#000000";
-    
+
     static RatingElementConfig Deserialize(const Json::Value& json, const RatingElementConfig& defaultValue);
 };
 
@@ -492,10 +492,10 @@ public:
 
     TextStylesConfig GetTextStyles() const;
     void SetTextStyles(const TextStylesConfig value);
-    
+
     RatingElementConfig GetRatingLabelConfig() const;
     void SetRatingLabelConfig(const RatingElementConfig value);
-    
+
     RatingElementConfig GetRatingInputConfig() const;
     void SetRatingInputConfig(const RatingElementConfig value);
 

@@ -72,18 +72,18 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
 
     result._textStyles = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStylesConfig>(
         json, AdaptiveCardSchemaKey::TextStyles, result._textStyles, TextStylesConfig::Deserialize);
-    
+
     result._ratingLabelConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
         json, AdaptiveCardSchemaKey::RatingLabel, result._ratingLabelConfig, RatingElementConfig::Deserialize);
-    
+
     result._ratingInputConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
         json, AdaptiveCardSchemaKey::RatingInput, result._ratingInputConfig, RatingElementConfig::Deserialize);
 
     result._table = ParseUtil::ExtractJsonValueAndMergeWithDefault<TableConfig>(
         json, AdaptiveCardSchemaKey::Table, result._table, TableConfig::Deserialize);
-    
+
     result._borderWidth = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::BorderWidth);
-    
+
     result._cornerRadius = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::CornerRadius);
     
     result._compoundButtonConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<CompoundButtonConfig>(json,
@@ -237,12 +237,12 @@ RatingElementConfig RatingElementConfig::Deserialize(const Json::Value& json, co
     RatingElementConfig result;
     result.filledStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
         json, AdaptiveCardSchemaKey::FilledStar, defaultValue.filledStar, RatingStarCofig::Deserialize);
-    
+
     result.emptyStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
         json, AdaptiveCardSchemaKey::EmptyStar, defaultValue.emptyStar, RatingStarCofig::Deserialize);
-    
+
     result.ratingTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::RatingTextColor, defaultValue.ratingTextColor);
-    
+
     result.countTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::CountTextColor, defaultValue.countTextColor);
 
     return result;
@@ -682,6 +682,25 @@ std::string HostConfig::GetFontFamily(FontType fontType) const
         }
     }
     return fontFamilyValue;
+}
+
+CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, const CompoundButtonConfig &defaultValue)
+{
+    CompoundButtonConfig result;
+    result.badgeConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeConfig>(json,
+                                                                                     AdaptiveCardSchemaKey::Badge,
+                                                                                     defaultValue.badgeConfig,
+                                                                                     BadgeConfig::Deserialize);
+    return result;
+}
+
+BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig &defaultValue)
+{
+    BadgeConfig result;
+    result.backgroundColor = ParseUtil::GetString(json,
+                                                  AdaptiveCardSchemaKey::BackgroundColor,
+                                                  defaultValue.backgroundColor);
+    return result;
 }
 
 unsigned int HostConfig::GetFontSize(FontType fontType, TextSize size) const

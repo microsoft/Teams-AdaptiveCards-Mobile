@@ -5,25 +5,23 @@ package io.adaptivecards.renderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
-import io.adaptivecards.R;
 import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.CompoundButton;
 import io.adaptivecards.objectmodel.ContainerStyle;
+import io.adaptivecards.objectmodel.ForegroundColor;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
@@ -62,7 +60,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
     }
 
     private ViewGroup getCompoundButtonLayout(Context context, CompoundButton compoundButton, RenderedAdaptiveCard renderedCard, HostConfig hostConfig) {
-        String foregroundColor = hostConfig.GetForegroundColor(ContainerStyle.Default, compoundButton.getIcon().getForgroundColor(), false);
+        String foregroundColor = hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Dark, false);
         String backgroundColor = hostConfig.GetBackgroundColor(ContainerStyle.Default);
 
         // Create a RelativeLayout
@@ -92,10 +90,11 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
             imageView.setVisibility(View.GONE);
         } else {
             String svgURL = compoundButton.getIcon().GetSVGResourceURL();
+            String foregroundColorIcon = hostConfig.GetForegroundColor(ContainerStyle.Default, compoundButton.getIcon().getForgroundColor(), false);
             FluentIconImageLoaderAsync fluentIconImageLoaderAsync = new FluentIconImageLoaderAsync(
                 renderedCard,
                 compoundButton.getIcon().getSize(),
-                foregroundColor,
+                foregroundColorIcon,
                 imageView
             );
             fluentIconImageLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, svgURL);
@@ -126,7 +125,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         badgeTextView.setId(View.generateViewId());
         badgeTextView.setText(compoundButton.getBadge());
         badgeTextView.setTextColor(Color.parseColor(backgroundColor));
-        badgeTextView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.adaptive_compound_button_badge_background));
+        badgeTextView.setBackground(getBadgeBackground(context, hostConfig.GetCompoundButtonConfig().getBadgeConfig().getBackgroundColor()));
         badgeTextView.setPadding(dpToPx(8, context), dpToPx(8, context), dpToPx(8, context), dpToPx(8, context));
         RelativeLayout.LayoutParams badgeParams = new RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -136,6 +135,9 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         badgeParams.addRule(RelativeLayout.ALIGN_BASELINE, titleTextView.getId());
         badgeParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         badgeTextView.setLayoutParams(badgeParams);
+        if (compoundButton.getBadge().isEmpty()) {
+            badgeTextView.setVisibility(View.GONE);
+        }
         layout.addView(badgeTextView);
 
         // Description TextView
@@ -151,6 +153,9 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         descriptionParams.addRule(RelativeLayout.BELOW, titleTextView.getId());
         descriptionTextView.setPadding(dpToPx(2, context), dpToPx(2, context), dpToPx(2, context), dpToPx(2, context));
         descriptionTextView.setLayoutParams(descriptionParams);
+        if (compoundButton.getDescription().isEmpty()){
+            descriptionTextView.setVisibility(View.GONE);
+        }
         layout.addView(descriptionTextView);
 
        return layout;
@@ -160,6 +165,14 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
     private int dpToPx(int dp, Context context) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+
+    private GradientDrawable getBadgeBackground(Context context, String backgroundColor) {
+        GradientDrawable badgeBackground = new GradientDrawable();
+        badgeBackground.setShape(GradientDrawable.RECTANGLE);
+        badgeBackground.setColor(Color.parseColor(backgroundColor));
+        badgeBackground.setCornerRadius(dpToPx(190, context));
+        return badgeBackground;
     }
 
     private static CompoundButtonRenderer s_instance = null;
