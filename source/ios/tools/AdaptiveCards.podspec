@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
     sspec.resource_bundles = {'AdaptiveCards' => ['source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/Resources/**/*']}
     sspec.dependency 'AdaptiveCards/AdaptiveCardsPrivate'
     sspec.dependency 'AdaptiveCards/ObjectModel'
-    sspec.dependency 'SVGKit', '>= 3.1.1'
+    sspec.dependency 'SVGKit', '>= 3.0.0'
   end
 
   spec.subspec 'ObjectModel' do | sspec |
