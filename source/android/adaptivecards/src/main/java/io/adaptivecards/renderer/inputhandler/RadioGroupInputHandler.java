@@ -77,9 +77,11 @@ public class RadioGroupInputHandler extends BaseInputHandler
     }
 
     @Override
-    public void resetValue() {
-        ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
-        setInput(choiceSetInput.GetValue());
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, ChoiceSetInput.class)) {
+            return Util.castTo(m_baseInputElement, ChoiceSetInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     @Override

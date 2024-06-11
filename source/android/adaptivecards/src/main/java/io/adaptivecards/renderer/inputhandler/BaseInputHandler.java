@@ -4,6 +4,7 @@ package io.adaptivecards.renderer.inputhandler;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
@@ -20,7 +21,7 @@ public abstract class BaseInputHandler implements IInputHandler
         m_inputWatchers = new ArrayList<>();
     }
 
-    public BaseInputHandler(@Nullable BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
+    public BaseInputHandler(@NonNull BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
         this(baseInputElement);
         m_renderedAdaptiveCard = renderedAdaptiveCard;
         m_cardId = cardId;
@@ -109,8 +110,8 @@ public abstract class BaseInputHandler implements IInputHandler
     }
 
     @Override
-    public void resetValue() {
-    // Default implementation does nothing
+    public String getDefaultValue() {
+        return "";
     }
 
     protected void notifyAllInputWatchers(){
@@ -120,7 +121,7 @@ public abstract class BaseInputHandler implements IInputHandler
         }
     }
 
-    protected BaseInputElement m_baseInputElement = null;
+    protected BaseInputElement m_baseInputElement;
     protected View m_view = null;
     private StretchableInputLayout m_inputLayout = null;
     List<IInputWatcher> m_inputWatchers;
