@@ -71,4 +71,11 @@ public class NumberInputHandler extends TextInputHandler
         return isValid;
     }
 
+    @Override
+    public void resetValue() {
+        if (Util.isOfType(m_baseInputElement, NumberInput.class)) {
+            setInput(String.valueOf(Util.castTo(m_baseInputElement, NumberInput.class).GetValue()));
+        }
+    }
+
 }

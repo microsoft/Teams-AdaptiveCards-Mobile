@@ -121,6 +121,13 @@ public class DateInputHandler extends TextInputHandler
         return (beforeYear < afterYear || beforeOrSameMonthOfTheSameYear);
     }
 
+    @Override
+    public void resetValue() {
+        if (Util.isOfType(m_baseInputElement, DateInput.class)) {
+            setInput(Util.castTo(m_baseInputElement, DateInput.class).GetValue());
+        }
+    }
+
     private FragmentManager m_fragmentManager;
 
     public static final String DATE_FORMAT = "yyyy-MM-dd";
