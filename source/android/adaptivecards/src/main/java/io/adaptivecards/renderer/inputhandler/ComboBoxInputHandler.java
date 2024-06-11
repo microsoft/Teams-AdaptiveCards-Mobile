@@ -88,8 +88,10 @@ public class ComboBoxInputHandler extends BaseInputHandler
 
     @Override
     public void resetValue() {
-        ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
-        setInput(choiceSetInput.GetValue());
+        if(Util.isOfType(m_baseInputElement, ChoiceSetInput.class)) {
+            ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
+            setInput(choiceSetInput.GetValue());
+        }
     }
 
     @Override

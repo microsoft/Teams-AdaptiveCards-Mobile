@@ -52,8 +52,10 @@ class RatingInputHandler(
     }
 
     override fun resetValue() {
-        val ratingInput = Util.castTo(m_baseInputElement, RatingInput::class.java)
-        input = ratingInput.GetValue().toString()
+        if (Util.isOfType(m_baseInputElement, RatingInput::class.java)) {
+            val ratingInput = Util.castTo(m_baseInputElement, RatingInput::class.java)
+            input = ratingInput.GetValue().toString()
+        }
     }
 
     override fun registerInputObserver() {

@@ -69,8 +69,10 @@ public class ToggleInputHandler extends BaseInputHandler
 
     @Override
     public void resetValue() {
-        ToggleInput toggleInput = Util.castTo(m_baseInputElement, ToggleInput.class);
-        setInput(toggleInput.GetValue());
+        if (Util.isOfType(m_baseInputElement, ToggleInput.class)) {
+            ToggleInput toggleInput = Util.castTo(m_baseInputElement, ToggleInput.class);
+            setInput(toggleInput.GetValue());
+        }
     }
 
     @Override
