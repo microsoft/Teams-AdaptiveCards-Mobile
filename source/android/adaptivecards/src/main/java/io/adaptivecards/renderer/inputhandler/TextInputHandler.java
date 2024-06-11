@@ -3,7 +3,6 @@
 package io.adaptivecards.renderer.inputhandler;
 
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.EditText;
 
@@ -79,9 +78,11 @@ public class TextInputHandler extends BaseInputHandler
     }
 
     @Override
-    public void resetValue() {
-        TextInput textInput = Util.castTo(m_baseInputElement, TextInput.class);
-        setInput(textInput.GetValue());
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, TextInput.class)) {
+            return Util.castTo(m_baseInputElement, TextInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     public void setFocusToView()

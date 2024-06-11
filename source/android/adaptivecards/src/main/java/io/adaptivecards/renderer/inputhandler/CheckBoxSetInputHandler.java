@@ -60,7 +60,7 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
             return;
         }
 
-        List<String> listValues = Arrays.asList(values.split(";"));
+        List<String> listValues = Arrays.asList(values.split(","));
         for (int i = 0 ; i < choiceInputVector.size(); i++)
         {
             if (listValues.contains(choiceInputVector.get(i).GetValue()))
@@ -93,9 +93,11 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
     }
 
     @Override
-    public void resetValue() {
-        ChoiceSetInput choiceSetInput = Util.castTo(m_baseInputElement, ChoiceSetInput.class);
-        setInput(choiceSetInput.GetValue());
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, ChoiceSetInput.class)) {
+            return Util.castTo(m_baseInputElement, ChoiceSetInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     private List<CheckBox> m_checkBoxList;
