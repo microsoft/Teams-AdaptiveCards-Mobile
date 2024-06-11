@@ -27,7 +27,7 @@ class ValueChangedActionInputWatcher(
             val targetInputIds = valueChangedAction.GetTargetInputIds()
             renderedCard.getInputsHandlerFromCardId(cardId)?.let{
                 for (targetInputId in targetInputIds) {
-                    it[targetInputId]?.resetValue()
+                    it[targetInputId]?.input = it[targetInputId]?.getDefaultValue()
                 }
             }
         }

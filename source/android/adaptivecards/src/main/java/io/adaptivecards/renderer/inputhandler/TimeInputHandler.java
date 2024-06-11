@@ -151,10 +151,11 @@ public class TimeInputHandler extends TextInputHandler
     }
 
     @Override
-    public void resetValue() {
+    public String getDefaultValue() {
         if (Util.isOfType(m_baseInputElement, TimeInput.class)) {
-            setInput(Util.castTo(m_baseInputElement, TimeInput.class).GetValue());
+            return Util.castTo(m_baseInputElement, TimeInput.class).GetValue();
         }
+        return super.getDefaultValue();
     }
 
     private FragmentManager m_fragmentManager;

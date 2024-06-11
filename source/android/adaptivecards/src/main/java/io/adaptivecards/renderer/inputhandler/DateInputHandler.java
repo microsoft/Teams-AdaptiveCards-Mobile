@@ -122,10 +122,11 @@ public class DateInputHandler extends TextInputHandler
     }
 
     @Override
-    public void resetValue() {
+    public String getDefaultValue() {
         if (Util.isOfType(m_baseInputElement, DateInput.class)) {
-            setInput(Util.castTo(m_baseInputElement, DateInput.class).GetValue());
+            return Util.castTo(m_baseInputElement, DateInput.class).GetValue();
         }
+        return super.getDefaultValue();
     }
 
     private FragmentManager m_fragmentManager;

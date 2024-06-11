@@ -58,7 +58,7 @@ public interface IInputHandler
     void registerInputObserver();
 
     /**
-     * reset value of the input field to default.
+     * default value for the input filed
      */
-    void resetValue();
+    String getDefaultValue();
 }
