@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger, ACRCardElementType) {
     ACRImageSet,
     ACRMedia,
     ACRNumberInput,
+    ACRRatingInput,
+    ACRRatingLabel,
     ACRRichTextBlock,
     ACRTable,
     ACRTableCell,
@@ -83,6 +85,20 @@ typedef NS_ENUM(NSUInteger, ACRHorizontalAlignment) {
     ACRRight
 };
 
+typedef NS_ENUM(NSUInteger, ACRRatingSize) {
+    ACRMedium = 0,
+    ACRLarge
+};
+
+typedef NS_ENUM(NSUInteger, ACRRatingColor) {
+    ACRNeutral = 0,
+    ACRMarigold
+};
+
+typedef NS_ENUM(NSUInteger, ACRRatingStyle) {
+    ACRDefaultStyle = 0,
+    ACRCompactStyle
+};
 
 typedef NS_ENUM(NSUInteger, ACRVerticalContentAlignment) {
     ACRVerticalContentAlignmentTop = 0,

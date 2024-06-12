@@ -57,7 +57,7 @@ public class NumberInputRenderer extends TextInputRenderer
 
         NumberInput numberInput = Util.castTo(baseCardElement, NumberInput.class);
 
-        NumberInputHandler numberInputHandler = new NumberInputHandler(numberInput);
+        NumberInputHandler numberInputHandler = new NumberInputHandler(numberInput, renderedCard, renderArgs.getContainerCardId());
         TagContent tagContent = new TagContent(numberInput, numberInputHandler);
 
         EditText editText = renderInternal(

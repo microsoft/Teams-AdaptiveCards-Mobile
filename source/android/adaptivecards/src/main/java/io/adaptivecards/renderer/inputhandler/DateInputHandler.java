@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.DateInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.readonly.RendererUtil;
 
@@ -18,9 +19,9 @@ import java.util.Date;
 
 public class DateInputHandler extends TextInputHandler
 {
-    public DateInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager)
+    public DateInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
         m_fragmentManager = fragmentManager;
         s_simpleDateFormat.setLenient(false);
     }
@@ -118,6 +119,14 @@ public class DateInputHandler extends TextInputHandler
         boolean beforeOrSameMonthOfTheSameYear = (beforeYear == afterYear && (beforeMonth < afterMonth || beforeOrSameDayOfTheSameMonth));
         // If the years are the same, then the previous variable must have been satisfied
         return (beforeYear < afterYear || beforeOrSameMonthOfTheSameYear);
+    }
+
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, DateInput.class)) {
+            return Util.castTo(m_baseInputElement, DateInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     private FragmentManager m_fragmentManager;

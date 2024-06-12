@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.TimeInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.input.TimeInputRenderer;
 import io.adaptivecards.renderer.readonly.RendererUtil;
@@ -20,9 +21,9 @@ import java.util.Date;
 
 public class TimeInputHandler extends TextInputHandler
 {
-    public TimeInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager)
+    public TimeInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
         m_fragmentManager = fragmentManager;
     }
 
@@ -147,6 +148,14 @@ public class TimeInputHandler extends TextInputHandler
 
         // If the hour is the same, compare against minutes. Seconds are not considered
         return (beforeHour < afterHour || (beforeHour == afterHour && beforeMinute <= afterMinute));
+    }
+
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, TimeInput.class)) {
+            return Util.castTo(m_baseInputElement, TimeInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     private FragmentManager m_fragmentManager;

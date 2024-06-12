@@ -7,7 +7,7 @@
 
 using namespace AdaptiveCards;
 
-ChoicesData::ChoicesData()
+ChoicesData::ChoicesData() : m_associatedInputs(AssociatedInputs::Auto)
 {
 }
 
@@ -28,6 +28,11 @@ Json::Value ChoicesData::SerializeToJsonValue() const
     if (!m_dataset.empty())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Dataset)] = GetDataset();
+    }
+
+    if (m_associatedInputs != AssociatedInputs::Auto)
+    {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::AssociatedInputs)] = AssociatedInputsToString(m_associatedInputs);
     }
 
     return root;
@@ -79,6 +84,9 @@ std::shared_ptr<ChoicesData> ChoicesData::Deserialize(ParseContext& context, con
         choicesData->SetDataset(dataset);
     }
 
+    choicesData->SetAssociatedInputs(ParseUtil::GetEnumValue<AssociatedInputs>(
+            json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString));
+
     return choicesData;
 }
 
@@ -105,4 +113,14 @@ std::string ChoicesData::GetDataset() const
 void ChoicesData::SetDataset(const std::string& dataset)
 {
     m_dataset = dataset;
+}
+
+AssociatedInputs ChoicesData::GetAssociatedInputs() const
+{
+    return m_associatedInputs;
+}
+
+void ChoicesData::SetAssociatedInputs(const AssociatedInputs value)
+{
+    m_associatedInputs = value;
 }

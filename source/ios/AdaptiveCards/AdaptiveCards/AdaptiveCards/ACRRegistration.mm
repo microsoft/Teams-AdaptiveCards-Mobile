@@ -41,6 +41,8 @@
 #import "FeatureRegistration.h"
 #import "HostConfig.h"
 #import "ACRIconRenderer.h"
+#import "ACRRatingInputRenderer.h"
+#import "ACRRatingLabelRenderer.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -80,6 +82,8 @@ using namespace AdaptiveCards;
                                              [ACRInputDateRenderer getInstance], [NSNumber numberWithInt:(int)[ACRInputDateRenderer elemType]],
                                              [ACRInputTimeRenderer getInstance], [NSNumber numberWithInt:(int)[ACRInputTimeRenderer elemType]],
                                              [ACRInputNumberRenderer getInstance], [NSNumber numberWithInt:(int)[ACRInputNumberRenderer elemType]],
+                                             [ACRRatingInputRenderer getInstance], [NSNumber numberWithInt:(int)[ACRRatingInputRenderer elemType]],
+                                             [ACRRatingLabelRenderer getInstance], [NSNumber numberWithInt:(int)[ACRRatingLabelRenderer elemType]],
                                              [ACRFactSetRenderer getInstance], [NSNumber numberWithInt:(int)[ACRFactSetRenderer elemType]],
                                              [ACRContainerRenderer getInstance], [NSNumber numberWithInt:(int)[ACRContainerRenderer elemType]],
                                              [ACRColumnSetRenderer getInstance], [NSNumber numberWithInt:(int)[ACRColumnSetRenderer elemType]],

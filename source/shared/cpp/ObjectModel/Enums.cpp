@@ -64,6 +64,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::DateInput, "dateInput"},
             {AdaptiveCardSchemaKey::Default, "default"},
             {AdaptiveCardSchemaKey::DefaultPoster, "defaultPoster"},
+            {AdaptiveCardSchemaKey::Count, "count"},
             {AdaptiveCardSchemaKey::ElementId, "elementId"},
             {AdaptiveCardSchemaKey::Emphasis, "emphasis"},
             {AdaptiveCardSchemaKey::ErrorMessage, "errorMessage"},
@@ -144,6 +145,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Monospace, "monospace"},
             {AdaptiveCardSchemaKey::Narrow, "narrow"},
             {AdaptiveCardSchemaKey::NumberInput, "numberInput"},
+            {AdaptiveCardSchemaKey::RatingInput, "ratingInput"},
+            {AdaptiveCardSchemaKey::RatingLabel, "ratingLabel"},
             {AdaptiveCardSchemaKey::OptionalInputs, "optionalInputs"},
             {AdaptiveCardSchemaKey::Padding, "padding"},
             {AdaptiveCardSchemaKey::Placeholder, "placeholder"},
@@ -185,12 +188,19 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TableCell, "tableCell"},
             {AdaptiveCardSchemaKey::TableRow, "tableRow"},
             {AdaptiveCardSchemaKey::TargetElements, "targetElements"},
+            {AdaptiveCardSchemaKey::TargetInputIds, "targetInputIds"},
             {AdaptiveCardSchemaKey::TargetWidth, "targetWidth"},
             {AdaptiveCardSchemaKey::Text, "text"},
             {AdaptiveCardSchemaKey::TextBlock, "textBlock"},
             {AdaptiveCardSchemaKey::TextConfig, "textConfig"},
             {AdaptiveCardSchemaKey::TextInput, "textInput"},
             {AdaptiveCardSchemaKey::TextStyles, "textStyles"},
+            {AdaptiveCardSchemaKey::MarigoldColor, "marigoldColor"},
+            {AdaptiveCardSchemaKey::NeutralColor, "neutralColor"},
+            {AdaptiveCardSchemaKey::FilledStar, "filledStar"},
+            {AdaptiveCardSchemaKey::EmptyStar, "emptyStar"},
+            {AdaptiveCardSchemaKey::RatingTextColor, "ratingTextColor"},
+            {AdaptiveCardSchemaKey::CountTextColor, "countTextColor"},
             {AdaptiveCardSchemaKey::TextWeight, "weight"},
             {AdaptiveCardSchemaKey::Thickness, "thickness"},
             {AdaptiveCardSchemaKey::TimeInput, "timeInput"},
@@ -205,6 +215,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Url, "url"},
             {AdaptiveCardSchemaKey::UserIds, "userIds"},
             {AdaptiveCardSchemaKey::Value, "value"},
+            {AdaptiveCardSchemaKey::ValueChangedAction, "valueChangedAction"},
+            {AdaptiveCardSchemaKey::ValueChangedActionType, "type"},
             {AdaptiveCardSchemaKey::ValueOff, "valueOff"},
             {AdaptiveCardSchemaKey::ValueOn, "valueOn"},
             {AdaptiveCardSchemaKey::Verb, "verb"},
@@ -235,6 +247,8 @@ namespace AdaptiveCards
             {CardElementType::ImageSet, "ImageSet"},
             {CardElementType::Media, "Media"},
             {CardElementType::NumberInput, "Input.Number"},
+            {CardElementType::RatingInput, "Input.Rating"},
+            {CardElementType::RatingLabel, "Rating"},
             {CardElementType::RichTextBlock, "RichTextBlock"},
             {CardElementType::Table, "Table"},
             {CardElementType::TableCell, "TableCell"},
@@ -259,6 +273,18 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(HeightType, {
             {HeightType::Auto, "Auto"},
             {HeightType::Stretch, "Stretch"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(RatingSize, {
+            {RatingSize::Medium, "medium"},
+            {RatingSize::Large, "large"}});
+    
+    DEFINE_ADAPTIVECARD_ENUM(RatingColor, {
+            {RatingColor::Neutral, "neutral"},
+            {RatingColor::Marigold, "marigold"}});
+    
+    DEFINE_ADAPTIVECARD_ENUM(RatingStyle, {
+            {RatingStyle::Default, "default"},
+            {RatingStyle::Compact, "compact"}});
 
     DEFINE_ADAPTIVECARD_ENUM(Spacing, {
             {Spacing::Default, "default"},
@@ -443,4 +469,7 @@ namespace AdaptiveCards
         {TargetWidthType::AtLeastNarrow, "atLeast:narrow"},
         {TargetWidthType::AtLeastStandard, "atLeast:standard"},
         {TargetWidthType::AtLeastWide, "atLeast:wide"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(ValueChangedActionType, {
+            {ValueChangedActionType::ResetInputs, "Action.ResetInputs"},});
 }

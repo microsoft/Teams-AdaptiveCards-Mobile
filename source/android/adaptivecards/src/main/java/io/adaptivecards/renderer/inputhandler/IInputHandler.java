@@ -33,6 +33,11 @@ public interface IInputHandler
     boolean isValid(boolean showError);
 
     /**
+     * @return true if the inputElement is a required value
+     */
+    boolean isRequiredInput();
+
+    /**
      * request focus on the given input view
      */
     void setFocusToView();
@@ -51,4 +56,9 @@ public interface IInputHandler
      * in that case explicit call to add observer is required after adding child views.
      */
     void registerInputObserver();
+
+    /**
+     * default value for the input filed
+     */
+    String getDefaultValue();
 }

@@ -33,7 +33,7 @@ public class NumberInputValidationTest
 
     private NumberInputHandler createInputHandler(NumberInput numberInput)
     {
-        NumberInputHandler numberInputHandler = new NumberInputHandler(numberInput);
+        NumberInputHandler numberInputHandler = new NumberInputHandler(numberInput, null, 0);
         numberInputHandler.setView(new EditText(InstrumentationRegistry.getContext()));
         return numberInputHandler;
     }
@@ -42,7 +42,7 @@ public class NumberInputValidationTest
     {
         class CustomNumberInputHandler extends NumberInputHandler
         {
-            public CustomNumberInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager) { super(baseInputElement); }
+            public CustomNumberInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager) { super(baseInputElement, null, 0); }
 
             @Override
             public boolean isValidOnSpecifics(String NumberInputValue) { return true; }

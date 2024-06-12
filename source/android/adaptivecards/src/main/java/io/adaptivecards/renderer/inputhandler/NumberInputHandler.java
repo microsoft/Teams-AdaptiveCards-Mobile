@@ -6,13 +6,14 @@ import android.widget.EditText;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.NumberInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 
 public class NumberInputHandler extends TextInputHandler
 {
-    public NumberInputHandler(BaseInputElement baseInputElement)
+    public NumberInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
     }
 
     protected EditText getEditText()
@@ -70,4 +71,11 @@ public class NumberInputHandler extends TextInputHandler
         return isValid;
     }
 
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, NumberInput.class)) {
+            return String.valueOf(Util.castTo(m_baseInputElement, NumberInput.class).GetValue());
+        }
+        return super.getDefaultValue();
+    }
 }

@@ -79,6 +79,15 @@ public class BaseInputElement extends BaseCardElement {
     AdaptiveCardObjectModelJNI.BaseInputElement_SetErrorMessage(swigCPtr, this, errorMessage);
   }
 
+  public ValueChangedAction GetValueChangedAction() {
+    long cPtr = AdaptiveCardObjectModelJNI.BaseInputElement_GetValueChangedAction(swigCPtr, this);
+    return (cPtr == 0) ? null : new ValueChangedAction(cPtr, true);
+  }
+
+  public void SetValueChangedAction(ValueChangedAction value) {
+    AdaptiveCardObjectModelJNI.BaseInputElement_SetValueChangedAction(swigCPtr, this, ValueChangedAction.getCPtr(value), value);
+  }
+
   public static BaseInputElement DeserializeBasePropertiesFromString(ParseContext context, String jsonString) {
     long cPtr = AdaptiveCardObjectModelJNI.BaseInputElement_DeserializeBasePropertiesFromString(ParseContext.getCPtr(context), context, jsonString);
     return (cPtr == 0) ? null : new BaseInputElement(cPtr, true);

@@ -124,6 +124,34 @@ struct FactSetTextConfig : TextStyleConfig
     static FactSetTextConfig Deserialize(const Json::Value& json, const FactSetTextConfig& defaultValue);
 };
 
+struct RatingStarCofig
+{
+    std::string marigoldColor = "#EAA300";
+    std::string neutralColor = "#242424";
+    
+    static RatingStarCofig Deserialize(const Json::Value& json, const RatingStarCofig& defaultValue);
+};
+
+struct RatingElementConfig
+{
+    RatingStarCofig filledStar = {
+        "#EAA300",
+        "#212121"
+    };
+    
+    RatingStarCofig emptyStar = {
+        "#EAA300",
+        "#212121"
+    };
+    
+    std::string ratingTextColor = "#000000";
+    std::string countTextColor = "#000000";
+    
+    static RatingElementConfig Deserialize(const Json::Value& json, const RatingElementConfig& defaultValue);
+};
+
+
+
 struct TextStylesConfig
 {
     TextStyleConfig heading = {TextWeight::Bolder, TextSize::Large, false, ForegroundColor::Default, FontType::Default};
@@ -452,6 +480,12 @@ public:
 
     TextStylesConfig GetTextStyles() const;
     void SetTextStyles(const TextStylesConfig value);
+    
+    RatingElementConfig GetRatingLabelConfig() const;
+    void SetRatingLabelConfig(const RatingElementConfig value);
+    
+    RatingElementConfig GetRatingInputConfig() const;
+    void SetRatingInputConfig(const RatingElementConfig value);
 
     TextBlockConfig GetTextBlock() const;
     void SetTextBlock(const TextBlockConfig value);
@@ -483,6 +517,8 @@ private:
     HostWidthConfig _hostWidth;
     TextBlockConfig _textBlock;
     TextStylesConfig _textStyles;
+    RatingElementConfig _ratingInputConfig;
+    RatingElementConfig _ratingLabelConfig;
     TableConfig _table;
     Json::Value _borderWidth;
     Json::Value _cornerRadius;

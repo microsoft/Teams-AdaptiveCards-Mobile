@@ -19,6 +19,10 @@
 										"title": "FluentIcon",
 										"value": "v1.5/Scenarios/FluentIcon.json"
 									},
+									{
+										"title": "RatingInput",
+										"value": "v1.5/Scenarios/RatingInput.json"
+									},
                                     {
                                         "title": "ActivityUpdate",
                                         "value": "v1.5/Scenarios/ActivityUpdate.json"
@@ -50,6 +54,14 @@
 									{
 										"title": "ConditionallyEnabledAction",
 										"value": "v1.5/Scenarios/ConditionallyEnabled.json"
+									},
+									{
+										"title": "ValueChangedAction",
+										"value": "v1.5/Scenarios/ValueChangedAction.json"
+									},
+									{
+										"title": "ValueChangedActionAllInputType",
+										"value": "v1.5/Scenarios/ValueChangedActionAllInputType.json"
 									},
                                     {
                                         "title": "Inputs",

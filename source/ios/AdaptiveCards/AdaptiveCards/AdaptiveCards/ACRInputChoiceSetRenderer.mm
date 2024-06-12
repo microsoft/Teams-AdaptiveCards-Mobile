@@ -76,6 +76,7 @@
         [choiceSetView registerClass:[ACRChoiceSetCell class] forCellReuseIdentifier:uncheckedRadioButtonReuseID];
         NSObject<UITableViewDelegate, UITableViewDataSource, ACRIBaseInputHandler> *dataSource = [[ACRChoiceSetViewDataSource alloc] initWithInputChoiceSet:choiceSet WithHostConfig:config];
         ((ACRChoiceSetViewDataSource *)dataSource).spacing = choiceSetView.inputTableViewSpacing;
+        ((ACRChoiceSetViewDataSource *)dataSource).tableView = choiceSetView;
         [choiceSetView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 
         // removes leading padding
