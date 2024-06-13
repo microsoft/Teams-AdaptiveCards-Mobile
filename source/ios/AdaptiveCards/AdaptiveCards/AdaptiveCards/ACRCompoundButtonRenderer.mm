@@ -49,8 +49,6 @@
     std::shared_ptr<CompoundButton> compoundButton = std::dynamic_pointer_cast<CompoundButton>(elem);
     std::shared_ptr<IconInfo> icon = compoundButton->getIcon();
    
-    
-    
     UIStackView *verticalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     verticalStack.axis = UILayoutConstraintAxisVertical;
     verticalStack.translatesAutoresizingMaskIntoConstraints = NO;
@@ -62,7 +60,8 @@
     horizontalStack.spacing = 5;
     horizontalStack.alignment = UIStackViewAlignmentCenter;
     
-    if(icon != nil){
+    if(icon != nil)
+    {
         ACRSVGIconHoldingView* iconView = [self getIconViewWithIconInfo:icon
                                                                rootView:rootView
                                                              hostConfig:acoConfig];
