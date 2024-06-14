@@ -122,6 +122,7 @@
         self.isRequired = numberInputBlock->GetIsRequired();
         auto value = numberInputBlock->GetValue();
         self.text = (value.has_value()) ? [[NSNumber numberWithDouble:value.value_or(0)] stringValue] : nil;
+        self.defaultValue = self.text;
         self.hasText = self.text != nil;
 
         NSMutableCharacterSet *characterSets = [NSMutableCharacterSet characterSetWithCharactersInString:@"-."];
