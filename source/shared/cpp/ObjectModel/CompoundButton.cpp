@@ -119,6 +119,7 @@ std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeWithoutCheckin
                                                       AdaptiveCardSchemaKey::Icon,
                                                       IconInfo::Deserialize,
                                                       false);
+    compoundButton->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
     compoundButton->setIcon(icon);
     return compoundButton;
 }

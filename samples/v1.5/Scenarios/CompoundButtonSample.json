@@ -3,10 +3,8 @@
 	"$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
 	"version": "1.5",
 	"body": [
-
 		{
 			"type": "CompoundButton",
-
 			"title": "Summarize",
 			"icon": {
 				"name": "List",
@@ -14,48 +12,31 @@
 				"style": "Regular",
 				"color": "attention"
 			},
-
 			"description": "Create a work item and assign it to your or a team member",
-
 			"height": "stretch",
-
 			"badge": "New",
-
 			"selectAction": {
 				"type": "Action.OpenUrl",
 				"url": "https://www.microsoft.com",
 				"title": "Click me!",
 				"tooltip": "compound button can handle actions"
 			}
-
 		},
-
-
 		{
 			"type": "CompoundButton",
-
 			"title": "View active work items",
-
 			"description": "See active tasks assigned to you or a team members",
-
 			"height": "stretch",
-
 			"badge": "New",
-
 			"selectAction": {
 				"type": "Action.OpenUrl",
 				"url": "https://www.microsoft.com",
 				"title": "Click me!",
 				"tooltip": "compound button can handle actions"
 			}
-
 		},
-
-
-
 		{
 			"type": "CompoundButton",
-
 			"title": "Give feedback",
 			"icon": {
 				"name": "Calendar",
@@ -63,11 +44,8 @@
 				"style": "Regular",
 				"color": "attention"
 			},
-
 			"description": "To give us feedback on Azure DevOps",
-
 			"height": "stretch",
-
 			"selectAction": {
 				"type": "Action.OpenUrl",
 				"url": "https://www.microsoft.com",
@@ -76,19 +54,12 @@
 			},
 			"separator": true,
 			"spacing": "large"
-
 		},
-
-
 		{
 			"type": "CompoundButton",
-
 			"title": "Summarize",
-
 			"description": "Create a work item and assign it to your or a team member",
-
 			"height": "stretch",
-
 			"selectAction": {
 				"type": "Action.OpenUrl",
 				"url": "https://www.microsoft.com",
@@ -97,12 +68,9 @@
 			},
 			"separator": true,
 			"spacing": "large"
-
 		},
-
 		{
 			"type": "CompoundButton",
-
 			"title": "Pending Taks",
 			"icon": {
 				"name": "Emoji",
@@ -110,11 +78,8 @@
 				"style": "Regular",
 				"color": "attention"
 			},
-
 			"badge": "priority",
-
 			"height": "stretch",
-
 			"selectAction": {
 				"type": "Action.OpenUrl",
 				"url": "https://www.microsoft.com",
@@ -123,7 +88,6 @@
 			},
 			"separator": true,
 			"spacing": "large"
-
 		}
 	]
 }
