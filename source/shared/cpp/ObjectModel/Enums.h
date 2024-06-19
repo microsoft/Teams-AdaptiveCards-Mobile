@@ -36,6 +36,7 @@ enum class AdaptiveCardSchemaKey
     Bolder,
     BorderColor,
     Bottom,
+    Badge,
     ButtonSpacing,
     Buttons,
     CaptionSources,
@@ -67,6 +68,7 @@ enum class AdaptiveCardSchemaKey
     Default,
     DefaultPoster,
     Count,
+    Description,
     ElementId,
     Emphasis,
     ErrorMessage,
@@ -232,6 +234,7 @@ enum class AdaptiveCardSchemaKey
     Weight,
     Width,
     Wrap,
+    CompoundButton
 };
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 
@@ -264,6 +267,7 @@ enum class CardElementType
     TextInput,
     TimeInput,
     ToggleInput,
+    CompoundButton,
     Unknown,
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);

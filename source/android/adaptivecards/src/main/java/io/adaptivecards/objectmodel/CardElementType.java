@@ -35,6 +35,7 @@ public enum CardElementType {
   TextInput,
   TimeInput,
   ToggleInput,
+  CompoundButton,
   Unknown;
 
   public final int swigValue() {
