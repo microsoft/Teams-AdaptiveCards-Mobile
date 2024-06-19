@@ -25,12 +25,12 @@ Json::Value CompoundButton::SerializeToJsonValue() const
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Badge)] = m_badge;
     }
 
-    if (m_title.empty())
+    if (!m_title.empty())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title)] = m_title;
     }
 
-    if (m_description.empty())
+    if (!m_description.empty())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Description)] = m_description;
     }
