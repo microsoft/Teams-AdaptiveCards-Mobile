@@ -113,7 +113,7 @@ std::shared_ptr<BaseCardElement> CompoundButtonParser::DeserializeWithoutCheckin
 {
     std::shared_ptr<CompoundButton> compoundButton = BaseCardElement::Deserialize<CompoundButton>(context, json);
     compoundButton->setBadge(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Badge));
-    compoundButton->setTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title));
+    compoundButton->setTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title, true));
     compoundButton-> setDescription(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Description));
     auto icon = ParseUtil::DeserializeValue<IconInfo>(json,
                                                       AdaptiveCardSchemaKey::Icon,

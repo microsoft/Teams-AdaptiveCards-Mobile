@@ -54,6 +54,15 @@
 		46B78E662C0586D500EF4566 /* RatingInputValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E652C0586D500EF4566 /* RatingInputValid.json */; };
 		46B78E682C0587B700EF4566 /* RatingLabelValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E672C0587B700EF4566 /* RatingLabelValid.json */; };
 		46B78E6A2C058A8200EF4566 /* RatingInputInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E692C058A8200EF4566 /* RatingInputInvalid.json */; };
+		46CBB6372C22BA24008FC5D5 /* IconInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46CBB6352C22BA24008FC5D5 /* IconInfo.cpp */; };
+		46CBB6382C22BA24008FC5D5 /* IconInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 46CBB6362C22BA24008FC5D5 /* IconInfo.h */; };
+		46CBB63B2C22BA33008FC5D5 /* CompoundButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46CBB6392C22BA33008FC5D5 /* CompoundButton.cpp */; };
+		46CBB63C2C22BA33008FC5D5 /* CompoundButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 46CBB63A2C22BA33008FC5D5 /* CompoundButton.h */; };
+		46CBB63F2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46CBB63D2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.h */; };
+		46CBB6402C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46CBB63E2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.mm */; };
+		46CBB6422C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46CBB6412C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm */; };
+		46CBB6452C22BA96008FC5D5 /* CompoundButtonInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46CBB6432C22BA96008FC5D5 /* CompoundButtonInvalid.json */; };
+		46CBB6462C22BA96008FC5D5 /* CompoundButtonValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46CBB6442C22BA96008FC5D5 /* CompoundButtonValid.json */; };
 		46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */; };
 		46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */; };
 		6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */; };
@@ -563,6 +572,15 @@
 		46B78E652C0586D500EF4566 /* RatingInputValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingInputValid.json; sourceTree = "<group>"; };
 		46B78E672C0587B700EF4566 /* RatingLabelValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingLabelValid.json; sourceTree = "<group>"; };
 		46B78E692C058A8200EF4566 /* RatingInputInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingInputInvalid.json; sourceTree = "<group>"; };
+		46CBB6352C22BA24008FC5D5 /* IconInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IconInfo.cpp; path = ../../../../shared/cpp/ObjectModel/IconInfo.cpp; sourceTree = "<group>"; };
+		46CBB6362C22BA24008FC5D5 /* IconInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IconInfo.h; path = ../../../../shared/cpp/ObjectModel/IconInfo.h; sourceTree = "<group>"; };
+		46CBB6392C22BA33008FC5D5 /* CompoundButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompoundButton.cpp; path = ../../../../shared/cpp/ObjectModel/CompoundButton.cpp; sourceTree = "<group>"; };
+		46CBB63A2C22BA33008FC5D5 /* CompoundButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompoundButton.h; path = ../../../../shared/cpp/ObjectModel/CompoundButton.h; sourceTree = "<group>"; };
+		46CBB63D2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRCompoundButtonRenderer.h; sourceTree = "<group>"; };
+		46CBB63E2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCompoundButtonRenderer.mm; sourceTree = "<group>"; };
+		46CBB6412C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardCompoundButtonTests.mm; sourceTree = "<group>"; };
+		46CBB6432C22BA96008FC5D5 /* CompoundButtonInvalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CompoundButtonInvalid.json; sourceTree = "<group>"; };
+		46CBB6442C22BA96008FC5D5 /* CompoundButtonValid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CompoundButtonValid.json; sourceTree = "<group>"; };
 		46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
 		46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
 		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
@@ -1292,6 +1310,8 @@
 				6BE6C7B926E2E30A009E9171 /* ColumnSet.FactSet.VerticalStretch.json */,
 				6BE6C7B826E2E30A009E9171 /* ColumnSet.Image.VerticalStretch.json */,
 				6BE6C7C426E7CDCF009E9171 /* ColumnSet.Input.ChoiceSet.VerticalStretch.json */,
+				46CBB6432C22BA96008FC5D5 /* CompoundButtonInvalid.json */,
+				46CBB6442C22BA96008FC5D5 /* CompoundButtonValid.json */,
 				6BE6C7BD26E2E4EC009E9171 /* ColumnSet.VerticalStretch.json */,
 				6BE6C7A426E17132009E9171 /* ColumnSet.VerticalStretch.json */,
 				6BE6C7B726E2E30A009E9171 /* Container.VerticalContentAlignment.json */,
@@ -1441,6 +1461,7 @@
 				30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */,
 				30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */,
 				6B124CA326D04CA9007E9641 /* AdaptiveCardsUtiliOSTest.mm */,
+				46CBB6412C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm */,
 				46B78E632C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm */,
 				B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */,
 				6BE6C79426E1560A009E9171 /* Helpers */,
@@ -1522,9 +1543,13 @@
 				F452CD571F68CD6F005394B2 /* HostConfig.cpp */,
 				F44872D71EE2261F00FCAFAE /* HostConfig.h */,
 				F44872DA1EE2261F00FCAFAE /* Image.cpp */,
+				46CBB6392C22BA33008FC5D5 /* CompoundButton.cpp */,
+				46CBB63A2C22BA33008FC5D5 /* CompoundButton.h */,
 				F44872DB1EE2261F00FCAFAE /* Image.h */,
 				463C3C062BD8DB1F00A95C4E /* Icon.cpp */,
 				463C3C0A2BD8DCC000A95C4E /* Icon.h */,
+				46CBB6352C22BA24008FC5D5 /* IconInfo.cpp */,
+				46CBB6362C22BA24008FC5D5 /* IconInfo.h */,
 				F44872DC1EE2261F00FCAFAE /* ImageSet.cpp */,
 				F44872DD1EE2261F00FCAFAE /* ImageSet.h */,
 				6B2242B322334492000ACDA1 /* Inline.cpp */,
@@ -1720,6 +1745,8 @@
 				F43A940F1F1D60E30001920B /* ACRFactSetRenderer.mm */,
 				F42741061EF8624F00399FBB /* ACRIBaseCardElementRenderer.h */,
 				6B74403725BA71B60051F2A1 /* ACRImageProperties.h */,
+				46CBB63D2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.h */,
+				46CBB63E2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.mm */,
 				6B74403825BA71B60051F2A1 /* ACRImageProperties.mm */,
 				463C3C0C2BD8F63100A95C4E /* ACRIconRenderer.h */,
 				463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */,
@@ -1813,6 +1840,7 @@
 				F44873221EE2261F00FCAFAE /* SubmitAction.h in Headers */,
 				6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */,
 				F44873201EE2261F00FCAFAE /* ShowCardAction.h in Headers */,
+				46CBB6382C22BA24008FC5D5 /* IconInfo.h in Headers */,
 				7EF8879D21F14CDD00BAFF02 /* BackgroundImage.h in Headers */,
 				F448731B1EE2261F00FCAFAE /* OpenUrlAction.h in Headers */,
 				84AE295A27FFA26F00D01B82 /* ContentSource.h in Headers */,
@@ -1966,12 +1994,14 @@
 				6BFF23F82714C0F000183C59 /* ACRParseWarningPrivate.h in Headers */,
 				6BFF24062714E26900183C59 /* ACRToggleInputDataSource.h in Headers */,
 				6B377284260194000024E527 /* ACRActionExecuteRenderer.h in Headers */,
+				46CBB63F2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.h in Headers */,
 				6B8C765526449B09009548FA /* TableColumnDefinition.h in Headers */,
 				6B8C765326449B09009548FA /* Table.h in Headers */,
 				6BFCA141264F54B500195CA7 /* ACRTableView.h in Headers */,
 				CFF954D029819AC300F321C3 /* ACOTypeaheadDebouncer.h in Headers */,
 				6BFF24142714EF2200183C59 /* UtiliOS.h in Headers */,
 				6BFF24082714E30B00183C59 /* ACRShowCardTarget.h in Headers */,
+				46CBB63C2C22BA33008FC5D5 /* CompoundButton.h in Headers */,
 				6BFF24102714E46300183C59 /* ACRImageSetUICollectionView.h in Headers */,
 				6BFF23F32714C0F000183C59 /* ACOHostConfigPrivate.h in Headers */,
 				6BFF24002714CA7600183C59 /* ACRChoiceSetViewDataSource.h in Headers */,
@@ -2148,6 +2178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B654C752708168D00DF6A5F /* Action.ToggleVisibilityExhaustive.json in Resources */,
+				46CBB6462C22BA96008FC5D5 /* CompoundButtonValid.json in Resources */,
 				46B78E662C0586D500EF4566 /* RatingInputValid.json in Resources */,
 				46B78E6A2C058A8200EF4566 /* RatingInputInvalid.json in Resources */,
 				6BE6C7C526E7CDD0009E9171 /* ColumnSet.Input.ChoiceSet.VerticalStretch.json in Resources */,
@@ -2155,6 +2186,7 @@
 				46B78E682C0587B700EF4566 /* RatingLabelValid.json in Resources */,
 				6BE6C7BE26E2E4EC009E9171 /* ColumnSet.VerticalStretch.json in Resources */,
 				6BE6C7BB26E2E30A009E9171 /* ColumnSet.Image.VerticalStretch.json in Resources */,
+				46CBB6452C22BA96008FC5D5 /* CompoundButtonInvalid.json in Resources */,
 				6BE6C7C326E2F07C009E9171 /* sample.json in Resources */,
 				6BE6C7BC26E2E30A009E9171 /* ColumnSet.FactSet.VerticalStretch.json in Resources */,
 				6BE6C7B626E2E140009E9171 /* Column.VerticalAlignment.json in Resources */,
@@ -2283,7 +2315,9 @@
 				F44873091EE2261F00FCAFAE /* Enums.cpp in Sources */,
 				6B8C765426449B09009548FA /* TableCell.cpp in Sources */,
 				F44873171EE2261F00FCAFAE /* jsoncpp.cpp in Sources */,
+				46CBB6372C22BA24008FC5D5 /* IconInfo.cpp in Sources */,
 				F42E51781FEC3840008F9642 /* MarkDownHtmlGenerator.cpp in Sources */,
+				46CBB63B2C22BA33008FC5D5 /* CompoundButton.cpp in Sources */,
 				F49683551F6CA24600DF0D3A /* ACRRenderResult.mm in Sources */,
 				6BFF9A0526004C580028069F /* ACOAuthentication.mm in Sources */,
 				6B8C765226449B09009548FA /* TableColumnDefinition.cpp in Sources */,
@@ -2405,6 +2439,7 @@
 				6B7B1A9120B4D2AB00260731 /* Media.cpp in Sources */,
 				7EDC0F68213878E800077A13 /* SemanticVersion.cpp in Sources */,
 				84AE295827FFA26F00D01B82 /* ContentSource.cpp in Sources */,
+				46CBB6402C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.mm in Sources */,
 				F42E517A1FEC3840008F9642 /* MarkDownParser.cpp in Sources */,
 				463C3C082BD8DB1F00A95C4E /* Icon.cpp in Sources */,
 				6B7B1A9720BE2CBC00260731 /* ACRUIImageView.mm in Sources */,
@@ -2462,6 +2497,7 @@
 				B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */,
 				CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */,
 				6B124C9826B9F5FC007E9641 /* AdaptiveCardsColumnTests.mm in Sources */,
+				46CBB6422C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm in Sources */,
 				6B4C05BF27864B0800882387 /* ACRImagePropertiesTests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
