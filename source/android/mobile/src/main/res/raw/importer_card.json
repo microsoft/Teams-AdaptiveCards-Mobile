@@ -59,6 +59,10 @@
 										"title": "ValueChangedAction",
 										"value": "v1.5/Scenarios/ValueChangedAction.json"
 									},
+									{
+										"title": "ValueChangedActionAllInputType",
+										"value": "v1.5/Scenarios/ValueChangedActionAllInputType.json"
+									},
                                     {
                                         "title": "Inputs",
                                         "value": "v1.5/Scenarios/InputsWithValidation.json"

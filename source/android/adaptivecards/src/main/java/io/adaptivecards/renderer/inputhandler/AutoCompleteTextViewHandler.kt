@@ -15,7 +15,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.input.customcontrols.ValidatedInputLayout
 
-class AutoCompleteTextViewHandler(baseInputElement: BaseInputElement?,
+class AutoCompleteTextViewHandler(baseInputElement: BaseInputElement,
                                   renderedAdaptiveCard: RenderedAdaptiveCard?, cardId: Long
 ) : BaseInputHandler(baseInputElement, renderedAdaptiveCard, cardId) {
     // For validation visual cues we draw the spinner inside a ValidatedSpinnerLayout so we query for this
@@ -112,5 +112,12 @@ class AutoCompleteTextViewHandler(baseInputElement: BaseInputElement?,
         // Find index for the title
         val index = findTitleIndex(title, choiceInputVector)
         return findStringForIndex(index, choiceInputVector, { choiceInput: ChoiceInput -> choiceInput.GetValue() })
+    }
+
+    override fun getDefaultValue(): String {
+        if (Util.isOfType(m_baseInputElement, ChoiceSetInput::class.java)) {
+            return Util.castTo(m_baseInputElement, ChoiceSetInput::class.java).GetValue()
+        }
+        return super.getDefaultValue()
     }
 }

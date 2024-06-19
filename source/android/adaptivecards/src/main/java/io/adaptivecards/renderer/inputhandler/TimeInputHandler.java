@@ -150,6 +150,14 @@ public class TimeInputHandler extends TextInputHandler
         return (beforeHour < afterHour || (beforeHour == afterHour && beforeMinute <= afterMinute));
     }
 
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, TimeInput.class)) {
+            return Util.castTo(m_baseInputElement, TimeInput.class).GetValue();
+        }
+        return super.getDefaultValue();
+    }
+
     private FragmentManager m_fragmentManager;
 
     public static final String TIME_FORMAT_SUBMIT = "kk:mm";
