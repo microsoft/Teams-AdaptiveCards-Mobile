@@ -1,3 +1,4 @@
+
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 #include "pch.h"
@@ -18,78 +19,78 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._fontFamily = fontFamily != "" ? fontFamily : result._fontFamily;
 
     result._supportsInteractivity =
-        ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::SupportsInteractivity).value_or(result._supportsInteractivity);
+            ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::SupportsInteractivity).value_or(result._supportsInteractivity);
 
     result._imageBaseUrl = ParseUtil::TryGetString(json, AdaptiveCardSchemaKey::ImageBaseUrl);
 
     result._factSet = ParseUtil::ExtractJsonValueAndMergeWithDefault<FactSetConfig>(
-        json, AdaptiveCardSchemaKey::FactSet, result._factSet, FactSetConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::FactSet, result._factSet, FactSetConfig::Deserialize);
 
     result._fontSizes = ParseUtil::ExtractJsonValueAndMergeWithDefault<FontSizesConfig>(
-        json, AdaptiveCardSchemaKey::FontSizes, result._fontSizes, FontSizesConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::FontSizes, result._fontSizes, FontSizesConfig::Deserialize);
 
     result._fontWeights = ParseUtil::ExtractJsonValueAndMergeWithDefault<FontWeightsConfig>(
-        json, AdaptiveCardSchemaKey::FontWeights, result._fontWeights, FontWeightsConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::FontWeights, result._fontWeights, FontWeightsConfig::Deserialize);
 
     result._fontTypes = ParseUtil::ExtractJsonValueAndMergeWithDefault<FontTypesDefinition>(
-        json, AdaptiveCardSchemaKey::FontTypes, result._fontTypes, FontTypesDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::FontTypes, result._fontTypes, FontTypesDefinition::Deserialize);
 
     result._containerStyles = ParseUtil::ExtractJsonValueAndMergeWithDefault<ContainerStylesDefinition>(
-        json, AdaptiveCardSchemaKey::ContainerStyles, result._containerStyles, ContainerStylesDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::ContainerStyles, result._containerStyles, ContainerStylesDefinition::Deserialize);
 
     result._image = ParseUtil::ExtractJsonValueAndMergeWithDefault<ImageConfig>(
-        json, AdaptiveCardSchemaKey::Image, result._image, ImageConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Image, result._image, ImageConfig::Deserialize);
 
     result._imageSet = ParseUtil::ExtractJsonValueAndMergeWithDefault<ImageSetConfig>(
-        json, AdaptiveCardSchemaKey::ImageSet, result._imageSet, ImageSetConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::ImageSet, result._imageSet, ImageSetConfig::Deserialize);
 
     result._imageSizes = ParseUtil::ExtractJsonValueAndMergeWithDefault<ImageSizesConfig>(
-        json, AdaptiveCardSchemaKey::ImageSizes, result._imageSizes, ImageSizesConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::ImageSizes, result._imageSizes, ImageSizesConfig::Deserialize);
 
     result._separator = ParseUtil::ExtractJsonValueAndMergeWithDefault<SeparatorConfig>(
-        json, AdaptiveCardSchemaKey::Separator, result._separator, SeparatorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Separator, result._separator, SeparatorConfig::Deserialize);
 
     result._spacing = ParseUtil::ExtractJsonValueAndMergeWithDefault<SpacingConfig>(
-        json, AdaptiveCardSchemaKey::Spacing, result._spacing, SpacingConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Spacing, result._spacing, SpacingConfig::Deserialize);
 
     result._adaptiveCard = ParseUtil::ExtractJsonValueAndMergeWithDefault<AdaptiveCardConfig>(
-        json, AdaptiveCardSchemaKey::AdaptiveCard, result._adaptiveCard, AdaptiveCardConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::AdaptiveCard, result._adaptiveCard, AdaptiveCardConfig::Deserialize);
 
     result._actions = ParseUtil::ExtractJsonValueAndMergeWithDefault<ActionsConfig>(
-        json, AdaptiveCardSchemaKey::Actions, result._actions, ActionsConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Actions, result._actions, ActionsConfig::Deserialize);
 
     result._media = ParseUtil::ExtractJsonValueAndMergeWithDefault<MediaConfig>(
-        json, AdaptiveCardSchemaKey::Media, result._media, MediaConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Media, result._media, MediaConfig::Deserialize);
 
     result._hostWidth = ParseUtil::ExtractJsonValueAndMergeWithDefault<HostWidthConfig>(
             json, AdaptiveCardSchemaKey::HostWidthBreakpoints, result._hostWidth, HostWidthConfig::Deserialize);
 
     result._inputs = ParseUtil::ExtractJsonValueAndMergeWithDefault<InputsConfig>(
-        json, AdaptiveCardSchemaKey::Inputs, result._inputs, InputsConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Inputs, result._inputs, InputsConfig::Deserialize);
 
     result._textBlock = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextBlockConfig>(
-        json, AdaptiveCardSchemaKey::TextBlock, result._textBlock, TextBlockConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::TextBlock, result._textBlock, TextBlockConfig::Deserialize);
 
     result._textStyles = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStylesConfig>(
-        json, AdaptiveCardSchemaKey::TextStyles, result._textStyles, TextStylesConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::TextStyles, result._textStyles, TextStylesConfig::Deserialize);
 
     result._ratingLabelConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
-        json, AdaptiveCardSchemaKey::RatingLabel, result._ratingLabelConfig, RatingElementConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::RatingLabel, result._ratingLabelConfig, RatingElementConfig::Deserialize);
 
     result._ratingInputConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
-        json, AdaptiveCardSchemaKey::RatingInput, result._ratingInputConfig, RatingElementConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::RatingInput, result._ratingInputConfig, RatingElementConfig::Deserialize);
 
     result._table = ParseUtil::ExtractJsonValueAndMergeWithDefault<TableConfig>(
-        json, AdaptiveCardSchemaKey::Table, result._table, TableConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Table, result._table, TableConfig::Deserialize);
 
     result._borderWidth = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::BorderWidth);
 
     result._cornerRadius = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::CornerRadius);
 
     result._compoundButtonConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<CompoundButtonConfig>(json,
-                                                                                  AdaptiveCardSchemaKey::CompoundButton,
-                                                                                  result._compoundButtonConfig,
-                                                                                  CompoundButtonConfig::Deserialize);
+                                                                                                        AdaptiveCardSchemaKey::CompoundButton,
+                                                                                                        result._compoundButtonConfig,
+                                                                                                        CompoundButtonConfig::Deserialize);
     return result;
 }
 
@@ -112,10 +113,10 @@ FontTypeDefinition FontTypeDefinition::Deserialize(const Json::Value& json, cons
     result.fontFamily = (fontFamily == "") ? defaultValue.fontFamily : fontFamily;
 
     result.fontSizes = ParseUtil::ExtractJsonValueAndMergeWithDefault<FontSizesConfig>(
-        json, AdaptiveCardSchemaKey::FontSizes, defaultValue.fontSizes, FontSizesConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::FontSizes, defaultValue.fontSizes, FontSizesConfig::Deserialize);
 
     result.fontWeights = ParseUtil::ExtractJsonValueAndMergeWithDefault<FontWeightsConfig>(
-        json, AdaptiveCardSchemaKey::FontWeights, defaultValue.fontWeights, FontWeightsConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::FontWeights, defaultValue.fontWeights, FontWeightsConfig::Deserialize);
 
     return result;
 }
@@ -125,9 +126,9 @@ FontTypesDefinition FontTypesDefinition::Deserialize(const Json::Value& json, co
     FontTypesDefinition result;
 
     result.defaultFontType = ParseUtil::ExtractJsonValueAndMergeWithDefault<FontTypeDefinition>(
-        json, AdaptiveCardSchemaKey::Default, defaultValue.defaultFontType, FontTypeDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::Default, defaultValue.defaultFontType, FontTypeDefinition::Deserialize);
     result.monospaceFontType = ParseUtil::ExtractJsonValueAndMergeWithDefault<FontTypeDefinition>(
-        json, AdaptiveCardSchemaKey::Monospace, defaultValue.monospaceFontType, FontTypeDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::Monospace, defaultValue.monospaceFontType, FontTypeDefinition::Deserialize);
     return result;
 }
 
@@ -153,7 +154,7 @@ ColorConfig ColorConfig::Deserialize(const Json::Value& json, const ColorConfig&
     result.subtleColor = subtleColor == "" ? defaultValue.subtleColor : subtleColor;
 
     result.highlightColors = ParseUtil::ExtractJsonValueAndMergeWithDefault<HighlightColorConfig>(
-        json, AdaptiveCardSchemaKey::HighlightColors, defaultValue.highlightColors, HighlightColorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::HighlightColors, defaultValue.highlightColors, HighlightColorConfig::Deserialize);
 
     return result;
 }
@@ -163,25 +164,25 @@ ColorsConfig ColorsConfig::Deserialize(const Json::Value& json, const ColorsConf
     ColorsConfig result;
 
     result.defaultColor = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorConfig>(
-        json, AdaptiveCardSchemaKey::Default, defaultValue.defaultColor, &ColorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Default, defaultValue.defaultColor, &ColorConfig::Deserialize);
 
     result.accent = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorConfig>(
-        json, AdaptiveCardSchemaKey::Accent, defaultValue.accent, &ColorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Accent, defaultValue.accent, &ColorConfig::Deserialize);
 
     result.dark = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorConfig>(
-        json, AdaptiveCardSchemaKey::Dark, defaultValue.dark, &ColorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Dark, defaultValue.dark, &ColorConfig::Deserialize);
 
     result.light = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorConfig>(
-        json, AdaptiveCardSchemaKey::Light, defaultValue.light, &ColorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Light, defaultValue.light, &ColorConfig::Deserialize);
 
     result.good = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorConfig>(
-        json, AdaptiveCardSchemaKey::Good, defaultValue.good, &ColorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Good, defaultValue.good, &ColorConfig::Deserialize);
 
     result.warning = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorConfig>(
-        json, AdaptiveCardSchemaKey::Warning, defaultValue.warning, &ColorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Warning, defaultValue.warning, &ColorConfig::Deserialize);
 
     result.attention = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorConfig>(
-        json, AdaptiveCardSchemaKey::Attention, defaultValue.attention, &ColorConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Attention, defaultValue.attention, &ColorConfig::Deserialize);
     return result;
 }
 
@@ -189,7 +190,7 @@ void TextStyleConfigDeserializeHelper(TextStyleConfig& result, const Json::Value
 {
     result.color = ParseUtil::GetEnumValue<ForegroundColor>(json, AdaptiveCardSchemaKey::Color, defaultValue.color, ForegroundColorFromString);
     result.fontType =
-        ParseUtil::GetEnumValue<FontType>(json, AdaptiveCardSchemaKey::FontType, defaultValue.fontType, FontTypeFromString);
+            ParseUtil::GetEnumValue<FontType>(json, AdaptiveCardSchemaKey::FontType, defaultValue.fontType, FontTypeFromString);
     result.isSubtle = ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsSubtle, defaultValue.isSubtle);
     result.size = ParseUtil::GetEnumValue<TextSize>(json, AdaptiveCardSchemaKey::Size, defaultValue.size, TextSizeFromString);
     result.weight = ParseUtil::GetEnumValue<TextWeight>(json, AdaptiveCardSchemaKey::Weight, defaultValue.weight, TextWeightFromString);
@@ -224,10 +225,10 @@ TextStylesConfig TextStylesConfig::Deserialize(const Json::Value& json, const Te
 {
     TextStylesConfig result;
     result.heading = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStyleConfig>(
-        json, AdaptiveCardSchemaKey::Heading, defaultValue.heading, TextStyleConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Heading, defaultValue.heading, TextStyleConfig::Deserialize);
 
     result.columnHeader = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStyleConfig>(
-        json, AdaptiveCardSchemaKey::ColumnHeader, defaultValue.columnHeader, TextStyleConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::ColumnHeader, defaultValue.columnHeader, TextStyleConfig::Deserialize);
 
     return result;
 }
@@ -236,10 +237,10 @@ RatingElementConfig RatingElementConfig::Deserialize(const Json::Value& json, co
 {
     RatingElementConfig result;
     result.filledStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
-        json, AdaptiveCardSchemaKey::FilledStar, defaultValue.filledStar, RatingStarCofig::Deserialize);
+            json, AdaptiveCardSchemaKey::FilledStar, defaultValue.filledStar, RatingStarCofig::Deserialize);
 
     result.emptyStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
-        json, AdaptiveCardSchemaKey::EmptyStar, defaultValue.emptyStar, RatingStarCofig::Deserialize);
+            json, AdaptiveCardSchemaKey::EmptyStar, defaultValue.emptyStar, RatingStarCofig::Deserialize);
 
     result.ratingTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::RatingTextColor, defaultValue.ratingTextColor);
 
@@ -270,7 +271,7 @@ ImageSetConfig ImageSetConfig::Deserialize(const Json::Value& json, const ImageS
 {
     ImageSetConfig result;
     result.imageSize =
-        ParseUtil::GetEnumValue<ImageSize>(json, AdaptiveCardSchemaKey::ImageSize, defaultValue.imageSize, ImageSizeFromString);
+            ParseUtil::GetEnumValue<ImageSize>(json, AdaptiveCardSchemaKey::ImageSize, defaultValue.imageSize, ImageSizeFromString);
 
     result.maxImageHeight = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::MaxImageHeight, defaultValue.maxImageHeight);
 
@@ -283,10 +284,10 @@ FactSetConfig FactSetConfig::Deserialize(const Json::Value& json, const FactSetC
 
     result.spacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::Spacing, defaultValue.spacing);
     result.title = ParseUtil::ExtractJsonValueAndMergeWithDefault<FactSetTextConfig>(
-        json, AdaptiveCardSchemaKey::Title, defaultValue.title, FactSetTextConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Title, defaultValue.title, FactSetTextConfig::Deserialize);
 
     result.value = ParseUtil::ExtractJsonValueAndMergeWithDefault<FactSetTextConfig>(
-        json, AdaptiveCardSchemaKey::Value, defaultValue.value, FactSetTextConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Value, defaultValue.value, FactSetTextConfig::Deserialize);
 
     // Value doesn't support maxWidth, so reset to the default value.
     result.value.maxWidth = defaultValue.value.maxWidth;
@@ -298,7 +299,7 @@ ShowCardActionConfig ShowCardActionConfig::Deserialize(const Json::Value& json, 
 {
     ShowCardActionConfig result;
     result.actionMode =
-        ParseUtil::GetEnumValue<ActionMode>(json, AdaptiveCardSchemaKey::ActionMode, defaultValue.actionMode, ActionModeFromString);
+            ParseUtil::GetEnumValue<ActionMode>(json, AdaptiveCardSchemaKey::ActionMode, defaultValue.actionMode, ActionModeFromString);
     result.inlineTopMargin = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::InlineTopMargin, defaultValue.inlineTopMargin);
     result.style = ParseUtil::GetEnumValue<ContainerStyle>(json, AdaptiveCardSchemaKey::Style, defaultValue.style, ContainerStyleFromString);
 
@@ -310,22 +311,22 @@ ActionsConfig ActionsConfig::Deserialize(const Json::Value& json, const ActionsC
     ActionsConfig result;
 
     result.actionsOrientation = ParseUtil::GetEnumValue<ActionsOrientation>(
-        json, AdaptiveCardSchemaKey::ActionsOrientation, defaultValue.actionsOrientation, ActionsOrientationFromString);
+            json, AdaptiveCardSchemaKey::ActionsOrientation, defaultValue.actionsOrientation, ActionsOrientationFromString);
 
     result.actionAlignment = ParseUtil::GetEnumValue<ActionAlignment>(
-        json, AdaptiveCardSchemaKey::ActionAlignment, defaultValue.actionAlignment, ActionAlignmentFromString);
+            json, AdaptiveCardSchemaKey::ActionAlignment, defaultValue.actionAlignment, ActionAlignmentFromString);
 
     result.buttonSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::ButtonSpacing, defaultValue.buttonSpacing);
 
     result.maxActions = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::MaxActions, defaultValue.maxActions);
 
     result.showCard = ParseUtil::ExtractJsonValueAndMergeWithDefault<ShowCardActionConfig>(
-        json, AdaptiveCardSchemaKey::ShowCard, defaultValue.showCard, ShowCardActionConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::ShowCard, defaultValue.showCard, ShowCardActionConfig::Deserialize);
 
     result.spacing = ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::Spacing, defaultValue.spacing, SpacingFromString);
 
     result.iconPlacement = ParseUtil::GetEnumValue<IconPlacement>(
-        json, AdaptiveCardSchemaKey::IconPlacement, defaultValue.iconPlacement, IconPlacementFromString);
+            json, AdaptiveCardSchemaKey::IconPlacement, defaultValue.iconPlacement, IconPlacementFromString);
 
     result.iconSize = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::IconSize, defaultValue.iconSize);
 
@@ -354,13 +355,13 @@ LabelConfig LabelConfig::Deserialize(const Json::Value& json, const LabelConfig&
     LabelConfig result;
 
     result.inputSpacing =
-        ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::InputSpacing, defaultValue.inputSpacing, SpacingFromString);
+            ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::InputSpacing, defaultValue.inputSpacing, SpacingFromString);
 
     result.requiredInputs = ParseUtil::ExtractJsonValueAndMergeWithDefault<InputLabelConfig>(
-        json, AdaptiveCardSchemaKey::RequiredInputs, defaultValue.requiredInputs, InputLabelConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::RequiredInputs, defaultValue.requiredInputs, InputLabelConfig::Deserialize);
 
     result.optionalInputs = ParseUtil::ExtractJsonValueAndMergeWithDefault<InputLabelConfig>(
-        json, AdaptiveCardSchemaKey::OptionalInputs, defaultValue.optionalInputs, InputLabelConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::OptionalInputs, defaultValue.optionalInputs, InputLabelConfig::Deserialize);
 
     return result;
 }
@@ -383,10 +384,10 @@ InputsConfig InputsConfig::Deserialize(const Json::Value& json, const InputsConf
     InputsConfig result;
 
     result.errorMessage = ParseUtil::ExtractJsonValueAndMergeWithDefault<ErrorMessageConfig>(
-        json, AdaptiveCardSchemaKey::ErrorMessage, defaultValue.errorMessage, ErrorMessageConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::ErrorMessage, defaultValue.errorMessage, ErrorMessageConfig::Deserialize);
 
     result.label = ParseUtil::ExtractJsonValueAndMergeWithDefault<LabelConfig>(
-        json, AdaptiveCardSchemaKey::Label, defaultValue.label, LabelConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::Label, defaultValue.label, LabelConfig::Deserialize);
 
     return result;
 }
@@ -433,7 +434,7 @@ ContainerStyleDefinition ContainerStyleDefinition::Deserialize(const Json::Value
     result.borderColor = borderColor == "" ? defaultValue.borderColor : borderColor;
 
     result.foregroundColors = ParseUtil::ExtractJsonValueAndMergeWithDefault<ColorsConfig>(
-        json, AdaptiveCardSchemaKey::ForegroundColors, defaultValue.foregroundColors, ColorsConfig::Deserialize);
+            json, AdaptiveCardSchemaKey::ForegroundColors, defaultValue.foregroundColors, ColorsConfig::Deserialize);
 
     return result;
 }
@@ -443,22 +444,22 @@ ContainerStylesDefinition ContainerStylesDefinition::Deserialize(const Json::Val
     ContainerStylesDefinition result;
 
     result.defaultPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<ContainerStyleDefinition>(
-        json, AdaptiveCardSchemaKey::Default, defaultValue.defaultPalette, ContainerStyleDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::Default, defaultValue.defaultPalette, ContainerStyleDefinition::Deserialize);
 
     result.emphasisPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<ContainerStyleDefinition>(
-        json, AdaptiveCardSchemaKey::Emphasis, defaultValue.emphasisPalette, ContainerStyleDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::Emphasis, defaultValue.emphasisPalette, ContainerStyleDefinition::Deserialize);
 
     result.goodPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<ContainerStyleDefinition>(
-        json, AdaptiveCardSchemaKey::Good, defaultValue.goodPalette, ContainerStyleDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::Good, defaultValue.goodPalette, ContainerStyleDefinition::Deserialize);
 
     result.attentionPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<ContainerStyleDefinition>(
-        json, AdaptiveCardSchemaKey::Attention, defaultValue.attentionPalette, ContainerStyleDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::Attention, defaultValue.attentionPalette, ContainerStyleDefinition::Deserialize);
 
     result.warningPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<ContainerStyleDefinition>(
-        json, AdaptiveCardSchemaKey::Warning, defaultValue.warningPalette, ContainerStyleDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::Warning, defaultValue.warningPalette, ContainerStyleDefinition::Deserialize);
 
     result.accentPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<ContainerStyleDefinition>(
-        json, AdaptiveCardSchemaKey::Accent, defaultValue.accentPalette, ContainerStyleDefinition::Deserialize);
+            json, AdaptiveCardSchemaKey::Accent, defaultValue.accentPalette, ContainerStyleDefinition::Deserialize);
 
     return result;
 }
@@ -481,7 +482,7 @@ ImageConfig ImageConfig::Deserialize(const Json::Value& json, const ImageConfig&
     ImageConfig result;
 
     result.imageSize =
-        ParseUtil::GetEnumValue<ImageSize>(json, AdaptiveCardSchemaKey::Size, defaultValue.imageSize, ImageSizeFromString);
+            ParseUtil::GetEnumValue<ImageSize>(json, AdaptiveCardSchemaKey::Size, defaultValue.imageSize, ImageSizeFromString);
 
     return result;
 }
@@ -497,7 +498,7 @@ MediaConfig MediaConfig::Deserialize(const Json::Value& json, const MediaConfig&
     result.playButton = playButton == "" ? defaultValue.playButton : playButton;
 
     result.allowInlinePlayback =
-        ParseUtil::GetBool(json, AdaptiveCardSchemaKey::AllowInlinePlayback, defaultValue.allowInlinePlayback);
+            ParseUtil::GetBool(json, AdaptiveCardSchemaKey::AllowInlinePlayback, defaultValue.allowInlinePlayback);
 
     return result;
 }
@@ -554,11 +555,11 @@ FontTypeDefinition HostConfig::GetFontType(FontType type) const
 {
     switch (type)
     {
-    case FontType::Monospace:
-        return _fontTypes.monospaceFontType;
-    case FontType::Default:
-    default:
-        return _fontTypes.defaultFontType;
+        case FontType::Monospace:
+            return _fontTypes.monospaceFontType;
+        case FontType::Default:
+        default:
+            return _fontTypes.defaultFontType;
     }
 }
 
@@ -566,17 +567,17 @@ unsigned int FontSizesConfig::GetFontSize(TextSize size) const
 {
     switch (size)
     {
-    case TextSize::Small:
-        return _small;
-    case TextSize::Medium:
-        return _medium;
-    case TextSize::Large:
-        return _large;
-    case TextSize::ExtraLarge:
-        return _extraLarge;
-    case TextSize::Default:
-    default:
-        return _default;
+        case TextSize::Small:
+            return _small;
+        case TextSize::Medium:
+            return _medium;
+        case TextSize::Large:
+            return _large;
+        case TextSize::ExtraLarge:
+            return _extraLarge;
+        case TextSize::Default:
+        default:
+            return _default;
     }
 }
 
@@ -584,17 +585,17 @@ void FontSizesConfig::SetFontSize(TextSize size, unsigned int value)
 {
     switch (size)
     {
-    case TextSize::Small:
-        _small = value;
-    case TextSize::Medium:
-        _medium = value;
-    case TextSize::Large:
-        _large = value;
-    case TextSize::ExtraLarge:
-        _extraLarge = value;
-    case TextSize::Default:
-    default:
-        _default = value;
+        case TextSize::Small:
+            _small = value;
+        case TextSize::Medium:
+            _medium = value;
+        case TextSize::Large:
+            _large = value;
+        case TextSize::ExtraLarge:
+            _extraLarge = value;
+        case TextSize::Default:
+        default:
+            _default = value;
     }
 }
 
@@ -602,17 +603,17 @@ unsigned int FontSizesConfig::GetDefaultFontSize(TextSize size)
 {
     switch (size)
     {
-    case TextSize::Small:
-        return 10;
-    case TextSize::Medium:
-        return 14;
-    case TextSize::Large:
-        return 17;
-    case TextSize::ExtraLarge:
-        return 20;
-    case TextSize::Default:
-    default:
-        return 12;
+        case TextSize::Small:
+            return 10;
+        case TextSize::Medium:
+            return 14;
+        case TextSize::Large:
+            return 17;
+        case TextSize::ExtraLarge:
+            return 20;
+        case TextSize::Default:
+        default:
+            return 12;
     }
 }
 
@@ -620,13 +621,13 @@ unsigned int FontWeightsConfig::GetFontWeight(TextWeight weight) const
 {
     switch (weight)
     {
-    case TextWeight::Lighter:
-        return _lighter;
-    case TextWeight::Bolder:
-        return _bolder;
-    case TextWeight::Default:
-    default:
-        return _default;
+        case TextWeight::Lighter:
+            return _lighter;
+        case TextWeight::Bolder:
+            return _bolder;
+        case TextWeight::Default:
+        default:
+            return _default;
     }
 }
 
@@ -634,13 +635,13 @@ void FontWeightsConfig::SetFontWeight(TextWeight weight, unsigned int value)
 {
     switch (weight)
     {
-    case TextWeight::Lighter:
-        _lighter = value;
-    case TextWeight::Bolder:
-        _bolder = value;
-    case TextWeight::Default:
-    default:
-        _default = value;
+        case TextWeight::Lighter:
+            _lighter = value;
+        case TextWeight::Bolder:
+            _bolder = value;
+        case TextWeight::Default:
+        default:
+            _default = value;
     }
 }
 
@@ -648,13 +649,13 @@ unsigned int FontWeightsConfig::GetDefaultFontWeight(TextWeight weight)
 {
     switch (weight)
     {
-    case AdaptiveCards::TextWeight::Lighter:
-        return 200;
-    case AdaptiveCards::TextWeight::Bolder:
-        return 800;
-    case AdaptiveCards::TextWeight::Default:
-    default:
-        return 400;
+        case AdaptiveCards::TextWeight::Lighter:
+            return 200;
+        case AdaptiveCards::TextWeight::Bolder:
+            return 800;
+        case AdaptiveCards::TextWeight::Default:
+        default:
+            return 400;
     }
 }
 
@@ -736,19 +737,19 @@ const ContainerStyleDefinition& HostConfig::GetContainerStyle(ContainerStyle sty
 {
     switch (style)
     {
-    case ContainerStyle::Accent:
-        return _containerStyles.accentPalette;
-    case ContainerStyle::Attention:
-        return _containerStyles.attentionPalette;
-    case ContainerStyle::Emphasis:
-        return _containerStyles.emphasisPalette;
-    case ContainerStyle::Good:
-        return _containerStyles.goodPalette;
-    case ContainerStyle::Warning:
-        return _containerStyles.warningPalette;
-    case ContainerStyle::Default:
-    default:
-        return _containerStyles.defaultPalette;
+        case ContainerStyle::Accent:
+            return _containerStyles.accentPalette;
+        case ContainerStyle::Attention:
+            return _containerStyles.attentionPalette;
+        case ContainerStyle::Emphasis:
+            return _containerStyles.emphasisPalette;
+        case ContainerStyle::Good:
+            return _containerStyles.goodPalette;
+        case ContainerStyle::Warning:
+            return _containerStyles.warningPalette;
+        case ContainerStyle::Default:
+        default:
+            return _containerStyles.defaultPalette;
     }
 }
 
@@ -767,21 +768,21 @@ const ColorConfig& HostConfig::GetContainerColorConfig(const ColorsConfig& color
 {
     switch (color)
     {
-    case ForegroundColor::Accent:
-        return colors.accent;
-    case ForegroundColor::Attention:
-        return colors.attention;
-    case ForegroundColor::Dark:
-        return colors.dark;
-    case ForegroundColor::Good:
-        return colors.good;
-    case ForegroundColor::Light:
-        return colors.light;
-    case ForegroundColor::Warning:
-        return colors.warning;
-    case ForegroundColor::Default:
-    default:
-        return colors.defaultColor;
+        case ForegroundColor::Accent:
+            return colors.accent;
+        case ForegroundColor::Attention:
+            return colors.attention;
+        case ForegroundColor::Dark:
+            return colors.dark;
+        case ForegroundColor::Good:
+            return colors.good;
+        case ForegroundColor::Light:
+            return colors.light;
+        case ForegroundColor::Warning:
+            return colors.warning;
+        case ForegroundColor::Default:
+        default:
+            return colors.defaultColor;
     }
 }
 
