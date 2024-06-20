@@ -504,7 +504,7 @@ public:
 
     TableConfig GetTable() const;
     void SetTable(const TableConfig value);
-    
+
     CompoundButtonConfig GetCompoundButtonConfig() const;
     void SetCompoundButtonConfig(const CompoundButtonConfig value);
 

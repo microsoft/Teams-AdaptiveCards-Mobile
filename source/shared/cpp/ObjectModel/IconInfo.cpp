@@ -11,7 +11,6 @@
 #include "Util.h"
 #include "CompoundButton.h"
 #include "Icon.h"
-#include "IconInfo.h"
 
 using namespace AdaptiveCards;
 
@@ -93,14 +92,14 @@ std::shared_ptr<IconInfo> IconInfo::Deserialize(const Json::Value& json)
     {
         return nullptr;
     }
-    
+
     std::shared_ptr<IconInfo> iconInfo = std::make_shared<IconInfo>();
     iconInfo->setIconSize(ParseUtil::GetEnumValue<IconSize>(json, AdaptiveCardSchemaKey::Size, IconSize::Standard, IconSizeFromString));
-    
+
     iconInfo->setIconStyle(ParseUtil::GetEnumValue<IconStyle>(json, AdaptiveCardSchemaKey::Style, IconStyle::Regular, IconStyleFromString));
-    
+
     iconInfo->setForgroundColor(ParseUtil::GetEnumValue<ForegroundColor>(json, AdaptiveCardSchemaKey::Color, ForegroundColor::Default, ForegroundColorFromString));
-    
+
     iconInfo->SetName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Name,true));
     return iconInfo;
 }

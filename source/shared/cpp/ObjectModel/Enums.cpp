@@ -65,8 +65,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::DateInput, "dateInput"},
             {AdaptiveCardSchemaKey::Default, "default"},
             {AdaptiveCardSchemaKey::DefaultPoster, "defaultPoster"},
-            {AdaptiveCardSchemaKey::Description, "description"},
             {AdaptiveCardSchemaKey::Count, "count"},
+            {AdaptiveCardSchemaKey::Description, "description"},
             {AdaptiveCardSchemaKey::ElementId, "elementId"},
             {AdaptiveCardSchemaKey::Emphasis, "emphasis"},
             {AdaptiveCardSchemaKey::ErrorMessage, "errorMessage"},
@@ -101,7 +101,6 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Id, "id"},
             {AdaptiveCardSchemaKey::Image, "image"},
             {AdaptiveCardSchemaKey::Icon, "icon"},
-            {AdaptiveCardSchemaKey::IconInfo, "iconInfo"},
             {AdaptiveCardSchemaKey::ImageBaseUrl, "imageBaseUrl"},
             {AdaptiveCardSchemaKey::ImageSet, "imageSet"},
             {AdaptiveCardSchemaKey::ImageSize, "imageSize"},
@@ -248,7 +247,6 @@ namespace AdaptiveCards
             {CardElementType::FactSet, "FactSet"},
             {CardElementType::Image, "Image"},
             {CardElementType::Icon, "Icon"},
-            {CardElementType::IconInfo, "IconInfo"},
             {CardElementType::ImageSet, "ImageSet"},
             {CardElementType::Media, "Media"},
             {CardElementType::NumberInput, "Input.Number"},
@@ -283,7 +281,7 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(RatingSize, {
             {RatingSize::Medium, "medium"},
             {RatingSize::Large, "large"}});
-
+    
     DEFINE_ADAPTIVECARD_ENUM(RatingColor, {
             {RatingColor::Neutral, "neutral"},
             {RatingColor::Marigold, "marigold"}});
