@@ -107,10 +107,10 @@ std::shared_ptr<IconInfo> IconInfo::Deserialize(const Json::Value& json)
 void IconInfo::PopulateKnownPropertiesSet()
 {
     m_knownProperties.insert(
-            {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Name),
-             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size),
-             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Color),
-             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)});
+        {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Name),
+         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size),
+         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Color),
+         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)});
 }
 
 std::string IconInfo::GetSVGResourceURL() const
