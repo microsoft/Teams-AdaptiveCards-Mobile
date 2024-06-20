@@ -72,7 +72,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         layout.setLayoutParams(layoutParams);
         layout.setBackgroundColor(Color.parseColor(backgroundColor));
 
-        boolean isIconSet = !compoundButton.getIcon().GetName().isEmpty();
+        boolean isIconSet = compoundButton.getIcon() != null && !compoundButton.getIcon().GetName().isEmpty();
 
         // Optional Image View
         ImageView imageView = new ImageView(context);

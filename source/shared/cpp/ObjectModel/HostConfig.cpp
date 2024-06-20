@@ -85,10 +85,10 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._borderWidth = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::BorderWidth);
 
     result._cornerRadius = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::CornerRadius);
-    
+
     result._compoundButtonConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<CompoundButtonConfig>(json,
                                                                                   AdaptiveCardSchemaKey::CompoundButton,
-                                                                                  result._compoundButtonConfig, 
+                                                                                  result._compoundButtonConfig,
                                                                                   CompoundButtonConfig::Deserialize);
     return result;
 }
@@ -544,7 +544,7 @@ CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, 
 BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig &defaultValue)
 {
     BadgeConfig result;
-    result.backgroundColor = ParseUtil::GetString(json, 
+    result.backgroundColor = ParseUtil::GetString(json,
                                                   AdaptiveCardSchemaKey::BackgroundColor,
                                                   defaultValue.backgroundColor);
     return result;
@@ -682,25 +682,6 @@ std::string HostConfig::GetFontFamily(FontType fontType) const
         }
     }
     return fontFamilyValue;
-}
-
-CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, const CompoundButtonConfig &defaultValue)
-{
-    CompoundButtonConfig result;
-    result.badgeConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeConfig>(json,
-                                                                                     AdaptiveCardSchemaKey::Badge,
-                                                                                     defaultValue.badgeConfig,
-                                                                                     BadgeConfig::Deserialize);
-    return result;
-}
-
-BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig &defaultValue)
-{
-    BadgeConfig result;
-    result.backgroundColor = ParseUtil::GetString(json,
-                                                  AdaptiveCardSchemaKey::BackgroundColor,
-                                                  defaultValue.backgroundColor);
-    return result;
 }
 
 unsigned int HostConfig::GetFontSize(FontType fontType, TextSize size) const
