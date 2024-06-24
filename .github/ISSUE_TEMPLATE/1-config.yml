@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: External to Microsoft?
+    about: Please create your issue on the Microoft Teams docs repo (msteams-docs). External issues will be closed.
+    url: "https://github.com/MicrosoftDocs/msteams-docs/issues"

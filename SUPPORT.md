@@ -4,7 +4,7 @@
 
 ### How to get help
 
-This project uses GitHub Issues to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates. For new issues, [file your bug](https://github.com/Microsoft/AdaptiveCards-Mobile/issues/new?assignees=&amp;labels=Bug&amp;template=bug_report.md&amp;title=%5BPlatform%5D%5BBroad+Issue+Category+if+applicable+%28eg+Accessibility%29%5D+%5BBug+Title%5D) or [feature request](https://github.com/Microsoft/AdaptiveCards-Mobile/issues/new?assignees=dclaux%2C+matthidinger%2C+shalinijoshi19&amp;labels=Request&amp;template=feature_request.md&amp;title=%5BPlatform%5D%5BBroader+Feature+Request+Category+if+applicable%5D+Title) as a new Issue.
+This project uses GitHub Issues to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates. For new issues, [file your bug](https://github.com/MicrosoftDocs/msteams-docs/issues).
 
 For help and questions about using this project, please use the [Stack Overflow tag adaptive-cards](https://stackoverflow.com/questions/tagged/adaptive-cards).
 
