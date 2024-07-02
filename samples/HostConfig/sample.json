@@ -349,6 +349,8 @@
 		}
 	},
     "compoundButton":{
-        "badgeBackgroundColor":"#DCECFC"
+        "badge":{
+            "backgroundColor":"#DCECFC"
+        }
     }
 }
