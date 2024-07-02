@@ -9,6 +9,6 @@
 
 @interface ACRCompoundButtonRenderer : ACRBaseCardElementRenderer
 
-+ (ACRIconRenderer *)getInstance;
++ (ACRCompoundButtonRenderer *)getInstance;
 
 @end
