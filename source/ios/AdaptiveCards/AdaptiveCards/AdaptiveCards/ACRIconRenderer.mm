@@ -45,13 +45,14 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Icon> icon = std::dynamic_pointer_cast<Icon>(elem);
     
-    NSString *svgPayloadURL = @(icon->GetSVGResourceURL().c_str());
-    CGSize size = CGSizeMake(icon->getSize(), icon->getSize());
+    NSString *svgPayloadURL = @(icon->GetSVGInfoURL().c_str());
+    CGSize size = CGSizeMake(getIconSize(icon->getIconSize()), getIconSize(icon->getIconSize()));
     
     UIColor *imageTintColor = [acoConfig getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:icon->getForgroundColor() subtleOption:false];
-    
+    BOOL isFilled = (icon->getIconStyle() == IconStyle::Filled);
     ACRSVGImageView *iconView = [[ACRSVGImageView alloc] init:svgPayloadURL
                                                           rtl:rootView.context.rtl
+                                                     isFilled:isFilled
                                                          size:size
                                                     tintColor:imageTintColor];
     

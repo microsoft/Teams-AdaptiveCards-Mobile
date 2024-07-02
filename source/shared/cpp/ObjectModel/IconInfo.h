@@ -21,8 +21,7 @@ namespace AdaptiveCards {
         ~IconInfo() = default;
         Json::Value SerializeToJsonValue() const;
         static std::shared_ptr<IconInfo> Deserialize(const Json::Value& json);
-        std::string GetSVGResourceURL() const;
-        unsigned int getSize() const;
+        std::string GetSVGInfoURL() const;
 
         ForegroundColor getForgroundColor() const;
         void setForgroundColor(const ForegroundColor value);
