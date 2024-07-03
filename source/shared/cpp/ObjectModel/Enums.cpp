@@ -29,6 +29,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::BackgroundImageUrl, "backgroundImageUrl"},
             {AdaptiveCardSchemaKey::BaseCardElement, "baseCardElement"},
             {AdaptiveCardSchemaKey::BaseContainerStyle, "baseContainerStyle"},
+            {AdaptiveCardSchemaKey::Badge,"badge"},
             {AdaptiveCardSchemaKey::Bleed, "bleed"},
             {AdaptiveCardSchemaKey::Body, "body"},
             {AdaptiveCardSchemaKey::Bolder, "bolder"},
@@ -65,6 +66,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Default, "default"},
             {AdaptiveCardSchemaKey::DefaultPoster, "defaultPoster"},
             {AdaptiveCardSchemaKey::Count, "count"},
+            {AdaptiveCardSchemaKey::Description, "description"},
             {AdaptiveCardSchemaKey::ElementId, "elementId"},
             {AdaptiveCardSchemaKey::Emphasis, "emphasis"},
             {AdaptiveCardSchemaKey::ErrorMessage, "errorMessage"},
@@ -229,6 +231,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::WebUrl, "webUrl"},
             {AdaptiveCardSchemaKey::Weight, "weight"},
             {AdaptiveCardSchemaKey::Width, "width"},
+            {AdaptiveCardSchemaKey::CompoundButton,"compoundButton"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
@@ -257,6 +260,7 @@ namespace AdaptiveCards
             {CardElementType::TextInput, "Input.Text"},
             {CardElementType::TimeInput, "Input.Time"},
             {CardElementType::ToggleInput, "Input.Toggle"},
+            {CardElementType::CompoundButton,"CompoundButton"},
             {CardElementType::Unknown, "Unknown"}});
 
     DEFINE_ADAPTIVECARD_ENUM(ActionType, {

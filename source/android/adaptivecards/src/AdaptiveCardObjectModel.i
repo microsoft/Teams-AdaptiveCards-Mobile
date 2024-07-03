@@ -175,6 +175,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/TokenExchangeResource.h"
 #include "../../../shared/cpp/ObjectModel/AuthCardButton.h"
 #include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
+#include "../../../shared/cpp/ObjectModel/CompoundButton.h"
+#include "../../../shared/cpp/ObjectModel/IconInfo.h"
 %}
 
 
@@ -198,6 +200,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::Container)
 %shared_ptr(AdaptiveCards::TextBlock)
 %shared_ptr(AdaptiveCards::Icon)
+%shared_ptr(AdaptiveCards::IconInfo)
 %shared_ptr(AdaptiveCards::RatingLabel)
 %shared_ptr(AdaptiveCards::Image)
 %shared_ptr(AdaptiveCards::ImageSet)
@@ -228,6 +231,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ImageParser)
 %shared_ptr(AdaptiveCards::ColumnParser)
 %shared_ptr(AdaptiveCards::ColumnSetParser)
+%shared_ptr(AdaptiveCards::CompoundButton)
+%shared_ptr(AdaptiveCards::CompoundButtonParser)
 %shared_ptr(AdaptiveCards::FactSetParser)
 %shared_ptr(AdaptiveCards::ChoiceSetInputParser)
 %shared_ptr(AdaptiveCards::NumberInputParser)
@@ -967,6 +972,37 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::CompoundButton::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+
+%extend AdaptiveCards::CompoundButton {
+        static AdaptiveCards::CompoundButton *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::CompoundButton *>(baseCardElement);
+        }
+};
+
+%exception AdaptiveCards::IconInfo::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::IconInfo {
+        static AdaptiveCards::IconInfo *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::IconInfo *>(baseCardElement);
+        }
+};
+
 %include "../../../shared/cpp/ObjectModel/pch.h"
 %include "../../../shared/cpp/ObjectModel/EnumMagic.h"
 %include "../../../shared/cpp/ObjectModel/Enums.h"
@@ -1041,3 +1077,5 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/TextRun.h"
 %include "../../../shared/cpp/ObjectModel/RichTextElementProperties.h"
 %include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
+%include "../../../shared/cpp/ObjectModel/CompoundButton.h"
+%include "../../../shared/cpp/ObjectModel/IconInfo.h"

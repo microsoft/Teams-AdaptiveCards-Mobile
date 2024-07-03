@@ -43,6 +43,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/CollectionCoreElement.cpp
              ../../shared/cpp/ObjectModel/Column.cpp
              ../../shared/cpp/ObjectModel/ColumnSet.cpp
+             ../../shared/cpp/ObjectModel/CompoundButton.cpp
              ../../shared/cpp/ObjectModel/Container.cpp
              ../../shared/cpp/ObjectModel/ContentSource.cpp
              ../../shared/cpp/ObjectModel/DateInput.cpp
@@ -56,6 +57,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/FeatureRegistration.cpp
              ../../shared/cpp/ObjectModel/HostConfig.cpp
              ../../shared/cpp/ObjectModel/Icon.cpp
+             ../../shared/cpp/ObjectModel/IconInfo.cpp
              ../../shared/cpp/ObjectModel/Image.cpp
              ../../shared/cpp/ObjectModel/ImageSet.cpp
              ../../shared/cpp/ObjectModel/Inline.cpp
