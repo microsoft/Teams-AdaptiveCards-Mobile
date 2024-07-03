@@ -38,7 +38,7 @@ const std::string& BaseActionElement::GetIconUrl() const
     return m_iconUrl;
 }
 
-std::string BaseActionElement::GetSVGResourceURL(unsigned int size) const
+std::string BaseActionElement::GetSVGInfoURL() const
 {
     std::regex regex{R"([,:]+)"}; // split on ':' and ','
     std::sregex_token_iterator it{m_iconUrl.begin(), m_iconUrl.end(), regex, -1};
@@ -51,7 +51,7 @@ std::string BaseActionElement::GetSVGResourceURL(unsigned int size) const
             iconStyle = config[config.size() - 1];
         }
     }
-    std::string m_url = baseIconCDNUrl + iconName + "/" + iconName + std::to_string(size) + iconStyle + ".json";
+    std::string m_url = baseIconCDNUrl + iconName + "/" + iconName + ".json";
     return m_url;
 }
 
