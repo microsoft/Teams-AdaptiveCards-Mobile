@@ -95,8 +95,8 @@ public class BaseActionElement extends BaseElement {
     return AdaptiveCardObjectModelJNI.BaseActionElement_GetIconUrl(swigCPtr, this);
   }
 
-  public String GetSVGResourceURL(long size) {
-    return AdaptiveCardObjectModelJNI.BaseActionElement_GetSVGResourceURL(swigCPtr, this, size);
+  public String GetSVGInfoURL() {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_GetSVGInfoURL(swigCPtr, this);
   }
 
   public void SetIconUrl(SWIGTYPE_p_std__string value) {

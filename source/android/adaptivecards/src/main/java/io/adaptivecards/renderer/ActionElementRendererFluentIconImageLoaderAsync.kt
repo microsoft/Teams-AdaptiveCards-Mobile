@@ -18,13 +18,13 @@ import io.adaptivecards.objectmodel.IconPlacement
  **/
 class ActionElementRendererFluentIconImageLoaderAsync(
     renderedCard: RenderedAdaptiveCard,
-    iconSize: Long,
+    targetIconSize: Long,
     view: View,
     iconColor: String,
     val iconPlacement: IconPlacement,
     val padding: Long,
     private val iconSizeFromConfig: Long
-): FluentIconImageLoaderAsync(renderedCard, iconSize, iconColor, view) {
+): FluentIconImageLoaderAsync(renderedCard, targetIconSize, iconColor, false, view) {
     override fun renderFluentIcon(drawable: Drawable?, flipInRtl: Boolean) {
         val view = viewReference.get()
         if (view != null && view is Button) {

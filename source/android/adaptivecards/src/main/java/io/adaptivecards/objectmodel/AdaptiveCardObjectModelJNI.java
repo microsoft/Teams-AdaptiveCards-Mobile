@@ -686,7 +686,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void BaseActionElement_SetTitle__SWIG_1(long jarg1, BaseActionElement jarg1_, String jarg2);
   public final static native void BaseActionElement_SetTitleSwigExplicitBaseActionElement__SWIG_1(long jarg1, BaseActionElement jarg1_, String jarg2);
   public final static native String BaseActionElement_GetIconUrl(long jarg1, BaseActionElement jarg1_);
-  public final static native String BaseActionElement_GetSVGResourceURL(long jarg1, BaseActionElement jarg1_, long jarg2);
+  public final static native String BaseActionElement_GetSVGInfoURL(long jarg1, BaseActionElement jarg1_);
   public final static native void BaseActionElement_SetIconUrl__SWIG_0(long jarg1, BaseActionElement jarg1_, long jarg2);
   public final static native void BaseActionElement_SetIconUrl__SWIG_1(long jarg1, BaseActionElement jarg1_, String jarg2);
   public final static native String BaseActionElement_GetStyle(long jarg1, BaseActionElement jarg1_);
@@ -824,8 +824,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void Icon_SetName(long jarg1, Icon jarg1_, String jarg2);
   public final static native long Icon_GetSelectAction(long jarg1, Icon jarg1_);
   public final static native void Icon_SetSelectAction(long jarg1, Icon jarg1_, long jarg2, BaseActionElement jarg2_);
-  public final static native long Icon_getSize(long jarg1, Icon jarg1_);
-  public final static native String Icon_GetSVGResourceURL(long jarg1, Icon jarg1_);
+  public final static native String Icon_GetSVGInfoURL(long jarg1, Icon jarg1_);
   public final static native void Icon_GetResourceInformation(long jarg1, Icon jarg1_, long jarg2, RemoteResourceInformationVector jarg2_);
   public final static native long Icon_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_IconParser__SWIG_0();
@@ -2002,8 +2001,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_IconInfo(long jarg1);
   public final static native long IconInfo_SerializeToJsonValue(long jarg1, IconInfo jarg1_);
   public final static native long IconInfo_Deserialize(long jarg1, JsonValue jarg1_);
-  public final static native String IconInfo_GetSVGResourceURL(long jarg1, IconInfo jarg1_);
-  public final static native long IconInfo_getSize(long jarg1, IconInfo jarg1_);
+  public final static native String IconInfo_GetSVGInfoURL(long jarg1, IconInfo jarg1_);
   public final static native int IconInfo_getForgroundColor(long jarg1, IconInfo jarg1_);
   public final static native void IconInfo_setForgroundColor(long jarg1, IconInfo jarg1_, int jarg2);
   public final static native int IconInfo_getIconSize(long jarg1, IconInfo jarg1_);
