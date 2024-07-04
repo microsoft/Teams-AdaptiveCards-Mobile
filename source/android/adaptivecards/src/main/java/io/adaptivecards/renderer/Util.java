@@ -587,9 +587,11 @@ public final class Util {
             long fluentIconSize = 24;
             int color = ((Button) view).getCurrentTextColor();
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
+            boolean isFilledStyle = iconUrl.contains("filled");
             ActionElementRendererFluentIconImageLoaderAsync fluentIconLoaderAsync = new ActionElementRendererFluentIconImageLoaderAsync(
                 renderedCard,
                 fluentIconSize,
+                isFilledStyle,
                 view,
                 hexColor,
                 iconPlacement,
