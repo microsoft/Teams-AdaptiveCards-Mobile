@@ -7,8 +7,14 @@
 //
 
 #import "ACRSVGImageView.h"
-#import <SVGKit/SVGKit.h>
 #import "Icon.h"
+#ifdef SWIFT_PACKAGE
+/// Swift Package Imports
+#import "SVGKit.h"
+#else
+/// Cocoapods Imports
+#import <SVGKit/SVGKit.h>
+#endif
 
 @implementation ACRSVGImageView
 {
