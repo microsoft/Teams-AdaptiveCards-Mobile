@@ -69,6 +69,12 @@
     <ClCompile Include="..\..\ObjectModel\Icon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ObjectModel\IconInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>   
+    <ClCompile Include="..\..\ObjectModel\CompoundButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>    
     <ClCompile Include="..\..\ObjectModel\RatingInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -317,6 +323,12 @@
     <ClInclude Include="..\..\ObjectModel\Icon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ObjectModel\IconInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>    
+    <ClInclude Include="..\..\ObjectModel\CompoundButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>   
     <ClInclude Include="..\..\ObjectModel\RatingInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>

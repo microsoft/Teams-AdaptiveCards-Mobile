@@ -1,5 +1,5 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: Question
-    about: Please ask questions on GitHub Discussions
-    url: "https://github.com/Microsoft/AdaptiveCards-Mobile/discussions"
+  - name: External to Microsoft?
+    about: Please create your issue on the Microoft Teams docs repo (msteams-docs). External issues will be closed.
+    url: "https://github.com/MicrosoftDocs/msteams-docs/issues"

@@ -1230,3 +1230,13 @@ NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, N
     }
     return tempString;
 }
+
+BOOL isNullOrEmpty(NSString *string) {
+    if (string) {
+        NSRange range = [string rangeOfString:string];
+        BOOL isEmpty = (range.length <= 0 || [string isEqualToString:@" "]);
+        BOOL isNull = string == (id)[NSNull null];
+        return (isNull || isEmpty);
+    }
+    return YES;
+}

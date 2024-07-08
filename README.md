@@ -4,6 +4,12 @@
 
 [Adaptive Cards](https://adaptivecards.io) are a new way for developers to exchange content in a common and consistent way. Get started today by putting Adaptive Cards into Microsoft Teams, Outlook Actionable Messages, Cortana Skills, or Windows Timeline -- or render cards inside your own apps by using our SDKs.
 
+## Adaptive Cards is now a semi private repo
+* Pull requests and issue creations will no longer be accepted and will be closed. Please send all issues with Adaptive Cards to
+[Microoft Teams docs repo (msteams-docs)](https://github.com/MicrosoftDocs/msteams-docs/issues)
+* Source code will still be avilable to the public.
+* Packages will still be posted to the public.
+
 ## Dive in
 
 * [Documentation](https://adaptivecards.io/documentation/)
@@ -74,14 +80,9 @@ Consumption of the AdaptiveCards binary packages are subject to the Microsoft EU
 
 NOTE: All of the source code, itself, made available in this repo as well as our NPM packages, continue to be governed by the open source [MIT license](https://github.com/microsoft/AdaptiveCards-Mobile/blob/main/LICENSE).
 
-## Contribute
-
-There are many ways to [contribute](https://github.com/Microsoft/AdaptiveCards-Mobile/blob/main/.github/CONTRIBUTING.md) to Adaptive Cards.
-* [Submit bugs](https://github.com/Microsoft/AdaptiveCards-Mobile/issues) and help us verify fixes as they are checked in.
-* Review the [source code changes](https://github.com/Microsoft/AdaptiveCards-Mobile/pulls).
+## Community
 * Engage with Adaptive Cards users and developers on [StackOverflow](http://stackoverflow.com/questions/tagged/adaptive-cards). 
 * Join the [#adaptivecards](https://twitter.com/hashtag/adaptivecards?f=tweets&vertical=default) discussion on Twitter.
-* [Contribute bug fixes](https://github.com/Microsoft/AdaptiveCards-Mobile/blob/main/.github/CONTRIBUTING.md).
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see 
 the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

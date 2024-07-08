@@ -173,3 +173,6 @@ bool matchHungarianDateRegex(NSString *stringToValidate);
 
 // Retuns a string with removed symbols of type \\x
 NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, NSSet<NSString *> *symbolsSet);
+
+// check if string is Null or Empty
+BOOL isNullOrEmpty(NSString *string);

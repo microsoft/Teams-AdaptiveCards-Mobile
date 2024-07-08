@@ -272,4 +272,12 @@ public class HostConfig {
     AdaptiveCardObjectModelJNI.HostConfig_SetTable(swigCPtr, this, TableConfig.getCPtr(value), value);
   }
 
+  public CompoundButtonConfig GetCompoundButtonConfig() {
+    return new CompoundButtonConfig(AdaptiveCardObjectModelJNI.HostConfig_GetCompoundButtonConfig(swigCPtr, this), true);
+  }
+
+  public void SetCompoundButtonConfig(CompoundButtonConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetCompoundButtonConfig(swigCPtr, this, CompoundButtonConfig.getCPtr(value), value);
+  }
+
 }

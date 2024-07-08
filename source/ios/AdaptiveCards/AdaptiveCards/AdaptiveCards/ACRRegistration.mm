@@ -43,6 +43,7 @@
 #import "ACRIconRenderer.h"
 #import "ACRRatingInputRenderer.h"
 #import "ACRRatingLabelRenderer.h"
+#import "ACRCompoundButtonRenderer.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -91,6 +92,7 @@ using namespace AdaptiveCards;
                                              [ACRActionSetRenderer getInstance], [NSNumber numberWithInt:(int)[ACRActionSetRenderer elemType]],
                                              [ACRTableCellRenderer getInstance], [NSNumber numberWithInt:(int)[ACRTableCellRenderer elemType]],
                                              [ACRTableRenderer getInstance], [NSNumber numberWithInt:(int)[ACRTableRenderer elemType]],
+                                             [ACRCompoundButtonRenderer getInstance], [NSNumber numberWithInt:(int)[ACRCompoundButtonRenderer elemType]],
                                              [ACRCustomRenderer getInstance], [NSNumber numberWithInt:(int)[ACRCustomRenderer elemType]],
                                              nil];
         actionRendererDict =
@@ -102,6 +104,7 @@ using namespace AdaptiveCards;
                                              [ACRActionToggleVisibilityRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::ToggleVisibility],
                                              [ACRCustomActionRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::UnknownAction],
                                              [ACRActionOverflowRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::Overflow],
+             
                                              nil];
 
         _elementParserDict = [[NSMutableDictionary alloc] init];

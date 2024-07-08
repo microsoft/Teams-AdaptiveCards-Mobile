@@ -1,0 +1,1 @@
+./source/ios/tools/AdaptiveCards.podspec

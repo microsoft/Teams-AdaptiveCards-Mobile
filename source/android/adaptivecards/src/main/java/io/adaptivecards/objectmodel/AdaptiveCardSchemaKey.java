@@ -37,6 +37,7 @@ public enum AdaptiveCardSchemaKey {
   Bolder,
   BorderColor,
   Bottom,
+  Badge,
   ButtonSpacing,
   Buttons,
   CaptionSources,
@@ -68,6 +69,7 @@ public enum AdaptiveCardSchemaKey {
   Default,
   DefaultPoster,
   Count,
+  Description,
   ElementId,
   Emphasis,
   ErrorMessage,
@@ -232,7 +234,8 @@ public enum AdaptiveCardSchemaKey {
   WebUrl,
   Weight,
   Width,
-  Wrap;
+  Wrap,
+  CompoundButton;
 
   public final int swigValue() {
     return swigValue;
