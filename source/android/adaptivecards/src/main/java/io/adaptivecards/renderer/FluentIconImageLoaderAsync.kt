@@ -41,7 +41,7 @@ open class FluentIconImageLoaderAsync(
 
     override fun onPostExecute(result: HttpRequestResult<String>?) {
         if (result?.isSuccessful == true && result.result.isNotEmpty()) {
-            processResponseAndRenderFluentIcon(JSONObject(result.result))
+            processResponseAndRenderFluentIcon(result.result)
         } else {
             renderFluentIcon(null, false)
         }
@@ -79,11 +79,12 @@ open class FluentIconImageLoaderAsync(
     /**
      * processes the response from the CDN and renders the fluent icon
      **/
-    private fun processResponseAndRenderFluentIcon(jsonResponse: JSONObject) {
+    private fun processResponseAndRenderFluentIcon(response: String) {
         try {
+            val responseJsonObject = JSONObject(response)
             val style = if (isFilledStyle) FILLED_STYLE else REGULAR_STYLE
-            val flipInRtl = jsonResponse.optBoolean(FLIP_IN_RTL_PROPERTY, false)
-            val styleJsonObject = jsonResponse.getJSONObject(style)
+            val flipInRtl = responseJsonObject.optBoolean(FLIP_IN_RTL_PROPERTY, false)
+            val styleJsonObject = responseJsonObject.getJSONObject(style)
             val availableFluentIconSizes = styleJsonObject.keys().asSequence().map { it.toLong() }.toList()
             val availableIconSizeClosestToGivenSize = Util.getSizeClosestToGivenSize(availableFluentIconSizes, targetIconSize)
             val svgPath = styleJsonObject.getJSONArray(availableIconSizeClosestToGivenSize.toString())[0] as String

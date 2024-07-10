@@ -23,6 +23,7 @@ import io.adaptivecards.objectmodel.CompoundButton;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.ForegroundColor;
 import io.adaptivecards.objectmodel.HostConfig;
+import io.adaptivecards.objectmodel.IconStyle;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 
@@ -89,15 +90,17 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         if (!isIconSet) {
             imageView.setVisibility(View.GONE);
         } else {
-            String svgURL = compoundButton.getIcon().GetSVGResourceURL();
+            boolean isFilledStyle = compoundButton.getIcon().getIconStyle() == IconStyle.Filled;
+            String svgInfoURL = compoundButton.getIcon().GetSVGInfoURL();
             String foregroundColorIcon = hostConfig.GetForegroundColor(ContainerStyle.Default, compoundButton.getIcon().getForgroundColor(), false);
             FluentIconImageLoaderAsync fluentIconImageLoaderAsync = new FluentIconImageLoaderAsync(
                 renderedCard,
-                compoundButton.getIcon().getSize(),
+                Util.getFluentIconSize(compoundButton.getIcon().getIconSize()),
                 foregroundColorIcon,
+                isFilledStyle,
                 imageView
             );
-            fluentIconImageLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, svgURL);
+            fluentIconImageLoaderAsync.execute(svgInfoURL);
         }
 
         // Title TextView
