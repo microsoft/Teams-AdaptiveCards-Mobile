@@ -51,7 +51,6 @@
                                   constant:_size.height];
     [_imageView addConstraints:@[heightConstraint, widthConstraint]];
     
-    [self.leadingAnchor constraintEqualToAnchor:_imageView.leadingAnchor].active = YES;
     [self.topAnchor constraintEqualToAnchor:_imageView.topAnchor].active = YES;
     [self.bottomAnchor constraintEqualToAnchor:_imageView.bottomAnchor].active = YES;
     
@@ -62,8 +61,16 @@
                                  attribute:NSLayoutAttributeTrailing
                                 multiplier:1
                                   constant:0];
+    NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:_imageView
+                                 attribute:NSLayoutAttributeLeading
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:0];
     trailing.priority = 499;
-    [self addConstraint:trailing];
+    leading.priority = 499;
+    [self addConstraints:@[trailing, leading]];
     
     [self setContentHuggingPriority:249 forAxis:UILayoutConstraintAxisHorizontal];
     [self setContentCompressionResistancePriority:251 forAxis:UILayoutConstraintAxisHorizontal];
