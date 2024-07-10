@@ -126,6 +126,10 @@
 									{
 										"title": "NestedFallbackRoot",
 										"value": "v1.5/Scenarios/NestedFallbackRoot.json"
+									},
+									{
+										"title": "CompoundButton",
+										"value": "v1.5/Scenarios/CompoundButtonSample.json"
 									}
                                 ],
                                 "placeholder": "(choose sample)",
