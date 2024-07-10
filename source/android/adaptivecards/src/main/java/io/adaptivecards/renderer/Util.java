@@ -41,6 +41,7 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.HostWidth;
 import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
+import io.adaptivecards.objectmodel.IconSize;
 import io.adaptivecards.objectmodel.JsonValue;
 import io.adaptivecards.objectmodel.Mode;
 import io.adaptivecards.objectmodel.ParseContext;
@@ -565,7 +566,7 @@ public final class Util {
         return new Pair<>(primaryActionElementVector,secondaryActionElementVector);
     }
 
-    public static void loadIcon(Context context, View view, String iconUrl, String svgResourceURL, HostConfig hostConfig, RenderedAdaptiveCard renderedCard, IconPlacement iconPlacement)
+    public static void loadIcon(Context context, View view, String iconUrl, String svgInfoURL, HostConfig hostConfig, RenderedAdaptiveCard renderedCard, IconPlacement iconPlacement)
     {
         if (!iconUrl.startsWith(FLUENT_ICON_URL_PREFIX)) {
             ActionElementRendererIconImageLoaderAsync imageLoader = new ActionElementRendererIconImageLoaderAsync(
@@ -586,18 +587,75 @@ public final class Util {
             long fluentIconSize = 24;
             int color = ((Button) view).getCurrentTextColor();
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
+            boolean isFilledStyle = iconUrl.contains("filled");
             ActionElementRendererFluentIconImageLoaderAsync fluentIconLoaderAsync = new ActionElementRendererFluentIconImageLoaderAsync(
                 renderedCard,
                 fluentIconSize,
+                isFilledStyle,
                 view,
                 hexColor,
                 iconPlacement,
                 hostConfig.GetSpacing().getDefaultSpacing(),
                 hostConfig.GetActions().getIconSize()
             );
-            fluentIconLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, svgResourceURL);
+            fluentIconLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, svgInfoURL);
         }
     }
+
+    /**
+     * Get the size of the Fluent Icon based on the IconSize enum
+     * @param iconSize IconSize enum
+     * @return size of the Fluent Icon
+     */
+    public static long getFluentIconSize(IconSize iconSize) {
+        long _size = 24;
+        switch (iconSize)
+        {
+            case xxSmall:
+                _size = 16;
+                break;
+            case xSmall:
+                _size = 20;
+                break;
+            case Small:
+                _size = 24;
+                break;
+            case Standard:
+                _size = 32;
+                break;
+            case Medium:
+                _size = 48;
+                break;
+            case Large:
+                _size = 56;
+                break;
+            case xLarge:
+                _size = 72;
+                break;
+            case xxLarge:
+                _size = 96;
+                break;
+        }
+        return _size;
+    }
+
+    /**
+     * returns the icon size closest to the target icon size from the list of available sizes
+     */
+    static long getSizeClosestToGivenSize(List<Long> availableSizes, Long targetIconSize) {
+        long minDiff = Long.MAX_VALUE;
+        long closestSize = targetIconSize;
+        for (Long availableSize : availableSizes) {
+            long diff = Math.abs(availableSize - targetIconSize);
+            if (diff < minDiff) {
+                minDiff = diff;
+                closestSize = availableSize;
+            }
+        }
+        return closestSize;
+    }
+
+
 
     private static final String FLUENT_ICON_URL_PREFIX = "icon:";
 

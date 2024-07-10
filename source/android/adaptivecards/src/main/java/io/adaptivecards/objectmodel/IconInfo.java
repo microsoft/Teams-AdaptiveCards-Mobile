@@ -57,12 +57,8 @@ public class IconInfo {
     return (cPtr == 0) ? null : new IconInfo(cPtr, true);
   }
 
-  public String GetSVGResourceURL() {
-    return AdaptiveCardObjectModelJNI.IconInfo_GetSVGResourceURL(swigCPtr, this);
-  }
-
-  public long getSize() {
-    return AdaptiveCardObjectModelJNI.IconInfo_getSize(swigCPtr, this);
+  public String GetSVGInfoURL() {
+    return AdaptiveCardObjectModelJNI.IconInfo_GetSVGInfoURL(swigCPtr, this);
   }
 
   public ForegroundColor getForgroundColor() {

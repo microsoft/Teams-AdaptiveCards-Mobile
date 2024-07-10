@@ -3,7 +3,6 @@
 package io.adaptivecards.renderer.readonly
 
 import android.content.Context
-import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import io.adaptivecards.objectmodel.HeightType
 import io.adaptivecards.objectmodel.HorizontalAlignment
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.Icon
+import io.adaptivecards.objectmodel.IconStyle
 import io.adaptivecards.renderer.BaseCardElementRenderer
 import io.adaptivecards.renderer.FluentIconImageLoaderAsync
 import io.adaptivecards.renderer.RenderArgs
@@ -44,17 +44,19 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
     ): View {
         val icon = Util.castTo(baseCardElement, Icon::class.java)
         val view = ImageView(context)
-        val svgURL = icon.GetSVGResourceURL()
+        val svgURL = icon.GetSVGInfoURL()
         val foregroundColor = hostConfig.GetForegroundColor(ContainerStyle.Default, icon.forgroundColor, false)
+        val isFilledStyle = icon.iconStyle == IconStyle.Filled
 
         val fluentIconImageLoaderAsync = FluentIconImageLoaderAsync(
             renderedCard,
-            icon.size,
+            Util.getFluentIconSize(icon.iconSize),
             foregroundColor,
+            isFilledStyle,
             view
         )
 
-        fluentIconImageLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, svgURL)
+        fluentIconImageLoaderAsync.execute(svgURL)
         val tagContent = TagContent(icon)
         val container = createContainer(context, icon)
         tagContent.SetStretchContainer(container)
@@ -113,7 +115,7 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
         // Set placeholder width, which will adjust left/right barriers (defined in layout)
         constraints.constrainWidth(
             R.id.widthPlaceholder,
-            Util.dpToPixels(context, icon.size.toFloat())
+            Util.dpToPixels(context, Util.getFluentIconSize(icon.iconSize).toFloat())
         )
         return constraints
     }
@@ -121,7 +123,7 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
     private fun applyHorizontalAlignment(constraints: ConstraintSet, id: Int, renderArgs: RenderArgs) {
         var horizontalAlignment = HorizontalAlignment.Left
 
-        if (renderArgs?.horizontalAlignment != null) {
+        if (renderArgs.horizontalAlignment != null) {
             horizontalAlignment = renderArgs.horizontalAlignment
         }
 
