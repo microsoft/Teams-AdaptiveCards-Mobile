@@ -811,6 +811,39 @@ void UpdateFontWithDynamicType(NSMutableAttributedString *content)
                      }];
 }
 
+unsigned int getIconSize(IconSize iconSize)
+{
+    unsigned int _size = 24;
+    switch (iconSize)
+    {
+        case IconSize::xxSmall:
+            _size = 16;
+            break;
+        case IconSize::xSmall:
+            _size = 20;
+            break;
+        case IconSize::Small:
+            _size = 24;
+            break;
+        case IconSize::Standard:
+            _size = 32;
+            break;
+        case IconSize::Medium:
+            _size = 48;
+            break;
+        case IconSize::Large:
+            _size = 56;
+            break;
+        case IconSize::xLarge:
+            _size = 72;
+            break;
+        case IconSize::xxLarge:
+            _size = 96;
+            break;
+    }
+    return _size;
+}
+
 void TexStylesToRichTextElementProperties(const std::shared_ptr<TextBlock> &textBlock,
                                           const TextStyleConfig &textStyleConfig,
                                           RichTextElementProperties &textProp)

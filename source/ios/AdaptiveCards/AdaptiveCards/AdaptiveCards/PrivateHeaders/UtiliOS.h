@@ -121,6 +121,8 @@ UIFont *getFont(ACOHostConfig *hostConfig, const AdaptiveCards::RichTextElementP
 
 void UpdateFontWithDynamicType(NSMutableAttributedString *content);
 
+unsigned int getIconSize(IconSize iconSize);
+
 ACOBaseActionElement *deserializeUnknownActionToCustomAction(const std::shared_ptr<UnknownAction> action);
 
 UIColor *getForegroundUIColorFromAdaptiveAttribute(std::shared_ptr<HostConfig> const &config, ACRContainerStyle style, ForegroundColor textColor = ForegroundColor::Default, bool isSubtle = false);

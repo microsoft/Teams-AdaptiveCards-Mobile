@@ -19,6 +19,7 @@
 
 - (instancetype)init:(NSString *)iconURL
                  rtl:(ACRRtl)rtl
+            isFilled:(BOOL)isFilled
                 size:(CGSize)size
            tintColor:(UIColor *)tintColor;
 @end

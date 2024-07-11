@@ -24,8 +24,9 @@ import java.nio.charset.StandardCharsets
  **/
 open class FluentIconImageLoaderAsync(
     val renderedCard: RenderedAdaptiveCard,
-    val iconSize: Long,
+    private val targetIconSize: Long,
     private val iconColor: String,
+    private var isFilledStyle: Boolean,
     view: View
 ) : AsyncTask<String, Void, HttpRequestResult<String>>() {
 
@@ -34,25 +35,15 @@ open class FluentIconImageLoaderAsync(
         return if (args.isEmpty()) {
             null
         } else {
-            fetchIcon(args[0])
+            fetchIconInfo(args[0])
         }
     }
 
     override fun onPostExecute(result: HttpRequestResult<String>?) {
-        val view = viewReference.get()
-        view?.let {
-            if (result?.isSuccessful == true) {
-                val jsonResponse = JSONObject(result.result)
-                try {
-                    val svgPath = jsonResponse.getJSONArray("svgPaths")
-                    val flipInRtl = jsonResponse.optBoolean("flipInRtl", false)
-                    val svgString = getSvgString(svgPath[0] as String)
-                    val drawable = getDrawableFromSVG(svgString, it.context)
-                    renderFluentIcon(drawable, flipInRtl)
-                } catch (e: Exception) {
-                    renderFluentIcon(null, false)
-                }
-            }
+        if (result?.isSuccessful == true && result.result.isNotEmpty()) {
+            processResponseAndRenderFluentIcon(result.result)
+        } else {
+            renderFluentIcon(null, false)
         }
     }
 
@@ -72,25 +63,55 @@ open class FluentIconImageLoaderAsync(
     }
 
     /**
-     * If the provided icon url is invalid, fetch fallback unavailable icon
+     * fetches the icon info from the CDN
+     * if the request fails or response is null, fetches the info for the unavailable "Square" icon as a fallback
+     * sample url: https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/AlbumAdd/AlbumAdd.json
      **/
-    private fun fetchIcon(svgURL: String): HttpRequestResult<String>? {
+    private fun fetchIconInfo(svgURL: String): HttpRequestResult<String>? {
         return try {
-            val responseBytes = HttpRequestHelper.get(svgURL)
+            val responseBytes = HttpRequestHelper.get(svgURL) ?: throw Exception("Failed to fetch icon info")
             HttpRequestResult<String>(String (responseBytes, StandardCharsets.UTF_8))
         } catch (e: Exception) {
-            val unavailableIconURL = "${AdaptiveCardObjectModel.getBaseIconCDNUrl()}/Square/Square${iconSize}Filled.json"
-            try {
-                val responseBytes = HttpRequestHelper.get(unavailableIconURL)
-                HttpRequestResult(String (responseBytes, StandardCharsets.UTF_8))
-            } catch (e: Exception) {
-                null
-            }
+            fetchUnavailableIconInfo()
         }
     }
 
-    private fun getSvgString(svgPath: String): String {
-        return "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"$iconSize\" height=\"$iconSize\" viewBox=\"0 0 $iconSize $iconSize\"> <path d=\"$svgPath\"/></svg>"
+    /**
+     * processes the response from the CDN and renders the fluent icon
+     **/
+    private fun processResponseAndRenderFluentIcon(response: String) {
+        try {
+            val responseJsonObject = JSONObject(response)
+            val style = if (isFilledStyle) FILLED_STYLE else REGULAR_STYLE
+            val flipInRtl = responseJsonObject.optBoolean(FLIP_IN_RTL_PROPERTY, false)
+            val styleJsonObject = responseJsonObject.getJSONObject(style)
+            val availableFluentIconSizes = styleJsonObject.keys().asSequence().map { it.toLong() }.toList()
+            val availableIconSizeClosestToGivenSize = Util.getSizeClosestToGivenSize(availableFluentIconSizes, targetIconSize)
+            val svgPath = styleJsonObject.getJSONArray(availableIconSizeClosestToGivenSize.toString())[0] as String
+            val svgPathString = getSvgString(svgPath, availableIconSizeClosestToGivenSize)
+            val drawable = getDrawableFromSVG(svgPathString)
+            renderFluentIcon(drawable, flipInRtl)
+        } catch (e: Exception) {
+            renderFluentIcon(null, false)
+        }
+    }
+
+    /**
+     * fetches the info for the unavailable filled style "Square" icon used as a fallback
+     */
+    private fun fetchUnavailableIconInfo(): HttpRequestResult<String>? {
+        isFilledStyle = true
+        val unavailableIconURL = "${AdaptiveCardObjectModel.getBaseIconCDNUrl()}/$SQUARE_ICON/$SQUARE_ICON.json"
+        return try {
+            val responseBytes = HttpRequestHelper.get(unavailableIconURL)
+            HttpRequestResult(String (responseBytes, StandardCharsets.UTF_8))
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    private fun getSvgString(svgPath: String, size: Long): String {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"$targetIconSize\" height=\"$targetIconSize\" viewBox=\"0 0 $size $size\"> <path d=\"$svgPath\"/></svg>"
     }
 
     /**
@@ -99,25 +120,35 @@ open class FluentIconImageLoaderAsync(
      **/
     open fun parseSvgString(context: Context, svgString: String): SVG {
         val svg = SVG.getFromString(svgString)
-        svg.documentWidth = Util.dpToPixels(context, iconSize.toFloat()).toFloat()
-        svg.documentHeight = Util.dpToPixels(context, iconSize.toFloat()).toFloat()
+        svg.documentWidth = Util.dpToPixels(context, targetIconSize.toFloat()).toFloat()
+        svg.documentHeight = Util.dpToPixels(context, targetIconSize.toFloat()).toFloat()
         return svg
     }
 
-    private fun getDrawableFromSVG(svgString: String, context: Context): BitmapDrawable {
-        val svg = parseSvgString(context, svgString)
-        val picture = svg.renderToPicture()
-        val bitmap = Bitmap.createBitmap(picture.width, picture.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        picture.draw(canvas)
-        val drawable = BitmapDrawable(context.resources, bitmap)
-        val color = try {
-            Color.parseColor(iconColor)
-        } catch (e: IllegalArgumentException) {
-            Color.BLACK
+    private fun getDrawableFromSVG(svgString: String): BitmapDrawable? {
+        viewReference.get()?.let {
+            val svg = parseSvgString(it.context, svgString)
+            val picture = svg.renderToPicture()
+            val bitmap = Bitmap.createBitmap(picture.width, picture.height, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            picture.draw(canvas)
+            val drawable = BitmapDrawable(it.context.resources, bitmap)
+            val color = try {
+                Color.parseColor(iconColor)
+            } catch (e: IllegalArgumentException) {
+                Color.BLACK
+            }
+            drawable.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
+            return drawable
         }
-        drawable.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
-        return drawable
+        return null
+    }
+
+    companion object {
+        const val FILLED_STYLE = "filled"
+        const val REGULAR_STYLE = "regular"
+        const val SQUARE_ICON = "Square"
+        const val FLIP_IN_RTL_PROPERTY = "flipInRtl"
     }
 
 }

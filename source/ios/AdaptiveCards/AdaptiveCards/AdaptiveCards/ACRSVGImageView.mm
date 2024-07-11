@@ -8,6 +8,7 @@
 
 #import "ACRSVGImageView.h"
 #import "Icon.h"
+#import "ACRErrors.h"
 #ifdef SWIFT_PACKAGE
 /// Swift Package Imports
 #import "SVGKit.h"
@@ -20,10 +21,12 @@
 {
     NSString *_svgPayloadURL;
     ACRRtl _rtl;
+    BOOL _isFilled;
 }
 
 - (instancetype)init:(NSString *)iconURL
                  rtl:(ACRRtl)rtl
+            isFilled:(BOOL)isFilled
                 size:(CGSize)size
            tintColor:(UIColor *)tintColor;
 {
@@ -33,6 +36,7 @@
         _svgPayloadURL = iconURL;
         self.size = size;
         _rtl = rtl;
+        _isFilled = isFilled;
         self.svgTintColor = tintColor;
         [self loadIconFromCDN];
     }
@@ -48,7 +52,11 @@
         ACRSVGImageView *strongSelf = weakSelf;
         if (dict != nil)
         {
-            [strongSelf updateImageWithSVGData: dict];
+            BOOL success = [strongSelf updateImageWithSVGData: dict];
+            if (!success)
+            {
+                [strongSelf showUnavailableIcon];
+            }
         }
         else
         {
@@ -94,24 +102,12 @@
         }];
         [iconDataTask resume];
     }
-    else 
-    {
-        [self showUnavailableIcon];
-    }
-}
-
-- (void)updateImageWithSVGData:(NSDictionary *)svgData
-{
-    NSArray<NSString *> *svgPathArray = svgData[@"svgPaths"];
-    BOOL flipInRTL = NO;
-    flipInRTL = svgData[@"flipInRtl"];
-    if (svgPathArray && [svgPathArray count] != 0)
-    {
-        [self setImageWith:svgPathArray flipInRTL:flipInRTL];
-    }
     else
     {
-        [self showUnavailableIcon];
+        NSError *error = [NSError errorWithDomain:ACRParseErrorDomain
+                                                  code:ACRInputErrorValueMissing
+                                              userInfo:nil];
+        completion(nil, error);
     }
 }
 
@@ -119,22 +115,20 @@
 {
     // we will always show hardcoded square icon as fallback
     NSString *fallbackURLName = @"Square";
-    NSString *fallBackURLString = [[NSString alloc] initWithFormat:@"%s%@/%@%ldFilled.json",AdaptiveCards::baseIconCDNUrl, fallbackURLName, fallbackURLName, (long)self.size.width];
+    NSString *fallBackURLString = [[NSString alloc] initWithFormat:@"%s%@/%@.json",AdaptiveCards::baseIconCDNUrl, fallbackURLName, fallbackURLName];
     NSURL *svgURL = [[NSURL alloc] initWithString:fallBackURLString];
-    __weak ACRSVGImageView *weakSelf = self;
     [self makeIconCDNRequestWithURL:svgURL completion:^(NSDictionary * _Nullable dict, NSError * _Nullable error) {
-        ACRSVGImageView *strongSelf = weakSelf;
         if (dict != nil)
         {
-            [strongSelf updateImageWithSVGData: dict];
+            [self updateImageWithSVGData:dict iconFilledStyleKey:@"filled"];
         }
     }];
 }
 
-- (void)setImageWith:(NSArray<NSString *> *)pathArray flipInRTL:(BOOL)flipInRTL
+- (void)setImageWith:(NSArray<NSString *> *)pathArray flipInRTL:(BOOL)flipInRTL viewPort:(CGFloat)viewPort
 {
     NSString *path = [pathArray firstObject];
-    NSString *svgXML = [self svgXMLPayloadFrom:path];
+    NSString *svgXML = [self svgXMLPayloadFrom:path viewPort: viewPort];
     NSData* svgData = [svgXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
     NSInputStream *stream = [[NSInputStream alloc] initWithData:svgData];
     SVGKSource *svgSource = [[SVGKSource alloc] initWithInputSteam:stream];
@@ -153,6 +147,7 @@
 {
     self.tintColor = self.svgTintColor;
     UIImage *colored = [img imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.contentMode = UIViewContentModeScaleAspectFit;
     
     if (_rtl == ACRRtlRTL)
     {
@@ -162,9 +157,58 @@
     return colored;
 }
 
-- (NSString *)svgXMLPayloadFrom:(NSString *)path
+- (NSString *)svgXMLPayloadFrom:(NSString *)path viewPort:(CGFloat)viewPort
 {
-    return [[NSString alloc] initWithFormat:@"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"%f\" height=\"%f\" viewBox=\"0 0 %f %f\"><path d=\"%@\"/></svg>", _size.width, _size.height, _size.width, _size.height, path];
+    return [[NSString alloc] initWithFormat:@"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"%f\" height=\"%f\" viewBox=\"0 0 %f %f\"><path d=\"%@\"/></svg>", _size.width, _size.height, viewPort, viewPort, path];
+}
+
+- (BOOL)updateImageWithSVGData:(NSDictionary *)svgData
+{
+    NSString *iconFilledStyleKey = _isFilled ? @"filled" : @"regular";
+    return [self updateImageWithSVGData:svgData iconFilledStyleKey:iconFilledStyleKey];
+}
+
+- (BOOL)updateImageWithSVGData:(NSDictionary *)svgData iconFilledStyleKey:(NSString *)iconFilledStyleKey
+{
+    NSDictionary *iconDict = svgData[iconFilledStyleKey];
+    if (iconDict)
+    {
+        // exact size for icon may not be available, try to find closest size of icon which is available
+        NSString *targetKey = [self findClosestIconSizeInArray:[iconDict allKeys] toTarget:@(self.size.height)];
+        NSArray<NSString *> *pathArray = iconDict[targetKey];
+        if (pathArray != nil)
+        {
+            BOOL flipInRTL = NO;
+            flipInRTL = svgData[@"flipInRtl"];
+            [self setImageWith:pathArray flipInRTL:flipInRTL viewPort:[targetKey doubleValue]];
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (NSString *)findClosestIconSizeInArray:(NSArray<NSString *> *)numbers toTarget:(NSNumber *)targetNumber
+{
+    if (numbers.count == 0)
+    {
+        return nil;
+    }
+
+    NSString *closestNumberString = numbers[0];
+    NSNumber *closestNumber = @([closestNumberString doubleValue]);
+    double closestDifference = fabs([closestNumber doubleValue] - [targetNumber doubleValue]);
+
+    for (NSString *numberString in numbers)
+    {
+        NSNumber *number = @([numberString doubleValue]);
+        double currentDifference = fabs([number doubleValue] - [targetNumber doubleValue]);
+        if (currentDifference < closestDifference)
+        {
+            closestDifference = currentDifference;
+            closestNumberString = numberString;
+        }
+    }
+    return closestNumberString;
 }
 
 @end
