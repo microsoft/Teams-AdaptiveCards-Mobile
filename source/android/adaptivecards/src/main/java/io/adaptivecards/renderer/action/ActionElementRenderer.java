@@ -92,7 +92,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
                 else
                 {
                     Button button = new Button(context);
-                    button.setTextColor(getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)));
+                    button.getBackground().setColorFilter(getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)), PorterDuff.Mode.MULTIPLY);
                     return button;
                 }
             }
