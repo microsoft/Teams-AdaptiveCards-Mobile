@@ -11,9 +11,15 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.TooltipCompat;
+import androidx.core.view.AccessibilityDelegateCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.fragment.app.FragmentManager;
 
 import io.adaptivecards.objectmodel.ActionType;
@@ -28,8 +34,8 @@ import io.adaptivecards.objectmodel.ExecuteAction;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 import io.adaptivecards.objectmodel.HostConfig;
-import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.StyledCollectionElement;
+import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.VerticalContentAlignment;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.BackgroundImageLoaderAsync;
@@ -324,8 +330,36 @@ public class ContainerRenderer extends BaseCardElementRenderer
         {
             TooltipCompat.setTooltipText(view, tooltip);
         }
+        if (selectAction.GetElementType() == ActionType.ToggleVisibility)
+        {
+            setAccessibilityForView(view);
+        }
+
     }
 
+    private static void setAccessibilityForView(@NonNull View view) {
+
+        if (view instanceof ViewGroup)
+        {
+            ViewGroup group = ((ViewGroup) view);
+            String description = "";
+            if (group.getChildCount() > 0 && group.getChildAt(0) instanceof TextView)
+            {
+                description = ((TextView) group.getChildAt(0)).getText().toString();
+            }
+            String finalDescription = description;
+            ViewCompat.setAccessibilityDelegate(view, new AccessibilityDelegateCompat()
+            {
+                @Override
+                public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
+                    super.onInitializeAccessibilityNodeInfo(host, info);
+                    info.setClassName(Button.class.getName());
+                    info.addAction(AccessibilityNodeInfoCompat.ACTION_CLICK);
+                    info.setContentDescription(finalDescription);
+                }
+            });
+        }
+    }
 
     public static void setSelectAction(RenderedAdaptiveCard renderedCard, BaseActionElement selectAction, View view, ICardActionHandler cardActionHandler, RenderArgs renderArgs)
     {
