@@ -14,6 +14,8 @@
 #import "Container.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import "FlowLayout.h"
+#import "AreaGridLayout.h"
 
 @implementation ACRContainerRenderer
 
@@ -36,7 +38,20 @@
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
-
+    
+    //Layout
+    std::shared_ptr<Layout> final_layout = [self finalLayoutToApply:acoElem config:acoConfig];
+    if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
+    {
+        std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
+        // layout using flow layout
+    }
+    else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
+    {
+        std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
+        // layout using Area Grid
+    }
+    
     [rootView.context pushBaseCardElementContext:acoElem];
 
     ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()
@@ -77,6 +92,46 @@
     container.accessibilityElements = [container getArrangedSubviews];
 
     return container;
+}
+
+-(std::shared_ptr<Layout>)finalLayoutToApply:(ACOBaseCardElement *)acoElem config:(ACOHostConfig *)acoConfig
+{
+    std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
+    ACRRegistration *reg = [ACRRegistration getInstance];
+    HostWidthConfig hostWidthConfig = [acoConfig getHostConfig]->getHostWidth();
+    HostWidth hostWidth = convertHostCardContainerToHostWidth([reg getHostCardContainer], hostWidthConfig);
+    std::vector<std::shared_ptr<Layout>> layoutArray = containerElem->GetLayouts();
+    std::shared_ptr<Layout> final_layout;
+    if (const auto& layoutArray = containerElem->GetLayouts(); !layoutArray.empty())
+    {
+        for (const auto& layout : layoutArray)
+        {
+            if(layout->GetLayoutContainerType() == LayoutContainerType::None)
+            {
+                continue;
+            }
+            
+            if(layout->MeetsTargetWidthRequirement(hostWidth))
+            {
+                final_layout = layout;
+                break;
+            }
+            else if (layout->GetTargetWidth() == TargetWidthType::Default)
+            {
+                final_layout = layout;
+            }
+        }
+    }
+    
+    if (final_layout == nullptr)
+    {
+        final_layout = std::make_shared<Layout>();
+        final_layout->SetLayoutContainerType(LayoutContainerType::Stack);
+        final_layout->SetTargetWidth(TargetWidthType::Default);
+    }
+    
+    return final_layout;
 }
 
 - (void)configUpdateForUIImageView:(ACRView *)rootView acoElem:(ACOBaseCardElement *)acoElem config:(ACOHostConfig *)acoConfig image:(UIImage *)image imageView:(UIImageView *)imageView

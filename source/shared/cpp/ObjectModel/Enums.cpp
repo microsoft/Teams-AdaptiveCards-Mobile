@@ -208,6 +208,19 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TimeInput, "timeInput"},
             {AdaptiveCardSchemaKey::Title, "title"},
             {AdaptiveCardSchemaKey::ToggleInput, "toggleInput"},
+            {AdaptiveCardSchemaKey::Layout, "Layout"},
+            {AdaptiveCardSchemaKey::itemFit, "itemFit"},
+            {AdaptiveCardSchemaKey::rowSpacing, "rowSpacing"},
+            {AdaptiveCardSchemaKey::columnSpacing, "columnSpacing"},
+            {AdaptiveCardSchemaKey::itemWidth, "itemWidth"},
+            {AdaptiveCardSchemaKey::minItemWidth, "minItemWidth"},
+            {AdaptiveCardSchemaKey::maxItemWidth, "maxItemWidth"},
+            {AdaptiveCardSchemaKey::horizontalItemsAlignment, "horizontalItemsAlignment"},
+            {AdaptiveCardSchemaKey::row, "row"},
+            {AdaptiveCardSchemaKey::rowSpan, "rowSpan"},
+            {AdaptiveCardSchemaKey::columnSpan, "columnSpan"},
+            {AdaptiveCardSchemaKey::Areas, "areas"},
+            {AdaptiveCardSchemaKey::Layouts, "layouts"},
             {AdaptiveCardSchemaKey::TokenExchangeResource, "tokenExchangeResource"},
             {AdaptiveCardSchemaKey::Tooltip, "tooltip"},
             {AdaptiveCardSchemaKey::Top, "top"},
@@ -337,6 +350,16 @@ namespace AdaptiveCards
         { ImageFillMode::RepeatHorizontally, "repeatHorizontally" },
         { ImageFillMode::RepeatVertically, "repeatVertically" },
         { ImageFillMode::Repeat, "repeat" }});
+
+    DEFINE_ADAPTIVECARD_ENUM(ItemFit, {
+        { ItemFit::Fit, "Fit" },
+        { ItemFit::Fill, "Fill" }});
+
+    DEFINE_ADAPTIVECARD_ENUM(LayoutContainerType, {
+        { LayoutContainerType::None, "Layout.None" },
+        { LayoutContainerType::Stack, "Layout.Stack" },
+        { LayoutContainerType::Flow, "Layout.Flow" },
+        { LayoutContainerType::AreaGrid, "Layout.AreaGrid" }});
 
     DEFINE_ADAPTIVECARD_ENUM(ImageSize, {
             {ImageSize::Auto, "Auto"},
