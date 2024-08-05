@@ -51,6 +51,11 @@
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
         // layout using Area Grid
     }
+    else
+    {
+        // default stack based layout
+    }
+
     
     [rootView.context pushBaseCardElementContext:acoElem];
 

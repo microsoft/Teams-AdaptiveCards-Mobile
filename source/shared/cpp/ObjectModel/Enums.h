@@ -203,6 +203,7 @@ enum class AdaptiveCardSchemaKey
     row,
     rowSpan,
     columnSpan,
+    AreaGridName,
     Areas,
     Layouts,
     TargetInputIds,

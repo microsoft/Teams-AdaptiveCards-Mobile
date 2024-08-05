@@ -219,6 +219,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::row, "row"},
             {AdaptiveCardSchemaKey::rowSpan, "rowSpan"},
             {AdaptiveCardSchemaKey::columnSpan, "columnSpan"},
+            {AdaptiveCardSchemaKey::AreaGridName, "grid.area"},
             {AdaptiveCardSchemaKey::Areas, "areas"},
             {AdaptiveCardSchemaKey::Layouts, "layouts"},
             {AdaptiveCardSchemaKey::TokenExchangeResource, "tokenExchangeResource"},
