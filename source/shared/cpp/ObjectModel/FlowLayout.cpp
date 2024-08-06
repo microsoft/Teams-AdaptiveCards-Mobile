@@ -99,37 +99,37 @@ Json::Value FlowLayout::SerializeToJsonValue() const
 
     if (m_itemFit != ItemFit::Fit)
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::itemFit)] = ItemFitToString(m_itemFit);
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ItemFit)] = ItemFitToString(m_itemFit);
     }
     
     if (m_rowSpacing != Spacing::Default)
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::rowSpacing)] = SpacingToString(m_rowSpacing);
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::RowSpacing)] = SpacingToString(m_rowSpacing);
     }
     
     if (m_columnSpacing != Spacing::Default)
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::rowSpacing)] = SpacingToString(m_columnSpacing);
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ColumnSpacing)] = SpacingToString(m_columnSpacing);
     }
     
     if (m_horizontalAlignment != HorizontalAlignment::Center)
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::horizontalItemsAlignment)] = HorizontalAlignmentToString(m_horizontalAlignment);
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalItemsAlignment)] = HorizontalAlignmentToString(m_horizontalAlignment);
     }
     
     if (m_itemWidth.has_value())
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::itemWidth)] = m_itemWidth.value_or("");
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ItemWidth)] = m_itemWidth.value_or("");
     }
     
     if (m_minItemWidth.has_value())
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::minItemWidth)] = m_minItemWidth.value_or("");
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MinItemWidth)] = m_minItemWidth.value_or("");
     }
     
     if (m_maxItemWidth.has_value())
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::maxItemWidth)] = m_maxItemWidth.value_or("");
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxItemWidth)] = m_maxItemWidth.value_or("");
     }
 
     return root;
@@ -142,13 +142,13 @@ std::shared_ptr<FlowLayout> FlowLayout::Deserialize(const Json::Value& json)
     std::shared_ptr<FlowLayout> layout = std::make_shared<FlowLayout>();
     layout->SetLayoutContainerType(base_layout->GetLayoutContainerType());
     layout->SetTargetWidth(base_layout->GetTargetWidth());
-    layout->setItemFit(ParseUtil::GetEnumValue<ItemFit>(json, AdaptiveCardSchemaKey::itemFit, ItemFit::Fit, ItemFitFromString));
-    layout->SetRowSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::rowSpacing, Spacing::Default, SpacingFromString));
-    layout->SetColumnSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::columnSpacing, Spacing::Default, SpacingFromString));
-    layout->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(json, AdaptiveCardSchemaKey::horizontalItemsAlignment, HorizontalAlignment::Center, HorizontalAlignmentFromString));
-    layout->SetItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::itemWidth));
-    layout->SetMinItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::minItemWidth));
-    layout->SetMaxItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::maxItemWidth));
+    layout->setItemFit(ParseUtil::GetEnumValue<ItemFit>(json, AdaptiveCardSchemaKey::ItemFit, ItemFit::Fit, ItemFitFromString));
+    layout->SetRowSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::RowSpacing, Spacing::Default, SpacingFromString));
+    layout->SetColumnSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::ColumnSpacing, Spacing::Default, SpacingFromString));
+    layout->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(json, AdaptiveCardSchemaKey::HorizontalItemsAlignment, HorizontalAlignment::Center, HorizontalAlignmentFromString));
+    layout->SetItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::ItemWidth));
+    layout->SetMinItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::MinItemWidth));
+    layout->SetMaxItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::MaxItemWidth));
     return layout;
 }
 

@@ -89,12 +89,12 @@ Json::Value AreaGridLayout::SerializeToJsonValue() const
     
     if (m_rowSpacing != Spacing::Default)
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::rowSpacing)] = SpacingToString(m_rowSpacing);
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::RowSpacing)] = SpacingToString(m_rowSpacing);
     }
     
     if (m_columnSpacing != Spacing::Default)
     {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::rowSpacing)] = SpacingToString(m_columnSpacing);
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ColumnSpacing)] = SpacingToString(m_columnSpacing);
     }
 
     return root;
@@ -106,8 +106,8 @@ std::shared_ptr<AreaGridLayout> AreaGridLayout::Deserialize(const Json::Value& j
     std::shared_ptr<AreaGridLayout> layout = std::make_shared<AreaGridLayout>();
     layout->SetLayoutContainerType(base_layout->GetLayoutContainerType());
     layout->SetTargetWidth(base_layout->GetTargetWidth());
-    layout->SetRowSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::rowSpacing, Spacing::Default, SpacingFromString));
-    layout->SetColumnSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::columnSpacing, Spacing::Default, SpacingFromString));
+    layout->SetRowSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::RowSpacing, Spacing::Default, SpacingFromString));
+    layout->SetColumnSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::ColumnSpacing, Spacing::Default, SpacingFromString));
     layout->SetColumns(ParseUtil::GetStringArray(json, AdaptiveCardSchemaKey::Columns));
     
     if (const auto& areasArray = ParseUtil::GetArray(json, AdaptiveCardSchemaKey::Areas, false); !areasArray.empty())

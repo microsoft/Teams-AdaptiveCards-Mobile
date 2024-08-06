@@ -18,8 +18,6 @@ public:
         m_itemFit(ItemFit::Fit), m_columnSpacing(Spacing::Default), m_rowSpacing(Spacing::Default), m_horizontalAlignment(HorizontalAlignment::Center)
     {
     }
-//    
-//    FlowLayout() = default;
     FlowLayout(const FlowLayout&) = default;
     FlowLayout(FlowLayout&&) = default;
     FlowLayout& operator=(const FlowLayout&) = default;
