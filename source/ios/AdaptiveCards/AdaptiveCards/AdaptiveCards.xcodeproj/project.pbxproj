@@ -29,7 +29,7 @@
 		300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
 		30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */; };
-		46058FCF2C5CCBAA00966E76 /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FCE2C5CCBAA00966E76 /* Layout.h */; };
+		46058FCF2C5CCBAA00966E76 /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FCE2C5CCBAA00966E76 /* Layout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		46058FD12C5CCBED00966E76 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46058FD02C5CCBED00966E76 /* Layout.cpp */; };
 		46058FD42C5CEEFE00966E76 /* FlowLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46058FD22C5CEEFE00966E76 /* FlowLayout.cpp */; };
 		46058FD52C5CEEFE00966E76 /* FlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FD32C5CEEFE00966E76 /* FlowLayout.h */; };
