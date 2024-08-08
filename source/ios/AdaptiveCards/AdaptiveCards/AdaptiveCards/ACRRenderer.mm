@@ -22,6 +22,7 @@
 #import "ACRViewController.h"
 #import "ACRViewPrivate.h"
 #import "UtiliOS.h"
+#import "ACRWidthDistributor.h"
 
 using namespace AdaptiveCards;
 
@@ -68,6 +69,13 @@ using namespace AdaptiveCards;
     return result;
 }
 
++(void)distributeWidth:(std::shared_ptr<AdaptiveCard> const &)adaptiveCard
+{
+    std::vector<std::shared_ptr<BaseCardElement>> body = adaptiveCard->GetBody();
+    
+    
+}
+
 // transforms (i.e. renders) an adaptiveCard to a new UIView instance
 + (UIView *)renderWithAdaptiveCards:(std::shared_ptr<AdaptiveCard> const &)adaptiveCard
                              inputs:(NSMutableArray *)inputs
@@ -75,6 +83,7 @@ using namespace AdaptiveCards;
                      containingView:(ACRColumnView *)containingView
                          hostconfig:(ACOHostConfig *)config
 {
+    [[[ACRWidthDistributor alloc] init] distributeWidth:[[ACRRegistration getInstance] getHostCardContainer] rootView:rootView forElement:adaptiveCard andHostConfig:config];
     std::vector<std::shared_ptr<BaseCardElement>> body = adaptiveCard->GetBody();
     ACRColumnView *verticalView = containingView;
 

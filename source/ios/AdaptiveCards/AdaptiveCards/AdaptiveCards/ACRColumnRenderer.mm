@@ -44,6 +44,7 @@
     std::shared_ptr<Column> columnElem = std::dynamic_pointer_cast<Column>(elem);
     
     //Layout
+    float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     std::shared_ptr<Layout> final_layout = [self finalLayoutToApply:acoElem config:acoConfig];
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {

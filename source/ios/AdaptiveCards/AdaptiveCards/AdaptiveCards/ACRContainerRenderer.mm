@@ -40,6 +40,7 @@
     std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
     
     //Layout
+    float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     std::shared_ptr<Layout> final_layout = [self finalLayoutToApply:acoElem config:acoConfig];
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {

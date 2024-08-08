@@ -42,6 +42,10 @@
 
 - (UIView *)render;
 
+- (void)setWidthForElememt:(unsigned int)key width:(float)width;
+
+- (float)widthForElement:(unsigned int)key;
+
 - (void)waitForAsyncTasksToFinish;
 
 @end
