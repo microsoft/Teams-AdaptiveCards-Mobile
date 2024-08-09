@@ -10,9 +10,7 @@
             "title": "Summarize",
             "icon": {
                 "name": "List",
-                "size": "Medium",
-                "style": "Regular",
-                "color": "attention"
+                "style": "Regular"
             },
             
             "description": "Create a work item and assign it to your or a team member",
@@ -59,9 +57,7 @@
             "title": "Give feedback",
             "icon": {
                 "name": "Calendar",
-                "size": "Medium",
-                "style": "Regular",
-                "color": "attention"
+                "style": "Regular"
             },
             
             "description": "To give us feedback on Azure DevOps",
@@ -106,12 +102,10 @@
             "title": "Pending Taks",
             "icon": {
                 "name": "Emoji",
-                "size": "Medium",
-                "style": "Regular",
-                "color": "attention"
+                "style": "Regular"
             },
             
-            "badge": "priority",
+            "badge": "Priority",
             
             "height": "stretch",
             

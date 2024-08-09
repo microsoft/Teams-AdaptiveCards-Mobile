@@ -57,7 +57,7 @@
     
     UIStackView *horizontalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     horizontalStack.translatesAutoresizingMaskIntoConstraints = NO;
-    horizontalStack.spacing = 5;
+    horizontalStack.spacing = 7;
     horizontalStack.alignment = UIStackViewAlignmentCenter;
     
     if(icon != nil)
@@ -154,16 +154,15 @@
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     ACRUILabel * badgeLabel = [[ACRUILabel alloc] init];
-    badgeLabel.textColor =  [acoConfig getTextBlockColor:[viewGroup style] textColor:ForegroundColor::Default subtleOption:NO];
+    badgeLabel.textColor =  [acoConfig getBackgroundColorForContainerStyle:[viewGroup style]];
     badgeLabel.text = @(badge.c_str());
     badgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    badgeLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
+    badgeLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
     std::string badgeBackgroundColor = config->GetCompoundButtonConfig().badgeConfig.backgroundColor;
     badgeLabel.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:badgeBackgroundColor];
-    badgeLabel.layer.cornerRadius = 12;
-    badgeLabel.clipsToBounds = YES;
+    badgeLabel.layer.cornerRadius = 10;
+    badgeLabel.layer.masksToBounds = YES;
     badgeLabel.textAlignment = NSTextAlignmentCenter;
-    
     UIEdgeInsets insets = UIEdgeInsetsMake(2.4, 7.2, 2.4, 7.2);
     badgeLabel.textContainerInset = insets;
     return badgeLabel;
