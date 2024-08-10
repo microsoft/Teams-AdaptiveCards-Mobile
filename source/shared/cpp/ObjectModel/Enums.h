@@ -192,6 +192,20 @@ enum class AdaptiveCardSchemaKey
     TableCell,
     TableRow,
     TargetElements,
+    Layout,
+    ItemFit,
+    RowSpacing,
+    ColumnSpacing,
+    ItemWidth,
+    MinItemWidth,
+    MaxItemWidth,
+    HorizontalItemsAlignment,
+    Row,
+    RowSpan,
+    ColumnSpan,
+    AreaGridName,
+    Areas,
+    Layouts,
     TargetInputIds,
     TargetWidth,
     Text,
@@ -366,6 +380,22 @@ enum class ImageFillMode
     Repeat
 };
 DECLARE_ADAPTIVECARD_ENUM(ImageFillMode);
+
+enum class ItemFit
+{
+    Fit = 0,
+    Fill,
+};
+DECLARE_ADAPTIVECARD_ENUM(ItemFit);
+
+enum class LayoutContainerType
+{
+    None = 0,
+    Stack,
+    Flow,
+    AreaGrid
+};
+DECLARE_ADAPTIVECARD_ENUM(LayoutContainerType);
 
 enum class ImageStyle
 {

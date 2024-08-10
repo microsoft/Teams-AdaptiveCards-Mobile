@@ -4,6 +4,7 @@
 
 #include "pch.h"
 #include "StyledCollectionElement.h"
+#include "Layout.h"
 
 namespace AdaptiveCards
 {
@@ -27,6 +28,10 @@ public:
 
     std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
     const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;
+    
+    std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts();
+    const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts() const;
+    void SetLayouts(const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& value);
 
     std::optional<bool> GetRtl() const;
     void SetRtl(const std::optional<bool>& value);
@@ -37,6 +42,7 @@ private:
     void PopulateKnownPropertiesSet();
 
     std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_items;
+    std::vector<std::shared_ptr<Layout>> m_layouts;
     std::optional<bool> m_rtl;
 };
 

@@ -55,6 +55,8 @@ namespace ParseUtil
 
     std::optional<double> GetOptionalDouble(const Json::Value& json, AdaptiveCardSchemaKey key);
 
+    std::optional<std::string> GetOptionalString(const Json::Value& json, AdaptiveCardSchemaKey key);
+
     Json::Value GetArray(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
     std::vector<std::string> GetStringArray(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
