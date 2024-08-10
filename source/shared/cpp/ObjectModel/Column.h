@@ -7,6 +7,7 @@
 #include "BackgroundImage.h"
 #include "BaseActionElement.h"
 #include "StyledCollectionElement.h"
+#include "Layout.h"
 
 namespace AdaptiveCards
 {
@@ -29,6 +30,10 @@ public:
     // explicit width takes precedence over relative width
     int GetPixelWidth() const;
     void SetPixelWidth(const int value);
+    
+    std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts();
+    const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts() const;
+    void SetLayouts(const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& value);
 
     std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
     const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;
@@ -44,6 +49,7 @@ private:
     unsigned int m_pixelWidth;
     std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_items;
     std::optional<bool> m_rtl;
+    std::vector<std::shared_ptr<Layout>> m_layouts;
 };
 
 class ColumnParser : public BaseCardElementParser

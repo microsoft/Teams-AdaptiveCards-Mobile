@@ -308,6 +308,25 @@ std::optional<double> ParseUtil::GetOptionalDouble(const Json::Value& json, Adap
     return propertyValue.asDouble();
 }
 
+std::optional<std::string> ParseUtil::GetOptionalString(const Json::Value& json, AdaptiveCardSchemaKey key)
+{
+    const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
+    auto propertyValue = json.get(propertyName, Json::Value());
+    if (propertyValue.empty())
+    {
+        return std::nullopt;
+    }
+
+    if (!propertyValue.isString())
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue,
+            "Value for property " + propertyName + " was invalid. Expected type String.");
+    }
+
+    return propertyValue.asString();
+}
+
 void ParseUtil::ExpectTypeString(const Json::Value& json, const std::string& expectedTypeStr)
 {
     const std::string actualType = GetTypeAsString(json);
