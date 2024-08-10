@@ -743,7 +743,12 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
     NSString *parsedString = (markDownParser->HasHtmlTags()) ? [NSString stringWithCString:markdownString.c_str() encoding:NSUTF8StringEncoding] : [NSString stringWithCString:markDownParser->GetRawText().c_str() encoding:NSUTF8StringEncoding];
 
     if (markDownParser->HasHtmlTags() && ([parsedString containsString:@"\n"] || [parsedString containsString:@"\r"])) {
-        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"[\\n\\r]"
+        // Different systems have different line break styles
+        // Windows style: \r\n
+        // Modern mac style: \n
+        // Old mac style: \r
+        NSString *replacementPattern = [parsedString containsString:@"\r\n"] ? @"\r\n" : @"[\\n\\r]";
+        parsedString = [parsedString stringByReplacingOccurrencesOfString:replacementPattern
                                                                withString:@"<br>"
                                                                   options:NSRegularExpressionSearch
                                                                     range:NSMakeRange(0, [parsedString length])];
@@ -809,6 +814,39 @@ void UpdateFontWithDynamicType(NSMutableAttributedString *content)
                      usingBlock:^(id value, NSRange range, BOOL *stop) {
                          [content addAttribute:NSFontAttributeName value:[UIFontMetrics.defaultMetrics scaledFontForFont:(UIFont *)value] range:range];
                      }];
+}
+
+unsigned int getIconSize(IconSize iconSize)
+{
+    unsigned int _size = 24;
+    switch (iconSize)
+    {
+        case IconSize::xxSmall:
+            _size = 16;
+            break;
+        case IconSize::xSmall:
+            _size = 20;
+            break;
+        case IconSize::Small:
+            _size = 24;
+            break;
+        case IconSize::Standard:
+            _size = 32;
+            break;
+        case IconSize::Medium:
+            _size = 48;
+            break;
+        case IconSize::Large:
+            _size = 56;
+            break;
+        case IconSize::xLarge:
+            _size = 72;
+            break;
+        case IconSize::xxLarge:
+            _size = 96;
+            break;
+    }
+    return _size;
 }
 
 void TexStylesToRichTextElementProperties(const std::shared_ptr<TextBlock> &textBlock,

@@ -92,7 +92,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
                 else
                 {
                     Button button = new Button(context);
-                    button.setTextColor(getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)));
+                    button.getBackground().setColorFilter(getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)), PorterDuff.Mode.MULTIPLY);
                     return button;
                 }
             }
@@ -152,12 +152,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         button.post(() -> Util.expandClickArea(button, minHeight));
 
         String iconUrl = baseActionElement.GetIconUrl();
-
-        // intentionally kept this 24 so that it always loads
-        // irrespective of size given in host config.
-        // it is possible that host config has some size which is not available in CDN.
-        long fluentIconSize = 24;
-        String svgResourceURL = baseActionElement.GetSVGResourceURL(fluentIconSize);
+        String svgInfoURL = baseActionElement.GetSVGInfoURL();
 
         if (!iconUrl.isEmpty())
         {
@@ -167,7 +162,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
                 iconPlacement = IconPlacement.LeftOfTitle;
             }
 
-            Util.loadIcon(context, button, iconUrl, svgResourceURL, hostConfig, renderedCard, iconPlacement);
+            Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
         }
 
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {

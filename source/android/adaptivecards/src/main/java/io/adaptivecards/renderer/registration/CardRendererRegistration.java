@@ -37,6 +37,7 @@ import io.adaptivecards.renderer.ActionLayoutRenderer;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.AdaptiveWarning;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
+import io.adaptivecards.renderer.CompoundButtonRenderer;
 import io.adaptivecards.renderer.IActionLayoutRenderer;
 import io.adaptivecards.renderer.IBaseActionElementRenderer;
 import io.adaptivecards.renderer.IBaseCardElementRenderer;
@@ -98,6 +99,7 @@ public class CardRendererRegistration
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Table), TableRenderer.INSTANCE);
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.TableCell), TableCellRenderer.INSTANCE);
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.RatingLabel), RatingDisplayRenderer.INSTANCE);
+        registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.CompoundButton), CompoundButtonRenderer.getInstance());
 
         // Register Input Renderers
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.TextInput), TextInputRenderer.getInstance());

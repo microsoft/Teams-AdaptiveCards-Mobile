@@ -168,8 +168,9 @@
             // irrespective of size given in host config.
             // it is possible that host config has some size which is not available in CDN.
             unsigned int imageHeight = 24;
-            NSString *getSVGURL = [NSString stringWithCString:action->GetSVGResourceURL(imageHeight).c_str() encoding:[NSString defaultCStringEncoding]];
-            UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl size:CGSizeMake(imageHeight, imageHeight) tintColor:button.currentTitleColor];
+            BOOL isFilled = [[iconURL lowercaseString] containsString:@"filled"];
+            NSString *getSVGURL = [NSString stringWithCString:action->GetSVGInfoURL().c_str() encoding:[NSString defaultCStringEncoding]];
+            UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl isFilled:isFilled size:CGSizeMake(imageHeight, imageHeight) tintColor:button.currentTitleColor];
             button.iconView = view;
             [button addSubview:view];
             [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];

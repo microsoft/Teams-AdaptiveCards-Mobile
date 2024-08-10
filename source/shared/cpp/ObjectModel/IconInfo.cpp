@@ -42,7 +42,7 @@ Json::Value IconInfo::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Name)] = m_name;
     }
-    
+
     return root;
 }
 
@@ -92,14 +92,14 @@ std::shared_ptr<IconInfo> IconInfo::Deserialize(const Json::Value& json)
     {
         return nullptr;
     }
-    
+
     std::shared_ptr<IconInfo> iconInfo = std::make_shared<IconInfo>();
     iconInfo->setIconSize(ParseUtil::GetEnumValue<IconSize>(json, AdaptiveCardSchemaKey::Size, IconSize::Standard, IconSizeFromString));
-    
+
     iconInfo->setIconStyle(ParseUtil::GetEnumValue<IconStyle>(json, AdaptiveCardSchemaKey::Style, IconStyle::Regular, IconStyleFromString));
-    
+
     iconInfo->setForgroundColor(ParseUtil::GetEnumValue<ForegroundColor>(json, AdaptiveCardSchemaKey::Color, ForegroundColor::Default, ForegroundColorFromString));
-    
+
     iconInfo->SetName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Name,true));
     return iconInfo;
 }
@@ -113,42 +113,10 @@ void IconInfo::PopulateKnownPropertiesSet()
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)});
 }
 
-std::string IconInfo::GetSVGResourceURL() const
+std::string IconInfo::GetSVGInfoURL() const
 {
-    // format: "<baseIconCDNUrl><Icon Name>/<IconName><Size><Style>.json"
-    std::string m_url =  AdaptiveCards::baseIconCDNUrl + GetName() + "/" + GetName() + std::to_string(getSize()) + IconStyleToString(getIconStyle()) + ".json";
+    // format: "<baseIconCDNUrl><Icon Name>/<IconName>.json"
+    // https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/Rss/Rss.json
+    std::string m_url = baseIconCDNUrl + GetName() + "/" + GetName() + ".json";
     return m_url;
-}
-
-unsigned int IconInfo::getSize() const
-{
-    unsigned int _size = 24;
-    switch (getIconSize())
-    {
-        case IconSize::xxSmall:
-            _size = 12;
-            break;
-        case IconSize::xSmall:
-            _size = 16;
-            break;
-        case IconSize::Small:
-            _size = 20;
-            break;
-        case IconSize::Standard:
-            _size = 24;
-            break;
-        case IconSize::Medium:
-            _size = 28;
-            break;
-        case IconSize::Large:
-            _size = 32;
-            break;
-        case IconSize::xLarge:
-            _size = 40;
-            break;
-        case IconSize::xxLarge:
-            _size = 48;
-            break;
-    }
-    return _size;
 }

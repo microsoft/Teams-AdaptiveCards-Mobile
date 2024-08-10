@@ -363,7 +363,7 @@
 			"type": "Action.OpenUrl",
 			"title": "Filled icon",
 			"url": "https://www.microsoft.com",
-			"iconUrl": "icon:AccessTime,Filled"
+			"iconUrl": "icon:AccessTime,filled"
 		},
 		{
 			"type": "Action.OpenUrl",

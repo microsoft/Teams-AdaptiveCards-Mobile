@@ -117,12 +117,15 @@
                                       rootView:(ACRView *)rootView
                                     hostConfig:(ACOHostConfig *)acoConfig;
 {
-    NSString *svgPayloadURL = @(icon->GetSVGResourceURL().c_str());
+    NSString *svgPayloadURL = @(icon->GetSVGInfoURL().c_str());
     UIColor *imageTintColor = [acoConfig getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:icon->getForgroundColor() subtleOption:false];
-    CGSize size = CGSizeMake(icon->getSize(), icon->getSize());
     
+    CGSize size = CGSizeMake(getIconSize(icon->getIconSize()), getIconSize(icon->getIconSize()));
+    
+    BOOL isFilled = (icon->getIconStyle() == IconStyle::Filled);
     ACRSVGImageView *iconView = [[ACRSVGImageView alloc] init:svgPayloadURL
                                                           rtl:rootView.context.rtl
+                                                     isFilled:isFilled
                                                          size:size
                                                     tintColor:imageTintColor];
     ACRSVGIconHoldingView *iconViewWraper = [[ACRSVGIconHoldingView alloc] init:iconView size:size];

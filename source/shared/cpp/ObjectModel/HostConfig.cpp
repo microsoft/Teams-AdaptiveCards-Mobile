@@ -72,23 +72,23 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
 
     result._textStyles = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStylesConfig>(
         json, AdaptiveCardSchemaKey::TextStyles, result._textStyles, TextStylesConfig::Deserialize);
-    
+
     result._ratingLabelConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
         json, AdaptiveCardSchemaKey::RatingLabel, result._ratingLabelConfig, RatingElementConfig::Deserialize);
-    
+
     result._ratingInputConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingElementConfig>(
         json, AdaptiveCardSchemaKey::RatingInput, result._ratingInputConfig, RatingElementConfig::Deserialize);
 
     result._table = ParseUtil::ExtractJsonValueAndMergeWithDefault<TableConfig>(
         json, AdaptiveCardSchemaKey::Table, result._table, TableConfig::Deserialize);
-    
+
     result._borderWidth = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::BorderWidth);
-    
+
     result._cornerRadius = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::CornerRadius);
-    
+
     result._compoundButtonConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<CompoundButtonConfig>(json,
                                                                                   AdaptiveCardSchemaKey::CompoundButton,
-                                                                                  result._compoundButtonConfig, 
+                                                                                  result._compoundButtonConfig,
                                                                                   CompoundButtonConfig::Deserialize);
     return result;
 }
@@ -237,12 +237,12 @@ RatingElementConfig RatingElementConfig::Deserialize(const Json::Value& json, co
     RatingElementConfig result;
     result.filledStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
         json, AdaptiveCardSchemaKey::FilledStar, defaultValue.filledStar, RatingStarCofig::Deserialize);
-    
+
     result.emptyStar = ParseUtil::ExtractJsonValueAndMergeWithDefault<RatingStarCofig>(
         json, AdaptiveCardSchemaKey::EmptyStar, defaultValue.emptyStar, RatingStarCofig::Deserialize);
-    
+
     result.ratingTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::RatingTextColor, defaultValue.ratingTextColor);
-    
+
     result.countTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::CountTextColor, defaultValue.countTextColor);
 
     return result;
@@ -544,7 +544,7 @@ CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, 
 BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig &defaultValue)
 {
     BadgeConfig result;
-    result.backgroundColor = ParseUtil::GetString(json, 
+    result.backgroundColor = ParseUtil::GetString(json,
                                                   AdaptiveCardSchemaKey::BackgroundColor,
                                                   defaultValue.backgroundColor);
     return result;

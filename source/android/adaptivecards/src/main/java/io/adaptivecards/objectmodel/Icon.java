@@ -96,12 +96,8 @@ public class Icon extends BaseCardElement {
     AdaptiveCardObjectModelJNI.Icon_SetSelectAction(swigCPtr, this, BaseActionElement.getCPtr(action), action);
   }
 
-  public long getSize() {
-    return AdaptiveCardObjectModelJNI.Icon_getSize(swigCPtr, this);
-  }
-
-  public String GetSVGResourceURL() {
-    return AdaptiveCardObjectModelJNI.Icon_GetSVGResourceURL(swigCPtr, this);
+  public String GetSVGInfoURL() {
+    return AdaptiveCardObjectModelJNI.Icon_GetSVGInfoURL(swigCPtr, this);
   }
 
   public void GetResourceInformation(RemoteResourceInformationVector resourceInfo) {
