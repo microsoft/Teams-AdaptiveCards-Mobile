@@ -134,6 +134,10 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/NumberInput.h"
 #include "../../../shared/cpp/ObjectModel/TextInput.h"
 #include "../../../shared/cpp/ObjectModel/RatingInput.h"
+#include "../../../shared/cpp/ObjectModel/Layout.h"
+#include "../../../shared/cpp/ObjectModel/FlowLayout.h"
+#include "../../../shared/cpp/ObjectModel/AreaGridLayout.h"
+#include "../../../shared/cpp/ObjectModel/GridArea.h"
 #include "../../../shared/cpp/ObjectModel/TimeInput.h"
 #include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 #include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
@@ -215,6 +219,10 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::NumberInput)
 %shared_ptr(AdaptiveCards::TextInput)
 %shared_ptr(AdaptiveCards::RatingInput)
+%shared_ptr(AdaptiveCards::Layout)
+%shared_ptr(AdaptiveCards::FlowLayout)
+%shared_ptr(AdaptiveCards::AreaGridLayout)
+%shared_ptr(AdaptiveCards::GridArea)
 %shared_ptr(AdaptiveCards::TimeInput)
 %shared_ptr(AdaptiveCards::ToggleInput)
 %shared_ptr(AdaptiveCards::ExecuteAction)
@@ -241,6 +249,10 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::TableRowParser)
 %shared_ptr(AdaptiveCards::TextInputParser)
 %shared_ptr(AdaptiveCards::RatingInputParser)
+%shared_ptr(AdaptiveCards::Layout)
+%shared_ptr(AdaptiveCards::FlowLayout)
+%shared_ptr(AdaptiveCards::AreaGridLayout)
+%shared_ptr(AdaptiveCards::GridArea)
 %shared_ptr(AdaptiveCards::TimeInputParser)
 %shared_ptr(AdaptiveCards::ToggleInputParser)
 %shared_ptr(AdaptiveCards::ExecuteActionParser)
@@ -485,7 +497,12 @@ namespace Json {
 %template(RemoteResourceInformationVector) std::vector<AdaptiveCards::RemoteResourceInformation>;
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;
 %template(BaseCardElementVector) std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement> >;
+%template(LayoutVector) std::vector<std::shared_ptr<AdaptiveCards::Layout> >;
 %template(IconVector) std::vector<std::shared_ptr<AdaptiveCards::Icon> >;
+%template(LayoutVector) std::vector<std::shared_ptr<AdaptiveCards::Layout> >;
+%template(FlowLayoutVector) std::vector<std::shared_ptr<AdaptiveCards::FlowLayout> >;
+%template(AreaGridLayoutVector) std::vector<std::shared_ptr<AdaptiveCards::AreaGridLayout> >;
+%template(GridAreaVector) std::vector<std::shared_ptr<AdaptiveCards::GridArea> >;
 %template(RatingInputVector) std::vector<std::shared_ptr<AdaptiveCards::RatingInput> >;
 %template(RatingLabelVector) std::vector<std::shared_ptr<AdaptiveCards::RatingLabel> >;
 %template(ImageVector) std::vector<std::shared_ptr<AdaptiveCards::Image> >;
@@ -1037,6 +1054,10 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/DateInput.h"
 %include "../../../shared/cpp/ObjectModel/NumberInput.h"
 %include "../../../shared/cpp/ObjectModel/TextInput.h"
+%include "../../../shared/cpp/ObjectModel/Layout.h"
+%include "../../../shared/cpp/ObjectModel/FlowLayout.h"
+%include "../../../shared/cpp/ObjectModel/AreaGridLayout.h"
+%include "../../../shared/cpp/ObjectModel/GridArea.h"
 %include "../../../shared/cpp/ObjectModel/RatingInput.h"
 %include "../../../shared/cpp/ObjectModel/TimeInput.h"
 %include "../../../shared/cpp/ObjectModel/ToggleInput.h"

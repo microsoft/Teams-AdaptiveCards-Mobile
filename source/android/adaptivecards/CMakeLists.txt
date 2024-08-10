@@ -31,6 +31,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/AdaptiveCardParseWarning.cpp
              ../../shared/cpp/ObjectModel/AuthCardButton.cpp
              ../../shared/cpp/ObjectModel/Authentication.cpp
+             ../../shared/cpp/ObjectModel/AreaGridLayout.cpp
              ../../shared/cpp/ObjectModel/BackgroundImage.cpp
              ../../shared/cpp/ObjectModel/BaseActionElement.cpp
              ../../shared/cpp/ObjectModel/BaseCardElement.cpp
@@ -52,15 +53,18 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/ElementParserRegistration.cpp
              ../../shared/cpp/ObjectModel/Enums.cpp
              ../../shared/cpp/ObjectModel/ExecuteAction.cpp
+             ../../shared/cpp/ObjectModel/FlowLayout.cpp
              ../../shared/cpp/ObjectModel/Fact.cpp
              ../../shared/cpp/ObjectModel/FactSet.cpp
              ../../shared/cpp/ObjectModel/FeatureRegistration.cpp
+             ../../shared/cpp/ObjectModel/GridArea.cpp
              ../../shared/cpp/ObjectModel/HostConfig.cpp
              ../../shared/cpp/ObjectModel/Icon.cpp
              ../../shared/cpp/ObjectModel/IconInfo.cpp
              ../../shared/cpp/ObjectModel/Image.cpp
              ../../shared/cpp/ObjectModel/ImageSet.cpp
              ../../shared/cpp/ObjectModel/Inline.cpp
+             ../../shared/cpp/ObjectModel/Layout.cpp
              ../../shared/cpp/ObjectModel/MarkDownBlockParser.cpp
              ../../shared/cpp/ObjectModel/MarkDownHtmlGenerator.cpp
              ../../shared/cpp/ObjectModel/MarkDownParsedResult.cpp
