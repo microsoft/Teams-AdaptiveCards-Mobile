@@ -53,16 +53,17 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
                        @NonNull HostConfig hostConfig,
                        @NonNull RenderArgs renderArgs) throws Exception {
         CompoundButton compoundButton = Util.castTo(baseCardElement, io.adaptivecards.objectmodel.CompoundButton.class);
-        ViewGroup compoundButtonLayout = getCompoundButtonLayout(context, compoundButton, renderedCard, hostConfig);
+        ViewGroup compoundButtonLayout = getCompoundButtonLayout(context, compoundButton, renderedCard, hostConfig, renderArgs);
         compoundButtonLayout.setTag(new TagContent(compoundButton));
         viewGroup.addView(compoundButtonLayout);
         ContainerRenderer.setSelectAction(renderedCard, compoundButton.GetSelectAction(), compoundButtonLayout, cardActionHandler, renderArgs);
         return compoundButtonLayout;
     }
 
-    private ViewGroup getCompoundButtonLayout(Context context, CompoundButton compoundButton, RenderedAdaptiveCard renderedCard, HostConfig hostConfig) {
-        String foregroundColor = hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Dark, false);
-        String backgroundColor = hostConfig.GetBackgroundColor(ContainerStyle.Default);
+    private ViewGroup getCompoundButtonLayout(Context context, CompoundButton compoundButton, RenderedAdaptiveCard renderedCard, HostConfig hostConfig, RenderArgs renderArgs) {
+        ContainerStyle style = renderArgs.getContainerStyle();
+        String foregroundColor = hostConfig.GetForegroundColor(style, ForegroundColor.Default, false);
+        String backgroundColor = hostConfig.GetBackgroundColor(style);
 
         // Create a RelativeLayout
         RelativeLayout layout = new RelativeLayout(context);
