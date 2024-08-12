@@ -154,22 +154,25 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     UIView *containerView = [[UIView alloc] initWithFrame:CGRectZero];
     containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    containerView.layer.cornerRadius = 10;
+    containerView.layer.masksToBounds = YES;
+    std::string badgeBackgroundColor = config->GetCompoundButtonConfig().badgeConfig.backgroundColor;
+    containerView.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:badgeBackgroundColor];
+    
     UILabel * badgeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     badgeLabel.textColor =  [acoConfig getBackgroundColorForContainerStyle:[viewGroup style]];
     badgeLabel.text = @(badge.c_str());
     badgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     badgeLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
-    std::string badgeBackgroundColor = config->GetCompoundButtonConfig().badgeConfig.backgroundColor;
-    containerView.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:badgeBackgroundColor];
     [containerView addSubview:badgeLabel];
+
     [NSLayoutConstraint activateConstraints:@[
         [badgeLabel.leadingAnchor constraintEqualToAnchor:containerView.leadingAnchor constant:7.2],
         [badgeLabel.trailingAnchor constraintEqualToAnchor:containerView.trailingAnchor constant:-7.2],
         [badgeLabel.topAnchor constraintEqualToAnchor:containerView.topAnchor constant:2.4],
         [badgeLabel.bottomAnchor constraintEqualToAnchor:containerView.bottomAnchor constant:-2.4]
     ]];
-    containerView.layer.cornerRadius = 11;
-    containerView.layer.masksToBounds = YES;
+
     return containerView;
 }
 
