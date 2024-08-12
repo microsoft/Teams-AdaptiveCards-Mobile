@@ -263,6 +263,11 @@
         "imageSize": "medium",
         "maxImageHeight": 100
     },
+	"compoundButton":{
+		"badge":{
+			"backgroundColor":"#5B5FC7"
+		}
+	},
     "factSet": {
         "title": {
             "color": "default",
