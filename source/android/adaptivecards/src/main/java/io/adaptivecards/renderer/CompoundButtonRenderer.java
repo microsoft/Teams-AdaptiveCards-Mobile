@@ -72,7 +72,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT));
         layout.setOrientation(LinearLayout.VERTICAL);
-        int paddingPx = dpToPx(context, 8);
+        int paddingPx = dpToPx(context, 16);
         layout.setPadding(paddingPx, paddingPx, paddingPx, paddingPx);
 
         boolean isIconSet = compoundButton.getIcon() != null && !compoundButton.getIcon().GetName().isEmpty();
@@ -160,7 +160,30 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         layout.addView(innerLayout);
         layout.addView(descriptionTextView);
 
+        layout.setBackground(createCustomOuterDrawable(context));
+
         return layout;
+    }
+
+    public Drawable createCustomOuterDrawable(Context context) {
+        // Create a GradientDrawable
+        GradientDrawable drawable = new GradientDrawable();
+
+        // Set the shape to a rectangle (default is rectangle, so this line is optional)
+        drawable.setShape(GradientDrawable.RECTANGLE);
+
+        // Set the solid color
+        drawable.setColor(0x00FFFFFF); // Hex color #00FFFFFF (Transparent)
+
+        // Set the stroke width and color
+        int strokeWidth = dpToPx(context, 1); // Convert 1dp to pixels
+        drawable.setStroke(strokeWidth, 0XFFE1E1E1); // Hex color #FFE1E1E1 (Gray)
+
+        // Set the corner radius
+        float cornerRadius = dpToPx(context, 12); // Convert 12dp to pixels
+        drawable.setCornerRadius(cornerRadius);
+
+        return drawable;
     }
 
     public Drawable createCustomDrawable(Context context, String backgroundColor, int cornerRadius) {

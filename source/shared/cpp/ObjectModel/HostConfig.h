@@ -407,7 +407,7 @@ struct TableConfig
 
 struct BadgeConfig
 {
-    std::string backgroundColor = "#DCECFC";
+    std::string backgroundColor = "#5B5FC7";
     static BadgeConfig Deserialize(const Json::Value& json, const BadgeConfig& defaultValue);
 };
 
