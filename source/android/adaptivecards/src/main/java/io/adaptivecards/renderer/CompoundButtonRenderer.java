@@ -87,6 +87,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
 
         // Optional Image View
         ImageView imageView = new ImageView(context);
+        imageView.setId(View.generateViewId());
         LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -111,6 +112,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
 
         // Title TextView
         TextView titleTextView = new TextView(context);
+        titleTextView.setId(View.generateViewId());
         LinearLayout.LayoutParams titleParams = new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -125,6 +127,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
 
         // Badge TextView
         TextView badgeTextView = new TextView(context);
+        badgeTextView.setId(View.generateViewId());
         LinearLayout.LayoutParams badgeParams = new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -145,6 +148,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
 
         // Description TextView
         TextView descriptionTextView = new TextView(context);
+        descriptionTextView.setId(View.generateViewId());
         LinearLayout.LayoutParams descriptionParams = new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
