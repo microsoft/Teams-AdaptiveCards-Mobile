@@ -70,7 +70,6 @@
               "title": "Click me!",
               "tooltip": "compound button can handle actions"
             },
-            "separator": true,
             "spacing": "large"
             
         },
@@ -91,9 +90,7 @@
               "title": "Click me!",
               "tooltip": "compound button can handle actions"
             },
-            "separator": true,
             "spacing": "large"
-            
         },
 
         {
@@ -115,7 +112,6 @@
               "title": "Click me!",
               "tooltip": "compound button can handle actions"
             },
-            "separator": true,
             "spacing": "large"
             
         }

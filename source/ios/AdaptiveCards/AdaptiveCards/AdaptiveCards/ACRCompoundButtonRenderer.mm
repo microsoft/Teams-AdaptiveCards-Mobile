@@ -48,16 +48,17 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<CompoundButton> compoundButton = std::dynamic_pointer_cast<CompoundButton>(elem);
     std::shared_ptr<IconInfo> icon = compoundButton->getIcon();
-   
+    std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+
     UIStackView *verticalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     verticalStack.axis = UILayoutConstraintAxisVertical;
     verticalStack.translatesAutoresizingMaskIntoConstraints = NO;
     verticalStack.alignment = UIStackViewAlignmentLeading;
-    verticalStack.spacing = 5;
+    verticalStack.spacing = 4;
     
     UIStackView *horizontalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     horizontalStack.translatesAutoresizingMaskIntoConstraints = NO;
-    horizontalStack.spacing = 7;
+    horizontalStack.spacing = 8;
     horizontalStack.alignment = UIStackViewAlignmentCenter;
     
     if(icon != nil)
@@ -80,24 +81,36 @@
     
     [horizontalStack addArrangedSubview:titleLabel];
     if(!compoundButton->getBadge().empty()) {
-        UIView *badgeLabel = [self getBadgeLabelWithText:compoundButton->getBadge()
+        UIView *badgeView = [self getBadgeLabelWithText:compoundButton->getBadge()
                                                    viewGroup:viewGroup
                                                   hostConfig:acoConfig];
-        [horizontalStack addArrangedSubview:badgeLabel];
+        [horizontalStack addArrangedSubview:badgeView];
     }
     [verticalStack addArrangedSubview:horizontalStack];
     [verticalStack addArrangedSubview:descriptionLabel];
     
-    configRtl(verticalStack, rootView.context);
+    UIView *compoundButtonView = [[UIView alloc] initWithFrame:CGRectZero];
+    compoundButtonView.translatesAutoresizingMaskIntoConstraints = NO;
+    compoundButtonView.layer.borderWidth = 0.5;
+    std::string compoundButtonViewBorderColor = config->GetCompoundButtonConfig().borderColour;
+    compoundButtonView.layer.borderColor = [ACOHostConfig convertHexColorCodeToUIColor:compoundButtonViewBorderColor].CGColor;
+    compoundButtonView.layer.cornerRadius = 12;
+    [compoundButtonView addSubview:verticalStack];
+    [NSLayoutConstraint activateConstraints:@[
+        [verticalStack.leadingAnchor constraintEqualToAnchor:compoundButtonView.leadingAnchor constant:16],
+        [verticalStack.trailingAnchor constraintEqualToAnchor:compoundButtonView.trailingAnchor constant:-16],
+        [verticalStack.topAnchor constraintEqualToAnchor:compoundButtonView.topAnchor constant:16],
+        [verticalStack.bottomAnchor constraintEqualToAnchor:compoundButtonView.bottomAnchor constant:-16]
+    ]];
+
+    configRtl(compoundButtonView, rootView.context);
     
     std::shared_ptr<BaseActionElement> selectAction = compoundButton->GetSelectAction();
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
-    addSelectActionToView(acoConfig, acoSelectAction, rootView, verticalStack, viewGroup);
-    [viewGroup addArrangedSubview:verticalStack];
-    
-    verticalStack.accessibilityLabel = @(compoundButton->getTitle().c_str());
-    
-    return verticalStack;
+    addSelectActionToView(acoConfig, acoSelectAction, rootView, compoundButtonView, viewGroup);
+    compoundButtonView.accessibilityLabel = @(compoundButton->getTitle().c_str());
+    [viewGroup addArrangedSubview:compoundButtonView];
+    return compoundButtonView;
 }
 
 -(UILabel*) getTitleLabelWithText:(std::string) title
@@ -152,28 +165,29 @@
                             hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
-    UIView *containerView = [[UIView alloc] initWithFrame:CGRectZero];
-    containerView.translatesAutoresizingMaskIntoConstraints = NO;
-    containerView.layer.cornerRadius = 10;
-    containerView.layer.masksToBounds = YES;
+    UIView *badgeContainerView = [[UIView alloc] initWithFrame:CGRectZero];
+    badgeContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+    badgeContainerView.layer.cornerRadius = 9;
+    badgeContainerView.clipsToBounds = YES;
     std::string badgeBackgroundColor = config->GetCompoundButtonConfig().badgeConfig.backgroundColor;
-    containerView.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:badgeBackgroundColor];
-    
+    badgeContainerView.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:badgeBackgroundColor];
+    badgeContainerView.layer.borderWidth = 2.4;
+    badgeContainerView.layer.borderColor = [ACOHostConfig convertHexColorCodeToUIColor:badgeBackgroundColor].CGColor;
     UILabel * badgeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     badgeLabel.textColor =  [acoConfig getBackgroundColorForContainerStyle:[viewGroup style]];
     badgeLabel.text = @(badge.c_str());
     badgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     badgeLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
-    [containerView addSubview:badgeLabel];
+    [badgeContainerView addSubview:badgeLabel];
 
     [NSLayoutConstraint activateConstraints:@[
-        [badgeLabel.leadingAnchor constraintEqualToAnchor:containerView.leadingAnchor constant:7.2],
-        [badgeLabel.trailingAnchor constraintEqualToAnchor:containerView.trailingAnchor constant:-7.2],
-        [badgeLabel.topAnchor constraintEqualToAnchor:containerView.topAnchor constant:2.4],
-        [badgeLabel.bottomAnchor constraintEqualToAnchor:containerView.bottomAnchor constant:-2.4]
+        [badgeLabel.leadingAnchor constraintEqualToAnchor:badgeContainerView.leadingAnchor constant:7.2],
+        [badgeLabel.trailingAnchor constraintEqualToAnchor:badgeContainerView.trailingAnchor constant:-7.2],
+        [badgeLabel.topAnchor constraintEqualToAnchor:badgeContainerView.topAnchor constant:2.4],
+        [badgeLabel.bottomAnchor constraintEqualToAnchor:badgeContainerView.bottomAnchor constant:-2.4]
     ]];
 
-    return containerView;
+    return badgeContainerView;
 }
 
 @end
