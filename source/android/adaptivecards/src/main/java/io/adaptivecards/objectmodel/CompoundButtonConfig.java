@@ -45,6 +45,14 @@ public class CompoundButtonConfig {
     return (cPtr == 0) ? null : new BadgeConfig(cPtr, false);
   }
 
+  public void setBorderColour(String value) {
+    AdaptiveCardObjectModelJNI.CompoundButtonConfig_borderColour_set(swigCPtr, this, value);
+  }
+
+  public String getBorderColour() {
+    return AdaptiveCardObjectModelJNI.CompoundButtonConfig_borderColour_get(swigCPtr, this);
+  }
+
   public static CompoundButtonConfig Deserialize(JsonValue json, CompoundButtonConfig defaultValue) {
     return new CompoundButtonConfig(AdaptiveCardObjectModelJNI.CompoundButtonConfig_Deserialize(JsonValue.getCPtr(json), json, CompoundButtonConfig.getCPtr(defaultValue), defaultValue), true);
   }

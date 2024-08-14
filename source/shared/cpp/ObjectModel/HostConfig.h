@@ -414,6 +414,7 @@ struct BadgeConfig
 struct CompoundButtonConfig
 {
     BadgeConfig badgeConfig;
+    std::string borderColour = "#E1E1E1";
     static CompoundButtonConfig Deserialize(const Json::Value& json, const CompoundButtonConfig& defaultValue);
 };
 

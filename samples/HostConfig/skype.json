@@ -266,7 +266,8 @@
 	"compoundButton":{
 		"badge":{
 			"backgroundColor":"#5B5FC7"
-		}
+		},
+		"borderColour": "#FF000000"
 	},
     "factSet": {
         "title": {

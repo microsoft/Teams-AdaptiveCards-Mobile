@@ -121,7 +121,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         titleTextView.setEllipsize(TextUtils.TruncateAt.END);
         titleTextView.setSingleLine(true);
         titleTextView.setTypeface(null, Typeface.BOLD);
-        titleTextView.setTextSize(16);
+        titleTextView.setTextSize(17);
         titleTextView.setTextColor(Color.parseColor(foregroundColor));
         titleTextView.setText(compoundButton.getTitle());
 
@@ -153,7 +153,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
         descriptionTextView.setLayoutParams(descriptionParams);
-        descriptionTextView.setTextSize(14);
+        descriptionTextView.setTextSize(15);
         descriptionTextView.setTextColor(Color.parseColor(foregroundColor));
         descriptionTextView.setText(compoundButton.getDescription());
         if (compoundButton.getDescription().isEmpty()){
@@ -164,12 +164,12 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         layout.addView(innerLayout);
         layout.addView(descriptionTextView);
 
-        layout.setBackground(createCustomOuterDrawable(context));
+        layout.setBackground(createCustomOuterDrawable(context, hostConfig.GetCompoundButtonConfig().getBorderColour()));
 
         return layout;
     }
 
-    public Drawable createCustomOuterDrawable(Context context) {
+    public Drawable createCustomOuterDrawable(Context context, String borderColour) {
         // Create a GradientDrawable
         GradientDrawable drawable = new GradientDrawable();
 
@@ -181,7 +181,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
 
         // Set the stroke width and color
         int strokeWidth = dpToPx(context, 1); // Convert 1dp to pixels
-        drawable.setStroke(strokeWidth, 0XFFE1E1E1); // Hex color #FFE1E1E1 (Gray)
+        drawable.setStroke(strokeWidth, Color.parseColor(borderColour));
 
         // Set the corner radius
         float cornerRadius = dpToPx(context, 12); // Convert 12dp to pixels
