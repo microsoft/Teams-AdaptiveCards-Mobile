@@ -111,7 +111,7 @@ stages:
            echo "Copied pom to $dest for signing"
          }
 
-    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+    - task: EsrpCodeSigning@4
       displayName: 'ESRP CodeSign (Detached PGP)'
       inputs:
         ConnectedServiceName: 'Teams ESRP CodeSign v3'
