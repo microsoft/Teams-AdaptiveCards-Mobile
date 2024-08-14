@@ -8,9 +8,7 @@
 			"title": "Summarize",
 			"icon": {
 				"name": "List",
-				"size": "Medium",
-				"style": "Regular",
-				"color": "Regular"
+				"style": "Regular"
 			},
 			"description": "Create a work item and assign it to your or a team member",
 			"badge": "New",
@@ -38,9 +36,7 @@
 			"title": "Give feedback",
 			"icon": {
 				"name": "Calendar",
-				"size": "Medium",
-				"style": "Regular",
-				"color": "Regular"
+				"style": "Regular"
 			},
 			"description": "To give us feedback on Azure DevOps",
 			"selectAction": {
@@ -66,9 +62,7 @@
 			"title": "Pending Tasks",
 			"icon": {
 				"name": "Emoji",
-				"size": "Medium",
-				"style": "Regular",
-				"color": "Regular"
+				"style": "Regular"
 			},
 			"badge": "Priority",
 			"selectAction": {
