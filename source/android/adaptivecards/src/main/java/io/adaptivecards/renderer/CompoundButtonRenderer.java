@@ -164,7 +164,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         layout.addView(innerLayout);
         layout.addView(descriptionTextView);
 
-        layout.setBackground(createCustomOuterDrawable(context, hostConfig.GetCompoundButtonConfig().getBorderColour()));
+        layout.setBackground(createCustomOuterDrawable(context, hostConfig.GetCompoundButtonConfig().getBorderColor()));
 
         return layout;
     }

@@ -10,7 +10,7 @@
 				"name": "List",
 				"size": "Medium",
 				"style": "Regular",
-				"color": "attention"
+				"color": "Regular"
 			},
 			"description": "Create a work item and assign it to your or a team member",
 			"badge": "New",
@@ -40,7 +40,7 @@
 				"name": "Calendar",
 				"size": "Medium",
 				"style": "Regular",
-				"color": "attention"
+				"color": "Regular"
 			},
 			"description": "To give us feedback on Azure DevOps",
 			"selectAction": {
@@ -68,7 +68,7 @@
 				"name": "Emoji",
 				"size": "Medium",
 				"style": "Regular",
-				"color": "attention"
+				"color": "Regular"
 			},
 			"badge": "Priority",
 			"selectAction": {

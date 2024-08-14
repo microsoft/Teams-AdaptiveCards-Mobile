@@ -31889,7 +31889,7 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_CompoundButtonConfig_1borderColour_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_CompoundButtonConfig_1borderColor_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   AdaptiveCards::CompoundButtonConfig *arg1 = (AdaptiveCards::CompoundButtonConfig *) 0 ;
   std::string *arg2 = 0 ;
   
@@ -31906,11 +31906,11 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  if (arg1) (arg1)->borderColour = *arg2;
+  if (arg1) (arg1)->borderColor = *arg2;
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_CompoundButtonConfig_1borderColour_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_CompoundButtonConfig_1borderColor_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   AdaptiveCards::CompoundButtonConfig *arg1 = (AdaptiveCards::CompoundButtonConfig *) 0 ;
   std::string *result = 0 ;
@@ -31919,7 +31919,7 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
   (void)jcls;
   (void)jarg1_;
   arg1 = *(AdaptiveCards::CompoundButtonConfig **)&jarg1; 
-  result = (std::string *) & ((arg1)->borderColour);
+  result = (std::string *) & ((arg1)->borderColor);
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }

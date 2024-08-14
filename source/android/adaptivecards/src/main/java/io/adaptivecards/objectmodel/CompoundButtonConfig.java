@@ -45,12 +45,12 @@ public class CompoundButtonConfig {
     return (cPtr == 0) ? null : new BadgeConfig(cPtr, false);
   }
 
-  public void setBorderColour(String value) {
-    AdaptiveCardObjectModelJNI.CompoundButtonConfig_borderColour_set(swigCPtr, this, value);
+  public void setBorderColor(String value) {
+    AdaptiveCardObjectModelJNI.CompoundButtonConfig_borderColor_set(swigCPtr, this, value);
   }
 
-  public String getBorderColour() {
-    return AdaptiveCardObjectModelJNI.CompoundButtonConfig_borderColour_get(swigCPtr, this);
+  public String getBorderColor() {
+    return AdaptiveCardObjectModelJNI.CompoundButtonConfig_borderColor_get(swigCPtr, this);
   }
 
   public static CompoundButtonConfig Deserialize(JsonValue json, CompoundButtonConfig defaultValue) {

@@ -267,7 +267,7 @@
 		"badge":{
 			"backgroundColor":"#5B5FC7"
 		},
-		"borderColour": "#FF000000"
+		"borderColor": "#E1E1E1"
 	},
     "factSet": {
         "title": {

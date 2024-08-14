@@ -538,7 +538,7 @@ CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, 
                                                                                      AdaptiveCardSchemaKey::Badge,
                                                                                      defaultValue.badgeConfig,
                                                                                      BadgeConfig::Deserialize);
-    result.borderColour = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BorderColor, result.borderColour);
+    result.borderColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BorderColor, result.borderColor);
     return result;
 }
 
