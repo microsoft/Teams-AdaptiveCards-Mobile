@@ -6,7 +6,6 @@
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 
-#import "ACRIconRenderer.h"
 #import "ACOBaseCardElementPrivate.h"
 #import "ACOHostConfigPrivate.h"
 #import "ACRColumnView.h"
