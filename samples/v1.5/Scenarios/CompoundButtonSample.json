@@ -22,7 +22,7 @@
 		{
 			"type": "CompoundButton",
 			"title": "View active work items",
-			"description": "See active tasks assigned to you or a team members",
+			"description": "See active tasks assigned to you or team members",
 			"badge": "New",
 			"selectAction": {
 				"type": "Action.OpenUrl",
