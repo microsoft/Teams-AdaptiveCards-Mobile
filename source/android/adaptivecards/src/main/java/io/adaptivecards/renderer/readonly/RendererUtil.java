@@ -208,6 +208,12 @@ public class RendererUtil
         {
             boolean tagWasHandled = false;
 
+            if ((tag.equals("ol") && !opening))
+            {
+                orderedList = false;
+                tagWasHandled = true;
+            }
+
             if (tag.equals("ul") && !opening)
             {
                 output.append("\n");
