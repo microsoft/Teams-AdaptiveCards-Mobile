@@ -22,6 +22,7 @@ import io.adaptivecards.objectmodel.BaseElement;
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.CardElementType;
 import io.adaptivecards.objectmodel.Column;
+import io.adaptivecards.objectmodel.CompoundButton;
 import io.adaptivecards.objectmodel.Container;
 import io.adaptivecards.objectmodel.FallbackType;
 import io.adaptivecards.objectmodel.FeatureRegistration;
@@ -499,7 +500,7 @@ public class CardRendererRegistration
                 // Column, container, image and imageSet handle their height on their own, so let's not add an extra view for them
                 if (renderedElement.GetHeight() == HeightType.Stretch && !isColumn && !Util.isOfType(renderedElement, Container.class)
                     && !Util.isOfType(renderedElement, Image.class) && !Util.isOfType(renderedElement, ImageSet.class)
-                    && !Util.isOfType(renderedElement, Icon.class))
+                    && !Util.isOfType(renderedElement, Icon.class) && !Util.isOfType(renderedElement, CompoundButton.class))
                 {
                     // put the element in a StretchableElementLayout
                     HandleStretchHeight(mockLayout, viewGroup, renderedElement, context, tagContent);
