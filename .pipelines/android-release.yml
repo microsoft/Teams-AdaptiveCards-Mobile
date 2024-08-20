@@ -111,10 +111,10 @@ stages:
            echo "Copied pom to $dest for signing"
          }
 
-    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+    - task: EsrpCodeSigning@4
       displayName: 'ESRP CodeSign (Detached PGP)'
       inputs:
-        ConnectedServiceName: 'AdaptiveCards ESRP CodeSigning Oct 2023'
+        ConnectedServiceName: 'Teams ESRP CodeSign v3'
         FolderPath: $(build.artifactstagingdirectory)
         Pattern: '*.asc'
         signConfigType: inlineSignParams
@@ -162,6 +162,7 @@ stages:
         publishJUnitResults: false
         jdkVersionOption: 1.11
       env:
+        AC_SONATYPE_USERNAME: $(SonatypeNexusUsername)
         AC_SONATYPE_CREDENTIAL: $(SonatypeNexusOSSRH)
         AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
         AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
@@ -184,6 +185,7 @@ stages:
         publishJUnitResults: false
         jdkVersionOption: 1.11
       env:
+        AC_SONATYPE_USERNAME: $(SonatypeNexusUsername)
         AC_SONATYPE_CREDENTIAL: $(SonatypeNexusOSSRH)
         
 - stage: PublishToMavenCentral
@@ -210,6 +212,7 @@ stages:
         publishJUnitResults: false
         jdkVersionOption: 1.11
       env:
+        AC_SONATYPE_USERNAME: $(SonatypeNexusUsername)
         AC_SONATYPE_CREDENTIAL: $(SonatypeNexusOSSRH)
 
     - bash: |
