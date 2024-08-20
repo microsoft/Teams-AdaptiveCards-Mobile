@@ -154,7 +154,7 @@ afterEvaluate {
                 name = 'sonatypeStaging'
                 url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 credentials {
-                    username "adaptivecards"
+                    username System.getenv("AC_SONATYPE_USERNAME") ?: "adaptivecards"
                     password System.getenv("AC_SONATYPE_CREDENTIAL") ?: "${NexusPassword}"
                 }
             }
@@ -168,7 +168,7 @@ tasks.withType(GenerateModuleMetadata) {
 }
 
 nexusStaging {
-    username "adaptivecards"
+    username System.getenv("AC_SONATYPE_USERNAME") ?: "adaptivecards"
     password System.getenv("AC_SONATYPE_CREDENTIAL") ?: "${NexusPassword}"
     packageGroup 'io.adaptivecards'
     stagingProfileId '9ee8e04fa2eec'
