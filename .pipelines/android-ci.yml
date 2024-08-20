@@ -7,14 +7,6 @@ pr:
     - feature/*
     - release/*
 
-trigger:
-  branches:
-    include:
-    - main
-    - feature/*
-    - release/*
-  batch: True
-
 pool:
   name: Azure Pipelines
   vmImage: macOS-latest
