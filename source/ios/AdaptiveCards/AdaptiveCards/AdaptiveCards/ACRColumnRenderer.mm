@@ -43,6 +43,7 @@
 
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Column> columnElem = std::dynamic_pointer_cast<Column>(elem);
+    [rootView.context pushBaseCardElementContext:acoElem];
     
     //Layout
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
@@ -53,12 +54,11 @@
         std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
         // layout using flow layout
         flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
-                                                                       style:(ACRContainerStyle)columnElem->GetStyle()
-                                                                 parentStyle:[viewGroup style]
-                                                                  hostConfig:acoConfig
-                                                                    maxWidth:widthOfElement
-                                                                   superview:viewGroup];
-        [viewGroup addArrangedSubview:flowContainer];
+                                                            style:(ACRContainerStyle)columnElem->GetStyle()
+                                                      parentStyle:[viewGroup style]
+                                                       hostConfig:acoConfig
+                                                         maxWidth:widthOfElement
+                                                        superview:viewGroup];
         
         [ACRRenderer renderInFlow:flowContainer
                          rootView:rootView
@@ -76,8 +76,6 @@
     {
         // default stack based layout
     }
-
-    [rootView.context pushBaseCardElementContext:acoElem];
 
     ACRColumnView *column = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)columnElem->GetStyle()
                                                      parentStyle:[viewGroup style]

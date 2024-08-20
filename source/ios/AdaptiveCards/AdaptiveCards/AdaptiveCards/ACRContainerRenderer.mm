@@ -40,30 +40,28 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
     
+    [rootView.context pushBaseCardElementContext:acoElem];
+    
     //Layout
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     std::shared_ptr<Layout> final_layout = [self finalLayoutToApply:acoElem config:acoConfig];
+    ACRFlowLayout *flowContainer;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
         // layout using flow layout
-        [rootView.context pushBaseCardElementContext:acoElem];
-        ACRFlowLayout *container = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
-                                                                       style:(ACRContainerStyle)containerElem->GetStyle()
-                                                                 parentStyle:[viewGroup style]
-                                                                  hostConfig:acoConfig
-                                                                    maxWidth:widthOfElement
-                                                                   superview:viewGroup];
-        [viewGroup addArrangedSubview:container];
+        flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
+                                                            style:(ACRContainerStyle)containerElem->GetStyle()
+                                                      parentStyle:[viewGroup style]
+                                                       hostConfig:acoConfig
+                                                         maxWidth:widthOfElement
+                                                        superview:viewGroup];
         
-        [ACRRenderer renderInFlow:container
+        [ACRRenderer renderInFlow:flowContainer
                          rootView:rootView
                            inputs:inputs
                     withCardElems:containerElem->GetItems()
                     andHostConfig:acoConfig];
-        
-        [rootView.context popBaseCardElementContext:acoElem];
-        return container;
         
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
@@ -75,9 +73,6 @@
     {
         // default stack based layout
     }
-
-    
-    [rootView.context pushBaseCardElementContext:acoElem];
 
     ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()
                                                         parentStyle:[viewGroup style]
@@ -95,11 +90,18 @@
 
     container.frame = viewGroup.frame;
 
-    [ACRRenderer render:container
-               rootView:rootView
-                 inputs:inputs
-          withCardElems:containerElem->GetItems()
-          andHostConfig:acoConfig];
+    if(flowContainer != nil)
+    {
+        [container addArrangedSubview:flowContainer];
+    }
+    else
+    {
+        [ACRRenderer render:container
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:containerElem->GetItems()
+              andHostConfig:acoConfig];
+    }
 
     [container setClipsToBounds:NO];
 
