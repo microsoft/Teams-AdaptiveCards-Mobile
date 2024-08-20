@@ -21,14 +21,14 @@ using namespace AdaptiveCards;
 
 @implementation ACRContentHoldingUIView {
     __weak UIImageView *_imageView;
-    __weak ACRContentStackView *_viewGroup;
+    __weak id<ACRIContentHoldingView> _viewGroup;
     __weak NSLayoutConstraint *imageViewHeightConstraint;
     __weak NSLayoutConstraint *heightConstraint;
     BOOL isImageSet;
     CGSize prevIntrinsicContentSize;
 }
 
-- (instancetype)initWithImageProperties:(ACRImageProperties *)imageProperties imageView:(UIImageView *)imageView viewGroup:(ACRContentStackView *)viewGroup
+- (instancetype)initWithImageProperties:(ACRImageProperties *)imageProperties imageView:(UIImageView *)imageView viewGroup:(id<ACRIContentHoldingView>)viewGroup
 {
     if (!imageProperties) {
         imageProperties = [[ACRImageProperties alloc] init];
@@ -156,14 +156,20 @@ using namespace AdaptiveCards;
             }
 
             if (bUpdate) {
-                if ([_viewGroup isKindOfClass:[ACRColumnView class]]) {
+                NSObject *container = (NSObject *)_viewGroup;
+                if([container isKindOfClass:[ACRColumnView class]])
+                {
                     ACRColumnSetView *columnSetView = ((ACRColumnView *)_viewGroup).columnsetView;
                     if (columnSetView) {
                         [columnSetView updateIntrinsicContentSize];
                         [columnSetView invalidateIntrinsicContentSize];
                     }
                 }
-                [_viewGroup invalidateIntrinsicContentSize];
+                if([container isKindOfClass:[ACRContentStackView class]])
+                {
+                    [(ACRContentStackView *)_viewGroup invalidateIntrinsicContentSize];
+                }
+               
             }
         }
     }

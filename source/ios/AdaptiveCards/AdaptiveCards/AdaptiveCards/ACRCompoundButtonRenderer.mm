@@ -54,11 +54,12 @@
     verticalStack.translatesAutoresizingMaskIntoConstraints = NO;
     verticalStack.alignment = UIStackViewAlignmentLeading;
     verticalStack.spacing = 5;
+    verticalStack.distribution = UIStackViewDistributionEqualSpacing;
     
     UIStackView *horizontalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     horizontalStack.translatesAutoresizingMaskIntoConstraints = NO;
     horizontalStack.spacing = 5;
-    horizontalStack.alignment = UIStackViewAlignmentCenter;
+    horizontalStack.alignment = UIStackViewAlignmentLeading;
     
     if(icon != nil)
     {

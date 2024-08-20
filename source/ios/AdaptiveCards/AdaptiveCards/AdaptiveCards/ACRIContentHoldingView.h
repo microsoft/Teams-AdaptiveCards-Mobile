@@ -32,6 +32,8 @@
 - (NSUInteger)subviewsCounts;
 - (NSUInteger)arrangedSubviewsCounts;
 - (UIView *)getLastSubview;
+- (void)decreaseIntrinsicContentSize:(UIView *)view;
+- (void)increaseIntrinsicContentSize:(UIView *)view;
 
 - (void)updateLayoutAndVisibilityOfRenderedView:(UIView *)renderedView
                                      acoElement:(ACOBaseCardElement *)acoElem

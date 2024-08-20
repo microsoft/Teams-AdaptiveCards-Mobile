@@ -16,6 +16,7 @@
 #import "UtiliOS.h"
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
+#import "ACRFlowLayout.h"
 
 @implementation ACRColumnRenderer
 
@@ -45,16 +46,31 @@
     
     //Layout
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
+    ACRFlowLayout *flowContainer;
     std::shared_ptr<Layout> final_layout = [self finalLayoutToApply:acoElem config:acoConfig];
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
         // layout using flow layout
+        flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
+                                                                       style:(ACRContainerStyle)columnElem->GetStyle()
+                                                                 parentStyle:[viewGroup style]
+                                                                  hostConfig:acoConfig
+                                                                    maxWidth:widthOfElement
+                                                                   superview:viewGroup];
+        [viewGroup addArrangedSubview:flowContainer];
+        
+        [ACRRenderer renderInFlow:flowContainer
+                         rootView:rootView
+                           inputs:inputs
+                    withCardElems:columnElem->GetItems()
+                    andHostConfig:acoConfig];
+        
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
-        // layout using Area Grid
+        // Layout using Area grid
     }
     else
     {
@@ -90,11 +106,18 @@
     column.isLastColumn = columnsetView.isLastColumn;
     column.columnsetView = columnsetView;
 
-    [ACRRenderer render:column
-               rootView:rootView
-                 inputs:inputs
-          withCardElems:columnElem->GetItems()
-          andHostConfig:acoConfig];
+    if(flowContainer)
+    {
+        [column addArrangedSubview:flowContainer];
+    }
+    else
+    {
+        [ACRRenderer render:column
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:columnElem->GetItems()
+              andHostConfig:acoConfig];
+    }
 
     [column configureLayoutAndVisibility:GetACRVerticalContentAlignment(columnElem->GetVerticalContentAlignment().value_or(VerticalContentAlignment::Top))
                                minHeight:columnElem->GetMinHeight()

@@ -15,7 +15,7 @@ class FlowLayout: public Layout
 {
 public:
     FlowLayout() :
-        m_itemFit(ItemFit::Fit), m_columnSpacing(Spacing::Default), m_rowSpacing(Spacing::Default), m_horizontalAlignment(HorizontalAlignment::Center)
+        m_itemFit(ItemFit::Fit), m_columnSpacing(Spacing::Default), m_rowSpacing(Spacing::Default), m_horizontalAlignment(HorizontalAlignment::Center), m_itemMaxPixelWidth(-1), m_itemMinPixelWidth(-1), m_pixelItemWidth(-1)
     {
     }
     FlowLayout(const FlowLayout&) = default;
@@ -29,6 +29,15 @@ public:
     
     std::optional<std::string> GetItemWidth() const;
     void SetItemWidth(const std::optional<std::string>& value);
+    
+    int GetItemPixelWidth() const;
+    void SetItemPixelWidth(int value);
+
+    int GetMinItemPixelWidth() const;
+    void SetMinItemPixelWidth(int value);
+    
+    int GetMaxItemPixelWidth() const;
+    void SetMaxItemPixelWidth(int value);
     
     std::optional<std::string> GetMinItemWidth() const;
     void SetMinItemWidth(const std::optional<std::string>& value);
@@ -57,6 +66,9 @@ private:
     std::optional<std::string> m_itemWidth;
     std::optional<std::string> m_minItemWidth;
     std::optional<std::string> m_maxItemWidth;
+    int m_pixelItemWidth;
+    int m_itemMinPixelWidth;
+    int m_itemMaxPixelWidth;
     
     Spacing m_rowSpacing = Spacing::Default;
     Spacing m_columnSpacing = Spacing::Default;

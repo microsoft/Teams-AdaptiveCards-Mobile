@@ -16,6 +16,7 @@
 #import "UtiliOS.h"
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
+#import "ACRFlowLayout.h"
 
 @implementation ACRContainerRenderer
 
@@ -46,6 +47,24 @@
     {
         std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
         // layout using flow layout
+        [rootView.context pushBaseCardElementContext:acoElem];
+        ACRFlowLayout *container = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
+                                                                       style:(ACRContainerStyle)containerElem->GetStyle()
+                                                                 parentStyle:[viewGroup style]
+                                                                  hostConfig:acoConfig
+                                                                    maxWidth:widthOfElement
+                                                                   superview:viewGroup];
+        [viewGroup addArrangedSubview:container];
+        
+        [ACRRenderer renderInFlow:container
+                         rootView:rootView
+                           inputs:inputs
+                    withCardElems:containerElem->GetItems()
+                    andHostConfig:acoConfig];
+        
+        [rootView.context popBaseCardElementContext:acoElem];
+        return container;
+        
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {

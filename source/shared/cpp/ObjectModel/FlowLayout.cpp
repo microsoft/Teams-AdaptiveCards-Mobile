@@ -10,6 +10,7 @@
 #include "pch.h"
 #include "ParseContext.h"
 #include "ParseUtil.h"
+#include "Util.h"
 
 using namespace AdaptiveCards;
 
@@ -93,6 +94,36 @@ std::string FlowLayout::Serialize() const
     return ParseUtil::JsonToString(SerializeToJsonValue());
 }
 
+int FlowLayout::GetItemPixelWidth() const
+{
+    return m_itemMaxPixelWidth;
+}
+
+void FlowLayout::SetItemPixelWidth(int value)
+{
+    m_itemMaxPixelWidth = value;
+}
+
+int FlowLayout::GetMinItemPixelWidth() const
+{
+    return m_itemMinPixelWidth;
+}
+
+void FlowLayout::SetMinItemPixelWidth(int value)
+{
+    m_itemMinPixelWidth = value;
+}
+
+int FlowLayout::GetMaxItemPixelWidth() const
+{
+    return m_itemMaxPixelWidth;
+}
+
+void FlowLayout::SetMaxItemPixelWidth(int value)
+{
+    m_itemMaxPixelWidth = value;
+}
+
 Json::Value FlowLayout::SerializeToJsonValue() const
 {
     Json::Value root;
@@ -149,6 +180,12 @@ std::shared_ptr<FlowLayout> FlowLayout::Deserialize(const Json::Value& json)
     layout->SetItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::ItemWidth));
     layout->SetMinItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::MinItemWidth));
     layout->SetMaxItemWidth(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::MaxItemWidth));
+    int itemWidth = ParseSizeForPixelSize(ParseUtil::GetString(json, AdaptiveCardSchemaKey::ItemWidth), nullptr).value_or(-1);
+    int minItemWidth = ParseSizeForPixelSize(ParseUtil::GetString(json, AdaptiveCardSchemaKey::MinItemWidth), nullptr).value_or(-1);
+    int maxItemWidth = ParseSizeForPixelSize(ParseUtil::GetString(json, AdaptiveCardSchemaKey::MaxItemWidth), nullptr).value_or(-1);
+    layout->SetItemPixelWidth(itemWidth);
+    layout->SetMinItemPixelWidth(minItemWidth);
+    layout->SetMaxItemPixelWidth(maxItemWidth);
     return layout;
 }
 

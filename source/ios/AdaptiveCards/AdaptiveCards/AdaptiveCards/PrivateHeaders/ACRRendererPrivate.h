@@ -42,4 +42,10 @@ using namespace AdaptiveCards;
                              withCardElems:(std::vector<std::shared_ptr<BaseCardElement>> const &)elems
                              andHostConfig:(ACOHostConfig *)config;
 
++ (UIView<ACRIContentHoldingView> *)renderInFlow:(UIView *)view
+                                        rootView:(ACRView *)rootView
+                                          inputs:(NSMutableArray *)inputs
+                                   withCardElems:(std::vector<std::shared_ptr<BaseCardElement>> const &)elems
+                                   andHostConfig:(ACOHostConfig *)config;
+
 @end

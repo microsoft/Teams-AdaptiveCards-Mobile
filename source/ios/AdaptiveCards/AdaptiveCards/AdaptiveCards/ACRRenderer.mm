@@ -69,13 +69,6 @@ using namespace AdaptiveCards;
     return result;
 }
 
-+(void)distributeWidth:(std::shared_ptr<AdaptiveCard> const &)adaptiveCard
-{
-    std::vector<std::shared_ptr<BaseCardElement>> body = adaptiveCard->GetBody();
-    
-    
-}
-
 // transforms (i.e. renders) an adaptiveCard to a new UIView instance
 + (UIView *)renderWithAdaptiveCards:(std::shared_ptr<AdaptiveCard> const &)adaptiveCard
                              inputs:(NSMutableArray *)inputs
@@ -172,6 +165,58 @@ using namespace AdaptiveCards;
 {
     ACRRegistration *reg = [ACRRegistration getInstance];
     return [[reg getActionSetRenderer] renderButtons:rootView inputs:inputs superview:superview card:card hostConfig:config];
+}
+
++ (UIView *)renderInFlow:(UIView<ACRIContentHoldingView> *)view
+                rootView:(ACRView *)rootView
+                  inputs:(NSMutableArray *)inputs
+           withCardElems:(std::vector<std::shared_ptr<BaseCardElement>> const &)elems
+           andHostConfig:(ACOHostConfig *)config
+{
+    ACRRegistration *reg = [ACRRegistration getInstance];
+    ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] init];
+    ACOFeatureRegistration *featureReg = [ACOFeatureRegistration getInstance];
+    
+    // Get responsive layout's host width
+    HostWidthConfig hostWidthConfig = [config getHostConfig]->getHostWidth();
+    HostWidth hostWidth = convertHostCardContainerToHostWidth([reg getHostCardContainer], hostWidthConfig);
+    
+    UIView *renderedView = nil;
+    
+    auto firstelem = elems.begin();
+    
+    for (const auto &elem : elems) {
+        ACRBaseCardElementRenderer *renderer =
+        [reg getRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];
+        
+        if (renderer == nil) {
+            NSLog(@"Unsupported card element type:%d\n", (int)elem->GetElementType());
+            continue;
+        }
+        
+        [acoElem setElem:elem];
+        
+        @try {
+            if ([acoElem meetsRequirements:featureReg] == NO){
+                @throw [ACOFallbackException fallbackException];
+            }
+            if (elem->MeetsTargetWidthRequirement(hostWidth) == false){
+                continue;
+            }
+            
+            renderedView = [renderer render:view rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:config];
+            
+            [view updateLayoutAndVisibilityOfRenderedView:renderedView acoElement:acoElem separator:nil rootView:rootView];
+        } @catch (ACOFallbackException *e) {
+            
+            handleFallbackException(e, view, rootView, inputs, elem, config, true);
+        }
+    }
+    
+    //    view.accessibilityElements = [(ACRContentStackView *)view getArrangedSubviews];
+    
+    return view;
+    
 }
 
 + (UIView *)render:(UIView<ACRIContentHoldingView> *)view
