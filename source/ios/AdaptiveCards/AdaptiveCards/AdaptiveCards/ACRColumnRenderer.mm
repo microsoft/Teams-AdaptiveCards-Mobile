@@ -17,6 +17,7 @@
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
 #import "ACRFlowLayout.h"
+#import "ACRLayoutHelper.h"
 
 @implementation ACRColumnRenderer
 
@@ -48,7 +49,7 @@
     //Layout
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     ACRFlowLayout *flowContainer;
-    std::shared_ptr<Layout> final_layout = [self finalLayoutToApply:acoElem config:acoConfig];
+    std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:columnElem->GetLayouts() andHostConfig:acoConfig];
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
@@ -145,46 +146,6 @@
     column.accessibilityElements = [column getArrangedSubviews];
 
     return column;
-}
-
--(std::shared_ptr<Layout>)finalLayoutToApply:(ACOBaseCardElement *)acoElem config:(ACOHostConfig *)acoConfig
-{
-    std::shared_ptr<BaseCardElement> elem = [acoElem element];
-    std::shared_ptr<Column> containerElem = std::dynamic_pointer_cast<Column>(elem);
-    ACRRegistration *reg = [ACRRegistration getInstance];
-    HostWidthConfig hostWidthConfig = [acoConfig getHostConfig]->getHostWidth();
-    HostWidth hostWidth = convertHostCardContainerToHostWidth([reg getHostCardContainer], hostWidthConfig);
-    std::vector<std::shared_ptr<Layout>> layoutArray = containerElem->GetLayouts();
-    std::shared_ptr<Layout> final_layout;
-    if (const auto& layoutArray = containerElem->GetLayouts(); !layoutArray.empty())
-    {
-        for (const auto& layout : layoutArray)
-        {
-            if(layout->GetLayoutContainerType() == LayoutContainerType::None)
-            {
-                continue;
-            }
-            
-            if(layout->MeetsTargetWidthRequirement(hostWidth))
-            {
-                final_layout = layout;
-                break;
-            }
-            else if (layout->GetTargetWidth() == TargetWidthType::Default)
-            {
-                final_layout = layout;
-            }
-        }
-    }
-    
-    if (final_layout == nullptr)
-    {
-        final_layout = std::make_shared<Layout>();
-        final_layout->SetLayoutContainerType(LayoutContainerType::Stack);
-        final_layout->SetTargetWidth(TargetWidthType::Default);
-    }
-    
-    return final_layout;
 }
 
 - (void)configUpdateForUIImageView:(ACRView *)rootView acoElem:(ACOBaseCardElement *)acoElem config:(ACOHostConfig *)acoConfig image:(UIImage *)image imageView:(UIImageView *)imageView

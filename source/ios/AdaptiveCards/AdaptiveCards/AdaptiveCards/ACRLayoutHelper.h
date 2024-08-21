@@ -24,17 +24,14 @@
 #import <UIKit/UIKit.h>
 
 using namespace AdaptiveCards;
-@interface ACRWidthDistributor : NSObject
+@interface ACRLayoutHelper : NSObject
 
 - (instancetype)init;
 - (void)distributeWidth:(float)parentWidth
                rootView:(ACRView *)rootView
           forElement:(std::shared_ptr<AdaptiveCard> const &)card
           andHostConfig:(ACOHostConfig *)config;
-//
-//- (void)distributeWidth:(float)parentWidth
-//               rootView:(ACRView *)rootView
-//          forElement:(std::shared_ptr<BaseCardElement> const &)elem
-//          andHostConfig:(ACOHostConfig *)config;
+
+- (std::shared_ptr<AdaptiveCards::Layout>)layoutToApplyFrom:(std::vector<std::shared_ptr<Layout>>)layoutArray andHostConfig:(ACOHostConfig *)config;
 
 @end

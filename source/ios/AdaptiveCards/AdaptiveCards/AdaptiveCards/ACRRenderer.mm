@@ -22,7 +22,7 @@
 #import "ACRViewController.h"
 #import "ACRViewPrivate.h"
 #import "UtiliOS.h"
-#import "ACRWidthDistributor.h"
+#import "ACRLayoutHelper.h"
 
 using namespace AdaptiveCards;
 
@@ -76,7 +76,7 @@ using namespace AdaptiveCards;
                      containingView:(ACRColumnView *)containingView
                          hostconfig:(ACOHostConfig *)config
 {
-    [[[ACRWidthDistributor alloc] init] distributeWidth:[[ACRRegistration getInstance] getHostCardContainer] rootView:rootView forElement:adaptiveCard andHostConfig:config];
+    [[[ACRLayoutHelper alloc] init] distributeWidth:[[ACRRegistration getInstance] getHostCardContainer] rootView:rootView forElement:adaptiveCard andHostConfig:config];
     std::vector<std::shared_ptr<BaseCardElement>> body = adaptiveCard->GetBody();
     ACRColumnView *verticalView = containingView;
 

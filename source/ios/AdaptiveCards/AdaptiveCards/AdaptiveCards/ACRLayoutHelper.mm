@@ -6,7 +6,7 @@
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 
-#import "ACRWidthDistributor.h"
+#import "ACRLayoutHelper.h"
 #import "Column.h"
 #import "ColumnSet.h"
 #import "Table.h"
@@ -17,7 +17,7 @@
 
 using namespace AdaptiveCards;
 
-@implementation ACRWidthDistributor
+@implementation ACRLayoutHelper
 
 - (instancetype)init
 {

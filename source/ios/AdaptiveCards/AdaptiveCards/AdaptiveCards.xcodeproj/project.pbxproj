@@ -37,8 +37,8 @@
 		46058FD92C6086AA00966E76 /* GridArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FD72C6086AA00966E76 /* GridArea.h */; };
 		46058FDC2C608D0800966E76 /* AreaGridLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46058FDA2C608D0800966E76 /* AreaGridLayout.cpp */; };
 		46058FDD2C608D0800966E76 /* AreaGridLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FDB2C608D0800966E76 /* AreaGridLayout.h */; };
-		46058FDF2C64773300966E76 /* ACRWidthDistributor.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FDE2C64773300966E76 /* ACRWidthDistributor.h */; };
-		46058FE12C64774800966E76 /* ACRWidthDistributor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46058FE02C64774800966E76 /* ACRWidthDistributor.mm */; };
+		46058FDF2C64773300966E76 /* ACRLayoutHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FDE2C64773300966E76 /* ACRLayoutHelper.h */; };
+		46058FE12C64774800966E76 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46058FE02C64774800966E76 /* ACRLayoutHelper.mm */; };
 		4608EE892BF5C1AB00543095 /* ACRRatingLabelRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4608EE872BF5C1AB00543095 /* ACRRatingLabelRenderer.h */; };
 		4608EE8A2BF5C1AB00543095 /* ACRRatingLabelRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4608EE882BF5C1AB00543095 /* ACRRatingLabelRenderer.mm */; };
 		4608EE8D2BF5C1B800543095 /* ACRRatingInputRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4608EE8B2BF5C1B800543095 /* ACRRatingInputRenderer.h */; };
@@ -567,8 +567,8 @@
 		46058FD72C6086AA00966E76 /* GridArea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GridArea.h; path = ../../../../shared/cpp/ObjectModel/GridArea.h; sourceTree = "<group>"; };
 		46058FDA2C608D0800966E76 /* AreaGridLayout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AreaGridLayout.cpp; path = ../../../../shared/cpp/ObjectModel/AreaGridLayout.cpp; sourceTree = "<group>"; };
 		46058FDB2C608D0800966E76 /* AreaGridLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AreaGridLayout.h; path = ../../../../shared/cpp/ObjectModel/AreaGridLayout.h; sourceTree = "<group>"; };
-		46058FDE2C64773300966E76 /* ACRWidthDistributor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRWidthDistributor.h; sourceTree = "<group>"; };
-		46058FE02C64774800966E76 /* ACRWidthDistributor.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRWidthDistributor.mm; sourceTree = "<group>"; };
+		46058FDE2C64773300966E76 /* ACRLayoutHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRLayoutHelper.h; sourceTree = "<group>"; };
+		46058FE02C64774800966E76 /* ACRLayoutHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRLayoutHelper.mm; sourceTree = "<group>"; };
 		4608EE872BF5C1AB00543095 /* ACRRatingLabelRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRatingLabelRenderer.h; sourceTree = "<group>"; };
 		4608EE882BF5C1AB00543095 /* ACRRatingLabelRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingLabelRenderer.mm; sourceTree = "<group>"; };
 		4608EE8B2BF5C1B800543095 /* ACRRatingInputRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRatingInputRenderer.h; sourceTree = "<group>"; };
@@ -1274,8 +1274,8 @@
 				6BFF23DF2714C0F000183C59 /* ACRViewPrivate.h */,
 				6BFF24132714EF2200183C59 /* UtiliOS.h */,
 				6BC30F6D21E56CF900B9FAAE /* UtiliOS.mm */,
-				46058FDE2C64773300966E76 /* ACRWidthDistributor.h */,
-				46058FE02C64774800966E76 /* ACRWidthDistributor.mm */,
+				46058FDE2C64773300966E76 /* ACRLayoutHelper.h */,
+				46058FE02C64774800966E76 /* ACRLayoutHelper.mm */,
 				46DF58E02C6F12EA00DCBA77 /* ACRFlowLayout.h */,
 				46DF58E22C6F12FC00DCBA77 /* ACRFlowLayout.mm */,
 			);
@@ -1962,7 +1962,7 @@
 				F42E51791FEC3840008F9642 /* MarkDownParser.h in Headers */,
 				6B268FE720CF19E200D99C1B /* RemoteResourceInformation.h in Headers */,
 				F9A9E55626FE9FE400D13410 /* StyledCollectionElement.h in Headers */,
-				46058FDF2C64773300966E76 /* ACRWidthDistributor.h in Headers */,
+				46058FDF2C64773300966E76 /* ACRLayoutHelper.h in Headers */,
 				CA1218C621C4509400152EA8 /* ToggleVisibilityTarget.h in Headers */,
 				CA1218C721C4509400152EA8 /* ToggleVisibilityAction.h in Headers */,
 				6BAC0F2D228E2D7300E42DEB /* RichTextElementProperties.h in Headers */,
@@ -2519,7 +2519,7 @@
 				F4C1F5EC1F2ABD6B0018CB78 /* ACRBaseActionElementRenderer.mm in Sources */,
 				F4D402141F7DAC2C00D0356B /* ACOHostConfigParseResult.mm in Sources */,
 				6BE8DFD4249C4C1B005EFE66 /* ACRToggleInputView.mm in Sources */,
-				46058FE12C64774800966E76 /* ACRWidthDistributor.mm in Sources */,
+				46058FE12C64774800966E76 /* ACRLayoutHelper.mm in Sources */,
 				84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */,
 				F495FC0A2022A18F0093D4DE /* ACRChoiceSetViewDataSource.mm in Sources */,
 			);
