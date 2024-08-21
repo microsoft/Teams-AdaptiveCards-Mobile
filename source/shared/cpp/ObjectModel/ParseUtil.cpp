@@ -327,6 +327,30 @@ std::optional<std::string> ParseUtil::GetOptionalString(const Json::Value& json,
     return propertyValue.asString();
 }
 
+/**
+ * The swig conversion of std::optional<std::string> to Java is not working as expected.
+ * Hence, this method is added, which returns an "NAN" string if the property value is not provided.
+ * This can be used in Java to check if the property is provided or not.
+ **/
+std::string ParseUtil::GetOptString(const Json::Value& json, AdaptiveCardSchemaKey key)
+{
+    const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
+    auto propertyValue = json.get(propertyName, Json::Value());
+    if (propertyValue.empty())
+    {
+        return "NAN";
+    }
+
+    if (!propertyValue.isString())
+    {
+        throw AdaptiveCardParseException(
+                ErrorStatusCode::InvalidPropertyValue,
+                "Value for property " + propertyName + " was invalid. Expected type String.");
+    }
+
+    return propertyValue.asString();
+}
+
 void ParseUtil::ExpectTypeString(const Json::Value& json, const std::string& expectedTypeStr)
 {
     const std::string actualType = GetTypeAsString(json);

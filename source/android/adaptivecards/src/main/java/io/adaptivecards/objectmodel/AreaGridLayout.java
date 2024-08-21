@@ -105,4 +105,9 @@ public class AreaGridLayout extends Layout {
     return (cPtr == 0) ? null : new AreaGridLayout(cPtr, true);
   }
 
+  public static AreaGridLayout dynamic_cast(Layout layout) {
+    long cPtr = AdaptiveCardObjectModelJNI.AreaGridLayout_dynamic_cast(Layout.getCPtr(layout), layout);
+    return (cPtr == 0) ? null : new AreaGridLayout(cPtr, true);
+  }
+
 }

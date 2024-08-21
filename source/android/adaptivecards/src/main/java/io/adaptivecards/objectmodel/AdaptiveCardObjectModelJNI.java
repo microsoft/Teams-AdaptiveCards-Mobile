@@ -1131,12 +1131,12 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_FlowLayout(long jarg1);
   public final static native int FlowLayout_GetItemFit(long jarg1, FlowLayout jarg1_);
   public final static native void FlowLayout_setItemFit(long jarg1, FlowLayout jarg1_, int jarg2);
-  public final static native long FlowLayout_GetItemWidth(long jarg1, FlowLayout jarg1_);
-  public final static native void FlowLayout_SetItemWidth(long jarg1, FlowLayout jarg1_, long jarg2);
-  public final static native long FlowLayout_GetMinItemWidth(long jarg1, FlowLayout jarg1_);
-  public final static native void FlowLayout_SetMinItemWidth(long jarg1, FlowLayout jarg1_, long jarg2);
-  public final static native long FlowLayout_GetMaxItemWidth(long jarg1, FlowLayout jarg1_);
-  public final static native void FlowLayout_SetMaxItemWidth(long jarg1, FlowLayout jarg1_, long jarg2);
+  public final static native String FlowLayout_GetItemWidth(long jarg1, FlowLayout jarg1_);
+  public final static native void FlowLayout_SetItemWidth(long jarg1, FlowLayout jarg1_, String jarg2);
+  public final static native String FlowLayout_GetMinItemWidth(long jarg1, FlowLayout jarg1_);
+  public final static native void FlowLayout_SetMinItemWidth(long jarg1, FlowLayout jarg1_, String jarg2);
+  public final static native String FlowLayout_GetMaxItemWidth(long jarg1, FlowLayout jarg1_);
+  public final static native void FlowLayout_SetMaxItemWidth(long jarg1, FlowLayout jarg1_, String jarg2);
   public final static native int FlowLayout_GetColumnSpacing(long jarg1, FlowLayout jarg1_);
   public final static native void FlowLayout_SetColumnSpacing(long jarg1, FlowLayout jarg1_, int jarg2);
   public final static native int FlowLayout_GetRowSpacing(long jarg1, FlowLayout jarg1_);
@@ -1148,6 +1148,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long FlowLayout_SerializeToJsonValue(long jarg1, FlowLayout jarg1_);
   public final static native long FlowLayout_Deserialize(long jarg1, JsonValue jarg1_);
   public final static native long FlowLayout_DeserializeFromString(String jarg1);
+  public final static native long FlowLayout_dynamic_cast(long jarg1, Layout jarg1_);
   public final static native long new_AreaGridLayout__SWIG_0();
   public final static native long new_AreaGridLayout__SWIG_1(long jarg1, AreaGridLayout jarg1_);
   public final static native void delete_AreaGridLayout(long jarg1);
@@ -1164,6 +1165,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long AreaGridLayout_SerializeToJsonValue(long jarg1, AreaGridLayout jarg1_);
   public final static native long AreaGridLayout_Deserialize(long jarg1, JsonValue jarg1_);
   public final static native long AreaGridLayout_DeserializeFromString(String jarg1);
+  public final static native long AreaGridLayout_dynamic_cast(long jarg1, Layout jarg1_);
   public final static native long new_GridArea();
   public final static native String GridArea_GetName(long jarg1, GridArea jarg1_);
   public final static native void GridArea_SetName(long jarg1, GridArea jarg1_, String jarg2);

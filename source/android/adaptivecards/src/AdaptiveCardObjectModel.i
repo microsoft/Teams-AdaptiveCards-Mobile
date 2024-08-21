@@ -569,6 +569,36 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::FlowLayout::dynamic_cast(AdaptiveCards::Layout *layout) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::FlowLayout {
+        static AdaptiveCards::FlowLayout *dynamic_cast(AdaptiveCards::Layout *layout) {
+            return dynamic_cast<AdaptiveCards::FlowLayout *>(layout);
+        }
+};
+
+%exception AdaptiveCards::AreaGridLayout::dynamic_cast(AdaptiveCards::Layout *layout) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::AreaGridLayout {
+        static AdaptiveCards::AreaGridLayout *dynamic_cast(AdaptiveCards::Layout *layout) {
+            return dynamic_cast<AdaptiveCards::AreaGridLayout *>(layout);
+        }
+};
+
 %exception AdaptiveCards::Container::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {

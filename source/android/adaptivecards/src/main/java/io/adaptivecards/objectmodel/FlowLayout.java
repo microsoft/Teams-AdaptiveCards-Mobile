@@ -59,28 +59,28 @@ public class FlowLayout extends Layout {
     AdaptiveCardObjectModelJNI.FlowLayout_setItemFit(swigCPtr, this, value.swigValue());
   }
 
-  public SWIGTYPE_p_std__optionalT_std__string_t GetItemWidth() {
-    return new SWIGTYPE_p_std__optionalT_std__string_t(AdaptiveCardObjectModelJNI.FlowLayout_GetItemWidth(swigCPtr, this), true);
+  public String GetItemWidth() {
+    return AdaptiveCardObjectModelJNI.FlowLayout_GetItemWidth(swigCPtr, this);
   }
 
-  public void SetItemWidth(SWIGTYPE_p_std__optionalT_std__string_t value) {
-    AdaptiveCardObjectModelJNI.FlowLayout_SetItemWidth(swigCPtr, this, SWIGTYPE_p_std__optionalT_std__string_t.getCPtr(value));
+  public void SetItemWidth(String value) {
+    AdaptiveCardObjectModelJNI.FlowLayout_SetItemWidth(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_std__optionalT_std__string_t GetMinItemWidth() {
-    return new SWIGTYPE_p_std__optionalT_std__string_t(AdaptiveCardObjectModelJNI.FlowLayout_GetMinItemWidth(swigCPtr, this), true);
+  public String GetMinItemWidth() {
+    return AdaptiveCardObjectModelJNI.FlowLayout_GetMinItemWidth(swigCPtr, this);
   }
 
-  public void SetMinItemWidth(SWIGTYPE_p_std__optionalT_std__string_t value) {
-    AdaptiveCardObjectModelJNI.FlowLayout_SetMinItemWidth(swigCPtr, this, SWIGTYPE_p_std__optionalT_std__string_t.getCPtr(value));
+  public void SetMinItemWidth(String value) {
+    AdaptiveCardObjectModelJNI.FlowLayout_SetMinItemWidth(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_std__optionalT_std__string_t GetMaxItemWidth() {
-    return new SWIGTYPE_p_std__optionalT_std__string_t(AdaptiveCardObjectModelJNI.FlowLayout_GetMaxItemWidth(swigCPtr, this), true);
+  public String GetMaxItemWidth() {
+    return AdaptiveCardObjectModelJNI.FlowLayout_GetMaxItemWidth(swigCPtr, this);
   }
 
-  public void SetMaxItemWidth(SWIGTYPE_p_std__optionalT_std__string_t value) {
-    AdaptiveCardObjectModelJNI.FlowLayout_SetMaxItemWidth(swigCPtr, this, SWIGTYPE_p_std__optionalT_std__string_t.getCPtr(value));
+  public void SetMaxItemWidth(String value) {
+    AdaptiveCardObjectModelJNI.FlowLayout_SetMaxItemWidth(swigCPtr, this, value);
   }
 
   public Spacing GetColumnSpacing() {
@@ -126,6 +126,11 @@ public class FlowLayout extends Layout {
 
   public static FlowLayout DeserializeFromString(String jsonString) {
     long cPtr = AdaptiveCardObjectModelJNI.FlowLayout_DeserializeFromString(jsonString);
+    return (cPtr == 0) ? null : new FlowLayout(cPtr, true);
+  }
+
+  public static FlowLayout dynamic_cast(Layout layout) {
+    long cPtr = AdaptiveCardObjectModelJNI.FlowLayout_dynamic_cast(Layout.getCPtr(layout), layout);
     return (cPtr == 0) ? null : new FlowLayout(cPtr, true);
   }
 
