@@ -1721,6 +1721,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_BadgeConfig(long jarg1);
   public final static native void CompoundButtonConfig_badgeConfig_set(long jarg1, CompoundButtonConfig jarg1_, long jarg2, BadgeConfig jarg2_);
   public final static native long CompoundButtonConfig_badgeConfig_get(long jarg1, CompoundButtonConfig jarg1_);
+  public final static native void CompoundButtonConfig_borderColor_set(long jarg1, CompoundButtonConfig jarg1_, String jarg2);
+  public final static native String CompoundButtonConfig_borderColor_get(long jarg1, CompoundButtonConfig jarg1_);
   public final static native long CompoundButtonConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, CompoundButtonConfig jarg2_);
   public final static native long new_CompoundButtonConfig();
   public final static native void delete_CompoundButtonConfig(long jarg1);
