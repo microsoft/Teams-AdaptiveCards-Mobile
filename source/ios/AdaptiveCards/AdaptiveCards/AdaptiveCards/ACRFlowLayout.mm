@@ -28,6 +28,8 @@ using namespace AdaptiveCards;
     CGFloat _remainingRowSpace;
     CGFloat _availableRowSpace;
     std::shared_ptr<FlowLayout> _layout;
+    CGFloat _rowSpacing;
+    CGFloat _columnSpacing;
 }
 
 - (instancetype)initWithFlowLayout:(std::shared_ptr<AdaptiveCards::FlowLayout> const &)flowLayout
@@ -45,6 +47,8 @@ using namespace AdaptiveCards;
         _layout = flowLayout;
         _availableRowSpace = maxWidth;
         _remainingRowSpace = _availableRowSpace;
+        _rowSpacing = getSpacing(_layout->GetRowSpacing(), config);
+        _columnSpacing = getSpacing(_layout->GetColumnSpacing(), config);
         if (style != ACRNone &&
             style != parentStyle) {
             self.backgroundColor = [acoConfig getBackgroundColorForContainerStyle:_style];
@@ -82,9 +86,6 @@ using namespace AdaptiveCards;
 {
     _verticalStack = [self createVerticalStack];
     [self addNewRowWithView:nil];
-    NSLayoutConstraint *selfWidth = [self.widthAnchor constraintEqualToConstant:_availableRowSpace];
-    selfWidth.priority = 999;
-    [NSLayoutConstraint activateConstraints:@[selfWidth]];
 }
 
 - (void)addNewRowWithView:(UIView *)view
@@ -102,34 +103,57 @@ using namespace AdaptiveCards;
     [_horizontalStack addArrangedSubview:view];
 }
 
-
 - (UIStackView *)createHorizontalStack
 {
     UIStackView *stackView = [[UIStackView alloc] init];
     stackView.axis = UILayoutConstraintAxisHorizontal;
-    stackView.alignment = UIStackViewAlignmentFill; // TODO: Fill this actual fill
-    stackView.distribution = UIStackViewDistributionFillEqually; // TODO: Fill this actual distribution
-    stackView.spacing = 10; // TODO: Fill this actual row spacing
+    stackView.alignment = UIStackViewAlignmentLeading;
+    stackView.distribution = UIStackViewDistributionEqualSpacing;
+    stackView.spacing = _columnSpacing;
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
     return stackView;
+}
+
+-(UIStackViewAlignment) horizontalAlignment
+{
+    if(_layout->GetItemFit() == ItemFit::Fill)
+    {
+        return UIStackViewAlignmentFill;
+    }
+    
+    switch (_layout->GetHorizontalAlignment()) {
+        case AdaptiveCards::HorizontalAlignment::Center:
+            return UIStackViewAlignmentCenter;
+            
+        case AdaptiveCards::HorizontalAlignment::Right:
+            return UIStackViewAlignmentTrailing;
+            
+        case AdaptiveCards::HorizontalAlignment::Left:
+            return UIStackViewAlignmentLeading;
+    }
+    
 }
 
 - (UIStackView *)createVerticalStack
 {
     UIStackView *stackView = [[UIStackView alloc] init];
     stackView.axis = UILayoutConstraintAxisVertical;
-    stackView.alignment = UIStackViewAlignmentFill;
+    stackView.alignment = [self horizontalAlignment];
     stackView.distribution = UIStackViewDistributionEqualSpacing;
-    stackView.spacing = 10; // TODO: Fill this actual column spacing
+    stackView.spacing = _rowSpacing;
     
     [self addSubview:stackView];
     
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:@[
-        [stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:0],
-        [stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:0],
-        [stackView.topAnchor constraintEqualToAnchor:self.topAnchor constant:0],
-        [stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:0]]];
+    
+    NSLayoutConstraint *selfWidth = [self.widthAnchor constraintEqualToConstant:_availableRowSpace];
+    selfWidth.priority = 999;
+    NSLayoutConstraint *leading = [stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:0];
+    NSLayoutConstraint *trailing = [stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:0];
+    NSLayoutConstraint *top = [stackView.topAnchor constraintEqualToAnchor:self.topAnchor constant:0];
+    NSLayoutConstraint *bottom = [stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:0];
+    
+    [NSLayoutConstraint activateConstraints:@[selfWidth, leading, trailing, top, bottom]];
     
     return stackView;
 }
@@ -142,9 +166,9 @@ using namespace AdaptiveCards;
     [[self layer] setBorderColor:[color CGColor]];
 }
 
-- (CGFloat)sizeForView:(UIView *)view
+- (CGFloat)sizeForView:(UIView *)view fittingSize:(CGSize)fittingSize
 {
-    CGFloat widthForItem = view.intrinsicContentSize.width;
+    CGFloat widthForItem = fittingSize.width;
     
     if (_layout->GetItemPixelWidth() != -1)
     {
@@ -167,17 +191,24 @@ using namespace AdaptiveCards;
 
 - (void)addArrangedSubview:(UIView *)view
 {
-    CGFloat sizeForView = [self sizeForView:view];
-    CGFloat rowSpacing = 10;
-    if (_remainingRowSpace > (sizeForView + rowSpacing))
+    CGSize fittingSize = [view systemLayoutSizeFittingSize:UILayoutFittingExpandedSize];
+    CGFloat sizeForView = [self sizeForView:view fittingSize:fittingSize];
+    if (sizeForView != fittingSize.width)
+    {
+        // this means that we need to resize view even futhur
+        NSLayoutConstraint *itemWidth = [view.widthAnchor constraintEqualToConstant:sizeForView];
+        itemWidth.priority = 999;
+        [itemWidth setActive:YES];
+    }
+    if (_remainingRowSpace > (sizeForView + _columnSpacing))
     {
         [self addViewInCurrentRow:view];
-        _remainingRowSpace -= (sizeForView + rowSpacing);
+        _remainingRowSpace -= (sizeForView + _columnSpacing);
     }
     else
     {
         [self addNewRowWithView:view];
-        _remainingRowSpace = _availableRowSpace - (sizeForView + rowSpacing);
+        _remainingRowSpace = _availableRowSpace - (sizeForView + _columnSpacing);
     }
 }
 

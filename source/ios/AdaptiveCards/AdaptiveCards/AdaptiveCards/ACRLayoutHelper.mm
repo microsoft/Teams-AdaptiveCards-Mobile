@@ -86,7 +86,12 @@ using namespace AdaptiveCards;
         {
             std::shared_ptr<Table> table = std::dynamic_pointer_cast<Table>(elem);
             std::vector<std::shared_ptr<TableColumnDefinition>> colums = table->GetColumns();
-            float childrenWidth = parentWidth/(colums.size());
+            long numberOfColumns = colums.size();
+            int cellSpacing = [config getHostConfig]->GetTable().cellSpacing;
+            float availableSpace = (parentWidth - ((numberOfColumns - 1)*cellSpacing));
+           
+            //remove spacing b/w cells, padding is taken care by the cell renderer
+            float childrenWidth = availableSpace/numberOfColumns;
             std::vector<std::shared_ptr<TableRow>> tableRows = table->GetRows();
             for (const auto &row : tableRows) 
             {

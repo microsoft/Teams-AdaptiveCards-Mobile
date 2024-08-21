@@ -96,12 +96,12 @@ std::string FlowLayout::Serialize() const
 
 int FlowLayout::GetItemPixelWidth() const
 {
-    return m_itemMaxPixelWidth;
+    return m_pixelItemWidth;
 }
 
 void FlowLayout::SetItemPixelWidth(int value)
 {
-    m_itemMaxPixelWidth = value;
+    m_pixelItemWidth = value;
 }
 
 int FlowLayout::GetMinItemPixelWidth() const

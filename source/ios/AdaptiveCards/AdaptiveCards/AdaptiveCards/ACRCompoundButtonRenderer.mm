@@ -57,9 +57,9 @@
     verticalStack.distribution = UIStackViewDistributionEqualSpacing;
     
     UIStackView *horizontalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
-    horizontalStack.translatesAutoresizingMaskIntoConstraints = NO;
     horizontalStack.spacing = 5;
-    horizontalStack.alignment = UIStackViewAlignmentLeading;
+    horizontalStack.alignment = UIStackViewAlignmentCenter;
+    horizontalStack.distribution = UIStackViewDistributionEqualSpacing;
     
     if(icon != nil)
     {
@@ -71,6 +71,7 @@
    
     
     UILabel *titleLabel = [self getTitleLabelWithText:compoundButton->getTitle() viewGroup:viewGroup hostConfig:acoConfig];
+    [titleLabel setContentCompressionResistancePriority:251 forAxis:UILayoutConstraintAxisHorizontal];
     
     UILabel* descriptionLabel = [self getDescriptionLabelWithText:compoundButton->getDescription()
                                                            viewGroup:viewGroup
