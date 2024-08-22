@@ -90,7 +90,7 @@
     
     UIView *compoundButtonView = [[UIView alloc] initWithFrame:CGRectZero];
     compoundButtonView.translatesAutoresizingMaskIntoConstraints = NO;
-    compoundButtonView.layer.borderWidth = 0.5;
+    compoundButtonView.layer.borderWidth = 1;
     std::string compoundButtonViewBorderColor = config->GetCompoundButtonConfig().borderColor;
     compoundButtonView.layer.borderColor = [ACOHostConfig convertHexColorCodeToUIColor:compoundButtonViewBorderColor].CGColor;
     compoundButtonView.layer.cornerRadius = 12;
