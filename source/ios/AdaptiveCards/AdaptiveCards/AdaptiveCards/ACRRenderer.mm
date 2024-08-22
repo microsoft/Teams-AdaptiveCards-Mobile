@@ -23,6 +23,8 @@
 #import "ACRViewPrivate.h"
 #import "UtiliOS.h"
 #import "ACRLayoutHelper.h"
+#import "ACRFlowLayout.h"
+#import "AreaGridLayout.h"
 
 using namespace AdaptiveCards;
 
@@ -76,7 +78,9 @@ using namespace AdaptiveCards;
                      containingView:(ACRColumnView *)containingView
                          hostconfig:(ACOHostConfig *)config
 {
-    [[[ACRLayoutHelper alloc] init] distributeWidth:[[ACRRegistration getInstance] getHostCardContainer] rootView:rootView forElement:adaptiveCard andHostConfig:config];
+    ACRLayoutHelper *layoutHelper = [[ACRLayoutHelper alloc] init];
+    [layoutHelper distributeWidth:[[ACRRegistration getInstance] getHostCardContainer] rootView:rootView forElement:adaptiveCard andHostConfig:config];
+                                     
     std::vector<std::shared_ptr<BaseCardElement>> body = adaptiveCard->GetBody();
     ACRColumnView *verticalView = containingView;
 
@@ -124,10 +128,47 @@ using namespace AdaptiveCards;
 
     [rootView addBaseCardElementListToConcurrentQueue:body registration:[ACRRegistration getInstance]];
     
+    std::shared_ptr<Layout> final_layout = [layoutHelper layoutToApplyFrom:adaptiveCard->GetLayouts() andHostConfig:config];
+    ACRFlowLayout *flowContainer;
+    if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
+    {
+        std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
+        // layout using flow layout
+        flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
+                                                            style:style
+                                                      parentStyle:style
+                                                       hostConfig:config
+                                                         maxWidth:[[ACRRegistration getInstance] getHostCardContainer]
+                                                        superview:containingView];
+        
+        [ACRRenderer renderInFlow:flowContainer
+                         rootView:rootView
+                           inputs:inputs
+                    withCardElems:body
+                    andHostConfig:config];
+        
+    }
+    else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
+    {
+        std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
+        // layout using Area Grid
+    }
+    else
+    {
+        // default stack based layout
+    }
+    
     @try {
         
-        [ACRRenderer render:verticalView rootView:rootView inputs:inputs withCardElems:body andHostConfig:config];
-        
+        if(flowContainer != nil)
+        {
+            [verticalView addArrangedSubview:flowContainer];
+        }
+        else
+        {
+            [ACRRenderer render:verticalView rootView:rootView inputs:inputs withCardElems:body andHostConfig:config];
+        }
+
         [verticalView configureLayoutAndVisibility:GetACRVerticalContentAlignment(adaptiveCard->GetVerticalContentAlignment())
                                          minHeight:adaptiveCard->GetMinHeight()
                                         heightType:GetACRHeight(adaptiveCard->GetHeight())
@@ -182,33 +223,43 @@ using namespace AdaptiveCards;
     HostWidth hostWidth = convertHostCardContainerToHostWidth([reg getHostCardContainer], hostWidthConfig);
     
     UIView *renderedView = nil;
-    
-    auto firstelem = elems.begin();
-    
-    for (const auto &elem : elems) {
+        
+    for (const auto &elem : elems) 
+    {
         ACRBaseCardElementRenderer *renderer =
         [reg getRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];
         
-        if (renderer == nil) {
+        if (renderer == nil) 
+        {
             NSLog(@"Unsupported card element type:%d\n", (int)elem->GetElementType());
             continue;
         }
         
         [acoElem setElem:elem];
         
-        @try {
-            if ([acoElem meetsRequirements:featureReg] == NO){
+        @try 
+        {
+            if ([acoElem meetsRequirements:featureReg] == NO)
+            {
                 @throw [ACOFallbackException fallbackException];
             }
-            if (elem->MeetsTargetWidthRequirement(hostWidth) == false){
+            
+            if (elem->MeetsTargetWidthRequirement(hostWidth) == false)
+            {
+                continue;
+            }
+            
+            if (!elem->GetIsVisible())
+            {
                 continue;
             }
             
             renderedView = [renderer render:view rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:config];
             
             [view updateLayoutAndVisibilityOfRenderedView:renderedView acoElement:acoElem separator:nil rootView:rootView];
-        } @catch (ACOFallbackException *e) {
-            
+        } 
+        @catch (ACOFallbackException *e)
+        {
             handleFallbackException(e, view, rootView, inputs, elem, config, true);
         }
     }

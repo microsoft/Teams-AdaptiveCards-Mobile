@@ -108,7 +108,7 @@ using namespace AdaptiveCards;
     UIStackView *stackView = [[UIStackView alloc] init];
     stackView.axis = UILayoutConstraintAxisHorizontal;
     stackView.alignment = UIStackViewAlignmentLeading;
-    stackView.distribution = UIStackViewDistributionEqualSpacing;
+    stackView.distribution = UIStackViewDistributionFill;
     stackView.spacing = _columnSpacing;
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
     return stackView;
