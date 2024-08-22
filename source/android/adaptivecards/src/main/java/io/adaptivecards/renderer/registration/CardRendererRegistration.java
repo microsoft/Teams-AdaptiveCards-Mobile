@@ -33,7 +33,10 @@ import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.Icon;
 import io.adaptivecards.objectmodel.Image;
 import io.adaptivecards.objectmodel.ImageSet;
+import io.adaptivecards.objectmodel.Layout;
+import io.adaptivecards.objectmodel.LayoutContainerType;
 import io.adaptivecards.objectmodel.Mode;
+import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.renderer.ActionLayoutRenderer;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.AdaptiveWarning;
@@ -42,6 +45,7 @@ import io.adaptivecards.renderer.CompoundButtonRenderer;
 import io.adaptivecards.renderer.IActionLayoutRenderer;
 import io.adaptivecards.renderer.IBaseActionElementRenderer;
 import io.adaptivecards.renderer.IBaseCardElementRenderer;
+import io.adaptivecards.renderer.IFeatureFlagResolver;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
 import io.adaptivecards.renderer.IOverflowActionRenderer;
@@ -251,6 +255,16 @@ public class CardRendererRegistration
         m_hostCardContainer = hostCardContainer;
     }
 
+    public void registerFeatureFlagResolver(IFeatureFlagResolver featureFlagResolver)
+    {
+        m_featureFlagResolver = featureFlagResolver;
+    }
+
+    public IFeatureFlagResolver getFeatureFlagResolver()
+    {
+        return m_featureFlagResolver;
+    }
+
     public FeatureRegistration getFeatureRegistration()
     {
         if (m_featureRegistration == null) {
@@ -299,7 +313,8 @@ public class CardRendererRegistration
                                BaseCardElementVector baseCardElementList,
                                ICardActionHandler cardActionHandler,
                                HostConfig hostConfig,
-                               RenderArgs renderArgs) throws AdaptiveFallbackException, Exception
+                               RenderArgs renderArgs,
+                               Layout layout) throws AdaptiveFallbackException, Exception
     {
         long size;
         if (baseCardElementList == null || (size = baseCardElementList.size()) <= 0)
@@ -313,10 +328,27 @@ public class CardRendererRegistration
         for (int i = 0; i < size; i++)
         {
             BaseCardElement cardElement = baseCardElementList.get(i);
-            renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration);
+            renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration, layout);
         }
 
         return viewGroup;
+    }
+
+    public void renderElementAndPerformFallback(
+        RenderedAdaptiveCard renderedCard,
+        Context context,
+        FragmentManager fragmentManager,
+        BaseCardElement cardElement,
+        ViewGroup viewGroup,
+        ICardActionHandler cardActionHandler,
+        HostConfig hostConfig,
+        RenderArgs renderArgs,
+        FeatureRegistration featureRegistration) throws AdaptiveFallbackException, Exception
+    {
+        Layout targetLayout = new Layout();
+        targetLayout.SetLayoutContainerType(LayoutContainerType.Stack);
+        targetLayout.SetTargetWidth(TargetWidthType.Default);
+        renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration, targetLayout);
     }
 
     public void renderElementAndPerformFallback(
@@ -328,7 +360,8 @@ public class CardRendererRegistration
             ICardActionHandler cardActionHandler,
             HostConfig hostConfig,
             RenderArgs renderArgs,
-            FeatureRegistration featureRegistration) throws AdaptiveFallbackException, Exception
+            FeatureRegistration featureRegistration,
+            Layout targetLayout) throws AdaptiveFallbackException, Exception
     {
         boolean shouldRenderCardElements = true;
         IBaseCardElementRenderer renderer = m_typeToRendererMap.get(cardElement.GetElementTypeString());
@@ -486,28 +519,31 @@ public class CardRendererRegistration
             boolean isColumn = Util.isOfType(renderedElement, Column.class);
 
             // Only columns render vertical spacing, so if it's not a column, then we need a horizontal spacing
-            HandleSpacing(context, viewGroup, renderedElement, hostConfig, tagContent, !isColumn);
+            // if the targetLayout is a flow layout, then the spacing and separator properties on items are ignored
+            boolean isFlowLayout = targetLayout.GetLayoutContainerType() == LayoutContainerType.Flow;
+            HandleSpacing(context, viewGroup, renderedElement, hostConfig, tagContent, !isColumn, isFlowLayout);
 
             // Check if the element is an input or must be stretched
             BaseInputElement baseInputElement = Util.tryCastTo(renderedElement, BaseInputElement.class);
             if (baseInputElement != null)
             {
                 // put the element in a Stretchable input layout and
-                HandleLabelAndValidation(renderedCard, mockLayout, viewGroup, baseInputElement, context, hostConfig, renderArgs, tagContent);
+                HandleLabelAndValidation(renderedCard, mockLayout, viewGroup, baseInputElement, context, hostConfig, renderArgs, tagContent, targetLayout);
             }
             else
             {
                 // Column, container, image and imageSet handle their height on their own, so let's not add an extra view for them
-                if (renderedElement.GetHeight() == HeightType.Stretch && !isColumn && !Util.isOfType(renderedElement, Container.class)
+                if (renderedElement.GetHeight() == HeightType.Stretch && !isColumn
+                    && !Util.isOfType(renderedElement, Container.class)
                     && !Util.isOfType(renderedElement, Image.class) && !Util.isOfType(renderedElement, ImageSet.class)
                     && !Util.isOfType(renderedElement, Icon.class) && !Util.isOfType(renderedElement, CompoundButton.class))
                 {
                     // put the element in a StretchableElementLayout
-                    HandleStretchHeight(mockLayout, viewGroup, renderedElement, context, tagContent);
+                    HandleStretchHeight(mockLayout, viewGroup, renderedElement, context, tagContent, targetLayout, hostConfig);
                 }
                 else
                 {
-                    Util.MoveChildrenViews(mockLayout, viewGroup);
+                    Util.MoveChildrenViews(mockLayout, viewGroup, targetLayout, hostConfig);
                 }
             }
 
@@ -520,19 +556,22 @@ public class CardRendererRegistration
                                       BaseCardElement cardElement,
                                       HostConfig hostConfig,
                                       TagContent tagContent,
-                                      boolean isHorizontalSpacing)
+                                      boolean isHorizontalSpacing,
+                                      boolean isFlowLayout)
     {
-        // Render spacing
-        View separator = BaseCardElementRenderer.setSpacingAndSeparator(context,
-                                                                        viewGroup,
-                                                                        cardElement.GetSpacing(),
-                                                                        cardElement.GetSeparator(),
-                                                                        hostConfig,
-                                                                        isHorizontalSpacing,
-                                                                        false /* isImageSet */);
+        if (!isFlowLayout) {
+            // Render spacing
+            View separator = BaseCardElementRenderer.setSpacingAndSeparator(context,
+                viewGroup,
+                cardElement.GetSpacing(),
+                cardElement.GetSeparator(),
+                hostConfig,
+                isHorizontalSpacing,
+                false /* isImageSet */);
 
-        // Sets the spacing as now we handle the spacing rendering
-        tagContent.SetSeparator(separator);
+            // Sets the spacing as now we handle the spacing rendering
+            tagContent.SetSeparator(separator);
+        }
     }
 
     private static void HandleVisibility(BaseCardElement element, View renderedElementView)
@@ -547,7 +586,8 @@ public class CardRendererRegistration
                                                 Context context,
                                                 HostConfig hostConfig,
                                                 RenderArgs renderArgs,
-                                                TagContent tagContent)
+                                                TagContent tagContent,
+                                                Layout targetLayout)
     {
         // as first step we must figure out if the input requires a container layout
         // it will require a container layout if:
@@ -593,7 +633,7 @@ public class CardRendererRegistration
             }
             else
             {
-                Util.MoveChildrenViews(mockLayout, inputLayout);
+                Util.MoveChildrenViews(mockLayout, inputLayout, targetLayout, hostConfig);
             }
 
             if (inputHasErrorMessage)
@@ -619,11 +659,14 @@ public class CardRendererRegistration
                 }
             }
 
+            if (targetLayout.GetLayoutContainerType() == LayoutContainerType.Flow) {
+                inputLayout.setLayoutParams(Util.generateLayoutParamsForFlowLayoutItems(context, targetLayout, hostConfig));
+            }
             container.addView(inputLayout);
         }
         else
         {
-            Util.MoveChildrenViews(mockLayout, container);
+            Util.MoveChildrenViews(mockLayout, container, targetLayout, hostConfig);
         }
     }
 
@@ -631,23 +674,28 @@ public class CardRendererRegistration
                                            ViewGroup container,
                                            BaseCardElement element,
                                            Context context,
-                                           TagContent tagContent)
+                                           TagContent tagContent,
+                                           Layout layoutToApply,
+                                           HostConfig hostConfig)
     {
         boolean mustStretch = element.GetHeight() == HeightType.Stretch;
-
         if (mustStretch)
         {
             // Create a stretchable input lay
             StretchableElementLayout stretchElementLayout = new StretchableElementLayout(context, mustStretch);
-            Util.MoveChildrenViews(mockLayout, stretchElementLayout);
-            container.addView(stretchElementLayout);
+            Util.MoveChildrenViews(mockLayout, stretchElementLayout, layoutToApply, hostConfig);
 
+            if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
+                stretchElementLayout.setLayoutParams(Util.generateLayoutParamsForFlowLayoutItems(context, layoutToApply, hostConfig));
+            }
+
+            container.addView(stretchElementLayout);
             tagContent.SetStretchContainer(stretchElementLayout);
         }
         else
         {
             // Just move the generated views into the actual container
-            Util.MoveChildrenViews(mockLayout, container);
+            Util.MoveChildrenViews(mockLayout, container, layoutToApply, hostConfig);
         }
     }
 
@@ -687,6 +735,7 @@ public class CardRendererRegistration
     private BaseCardElement m_rootFallbackCard = null;
     private FeatureRegistration m_featureRegistration = null;
     private int m_hostCardContainer = -1;
+    private IFeatureFlagResolver m_featureFlagResolver;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
 }

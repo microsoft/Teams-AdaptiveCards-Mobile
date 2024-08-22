@@ -1041,60 +1041,6 @@ SWIGINTERN void std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_BaseCardElement_Sg
           throw std::out_of_range("vector index out of range");
         }
       }
-SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Layout > > *new_std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg___SWIG_2(jint count,std::shared_ptr< AdaptiveCards::Layout > const &value){
-        if (count < 0)
-          throw std::out_of_range("vector count must be positive");
-        return new std::vector< std::shared_ptr< AdaptiveCards::Layout > >(static_cast<std::vector< std::shared_ptr< AdaptiveCards::Layout > >::size_type>(count), value);
-      }
-SWIGINTERN jint std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doSize(std::vector< std::shared_ptr< AdaptiveCards::Layout > > const *self){
-        return SWIG_VectorSize(self->size());
-      }
-SWIGINTERN void std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doAdd__SWIG_0(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type const &x){
-        self->push_back(x);
-      }
-SWIGINTERN void std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doAdd__SWIG_1(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint index,std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type const &x){
-        jint size = static_cast<jint>(self->size());
-        if (0 <= index && index <= size) {
-          self->insert(self->begin() + index, x);
-        } else {
-          throw std::out_of_range("vector index out of range");
-        }
-      }
-SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doRemove(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint index){
-        jint size = static_cast<jint>(self->size());
-        if (0 <= index && index < size) {
-          std::shared_ptr< AdaptiveCards::Layout > const old_value = (*self)[index];
-          self->erase(self->begin() + index);
-          return old_value;
-        } else {
-          throw std::out_of_range("vector index out of range");
-        }
-      }
-SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type const &std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doGet(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint index){
-        jint size = static_cast<jint>(self->size());
-        if (index >= 0 && index < size)
-          return (*self)[index];
-        else
-          throw std::out_of_range("vector index out of range");
-      }
-SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doSet(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint index,std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type const &val){
-        jint size = static_cast<jint>(self->size());
-        if (index >= 0 && index < size) {
-          std::shared_ptr< AdaptiveCards::Layout > const old_value = (*self)[index];
-          (*self)[index] = val;
-          return old_value;
-        }
-        else
-          throw std::out_of_range("vector index out of range");
-      }
-SWIGINTERN void std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doRemoveRange(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint fromIndex,jint toIndex){
-        jint size = static_cast<jint>(self->size());
-        if (0 <= fromIndex && fromIndex <= toIndex && toIndex <= size) {
-          self->erase(self->begin() + fromIndex, self->begin() + toIndex);
-        } else {
-          throw std::out_of_range("vector index out of range");
-        }
-      }
 SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Icon > > *new_std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Icon_Sg__Sg___SWIG_2(jint count,std::shared_ptr< AdaptiveCards::Icon > const &value){
         if (count < 0)
           throw std::out_of_range("vector count must be positive");
@@ -1142,6 +1088,60 @@ SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Icon > >::value_type std
           throw std::out_of_range("vector index out of range");
       }
 SWIGINTERN void std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Icon_Sg__Sg__doRemoveRange(std::vector< std::shared_ptr< AdaptiveCards::Icon > > *self,jint fromIndex,jint toIndex){
+        jint size = static_cast<jint>(self->size());
+        if (0 <= fromIndex && fromIndex <= toIndex && toIndex <= size) {
+          self->erase(self->begin() + fromIndex, self->begin() + toIndex);
+        } else {
+          throw std::out_of_range("vector index out of range");
+        }
+      }
+SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Layout > > *new_std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg___SWIG_2(jint count,std::shared_ptr< AdaptiveCards::Layout > const &value){
+        if (count < 0)
+          throw std::out_of_range("vector count must be positive");
+        return new std::vector< std::shared_ptr< AdaptiveCards::Layout > >(static_cast<std::vector< std::shared_ptr< AdaptiveCards::Layout > >::size_type>(count), value);
+      }
+SWIGINTERN jint std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doSize(std::vector< std::shared_ptr< AdaptiveCards::Layout > > const *self){
+        return SWIG_VectorSize(self->size());
+      }
+SWIGINTERN void std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doAdd__SWIG_0(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type const &x){
+        self->push_back(x);
+      }
+SWIGINTERN void std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doAdd__SWIG_1(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint index,std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type const &x){
+        jint size = static_cast<jint>(self->size());
+        if (0 <= index && index <= size) {
+          self->insert(self->begin() + index, x);
+        } else {
+          throw std::out_of_range("vector index out of range");
+        }
+      }
+SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doRemove(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint index){
+        jint size = static_cast<jint>(self->size());
+        if (0 <= index && index < size) {
+          std::shared_ptr< AdaptiveCards::Layout > const old_value = (*self)[index];
+          self->erase(self->begin() + index);
+          return old_value;
+        } else {
+          throw std::out_of_range("vector index out of range");
+        }
+      }
+SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type const &std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doGet(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint index){
+        jint size = static_cast<jint>(self->size());
+        if (index >= 0 && index < size)
+          return (*self)[index];
+        else
+          throw std::out_of_range("vector index out of range");
+      }
+SWIGINTERN std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doSet(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint index,std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type const &val){
+        jint size = static_cast<jint>(self->size());
+        if (index >= 0 && index < size) {
+          std::shared_ptr< AdaptiveCards::Layout > const old_value = (*self)[index];
+          (*self)[index] = val;
+          return old_value;
+        }
+        else
+          throw std::out_of_range("vector index out of range");
+      }
+SWIGINTERN void std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doRemoveRange(std::vector< std::shared_ptr< AdaptiveCards::Layout > > *self,jint fromIndex,jint toIndex){
         jint size = static_cast<jint>(self->size());
         if (0 <= fromIndex && fromIndex <= toIndex && toIndex <= size) {
           self->erase(self->begin() + fromIndex, self->begin() + toIndex);
@@ -2342,6 +2342,12 @@ SWIGINTERN AdaptiveCards::NumberInput *AdaptiveCards_NumberInput_dynamic_cast(Ad
 SWIGINTERN AdaptiveCards::TextInput *AdaptiveCards_TextInput_dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement){
         return dynamic_cast<AdaptiveCards::TextInput *>(baseCardElement);
     }
+SWIGINTERN AdaptiveCards::FlowLayout *AdaptiveCards_FlowLayout_dynamic_cast(AdaptiveCards::Layout *layout){
+            return dynamic_cast<AdaptiveCards::FlowLayout *>(layout);
+        }
+SWIGINTERN AdaptiveCards::AreaGridLayout *AdaptiveCards_AreaGridLayout_dynamic_cast(AdaptiveCards::Layout *layout){
+            return dynamic_cast<AdaptiveCards::AreaGridLayout *>(layout);
+        }
 SWIGINTERN AdaptiveCards::RatingInput *AdaptiveCards_RatingInput_dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement){
             return dynamic_cast<AdaptiveCards::RatingInput *>(baseCardElement);
         }
@@ -5299,276 +5305,6 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1LayoutVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *)new std::vector< std::shared_ptr< AdaptiveCards::Layout > >();
-  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1LayoutVector_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1;
-  if (!arg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::shared_ptr< AdaptiveCards::Layout > > const & reference is null");
-    return 0;
-  } 
-  result = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *)new std::vector< std::shared_ptr< AdaptiveCards::Layout > >((std::vector< std::shared_ptr< AdaptiveCards::Layout > > const &)*arg1);
-  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1capacity(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::size_type result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  result = ((std::vector< std::shared_ptr< AdaptiveCards::Layout > > const *)arg1)->capacity();
-  jresult = (jlong)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1reserve(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::size_type arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  arg2 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > >::size_type)jarg2; 
-  try {
-    (arg1)->reserve(arg2);
-  } catch(std::length_error &_e) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
-    return ;
-  }
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1isEmpty(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  result = (bool)((std::vector< std::shared_ptr< AdaptiveCards::Layout > > const *)arg1)->empty();
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  (arg1)->clear();
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1LayoutVector_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jint jarg1, jlong jarg2, jobject jarg2_) {
-  jlong jresult = 0 ;
-  jint arg1 ;
-  std::shared_ptr< AdaptiveCards::Layout > *arg2 = 0 ;
-  std::shared_ptr< AdaptiveCards::Layout > tempnull2 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg2_;
-  arg1 = jarg1; 
-  arg2 = jarg2 ? *(std::shared_ptr< AdaptiveCards::Layout > **)&jarg2 : &tempnull2; 
-  try {
-    result = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *)new_std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg___SWIG_2(arg1,(std::shared_ptr< AdaptiveCards::Layout > const &)*arg2);
-  } catch(std::out_of_range &_e) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
-    return 0;
-  }
-  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jint jresult = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  jint result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  try {
-    result = std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doSize((std::vector< std::shared_ptr< AdaptiveCards::Layout > > const *)arg1);
-  } catch(std::out_of_range &_e) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
-    return 0;
-  }
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doAdd_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *arg2 = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type tempnull2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  arg2 = jarg2 ? *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jarg2 : &tempnull2; 
-  std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doAdd__SWIG_0(arg1,(std::shared_ptr< AdaptiveCards::Layout > const &)*arg2);
-}
-
-
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doAdd_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3, jobject jarg3_) {
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  jint arg2 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *arg3 = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type tempnull3 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg3_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  arg2 = jarg2; 
-  arg3 = jarg3 ? *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jarg3 : &tempnull3; 
-  try {
-    std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doAdd__SWIG_1(arg1,arg2,(std::shared_ptr< AdaptiveCards::Layout > const &)*arg3);
-  } catch(std::out_of_range &_e) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
-    return ;
-  }
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doRemove(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jlong jresult = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  jint arg2 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  arg2 = jarg2; 
-  try {
-    result = std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doRemove(arg1,arg2);
-  } catch(std::out_of_range &_e) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
-    return 0;
-  }
-  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jresult = result ? new std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type(result) : 0; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doGet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jlong jresult = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  jint arg2 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  arg2 = jarg2; 
-  try {
-    result = (std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *) &std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doGet(arg1,arg2);
-  } catch(std::out_of_range &_e) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
-    return 0;
-  }
-  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jresult = *result ? new std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type(*result) : 0; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3, jobject jarg3_) {
-  jlong jresult = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  jint arg2 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *arg3 = 0 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type tempnull3 ;
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg3_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  arg2 = jarg2; 
-  arg3 = jarg3 ? *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jarg3 : &tempnull3; 
-  try {
-    result = std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doSet(arg1,arg2,(std::shared_ptr< AdaptiveCards::Layout > const &)*arg3);
-  } catch(std::out_of_range &_e) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
-    return 0;
-  }
-  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jresult = result ? new std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type(result) : 0; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doRemoveRange(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  jint arg2 ;
-  jint arg3 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  arg2 = jarg2; 
-  arg3 = jarg3; 
-  try {
-    std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doRemoveRange(arg1,arg2,arg3);
-  } catch(std::out_of_range &_e) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
-    return ;
-  }
-}
-
-
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1LayoutVector(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
-  delete arg1;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1IconVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   std::vector< std::shared_ptr< AdaptiveCards::Icon > > *result = 0 ;
@@ -5835,6 +5571,276 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   (void)jenv;
   (void)jcls;
   arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Icon > > **)&jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1LayoutVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *)new std::vector< std::shared_ptr< AdaptiveCards::Layout > >();
+  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1LayoutVector_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1;
+  if (!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< std::shared_ptr< AdaptiveCards::Layout > > const & reference is null");
+    return 0;
+  } 
+  result = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *)new std::vector< std::shared_ptr< AdaptiveCards::Layout > >((std::vector< std::shared_ptr< AdaptiveCards::Layout > > const &)*arg1);
+  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1capacity(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::size_type result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  result = ((std::vector< std::shared_ptr< AdaptiveCards::Layout > > const *)arg1)->capacity();
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1reserve(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::size_type arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  arg2 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > >::size_type)jarg2; 
+  try {
+    (arg1)->reserve(arg2);
+  } catch(std::length_error &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return ;
+  }
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1isEmpty(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  result = (bool)((std::vector< std::shared_ptr< AdaptiveCards::Layout > > const *)arg1)->empty();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  (arg1)->clear();
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1LayoutVector_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jint jarg1, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
+  jint arg1 ;
+  std::shared_ptr< AdaptiveCards::Layout > *arg2 = 0 ;
+  std::shared_ptr< AdaptiveCards::Layout > tempnull2 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg2_;
+  arg1 = jarg1; 
+  arg2 = jarg2 ? *(std::shared_ptr< AdaptiveCards::Layout > **)&jarg2 : &tempnull2; 
+  try {
+    result = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *)new_std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg___SWIG_2(arg1,(std::shared_ptr< AdaptiveCards::Layout > const &)*arg2);
+  } catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return 0;
+  }
+  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  jint result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  try {
+    result = std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doSize((std::vector< std::shared_ptr< AdaptiveCards::Layout > > const *)arg1);
+  } catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return 0;
+  }
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doAdd_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *arg2 = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type tempnull2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  arg2 = jarg2 ? *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jarg2 : &tempnull2; 
+  std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doAdd__SWIG_0(arg1,(std::shared_ptr< AdaptiveCards::Layout > const &)*arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doAdd_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3, jobject jarg3_) {
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  jint arg2 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *arg3 = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type tempnull3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg3_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  arg2 = jarg2; 
+  arg3 = jarg3 ? *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jarg3 : &tempnull3; 
+  try {
+    std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doAdd__SWIG_1(arg1,arg2,(std::shared_ptr< AdaptiveCards::Layout > const &)*arg3);
+  } catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return ;
+  }
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doRemove(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jlong jresult = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  jint arg2 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  arg2 = jarg2; 
+  try {
+    result = std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doRemove(arg1,arg2);
+  } catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return 0;
+  }
+  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jresult = result ? new std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type(result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doGet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jlong jresult = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  jint arg2 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  arg2 = jarg2; 
+  try {
+    result = (std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *) &std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doGet(arg1,arg2);
+  } catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return 0;
+  }
+  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jresult = *result ? new std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type(*result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3, jobject jarg3_) {
+  jlong jresult = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  jint arg2 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type *arg3 = 0 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type tempnull3 ;
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg3_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  arg2 = jarg2; 
+  arg3 = jarg3 ? *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jarg3 : &tempnull3; 
+  try {
+    result = std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doSet(arg1,arg2,(std::shared_ptr< AdaptiveCards::Layout > const &)*arg3);
+  } catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return 0;
+  }
+  *(std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type **)&jresult = result ? new std::vector< std::shared_ptr< AdaptiveCards::Layout > >::value_type(result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_LayoutVector_1doRemoveRange(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  jint arg2 ;
+  jint arg3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
+  arg2 = jarg2; 
+  arg3 = jarg3; 
+  try {
+    std_vector_Sl_std_shared_ptr_Sl_AdaptiveCards_Layout_Sg__Sg__doRemoveRange(arg1,arg2,arg3);
+  } catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return ;
+  }
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1LayoutVector(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  std::vector< std::shared_ptr< AdaptiveCards::Layout > > *arg1 = (std::vector< std::shared_ptr< AdaptiveCards::Layout > > *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< std::shared_ptr< AdaptiveCards::Layout > > **)&jarg1; 
   delete arg1;
 }
 
@@ -23802,6 +23808,108 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_FlowLayout_1GetItemPixelWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  AdaptiveCards::FlowLayout *arg1 = (AdaptiveCards::FlowLayout *) 0 ;
+  std::shared_ptr< AdaptiveCards::FlowLayout const > *smartarg1 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::FlowLayout > **)&jarg1;
+  arg1 = (AdaptiveCards::FlowLayout *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (int)((AdaptiveCards::FlowLayout const *)arg1)->GetItemPixelWidth();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_FlowLayout_1SetItemPixelWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  AdaptiveCards::FlowLayout *arg1 = (AdaptiveCards::FlowLayout *) 0 ;
+  int arg2 ;
+  std::shared_ptr< AdaptiveCards::FlowLayout > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::FlowLayout > **)&jarg1;
+  arg1 = (AdaptiveCards::FlowLayout *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = (int)jarg2; 
+  (arg1)->SetItemPixelWidth(arg2);
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_FlowLayout_1GetMinItemPixelWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  AdaptiveCards::FlowLayout *arg1 = (AdaptiveCards::FlowLayout *) 0 ;
+  std::shared_ptr< AdaptiveCards::FlowLayout const > *smartarg1 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::FlowLayout > **)&jarg1;
+  arg1 = (AdaptiveCards::FlowLayout *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (int)((AdaptiveCards::FlowLayout const *)arg1)->GetMinItemPixelWidth();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_FlowLayout_1SetMinItemPixelWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  AdaptiveCards::FlowLayout *arg1 = (AdaptiveCards::FlowLayout *) 0 ;
+  int arg2 ;
+  std::shared_ptr< AdaptiveCards::FlowLayout > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::FlowLayout > **)&jarg1;
+  arg1 = (AdaptiveCards::FlowLayout *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = (int)jarg2; 
+  (arg1)->SetMinItemPixelWidth(arg2);
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_FlowLayout_1GetMaxItemPixelWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  AdaptiveCards::FlowLayout *arg1 = (AdaptiveCards::FlowLayout *) 0 ;
+  std::shared_ptr< AdaptiveCards::FlowLayout const > *smartarg1 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::FlowLayout > **)&jarg1;
+  arg1 = (AdaptiveCards::FlowLayout *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (int)((AdaptiveCards::FlowLayout const *)arg1)->GetMaxItemPixelWidth();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_FlowLayout_1SetMaxItemPixelWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  AdaptiveCards::FlowLayout *arg1 = (AdaptiveCards::FlowLayout *) 0 ;
+  int arg2 ;
+  std::shared_ptr< AdaptiveCards::FlowLayout > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::FlowLayout > **)&jarg1;
+  arg1 = (AdaptiveCards::FlowLayout *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = (int)jarg2; 
+  (arg1)->SetMaxItemPixelWidth(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_FlowLayout_1GetMinItemWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::FlowLayout *arg1 = (AdaptiveCards::FlowLayout *) 0 ;
@@ -24077,6 +24185,34 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   result = AdaptiveCards::FlowLayout::DeserializeFromString((std::string const &)*arg1);
   *(std::shared_ptr< AdaptiveCards::FlowLayout > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::FlowLayout >(result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_FlowLayout_1dynamic_1cast(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::Layout *arg1 = (AdaptiveCards::Layout *) 0 ;
+  std::shared_ptr< AdaptiveCards::Layout > *smartarg1 = 0 ;
+  AdaptiveCards::FlowLayout *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::Layout > **)&jarg1;
+  arg1 = (AdaptiveCards::Layout *)(smartarg1 ? smartarg1->get() : 0); 
+  {
+    result = (AdaptiveCards::FlowLayout *)AdaptiveCards_FlowLayout_dynamic_cast(arg1);
+    if (!result) {
+      jclass excep = jenv->FindClass("java/lang/ClassCastException");
+      if (excep) {
+        jenv->ThrowNew(excep, "dynamic_cast exception");
+      }
+    }
+  }
+  
+  *(std::shared_ptr<  AdaptiveCards::FlowLayout > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::FlowLayout >(result SWIG_NO_NULL_DELETER_0) : 0;
+  
   return jresult;
 }
 
@@ -24373,6 +24509,34 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   result = AdaptiveCards::AreaGridLayout::DeserializeFromString((std::string const &)*arg1);
   *(std::shared_ptr< AdaptiveCards::AreaGridLayout > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::AreaGridLayout >(result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_AreaGridLayout_1dynamic_1cast(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::Layout *arg1 = (AdaptiveCards::Layout *) 0 ;
+  std::shared_ptr< AdaptiveCards::Layout > *smartarg1 = 0 ;
+  AdaptiveCards::AreaGridLayout *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::Layout > **)&jarg1;
+  arg1 = (AdaptiveCards::Layout *)(smartarg1 ? smartarg1->get() : 0); 
+  {
+    result = (AdaptiveCards::AreaGridLayout *)AdaptiveCards_AreaGridLayout_dynamic_cast(arg1);
+    if (!result) {
+      jclass excep = jenv->FindClass("java/lang/ClassCastException");
+      if (excep) {
+        jenv->ThrowNew(excep, "dynamic_cast exception");
+      }
+    }
+  }
+  
+  *(std::shared_ptr<  AdaptiveCards::AreaGridLayout > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::AreaGridLayout >(result SWIG_NO_NULL_DELETER_0) : 0;
+  
   return jresult;
 }
 

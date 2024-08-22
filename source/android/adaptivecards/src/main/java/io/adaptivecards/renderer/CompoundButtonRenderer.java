@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +17,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
+
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayout;
+import com.google.android.flexbox.JustifyContent;
 
 import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.CompoundButton;
@@ -66,33 +71,40 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         String foregroundColor = hostConfig.GetForegroundColor(style, ForegroundColor.Default, false);
         String backgroundColor = hostConfig.GetBackgroundColor(style);
 
-        // Create a LinearLayout
-        LinearLayout layout = new LinearLayout(context);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT));
-        layout.setOrientation(LinearLayout.VERTICAL);
+        // Create a FlexboxLayout
+        FlexboxLayout flexboxLayout = new FlexboxLayout(context);
+        FlexboxLayout.LayoutParams flexboxLayoutParams = new FlexboxLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+
+        flexboxLayout.setLayoutParams(flexboxLayoutParams);
+        flexboxLayout.setFlexDirection(FlexDirection.COLUMN);
         int paddingPx = dpToPx(context, 16);
-        layout.setPadding(paddingPx, paddingPx, paddingPx, paddingPx);
+        flexboxLayout.setPadding(paddingPx, paddingPx, paddingPx, paddingPx);
+
+        // FlexboxLayout for header i.e. Icon, Title, Badge
+        FlexboxLayout headerLayout = new FlexboxLayout(context);
+        FlexboxLayout.LayoutParams headerLayoutParams = new FlexboxLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        headerLayout.setFlexDirection(FlexDirection.ROW); // Set direction to row
+        headerLayout.setFlexWrap(FlexWrap.WRAP); // Enable wrapping
+        headerLayout.setJustifyContent(JustifyContent.FLEX_START);
+        headerLayout.setAlignItems(AlignItems.CENTER);
+        headerLayout.setLayoutParams(headerLayoutParams);
 
         boolean isIconSet = compoundButton.getIcon() != null && !compoundButton.getIcon().GetName().isEmpty();
 
-        // Create the inner LinearLayout (horizontal orientation)
-        LinearLayout innerLayout = new LinearLayout(context);
-        innerLayout.setLayoutParams(new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT));
-        innerLayout.setOrientation(LinearLayout.HORIZONTAL);
-        innerLayout.setGravity(Gravity.CENTER_VERTICAL);
-
         // Optional Image View
         ImageView imageView = new ImageView(context);
-        imageView.setId(View.generateViewId());
-        LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT);
-        iconParams.setMarginEnd(dpToPx(context, 8));
-        imageView.setLayoutParams(iconParams);
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        imageLayoutParams.setMarginEnd(dpToPx(context, 8));
+        imageView.setLayoutParams(imageLayoutParams);
 
         if (!isIconSet) {
             imageView.setVisibility(View.GONE);
@@ -110,63 +122,62 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
             fluentIconImageLoaderAsync.execute(svgInfoURL);
         }
 
+        LinearLayout.LayoutParams titleLayoutParams = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        titleLayoutParams.setMarginEnd(dpToPx(context, 8));
+
         // Title TextView
         TextView titleTextView = new TextView(context);
-        titleTextView.setId(View.generateViewId());
-        LinearLayout.LayoutParams titleParams = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT);
-        titleParams.setMarginEnd(dpToPx(context, 8));
-        titleTextView.setLayoutParams(titleParams);
-        titleTextView.setEllipsize(TextUtils.TruncateAt.END);
-        titleTextView.setSingleLine(true);
-        titleTextView.setTypeface(null, Typeface.BOLD);
+        titleTextView.setLayoutParams(titleLayoutParams);
+        titleTextView.setText(compoundButton.getTitle());
+        titleTextView.setSingleLine();
         titleTextView.setTextSize(17);
         titleTextView.setTextColor(Color.parseColor(foregroundColor));
-        titleTextView.setText(compoundButton.getTitle());
+        titleTextView.setEllipsize(TextUtils.TruncateAt.END);
+        titleTextView.setTypeface(null, Typeface.BOLD);
 
         // Badge TextView
         TextView badgeTextView = new TextView(context);
-        badgeTextView.setId(View.generateViewId());
-        LinearLayout.LayoutParams badgeParams = new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams badgeLayoutParams = new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT);
-        badgeTextView.setLayoutParams(badgeParams);
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        badgeTextView.setLayoutParams(badgeLayoutParams);
         badgeTextView.setTextSize(12);
+        badgeTextView.setText(compoundButton.getBadge());
         badgeTextView.setTextColor(Color.parseColor(backgroundColor));
         badgeTextView.setBackground(createCustomDrawable(context, hostConfig.GetCompoundButtonConfig().getBadgeConfig().getBackgroundColor(), 12));
         badgeTextView.setPadding(dpToPx(context, 8), dpToPx(context, 3), dpToPx(context, 8), dpToPx(context, 3));
-        badgeTextView.setText(compoundButton.getBadge());
         if (compoundButton.getBadge().isEmpty()) {
             badgeTextView.setVisibility(View.GONE);
         }
 
-        // Add the ImageView and TextViews to the inner LinearLayout
-        innerLayout.addView(imageView);
-        innerLayout.addView(titleTextView);
-        innerLayout.addView(badgeTextView);
+        headerLayout.addView(imageView);
+        headerLayout.addView(titleTextView);
+        headerLayout.addView(badgeTextView);
+
+        flexboxLayout.addView(headerLayout);
 
         // Description TextView
         TextView descriptionTextView = new TextView(context);
-        descriptionTextView.setId(View.generateViewId());
-        LinearLayout.LayoutParams descriptionParams = new LinearLayout.LayoutParams(
+        FlexboxLayout.LayoutParams descriptionLayoutParams = new FlexboxLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT);
-        descriptionTextView.setLayoutParams(descriptionParams);
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        descriptionTextView.setLayoutParams(descriptionLayoutParams);
         descriptionTextView.setTextSize(15);
-        descriptionTextView.setTextColor(Color.parseColor(foregroundColor));
         descriptionTextView.setText(compoundButton.getDescription());
+        descriptionTextView.setTextColor(Color.parseColor(foregroundColor));
+        descriptionTextView.setLayoutParams(descriptionLayoutParams);
         if (compoundButton.getDescription().isEmpty()){
             descriptionTextView.setVisibility(View.GONE);
         }
 
-        // Add the inner LinearLayout and Description TextView to the root LinearLayout
-        layout.addView(innerLayout);
-        layout.addView(descriptionTextView);
-
-        layout.setBackground(createCustomOuterDrawable(context, hostConfig.GetCompoundButtonConfig().getBorderColor()));
-
-        return layout;
+        flexboxLayout.addView(descriptionTextView);
+        flexboxLayout.setBackground(createCustomOuterDrawable(context, hostConfig.GetCompoundButtonConfig().getBorderColor()));
+        return flexboxLayout;
     }
 
     public Drawable createCustomOuterDrawable(Context context, String borderColour) {
@@ -213,7 +224,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
     }
 
     // Helper method to convert dp to pixels
-    private int dpToPx(Context context, int dp) {
+    private int dpToPx(Context context,int dp) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
     }

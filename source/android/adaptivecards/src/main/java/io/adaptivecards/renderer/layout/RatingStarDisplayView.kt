@@ -9,9 +9,11 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.R
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.RatingColor
@@ -24,7 +26,7 @@ import io.adaptivecards.renderer.readonly.RatingElementRendererUtil
 /**
  * View to display the read only rating stars
  **/
-class RatingStarDisplayView: LinearLayout {
+class RatingStarDisplayView: FlexboxLayout {
 
     private var value: Double = 0.0
 
@@ -66,7 +68,8 @@ class RatingStarDisplayView: LinearLayout {
     }
 
     private fun initStars() {
-        orientation = HORIZONTAL
+        flexWrap = FlexWrap.WRAP
+        alignItems = AlignItems.CENTER
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
         when (style) {

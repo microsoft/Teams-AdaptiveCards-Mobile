@@ -67,6 +67,30 @@ public class FlowLayout extends Layout {
     AdaptiveCardObjectModelJNI.FlowLayout_SetItemWidth(swigCPtr, this, SWIGTYPE_p_std__optionalT_std__string_t.getCPtr(value));
   }
 
+  public int GetItemPixelWidth() {
+    return AdaptiveCardObjectModelJNI.FlowLayout_GetItemPixelWidth(swigCPtr, this);
+  }
+
+  public void SetItemPixelWidth(int value) {
+    AdaptiveCardObjectModelJNI.FlowLayout_SetItemPixelWidth(swigCPtr, this, value);
+  }
+
+  public int GetMinItemPixelWidth() {
+    return AdaptiveCardObjectModelJNI.FlowLayout_GetMinItemPixelWidth(swigCPtr, this);
+  }
+
+  public void SetMinItemPixelWidth(int value) {
+    AdaptiveCardObjectModelJNI.FlowLayout_SetMinItemPixelWidth(swigCPtr, this, value);
+  }
+
+  public int GetMaxItemPixelWidth() {
+    return AdaptiveCardObjectModelJNI.FlowLayout_GetMaxItemPixelWidth(swigCPtr, this);
+  }
+
+  public void SetMaxItemPixelWidth(int value) {
+    AdaptiveCardObjectModelJNI.FlowLayout_SetMaxItemPixelWidth(swigCPtr, this, value);
+  }
+
   public SWIGTYPE_p_std__optionalT_std__string_t GetMinItemWidth() {
     return new SWIGTYPE_p_std__optionalT_std__string_t(AdaptiveCardObjectModelJNI.FlowLayout_GetMinItemWidth(swigCPtr, this), true);
   }
@@ -126,6 +150,11 @@ public class FlowLayout extends Layout {
 
   public static FlowLayout DeserializeFromString(String jsonString) {
     long cPtr = AdaptiveCardObjectModelJNI.FlowLayout_DeserializeFromString(jsonString);
+    return (cPtr == 0) ? null : new FlowLayout(cPtr, true);
+  }
+
+  public static FlowLayout dynamic_cast(Layout layout) {
+    long cPtr = AdaptiveCardObjectModelJNI.FlowLayout_dynamic_cast(Layout.getCPtr(layout), layout);
     return (cPtr == 0) ? null : new FlowLayout(cPtr, true);
   }
 

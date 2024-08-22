@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import io.adaptivecards.adaptivecardssample.CustomObjects.FeatureFlagResolver;
 import io.adaptivecards.objectmodel.*;
 import io.adaptivecards.renderer.AdaptiveCardRenderer;
 import io.adaptivecards.renderer.IOnlineImageLoader;
@@ -326,6 +327,10 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         }
     }
 
+    private void registerFeatureFlagResolver() {
+        CardRendererRegistration.getInstance().registerFeatureFlagResolver(new FeatureFlagResolver());
+    }
+
     private void registerCustomFeatures()
     {
         registerCustomImageLoaders();
@@ -365,6 +370,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
             layout.removeAllViews();
 
+            registerFeatureFlagResolver();
             registerCustomFeatures();
             if (mLayoutWidth != 0) {
                 CardRendererRegistration.getInstance().registerHostCardContainer(mLayoutWidth);
