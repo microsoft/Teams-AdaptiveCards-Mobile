@@ -39,12 +39,16 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
-public class ColumnRenderer extends BaseCardElementRenderer {
-    protected ColumnRenderer() {
+public class ColumnRenderer extends BaseCardElementRenderer
+{
+    protected ColumnRenderer()
+    {
     }
 
-    public static ColumnRenderer getInstance() {
-        if (s_instance == null) {
+    public static ColumnRenderer getInstance()
+    {
+        if (s_instance == null)
+        {
             s_instance = new ColumnRenderer();
         }
 
@@ -57,42 +61,51 @@ public class ColumnRenderer extends BaseCardElementRenderer {
      * @param column The Column element
      * @return weight, or null if width is not relative
      */
-    static @Nullable Float getRelativeWidth(Column column) {
-        try {
+    static @Nullable Float getRelativeWidth(Column column)
+    {
+        try
+        {
             String columnSize = column.GetWidth().toLowerCase(Locale.getDefault());
             return Float.parseFloat(columnSize);
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex)
+        {
             return null;
         }
     }
 
-    private ViewGroup setColumnWidth(RenderedAdaptiveCard renderedCard, Context context, Column column, ViewGroup columnLayout) {
+    private ViewGroup setColumnWidth(RenderedAdaptiveCard renderedCard, Context context, Column column, ViewGroup columnLayout)
+    {
         String columnSize = column.GetWidth().toLowerCase(Locale.getDefault());
         long pixelWidth = column.GetPixelWidth();
         Float relativeWidth = ColumnRenderer.getRelativeWidth(column);
 
         FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(0, FlexboxLayout.LayoutParams.MATCH_PARENT);
 
-        if (pixelWidth != 0) {
+        if (pixelWidth != 0)
+        {
             layoutParams.setFlexGrow(0);
             layoutParams.setFlexShrink(0);
             layoutParams.setWidth(Util.dpToPixels(context, pixelWidth));
-        } else if (relativeWidth != null) {
+        } else if (relativeWidth != null)
+        {
             // Set ratio to column
             layoutParams.setFlexGrow(relativeWidth);
             layoutParams.setFlexShrink(1);
             layoutParams.setFlexBasisPercent(0);
-        } else if (TextUtils.isEmpty(columnSize) || columnSize.equals(g_columnSizeStretch)) {
+        } else if (TextUtils.isEmpty(columnSize) || columnSize.equals(g_columnSizeStretch))
+        {
             layoutParams.setFlexGrow(1);
             layoutParams.setFlexShrink(1);
             layoutParams.setFlexBasisPercent(0);
-        } else {
+        } else
+        {
             // If the width is Auto or is not valid (not weight, pixel, empty or stretch)
             layoutParams.setFlexGrow(0);
             layoutParams.setFlexShrink(1);
             layoutParams.setWidth(FlexboxLayout.LayoutParams.WRAP_CONTENT);
 
-            if (!columnSize.equals(g_columnSizeAuto)) {
+            if (!columnSize.equals(g_columnSizeAuto))
+            {
                 renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.INVALID_COLUMN_WIDTH_VALUE, "Column Width (" + column.GetWidth() + ") is not a valid weight ('auto', 'stretch', <integer>)."));
             }
         }
@@ -109,7 +122,8 @@ public class ColumnRenderer extends BaseCardElementRenderer {
         BaseCardElement baseCardElement,
         ICardActionHandler cardActionHandler,
         HostConfig hostConfig,
-        RenderArgs renderArgs) throws Exception {
+        RenderArgs renderArgs) throws Exception
+    {
         Column column = Util.castTo(baseCardElement, Column.class);
 
         Layout layoutToApply = getLayoutToApply(column, hostConfig);
@@ -117,7 +131,7 @@ public class ColumnRenderer extends BaseCardElementRenderer {
 
         // TODO: Check compatibility with model on top
         // Spacing between elements in a Layout.Flow is solely controlled by the columnSpacing and rowSpacing properties
-        // provided by the flow layout. The spacing properties on items are ignored.
+        // provided by the flow layout. The spacing and separator properties on items are ignored.
         View separator = null;
         boolean isFlowLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow;
         if (!isFlowLayout) {
@@ -136,8 +150,10 @@ public class ColumnRenderer extends BaseCardElementRenderer {
         columnRenderArgs.setContainerStyle(styleForThis);
         columnRenderArgs.setHorizontalAlignment(HorizontalAlignment.Left);
         columnRenderArgs.setAncestorHasSelectAction(renderArgs.getAncestorHasSelectAction() || (column.GetSelectAction() != null));
-        if (!column.GetItems().isEmpty()) {
-            try {
+        if (!column.GetItems().isEmpty())
+        {
+            try
+            {
                 CardRendererRegistration.getInstance().renderElements(renderedCard,
                     context,
                     fragmentManager,
@@ -152,7 +168,8 @@ public class ColumnRenderer extends BaseCardElementRenderer {
                     ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, columnLayout);
                 }
 
-            } catch (AdaptiveFallbackException e) {
+            } catch (AdaptiveFallbackException e)
+            {
                 // If the column couldn't be rendered, the separator is removed
                 if (separator != null) {
                     viewGroup.removeView(separator);
