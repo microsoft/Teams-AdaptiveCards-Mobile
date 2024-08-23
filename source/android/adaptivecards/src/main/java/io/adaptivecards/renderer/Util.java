@@ -758,15 +758,30 @@ public final class Util {
     }
 
     public static boolean isFlowLayoutEnabled() {
-        return CardRendererRegistration.getInstance().getFeatureFlagResolver().getEcsSettingAsBoolean(IS_FLOW_LAYOUT_ENABLED);
+        IFeatureFlagResolver featureFlagResolver = CardRendererRegistration.getInstance().getFeatureFlagResolver();
+        if (featureFlagResolver != null) {
+            return featureFlagResolver.getEcsSettingAsBoolean(IS_FLOW_LAYOUT_ENABLED);
+        } else {
+            return false;
+        }
     }
 
     public static boolean isGridLayoutEnabled() {
-        return CardRendererRegistration.getInstance().getFeatureFlagResolver().getEcsSettingAsBoolean(IS_GRID_LAYOUT_ENABLED);
+        IFeatureFlagResolver featureFlagResolver = CardRendererRegistration.getInstance().getFeatureFlagResolver();
+        if (featureFlagResolver != null) {
+            return featureFlagResolver.getEcsSettingAsBoolean(IS_GRID_LAYOUT_ENABLED);
+        } else {
+            return false;
+        }
     }
 
     public static boolean isItemFitToFillEnabledForColumn() {
-        return CardRendererRegistration.getInstance().getFeatureFlagResolver().getEcsSettingAsBoolean(IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN);
+        IFeatureFlagResolver featureFlagResolver = CardRendererRegistration.getInstance().getFeatureFlagResolver();
+        if (featureFlagResolver != null) {
+            return featureFlagResolver.getEcsSettingAsBoolean(IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN);
+        } else {
+            return false;
+        }
     }
 
     private static final String FLUENT_ICON_URL_PREFIX = "icon:";
