@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.flexbox.FlexboxLayout;
+
 import java.util.HashMap;
 
 import io.adaptivecards.objectmodel.ActionType;
@@ -659,7 +661,7 @@ public class CardRendererRegistration
                 }
             }
 
-            if (targetLayout.GetLayoutContainerType() == LayoutContainerType.Flow) {
+            if (targetLayout.GetLayoutContainerType() == LayoutContainerType.Flow && container instanceof FlexboxLayout) {
                 inputLayout.setLayoutParams(Util.generateLayoutParamsForFlowLayoutItems(context, targetLayout, hostConfig));
             }
             container.addView(inputLayout);

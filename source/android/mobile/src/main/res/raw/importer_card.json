@@ -16,24 +16,24 @@
                                 "type": "Input.ChoiceSet",
                                 "choices": [
 									{
-										"title": "InputsFlowLayout.json",
-										"value": "v1.5/Scenarios/InputsFlowLayout.json"
-									},
-									{
-										"title": "NestedFlowLayout.json",
-										"value": "v1.5/Scenarios/NestedFlowLayout.json"
-									},
-									{
-										"title": "AdaptiveCardStackLayout.json",
-										"value": "v1.5/Scenarios/AdaptiveCardStackLayout.json"
-									},
-									{
-										"title": "AdaptiveCardFlowLayout.json",
+										"title": "AdaptiveCardFlowLayout",
 										"value": "v1.5/Scenarios/AdaptiveCardFlowLayout.json"
+									},
+									{
+										"title": "FlowLayoutWithInputElements",
+										"value": "v1.5/Scenarios/AdaptiveCardFlowLayoutWithInputElements.json"
+									},
+									{
+										"title": "NestedFlowLayout",
+										"value": "v1.5/Scenarios/NestedFlowLayout.json"
 									},
 									{
 										"title": "ContainerFlowLayout",
 										"value": "v1.5/Scenarios/ContainerFlowLayout.json"
+									},
+									{
+										"title": "RatingInputsFlowLayout",
+										"value": "v1.5/Scenarios/RatingInputsFlowLayout.json"
 									},
 									{
 										"title": "SingleColumnFlowLayout",
@@ -44,7 +44,7 @@
 										"value": "v1.5/Scenarios/MultiColumnFlowLayout.json"
 									},
 									{
-										"title": "ColumnSetWithDifferentWidths",
+										"title": "DifferentWidthsColumnSetFlowLayout",
 										"value": "v1.5/Scenarios/ColumnSetWithDifferentWidths.json"
 									},
 									{

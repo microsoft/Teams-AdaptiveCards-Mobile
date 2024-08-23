@@ -41,7 +41,8 @@
 					"width": "2",
 					"layouts": [
 						{
-							"type": "Layout.Flow"
+							"type": "Layout.Flow",
+							"maxItemWidth": "150px"
 						}
 					],
 					"items": [

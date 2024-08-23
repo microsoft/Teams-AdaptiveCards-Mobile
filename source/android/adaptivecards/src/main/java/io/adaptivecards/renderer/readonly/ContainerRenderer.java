@@ -37,11 +37,13 @@ import io.adaptivecards.objectmodel.Container;
 import io.adaptivecards.objectmodel.ContainerBleedDirection;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.ExecuteAction;
+import io.adaptivecards.objectmodel.FlowLayout;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.HostWidth;
 import io.adaptivecards.objectmodel.HostWidthConfig;
+import io.adaptivecards.objectmodel.ItemFit;
 import io.adaptivecards.objectmodel.Layout;
 import io.adaptivecards.objectmodel.LayoutContainerType;
 import io.adaptivecards.objectmodel.LayoutVector;
@@ -53,7 +55,6 @@ import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.BackgroundImageLoaderAsync;
 import io.adaptivecards.renderer.BaseActionElementRenderer;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
-import io.adaptivecards.renderer.IFeatureFlagResolver;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
@@ -129,6 +130,8 @@ public class ContainerRenderer extends BaseCardElementRenderer
                                                               hostConfig,
                                                               containerRenderArgs,
                                                               layoutToApply);
+
+                applyItemFillForFlowLayout(layoutToApply, containerView);
             }
             catch (AdaptiveFallbackException e)
             {
@@ -267,6 +270,20 @@ public class ContainerRenderer extends BaseCardElementRenderer
                 GradientDrawable gradientDrawable = new GradientDrawable();
                 gradientDrawable.setCornerRadius(cornerRadiusInPixels);
                 collectionElementView.setBackground(gradientDrawable);
+            }
+        }
+    }
+
+    public static void applyItemFillForFlowLayout(Layout layoutToApply, ViewGroup flexboxLayout) {
+        if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
+            for (int i = 0; i < flexboxLayout.getChildCount(); i++) {
+                FlowLayout flowLayout = Util.castTo(layoutToApply, FlowLayout.class);
+                View child = flexboxLayout.getChildAt(i);
+                FlexboxLayout.LayoutParams layoutParams = (FlexboxLayout.LayoutParams) child.getLayoutParams();
+                if (flowLayout.GetItemFit() == ItemFit.Fill) {
+                    layoutParams.setFlexGrow(1f);
+                }
+                child.setLayoutParams(layoutParams);
             }
         }
     }

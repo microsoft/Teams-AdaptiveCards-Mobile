@@ -218,9 +218,6 @@ public final class Util {
         if (maxItemWidth != valueNotDefinedIndicator) {
             params.setMaxWidth(maxItemWidth);
         }
-        if (flowLayout.GetItemFit() == ItemFit.Fill) {
-            params.setFlexGrow(1f);
-        }
         return params;
     }
 
@@ -773,9 +770,14 @@ public final class Util {
         return CardRendererRegistration.getInstance().getFeatureFlagResolver().getEcsSettingAsBoolean(IS_GRID_LAYOUT_ENABLED);
     }
 
+    public static boolean isItemFitToFillEnabledForColumn() {
+        return CardRendererRegistration.getInstance().getFeatureFlagResolver().getEcsSettingAsBoolean(IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN);
+    }
+
     private static final String FLUENT_ICON_URL_PREFIX = "icon:";
-    private static final String IS_FLOW_LAYOUT_ENABLED = "adaptiveCard/isFlowLayoutEnabled";
-    private static final String IS_GRID_LAYOUT_ENABLED = "adaptiveCard/isGridLayoutEnabled";
+    public static final String IS_FLOW_LAYOUT_ENABLED = "adaptiveCard/isFlowLayoutEnabled";
+    public static final String IS_GRID_LAYOUT_ENABLED = "adaptiveCard/isGridLayoutEnabled";
+    public static final String IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN = "adaptiveCard/isItemFitToFillEnabledForColumn";
 
     public static String getOpenUrlAnnouncement(Context context, String urlTitle) {
         return context.getResources().getString(R.string.open_url_announcement, urlTitle);

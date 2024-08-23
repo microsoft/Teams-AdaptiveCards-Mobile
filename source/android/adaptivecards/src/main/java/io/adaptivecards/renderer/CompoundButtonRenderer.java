@@ -74,7 +74,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         // Create a FlexboxLayout
         FlexboxLayout flexboxLayout = new FlexboxLayout(context);
         FlexboxLayout.LayoutParams flexboxLayoutParams = new FlexboxLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         );
 

@@ -80,6 +80,8 @@ object TableCellRenderer : BaseCardElementRenderer() {
             },
             layoutToApply)
 
+        ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, cellLayout)
+
         viewGroup.addView(cellLayout)
         return cellLayout
     }

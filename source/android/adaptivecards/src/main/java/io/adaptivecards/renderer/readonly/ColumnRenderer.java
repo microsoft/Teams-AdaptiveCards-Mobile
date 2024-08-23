@@ -148,6 +148,10 @@ public class ColumnRenderer extends BaseCardElementRenderer {
                     columnRenderArgs,
                     layoutToApply);
 
+                if (Util.isItemFitToFillEnabledForColumn()) {
+                    ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, columnLayout);
+                }
+
             } catch (AdaptiveFallbackException e) {
                 // If the column couldn't be rendered, the separator is removed
                 if (separator != null) {

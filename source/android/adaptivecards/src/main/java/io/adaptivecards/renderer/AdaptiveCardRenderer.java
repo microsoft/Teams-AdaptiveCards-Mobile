@@ -189,6 +189,7 @@ public class AdaptiveCardRenderer
             FlexboxLayout flexboxLayout = getFlexboxContainerForLayout(context);
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
             renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, flexboxLayout, renderArgs, layoutToApply);
+            ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, flexboxLayout);
             cardLayout.addView(flexboxLayout);
         } else {
             renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, cardLayout, renderArgs, layoutToApply);
