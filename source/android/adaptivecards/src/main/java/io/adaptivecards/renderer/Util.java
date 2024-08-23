@@ -221,11 +221,6 @@ public final class Util {
         return params;
     }
 
-    /**
-     * The optional string conversion using SWIG is not working as expected.
-     * If the value is not defined, the value is set to "NAN" in the object model.
-     * This method checks if the value is defined or not in the JSON.
-     **/
     private static boolean isValueDefined(int inputValue) {
         int undefinedValueIndicator = -1;
         return inputValue != undefinedValueIndicator;
