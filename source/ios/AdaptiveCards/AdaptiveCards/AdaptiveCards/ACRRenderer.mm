@@ -13,6 +13,7 @@
 #import "ACRColumnSetView.h"
 #import "ACRColumnView.h"
 #import "ACRContentHoldingUIScrollView.h"
+#import "ARCGridViewLayout.h"
 #import "ACRImageRenderer.h"
 #import "ACRRegistration.h"
 #import "ACRRegistrationPrivate.h"
@@ -22,6 +23,10 @@
 #import "ACRViewController.h"
 #import "ACRViewPrivate.h"
 #import "UtiliOS.h"
+#import "ACRLayoutHelper.h"
+#import "ACRFlowLayout.h"
+#import "FlowLayout.h"
+#import "AreaGridLayout.h""
 
 using namespace AdaptiveCards;
 
@@ -75,6 +80,8 @@ using namespace AdaptiveCards;
                      containingView:(ACRColumnView *)containingView
                          hostconfig:(ACOHostConfig *)config
 {
+    ACRLayoutHelper *layoutHelper = [[ACRLayoutHelper alloc] init];
+    [layoutHelper distributeWidth:[[ACRRegistration getInstance] getHostCardContainer] rootView:rootView forElement:adaptiveCard andHostConfig:config];
     std::vector<std::shared_ptr<BaseCardElement>> body = adaptiveCard->GetBody();
     ACRColumnView *verticalView = containingView;
 
@@ -122,9 +129,42 @@ using namespace AdaptiveCards;
 
     [rootView addBaseCardElementListToConcurrentQueue:body registration:[ACRRegistration getInstance]];
     
+    std::shared_ptr<Layout> final_layout = [layoutHelper layoutToApplyFrom:adaptiveCard->GetLayouts() andHostConfig:config];
+    ARCGridViewLayout *gridLayout;
+    if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
+    {
+        std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
+        // layout using flow layout
+    }
+    else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
+    {
+        std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
+        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                             style:style
+                                                       parentStyle:style
+                                                        hostConfig:config
+                                                         superview:containingView];
+        [ACRRenderer render:gridLayout
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:body
+              andHostConfig:config];
+    }
+    else
+    {
+        // default stack based layout
+    }
+    
     @try {
         
-        [ACRRenderer render:verticalView rootView:rootView inputs:inputs withCardElems:body andHostConfig:config];
+        if(gridLayout != nil)
+        {
+            [verticalView addArrangedSubview:gridLayout];
+        }
+        else
+        {
+            [ACRRenderer render:verticalView rootView:rootView inputs:inputs withCardElems:body andHostConfig:config];
+        }
         
         [verticalView configureLayoutAndVisibility:GetACRVerticalContentAlignment(adaptiveCard->GetVerticalContentAlignment())
                                          minHeight:adaptiveCard->GetMinHeight()
@@ -185,7 +225,8 @@ using namespace AdaptiveCards;
 
     for (const auto &elem : elems) {
         ACRSeparator *separator = nil;
-        if (*firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
+        BOOL isGridView = ([view isKindOfClass:[ARCGridViewLayout class]]);
+        if (!isGridView && *firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
             separator = [ACRSeparator renderSeparation:elem
                                           forSuperview:view
                                         withHostConfig:[config getHostConfig]];
@@ -209,7 +250,7 @@ using namespace AdaptiveCards;
                 continue;
             }
 
-            renderedView = [renderer render:view rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:config];
+            renderedView = [renderer render:view rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:config]; //--
 
             [view updateLayoutAndVisibilityOfRenderedView:renderedView acoElement:acoElem separator:separator rootView:rootView];
 

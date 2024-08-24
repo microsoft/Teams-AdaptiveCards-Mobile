@@ -5,11 +5,13 @@
 //  Copyright © 2017 Microsoft. All rights reserved.
 //
 
+#import "ACOParseContext.h"
 #import "ACRImageRenderer.h"
 #import "ACOBaseCardElementPrivate.h"
 #import "ACOHostConfigPrivate.h"
 #import "ACRColumnView.h"
 #import "ACRContentHoldingUIView.h"
+#import "ARCGridViewLayout.h"
 #import "ACRImageProperties.h"
 #import "ACRTapGestureRecognizerFactory.h"
 #import "ACRUIImageView.h"
@@ -18,6 +20,7 @@
 #import "Image.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import <Foundation/Foundation.h>
 
 @implementation ACRImageRenderer
 
@@ -80,8 +83,14 @@
     if (!backgroundColor.empty()) {
         view.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:imgElem->GetBackgroundColor()];
     }
+    if ([viewGroup isKindOfClass:[ARCGridViewLayout class]]) {
+//        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
 
-    [viewGroup addArrangedSubview:wrappingView];
+        [viewGroup addArrangedSubview:wrappingView withAreaName:areaName];
+    } else {
+        [viewGroup addArrangedSubview:wrappingView];
+    }
 
     switch (imageProps.acrHorizontalAlignment) {
         case ACRCenter:

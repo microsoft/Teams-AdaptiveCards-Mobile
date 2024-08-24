@@ -25,6 +25,7 @@
 #import "ACRCompoundButtonRenderer.h"
 #import "ACRUILabel.h"
 #import "UtiliOS.h"
+#import "ARCGridViewLayout.h"
 
 @implementation ACRCompoundButtonRenderer
 
@@ -94,7 +95,14 @@
     std::shared_ptr<BaseActionElement> selectAction = compoundButton->GetSelectAction();
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, verticalStack, viewGroup);
-    [viewGroup addArrangedSubview:verticalStack];
+//    [viewGroup addArrangedSubview:verticalStack];
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    NSLog(@"%@ areaName", areaName);
+    if (areaName != nil && ![areaName isEqualToString:@""] && [viewGroup isKindOfClass:[ARCGridViewLayout class]]) {
+        [viewGroup addArrangedSubview:verticalStack withAreaName:areaName];
+    } else {
+        [viewGroup addArrangedSubview:verticalStack];
+    }
     
     verticalStack.accessibilityLabel = @(compoundButton->getTitle().c_str());
     

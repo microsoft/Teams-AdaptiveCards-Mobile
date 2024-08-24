@@ -12,6 +12,10 @@
 #import "ACRTableCellView.h"
 #import "TableCell.h"
 #import "UtiliOS.h"
+#import "FlowLayout.h"
+#import "AreaGridLayout.h"
+#import "ARCGridViewLayout.h"
+#import "ACRLayoutHelper.h"
 
 @implementation ACRTableCellRenderer
 
@@ -35,18 +39,50 @@
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     auto cellElement = std::dynamic_pointer_cast<TableCell>(elem);
-
+    ARCGridViewLayout *gridLayout;
+    //Layout
+    std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:cellElement->GetLayouts() andHostConfig:acoConfig];
+    if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
+    {
+        std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
+        // layout using flow layout
+    }
+    else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
+    {
+        std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
+        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                             style:(ACRContainerStyle)cellElement->GetStyle()
+                                                       parentStyle:[viewGroup style]
+                                                        hostConfig:acoConfig
+                                                         superview:viewGroup];
+        [ACRRenderer render:gridLayout
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:cellElement->GetItems()
+              andHostConfig:acoConfig];
+    }
+    else
+    {
+        // default stack based layout
+    }
     ACRColumnView *cell = (ACRColumnView *)viewGroup;
 
     cell.rtl = rootView.context.rtl;
 
     renderBackgroundImage(cellElement->GetBackgroundImage(), cell, rootView);
 
-    [ACRRenderer render:cell
-               rootView:rootView
-                 inputs:inputs
-          withCardElems:cellElement->GetItems()
-          andHostConfig:acoConfig];
+    if(gridLayout)
+    {
+        [cell addArrangedSubview:gridLayout];
+    }
+    else
+    {
+        [ACRRenderer render:cell
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:cellElement->GetItems()
+              andHostConfig:acoConfig];
+    }
 
     [cell setClipsToBounds:NO];
 

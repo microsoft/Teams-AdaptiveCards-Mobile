@@ -18,6 +18,7 @@
 #import "MarkDownParser.h"
 #import "TextBlock.h"
 #import "UtiliOS.h"
+#import "ARCGridViewLayout.h"
 
 @implementation ACRTextBlockRenderer
 
@@ -149,7 +150,13 @@
     
     configRtl(lab, rootView.context);
     
-    [viewGroup addArrangedSubview:lab];
+//    [viewGroup addArrangedSubview:lab];
+    if ([viewGroup isKindOfClass:[ARCGridViewLayout class]]) {
+        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+        [viewGroup addArrangedSubview:lab withAreaName:areaName];
+    } else {
+        [viewGroup addArrangedSubview:lab];
+    }
 
     return lab;
 }

@@ -16,6 +16,8 @@
 #import "UtiliOS.h"
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
+#import "ARCGridViewLayout.h"
+#import "ACRLayoutHelper.h"
 
 @implementation ACRContainerRenderer
 
@@ -40,7 +42,8 @@
     std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
     
     //Layout
-    std::shared_ptr<Layout> final_layout = [self finalLayoutToApply:acoElem config:acoConfig];
+    std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:containerElem->GetLayouts() andHostConfig:acoConfig];
+    ARCGridViewLayout *gridLayout;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
@@ -49,7 +52,16 @@
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
-        // layout using Area Grid
+        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                             style:(ACRContainerStyle)containerElem->GetStyle()
+                                                       parentStyle:[viewGroup style]
+                                                        hostConfig:acoConfig
+                                                         superview:viewGroup];
+        [ACRRenderer render:gridLayout
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:containerElem->GetItems()
+              andHostConfig:acoConfig];
     }
     else
     {
@@ -65,7 +77,13 @@
                                                           superview:viewGroup];
     container.rtl = rootView.context.rtl;
 
-    [viewGroup addArrangedSubview:container];
+    // For Area Grid
+    if ([viewGroup isKindOfClass:[ARCGridViewLayout class]]) {
+        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+        [viewGroup addArrangedSubview:container withAreaName:areaName];
+    } else {
+        [viewGroup addArrangedSubview:container];
+    }
     
     [self configureBorderForElement:acoElem container:container config:acoConfig];
 
@@ -75,11 +93,15 @@
 
     container.frame = viewGroup.frame;
 
-    [ACRRenderer render:container
-               rootView:rootView
-                 inputs:inputs
-          withCardElems:containerElem->GetItems()
-          andHostConfig:acoConfig];
+    if (gridLayout != nil) {
+        [container addArrangedSubview:gridLayout];
+    } else {
+        [ACRRenderer render:container
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:containerElem->GetItems()
+              andHostConfig:acoConfig];
+    }
 
     [container setClipsToBounds:NO];
 
@@ -96,47 +118,8 @@
 
     container.accessibilityElements = [container getArrangedSubviews];
 
+//    return [[UIView alloc] init];
     return container;
-}
-
--(std::shared_ptr<Layout>)finalLayoutToApply:(ACOBaseCardElement *)acoElem config:(ACOHostConfig *)acoConfig
-{
-    std::shared_ptr<BaseCardElement> elem = [acoElem element];
-    std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
-    ACRRegistration *reg = [ACRRegistration getInstance];
-    HostWidthConfig hostWidthConfig = [acoConfig getHostConfig]->getHostWidth();
-    HostWidth hostWidth = convertHostCardContainerToHostWidth([reg getHostCardContainer], hostWidthConfig);
-    std::vector<std::shared_ptr<Layout>> layoutArray = containerElem->GetLayouts();
-    std::shared_ptr<Layout> final_layout;
-    if (const auto& layoutArray = containerElem->GetLayouts(); !layoutArray.empty())
-    {
-        for (const auto& layout : layoutArray)
-        {
-            if(layout->GetLayoutContainerType() == LayoutContainerType::None)
-            {
-                continue;
-            }
-            
-            if(layout->MeetsTargetWidthRequirement(hostWidth))
-            {
-                final_layout = layout;
-                break;
-            }
-            else if (layout->GetTargetWidth() == TargetWidthType::Default)
-            {
-                final_layout = layout;
-            }
-        }
-    }
-    
-    if (final_layout == nullptr)
-    {
-        final_layout = std::make_shared<Layout>();
-        final_layout->SetLayoutContainerType(LayoutContainerType::Stack);
-        final_layout->SetTargetWidth(TargetWidthType::Default);
-    }
-    
-    return final_layout;
 }
 
 - (void)configUpdateForUIImageView:(ACRView *)rootView acoElem:(ACOBaseCardElement *)acoElem config:(ACOHostConfig *)acoConfig image:(UIImage *)image imageView:(UIImageView *)imageView

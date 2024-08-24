@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include "TableCell.h"
+#include "FlowLayout.h"
+#include "AreaGridLayout.h"
 
 using namespace AdaptiveCards;
 
@@ -22,6 +24,23 @@ std::shared_ptr<TableCell> TableCell::DeserializeTableCell(ParseContext& context
     auto cell = StyledCollectionElement::Deserialize<TableCell>(context, value);
     cell->SetRtl(ParseUtil::GetOptionalBool(value, AdaptiveCardSchemaKey::Rtl));
 
+    if (const auto& layoutArray = ParseUtil::GetArray(value, AdaptiveCardSchemaKey::Layouts, false); !layoutArray.empty())
+    {
+        auto& layouts = cell->GetLayouts();
+        for (const auto& layoutJson : layoutArray)
+        {
+            std::shared_ptr<Layout> layout = Layout::Deserialize(layoutJson);
+            if(layout->GetLayoutContainerType() == LayoutContainerType::Flow)
+            {
+                layouts.push_back(FlowLayout::Deserialize(layoutJson));
+            }
+            else if (layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
+            {
+                layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
+            }
+        }
+    }
+    
     context.PopElement();
 
     return cell;
