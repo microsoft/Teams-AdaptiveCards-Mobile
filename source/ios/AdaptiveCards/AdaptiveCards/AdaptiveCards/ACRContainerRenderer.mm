@@ -49,30 +49,31 @@
     ACRFlowLayout *flowContainer;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
-        std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
-        // layout using flow layout
-        flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
-                                                            style:(ACRContainerStyle)containerElem->GetStyle()
-                                                      parentStyle:[viewGroup style]
-                                                       hostConfig:acoConfig
-                                                         maxWidth:widthOfElement
-                                                        superview:viewGroup];
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+        BOOL isFlowLayoutEnabled = [featureFlagResolver boolForFlag:@"isFlowLayoutEnabled"] ?: NO;
         
-        [ACRRenderer renderInFlow:flowContainer
-                         rootView:rootView
-                           inputs:inputs
-                    withCardElems:containerElem->GetItems()
-                    andHostConfig:acoConfig];
-        
+        if(isFlowLayoutEnabled)
+        {
+            std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
+            // layout using flow layout
+            flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
+                                                                style:(ACRContainerStyle)containerElem->GetStyle()
+                                                          parentStyle:[viewGroup style]
+                                                           hostConfig:acoConfig
+                                                             maxWidth:widthOfElement
+                                                            superview:viewGroup];
+            
+            [ACRRenderer renderInFlow:flowContainer
+                             rootView:rootView
+                               inputs:inputs
+                        withCardElems:containerElem->GetItems()
+                        andHostConfig:acoConfig];
+        }
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
         // layout using Area Grid
-    }
-    else
-    {
-        // default stack based layout
     }
 
     ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()

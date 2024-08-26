@@ -132,30 +132,31 @@ using namespace AdaptiveCards;
     ACRFlowLayout *flowContainer;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
-        std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
-        // layout using flow layout
-        flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
-                                                            style:style
-                                                      parentStyle:style
-                                                       hostConfig:config
-                                                         maxWidth:[[ACRRegistration getInstance] getHostCardContainer]
-                                                        superview:containingView];
-        
-        [ACRRenderer renderInFlow:flowContainer
-                         rootView:rootView
-                           inputs:inputs
-                    withCardElems:body
-                    andHostConfig:config];
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+        BOOL isFlowLayoutEnabled = [featureFlagResolver boolForFlag:@"isFlowLayoutEnabled"] ?: NO;
+        if (isFlowLayoutEnabled)
+        {
+            std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
+            // layout using flow layout
+            flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
+                                                                style:style
+                                                          parentStyle:style
+                                                           hostConfig:config
+                                                             maxWidth:[[ACRRegistration getInstance] getHostCardContainer]
+                                                            superview:containingView];
+            
+            [ACRRenderer renderInFlow:flowContainer
+                             rootView:rootView
+                               inputs:inputs
+                        withCardElems:body
+                        andHostConfig:config];
+        }
         
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
         // layout using Area Grid
-    }
-    else
-    {
-        // default stack based layout
     }
     
     @try {
