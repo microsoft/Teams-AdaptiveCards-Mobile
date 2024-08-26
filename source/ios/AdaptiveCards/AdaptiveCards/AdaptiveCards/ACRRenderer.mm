@@ -24,9 +24,8 @@
 #import "ACRViewPrivate.h"
 #import "UtiliOS.h"
 #import "ACRLayoutHelper.h"
-#import "ACRFlowLayout.h"
 #import "FlowLayout.h"
-#import "AreaGridLayout.h""
+#import "AreaGridLayout.h"
 
 using namespace AdaptiveCards;
 

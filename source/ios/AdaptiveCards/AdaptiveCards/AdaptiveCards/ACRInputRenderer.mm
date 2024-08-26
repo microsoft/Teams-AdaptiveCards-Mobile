@@ -175,7 +175,8 @@
             }
     }
 
-    [viewGroup addArrangedSubview:inputview];
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:inputview withAreaName:areaName];
 
     inputview.translatesAutoresizingMaskIntoConstraints = false;
 

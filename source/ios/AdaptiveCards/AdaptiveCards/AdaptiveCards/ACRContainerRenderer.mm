@@ -77,13 +77,8 @@
                                                           superview:viewGroup];
     container.rtl = rootView.context.rtl;
 
-    // For Area Grid
-    if ([viewGroup isKindOfClass:[ARCGridViewLayout class]]) {
-        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
-        [viewGroup addArrangedSubview:container withAreaName:areaName];
-    } else {
-        [viewGroup addArrangedSubview:container];
-    }
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:container withAreaName:areaName];
     
     [self configureBorderForElement:acoElem container:container config:acoConfig];
 

@@ -28,7 +28,8 @@
     if (self) {
         std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
         std::shared_ptr<Table> table = std::dynamic_pointer_cast<Table>([acoElement element]);
-        [viewGroup addArrangedSubview:self];
+        NSString *areaName = [NSString stringWithCString:table->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+        [viewGroup addArrangedSubview:self withAreaName:areaName];
         _columnDefinitions = [[NSMutableArray alloc] init];
         _showGridLines = table->GetShowGridLines();
         _gridStyle = [viewGroup style];

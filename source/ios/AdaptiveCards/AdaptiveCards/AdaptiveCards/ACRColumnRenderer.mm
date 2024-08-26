@@ -129,14 +129,8 @@
 
     column.shouldGroupAccessibilityChildren = YES;
 
-//    [viewGroup addArrangedSubview:column];
-    // Now can't use this for Area Grid
-    if ([viewGroup isKindOfClass:[ARCGridViewLayout class]]) {
-        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
-        [viewGroup addArrangedSubview:column withAreaName:areaName];
-    } else {
-        [viewGroup addArrangedSubview:column];
-    }
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:column withAreaName:areaName];
 
     // viewGroup and column has to be in view hierarchy before configBleed is called
     configBleed(rootView, elem, column, acoConfig, viewGroup);

@@ -275,6 +275,11 @@ using namespace AdaptiveCards;
 
 - (void)addArrangedSubview:(UIView *)view withAreaName:(NSString *)areaName
 {
+    // If areaName is not available, we can't add the view
+    if (areaName == nil || [areaName isEqualToString:@""])
+    {
+        return;
+    }
     [_viewSubViews addObject:view];
     UIView *area = _viewsByAreaName[areaName];
     [area addSubview:view];

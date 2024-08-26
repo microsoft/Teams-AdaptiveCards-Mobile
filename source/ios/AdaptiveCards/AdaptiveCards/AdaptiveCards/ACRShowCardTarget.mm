@@ -103,8 +103,8 @@
     [backgroundView.topAnchor constraintEqualToAnchor:adcView.layoutMarginsGuide.topAnchor].active = YES;
     [backgroundView.bottomAnchor constraintEqualToAnchor:adcView.layoutMarginsGuide.bottomAnchor].active = YES;
     _adcView.hidden = YES;
-
-    [superview addArrangedSubview:adcView];
+    // TODO: AreaName not found
+    [superview addArrangedSubview:adcView withAreaName:nil];
     _superview = superview;
     superview.accessibilityElements = [((ACRContentStackView *)superview) getArrangedSubviews];
 }

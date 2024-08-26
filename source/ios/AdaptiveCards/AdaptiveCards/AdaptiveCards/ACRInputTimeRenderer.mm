@@ -43,7 +43,8 @@
     UIView *renderedview = inputLabelView;
 
     if (viewGroup) {
-        [viewGroup addArrangedSubview:renderedview];
+        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+        [viewGroup addArrangedSubview:renderedview withAreaName:areaName];
     }
 
     [inputs addObject:renderedview];

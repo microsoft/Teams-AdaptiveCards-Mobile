@@ -83,14 +83,8 @@
     if (!backgroundColor.empty()) {
         view.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:imgElem->GetBackgroundColor()];
     }
-    if ([viewGroup isKindOfClass:[ARCGridViewLayout class]]) {
-//        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
-        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
-
-        [viewGroup addArrangedSubview:wrappingView withAreaName:areaName];
-    } else {
-        [viewGroup addArrangedSubview:wrappingView];
-    }
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:wrappingView withAreaName:areaName];
 
     switch (imageProps.acrHorizontalAlignment) {
         case ACRCenter:
@@ -109,7 +103,7 @@
 
     // added padding to strech for image view because stretching ImageView is not desirable
     if (imgElem->GetHeight() == HeightType::Stretch) {
-        [viewGroup addArrangedSubview:[viewGroup addPaddingFor:wrappingView]];
+        [viewGroup addArrangedSubview:[viewGroup addPaddingFor:wrappingView] withAreaName:areaName];
     }
 
     [wrappingView.widthAnchor constraintGreaterThanOrEqualToAnchor:view.widthAnchor].active = YES;
