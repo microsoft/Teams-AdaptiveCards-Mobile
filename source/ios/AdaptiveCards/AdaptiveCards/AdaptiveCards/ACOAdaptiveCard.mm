@@ -56,41 +56,115 @@ using namespace AdaptiveCards;
     return _inputs;
 }
 
-+ (ACOAdaptiveCardParseResult *)fromJson:(NSString *)payload;
-{
++ (NSString *)correctInvalidJsonEscapes:(NSString *)payload {
+    NSError *regexError = nil;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\\\+\\.)"
+                                                                           options:0
+                                                                             error:&regexError];
+    if (regexError != nil) {
+        NSLog(@"Regex Error: %@", regexError.localizedDescription);
+        return payload; // Return the original payload if regex creation fails
+    }
+    
+    NSMutableString *mutablePayload = [payload mutableCopy];
+
+    // Replace matches with the correct number of escaped backslashes
+    [regex enumerateMatchesInString:payload
+                            options:0
+                              range:NSMakeRange(0, payload.length)
+                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+        if (match.range.length > 0) {
+            NSString *matchedString = [payload substringWithRange:match.range];
+            NSString *replacementString = [matchedString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+            [mutablePayload replaceCharactersInRange:match.range withString:replacementString];
+        }
+    }];
+
+    return [mutablePayload copy];
+}
+
++ (BOOL)isValidJson:(NSString *)jsonString error:(NSError **)error {
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    if (!jsonData) {
+        return NO;
+    }
+
+    [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:error];
+    return (*error == nil);
+}
+
+
++ (ACOAdaptiveCardParseResult *)fromJson:(NSString *)payload {
     const std::string g_version = "1.6";
     ACOAdaptiveCardParseResult *result = nil;
     if (payload) {
-        try {
-            ACOAdaptiveCard *card = [[ACOAdaptiveCard alloc] init];
-            NSString *processedPayload = [payload stringByReplacingOccurrencesOfString:@"\\." withString:@"\\\\."];
-            std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([processedPayload UTF8String]), g_version);
-            NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
-            std::vector<std::shared_ptr<AdaptiveCardParseWarning>> parseWarnings = parseResult->GetWarnings();
-            for (const auto &warning : parseWarnings) {
-                ACRParseWarning *acrParseWarning = [[ACRParseWarning alloc] initWithParseWarning:warning];
-                [acrParseWarnings addObject:acrParseWarning];
-            }
-            card->_adaptiveCard = parseResult->GetAdaptiveCard();
-            if (card && card->_adaptiveCard) {
-                card->_refresh = [[ACORefresh alloc] init:card->_adaptiveCard->GetRefresh()];
-                card->_authentication = [[ACOAuthentication alloc] init:card->_adaptiveCard->GetAuthentication()];
-            }
-            result = [[ACOAdaptiveCardParseResult alloc] init:card errors:nil warnings:acrParseWarnings];
-        } catch (const AdaptiveCardParseException &e) {
-            // converts AdaptiveCardParseException to NSError
-            ErrorStatusCode errorStatusCode = e.GetStatusCode();
-            NSInteger errorCode = (long)errorStatusCode;
-            NSBundle *adaptiveCardsBundle = [[ACOBundle getInstance] getBundle];
-            NSString *localizedFormat = NSLocalizedStringFromTableInBundle(@"AdaptiveCards.Parsing", nil, adaptiveCardsBundle, "Parsing Error Messages");
-            NSString *objectModelErrorCodeInString = [NSString stringWithCString:ErrorStatusCodeToString(errorStatusCode).c_str() encoding:NSUTF8StringEncoding];
-            NSDictionary<NSErrorUserInfoKey, id> *userInfo = @{NSLocalizedDescriptionKey : [NSString localizedStringWithFormat:localizedFormat, objectModelErrorCodeInString]};
-            NSError *parseError = [NSError errorWithDomain:ACRParseErrorDomain
-                                                      code:errorCode
-                                                  userInfo:userInfo];
-            NSArray<NSError *> *errors = @[ parseError ];
+        NSError *jsonError = nil;
 
-            result = [[ACOAdaptiveCardParseResult alloc] init:nil errors:errors warnings:nil];
+        // First, check if the JSON is valid
+        if (![self isValidJson:payload error:&jsonError]) {
+            NSLog(@"Initial JSON Deserialization Error: %@", jsonError.localizedDescription);
+            jsonError = nil;
+
+            // Attempt to fix the JSON using regex replacement
+            NSString *processedPayload = [self correctInvalidJsonEscapes:payload];
+
+            // Check if the corrected JSON is valid
+            if (![self isValidJson:processedPayload error:&jsonError]) {
+                NSLog(@"JSON Deserialization Error after fix: %@", jsonError.localizedDescription);
+                return result; // Return nil result if JSON is still invalid
+            }
+
+            // Update payload to the corrected version
+            payload = processedPayload;
+        }
+
+        // If JSON is valid or fixed, convert to NSData
+        NSData *jsonData = [payload dataUsingEncoding:NSUTF8StringEncoding];
+
+        // Deserialize JSON data to NSDictionary/NSArray
+        id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&jsonError];
+
+        if (jsonObject != nil) {
+            // Re-serialize the object to JSON data
+            jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:&jsonError];
+            if (jsonError == nil && jsonData != nil) {
+                // Convert back to NSString
+                NSString *escapedPayload = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                
+                try {
+                    ACOAdaptiveCard *card = [[ACOAdaptiveCard alloc] init];
+                    std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([escapedPayload UTF8String]), g_version);
+                    NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
+                    std::vector<std::shared_ptr<AdaptiveCardParseWarning>> parseWarnings = parseResult->GetWarnings();
+                    for (const auto &warning : parseWarnings) {
+                        ACRParseWarning *acrParseWarning = [[ACRParseWarning alloc] initWithParseWarning:warning];
+                        [acrParseWarnings addObject:acrParseWarning];
+                    }
+                    card->_adaptiveCard = parseResult->GetAdaptiveCard();
+                    if (card && card->_adaptiveCard) {
+                        card->_refresh = [[ACORefresh alloc] init:card->_adaptiveCard->GetRefresh()];
+                        card->_authentication = [[ACOAuthentication alloc] init:card->_adaptiveCard->GetAuthentication()];
+                    }
+                    result = [[ACOAdaptiveCardParseResult alloc] init:card errors:nil warnings:acrParseWarnings];
+                } catch (const AdaptiveCardParseException &e) {
+                    // Converts AdaptiveCardParseException to NSError
+                    ErrorStatusCode errorStatusCode = e.GetStatusCode();
+                    NSInteger errorCode = (long)errorStatusCode;
+                    NSBundle *adaptiveCardsBundle = [[ACOBundle getInstance] getBundle];
+                    NSString *localizedFormat = NSLocalizedStringFromTableInBundle(@"AdaptiveCards.Parsing", nil, adaptiveCardsBundle, "Parsing Error Messages");
+                    NSString *objectModelErrorCodeInString = [NSString stringWithCString:ErrorStatusCodeToString(errorStatusCode).c_str() encoding:NSUTF8StringEncoding];
+                    NSDictionary<NSErrorUserInfoKey, id> *userInfo = @{NSLocalizedDescriptionKey : [NSString localizedStringWithFormat:localizedFormat, objectModelErrorCodeInString]};
+                    NSError *parseError = [NSError errorWithDomain:ACRParseErrorDomain
+                                                              code:errorCode
+                                                          userInfo:userInfo];
+                    NSArray<NSError *> *errors = @[ parseError ];
+
+                    result = [[ACOAdaptiveCardParseResult alloc] init:nil errors:errors warnings:nil];
+                }
+            } else {
+                // Handle JSON serialization error
+                NSLog(@"JSON Serialization Error: %@", jsonError.localizedDescription);
+            }
         }
     }
     return result;
