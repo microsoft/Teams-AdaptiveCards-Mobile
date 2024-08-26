@@ -78,7 +78,6 @@
     ACRContentHoldingUIView *wrappingview = [[ACRContentHoldingUIView alloc] init];
     wrappingview.translatesAutoresizingMaskIntoConstraints = NO;
 
-    // TODO: AreaName not found
     [viewGroup addArrangedSubview:wrappingview withAreaName:nil];
 
     [wrappingview addSubview:progressView];
