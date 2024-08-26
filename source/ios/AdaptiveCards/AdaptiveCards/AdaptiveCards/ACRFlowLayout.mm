@@ -30,6 +30,8 @@ using namespace AdaptiveCards;
     std::shared_ptr<FlowLayout> _layout;
     CGFloat _rowSpacing;
     CGFloat _columnSpacing;
+    NSInteger _numberOfItems;
+    UIView *_lastItem;
 }
 
 - (instancetype)initWithFlowLayout:(std::shared_ptr<AdaptiveCards::FlowLayout> const &)flowLayout
@@ -49,6 +51,9 @@ using namespace AdaptiveCards;
         _remainingRowSpace = _availableRowSpace;
         _rowSpacing = getSpacing(_layout->GetRowSpacing(), config);
         _columnSpacing = getSpacing(_layout->GetColumnSpacing(), config);
+        _targets = [[NSMutableArray alloc] init];
+        _showcardTargets = [[NSMutableArray alloc] init];
+        _numberOfItems = 0;
         if (style != ACRNone &&
             style != parentStyle) {
             self.backgroundColor = [acoConfig getBackgroundColorForContainerStyle:_style];
@@ -107,7 +112,7 @@ using namespace AdaptiveCards;
 {
     UIStackView *stackView = [[UIStackView alloc] init];
     stackView.axis = UILayoutConstraintAxisHorizontal;
-    stackView.alignment = UIStackViewAlignmentLeading;
+    stackView.alignment = UIStackViewAlignmentFill;
     stackView.distribution = UIStackViewDistributionFill;
     stackView.spacing = _columnSpacing;
     stackView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -210,35 +215,43 @@ using namespace AdaptiveCards;
         [self addNewRowWithView:view];
         _remainingRowSpace = _availableRowSpace - (sizeForView + _columnSpacing);
     }
+    _numberOfItems += 1;
+    _lastItem = view;
 }
 
 - (void)insertArrangedSubview:(UIView *)view atIndex:(NSUInteger)insertionIndex
 {
-    
+    //not supported
 }
 
 - (void)removeLastViewFromArrangedSubview
 {
-    
+    //not supported
 }
 
 - (void)removeAllArrangedSubviews
 {
-    
+    //not supported
 }
 
 - (void)addTarget:(NSObject *)target
 {
-    
+    [_targets addObject:target];
+
+    if ([target isKindOfClass:[ACRShowCardTarget class]]) {
+        [_showcardTargets addObject:(ACRShowCardTarget *)target];
+    }
 }
+
 - (void)configureForSelectAction:(ACOBaseActionElement *)action rootView:(ACRView *)rootView
 {
-    
+    // This is already handled in ACRContentStackView
+    // Any new layout is also added inside ACRContentStackView
 }
 
 - (void)adjustHuggingForLastElement
 {
-    
+    //not supported
 }
 
 - (ACRContainerStyle)style
@@ -248,27 +261,29 @@ using namespace AdaptiveCards;
 
 - (void)setStyle:(ACRContainerStyle)stye
 {
-    
+    _style = stye;
 }
 
 - (void)hideAllShowCards
 {
-    
+    for (ACRShowCardTarget *target in _showcardTargets) {
+        [target hideShowCard];
+    }
 }
 
 - (NSUInteger)subviewsCounts
 {
-    return 10;
+    return _numberOfItems;
 }
 
 - (NSUInteger)arrangedSubviewsCounts
 {
-    return 10;
+    return _numberOfItems;
 }
 
 - (UIView *)getLastSubview
 {
-    return  self;
+    return _lastItem;
 }
 
 - (void)updateLayoutAndVisibilityOfRenderedView:(UIView *)renderedView
@@ -276,7 +291,7 @@ using namespace AdaptiveCards;
                                       separator:(ACRSeparator *)separator
                                        rootView:(ACRView *)rootView
 {
-    
+    // We don't have separators in flow container, so this is not supported
 }
 
 - (UIView *)addPaddingFor:(UIView *)view
@@ -286,12 +301,12 @@ using namespace AdaptiveCards;
 
 - (void)decreaseIntrinsicContentSize:(UIView *)view
 {
-    
+    //not supported
 }
 
 - (void)increaseIntrinsicContentSize:(UIView *)view
 {
-    
+    //not supported
 }
 
 

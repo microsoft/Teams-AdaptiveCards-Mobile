@@ -9,7 +9,7 @@
                 {
                     "type": "Layout.Flow",
                     "minItemWidth": "150px",
-                    "itemWidth": "200px"
+                    "itemWidth": "180px"
                 }
             ],
             "items": [

@@ -77,7 +77,6 @@
     UILabel* descriptionLabel = [self getDescriptionLabelWithText:compoundButton->getDescription()
                                                            viewGroup:viewGroup
                                                           hostConfig:acoConfig];
-    
 
    
     
@@ -102,7 +101,7 @@
         [verticalStack.leadingAnchor constraintEqualToAnchor:compoundButtonView.leadingAnchor constant:16],
         [verticalStack.trailingAnchor constraintEqualToAnchor:compoundButtonView.trailingAnchor constant:-16],
         [verticalStack.topAnchor constraintEqualToAnchor:compoundButtonView.topAnchor constant:16],
-        [verticalStack.bottomAnchor constraintEqualToAnchor:compoundButtonView.bottomAnchor constant:-16]
+        [verticalStack.bottomAnchor constraintLessThanOrEqualToAnchor:compoundButtonView.bottomAnchor constant:-16]
     ]];
 
     configRtl(compoundButtonView, rootView.context);
