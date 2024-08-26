@@ -113,7 +113,6 @@
 
     container.accessibilityElements = [container getArrangedSubviews];
 
-//    return [[UIView alloc] init];
     return container;
 }
 

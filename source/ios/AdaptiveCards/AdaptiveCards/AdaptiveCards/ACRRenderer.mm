@@ -249,7 +249,7 @@ using namespace AdaptiveCards;
                 continue;
             }
 
-            renderedView = [renderer render:view rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:config]; //--
+            renderedView = [renderer render:view rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:config];
 
             [view updateLayoutAndVisibilityOfRenderedView:renderedView acoElement:acoElem separator:separator rootView:rootView];
 
