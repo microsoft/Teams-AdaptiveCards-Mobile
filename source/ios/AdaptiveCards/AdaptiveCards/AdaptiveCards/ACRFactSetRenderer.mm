@@ -207,8 +207,8 @@
     if (!nValidFacts) {
         return nil;
     }
-
-    [viewGroup addArrangedSubview:factSetWrapperView];
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:factSetWrapperView withAreaName:areaName];
 
     return factSetWrapperView;
 }

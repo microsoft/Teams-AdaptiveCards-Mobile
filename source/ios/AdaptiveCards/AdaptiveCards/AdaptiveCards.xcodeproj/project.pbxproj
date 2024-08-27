@@ -25,6 +25,10 @@
 		0D34862D261C606D00614EB9 /* ACOActionOverflow.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D3485EC26180E9900614EB9 /* ACOActionOverflow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0D45F59B2617319D00EF03C5 /* ACRActionOverflowRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D45F59A2617319D00EF03C5 /* ACRActionOverflowRenderer.mm */; };
 		0D45F5A7261731E400EF03C5 /* ACRActionOverflowRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D45F5A6261731E400EF03C5 /* ACRActionOverflowRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D993BEE2C788D3300B4D1C6 /* ARCGridViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D993BED2C788D3300B4D1C6 /* ARCGridViewLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */; };
+		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
+		0D993BF42C7A11E000B4D1C6 /* ACRLayoutHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D993BF22C7A11E000B4D1C6 /* ACRLayoutHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		300ECB63219A12D100371DC5 /* AdaptiveBase64Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300ECB61219A12D100371DC5 /* AdaptiveBase64Util.cpp */; };
 		300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
@@ -549,6 +553,10 @@
 		0D3485F026180F8F00614EB9 /* ACOActionOverflow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOActionOverflow.mm; sourceTree = "<group>"; };
 		0D45F59A2617319D00EF03C5 /* ACRActionOverflowRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRActionOverflowRenderer.mm; sourceTree = "<group>"; };
 		0D45F5A6261731E400EF03C5 /* ACRActionOverflowRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRActionOverflowRenderer.h; sourceTree = "<group>"; };
+		0D993BED2C788D3300B4D1C6 /* ARCGridViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCGridViewLayout.h; sourceTree = "<group>"; };
+		0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ARCGridViewLayout.mm; sourceTree = "<group>"; };
+		0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRLayoutHelper.mm; sourceTree = "<group>"; };
+		0D993BF22C7A11E000B4D1C6 /* ACRLayoutHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRLayoutHelper.h; sourceTree = "<group>"; };
 		0E46B8FBE57A09301765F779 /* Pods-Fluent-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCardsTests/Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1829,6 +1837,10 @@
 				F4C1F5ED1F2BB2810018CB78 /* ACRIContentHoldingView.h */,
 				6BFF240B2714E3D100183C59 /* ACRSeparator.h */,
 				F4D33EA41F06F41B00941E44 /* ACRSeparator.mm */,
+				0D993BED2C788D3300B4D1C6 /* ARCGridViewLayout.h */,
+				0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */,
+				0D993BF22C7A11E000B4D1C6 /* ACRLayoutHelper.h */,
+				0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -1962,6 +1974,7 @@
 				F4FE456E1F1985200071D9E5 /* ACRColumnSetView.h in Headers */,
 				F42E51751FEC3840008F9642 /* MarkDownHtmlGenerator.h in Headers */,
 				F42E51731FEC3840008F9642 /* MarkDownParsedResult.h in Headers */,
+				0D993BF42C7A11E000B4D1C6 /* ACRLayoutHelper.h in Headers */,
 				F42979471F322C9000E89914 /* ACRNumericTextField.h in Headers */,
 				F42E51791FEC3840008F9642 /* MarkDownParser.h in Headers */,
 				6B268FE720CF19E200D99C1B /* RemoteResourceInformation.h in Headers */,
@@ -2075,6 +2088,7 @@
 				6BFF240E2714E42800183C59 /* ACRTableCellView.h in Headers */,
 				6BFF23FB2714C0F000183C59 /* ACOTokenExchangeResourcePrivate.h in Headers */,
 				4608EE892BF5C1AB00543095 /* ACRRatingLabelRenderer.h in Headers */,
+				0D993BEE2C788D3300B4D1C6 /* ARCGridViewLayout.h in Headers */,
 				6B250FB2253F5F8F007FFCFB /* ACRTargetBuilder.h in Headers */,
 				6B8C76432641D8D6009548FA /* InternalId.h in Headers */,
 				6BDE5C4226FEA7DC003A1DDB /* ACROverflowTarget.h in Headers */,
@@ -2461,6 +2475,7 @@
 				F44873051EE2261F00FCAFAE /* Container.cpp in Sources */,
 				6BC30F7921E6E49E00B9FAAE /* ACRCustomActionRenderer.mm in Sources */,
 				6B22427A220BAC8B000ACDA1 /* pch.cpp in Sources */,
+				0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */,
 				F44873181EE2261F00FCAFAE /* NumberInput.cpp in Sources */,
 				F4960C052051FE8200780566 /* ACRView.mm in Sources */,
 				6B5D240E212C89E70010EB07 /* ACORemoteResourceInformation.mm in Sources */,
@@ -2485,6 +2500,7 @@
 				F44872F91EE2261F00FCAFAE /* BaseCardElement.cpp in Sources */,
 				F427410B1EF864A900399FBB /* ACRBaseCardElementRenderer.mm in Sources */,
 				F43660781F0706D800EBA868 /* SharedAdaptiveCard.cpp in Sources */,
+				0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */,
 				CFF954D329819B4A00F321C3 /* ACOTypeaheadDynamicChoicesService.mm in Sources */,
 				6B7B1A9120B4D2AB00260731 /* Media.cpp in Sources */,
 				7EDC0F68213878E800077A13 /* SemanticVersion.cpp in Sources */,

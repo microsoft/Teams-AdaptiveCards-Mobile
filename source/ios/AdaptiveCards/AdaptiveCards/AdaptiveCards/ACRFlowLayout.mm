@@ -194,7 +194,7 @@ using namespace AdaptiveCards;
     return widthForItem;
 }
 
-- (void)addArrangedSubview:(UIView *)view
+- (void)addArrangedSubview:(UIView *)view withAreaName:(NSString *)areaName
 {
     CGSize fittingSize = [view systemLayoutSizeFittingSize:UILayoutFittingExpandedSize];
     CGFloat sizeForView = [self sizeForView:view fittingSize:fittingSize];

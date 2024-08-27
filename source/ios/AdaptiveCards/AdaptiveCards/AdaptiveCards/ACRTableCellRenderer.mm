@@ -16,7 +16,7 @@
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
 #import "ACRFlowLayout.h"
-#import "ACRLayoutHelper.h"
+#import "ARCGridViewLayout.h"
 
 @implementation ACRTableCellRenderer
 
@@ -44,6 +44,7 @@
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:cellElement->GetLayouts() andHostConfig:acoConfig];
     ACRFlowLayout *flowContainer;
+    ARCGridViewLayout *gridLayout;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
@@ -65,14 +66,21 @@
                         withCardElems:cellElement->GetItems()
                         andHostConfig:acoConfig];
         }
-        
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
-        // layout using Area Grid
+        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                             style:(ACRContainerStyle)cellElement->GetStyle()
+                                                       parentStyle:[viewGroup style]
+                                                        hostConfig:acoConfig
+                                                         superview:viewGroup];
+        [ACRRenderer render:gridLayout
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:cellElement->GetItems()
+              andHostConfig:acoConfig];
     }
-
     ACRColumnView *cell = (ACRColumnView *)viewGroup;
 
     cell.rtl = rootView.context.rtl;
@@ -83,6 +91,10 @@
     {
         [cell addArrangedSubview:flowContainer];
     }
+    else if(gridLayout)
+    {
+        [cell addArrangedSubview:gridLayout];
+    }
     else
     {
         [ACRRenderer render:cell
@@ -91,8 +103,6 @@
               withCardElems:cellElement->GetItems()
               andHostConfig:acoConfig];
     }
-
-    
 
     [cell setClipsToBounds:NO];
 

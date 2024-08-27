@@ -237,7 +237,8 @@
 
     configRtl(lab, rootView.context);
 
-    [viewGroup addArrangedSubview:lab];
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:lab withAreaName:areaName];
 
     return lab;
 }

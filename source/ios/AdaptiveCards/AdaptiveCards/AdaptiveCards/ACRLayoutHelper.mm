@@ -135,7 +135,7 @@ using namespace AdaptiveCards;
     {
         return NO;
     }
-    
+
     std::shared_ptr<AdaptiveCards::Layout> layout = [self layoutToApplyFrom:card->GetLayouts() andHostConfig:config];
     
     BOOL isFlow = (layout->GetLayoutContainerType() == LayoutContainerType::Flow);

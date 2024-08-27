@@ -24,6 +24,7 @@
 #import "ACRCompoundButtonRenderer.h"
 #import "ACRUILabel.h"
 #import "UtiliOS.h"
+#import "ARCGridViewLayout.h"
 
 @implementation ACRCompoundButtonRenderer
 
@@ -110,7 +111,8 @@
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, compoundButtonView, viewGroup);
     compoundButtonView.accessibilityLabel = @(compoundButton->getTitle().c_str());
-    [viewGroup addArrangedSubview:compoundButtonView];
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:compoundButtonView withAreaName:areaName];
     return compoundButtonView;
 }
 

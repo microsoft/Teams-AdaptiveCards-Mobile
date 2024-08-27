@@ -13,6 +13,7 @@
 #import "ACRColumnSetView.h"
 #import "ACRColumnView.h"
 #import "ACRContentHoldingUIScrollView.h"
+#import "ARCGridViewLayout.h"
 #import "ACRImageRenderer.h"
 #import "ACRRegistration.h"
 #import "ACRRegistrationPrivate.h"
@@ -24,6 +25,7 @@
 #import "UtiliOS.h"
 #import "ACRLayoutHelper.h"
 #import "ACRFlowLayout.h"
+#import "FlowLayout.h"
 #import "AreaGridLayout.h"
 
 using namespace AdaptiveCards;
@@ -80,7 +82,7 @@ using namespace AdaptiveCards;
 {
     ACRLayoutHelper *layoutHelper = [[ACRLayoutHelper alloc] init];
     [layoutHelper distributeWidth:[[ACRRegistration getInstance] getHostCardContainer] rootView:rootView forElement:adaptiveCard andHostConfig:config];
-                                     
+
     std::vector<std::shared_ptr<BaseCardElement>> body = adaptiveCard->GetBody();
     ACRColumnView *verticalView = containingView;
 
@@ -130,6 +132,7 @@ using namespace AdaptiveCards;
     
     std::shared_ptr<Layout> final_layout = [layoutHelper layoutToApplyFrom:adaptiveCard->GetLayouts() andHostConfig:config];
     ACRFlowLayout *flowContainer;
+    ARCGridViewLayout *gridLayout;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
@@ -151,12 +154,21 @@ using namespace AdaptiveCards;
                         withCardElems:body
                         andHostConfig:config];
         }
-        
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
         // layout using Area Grid
+        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                             style:style
+                                                       parentStyle:style
+                                                        hostConfig:config
+                                                         superview:containingView];
+        [ACRRenderer render:gridLayout
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:body
+              andHostConfig:config];
     }
     
     @try {
@@ -164,6 +176,10 @@ using namespace AdaptiveCards;
         if(flowContainer != nil)
         {
             [verticalView addArrangedSubview:flowContainer];
+        }
+        else if(gridLayout != nil)
+        {
+            [verticalView addArrangedSubview:gridLayout];
         }
         else
         {
@@ -291,7 +307,8 @@ using namespace AdaptiveCards;
 
     for (const auto &elem : elems) {
         ACRSeparator *separator = nil;
-        if (*firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
+        BOOL isGridView = ([view isKindOfClass:[ARCGridViewLayout class]]);
+        if (!isGridView && *firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
             separator = [ACRSeparator renderSeparation:elem
                                           forSuperview:view
                                         withHostConfig:[config getHostConfig]];

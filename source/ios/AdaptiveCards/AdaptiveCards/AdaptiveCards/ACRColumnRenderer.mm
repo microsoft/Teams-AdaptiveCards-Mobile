@@ -17,6 +17,7 @@
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
 #import "ACRFlowLayout.h"
+#import "ARCGridViewLayout.h"
 #import "ACRLayoutHelper.h"
 
 @implementation ACRColumnRenderer
@@ -49,6 +50,8 @@
     //Layout
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     ACRFlowLayout *flowContainer;
+    ARCGridViewLayout *gridLayout;
+    //Layout
     std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:columnElem->GetLayouts() andHostConfig:acoConfig];
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
@@ -76,6 +79,16 @@
     {
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
         // Layout using Area grid
+        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                             style:(ACRContainerStyle)columnElem->GetStyle()
+                                                       parentStyle:[viewGroup style]
+                                                        hostConfig:acoConfig
+                                                         superview:viewGroup];
+        [ACRRenderer render:gridLayout
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:columnElem->GetItems()
+              andHostConfig:acoConfig];
     }
 
     ACRColumnView *column = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)columnElem->GetStyle()
@@ -105,9 +118,13 @@
     column.isLastColumn = columnsetView.isLastColumn;
     column.columnsetView = columnsetView;
 
-    if(flowContainer)
+    if(flowContainer != nil)
     {
         [column addArrangedSubview:flowContainer];
+    }
+    else if(gridLayout != nil)
+    {
+        [column addArrangedSubview:gridLayout];
     }
     else
     {
@@ -134,7 +151,8 @@
 
     column.shouldGroupAccessibilityChildren = YES;
 
-    [viewGroup addArrangedSubview:column];
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:column withAreaName:areaName];
 
     // viewGroup and column has to be in view hierarchy before configBleed is called
     configBleed(rootView, elem, column, acoConfig, viewGroup);

@@ -1,0 +1,63 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "Table",
+      "gridStyle": "accent",
+      "firstRowAsHeaders": true,
+      "columns": [
+        {
+          "width": 1
+        }
+      ],
+      "rows": [
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "layouts": [
+                  {
+                      "type": "Layout.AreaGrid",
+                      "columns": [
+                          35,
+                          "auto"
+                      ],
+                      "areas": [
+                          {
+                              "name": "image"
+                          },
+                          {
+                              "name": "compoundButton",
+                              "column": 2
+                          }
+                      ]
+                  }
+              ],
+              "items": [
+                  {
+                      "type": "Image",
+                      "url": "https://www.wallpaperbetter.com/wallpaper/905/859/738/beautiful-nature-landscape-mountains-trees-lake-sky-clouds-water-reflection-1080P-wallpaper.jpg",
+                      "grid.area": "image"
+                  },
+                  {
+                      "type": "CompoundButton",
+                      "title": "Summarize",
+                      "grid.area": "compoundButton",
+                      "icon": {
+                          "name": "TextBulletList"
+                      },
+                      "description": "Review key points in file",
+                      "height": "stretch"
+                  }
+              ]
+            }
+          ],
+          "style": "accent"
+        }
+      ]
+    }
+  ]
+}

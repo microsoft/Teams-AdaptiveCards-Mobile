@@ -69,7 +69,8 @@
 
     [inputs addObject:inputLabelView];
 
-    [viewGroup addArrangedSubview:inputLabelView];
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:inputLabelView withAreaName:areaName];
 
     return inputLabelView;
 }

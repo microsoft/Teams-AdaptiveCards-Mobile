@@ -17,6 +17,7 @@
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
 #import "ACRFlowLayout.h"
+#import "ARCGridViewLayout.h"
 #import "ACRLayoutHelper.h"
 
 @implementation ACRContainerRenderer
@@ -47,6 +48,7 @@
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:containerElem->GetLayouts() andHostConfig:acoConfig];
     ACRFlowLayout *flowContainer;
+    ARCGridViewLayout *gridLayout;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
@@ -73,7 +75,16 @@
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
         std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
-        // layout using Area Grid
+        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                             style:(ACRContainerStyle)containerElem->GetStyle()
+                                                       parentStyle:[viewGroup style]
+                                                        hostConfig:acoConfig
+                                                         superview:viewGroup];
+        [ACRRenderer render:gridLayout
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:containerElem->GetItems()
+              andHostConfig:acoConfig];
     }
 
     ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()
@@ -82,7 +93,8 @@
                                                           superview:viewGroup];
     container.rtl = rootView.context.rtl;
 
-    [viewGroup addArrangedSubview:container];
+    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    [viewGroup addArrangedSubview:container withAreaName:areaName];
     
     [self configureBorderForElement:acoElem container:container config:acoConfig];
 
@@ -96,8 +108,9 @@
     {
         [container addArrangedSubview:flowContainer];
     }
-    else
-    {
+    else if (gridLayout != nil) {
+        [container addArrangedSubview:gridLayout];
+    } else {
         [ACRRenderer render:container
                    rootView:rootView
                      inputs:inputs
