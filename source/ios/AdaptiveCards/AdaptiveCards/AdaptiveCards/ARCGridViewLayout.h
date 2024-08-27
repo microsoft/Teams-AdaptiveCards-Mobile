@@ -9,7 +9,6 @@
 #import "ACOVisibilityManager.h"
 #import "ACRIContentHoldingView.h"
 #import <UIKit/UIKit.h>
-//#import <AdaptiveCards/AreaGridLayout.h>
 #import <AreaGridLayout.h>
 
 @interface ARCGridViewLayout : UIView<ACRIContentHoldingView>

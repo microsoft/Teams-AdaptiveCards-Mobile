@@ -3,11 +3,19 @@
 //  AdaptiveCards
 //
 
+//#ifdef SWIFT_PACKAGE
+///// Swift Package Imports
+//#import "FlowLayout.h"
+//#else
+///// Cocoapods Imports
+//#import <AdaptiveCards/FlowLayout.h>
+//#endif
+
 #import <UIKit/UIKit.h>
+#import <FlowLayout.h>
 #import "ACOVisibilityManager.h"
 #import "ACRIContentHoldingView.h"
 #import "ACRTapGestureRecognizerEventHandler.h"
-#import "FlowLayout.h"
 
 @interface ACRFlowLayout: UIView<ACRIContentHoldingView>
 
