@@ -74,17 +74,22 @@
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
-        std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
-        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
-                                                             style:(ACRContainerStyle)containerElem->GetStyle()
-                                                       parentStyle:[viewGroup style]
-                                                        hostConfig:acoConfig
-                                                         superview:viewGroup];
-        [ACRRenderer render:gridLayout
-                   rootView:rootView
-                     inputs:inputs
-              withCardElems:containerElem->GetItems()
-              andHostConfig:acoConfig];
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+        BOOL isGridLayoutEnabled = [featureFlagResolver boolForFlag:@"isGridLayoutEnabled"] ?: NO;
+        if (isGridLayoutEnabled)
+        {
+            std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
+            gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                                 style:(ACRContainerStyle)containerElem->GetStyle()
+                                                           parentStyle:[viewGroup style]
+                                                            hostConfig:acoConfig
+                                                             superview:viewGroup];
+            [ACRRenderer render:gridLayout
+                       rootView:rootView
+                         inputs:inputs
+                  withCardElems:containerElem->GetItems()
+                  andHostConfig:acoConfig];
+        }
     }
 
     ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()

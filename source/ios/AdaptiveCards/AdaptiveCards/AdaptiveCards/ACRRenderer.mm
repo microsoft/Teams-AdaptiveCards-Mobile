@@ -157,18 +157,22 @@ using namespace AdaptiveCards;
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
     {
-        std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
-        // layout using Area Grid
-        gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
-                                                             style:style
-                                                       parentStyle:style
-                                                        hostConfig:config
-                                                         superview:containingView];
-        [ACRRenderer render:gridLayout
-                   rootView:rootView
-                     inputs:inputs
-              withCardElems:body
-              andHostConfig:config];
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+        BOOL isGridLayoutEnabled = [featureFlagResolver boolForFlag:@"isGridLayoutEnabled"] ?: NO;
+        if (isGridLayoutEnabled)
+        {
+            std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
+            gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                                 style:style
+                                                           parentStyle:style
+                                                            hostConfig:config
+                                                             superview:containingView];
+            [ACRRenderer render:gridLayout
+                       rootView:rootView
+                         inputs:inputs
+                  withCardElems:body
+                  andHostConfig:config];
+        }
     }
     
     @try {

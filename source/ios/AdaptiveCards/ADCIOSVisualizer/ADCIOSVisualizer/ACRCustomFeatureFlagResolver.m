@@ -20,6 +20,12 @@
     {
         return YES;
     }
+    
+    if([flag isEqualToString:@"isGridLayoutEnabled"])
+    {
+        return YES;
+    }
+    
     return NO;
 }
 
