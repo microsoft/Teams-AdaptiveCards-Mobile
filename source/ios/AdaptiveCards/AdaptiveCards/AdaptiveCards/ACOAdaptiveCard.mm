@@ -58,25 +58,44 @@ using namespace AdaptiveCards;
 
 + (NSString *)correctInvalidJsonEscapes:(NSString *)payload {
     NSError *regexError = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\\\+\\.)"
-                                                                           options:0
+
+    // Regex pattern to find each "regex": "..." entry with capturing groups for before, regex string, and after
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\"regex\"\\s*:\\s*\")(.*?)(\")"
+                                                                           options:NSRegularExpressionDotMatchesLineSeparators
                                                                              error:&regexError];
+
     if (regexError != nil) {
         NSLog(@"Regex Error: %@", regexError.localizedDescription);
         return payload; // Return the original payload if regex creation fails
     }
-    
+
     NSMutableString *mutablePayload = [payload mutableCopy];
 
-    // Replace matches with the correct number of escaped backslashes
+    // Enumerate over each regex match and correct backslashes incrementally
+    __block NSInteger offset = 0; // Track adjustments to the range after replacements
     [regex enumerateMatchesInString:payload
                             options:0
                               range:NSMakeRange(0, payload.length)
                          usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-        if (match.range.length > 0) {
-            NSString *matchedString = [payload substringWithRange:match.range];
-            NSString *replacementString = [matchedString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
-            [mutablePayload replaceCharactersInRange:match.range withString:replacementString];
+        if (match.numberOfRanges == 4) { // Ensure we have all 4 capturing groups
+            // Adjust ranges by offset to account for previous replacements
+            NSRange fullMatchRange = NSMakeRange(match.range.location + offset, match.range.length);
+            NSRange regexStringRange = NSMakeRange([match rangeAtIndex:2].location + offset, [match rangeAtIndex:2].length);
+
+            // Extract the regex string
+            NSString *regexString = [mutablePayload substringWithRange:regexStringRange];
+
+            // Correct escaping: Replace each single backslash with two backslashes
+            NSString *correctedRegexString = [regexString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+
+            // Reconstruct the corrected full regex entry
+            NSString *correctedFullEntry = [NSString stringWithFormat:@"\"regex\": \"%@\"", correctedRegexString];
+
+            // Replace the entire match with the corrected entry
+            [mutablePayload replaceCharactersInRange:fullMatchRange withString:correctedFullEntry];
+
+            // Update offset by the difference in length between corrected and original entries
+            offset += correctedFullEntry.length - fullMatchRange.length;
         }
     }];
 
