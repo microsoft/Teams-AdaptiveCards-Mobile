@@ -61,11 +61,11 @@
                                                            parentStyle:[viewGroup style]
                                                             hostConfig:acoConfig
                                                              superview:viewGroup];
-            [ACRRenderer render:gridLayout
-                       rootView:rootView
-                         inputs:inputs
-                  withCardElems:containerElem->GetItems()
-                  andHostConfig:acoConfig];
+            [ACRRenderer renderInGridOrFlow:gridLayout
+                                   rootView:rootView
+                                     inputs:inputs
+                              withCardElems:containerElem->GetItems()
+                              andHostConfig:acoConfig];
         }
     }
     else
