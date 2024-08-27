@@ -93,7 +93,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
     {
         Container container = Util.castTo(baseCardElement, Container.class);
 
-        Layout layoutToApply = getLayoutToApply(container, hostConfig);
+        Layout layoutToApply = Util.getLayoutToApply(container.GetLayouts(), hostConfig);
         ViewGroup containerView = getAppropriateContainerForLayout(context, layoutToApply, container);
 
         setMinHeight(container.GetMinHeight(), containerView, context);
@@ -444,45 +444,6 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
     }
 
-    /**
-     * returns the layout to apply to the container
-     **/
-    public static Layout getLayoutToApply(Container container, HostConfig hostConfig) {
-        Layout layoutToApply = new Layout();
-        layoutToApply.SetLayoutContainerType(LayoutContainerType.None);
-
-        HostWidthConfig hostWidthConfig = hostConfig.getHostWidth();
-        int hostCardContainer = CardRendererRegistration.getInstance().getHostCardContainer();
-        HostWidth hostWidth = Util.convertHostCardContainerToHostWidth(hostCardContainer, hostWidthConfig);
-        LayoutVector layouts = container.GetLayouts();
-        if (!layouts.isEmpty()) {
-            for (int i = 0; i < layouts.size(); i++) {
-                Layout currentLayout = layouts.get(i);
-                if (currentLayout.GetLayoutContainerType() == LayoutContainerType.None) {
-                    continue;
-                }
-
-                if (currentLayout.MeetsTargetWidthRequirement(hostWidth)) {
-                    layoutToApply = currentLayout;
-                    break;
-                }
-                else if (currentLayout.GetTargetWidth() == TargetWidthType.Default) {
-                    layoutToApply = currentLayout;
-                }
-            }
-        }
-        LayoutContainerType layoutContainerType = layoutToApply.GetLayoutContainerType();
-        if ((layoutContainerType == LayoutContainerType.Flow && Util.isFlowLayoutEnabled()) ||
-            (layoutContainerType == LayoutContainerType.AreaGrid && Util.isGridLayoutEnabled())){
-            return layoutToApply;
-        } else {
-            Layout defaultStackLayout = new Layout();
-            defaultStackLayout.SetLayoutContainerType(LayoutContainerType.Stack);
-            defaultStackLayout.SetTargetWidth(TargetWidthType.Default);
-            return defaultStackLayout;
-        }
-    }
-
     public static ViewGroup getAppropriateContainerForLayout(Context context, Layout layoutToApply, Container container) {
         ViewGroup layoutContainer;
         if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
@@ -492,13 +453,8 @@ public class ContainerRenderer extends BaseCardElementRenderer
             flexboxLayout.setAlignItems(AlignItems.FLEX_START);
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
             flexboxLayout.setLayoutParams(new FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            flexboxLayout.setTag(new TagContent(container));
             layoutContainer = flexboxLayout;
-        } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
-            // not supported yet, return default stack layout
-            StretchableElementLayout areaGridLayout = new StretchableElementLayout(context, container.GetHeight() == HeightType.Stretch);
-            areaGridLayout.setTag(new TagContent(container));
-            areaGridLayout.setOrientation(LinearLayout.VERTICAL);
-            layoutContainer = areaGridLayout;
         } else {
             StretchableElementLayout stackLayout = new StretchableElementLayout(context, container.GetHeight() == HeightType.Stretch);
             stackLayout.setTag(new TagContent(container));

@@ -137,7 +137,7 @@ public class AdaptiveCardRenderer
         rootLayout.setClipChildren(false);
         rootLayout.setClipToPadding(false);
 
-        Layout layoutToApply = getLayoutToApply(adaptiveCard, hostConfig);
+        Layout layoutToApply = Util.getLayoutToApply(adaptiveCard.GetLayouts(), hostConfig);
 
         // cardLayout only contains the rendered card composed of elements and actions
         long cardMinHeight = adaptiveCard.GetMinHeight();
@@ -244,46 +244,6 @@ public class AdaptiveCardRenderer
         ContainerRenderer.setSelectAction(renderedCard, renderedCard.getAdaptiveCard().GetSelectAction(), rootLayout, cardActionHandler, renderArgs);
 
         return rootLayout;
-    }
-
-    /**
-     * returns the layout to apply to the container
-     **/
-    private static Layout getLayoutToApply(AdaptiveCard adaptiveCard, HostConfig hostConfig) {
-        Layout layoutToApply = new Layout();
-        layoutToApply.SetLayoutContainerType(LayoutContainerType.Stack);
-        layoutToApply.SetTargetWidth(TargetWidthType.Default);
-
-        HostWidthConfig hostWidthConfig = hostConfig.getHostWidth();
-        int hostCardContainer = CardRendererRegistration.getInstance().getHostCardContainer();
-        HostWidth hostWidth = Util.convertHostCardContainerToHostWidth(hostCardContainer, hostWidthConfig);
-        LayoutVector layouts = adaptiveCard.GetLayouts();
-        if (!layouts.isEmpty()) {
-            for (int i = 0; i < layouts.size(); i++) {
-                Layout currentLayout = layouts.get(i);
-                if (currentLayout.GetLayoutContainerType() == LayoutContainerType.None) {
-                    continue;
-                }
-
-                if (currentLayout.MeetsTargetWidthRequirement(hostWidth)) {
-                    layoutToApply = currentLayout;
-                    break;
-                }
-                else if (currentLayout.GetTargetWidth() == TargetWidthType.Default) {
-                    layoutToApply = currentLayout;
-                }
-            }
-        }
-        LayoutContainerType layoutContainerType = layoutToApply.GetLayoutContainerType();
-        if ((layoutContainerType == LayoutContainerType.Flow && Util.isFlowLayoutEnabled()) ||
-            (layoutContainerType == LayoutContainerType.AreaGrid && Util.isGridLayoutEnabled())){
-            return layoutToApply;
-        } else {
-            Layout defaultStackLayout = new Layout();
-            defaultStackLayout.SetLayoutContainerType(LayoutContainerType.Stack);
-            defaultStackLayout.SetTargetWidth(TargetWidthType.Default);
-            return defaultStackLayout;
-        }
     }
 
     private static FlexboxLayout getFlexboxContainerForLayout(Context context) {

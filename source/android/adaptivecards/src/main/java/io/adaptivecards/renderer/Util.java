@@ -45,12 +45,13 @@ import io.adaptivecards.objectmodel.HostWidth;
 import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
 import io.adaptivecards.objectmodel.IconSize;
-import io.adaptivecards.objectmodel.ItemFit;
 import io.adaptivecards.objectmodel.JsonValue;
 import io.adaptivecards.objectmodel.Layout;
 import io.adaptivecards.objectmodel.LayoutContainerType;
+import io.adaptivecards.objectmodel.LayoutVector;
 import io.adaptivecards.objectmodel.Mode;
 import io.adaptivecards.objectmodel.ParseContext;
+import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.renderer.action.ActionElementRendererIconImageLoaderAsync;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
@@ -219,6 +220,44 @@ public final class Util {
             params.setMaxWidth(maxItemWidth);
         }
         return params;
+    }
+
+    /**
+     * returns the layout to apply to the container
+     **/
+    public static Layout getLayoutToApply(LayoutVector layouts, HostConfig hostConfig) {
+        Layout layoutToApply = new Layout();
+        layoutToApply.SetLayoutContainerType(LayoutContainerType.None);
+
+        HostWidthConfig hostWidthConfig = hostConfig.getHostWidth();
+        int hostCardContainer = CardRendererRegistration.getInstance().getHostCardContainer();
+        HostWidth hostWidth = Util.convertHostCardContainerToHostWidth(hostCardContainer, hostWidthConfig);
+        if (layouts != null) {
+            for (int i = 0; i < layouts.size(); i++) {
+                Layout currentLayout = layouts.get(i);
+                if (currentLayout.GetLayoutContainerType() == LayoutContainerType.None) {
+                    continue;
+                }
+
+                if (currentLayout.MeetsTargetWidthRequirement(hostWidth)) {
+                    layoutToApply = currentLayout;
+                    break;
+                }
+                else if (currentLayout.GetTargetWidth() == TargetWidthType.Default) {
+                    layoutToApply = currentLayout;
+                }
+            }
+        }
+        LayoutContainerType layoutContainerType = layoutToApply.GetLayoutContainerType();
+        if ((layoutContainerType == LayoutContainerType.Flow && isFlowLayoutEnabled()) ||
+            (layoutContainerType == LayoutContainerType.AreaGrid && isGridLayoutEnabled())) {
+            return layoutToApply;
+        } else {
+            Layout defaultStackLayout = new Layout();
+            defaultStackLayout.SetLayoutContainerType(LayoutContainerType.Stack);
+            defaultStackLayout.SetTargetWidth(TargetWidthType.Default);
+            return defaultStackLayout;
+        }
     }
 
     private static boolean isValueDefined(int inputValue) {

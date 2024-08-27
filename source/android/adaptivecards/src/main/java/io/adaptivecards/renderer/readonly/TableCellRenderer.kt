@@ -36,7 +36,7 @@ object TableCellRenderer : BaseCardElementRenderer() {
 
         val cell = Util.castTo(baseCardElement, TableCell::class.java)
 
-        val layoutToApply = getLayoutToApply(cell, hostConfig)
+        val layoutToApply = Util.getLayoutToApply(cell.GetLayouts(), hostConfig)
         val cellLayout = getAppropriateContainerForLayout(context, layoutToApply, cell)
 
         var stretch = false
@@ -138,46 +138,6 @@ object TableCellRenderer : BaseCardElementRenderer() {
                 ?: HorizontalAlignment.Left
     }
 
-    /**
-     * returns the layout to apply to the container
-     */
-    private fun getLayoutToApply(tableCell: TableCell, hostConfig: HostConfig): Layout {
-        var layoutToApply = Layout()
-        layoutToApply.SetLayoutContainerType(LayoutContainerType.Stack)
-        layoutToApply.SetTargetWidth(TargetWidthType.Default)
-
-        val hostWidthConfig = hostConfig.hostWidth
-        val hostCardContainer = CardRendererRegistration.getInstance().hostCardContainer
-        val hostWidth = Util.convertHostCardContainerToHostWidth(hostCardContainer, hostWidthConfig)
-        val layouts = tableCell.GetLayouts()
-        if (!layouts.isEmpty()) {
-            for (i in layouts.indices) {
-                val currentLayout = layouts[i]
-                if (currentLayout.GetLayoutContainerType() == LayoutContainerType.None) {
-                    continue
-                }
-
-                if (currentLayout.MeetsTargetWidthRequirement(hostWidth)) {
-                    layoutToApply = currentLayout
-                    break
-                } else if (currentLayout.GetTargetWidth() == TargetWidthType.Default) {
-                    layoutToApply = currentLayout
-                }
-            }
-        }
-        val layoutContainerType = layoutToApply.GetLayoutContainerType()
-        return if ((layoutContainerType == LayoutContainerType.Flow && Util.isFlowLayoutEnabled()) ||
-            (layoutContainerType == LayoutContainerType.AreaGrid && Util.isGridLayoutEnabled())
-        ) {
-            layoutToApply
-        } else {
-            Layout().apply {
-                SetLayoutContainerType(LayoutContainerType.Stack)
-                SetTargetWidth(TargetWidthType.Default)
-            }
-        }
-    }
-
     private fun getAppropriateContainerForLayout(
         context: Context,
         layoutToApply: Layout,
@@ -194,14 +154,6 @@ object TableCellRenderer : BaseCardElementRenderer() {
             }
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply)
             layoutContainer = flexboxLayout
-        } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
-            // not supported yet, return default stack layout
-            val cellLayout = LinearLayout(context).apply {
-                orientation = LinearLayout.VERTICAL
-                tag = TagContent(tableCell)
-                layoutParams = TableRowLayout.LayoutParams(0, TableLayout.LayoutParams.MATCH_PARENT)
-            }
-            layoutContainer = cellLayout
         } else {
             val cellLayout = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL

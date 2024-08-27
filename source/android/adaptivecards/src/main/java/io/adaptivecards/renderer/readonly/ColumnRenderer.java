@@ -126,7 +126,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
     {
         Column column = Util.castTo(baseCardElement, Column.class);
 
-        Layout layoutToApply = getLayoutToApply(column, hostConfig);
+        Layout layoutToApply = Util.getLayoutToApply(column.GetLayouts(), hostConfig);
         ViewGroup columnLayout = getAppropriateContainerForLayout(context, layoutToApply, column);
 
         // TODO: Check compatibility with model on top
@@ -194,46 +194,6 @@ public class ColumnRenderer extends BaseCardElementRenderer
         return columnLayout;
     }
 
-    /**
-     * returns the layout to apply to the container
-     **/
-    private static Layout getLayoutToApply(Column column, HostConfig hostConfig) {
-        Layout layoutToApply = new Layout();
-        layoutToApply.SetLayoutContainerType(LayoutContainerType.Stack);
-        layoutToApply.SetTargetWidth(TargetWidthType.Default);
-
-        HostWidthConfig hostWidthConfig = hostConfig.getHostWidth();
-        int hostCardContainer = CardRendererRegistration.getInstance().getHostCardContainer();
-        HostWidth hostWidth = Util.convertHostCardContainerToHostWidth(hostCardContainer, hostWidthConfig);
-        LayoutVector layouts = column.GetLayouts();
-        if (!layouts.isEmpty()) {
-            for (int i = 0; i < layouts.size(); i++) {
-                Layout currentLayout = layouts.get(i);
-                if (currentLayout.GetLayoutContainerType() == LayoutContainerType.None) {
-                    continue;
-                }
-
-                if (currentLayout.MeetsTargetWidthRequirement(hostWidth)) {
-                    layoutToApply = currentLayout;
-                    break;
-                }
-                else if (currentLayout.GetTargetWidth() == TargetWidthType.Default) {
-                    layoutToApply = currentLayout;
-                }
-            }
-        }
-        LayoutContainerType layoutContainerType = layoutToApply.GetLayoutContainerType();
-        if ((layoutContainerType == LayoutContainerType.Flow && Util.isFlowLayoutEnabled()) ||
-            (layoutContainerType == LayoutContainerType.AreaGrid && Util.isGridLayoutEnabled())){
-            return layoutToApply;
-        } else {
-            Layout defaultStackLayout = new Layout();
-            defaultStackLayout.SetLayoutContainerType(LayoutContainerType.Stack);
-            defaultStackLayout.SetTargetWidth(TargetWidthType.Default);
-            return defaultStackLayout;
-        }
-    }
-
     private static ViewGroup getAppropriateContainerForLayout(Context context, Layout layoutToApply, Column column) {
         ViewGroup layoutContainer;
         if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
@@ -242,15 +202,8 @@ public class ColumnRenderer extends BaseCardElementRenderer
             flexboxLayout.setFlexWrap(FlexWrap.WRAP);
             flexboxLayout.setAlignItems(AlignItems.FLEX_START);
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
+            flexboxLayout.setTag(new TagContent(column));
             layoutContainer = flexboxLayout;
-        } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
-            // not supported yet, return default stack layout
-            LinearLayout columnLayout = new LinearLayout(context);
-            columnLayout.setOrientation(LinearLayout.VERTICAL);
-            columnLayout.setTag(new TagContent(column));
-            columnLayout.setFocusable(true);
-            columnLayout.setFocusableInTouchMode(true);
-            layoutContainer = columnLayout;
         } else {
             LinearLayout columnLayout = new LinearLayout(context);
             columnLayout.setOrientation(LinearLayout.VERTICAL);
