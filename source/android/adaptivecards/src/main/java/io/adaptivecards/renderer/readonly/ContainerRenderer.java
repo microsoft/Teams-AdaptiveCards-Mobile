@@ -149,9 +149,9 @@ public class ContainerRenderer extends BaseCardElementRenderer
      * @param container Layout whose children need to be vertically aligned
      * @param verticalContentAlignment Alignment attribute
      */
-    public static void applyVerticalContentAlignment(ViewGroup container, VerticalContentAlignment verticalContentAlignment, Layout targetLayout)
+    public static void applyVerticalContentAlignment(ViewGroup container, VerticalContentAlignment verticalContentAlignment, Layout layoutToApply)
     {
-        if (targetLayout.GetLayoutContainerType() == LayoutContainerType.Flow && container instanceof FlexboxLayout) {
+        if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow && container instanceof FlexboxLayout) {
             int alignContent = AlignContent.FLEX_START;
             if (verticalContentAlignment == VerticalContentAlignment.Center)
             {

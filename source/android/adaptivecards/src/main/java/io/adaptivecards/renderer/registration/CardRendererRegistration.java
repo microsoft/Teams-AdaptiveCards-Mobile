@@ -316,7 +316,7 @@ public class CardRendererRegistration
                                ICardActionHandler cardActionHandler,
                                HostConfig hostConfig,
                                RenderArgs renderArgs,
-                               Layout layout) throws AdaptiveFallbackException, Exception
+                               Layout layoutToApply) throws AdaptiveFallbackException, Exception
     {
         long size;
         if (baseCardElementList == null || (size = baseCardElementList.size()) <= 0)
@@ -330,7 +330,7 @@ public class CardRendererRegistration
         for (int i = 0; i < size; i++)
         {
             BaseCardElement cardElement = baseCardElementList.get(i);
-            renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration, layout);
+            renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration, layoutToApply);
         }
 
         return viewGroup;
@@ -347,10 +347,10 @@ public class CardRendererRegistration
         RenderArgs renderArgs,
         FeatureRegistration featureRegistration) throws AdaptiveFallbackException, Exception
     {
-        Layout targetLayout = new Layout();
-        targetLayout.SetLayoutContainerType(LayoutContainerType.Stack);
-        targetLayout.SetTargetWidth(TargetWidthType.Default);
-        renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration, targetLayout);
+        Layout layoutToApply = new Layout();
+        layoutToApply.SetLayoutContainerType(LayoutContainerType.Stack);
+        layoutToApply.SetTargetWidth(TargetWidthType.Default);
+        renderElementAndPerformFallback(renderedCard, context, fragmentManager, cardElement, viewGroup, cardActionHandler, hostConfig, renderArgs, featureRegistration, layoutToApply);
     }
 
     public void renderElementAndPerformFallback(
@@ -363,7 +363,7 @@ public class CardRendererRegistration
             HostConfig hostConfig,
             RenderArgs renderArgs,
             FeatureRegistration featureRegistration,
-            Layout targetLayout) throws AdaptiveFallbackException, Exception
+            Layout layoutToApply) throws AdaptiveFallbackException, Exception
     {
         boolean shouldRenderCardElements = true;
         IBaseCardElementRenderer renderer = m_typeToRendererMap.get(cardElement.GetElementTypeString());
@@ -521,8 +521,8 @@ public class CardRendererRegistration
             boolean isColumn = Util.isOfType(renderedElement, Column.class);
 
             // Only columns render vertical spacing, so if it's not a column, then we need a horizontal spacing
-            // if the targetLayout is a flow layout, then the spacing and separator properties on items are ignored
-            boolean isFlowLayout = targetLayout.GetLayoutContainerType() == LayoutContainerType.Flow;
+            // if the layoutToApply is a flow layout, then the spacing and separator properties on items are ignored
+            boolean isFlowLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow;
             HandleSpacing(context, viewGroup, renderedElement, hostConfig, tagContent, !isColumn, isFlowLayout);
 
             // Check if the element is an input or must be stretched
@@ -530,7 +530,7 @@ public class CardRendererRegistration
             if (baseInputElement != null)
             {
                 // put the element in a Stretchable input layout and
-                HandleLabelAndValidation(renderedCard, mockLayout, viewGroup, baseInputElement, context, hostConfig, renderArgs, tagContent, targetLayout);
+                HandleLabelAndValidation(renderedCard, mockLayout, viewGroup, baseInputElement, context, hostConfig, renderArgs, tagContent, layoutToApply);
             }
             else
             {
@@ -541,11 +541,11 @@ public class CardRendererRegistration
                     && !Util.isOfType(renderedElement, Icon.class) && !Util.isOfType(renderedElement, CompoundButton.class))
                 {
                     // put the element in a StretchableElementLayout
-                    HandleStretchHeight(mockLayout, viewGroup, renderedElement, context, tagContent, targetLayout, hostConfig);
+                    HandleStretchHeight(mockLayout, viewGroup, renderedElement, context, tagContent, layoutToApply, hostConfig);
                 }
                 else
                 {
-                    Util.MoveChildrenViews(mockLayout, viewGroup, targetLayout, hostConfig);
+                    Util.MoveChildrenViews(mockLayout, viewGroup, layoutToApply, hostConfig);
                 }
             }
 
@@ -589,7 +589,7 @@ public class CardRendererRegistration
                                                 HostConfig hostConfig,
                                                 RenderArgs renderArgs,
                                                 TagContent tagContent,
-                                                Layout targetLayout)
+                                                Layout layoutToApply)
     {
         // as first step we must figure out if the input requires a container layout
         // it will require a container layout if:
@@ -635,7 +635,7 @@ public class CardRendererRegistration
             }
             else
             {
-                Util.MoveChildrenViews(mockLayout, inputLayout, targetLayout, hostConfig);
+                Util.MoveChildrenViews(mockLayout, inputLayout, layoutToApply, hostConfig);
             }
 
             if (inputHasErrorMessage)
@@ -661,14 +661,14 @@ public class CardRendererRegistration
                 }
             }
 
-            if (targetLayout.GetLayoutContainerType() == LayoutContainerType.Flow && container instanceof FlexboxLayout) {
-                inputLayout.setLayoutParams(Util.generateLayoutParamsForFlowLayoutItems(context, targetLayout, hostConfig));
+            if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow && container instanceof FlexboxLayout) {
+                inputLayout.setLayoutParams(Util.generateLayoutParamsForFlowLayoutItems(context, layoutToApply, hostConfig));
             }
             container.addView(inputLayout);
         }
         else
         {
-            Util.MoveChildrenViews(mockLayout, container, targetLayout, hostConfig);
+            Util.MoveChildrenViews(mockLayout, container, layoutToApply, hostConfig);
         }
     }
 

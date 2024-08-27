@@ -94,11 +94,11 @@ public class AdaptiveCardRenderer
                                     HostConfig hostConfig,
                                     ViewGroup cardLayout,
                                     RenderArgs renderArgs,
-                                    Layout targetLayout)
+                                    Layout layoutToApply)
     {
         try
         {
-            CardRendererRegistration.getInstance().renderElements(renderedCard, context, fragmentManager, cardLayout, adaptiveCard.GetBody(), cardActionHandler, hostConfig, renderArgs, targetLayout);
+            CardRendererRegistration.getInstance().renderElements(renderedCard, context, fragmentManager, cardLayout, adaptiveCard.GetBody(), cardActionHandler, hostConfig, renderArgs, layoutToApply);
         }
         // Catches the exception as the method throws it for performing fallback with elements inside the card,
         // no fallback should be performed here so we just catch the exception

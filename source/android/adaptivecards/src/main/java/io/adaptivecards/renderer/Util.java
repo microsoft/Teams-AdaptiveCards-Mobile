@@ -190,8 +190,8 @@ public final class Util {
     /**
      * This method generates the LayoutParams for the FlowLayout items after reading the properties from the FlowLayout object.
      **/
-    public static FlexboxLayout.LayoutParams generateLayoutParamsForFlowLayoutItems(Context context, Layout targetLayout, HostConfig hostConfig) {
-        FlowLayout flowLayout = Util.castTo(targetLayout, FlowLayout.class);
+    public static FlexboxLayout.LayoutParams generateLayoutParamsForFlowLayoutItems(Context context, Layout layoutToApply, HostConfig hostConfig) {
+        FlowLayout flowLayout = Util.castTo(layoutToApply, FlowLayout.class);
         int valueNotDefinedIndicator = 0;
         int itemWidth = isValueDefined(flowLayout.GetItemPixelWidth())? dpToPixels(context, flowLayout.GetItemPixelWidth()) :
             WRAP_CONTENT;
