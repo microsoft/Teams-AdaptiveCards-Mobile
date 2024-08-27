@@ -78,11 +78,11 @@
                                                            parentStyle:[viewGroup style]
                                                             hostConfig:acoConfig
                                                              superview:viewGroup];
-            [ACRRenderer render:gridLayout
-                       rootView:rootView
-                         inputs:inputs
-                  withCardElems:cellElement->GetItems()
-                  andHostConfig:acoConfig];
+            [ACRRenderer renderInGridOrFlow:gridLayout
+                                   rootView:rootView
+                                     inputs:inputs
+                              withCardElems:cellElement->GetItems()
+                              andHostConfig:acoConfig];
         }
     }
     ACRColumnView *cell = (ACRColumnView *)viewGroup;

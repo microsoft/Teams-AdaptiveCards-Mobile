@@ -167,11 +167,11 @@ using namespace AdaptiveCards;
                                                            parentStyle:style
                                                             hostConfig:config
                                                              superview:containingView];
-            [ACRRenderer render:gridLayout
-                       rootView:rootView
-                         inputs:inputs
-                  withCardElems:body
-                  andHostConfig:config];
+            [ACRRenderer renderInGridOrFlow:gridLayout
+                                   rootView:rootView
+                                     inputs:inputs
+                              withCardElems:body
+                              andHostConfig:config];
         }
     }
     
@@ -352,5 +352,67 @@ using namespace AdaptiveCards;
     view.accessibilityElements = [(ACRContentStackView *)view getArrangedSubviews];
 
     return view;
+}
+
++ (UIView *)renderInGridOrFlow:(UIView<ACRIContentHoldingView> *)view
+                      rootView:(ACRView *)rootView
+                        inputs:(NSMutableArray *)inputs
+                 withCardElems:(std::vector<std::shared_ptr<BaseCardElement>> const &)elems
+                 andHostConfig:(ACOHostConfig *)config
+{
+    ACRRegistration *reg = [ACRRegistration getInstance];
+    ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] init];
+    ACOFeatureRegistration *featureReg = [ACOFeatureRegistration getInstance];
+
+    // Get responsive layout's host width
+    HostWidthConfig hostWidthConfig = [config getHostConfig]->getHostWidth();
+    HostWidth hostWidth = convertHostCardContainerToHostWidth([reg getHostCardContainer], hostWidthConfig);
+
+    UIView *renderedView = nil;
+
+    for (const auto &elem : elems)
+    {
+        ACRBaseCardElementRenderer *renderer =
+        [reg getRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];
+
+        if (renderer == nil)
+        {
+            NSLog(@"Unsupported card element type:%d\n", (int)elem->GetElementType());
+            continue;
+        }
+
+        [acoElem setElem:elem];
+
+        @try
+        {
+            if ([acoElem meetsRequirements:featureReg] == NO)
+            {
+                @throw [ACOFallbackException fallbackException];
+            }
+
+            if (elem->MeetsTargetWidthRequirement(hostWidth) == false)
+            {
+                continue;
+            }
+
+            if (!elem->GetIsVisible())
+            {
+                continue;
+            }
+
+            renderedView = [renderer render:view rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:config];
+
+            [view updateLayoutAndVisibilityOfRenderedView:renderedView acoElement:acoElem separator:nil rootView:rootView];
+        }
+        @catch (ACOFallbackException *e)
+        {
+            handleFallbackException(e, view, rootView, inputs, elem, config, true);
+        }
+    }
+
+    //    view.accessibilityElements = [(ACRContentStackView *)view getArrangedSubviews];
+
+    return view;
+
 }
 @end
