@@ -241,7 +241,6 @@ using namespace AdaptiveCards;
             
             for (const std::string& column : mColumns) {
                 NSString *columnStr = [NSString stringWithCString:column.c_str() encoding:NSUTF8StringEncoding];
-                
                 if ([columnStr hasSuffix:@"px"]) {
                     // Column width in pixels
                     NSString *valueStr = [columnStr substringToIndex:columnStr.length - 2];
@@ -249,12 +248,6 @@ using namespace AdaptiveCards;
                     [columnTypes addObject:@"fixed"];
                     [columnValues addObject:@(width)];
                     fixedWidthTotal += width;
-                } else if ([columnStr hasSuffix:@"%"]) {
-                    // Column width in percentage
-                    NSString *valueStr = [columnStr substringToIndex:columnStr.length - 1];
-                    CGFloat percentage = [valueStr floatValue];
-                    [columnTypes addObject:@"percentage"];
-                    [columnValues addObject:@(percentage)];
                 } else if ([columnStr isEqualToString:@"auto"]) {
                     // Auto width
                     [columnTypes addObject:@"auto"];
