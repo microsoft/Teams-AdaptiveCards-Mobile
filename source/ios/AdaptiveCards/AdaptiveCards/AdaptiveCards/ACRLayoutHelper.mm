@@ -128,6 +128,14 @@ using namespace AdaptiveCards;
                 forElement:(std::shared_ptr<AdaptiveCard> const &)card
              andHostConfig:(ACOHostConfig *)config
 {
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    BOOL isGridLayoutEnabled = [featureFlagResolver boolForFlag:@"isGridLayoutEnabled"] ?: NO;
+
+    if(!isGridLayoutEnabled)
+    {
+        return NO;
+    }
+    
     std::shared_ptr<AdaptiveCards::Layout> layout = [self layoutToApplyFrom:card->GetLayouts() andHostConfig:config];
     
     BOOL isFlow = (layout->GetLayoutContainerType() == LayoutContainerType::Flow);

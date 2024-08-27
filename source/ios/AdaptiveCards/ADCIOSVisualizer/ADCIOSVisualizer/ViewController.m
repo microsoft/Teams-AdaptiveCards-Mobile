@@ -18,6 +18,7 @@
 #import "CustomProgressBarRenderer.h"
 #import "CustomTextBlockRenderer.h"
 #import <SafariServices/SafariServices.h>
+#import "ACRCustomFeatureFlagResolver.h"
 
 // the width of the AdaptiveCards does not need to be set.
 // if the width for Adaptive Cards is zero, the width is determined by the contraint(s) set externally on the card.
@@ -141,6 +142,7 @@ UIColor* defaultButtonBackgroundColor;
     
     // Required registration for testing responsive layout
     [registration registerHostCardContainer:kFileBrowserWidth];
+    [registration setFeatureFlagResolver:([[ACRCustomFeatureFlagResolver alloc] init])];
 
     self.ACVTabVC = [[ACVTableViewController alloc] init];
     [self addChildViewController:self.ACVTabVC];
