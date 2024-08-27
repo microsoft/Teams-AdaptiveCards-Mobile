@@ -5,11 +5,16 @@
 //  Created by hiteshkumar on 07/08/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
-
+#ifdef SWIFT_PACKAGE
+/// Swift Package Imports
+#import "AreaGridLayout.h"
+#else
+/// Cocoapods Imports
+#import <AdaptiveCards/AreaGridLayout.h>
+#endif
 #import "ACOVisibilityManager.h"
 #import "ACRIContentHoldingView.h"
 #import <UIKit/UIKit.h>
-#import <AreaGridLayout.h>
 
 @interface ARCGridViewLayout : UIView<ACRIContentHoldingView>
 
