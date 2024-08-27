@@ -17,7 +17,7 @@ parameters:
     default: 1.0.0
 
 pool:
-  name: Azure Pipelines
+  name: 1ES-Teams-Ubuntu-LC-DomoreexpGithub
   vmImage: windows-2019
   demands: java
 

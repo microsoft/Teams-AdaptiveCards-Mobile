@@ -11,7 +11,7 @@ schedules:
    - main
 
 pool:
-  name: Azure Pipelines
+  name: 1ES-Teams-Ubuntu-LC-DomoreexpGithub
   vmImage: vs2017-win2016
   demands: java
 

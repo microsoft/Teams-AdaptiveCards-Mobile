@@ -19,6 +19,7 @@ schedules:
       include:
         - main
 pool:
+  name: 1ES-Teams-Ubuntu-LC-DomoreexpGithub
   vmImage: 'macos-latest'
 
 steps:

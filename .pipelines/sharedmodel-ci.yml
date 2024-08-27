@@ -17,6 +17,7 @@ jobs:
   timeoutInMinutes: 100
   cancelTimeoutInMinutes: 1
   pool:
+    name: 1ES-Teams-Ubuntu-LC-DomoreexpGithub
     vmImage: windows-2019
   steps:
   - checkout: self

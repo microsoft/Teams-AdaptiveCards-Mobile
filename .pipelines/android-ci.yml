@@ -8,7 +8,7 @@ pr:
     - release/*
 
 pool:
-  name: Azure Pipelines
+  name: 1ES-Teams-Ubuntu-LC-DomoreexpGithub
   vmImage: macOS-latest
 
 steps:

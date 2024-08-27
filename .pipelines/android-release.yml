@@ -4,7 +4,7 @@ pr: none
 trigger: none
 
 pool:
-  name: Azure Pipelines
+  name: 1ES-Teams-Ubuntu-LC-DomoreexpGithub
   vmImage: windows-2019
   demands: java
 
