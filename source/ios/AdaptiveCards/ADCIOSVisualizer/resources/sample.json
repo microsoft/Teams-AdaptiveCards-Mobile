@@ -325,5 +325,11 @@
             "marigoldColor": "#EAA300",
             "neutralColor": "#212121"
         }
+    },
+    "compoundButton":{
+        "badge":{
+            "backgroundColor":"#5B5FC7"
+        },
+        "borderColor":"#E1E1E1"
     }
 }
