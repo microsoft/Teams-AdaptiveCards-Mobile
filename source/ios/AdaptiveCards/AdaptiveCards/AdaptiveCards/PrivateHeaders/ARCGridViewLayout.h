@@ -8,12 +8,13 @@
 #ifdef SWIFT_PACKAGE
 /// Swift Package Imports
 #import "AreaGridLayout.h"
+#import "ACRIContentHoldingView.h"
 #else
 /// Cocoapods Imports
 #import <AdaptiveCards/AreaGridLayout.h>
+#import <AdaptiveCards/ACRIContentHoldingView.h>
 #endif
-#import "ACOVisibilityManager.h"
-#import "ACRIContentHoldingView.h"
+
 #import <UIKit/UIKit.h>
 
 @interface ARCGridViewLayout : UIView<ACRIContentHoldingView>

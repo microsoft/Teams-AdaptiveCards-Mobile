@@ -6,15 +6,12 @@
 #ifdef SWIFT_PACKAGE
 /// Swift Package Imports
 #import "FlowLayout.h"
+#import "ACRIContentHoldingView.h"
 #else
 /// Cocoapods Imports
 #import <AdaptiveCards/FlowLayout.h>
+#import <AdaptiveCards/ACRIContentHoldingView.h>
 #endif
-
-#import <UIKit/UIKit.h>
-#import "ACOVisibilityManager.h"
-#import "ACRIContentHoldingView.h"
-#import "ACRTapGestureRecognizerEventHandler.h"
 
 @interface ACRFlowLayout: UIView<ACRIContentHoldingView>
 
