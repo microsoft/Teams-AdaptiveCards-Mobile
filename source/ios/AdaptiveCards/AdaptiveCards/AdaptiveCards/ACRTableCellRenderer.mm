@@ -61,10 +61,10 @@
                                                             superview:viewGroup];
             
             [ACRRenderer renderInGridOrFlow:flowContainer
-                             rootView:rootView
-                               inputs:inputs
-                        withCardElems:cellElement->GetItems()
-                        andHostConfig:acoConfig];
+                                   rootView:rootView
+                                     inputs:inputs
+                              withCardElems:cellElement->GetItems()
+                              andHostConfig:acoConfig];
         }
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)

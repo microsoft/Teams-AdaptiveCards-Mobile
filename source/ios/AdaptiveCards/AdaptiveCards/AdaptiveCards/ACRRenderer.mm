@@ -149,10 +149,10 @@ using namespace AdaptiveCards;
                                                             superview:containingView];
             
             [ACRRenderer renderInGridOrFlow:flowContainer
-                             rootView:rootView
-                               inputs:inputs
-                        withCardElems:body
-                        andHostConfig:config];
+                                   rootView:rootView
+                                     inputs:inputs
+                              withCardElems:body
+                              andHostConfig:config];
         }
     }
     else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
