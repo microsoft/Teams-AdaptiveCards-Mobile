@@ -54,6 +54,7 @@ import io.adaptivecards.objectmodel.ParseContext;
 import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.renderer.action.ActionElementRendererIconImageLoaderAsync;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public final class Util {
 
@@ -249,8 +250,8 @@ public final class Util {
             }
         }
         LayoutContainerType layoutContainerType = layoutToApply.GetLayoutContainerType();
-        if ((layoutContainerType == LayoutContainerType.Flow && isFlowLayoutEnabled()) ||
-            (layoutContainerType == LayoutContainerType.AreaGrid && isGridLayoutEnabled())) {
+        if ((layoutContainerType == LayoutContainerType.Flow && FeatureFlagResolverUtility.INSTANCE.isFlowLayoutEnabled()) ||
+            (layoutContainerType == LayoutContainerType.AreaGrid && FeatureFlagResolverUtility.INSTANCE.isGridLayoutEnabled())) {
             return layoutToApply;
         } else {
             Layout defaultStackLayout = new Layout();
@@ -796,37 +797,7 @@ public final class Util {
         return closestSize;
     }
 
-    public static boolean isFlowLayoutEnabled() {
-        IFeatureFlagResolver featureFlagResolver = CardRendererRegistration.getInstance().getFeatureFlagResolver();
-        if (featureFlagResolver != null) {
-            return featureFlagResolver.getEcsSettingAsBoolean(IS_FLOW_LAYOUT_ENABLED);
-        } else {
-            return false;
-        }
-    }
-
-    public static boolean isGridLayoutEnabled() {
-        IFeatureFlagResolver featureFlagResolver = CardRendererRegistration.getInstance().getFeatureFlagResolver();
-        if (featureFlagResolver != null) {
-            return featureFlagResolver.getEcsSettingAsBoolean(IS_GRID_LAYOUT_ENABLED);
-        } else {
-            return false;
-        }
-    }
-
-    public static boolean isItemFitToFillEnabledForColumn() {
-        IFeatureFlagResolver featureFlagResolver = CardRendererRegistration.getInstance().getFeatureFlagResolver();
-        if (featureFlagResolver != null) {
-            return featureFlagResolver.getEcsSettingAsBoolean(IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN);
-        } else {
-            return false;
-        }
-    }
-
     private static final String FLUENT_ICON_URL_PREFIX = "icon:";
-    public static final String IS_FLOW_LAYOUT_ENABLED = "adaptiveCard/isFlowLayoutEnabled";
-    public static final String IS_GRID_LAYOUT_ENABLED = "adaptiveCard/isGridLayoutEnabled";
-    public static final String IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN = "adaptiveCard/isItemFitToFillEnabledForColumn";
 
     public static String getOpenUrlAnnouncement(Context context, String urlTitle) {
         return context.getResources().getString(R.string.open_url_announcement, urlTitle);

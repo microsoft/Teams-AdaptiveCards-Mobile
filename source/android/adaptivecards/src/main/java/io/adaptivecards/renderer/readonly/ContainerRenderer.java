@@ -450,7 +450,6 @@ public class ContainerRenderer extends BaseCardElementRenderer
             FlexboxLayout flexboxLayout = new FlexboxLayout(context);
             flexboxLayout.setFlexDirection(FlexDirection.ROW);
             flexboxLayout.setFlexWrap(FlexWrap.WRAP);
-            flexboxLayout.setAlignItems(AlignItems.FLEX_START);
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
             flexboxLayout.setLayoutParams(new FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             flexboxLayout.setTag(new TagContent(container));

@@ -224,7 +224,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
     }
 
     // Helper method to convert dp to pixels
-    private int dpToPx(Context context,int dp) {
+    private int dpToPx(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
     }

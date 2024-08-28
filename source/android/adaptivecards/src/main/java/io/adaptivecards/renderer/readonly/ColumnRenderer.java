@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
@@ -23,12 +22,8 @@ import io.adaptivecards.objectmodel.Column;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 import io.adaptivecards.objectmodel.HostConfig;
-import io.adaptivecards.objectmodel.HostWidth;
-import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.Layout;
 import io.adaptivecards.objectmodel.LayoutContainerType;
-import io.adaptivecards.objectmodel.LayoutVector;
-import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.AdaptiveWarning;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
@@ -38,6 +33,7 @@ import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class ColumnRenderer extends BaseCardElementRenderer
 {
@@ -164,7 +160,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
                     columnRenderArgs,
                     layoutToApply);
 
-                if (Util.isItemFitToFillEnabledForColumn()) {
+                if (FeatureFlagResolverUtility.INSTANCE.isItemFitToFillEnabledForColumn()) {
                     ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, columnLayout);
                 }
 
@@ -200,7 +196,6 @@ public class ColumnRenderer extends BaseCardElementRenderer
             FlexboxLayout flexboxLayout = new FlexboxLayout(context);
             flexboxLayout.setFlexDirection(FlexDirection.ROW);
             flexboxLayout.setFlexWrap(FlexWrap.WRAP);
-            flexboxLayout.setAlignItems(AlignItems.FLEX_START);
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
             flexboxLayout.setTag(new TagContent(column));
             layoutContainer = flexboxLayout;

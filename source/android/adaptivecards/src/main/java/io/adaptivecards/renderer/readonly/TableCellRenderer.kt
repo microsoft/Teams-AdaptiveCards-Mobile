@@ -150,7 +150,6 @@ object TableCellRenderer : BaseCardElementRenderer() {
                 flexWrap = FlexWrap.WRAP
                 tag = TagContent(tableCell)
                 layoutParams = TableRowLayout.LayoutParams(0, TableLayout.LayoutParams.MATCH_PARENT)
-                alignItems = AlignItems.CENTER
             }
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply)
             layoutContainer = flexboxLayout
