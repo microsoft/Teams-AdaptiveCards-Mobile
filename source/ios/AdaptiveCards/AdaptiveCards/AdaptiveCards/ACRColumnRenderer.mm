@@ -68,7 +68,7 @@
                                                              maxWidth:widthOfElement
                                                             superview:viewGroup];
             
-            [ACRRenderer renderInFlow:flowContainer
+            [ACRRenderer renderInGridOrFlow:flowContainer
                              rootView:rootView
                                inputs:inputs
                         withCardElems:columnElem->GetItems()
