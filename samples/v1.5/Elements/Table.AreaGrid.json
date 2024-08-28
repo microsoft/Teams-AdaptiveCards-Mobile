@@ -30,7 +30,7 @@
                               "name": "image"
                           },
                           {
-                              "name": "compoundButton",
+                              "name": "text",
                               "column": 2
                           }
                       ]
@@ -43,14 +43,22 @@
                       "grid.area": "image"
                   },
                   {
-                      "type": "CompoundButton",
-                      "title": "Summarize",
-                      "grid.area": "compoundButton",
-                      "icon": {
-                          "name": "TextBulletList"
-                      },
-                      "description": "Review key points in file",
-                      "height": "stretch"
+                      "type": "Container",
+                      "grid.area": "text",
+                      "items": [
+                          {
+                              "type": "TextBlock",
+                              "text": "This is a beautiful landscape",
+                              "wrap": true,
+                              "size": "ExtraLarge",
+                              "weight": "Bolder"
+                          },
+                          {
+                              "type": "TextBlock",
+                              "text": "You can see mountains, a lake, trees in the foreground. The sun is shining, there's some mist in the background.",
+                              "wrap": true
+                          }
+                      ]
                   }
               ]
             }
