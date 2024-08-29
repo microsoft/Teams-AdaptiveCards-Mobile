@@ -11,7 +11,7 @@ schedules:
    - main
 
 pool:
-  name: 1ES-Teams-Ubuntu-LC-DomoreexpGithub
+  name: 1ES-Teams-Ubuntu-Latest-Compliant-NCUS
   vmImage: vs2017-win2016
   demands: java
 

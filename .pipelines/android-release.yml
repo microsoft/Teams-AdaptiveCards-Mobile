@@ -4,7 +4,7 @@ pr: none
 trigger: none
 
 pool:
-  name: 1ES-Teams-Ubuntu-LC-DomoreexpGithub
+  name: 1ES-Teams-Ubuntu-Latest-Compliant-NCUS
   vmImage: windows-2019
   demands: java
 
