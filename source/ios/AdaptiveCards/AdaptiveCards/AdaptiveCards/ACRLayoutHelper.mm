@@ -36,14 +36,14 @@ using namespace AdaptiveCards;
         return;
     }
     std::vector<std::shared_ptr<BaseCardElement>> body = card->GetBody();
-    if (body.size() == 0)
+    if (body.size() > 0)
     {
-        return;
-    }
-    float childrenWidth = parentWidth/(body.size()) ;
-    for (const auto &element : body) 
-    {
-        [self distribute:childrenWidth rootView:rootView forElement:element andHostConfig:config];
+        
+        float childrenWidth = parentWidth/(body.size()) ;
+        for (const auto &element : body)
+        {
+            [self distribute:childrenWidth rootView:rootView forElement:element andHostConfig:config];
+        }
     }
 }
 
