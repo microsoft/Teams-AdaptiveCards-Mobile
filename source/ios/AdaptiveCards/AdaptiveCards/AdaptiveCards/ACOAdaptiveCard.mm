@@ -82,20 +82,25 @@ using namespace AdaptiveCards;
             NSRange fullMatchRange = NSMakeRange(match.range.location + offset, match.range.length);
             NSRange regexStringRange = NSMakeRange([match rangeAtIndex:2].location + offset, [match rangeAtIndex:2].length);
 
-            // Extract the regex string
-            NSString *regexString = [mutablePayload substringWithRange:regexStringRange];
+            // Validate ranges to prevent out-of-bounds errors
+            if (NSLocationInRange(regexStringRange.location, NSMakeRange(0, mutablePayload.length)) &&
+                NSLocationInRange(NSMaxRange(regexStringRange), NSMakeRange(0, mutablePayload.length))) {
+                
+                // Extract the regex string
+                NSString *regexString = [mutablePayload substringWithRange:regexStringRange];
 
-            // Correct escaping: Replace each single backslash with two backslashes
-            NSString *correctedRegexString = [regexString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+                // Correct escaping: Replace each single backslash with two backslashes
+                NSString *correctedRegexString = [regexString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
 
-            // Reconstruct the corrected full regex entry
-            NSString *correctedFullEntry = [NSString stringWithFormat:@"\"regex\": \"%@\"", correctedRegexString];
+                // Reconstruct the corrected full regex entry
+                NSString *correctedFullEntry = [NSString stringWithFormat:@"%@%@%@", [payload substringWithRange:[match rangeAtIndex:1]], correctedRegexString, [payload substringWithRange:[match rangeAtIndex:3]]];
 
-            // Replace the entire match with the corrected entry
-            [mutablePayload replaceCharactersInRange:fullMatchRange withString:correctedFullEntry];
+                // Replace the entire match with the corrected entry
+                [mutablePayload replaceCharactersInRange:fullMatchRange withString:correctedFullEntry];
 
-            // Update offset by the difference in length between corrected and original entries
-            offset += correctedFullEntry.length - fullMatchRange.length;
+                // Update offset by the difference in length between corrected and original entries
+                offset += correctedFullEntry.length - fullMatchRange.length;
+            }
         }
     }];
 
