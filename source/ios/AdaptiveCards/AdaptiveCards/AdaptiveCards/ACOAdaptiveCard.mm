@@ -56,11 +56,84 @@ using namespace AdaptiveCards;
     return _inputs;
 }
 
-+ (ACOAdaptiveCardParseResult *)fromJson:(NSString *)payload;
-{
++ (NSString *)correctInvalidJsonEscapes:(NSString *)payload {
+    NSError *regexError = nil;
+
+    // Regex pattern to find each "regex": "..." entry with capturing groups for before, regex string, and after
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\"regex\"\\s*:\\s*\")(.*?)(\")"
+                                                                           options:NSRegularExpressionDotMatchesLineSeparators
+                                                                             error:&regexError];
+
+    if (regexError != nil) {
+        NSLog(@"Regex Error: %@", regexError.localizedDescription);
+        return payload; // Return the original payload if regex creation fails
+    }
+
+    NSMutableString *mutablePayload = [payload mutableCopy];
+
+    // Enumerate over each regex match and correct backslashes incrementally
+    __block NSInteger offset = 0; // Track adjustments to the range after replacements
+    [regex enumerateMatchesInString:payload
+                            options:0
+                              range:NSMakeRange(0, payload.length)
+                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+        if (match.numberOfRanges == 4) { // Ensure we have all 4 capturing groups
+            // Adjust ranges by offset to account for previous replacements
+            NSRange fullMatchRange = NSMakeRange(match.range.location + offset, match.range.length);
+            NSRange regexStringRange = NSMakeRange([match rangeAtIndex:2].location + offset, [match rangeAtIndex:2].length);
+
+            // Validate ranges to prevent out-of-bounds errors
+            if (NSLocationInRange(regexStringRange.location, NSMakeRange(0, mutablePayload.length)) &&
+                NSLocationInRange(NSMaxRange(regexStringRange), NSMakeRange(0, mutablePayload.length))) {
+                
+                // Extract the regex string
+                NSString *regexString = [mutablePayload substringWithRange:regexStringRange];
+
+                // Correct escaping: Replace each single backslash with two backslashes
+                NSString *correctedRegexString = [regexString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+
+                // Reconstruct the corrected full regex entry
+                NSString *correctedFullEntry = [NSString stringWithFormat:@"%@%@%@", [payload substringWithRange:[match rangeAtIndex:1]], correctedRegexString, [payload substringWithRange:[match rangeAtIndex:3]]];
+
+                // Replace the entire match with the corrected entry
+                [mutablePayload replaceCharactersInRange:fullMatchRange withString:correctedFullEntry];
+
+                // Update offset by the difference in length between corrected and original entries
+                offset += correctedFullEntry.length - fullMatchRange.length;
+            }
+        }
+    }];
+
+    return [mutablePayload copy];
+}
+
++ (BOOL)isValidJson:(NSString *)jsonString error:(NSError **)error {
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    if (!jsonData) {
+        return NO;
+    }
+
+    [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:error];
+    return (*error == nil);
+}
+
++ (ACOAdaptiveCardParseResult *)fromJson:(NSString *)payload {
     const std::string g_version = "1.6";
     ACOAdaptiveCardParseResult *result = nil;
+
     if (payload) {
+        NSError *jsonError = nil;
+
+        // First, check if the JSON is valid
+        if (![self isValidJson:payload error:&jsonError]) {
+            NSLog(@"Initial JSON Deserialization Error: %@", jsonError.localizedDescription);
+            // Attempt to fix the JSON using regex replacement
+            NSString *processedPayload = [self correctInvalidJsonEscapes:payload];
+            // Update payload to the corrected version
+            payload = processedPayload;
+        }
+
+        // Use the already validated JSON object without re-serialization
         try {
             ACOAdaptiveCard *card = [[ACOAdaptiveCard alloc] init];
             std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
@@ -77,7 +150,7 @@ using namespace AdaptiveCards;
             }
             result = [[ACOAdaptiveCardParseResult alloc] init:card errors:nil warnings:acrParseWarnings];
         } catch (const AdaptiveCardParseException &e) {
-            // converts AdaptiveCardParseException to NSError
+            // Converts AdaptiveCardParseException to NSError
             ErrorStatusCode errorStatusCode = e.GetStatusCode();
             NSInteger errorCode = (long)errorStatusCode;
             NSBundle *adaptiveCardsBundle = [[ACOBundle getInstance] getBundle];
@@ -92,6 +165,7 @@ using namespace AdaptiveCards;
             result = [[ACOAdaptiveCardParseResult alloc] init:nil errors:errors warnings:nil];
         }
     }
+
     return result;
 }
 
