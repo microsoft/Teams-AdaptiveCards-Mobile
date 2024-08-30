@@ -155,17 +155,19 @@ using namespace AdaptiveCards;
                 }
             }
 
-            if (bUpdate) {
+            if (bUpdate) 
+            {
                 NSObject *container = (NSObject *)_viewGroup;
-                if([container isKindOfClass:[ACRColumnView class]])
+                if ([container isKindOfClass:[ACRColumnView class]])
                 {
                     ACRColumnSetView *columnSetView = ((ACRColumnView *)_viewGroup).columnsetView;
-                    if (columnSetView) {
+                    if (columnSetView) 
+                    {
                         [columnSetView updateIntrinsicContentSize];
                         [columnSetView invalidateIntrinsicContentSize];
                     }
                 }
-                if([container isKindOfClass:[ACRContentStackView class]])
+                if ([container isKindOfClass:[ACRContentStackView class]])
                 {
                     [(ACRContentStackView *)_viewGroup invalidateIntrinsicContentSize];
                 }

@@ -111,7 +111,7 @@
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, compoundButtonView, viewGroup);
     compoundButtonView.accessibilityLabel = @(compoundButton->getTitle().c_str());
-    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:compoundButtonView withAreaName:areaName];
     return compoundButtonView;
 }

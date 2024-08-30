@@ -83,7 +83,7 @@
     if (!backgroundColor.empty()) {
         view.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:imgElem->GetBackgroundColor()];
     }
-    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:wrappingView withAreaName:areaName];
 
     switch (imageProps.acrHorizontalAlignment) {

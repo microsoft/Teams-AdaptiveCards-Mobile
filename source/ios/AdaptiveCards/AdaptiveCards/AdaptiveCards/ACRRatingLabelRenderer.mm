@@ -78,7 +78,7 @@
             ]];
     }
     
-    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:wrapperView withAreaName:areaName];
   
     return wrapperView;

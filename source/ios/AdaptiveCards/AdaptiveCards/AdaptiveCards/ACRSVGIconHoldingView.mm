@@ -68,8 +68,7 @@
                                  attribute:NSLayoutAttributeLeading
                                 multiplier:1
                                   constant:0];
-//    trailing.priority = 499;
-//    leading.priority = 499;
+
     [self addConstraints:@[trailing, leading]];
     
     [self setContentHuggingPriority:249 forAxis:UILayoutConstraintAxisHorizontal];

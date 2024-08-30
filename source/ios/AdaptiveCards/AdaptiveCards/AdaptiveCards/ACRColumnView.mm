@@ -23,7 +23,7 @@
     self.isLastColumn = NO;
     self.inputHandlers = [[NSMutableArray<ACRIBaseInputHandler> alloc] init];
 }
-- (void)addArrangedSubview:(UIView *)view withAreaName:(NSString*)areaName
+- (void)addArrangedSubview:(UIView *)view withAreaName:(NSString *)areaName
 {
     [self configureWidthOfView:view];
 

@@ -44,7 +44,8 @@ using namespace AdaptiveCards;
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     self = [self initWithFrame:superview.frame attributes:nil];
-    if (self) {
+    if (self) 
+    {
         _style = style;
         _layout = flowLayout;
         _availableRowSpace = maxWidth;
@@ -55,7 +56,8 @@ using namespace AdaptiveCards;
         _showcardTargets = [[NSMutableArray alloc] init];
         _numberOfItems = 0;
         if (style != ACRNone &&
-            style != parentStyle) {
+            style != parentStyle)
+        {
             self.backgroundColor = [acoConfig getBackgroundColorForContainerStyle:_style];
             [self setBorderColorWithHostConfig:config];
         }
@@ -71,10 +73,12 @@ using namespace AdaptiveCards;
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     self = [self initWithFrame:superview.frame attributes:nil];
-    if (self) {
+    if (self) 
+    {
         _style = style;
         if (style != ACRNone &&
-            style != parentStyle) {
+            style != parentStyle) 
+        {
             self.backgroundColor = [acoConfig getBackgroundColorForContainerStyle:_style];
             [self setBorderColorWithHostConfig:config];
         }
@@ -126,7 +130,8 @@ using namespace AdaptiveCards;
         return UIStackViewAlignmentFill;
     }
     
-    switch (_layout->GetHorizontalAlignment()) {
+    switch (_layout->GetHorizontalAlignment()) 
+    {
         case AdaptiveCards::HorizontalAlignment::Center:
             return UIStackViewAlignmentCenter;
             
@@ -153,10 +158,10 @@ using namespace AdaptiveCards;
     
     NSLayoutConstraint *selfWidth = [self.widthAnchor constraintEqualToConstant:_availableRowSpace];
     selfWidth.priority = 999;
-    NSLayoutConstraint *leading = [stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:0];
-    NSLayoutConstraint *trailing = [stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:0];
-    NSLayoutConstraint *top = [stackView.topAnchor constraintEqualToAnchor:self.topAnchor constant:0];
-    NSLayoutConstraint *bottom = [stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:0];
+    NSLayoutConstraint *leading = [stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+    NSLayoutConstraint *trailing = [stackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor];
+    NSLayoutConstraint *top = [stackView.topAnchor constraintEqualToAnchor:self.topAnchor];
+    NSLayoutConstraint *bottom = [stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
     
     [NSLayoutConstraint activateConstraints:@[selfWidth, leading, trailing, top, bottom]];
     
@@ -238,7 +243,8 @@ using namespace AdaptiveCards;
 {
     [_targets addObject:target];
 
-    if ([target isKindOfClass:[ACRShowCardTarget class]]) {
+    if ([target isKindOfClass:[ACRShowCardTarget class]]) 
+    {
         [_showcardTargets addObject:(ACRShowCardTarget *)target];
     }
 }
@@ -266,7 +272,8 @@ using namespace AdaptiveCards;
 
 - (void)hideAllShowCards
 {
-    for (ACRShowCardTarget *target in _showcardTargets) {
+    for (ACRShowCardTarget *target in _showcardTargets) 
+    {
         [target hideShowCard];
     }
 }

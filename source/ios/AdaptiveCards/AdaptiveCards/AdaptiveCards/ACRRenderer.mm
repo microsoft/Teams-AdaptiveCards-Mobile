@@ -348,8 +348,6 @@ using namespace AdaptiveCards;
         }
     }
 
-    //    view.accessibilityElements = [(ACRContentStackView *)view getArrangedSubviews];
-
     return view;
 
 }

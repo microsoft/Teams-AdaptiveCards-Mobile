@@ -98,7 +98,7 @@
                                                           superview:viewGroup];
     container.rtl = rootView.context.rtl;
 
-    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:container withAreaName:areaName];
     
     [self configureBorderForElement:acoElem container:container config:acoConfig];
@@ -113,9 +113,12 @@
     {
         [container addArrangedSubview:flowContainer];
     }
-    else if (gridLayout != nil) {
+    else if (gridLayout != nil) 
+    {
         [container addArrangedSubview:gridLayout];
-    } else {
+    } 
+    else
+    {
         [ACRRenderer render:container
                    rootView:rootView
                      inputs:inputs

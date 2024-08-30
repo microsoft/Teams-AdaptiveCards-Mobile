@@ -126,7 +126,7 @@
 
     contentholdingview.hidePlayIcon = hideDefaultPlayIcon;
 
-    NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:contentholdingview withAreaName:areaName];
 
     if ([acoConfig getHostConfig]->GetSupportsInteractivity()) {
@@ -157,7 +157,7 @@
     }
 
     if (mediaElem->GetHeight() == HeightType::Stretch) {
-        NSString *areaName = [NSString stringWithCString:elem->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+        NSString *areaName = stringForCString(elem->GetAreaGridName());
         [viewGroup addArrangedSubview:[viewGroup addPaddingFor:contentholdingview] withAreaName:areaName];
     }
 

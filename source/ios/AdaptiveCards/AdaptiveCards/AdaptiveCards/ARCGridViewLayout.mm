@@ -36,10 +36,12 @@ using namespace AdaptiveCards;
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     self = [self initWithFrame:superview.frame];
-    if (self) {
+    if (self) 
+    {
         _style = style;
         if (style != ACRNone &&
-            style != parentStyle) {
+            style != parentStyle) 
+        {
             self.backgroundColor = [acoConfig getBackgroundColorForContainerStyle:_style];
             [self setBorderColorWithHostConfig:config];
         }
@@ -55,7 +57,8 @@ using namespace AdaptiveCards;
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     self = [super initWithFrame:superview.frame];
-    if (self) {
+    if (self) 
+    {
         _gridLayout = gridLayout;
         _rows = [NSMutableArray array];
         _columns = [NSMutableArray array];
@@ -64,7 +67,8 @@ using namespace AdaptiveCards;
         _rowSpacing = getSpacing(_gridLayout->GetRowSpacing(), config);
         _columnSpacing = getSpacing(_gridLayout->GetColumnSpacing(), config);
         if (style != ACRNone &&
-            style != parentStyle) {
+            style != parentStyle) 
+        {
             self.backgroundColor = [acoConfig getBackgroundColorForContainerStyle:_style];
             [self setBorderColorWithHostConfig:config];
         }
@@ -83,14 +87,17 @@ using namespace AdaptiveCards;
     [self setupViewsFromGridLayout];
 }
 
-- (void)createRows:(NSInteger)rows {
-    for (NSInteger rowIndex = 0; rowIndex < rows; rowIndex++) {
+- (void)createRows:(NSInteger)rows 
+{
+    for (NSInteger rowIndex = 0; rowIndex < rows; rowIndex++) 
+    {
         UIView *rowView = [[UIView alloc] init];
         rowView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:rowView];
         
         NSMutableArray<UIView *> *columnViews = [NSMutableArray array];
-        for (NSInteger i = 0; i < _numberOfColumns; i++) {
+        for (NSInteger i = 0; i < _numberOfColumns; i++) 
+        {
             UIView *columnView = [[UIView alloc] init];
             columnView.translatesAutoresizingMaskIntoConstraints = NO;
             [rowView addSubview:columnView];
@@ -98,16 +105,24 @@ using namespace AdaptiveCards;
             NSNumber *value = _columnWidthValues[i];
             NSInteger previousAutoIndex = -1;
             NSLayoutConstraint *widthConstraint;
-            if ([type isEqualToString:@"fixed"]) {
+            if ([type isEqualToString:@"fixed"]) 
+            {
                 CGFloat columnWidth = [value floatValue];
                 widthConstraint = [columnView.widthAnchor constraintEqualToConstant:columnWidth];
-            } else if ([type isEqualToString:@"percentage"]) {
+            } 
+            else if ([type isEqualToString:@"percentage"])
+            {
                 CGFloat percentage = [value floatValue] / 100.0;
                 widthConstraint = [columnView.widthAnchor constraintEqualToAnchor:self.widthAnchor multiplier:percentage];
-            } else if ([type isEqualToString:@"auto"]) {
-                if (previousAutoIndex != -1) {
+            } 
+            else if ([type isEqualToString:@"auto"])
+            {
+                if (previousAutoIndex != -1) 
+                {
                     widthConstraint = [columnViews[previousAutoIndex].widthAnchor constraintEqualToAnchor:(columnView.widthAnchor)];
-                } else {
+                } 
+                else
+                {
                     widthConstraint = [columnView.widthAnchor constraintGreaterThanOrEqualToConstant:0];
                 }
             }
@@ -118,7 +133,8 @@ using namespace AdaptiveCards;
                 [columnView.bottomAnchor constraintEqualToAnchor:rowView.bottomAnchor],
                 widthConstraint
             ]];
-            if (i == _numberOfColumns-1) {
+            if (i == _numberOfColumns-1) 
+            {
                 [NSLayoutConstraint activateConstraints:@[
                     [columnView.trailingAnchor constraintEqualToAnchor:rowView.trailingAnchor constant:-_columnSpacing]
                 ]];
@@ -127,13 +143,16 @@ using namespace AdaptiveCards;
             [columnViews addObject:columnView];
         }
         
-        if (rowIndex == 0) {
+        if (rowIndex == 0) 
+        {
             [NSLayoutConstraint activateConstraints:@[
                 [rowView.topAnchor constraintEqualToAnchor:self.topAnchor constant:_rowSpacing], // Add Top constraint
                 [rowView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
                 [rowView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor]
             ]];
-        } else {
+        } 
+        else
+        {
             UIView *previousRow = _rows.lastObject;
             [NSLayoutConstraint activateConstraints:@[
                 [rowView.topAnchor constraintEqualToAnchor:previousRow.bottomAnchor constant:_rowSpacing],
@@ -141,7 +160,9 @@ using namespace AdaptiveCards;
                 [rowView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor]
             ]];
         }
-        if (rowIndex == rows - 1) {
+        
+        if (rowIndex == rows - 1)
+        {
             [self addConstraints:@[
                 [rowView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-_rowSpacing],
             ]];
@@ -153,11 +174,14 @@ using namespace AdaptiveCards;
 
 - (void)setupViewsFromGridLayout
 {
-    if (_gridLayout) {
+    if (_gridLayout) 
+    {
         const std::vector<std::shared_ptr<GridArea>>& areas = _gridLayout->GetAreas();
         
-        for (const auto& areaPtr : areas) {
-            if (areaPtr) {
+        for (const auto& areaPtr : areas) 
+        {
+            if (areaPtr) 
+            {
                 const GridArea* area = areaPtr.get();
                 NSString *areaName = [NSString stringWithCString:area->GetName().c_str() encoding:NSUTF8StringEncoding];
                 UIView *view = [[UIView alloc] init];
@@ -198,11 +222,14 @@ using namespace AdaptiveCards;
 
 - (void)updateNumberOfRowsFromGridLayout
 {
-    if (_gridLayout) {
+    if (_gridLayout) 
+    {
         const std::vector<std::shared_ptr<GridArea>>& areas = _gridLayout->GetAreas();
         NSInteger maxRows = 1;
-        for (const auto& areaPtr : areas) {
-            if (areaPtr) {
+        for (const auto& areaPtr : areas) 
+        {
+            if (areaPtr) 
+            {
                 const GridArea* area = areaPtr.get();
                 NSInteger rows = area->GetRow() + area->GetRowSpan() - 1;
                 if (rows > maxRows)
@@ -218,9 +245,11 @@ using namespace AdaptiveCards;
 - (void)updateNumberOfColumnsFromGridLayout
 {
     _numberOfColumns = 0;
-    if (_gridLayout) {
+    if (_gridLayout) 
+    {
         const std::vector<std::string>& mColumns = _gridLayout->GetColumns();
-        if (!mColumns.empty()) {
+        if (!mColumns.empty()) 
+        {
             _numberOfColumns = mColumns.size();
         }
     }
@@ -228,7 +257,8 @@ using namespace AdaptiveCards;
 
 - (void)updateColumnsWidthsFromGridLayout
 {
-    if (_gridLayout) {
+    if (_gridLayout) 
+    {
         const std::vector<std::string>& mColumns = _gridLayout->GetColumns();
         if (!mColumns.empty()) {
             // Arrays to store column types and values
@@ -239,21 +269,27 @@ using namespace AdaptiveCards;
             CGFloat fixedWidthTotal = 0.0;
             NSInteger autoCount = 0;
             
-            for (const std::string& column : mColumns) {
+            for (const std::string& column : mColumns) 
+            {
                 NSString *columnStr = [NSString stringWithCString:column.c_str() encoding:NSUTF8StringEncoding];
-                if ([columnStr hasSuffix:@"px"]) {
+                if ([columnStr hasSuffix:@"px"]) 
+                {
                     // Column width in pixels
                     NSString *valueStr = [columnStr substringToIndex:columnStr.length - 2];
                     CGFloat width = [valueStr floatValue];
                     [columnTypes addObject:@"fixed"];
                     [columnValues addObject:@(width)];
                     fixedWidthTotal += width;
-                } else if ([columnStr isEqualToString:@"auto"]) {
+                } 
+                else if ([columnStr isEqualToString:@"auto"])
+                {
                     // Auto width
                     [columnTypes addObject:@"auto"];
                     [columnValues addObject:@(0)];
                     autoCount++;
-                } else {
+                }
+                else
+                {
                     // Default to percentage (if no suffix is provided, assume percentage)
                     CGFloat percentage = [columnStr floatValue];
                     [columnTypes addObject:@"percentage"];

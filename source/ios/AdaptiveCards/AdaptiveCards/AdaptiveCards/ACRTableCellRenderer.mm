@@ -71,7 +71,8 @@
     {
         NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
         BOOL isGridLayoutEnabled = [featureFlagResolver boolForFlag:@"isGridLayoutEnabled"] ?: NO;
-        if (isGridLayoutEnabled) {
+        if (isGridLayoutEnabled) 
+        {
             std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
             gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
                                                                  style:(ACRContainerStyle)cellElement->GetStyle()

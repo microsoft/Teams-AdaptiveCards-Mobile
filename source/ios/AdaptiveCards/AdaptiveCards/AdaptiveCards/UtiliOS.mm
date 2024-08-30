@@ -1278,3 +1278,19 @@ BOOL isNullOrEmpty(NSString *string) {
     }
     return YES;
 }
+
+NSString *stringForCString(const std::optional<std::string> cString)
+{
+    if (!cString.has_value())
+    {
+        return @"";
+    }
+    
+    const char* cStr = cString->c_str();
+    if (!cStr)
+    {
+        return @"";
+    }
+    
+    return [NSString stringWithCString:cStr encoding:NSUTF8StringEncoding];
+}

@@ -36,6 +36,10 @@ using namespace AdaptiveCards;
         return;
     }
     std::vector<std::shared_ptr<BaseCardElement>> body = card->GetBody();
+    if (body.size() == 0)
+    {
+        return;
+    }
     float childrenWidth = parentWidth/(body.size()) ;
     for (const auto &element : body) 
     {
@@ -57,11 +61,16 @@ using namespace AdaptiveCards;
         case CardElementType::Container:
         {
             std::shared_ptr<Container> container = std::dynamic_pointer_cast<Container>(elem);
-            float childrenWidth = parentWidth/(container->GetItems().size()) ;
-            for (const auto &item : container->GetItems()) 
+            long numberOfItems = container->GetItems().size();
+            if(numberOfItems > 0)
             {
-                [self distribute:childrenWidth rootView:rootView forElement:item andHostConfig:config];
+                float childrenWidth = parentWidth/(container->GetItems().size()) ;
+                for (const auto &item : container->GetItems())
+                {
+                    [self distribute:childrenWidth rootView:rootView forElement:item andHostConfig:config];
+                }
             }
+            
             break;
         }
         case CardElementType::ColumnSet:
@@ -72,13 +81,16 @@ using namespace AdaptiveCards;
             unsigned int padding = hostConfig->GetSpacing().paddingSpacing;
             unsigned int spacing = getSpacing(elem->GetSpacing(), hostConfig);
             long numberOfColumns = columnSetElem->GetColumns().size();
-            // removing padding of coloumSet and spacing between elemenets
-            float availableSpace = (parentWidth - (2 * padding) - ((numberOfColumns - 1)*spacing));
-            
-            float childrenWidth = availableSpace/numberOfColumns ;
-            for (const auto &column : columnSetElem->GetColumns())
+            if(numberOfColumns > 0)
             {
-                [self distribute:childrenWidth rootView:rootView forElement:column andHostConfig:config];
+                // removing padding of coloumSet and spacing between elemenets
+                float availableSpace = (parentWidth - (2 * padding) - ((numberOfColumns - 1) * spacing));
+                
+                float childrenWidth = availableSpace/numberOfColumns ;
+                for (const auto &column : columnSetElem->GetColumns())
+                {
+                    [self distribute:childrenWidth rootView:rootView forElement:column andHostConfig:config];
+                }
             }
             break;
         }
@@ -87,25 +99,28 @@ using namespace AdaptiveCards;
             std::shared_ptr<Table> table = std::dynamic_pointer_cast<Table>(elem);
             std::vector<std::shared_ptr<TableColumnDefinition>> colums = table->GetColumns();
             long numberOfColumns = colums.size();
-            int cellSpacing = [config getHostConfig]->GetTable().cellSpacing;
-            float availableSpace = (parentWidth - ((numberOfColumns - 1)*cellSpacing));
-           
-            //remove spacing b/w cells, padding is taken care by the cell renderer
-            float childrenWidth = availableSpace/numberOfColumns;
-            std::vector<std::shared_ptr<TableRow>> tableRows = table->GetRows();
-            for (const auto &row : tableRows) 
+            if(numberOfColumns > 0)
             {
-                std::vector<std::shared_ptr<TableCell>> tableCells = row->GetCells();
-                for (const auto &cell : tableCells) 
+                int cellSpacing = [config getHostConfig]->GetTable().cellSpacing;
+                float availableSpace = (parentWidth - ((numberOfColumns - 1) * cellSpacing));
+               
+                //remove spacing b/w cells, padding is taken care by the cell renderer
+                float childrenWidth = availableSpace/numberOfColumns;
+                std::vector<std::shared_ptr<TableRow>> tableRows = table->GetRows();
+                for (const auto &row : tableRows)
                 {
-                    [self distribute:childrenWidth rootView:rootView forElement:cell andHostConfig:config];
+                    std::vector<std::shared_ptr<TableCell>> tableCells = row->GetCells();
+                    for (const auto &cell : tableCells)
+                    {
+                        [self distribute:childrenWidth rootView:rootView forElement:cell andHostConfig:config];
+                    }
                 }
-            }
-            
-            //set pixel width also for Table Columns
-            for (const auto &colum : colums)
-            {
-                colum->SetPixelWidth(childrenWidth);
+                
+                //set pixel width also for Table Columns
+                for (const auto &colum : colums)
+                {
+                    colum->SetPixelWidth(childrenWidth);
+                }
             }
             
             break;
@@ -136,13 +151,6 @@ using namespace AdaptiveCards;
         return NO;
     }
 
-    BOOL isGridLayoutEnabled = [featureFlagResolver boolForFlag:@"isGridLayoutEnabled"] ?: NO;
-
-    if(!isGridLayoutEnabled)
-    {
-        return NO;
-    }
-    
     std::shared_ptr<AdaptiveCards::Layout> layout = [self layoutToApplyFrom:card->GetLayouts() andHostConfig:config];
     
     BOOL isFlow = (layout->GetLayoutContainerType() == LayoutContainerType::Flow);
