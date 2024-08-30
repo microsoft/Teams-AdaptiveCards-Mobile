@@ -96,14 +96,14 @@ using namespace AdaptiveCards;
         [self addSubview:rowView];
         
         NSMutableArray<UIView *> *columnViews = [NSMutableArray array];
-        for (NSInteger i = 0; i < _numberOfColumns; i++) 
+        NSInteger previousAutoIndex = -1;
+        for (NSInteger i = 0; i < _numberOfColumns; i++)
         {
             UIView *columnView = [[UIView alloc] init];
             columnView.translatesAutoresizingMaskIntoConstraints = NO;
             [rowView addSubview:columnView];
             NSString *type = _columnWidthTypes[i];
             NSNumber *value = _columnWidthValues[i];
-            NSInteger previousAutoIndex = -1;
             NSLayoutConstraint *widthConstraint;
             if ([type isEqualToString:@"fixed"]) 
             {
@@ -114,15 +114,17 @@ using namespace AdaptiveCards;
             {
                 CGFloat percentage = [value floatValue] / 100.0;
                 widthConstraint = [columnView.widthAnchor constraintEqualToAnchor:self.widthAnchor multiplier:percentage];
-            } 
-            else if ([type isEqualToString:@"auto"])
+            }
+            else if ([type isEqualToString:@"auto"] || type == nil)
             {
-                if (previousAutoIndex != -1) 
+                if (previousAutoIndex != -1)
                 {
                     widthConstraint = [columnViews[previousAutoIndex].widthAnchor constraintEqualToAnchor:(columnView.widthAnchor)];
-                } 
+                    previousAutoIndex = i;
+                }
                 else
                 {
+                    previousAutoIndex = i;
                     widthConstraint = [columnView.widthAnchor constraintGreaterThanOrEqualToConstant:0];
                 }
             }
@@ -201,7 +203,18 @@ using namespace AdaptiveCards;
 {
     [self addSubview:view];
     view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self createConstraintsForView:view row:row-1 column:column-1 rowSpan:rowSpan-1 columnSpan:columnSpan-1];
+    // Adjust row and column indices to ensure they fall within bounds
+    NSInteger adjustedRow = MIN(MAX(row - 1, 0), _rows.count - 1);
+    NSInteger adjustedColumn = MIN(MAX(column - 1, 0), _columns[adjustedRow].count - 1);
+    
+    NSInteger adjustedRowSpan = MIN(MAX(rowSpan - 1, 0), _rows.count - adjustedRow - 1);
+    NSInteger adjustedColumnSpan = MIN(MAX(columnSpan - 1, 0), _columns[adjustedRow].count - adjustedColumn - 1);
+    
+    [self createConstraintsForView:view
+                               row:adjustedRow
+                            column:adjustedColumn
+                           rowSpan:adjustedRowSpan
+                        columnSpan:adjustedColumnSpan];
 }
 
 - (void)createConstraintsForView:(UIView *)view row:(NSInteger)row column:(NSInteger)column rowSpan:(NSInteger)rowSpan columnSpan:(NSInteger)columnSpan
@@ -244,8 +257,8 @@ using namespace AdaptiveCards;
 
 - (void)updateNumberOfColumnsFromGridLayout
 {
-    _numberOfColumns = 0;
-    if (_gridLayout) 
+    _numberOfColumns = 1;
+    if (_gridLayout)
     {
         const std::vector<std::string>& mColumns = _gridLayout->GetColumns();
         if (!mColumns.empty()) 
@@ -305,12 +318,16 @@ using namespace AdaptiveCards;
 - (void)addArrangedSubview:(UIView *)view withAreaName:(NSString *)areaName
 {
     // If areaName is not available, we can't add the view
-    if (areaName == nil || [areaName isEqualToString:@""])
+    if (areaName == nil || [areaName isEqualToString:@""] || _viewsByAreaName.count == 0)
+    {
+        return;
+    }
+    UIView *area = _viewsByAreaName[areaName];
+    if (area == nil) /// If area is not available with the given name, we can not add without area
     {
         return;
     }
     [_viewSubViews addObject:view];
-    UIView *area = _viewsByAreaName[areaName];
     [area addSubview:view];
     view.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
