@@ -36,24 +36,25 @@ std::shared_ptr<TableCell> TableCell::DeserializeTableCell(ParseContext& context
             }
             else if (layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
             {
-                layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
-            }
-        }
-    }
-
-    if (const auto& layoutArray = ParseUtil::GetArray(value, AdaptiveCardSchemaKey::Layouts, false); !layoutArray.empty())
-    {
-        auto& layouts = cell->GetLayouts();
-        for (const auto& layoutJson : layoutArray)
-        {
-            std::shared_ptr<Layout> layout = Layout::Deserialize(layoutJson);
-            if(layout->GetLayoutContainerType() == LayoutContainerType::Flow)
-            {
-                layouts.push_back(FlowLayout::Deserialize(layoutJson));
-            }
-            else if (layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
-            {
-                layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
+                std::shared_ptr<AreaGridLayout> areaGridLayout = AreaGridLayout::Deserialize(layoutJson);
+                if (areaGridLayout->GetAreas().size() == 0 && areaGridLayout->GetColumns().size() == 0)
+                {
+                    // this needs to be stack layout
+                    std::shared_ptr<Layout> stackLayout = std::make_shared<Layout>();
+                    stackLayout->SetLayoutContainerType(LayoutContainerType::Stack);
+                    layouts.push_back(stackLayout);
+                }
+                else if (areaGridLayout->GetColumns().size() == 0)
+                {
+                    // this needs to be flow layout
+                    std::shared_ptr<FlowLayout> flowLayout = std::make_shared<FlowLayout>();
+                    flowLayout->SetLayoutContainerType(LayoutContainerType::Flow);
+                    layouts.push_back(flowLayout);
+                }
+                else
+                {
+                   layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
+                }
             }
         }
     }
