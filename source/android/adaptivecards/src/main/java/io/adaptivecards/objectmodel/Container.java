@@ -67,6 +67,14 @@ public class Container extends StyledCollectionElement {
     return new BaseCardElementVector(AdaptiveCardObjectModelJNI.Container_GetItems__SWIG_0(swigCPtr, this), false);
   }
 
+  public LayoutVector GetLayouts() {
+    return new LayoutVector(AdaptiveCardObjectModelJNI.Container_GetLayouts__SWIG_0(swigCPtr, this), false);
+  }
+
+  public void SetLayouts(LayoutVector value) {
+    AdaptiveCardObjectModelJNI.Container_SetLayouts(swigCPtr, this, LayoutVector.getCPtr(value), value);
+  }
+
   public @androidx.annotation.Nullable Boolean GetRtl() {
     StdOptionalBool optvalue = new StdOptionalBool(AdaptiveCardObjectModelJNI.Container_GetRtl(swigCPtr, this), false);
     return optvalue.has_value() ? optvalue.value() : null;

@@ -134,6 +134,10 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/NumberInput.h"
 #include "../../../shared/cpp/ObjectModel/TextInput.h"
 #include "../../../shared/cpp/ObjectModel/RatingInput.h"
+#include "../../../shared/cpp/ObjectModel/Layout.h"
+#include "../../../shared/cpp/ObjectModel/FlowLayout.h"
+#include "../../../shared/cpp/ObjectModel/AreaGridLayout.h"
+#include "../../../shared/cpp/ObjectModel/GridArea.h"
 #include "../../../shared/cpp/ObjectModel/TimeInput.h"
 #include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 #include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
@@ -215,6 +219,10 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::NumberInput)
 %shared_ptr(AdaptiveCards::TextInput)
 %shared_ptr(AdaptiveCards::RatingInput)
+%shared_ptr(AdaptiveCards::Layout)
+%shared_ptr(AdaptiveCards::FlowLayout)
+%shared_ptr(AdaptiveCards::AreaGridLayout)
+%shared_ptr(AdaptiveCards::GridArea)
 %shared_ptr(AdaptiveCards::TimeInput)
 %shared_ptr(AdaptiveCards::ToggleInput)
 %shared_ptr(AdaptiveCards::ExecuteAction)
@@ -485,9 +493,8 @@ namespace Json {
 %template(RemoteResourceInformationVector) std::vector<AdaptiveCards::RemoteResourceInformation>;
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;
 %template(BaseCardElementVector) std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement> >;
-%template(IconVector) std::vector<std::shared_ptr<AdaptiveCards::Icon> >;
-%template(RatingInputVector) std::vector<std::shared_ptr<AdaptiveCards::RatingInput> >;
-%template(RatingLabelVector) std::vector<std::shared_ptr<AdaptiveCards::RatingLabel> >;
+%template(LayoutVector) std::vector<std::shared_ptr<AdaptiveCards::Layout> >;
+%template(GridAreaVector) std::vector<std::shared_ptr<AdaptiveCards::GridArea> >;
 %template(ImageVector) std::vector<std::shared_ptr<AdaptiveCards::Image> >;
 %template(FactVector) std::vector<std::shared_ptr<AdaptiveCards::Fact> >;
 %template(ColumnVector) std::vector<std::shared_ptr<AdaptiveCards::Column> >;
@@ -550,6 +557,36 @@ namespace Json {
     static AdaptiveCards::BaseActionElement *dynamic_cast(AdaptiveCards::BaseElement *baseElement) {
         return dynamic_cast<AdaptiveCards::BaseActionElement *>(baseElement);
     }
+};
+
+%exception AdaptiveCards::FlowLayout::dynamic_cast(AdaptiveCards::Layout *layout) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::FlowLayout {
+        static AdaptiveCards::FlowLayout *dynamic_cast(AdaptiveCards::Layout *layout) {
+            return dynamic_cast<AdaptiveCards::FlowLayout *>(layout);
+        }
+};
+
+%exception AdaptiveCards::AreaGridLayout::dynamic_cast(AdaptiveCards::Layout *layout) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::AreaGridLayout {
+        static AdaptiveCards::AreaGridLayout *dynamic_cast(AdaptiveCards::Layout *layout) {
+            return dynamic_cast<AdaptiveCards::AreaGridLayout *>(layout);
+        }
 };
 
 %exception AdaptiveCards::Container::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
@@ -1037,6 +1074,10 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/DateInput.h"
 %include "../../../shared/cpp/ObjectModel/NumberInput.h"
 %include "../../../shared/cpp/ObjectModel/TextInput.h"
+%include "../../../shared/cpp/ObjectModel/Layout.h"
+%include "../../../shared/cpp/ObjectModel/FlowLayout.h"
+%include "../../../shared/cpp/ObjectModel/AreaGridLayout.h"
+%include "../../../shared/cpp/ObjectModel/GridArea.h"
 %include "../../../shared/cpp/ObjectModel/RatingInput.h"
 %include "../../../shared/cpp/ObjectModel/TimeInput.h"
 %include "../../../shared/cpp/ObjectModel/ToggleInput.h"

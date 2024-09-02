@@ -4,6 +4,8 @@ package io.adaptivecards.renderer.readonly
 
 import android.graphics.Color
 import android.widget.LinearLayout
+import com.google.android.flexbox.FlexboxLayout
+import com.google.android.flexbox.JustifyContent
 import io.adaptivecards.objectmodel.HorizontalAlignment
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.RatingColor
@@ -64,11 +66,11 @@ object RatingElementRendererUtil {
         }
     }
 
-    fun applyHorizontalAlignment(view: LinearLayout, horizontalAlignment: HorizontalAlignment?, renderArgs: RenderArgs) {
+    fun applyHorizontalAlignment(view: FlexboxLayout, horizontalAlignment: HorizontalAlignment?, renderArgs: RenderArgs) {
         when (horizontalAlignment ?: renderArgs.horizontalAlignment ?: HorizontalAlignment.Left) {
-            HorizontalAlignment.Center -> view.gravity = android.view.Gravity.CENTER_HORIZONTAL
-            HorizontalAlignment.Right -> view.gravity = android.view.Gravity.END
-            else -> view.gravity = android.view.Gravity.START
+            HorizontalAlignment.Center -> view.justifyContent = JustifyContent.CENTER
+            HorizontalAlignment.Right -> view.justifyContent = JustifyContent.FLEX_END
+            else -> view.justifyContent = JustifyContent.FLEX_START
         }
     }
 }

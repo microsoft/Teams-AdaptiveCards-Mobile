@@ -188,6 +188,14 @@ public class AdaptiveCard {
     return new BaseActionElementVector(AdaptiveCardObjectModelJNI.AdaptiveCard_GetActions__SWIG_0(swigCPtr, this), false);
   }
 
+  public LayoutVector GetLayouts() {
+    return new LayoutVector(AdaptiveCardObjectModelJNI.AdaptiveCard_GetLayouts__SWIG_0(swigCPtr, this), false);
+  }
+
+  public void SetLayouts(LayoutVector value) {
+    AdaptiveCardObjectModelJNI.AdaptiveCard_SetLayouts(swigCPtr, this, LayoutVector.getCPtr(value), value);
+  }
+
   public SWIGTYPE_p_std__unordered_setT_std__string_t GetKnownProperties() {
     return new SWIGTYPE_p_std__unordered_setT_std__string_t(AdaptiveCardObjectModelJNI.AdaptiveCard_GetKnownProperties(swigCPtr, this), false);
   }
