@@ -55,7 +55,8 @@
                                                                     superview:viewGroup];
     columnSetView.rtl = rootView.context.rtl;
 
-    [viewGroup addArrangedSubview:columnSetView];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:columnSetView withAreaName:areaName];
     
     [self configureBorderForElement:acoElem container:columnSetView config:acoConfig];
 

@@ -60,7 +60,8 @@
 
     wrappingView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [viewGroup addArrangedSubview:wrappingView];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:wrappingView withAreaName:areaName];
     
     configRtl(iconView, rootView.context);
     configRtl(wrappingView, rootView.context);

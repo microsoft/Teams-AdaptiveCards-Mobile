@@ -78,7 +78,7 @@
     ACRContentHoldingUIView *wrappingview = [[ACRContentHoldingUIView alloc] init];
     wrappingview.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [viewGroup addArrangedSubview:wrappingview];
+    [viewGroup addArrangedSubview:wrappingview withAreaName:nil];
 
     [wrappingview addSubview:progressView];
     [progressView.widthAnchor constraintEqualToAnchor:wrappingview.widthAnchor multiplier:0.8].active = YES;

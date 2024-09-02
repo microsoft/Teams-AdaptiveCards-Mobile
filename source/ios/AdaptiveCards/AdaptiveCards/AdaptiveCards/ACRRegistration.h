@@ -17,6 +17,7 @@
 #import <AdaptiveCards/ACRTargetBuilder.h>
 #endif
 #import "ACOBaseCardElement.h"
+#import "ACRIFeatureFlagResolver.h"
 
 @interface ACRRegistration : NSObject
 
@@ -63,6 +64,9 @@
 - (int)getHostCardContainer;
 
 - (void)registerHostCardContainer:(int)hostCardContainer;
+
+- (void)setFeatureFlagResolver:(NSObject<ACRIFeatureFlagResolver> *_Nonnull)featureFlagResolver;
+- (NSObject<ACRIFeatureFlagResolver> *_Nullable)getFeatureFlagResolver;
 
 @end
 

@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.Locale;
@@ -20,6 +22,8 @@ import io.adaptivecards.objectmodel.Column;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 import io.adaptivecards.objectmodel.HostConfig;
+import io.adaptivecards.objectmodel.Layout;
+import io.adaptivecards.objectmodel.LayoutContainerType;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.AdaptiveWarning;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
@@ -29,6 +33,7 @@ import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class ColumnRenderer extends BaseCardElementRenderer
 {
@@ -48,6 +53,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
 
     /**
      * If column width is given as a relative weight, get the weight
+     *
      * @param column The Column element
      * @return weight, or null if width is not relative
      */
@@ -57,8 +63,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
         {
             String columnSize = column.GetWidth().toLowerCase(Locale.getDefault());
             return Float.parseFloat(columnSize);
-        }
-        catch (NumberFormatException ex)
+        } catch (NumberFormatException ex)
         {
             return null;
         }
@@ -66,7 +71,6 @@ public class ColumnRenderer extends BaseCardElementRenderer
 
     private ViewGroup setColumnWidth(RenderedAdaptiveCard renderedCard, Context context, Column column, ViewGroup columnLayout)
     {
-
         String columnSize = column.GetWidth().toLowerCase(Locale.getDefault());
         long pixelWidth = column.GetPixelWidth();
         Float relativeWidth = ColumnRenderer.getRelativeWidth(column);
@@ -78,21 +82,18 @@ public class ColumnRenderer extends BaseCardElementRenderer
             layoutParams.setFlexGrow(0);
             layoutParams.setFlexShrink(0);
             layoutParams.setWidth(Util.dpToPixels(context, pixelWidth));
-        }
-        else if (relativeWidth != null)
+        } else if (relativeWidth != null)
         {
             // Set ratio to column
             layoutParams.setFlexGrow(relativeWidth);
             layoutParams.setFlexShrink(1);
             layoutParams.setFlexBasisPercent(0);
-        }
-        else if (TextUtils.isEmpty(columnSize) || columnSize.equals(g_columnSizeStretch))
+        } else if (TextUtils.isEmpty(columnSize) || columnSize.equals(g_columnSizeStretch))
         {
             layoutParams.setFlexGrow(1);
             layoutParams.setFlexShrink(1);
             layoutParams.setFlexBasisPercent(0);
-        }
-        else
+        } else
         {
             // If the width is Auto or is not valid (not weight, pixel, empty or stretch)
             layoutParams.setFlexGrow(0);
@@ -110,25 +111,28 @@ public class ColumnRenderer extends BaseCardElementRenderer
 
     @Override
     public View render(
-            RenderedAdaptiveCard renderedCard,
-            Context context,
-            FragmentManager fragmentManager,
-            ViewGroup viewGroup,
-            BaseCardElement baseCardElement,
-            ICardActionHandler cardActionHandler,
-            HostConfig hostConfig,
-            RenderArgs renderArgs) throws Exception
+        RenderedAdaptiveCard renderedCard,
+        Context context,
+        FragmentManager fragmentManager,
+        ViewGroup viewGroup,
+        BaseCardElement baseCardElement,
+        ICardActionHandler cardActionHandler,
+        HostConfig hostConfig,
+        RenderArgs renderArgs) throws Exception
     {
         Column column = Util.castTo(baseCardElement, Column.class);
 
-        // TODO: Check compatibility with model on top
-        View separator = setSpacingAndSeparator(context, viewGroup, column.GetSpacing(), column.GetSeparator(), hostConfig, false);
+        Layout layoutToApply = Util.getLayoutToApply(column.GetLayouts(), hostConfig);
+        ViewGroup columnLayout = getAppropriateContainerForLayout(context, layoutToApply, column);
 
-        LinearLayout columnLayout = new LinearLayout(context);
-        columnLayout.setOrientation(LinearLayout.VERTICAL);
-        columnLayout.setTag(new TagContent(column));
-        columnLayout.setFocusable(true);
-        columnLayout.setFocusableInTouchMode(true);
+        // TODO: Check compatibility with model on top
+        // Spacing between elements in a Layout.Flow is solely controlled by the columnSpacing and rowSpacing properties
+        // provided by the flow layout. The spacing and separator properties on items are ignored.
+        View separator = null;
+        boolean isFlowLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow;
+        if (!isFlowLayout) {
+            separator = setSpacingAndSeparator(context, viewGroup, column.GetSpacing(), column.GetSeparator(), hostConfig, false);
+        }
 
         setVisibility(baseCardElement.GetIsVisible(), columnLayout);
 
@@ -147,25 +151,32 @@ public class ColumnRenderer extends BaseCardElementRenderer
             try
             {
                 CardRendererRegistration.getInstance().renderElements(renderedCard,
-                                                              context,
-                                                              fragmentManager,
-                                                              columnLayout,
-                                                              column.GetItems(),
-                                                              cardActionHandler,
-                                                              hostConfig,
-                                                              columnRenderArgs);
-            }
-            catch (AdaptiveFallbackException e)
+                    context,
+                    fragmentManager,
+                    columnLayout,
+                    column.GetItems(),
+                    cardActionHandler,
+                    hostConfig,
+                    columnRenderArgs,
+                    layoutToApply);
+
+                if (FeatureFlagResolverUtility.INSTANCE.isItemFitToFillEnabledForColumn()) {
+                    ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, columnLayout);
+                }
+
+            } catch (AdaptiveFallbackException e)
             {
                 // If the column couldn't be rendered, the separator is removed
-                viewGroup.removeView(separator);
+                if (separator != null) {
+                    viewGroup.removeView(separator);
+                }
                 throw e;
             }
         }
 
         ContainerRenderer.setBackgroundImage(renderedCard, context, column.GetBackgroundImage(), hostConfig, columnLayout);
 
-        ContainerRenderer.applyVerticalContentAlignment(columnLayout, column.GetVerticalContentAlignment());
+        ContainerRenderer.applyVerticalContentAlignment(columnLayout, column.GetVerticalContentAlignment(), layoutToApply);
 
         ContainerRenderer.applyPadding(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig, column.GetShowBorder());
         ContainerRenderer.applyContainerStyle(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig);
@@ -177,6 +188,26 @@ public class ColumnRenderer extends BaseCardElementRenderer
         ContainerRenderer.setSelectAction(renderedCard, column.GetSelectAction(), columnLayout, cardActionHandler, renderArgs);
         viewGroup.addView(columnLayout);
         return columnLayout;
+    }
+
+    private static ViewGroup getAppropriateContainerForLayout(Context context, Layout layoutToApply, Column column) {
+        ViewGroup layoutContainer;
+        if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
+            FlexboxLayout flexboxLayout = new FlexboxLayout(context);
+            flexboxLayout.setFlexDirection(FlexDirection.ROW);
+            flexboxLayout.setFlexWrap(FlexWrap.WRAP);
+            Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
+            flexboxLayout.setTag(new TagContent(column));
+            layoutContainer = flexboxLayout;
+        } else {
+            LinearLayout columnLayout = new LinearLayout(context);
+            columnLayout.setOrientation(LinearLayout.VERTICAL);
+            columnLayout.setTag(new TagContent(column));
+            columnLayout.setFocusable(true);
+            columnLayout.setFocusableInTouchMode(true);
+            layoutContainer = columnLayout;
+        }
+        return layoutContainer;
     }
 
     private static ColumnRenderer s_instance = null;

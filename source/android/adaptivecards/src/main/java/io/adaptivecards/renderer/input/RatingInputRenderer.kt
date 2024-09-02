@@ -3,8 +3,10 @@
 package io.adaptivecards.renderer.input
 
 import android.content.Context
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import androidx.fragment.app.FragmentManager
 import io.adaptivecards.objectmodel.BaseCardElement
@@ -41,7 +43,7 @@ object RatingInputRenderer: BaseCardElementRenderer() {
             context,
             hostConfig,
             ratingInput
-        ) as LinearLayout
+        )
         RatingElementRendererUtil.applyHorizontalAlignment(view, ratingInput.GetHorizontalAlignment(), renderArgs)
         ratingInputHandler.setView(view)
         renderedCard.registerInputHandler(ratingInputHandler, renderArgs.containerCardId)

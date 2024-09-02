@@ -14,6 +14,11 @@
 #import "Column.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import "FlowLayout.h"
+#import "AreaGridLayout.h"
+#import "ACRFlowLayout.h"
+#import "ARCGridViewLayout.h"
+#import "ACRLayoutHelper.h"
 
 @implementation ACRColumnRenderer
 
@@ -40,8 +45,55 @@
 
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Column> columnElem = std::dynamic_pointer_cast<Column>(elem);
-
     [rootView.context pushBaseCardElementContext:acoElem];
+    
+    //Layout
+    float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
+    ACRFlowLayout *flowContainer;
+    ARCGridViewLayout *gridLayout;
+    //Layout
+    std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:columnElem->GetLayouts() andHostConfig:acoConfig];
+    if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
+    {
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+        BOOL isFlowLayoutEnabled = [featureFlagResolver boolForFlag:@"isFlowLayoutEnabled"] ?: NO;
+        if (isFlowLayoutEnabled)
+        {
+            std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
+            // layout using flow layout
+            flowContainer = [[ACRFlowLayout alloc] initWithFlowLayout:flow_layout
+                                                                style:(ACRContainerStyle)columnElem->GetStyle()
+                                                          parentStyle:[viewGroup style]
+                                                           hostConfig:acoConfig
+                                                             maxWidth:widthOfElement
+                                                            superview:viewGroup];
+            
+            [ACRRenderer renderInGridOrFlow:flowContainer
+                                   rootView:rootView
+                                     inputs:inputs
+                              withCardElems:columnElem->GetItems()
+                              andHostConfig:acoConfig];
+        }
+    }
+    else if (final_layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
+    {
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+        BOOL isGridLayoutEnabled = [featureFlagResolver boolForFlag:@"isGridLayoutEnabled"] ?: NO;
+        if (isGridLayoutEnabled)
+        {
+            std::shared_ptr<AreaGridLayout> grid_layout = std::dynamic_pointer_cast<AreaGridLayout>(final_layout);
+            gridLayout = [[ARCGridViewLayout alloc] initWithGridLayout:grid_layout
+                                                                 style:(ACRContainerStyle)columnElem->GetStyle()
+                                                           parentStyle:[viewGroup style]
+                                                            hostConfig:acoConfig
+                                                             superview:viewGroup];
+            [ACRRenderer renderInGridOrFlow:gridLayout
+                                   rootView:rootView
+                                     inputs:inputs
+                              withCardElems:columnElem->GetItems()
+                              andHostConfig:acoConfig];
+        }
+    }
 
     ACRColumnView *column = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)columnElem->GetStyle()
                                                      parentStyle:[viewGroup style]
@@ -70,11 +122,22 @@
     column.isLastColumn = columnsetView.isLastColumn;
     column.columnsetView = columnsetView;
 
-    [ACRRenderer render:column
-               rootView:rootView
-                 inputs:inputs
-          withCardElems:columnElem->GetItems()
-          andHostConfig:acoConfig];
+    if(flowContainer != nil)
+    {
+        [column addArrangedSubview:flowContainer];
+    }
+    else if(gridLayout != nil)
+    {
+        [column addArrangedSubview:gridLayout];
+    }
+    else
+    {
+        [ACRRenderer render:column
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:columnElem->GetItems()
+              andHostConfig:acoConfig];
+    }
 
     [column configureLayoutAndVisibility:GetACRVerticalContentAlignment(columnElem->GetVerticalContentAlignment().value_or(VerticalContentAlignment::Top))
                                minHeight:columnElem->GetMinHeight()
@@ -92,7 +155,8 @@
 
     column.shouldGroupAccessibilityChildren = YES;
 
-    [viewGroup addArrangedSubview:column];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:column withAreaName:areaName];
 
     // viewGroup and column has to be in view hierarchy before configBleed is called
     configBleed(rootView, elem, column, acoConfig, viewGroup);

@@ -41,8 +41,9 @@
     dateField.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitStaticText;
     dateField.accessibilityHint = NSLocalizedString(@"opens the date picker", nil);
 
-    [viewGroup addArrangedSubview:inputLabelView];
-
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:inputLabelView withAreaName:areaName];
+    
     [inputs addObject:inputLabelView];
 
     return inputLabelView;

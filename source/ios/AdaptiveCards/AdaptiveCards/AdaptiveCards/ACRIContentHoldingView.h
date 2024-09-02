@@ -19,7 +19,7 @@
                   parentStyle:(ACRContainerStyle)parentStyle
                    hostConfig:(ACOHostConfig *)config
                     superview:(UIView<ACRIContentHoldingView> *)superview;
-- (void)addArrangedSubview:(UIView *)view;
+- (void)addArrangedSubview:(UIView *)view withAreaName:(NSString*)areaName;
 - (void)insertArrangedSubview:(UIView *)view atIndex:(NSUInteger)insertionIndex;
 - (void)removeLastViewFromArrangedSubview;
 - (void)removeAllArrangedSubviews;
@@ -32,6 +32,8 @@
 - (NSUInteger)subviewsCounts;
 - (NSUInteger)arrangedSubviewsCounts;
 - (UIView *)getLastSubview;
+- (void)decreaseIntrinsicContentSize:(UIView *)view;
+- (void)increaseIntrinsicContentSize:(UIView *)view;
 
 - (void)updateLayoutAndVisibilityOfRenderedView:(UIView *)renderedView
                                      acoElement:(ACOBaseCardElement *)acoElem

@@ -16,6 +16,46 @@
                                 "type": "Input.ChoiceSet",
                                 "choices": [
 									{
+										"title": "AdaptiveCardFlowLayout",
+										"value": "v1.5/Scenarios/AdaptiveCardFlowLayout.json"
+									},
+									{
+										"title": "FlowLayoutWithInputElements",
+										"value": "v1.5/Scenarios/AdaptiveCardFlowLayoutWithInputElements.json"
+									},
+									{
+										"title": "NestedFlowLayout",
+										"value": "v1.5/Scenarios/NestedFlowLayout.json"
+									},
+									{
+										"title": "ContainerFlowLayout",
+										"value": "v1.5/Scenarios/ContainerFlowLayout.json"
+									},
+									{
+										"title": "RatingInputsFlowLayout",
+										"value": "v1.5/Scenarios/RatingInputsFlowLayout.json"
+									},
+									{
+										"title": "SingleColumnFlowLayout",
+										"value": "v1.5/Scenarios/SingleColumnFlowLayout.json"
+									},
+									{
+										"title": "MultiColumnFlowLayout",
+										"value": "v1.5/Scenarios/MultiColumnFlowLayout.json"
+									},
+									{
+										"title": "DifferentWidthsColumnSetFlowLayout",
+										"value": "v1.5/Scenarios/ColumnSetWithDifferentWidths.json"
+									},
+									{
+										"title": "TableFlowLayout",
+										"value": "v1.5/Scenarios/TableFlowLayout.json"
+									},
+									{
+										"title": "FlightUpdateTable",
+										"value": "v1.5/Scenarios/FlightUpdateTable.json"
+									},
+									{
 										"title": "FluentIcon",
 										"value": "v1.5/Scenarios/FluentIcon.json"
 									},

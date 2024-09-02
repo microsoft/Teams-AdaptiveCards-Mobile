@@ -79,6 +79,14 @@ public class Column extends StyledCollectionElement {
     AdaptiveCardObjectModelJNI.Column_SetPixelWidth(swigCPtr, this, value);
   }
 
+  public LayoutVector GetLayouts() {
+    return new LayoutVector(AdaptiveCardObjectModelJNI.Column_GetLayouts__SWIG_0(swigCPtr, this), false);
+  }
+
+  public void SetLayouts(LayoutVector value) {
+    AdaptiveCardObjectModelJNI.Column_SetLayouts(swigCPtr, this, LayoutVector.getCPtr(value), value);
+  }
+
   public BaseCardElementVector GetItems() {
     return new BaseCardElementVector(AdaptiveCardObjectModelJNI.Column_GetItems__SWIG_0(swigCPtr, this), false);
   }

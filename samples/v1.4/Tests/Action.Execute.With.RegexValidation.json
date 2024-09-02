@@ -1,0 +1,85 @@
+{
+	"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+	"type": "AdaptiveCard",
+	"version": "1.4",
+	"body": [
+		{
+			"type": "TextBlock",
+			"text": "Present a form and submit it back to the originator (with validation!)"
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Execute",
+					"title": "ActionSet Execute",
+					"verb": "doActionSetStuff",
+					"iconUrl": "https://adaptivecards.io/content/Closed%20bug%2092x92.png",
+					"associatedInputs": "none",
+					"data": {
+						"y": -1
+					}
+				},
+				{
+					"type": "Action.ShowCard",
+					"title": "ShowCard",
+					"card": {
+						"type": "AdaptiveCard",
+						"actions": [
+							{
+								"type": "Action.Execute",
+								"title": "Neat!",
+								"associatedInputs": "none"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"type": "Input.Text",
+			"id": "firstRegexCase",
+			"isRequired": true,
+            "regex": "^([a-zA-Z0-9._%+-]+@outokumpu\.com)(,[a-zA-Z0-9._%+-]+@outokumpu\.com)*$",
+			"label": "What is your first regex case?"
+		},
+        {
+            "type": "Input.Text",
+            "id": "secondRegexCase",
+            "regex": "^([a-zA-Z0-9._%+-]+@outokumpu\\.com)(,[a-zA-Z0-9._%+-]+@outokumpu\\.com)*$",
+            "label": "What is your second regex case?"
+        },
+        {
+            "type": "Input.Text",
+            "id": "thirdRegexCase",
+            "isRequired": true,
+            "regex": "^([a-zA-Z0-9._%+-]+@outokumpu\\\.com)(,[a-zA-Z0-9._%+-]+@outokumpu\\\.com)*$",
+            "label": "What is your third regex case?"
+        },
+        {
+            "type": "Input.Text",
+            "id": "fourthRegexCase",
+            "isRequired": true,
+            "regex": "^([a-zA-Z0-9._%+-]+@outokumpu\\\\.com)(,[a-zA-Z0-9._%+-]+@outokumpu\\\\.com)*$",
+            "label": "What is your fourth regex case?"
+        },
+        {
+            "type": "Input.Text",
+            "id": "fifthRegexCase",
+            "isRequired": true,
+            "regex": "^([a-zA-Z0-9._%+-]+@outokumpu\\\\\.com)(,[a-zA-Z0-9._%+-]+@outokumpu\\\\\.com)*$",
+            "label": "What is your fifth regex case?"
+        }
+	],
+	"actions": [
+		{
+			"type": "Action.Execute",
+			"title": "Action.Execute",
+			"verb": "doStuff",
+			"iconUrl": "https://adaptivecards.io/content/Closed%20bug%2092x92.png",
+			"data": {
+				"x": 13
+			}
+		}
+	]
+}
