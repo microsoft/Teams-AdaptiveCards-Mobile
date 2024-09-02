@@ -24,6 +24,7 @@
 #import "ACRCompoundButtonRenderer.h"
 #import "ACRUILabel.h"
 #import "UtiliOS.h"
+#import "ARCGridViewLayout.h"
 
 @implementation ACRCompoundButtonRenderer
 
@@ -53,12 +54,14 @@
     verticalStack.axis = UILayoutConstraintAxisVertical;
     verticalStack.translatesAutoresizingMaskIntoConstraints = NO;
     verticalStack.alignment = UIStackViewAlignmentLeading;
+    verticalStack.distribution = UIStackViewDistributionEqualSpacing;
     verticalStack.spacing = 4;
     
     UIStackView *horizontalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     horizontalStack.translatesAutoresizingMaskIntoConstraints = NO;
     horizontalStack.spacing = 8;
     horizontalStack.alignment = UIStackViewAlignmentCenter;
+    horizontalStack.distribution = UIStackViewDistributionEqualSpacing;
     
     if(icon != nil)
     {
@@ -70,11 +73,11 @@
    
     
     UILabel *titleLabel = [self getTitleLabelWithText:compoundButton->getTitle() viewGroup:viewGroup hostConfig:acoConfig];
+    [titleLabel setContentCompressionResistancePriority:251 forAxis:UILayoutConstraintAxisHorizontal];
     
     UILabel* descriptionLabel = [self getDescriptionLabelWithText:compoundButton->getDescription()
                                                            viewGroup:viewGroup
                                                           hostConfig:acoConfig];
-    
 
    
     
@@ -99,7 +102,7 @@
         [verticalStack.leadingAnchor constraintEqualToAnchor:compoundButtonView.leadingAnchor constant:16],
         [verticalStack.trailingAnchor constraintEqualToAnchor:compoundButtonView.trailingAnchor constant:-16],
         [verticalStack.topAnchor constraintEqualToAnchor:compoundButtonView.topAnchor constant:16],
-        [verticalStack.bottomAnchor constraintEqualToAnchor:compoundButtonView.bottomAnchor constant:-16]
+        [verticalStack.bottomAnchor constraintLessThanOrEqualToAnchor:compoundButtonView.bottomAnchor constant:-16]
     ]];
 
     configRtl(compoundButtonView, rootView.context);
@@ -108,7 +111,8 @@
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, compoundButtonView, viewGroup);
     compoundButtonView.accessibilityLabel = @(compoundButton->getTitle().c_str());
-    [viewGroup addArrangedSubview:compoundButtonView];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:compoundButtonView withAreaName:areaName];
     return compoundButtonView;
 }
 

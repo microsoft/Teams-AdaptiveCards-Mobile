@@ -103,7 +103,25 @@ std::shared_ptr<BaseCardElement> ContainerParser::Deserialize(ParseContext& cont
             }
             else if (layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
             {
-                layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
+                std::shared_ptr<AreaGridLayout> areaGridLayout = AreaGridLayout::Deserialize(layoutJson);
+                if (areaGridLayout->GetAreas().size() == 0 && areaGridLayout->GetColumns().size() == 0)
+                {
+                    // this needs to be stack layout
+                    std::shared_ptr<Layout> stackLayout = std::make_shared<Layout>();
+                    stackLayout->SetLayoutContainerType(LayoutContainerType::Stack);
+                    layouts.push_back(stackLayout);
+                }
+                else if (areaGridLayout->GetColumns().size() == 0)
+                {
+                    // this needs to be flow layout
+                    std::shared_ptr<FlowLayout> flowLayout = std::make_shared<FlowLayout>();
+                    flowLayout->SetLayoutContainerType(LayoutContainerType::Flow);
+                    layouts.push_back(flowLayout);
+                }
+                else
+                {
+                   layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
+                }
             }
         }
     }

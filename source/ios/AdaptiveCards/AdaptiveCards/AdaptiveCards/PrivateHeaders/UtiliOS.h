@@ -178,3 +178,5 @@ NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, N
 
 // check if string is Null or Empty
 BOOL isNullOrEmpty(NSString *string);
+
+NSString *stringForCString(const std::optional<std::string> cString);

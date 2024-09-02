@@ -91,8 +91,9 @@
 
     [inputs addObject:inputLabelView];
 
-    [viewGroup addArrangedSubview:inputLabelView];
-
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:inputLabelView withAreaName:areaName];
+    
     return inputLabelView;
 }
 

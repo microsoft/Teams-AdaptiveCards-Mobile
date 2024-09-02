@@ -75,6 +75,7 @@ Json::Value GridArea::SerializeToJsonValue() const
     Json::Value root;
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Name)] = m_name;
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Row)] = m_row;
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Column)] = m_column;
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ColumnSpan)] = m_columnSpan;
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::RowSpan)] = m_rowSpan;
     return root;
@@ -86,9 +87,9 @@ std::shared_ptr<GridArea> GridArea::Deserialize(const Json::Value& json)
     std::shared_ptr<GridArea> area = std::make_shared<GridArea>();
     area->SetName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Name));
     area->SetRow(ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Row, 1));
+    area->SetRowSpan(ParseUtil::GetInt(json, AdaptiveCardSchemaKey::RowSpan, 1));
     area->SetColumn(ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Column, 1));
-    area->SetColumn(ParseUtil::GetInt(json, AdaptiveCardSchemaKey::ColumnSpan, 1));
-    area->SetColumn(ParseUtil::GetInt(json, AdaptiveCardSchemaKey::RowSpan, 1));
+    area->SetColumnSpan(ParseUtil::GetInt(json, AdaptiveCardSchemaKey::ColumnSpan, 1));
     return area;
 }
 
