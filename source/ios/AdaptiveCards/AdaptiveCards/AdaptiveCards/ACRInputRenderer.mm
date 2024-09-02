@@ -237,6 +237,8 @@
                 if (![acoSelectAction isEnabled]) {
                     quickReplyView.accessibilityTraits |= UIAccessibilityTraitNotEnabled;
                 }
+            } else if (action->GetElementType() == ActionType::OpenUrl) {
+                button.accessibilityTraits = UIAccessibilityTraitLink;
             }
             [viewGroup addTarget:target];
         }
