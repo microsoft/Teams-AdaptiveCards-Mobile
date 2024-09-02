@@ -132,32 +132,32 @@ Json::Value FlowLayout::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ItemFit)] = ItemFitToString(m_itemFit);
     }
-    
+
     if (m_rowSpacing != Spacing::Default)
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::RowSpacing)] = SpacingToString(m_rowSpacing);
     }
-    
+
     if (m_columnSpacing != Spacing::Default)
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ColumnSpacing)] = SpacingToString(m_columnSpacing);
     }
-    
+
     if (m_horizontalAlignment != HorizontalAlignment::Center)
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalItemsAlignment)] = HorizontalAlignmentToString(m_horizontalAlignment);
     }
-    
+
     if (m_itemWidth.has_value())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ItemWidth)] = m_itemWidth.value_or("");
     }
-    
+
     if (m_minItemWidth.has_value())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MinItemWidth)] = m_minItemWidth.value_or("");
     }
-    
+
     if (m_maxItemWidth.has_value())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxItemWidth)] = m_maxItemWidth.value_or("");
@@ -168,7 +168,7 @@ Json::Value FlowLayout::SerializeToJsonValue() const
 
 std::shared_ptr<FlowLayout> FlowLayout::Deserialize(const Json::Value& json)
 {
-    
+
     std::shared_ptr<Layout> base_layout = Layout::Deserialize(json);
     std::shared_ptr<FlowLayout> layout = std::make_shared<FlowLayout>();
     layout->SetLayoutContainerType(base_layout->GetLayoutContainerType());

@@ -18,9 +18,9 @@ std::shared_ptr<TableCell> TableCell::DeserializeTableCell(ParseContext& context
 {
     const auto& idProperty = ParseUtil::GetString(value, AdaptiveCardSchemaKey::Id);
     const InternalId internalId = InternalId::Next();
-
+    
     context.PushElement(idProperty, internalId);
-
+    
     auto cell = StyledCollectionElement::Deserialize<TableCell>(context, value);
     cell->SetRtl(ParseUtil::GetOptionalBool(value, AdaptiveCardSchemaKey::Rtl));
     
@@ -53,14 +53,14 @@ std::shared_ptr<TableCell> TableCell::DeserializeTableCell(ParseContext& context
                 }
                 else
                 {
-                   layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
+                    layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
                 }
             }
         }
     }
     
     context.PopElement();
-
+    
     return cell;
 }
 

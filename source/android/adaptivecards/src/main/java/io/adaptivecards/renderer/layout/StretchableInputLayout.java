@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.flexbox.FlexboxLayout;
+
 import io.adaptivecards.renderer.BaseCardElementRenderer;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.input.customcontrols.IValidatedInputView;
@@ -59,7 +61,7 @@ public class StretchableInputLayout extends StretchableElementLayout
             m_viewWithVisualCues = input;
         }
         else if (input instanceof RatingStarInputView || input instanceof RatingStarDisplayView) {
-            LinearLayout layout = (LinearLayout) input;
+            FlexboxLayout layout = (FlexboxLayout) input;
             m_inputView = layout;
             m_viewWithVisualCues = layout;
         }

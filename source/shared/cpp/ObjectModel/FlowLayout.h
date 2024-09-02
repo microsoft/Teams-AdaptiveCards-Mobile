@@ -15,7 +15,7 @@ class FlowLayout: public Layout
 {
 public:
     FlowLayout() :
-        m_itemFit(ItemFit::Fit), m_columnSpacing(Spacing::Default), m_rowSpacing(Spacing::Default), m_horizontalAlignment(HorizontalAlignment::Center), m_itemMaxPixelWidth(-1), m_itemMinPixelWidth(-1), m_pixelItemWidth(-1)
+    m_itemFit(ItemFit::Fit), m_columnSpacing(Spacing::Default), m_rowSpacing(Spacing::Default), m_horizontalAlignment(HorizontalAlignment::Center), m_itemMaxPixelWidth(-1), m_itemMinPixelWidth(-1), m_pixelItemWidth(-1)
     {
     }
     FlowLayout(const FlowLayout&) = default;
@@ -32,7 +32,7 @@ public:
     
     int GetItemPixelWidth() const;
     void SetItemPixelWidth(int value);
-
+    
     int GetMinItemPixelWidth() const;
     void SetMinItemPixelWidth(int value);
     
@@ -53,14 +53,14 @@ public:
     
     HorizontalAlignment GetHorizontalAlignment() const;
     void SetHorizontalAlignment(const HorizontalAlignment& value);
-
+    
     bool ShouldSerialize() const;
     std::string Serialize() const;
     Json::Value SerializeToJsonValue() const;
-
+    
     static std::shared_ptr<FlowLayout> Deserialize(const Json::Value& json);
     static std::shared_ptr<FlowLayout> DeserializeFromString(const std::string& jsonString);
-
+    
 private:
     ItemFit m_itemFit = ItemFit::Fit;
     std::optional<std::string> m_itemWidth;
@@ -76,5 +76,3 @@ private:
     HorizontalAlignment m_horizontalAlignment = HorizontalAlignment::Center;
 };
 } // namespace AdaptiveCards
-
-
