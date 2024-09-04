@@ -261,6 +261,7 @@ namespace AdaptiveCards
             {CardElementType::TimeInput, "Input.Time"},
             {CardElementType::ToggleInput, "Input.Toggle"},
             {CardElementType::CompoundButton,"CompoundButton"},
+            {CardElementType::Carousel,"Carousel"},
             {CardElementType::Unknown, "Unknown"}});
 
     DEFINE_ADAPTIVECARD_ENUM(ActionType, {

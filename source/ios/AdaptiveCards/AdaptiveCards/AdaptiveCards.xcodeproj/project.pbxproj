@@ -63,6 +63,9 @@
 		46CBB6422C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46CBB6412C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm */; };
 		46CBB6452C22BA96008FC5D5 /* CompoundButtonInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46CBB6432C22BA96008FC5D5 /* CompoundButtonInvalid.json */; };
 		46CBB6462C22BA96008FC5D5 /* CompoundButtonValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46CBB6442C22BA96008FC5D5 /* CompoundButtonValid.json */; };
+		46DF04372C81DA3F001C254F /* Carousel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4615350F2C81D9D100054123 /* Carousel.h */; };
+		46DF043B2C81DC4E001C254F /* Carousel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46DF04382C81DC4E001C254F /* Carousel.cpp */; };
+		46DF04402C857771001C254F /* CarouselPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46DF043D2C857771001C254F /* CarouselPage.cpp */; };
 		46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */; };
 		46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */; };
 		6B00E1162A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */; };
@@ -551,6 +554,7 @@
 		4608EE882BF5C1AB00543095 /* ACRRatingLabelRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingLabelRenderer.mm; sourceTree = "<group>"; };
 		4608EE8B2BF5C1B800543095 /* ACRRatingInputRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRatingInputRenderer.h; sourceTree = "<group>"; };
 		4608EE8C2BF5C1B800543095 /* ACRRatingInputRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingInputRenderer.mm; sourceTree = "<group>"; };
+		4615350F2C81D9D100054123 /* Carousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Carousel.h; path = ../../../../shared/cpp/ObjectModel/Carousel.h; sourceTree = "<group>"; };
 		4621E12B2BF3557C004F03F3 /* RatingLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RatingLabel.h; path = ../../../../shared/cpp/ObjectModel/RatingLabel.h; sourceTree = "<group>"; };
 		4621E12D2BF35784004F03F3 /* RatingLabel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RatingLabel.cpp; path = ../../../../shared/cpp/ObjectModel/RatingLabel.cpp; sourceTree = "<group>"; };
 		463C3C062BD8DB1F00A95C4E /* Icon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Icon.cpp; path = ../../../../shared/cpp/ObjectModel/Icon.cpp; sourceTree = "<group>"; };
@@ -581,6 +585,9 @@
 		46CBB6412C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardCompoundButtonTests.mm; sourceTree = "<group>"; };
 		46CBB6432C22BA96008FC5D5 /* CompoundButtonInvalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CompoundButtonInvalid.json; sourceTree = "<group>"; };
 		46CBB6442C22BA96008FC5D5 /* CompoundButtonValid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CompoundButtonValid.json; sourceTree = "<group>"; };
+		46DF04382C81DC4E001C254F /* Carousel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Carousel.cpp; path = ../../../../shared/cpp/ObjectModel/Carousel.cpp; sourceTree = "<group>"; };
+		46DF043C2C81DF88001C254F /* CarouselPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CarouselPage.h; path = ../../../../shared/cpp/ObjectModel/CarouselPage.h; sourceTree = "<group>"; };
+		46DF043D2C857771001C254F /* CarouselPage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CarouselPage.cpp; sourceTree = "<group>"; };
 		46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
 		46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
 		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
@@ -1547,6 +1554,10 @@
 				46CBB63A2C22BA33008FC5D5 /* CompoundButton.h */,
 				F44872DB1EE2261F00FCAFAE /* Image.h */,
 				463C3C062BD8DB1F00A95C4E /* Icon.cpp */,
+				4615350F2C81D9D100054123 /* Carousel.h */,
+				46DF04382C81DC4E001C254F /* Carousel.cpp */,
+				46DF043C2C81DF88001C254F /* CarouselPage.h */,
+				46DF043D2C857771001C254F /* CarouselPage.cpp */,
 				463C3C0A2BD8DCC000A95C4E /* Icon.h */,
 				46CBB6352C22BA24008FC5D5 /* IconInfo.cpp */,
 				46CBB6362C22BA24008FC5D5 /* IconInfo.h */,
@@ -1891,6 +1902,7 @@
 				F4F44B98204A160B00A2F24C /* ACRInputRenderer.h in Headers */,
 				F4F44B95204A159A00A2F24C /* ACRImageSetRenderer.h in Headers */,
 				F4F44B90204A14EF00A2F24C /* ACRColumnRenderer.h in Headers */,
+				46DF04372C81DA3F001C254F /* Carousel.h in Headers */,
 				F4F44B92204A153D00A2F24C /* ACRContainerRenderer.h in Headers */,
 				F4F44B91204A152100A2F24C /* ACRColumnSetRenderer.h in Headers */,
 				F43110431F357487001AAE30 /* ACRInputTableView.h in Headers */,
@@ -2286,6 +2298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EF8879E21F14CDD00BAFF02 /* BackgroundImage.cpp in Sources */,
+				46DF043B2C81DC4E001C254F /* Carousel.cpp in Sources */,
 				6B5BA8BF2707BBD000719853 /* ACOWarning.mm in Sources */,
 				300ECB63219A12D100371DC5 /* AdaptiveBase64Util.cpp in Sources */,
 				F4F44B8E204A145200A2F24C /* ACOBaseCardElement.mm in Sources */,
@@ -2362,6 +2375,7 @@
 				463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */,
 				F429794D1F32684900E89914 /* ACRDateTextField.mm in Sources */,
 				CFF954E02981B62000F321C3 /* ACRTypeaheadSearchViewController.mm in Sources */,
+				46DF04402C857771001C254F /* CarouselPage.cpp in Sources */,
 				F4F44B8120478C6F00A2F24C /* Util.cpp in Sources */,
 				6BAC0F2E228E2D7300E42DEB /* RichTextElementProperties.cpp in Sources */,
 				6BFF99CC25FFF53E0028069F /* Authentication.cpp in Sources */,

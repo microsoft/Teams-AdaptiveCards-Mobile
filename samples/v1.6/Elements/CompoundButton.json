@@ -37,8 +37,6 @@
             "description": "See active tasks assigned to you or a team members",
 
             "height": "stretch",
-
-            "badge": "New",
             
             "selectAction": {
               "type": "Action.OpenUrl",

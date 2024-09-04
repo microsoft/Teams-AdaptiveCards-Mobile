@@ -24,6 +24,7 @@
 #include "UnknownElement.h"
 #include "RatingInput.h"
 #include "RatingLabel.h"
+#import "Carousel.h"
 
 namespace AdaptiveCards
 {
@@ -73,6 +74,7 @@ ElementParserRegistration::ElementParserRegistration()
                                CardElementTypeToString(CardElementType::TextInput),
                                CardElementTypeToString(CardElementType::TimeInput),
                                CardElementTypeToString(CardElementType::ToggleInput),
+                               CardElementTypeToString(CardElementType::Carousel),
                                CardElementTypeToString(CardElementType::Unknown)});
 
     m_cardElementParsers.insert(
@@ -97,6 +99,7 @@ ElementParserRegistration::ElementParserRegistration()
          {CardElementTypeToString(CardElementType::TimeInput), std::make_shared<TimeInputParser>()},
          {CardElementTypeToString(CardElementType::ToggleInput), std::make_shared<ToggleInputParser>()},
          {CardElementTypeToString(CardElementType::CompoundButton), std::make_shared<CompoundButtonParser>()},
+         {CardElementTypeToString(CardElementType::Carousel), std::make_shared<CarouselParser>()},
          {CardElementTypeToString(CardElementType::Unknown), std::make_shared<UnknownElementParser>()}});
 }
 

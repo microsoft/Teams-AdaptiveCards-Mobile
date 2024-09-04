@@ -268,6 +268,7 @@ enum class CardElementType
     TimeInput,
     ToggleInput,
     CompoundButton,
+    Carousel,
     Unknown,
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);
