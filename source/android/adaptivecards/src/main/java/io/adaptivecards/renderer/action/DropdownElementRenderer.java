@@ -72,7 +72,8 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
         Button button = actionRenderer.render(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
         viewGroup.removeView(button);
 
-        String svgResourceURL = baseActionElement.GetSVGInfoURL();
+        String fluentIconName = Util.extractFluentIconNameFromUrl(iconUrl);
+        String svgInfoURL = Util.getSvgInfoUrl(fluentIconName);
 
         Button dropDownItem = new Button(context, null, R.style.Widget_AppCompat_Light_ActionButton_Overflow);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -90,7 +91,7 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
 
         if (!iconUrl.isEmpty())
         {
-            Util.loadIcon(context, dropDownItem, iconUrl, svgResourceURL, hostConfig, renderedCard, IconPlacement.LeftOfTitle);
+            Util.loadIcon(context, dropDownItem, iconUrl, svgInfoURL, hostConfig, renderedCard, IconPlacement.LeftOfTitle);
         }
 
         dropDownItem.setOnClickListener(view ->

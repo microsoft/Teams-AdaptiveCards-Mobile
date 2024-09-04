@@ -797,6 +797,38 @@ public final class Util {
         return closestSize;
     }
 
+    /**
+     * icon url format - icon:<icon name>[,regular | filled]
+     * sample icon url - icon:Rss,regular
+     **/
+    public static String extractFluentIconNameFromUrl(String iconUrl) {
+
+        // Split the string by the colon character
+        String[] parts = iconUrl.split(":");
+
+        // Check if the split operation resulted in at least 2 parts
+        if (parts.length >= 2) {
+            // Split the second part by the comma character
+            String[] iconParts = parts[1].split(",");
+
+            // Return the first part which is the icon name
+            return iconParts[0];
+        }
+
+        // Return empty string if the icon name could not be extracted
+        return "";
+    }
+
+    /**
+     * format: "<fluentIconCdnRoot><fluentIconCdnPath><Icon Name>/<IconName>.json"
+     * https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/Rss/Rss.json
+     **/
+    public static String getSvgInfoUrl(String iconName) {
+        String fluentIconCdnRoot = FeatureFlagResolverUtility.INSTANCE.fetchFluentIconCdnRoot();
+        String fluentIconCdnPath = FeatureFlagResolverUtility.INSTANCE.fetchFluentIconCdnPath();
+        return String.format("%s/%s/%s/%s.json", fluentIconCdnRoot, fluentIconCdnPath, iconName, iconName);
+    }
+
     private static final String FLUENT_ICON_URL_PREFIX = "icon:";
 
     public static String getOpenUrlAnnouncement(Context context, String urlTitle) {

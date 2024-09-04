@@ -101,7 +101,7 @@ open class FluentIconImageLoaderAsync(
      */
     private fun fetchUnavailableIconInfo(): HttpRequestResult<String>? {
         isFilledStyle = true
-        val unavailableIconURL = "${AdaptiveCardObjectModel.getBaseIconCDNUrl()}/$SQUARE_ICON/$SQUARE_ICON.json"
+        val unavailableIconURL = Util.getSvgInfoUrl(SQUARE_ICON)
         return try {
             val responseBytes = HttpRequestHelper.get(unavailableIconURL)
             HttpRequestResult(String (responseBytes, StandardCharsets.UTF_8))
