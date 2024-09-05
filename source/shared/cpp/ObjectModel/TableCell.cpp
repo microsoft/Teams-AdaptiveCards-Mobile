@@ -44,7 +44,7 @@ std::shared_ptr<TableCell> TableCell::DeserializeTableCell(ParseContext& context
                     stackLayout->SetLayoutContainerType(LayoutContainerType::Stack);
                     layouts.push_back(stackLayout);
                 }
-                else if (areaGridLayout->GetColumns().size() == 0)
+                else if (areaGridLayout->GetAreas().size() == 0)
                 {
                     // this needs to be flow layout
                     std::shared_ptr<FlowLayout> flowLayout = std::make_shared<FlowLayout>();

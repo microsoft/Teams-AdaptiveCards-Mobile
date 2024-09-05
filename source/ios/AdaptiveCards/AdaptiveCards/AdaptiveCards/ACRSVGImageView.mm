@@ -9,6 +9,7 @@
 #import "ACRSVGImageView.h"
 #import "Icon.h"
 #import "ACRErrors.h"
+#import "UtiliOS.h"
 #ifdef SWIFT_PACKAGE
 /// Swift Package Imports
 #import "SVGKit.h"
@@ -115,7 +116,7 @@
 {
     // we will always show hardcoded square icon as fallback
     NSString *fallbackURLName = @"Square";
-    NSString *fallBackURLString = [[NSString alloc] initWithFormat:@"%s%@/%@.json",AdaptiveCards::baseIconCDNUrl, fallbackURLName, fallbackURLName];
+    NSString *fallBackURLString = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, fallbackURLName, fallbackURLName];
     NSURL *svgURL = [[NSURL alloc] initWithString:fallBackURLString];
     [self makeIconCDNRequestWithURL:svgURL completion:^(NSDictionary * _Nullable dict, NSError * _Nullable error) {
         if (dict != nil)

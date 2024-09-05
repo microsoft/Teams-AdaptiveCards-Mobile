@@ -113,10 +113,9 @@ void IconInfo::PopulateKnownPropertiesSet()
          AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style)});
 }
 
-std::string IconInfo::GetSVGInfoURL() const
+std::string IconInfo::GetSVGPath() const
 {
     // format: "<baseIconCDNUrl><Icon Name>/<IconName>.json"
-    // https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/Rss/Rss.json
-    std::string m_url = baseIconCDNUrl + GetName() + "/" + GetName() + ".json";
+    std::string m_url = GetName() + "/" + GetName() + ".json";
     return m_url;
 }

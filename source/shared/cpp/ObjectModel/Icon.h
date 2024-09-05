@@ -7,11 +7,6 @@
 #include "BaseCardElement.h"
 #include "ElementParserRegistration.h"
 
-namespace AdaptiveCards {
-    // This is CDN base url for all fluent svg icons
-    constexpr const char* const baseIconCDNUrl = "https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/";
-}
-
 namespace AdaptiveCards
 {
 class Icon : public BaseCardElement
@@ -41,7 +36,7 @@ public:
     std::shared_ptr<BaseActionElement> GetSelectAction() const;
     void SetSelectAction(const std::shared_ptr<BaseActionElement> action);
 
-    std::string GetSVGInfoURL() const;
+    std::string GetSVGPath() const;
 
     void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo) override;
 
