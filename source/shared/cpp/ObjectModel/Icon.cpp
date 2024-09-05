@@ -138,15 +138,14 @@ void Icon::PopulateKnownPropertiesSet()
 void Icon::GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo)
 {
     RemoteResourceInformation imageResourceInfo;
-    imageResourceInfo.url = GetSVGInfoURL();
+    imageResourceInfo.url = GetSVGPath();
     imageResourceInfo.mimeType = "image";
     resourceInfo.push_back(imageResourceInfo);
 }
 
-std::string Icon::GetSVGInfoURL() const
+std::string Icon::GetSVGPath() const
 {
     // format: "<baseIconCDNUrl><Icon Name>/<IconName>.json"
-    // https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/Rss/Rss.json
-    std::string m_url = baseIconCDNUrl + GetName() + "/" + GetName() + ".json";
+    std::string m_url = GetName() + "/" + GetName() + ".json";
     return m_url;
 }
