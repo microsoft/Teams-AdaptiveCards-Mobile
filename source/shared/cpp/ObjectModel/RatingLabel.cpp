@@ -127,7 +127,7 @@ std::shared_ptr<BaseCardElement> RatingLabelParser::Deserialize(ParseContext& co
 
     std::shared_ptr<RatingLabel> ratingLabel = BaseCardElement::Deserialize<RatingLabel>(context, json);
     ratingLabel->SetValue(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Value, 0, true));
-    ratingLabel->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 5));
+    ratingLabel->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 0));
     ratingLabel->SetCount(ParseUtil::GetOptionalInt(json, AdaptiveCardSchemaKey::Count));
     ratingLabel->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));
