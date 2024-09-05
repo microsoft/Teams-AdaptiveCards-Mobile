@@ -53,25 +53,4 @@ public class UtilTest extends TestCase {
         long closestSize = Util.getSizeClosestToGivenSize(availableSizes, targetSize);
         assertEquals(24L, closestSize);
     }
-
-    @Test
-    public void testExtractFluentIconNameFromUrl_1() {
-        String url = "icon:Rss";
-        String iconName = Util.extractFluentIconNameFromUrl(url);
-        assertEquals("Rss", iconName);
-    }
-
-    @Test
-    public void testExtractFluentIconNameFromUrl_2() {
-        String url = "icon:Rss,regular";
-        String iconName = Util.extractFluentIconNameFromUrl(url);
-        assertEquals("Rss", iconName);
-    }
-
-    @Test
-    public void testExtractFluentIconNameFromUrl_3() {
-        String url = "icon:Rss,filled";
-        String iconName = Util.extractFluentIconNameFromUrl(url);
-        assertEquals("Rss", iconName);
-    }
 }

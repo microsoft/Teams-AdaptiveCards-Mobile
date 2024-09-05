@@ -101,7 +101,7 @@ open class FluentIconImageLoaderAsync(
      */
     private fun fetchUnavailableIconInfo(): HttpRequestResult<String>? {
         isFilledStyle = true
-        val unavailableIconURL = Util.getSvgInfoUrl(SQUARE_ICON)
+        val unavailableIconURL = Util.getUnavailableIconSvgInfoUrl()
         return try {
             val responseBytes = HttpRequestHelper.get(unavailableIconURL)
             HttpRequestResult(String (responseBytes, StandardCharsets.UTF_8))
@@ -147,7 +147,6 @@ open class FluentIconImageLoaderAsync(
     companion object {
         const val FILLED_STYLE = "filled"
         const val REGULAR_STYLE = "regular"
-        const val SQUARE_ICON = "Square"
         const val FLIP_IN_RTL_PROPERTY = "flipInRtl"
     }
 
