@@ -9,5 +9,5 @@ interface IFeatureFlagResolver {
 
     fun getEcsSettingAsBoolean(key: String): Boolean
 
-    fun getEcsSettingAsString(key: String): String
+    fun getEcsSettingAsString(key: String): String?
 }
