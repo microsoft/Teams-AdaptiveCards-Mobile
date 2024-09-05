@@ -101,7 +101,7 @@ std::shared_ptr<BaseCardElement> RatingInputParser::Deserialize(ParseContext& co
     ratingInput->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString));
     ratingInput->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString));
     
-    if (ratingInput->GetValue() > 5)
+    if (ratingInput->GetValue() > ratingInput->GetMax())
     {
         ratingInput->SetMax(ratingInput->GetValue());
     }
