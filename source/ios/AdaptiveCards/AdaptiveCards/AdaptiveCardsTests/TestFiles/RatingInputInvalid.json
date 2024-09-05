@@ -9,8 +9,6 @@
       "label": "Pick a rating",
       "size": "medium",
       "isRequired": true,
-      "value": 5,
-      "max": 3,
       "color": "marigold",
       "errorMessage": "Please pick a rating"
     }

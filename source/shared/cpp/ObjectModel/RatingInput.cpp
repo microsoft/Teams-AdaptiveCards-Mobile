@@ -101,14 +101,14 @@ std::shared_ptr<BaseCardElement> RatingInputParser::Deserialize(ParseContext& co
     ratingInput->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString));
     ratingInput->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString));
     
-    if (ratingInput->GetMax() == 0 && ratingInput->GetValue() != 0)
+    if (ratingInput->GetMax() < ratingInput->GetValue())
     {
         ratingInput->SetMax(ratingInput->GetValue());
     }
     
     if(ratingInput->GetMax() == 0 && ratingInput->GetValue() == 0)
     {
-        throw AdaptiveCardParseException(ErrorStatusCode::InvalidPropertyValue, "In rating label Both max and value can't be zero");
+        throw AdaptiveCardParseException(ErrorStatusCode::InvalidPropertyValue, "In Rating Input, Both max and value can't be zero");
     }
 
     return ratingInput;
