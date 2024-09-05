@@ -95,20 +95,15 @@ std::shared_ptr<BaseCardElement> RatingInputParser::Deserialize(ParseContext& co
 
     std::shared_ptr<RatingInput> ratingInput = BaseInputElement::Deserialize<RatingInput>(context, json);
     ratingInput->SetValue(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Value, 0));
-    ratingInput->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 0));
+    ratingInput->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 5));
     ratingInput->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));
     ratingInput->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString));
     ratingInput->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString));
     
-    if (ratingInput->GetMax() < ratingInput->GetValue())
+    if (ratingInput->GetValue() > 5)
     {
         ratingInput->SetMax(ratingInput->GetValue());
-    }
-    
-    if(ratingInput->GetMax() == 0 && ratingInput->GetValue() == 0)
-    {
-        throw AdaptiveCardParseException(ErrorStatusCode::InvalidPropertyValue, "In Rating Input, Both max and value can't be zero");
     }
 
     return ratingInput;

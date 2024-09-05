@@ -127,7 +127,7 @@ std::shared_ptr<BaseCardElement> RatingLabelParser::Deserialize(ParseContext& co
 
     std::shared_ptr<RatingLabel> ratingLabel = BaseCardElement::Deserialize<RatingLabel>(context, json);
     ratingLabel->SetValue(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Value, 0, true));
-    ratingLabel->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 0));
+    ratingLabel->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 5));
     ratingLabel->SetCount(ParseUtil::GetOptionalInt(json, AdaptiveCardSchemaKey::Count));
     ratingLabel->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));
@@ -135,14 +135,9 @@ std::shared_ptr<BaseCardElement> RatingLabelParser::Deserialize(ParseContext& co
     ratingLabel->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString));
     ratingLabel->SetRatingStyle(ParseUtil::GetEnumValue<RatingStyle>(json, AdaptiveCardSchemaKey::Style, RatingStyle::Default, RatingStyleFromString));
     
-    if (ratingLabel->GetMax() < ratingLabel->GetValue())
+    if (ratingLabel->GetValue() > 5)
     {
         ratingLabel->SetMax(ratingLabel->GetValue());
-    }
-    
-    if(ratingLabel->GetMax() == 0 || ratingLabel->GetValue() == 0)
-    {
-        throw AdaptiveCardParseException(ErrorStatusCode::InvalidPropertyValue, "In rating label, Both max and value can't be zero");
     }
 
     return ratingLabel;
