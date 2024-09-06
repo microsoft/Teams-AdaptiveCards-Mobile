@@ -44,7 +44,7 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
     ): View {
         val icon = Util.castTo(baseCardElement, Icon::class.java)
         val view = ImageView(context)
-        val svgURL = icon.GetSVGInfoURL()
+        val svgURL = Util.getSvgInfoUrl(icon.GetSVGPath())
         val foregroundColor = hostConfig.GetForegroundColor(ContainerStyle.Default, icon.forgroundColor, false)
         val isFilledStyle = icon.iconStyle == IconStyle.Filled
 
