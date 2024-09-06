@@ -7,7 +7,7 @@
         {
             "type": "CompoundButton",
 
-            "title": "Summarize",
+            "title": "View active work items By having a Good summary and priority items",
             "icon": {
                 "name": "List",
                 "style": "Regular"
@@ -16,8 +16,7 @@
             "description": "Create a work item and assign it to your or a team member",
 
             "height": "stretch",
-
-            "badge": "New",
+            "badge": "New Badge ve Case and of a very renounded and famous and logical",
             
             "selectAction": {
               "type": "Action.OpenUrl",
@@ -32,7 +31,7 @@
         {
             "type": "CompoundButton",
 
-            "title": "View active work items",
+            "title": "View active work items By having a Good summary and health",
             
             "description": "See active tasks assigned to you or a team members",
 
@@ -54,7 +53,7 @@
         {
             "type": "CompoundButton",
 
-            "title": "Give feedback",
+            "title": "Give feedback bbbbb having a break of",
             "icon": {
                 "name": "Calendar",
                 "style": "Regular"
@@ -74,11 +73,10 @@
             
         },
         
-
         {
             "type": "CompoundButton",
 
-            "title": "Summarize",
+            "title": "Summarize by some means",
             
             "description": "Create a work item and assign it to your or a team member",
 
