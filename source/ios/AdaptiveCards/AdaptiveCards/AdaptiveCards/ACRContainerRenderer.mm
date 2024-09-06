@@ -98,17 +98,6 @@
                                                           superview:viewGroup];
     container.rtl = rootView.context.rtl;
 
-    NSString *areaName = stringForCString(elem->GetAreaGridName());
-    [viewGroup addArrangedSubview:container withAreaName:areaName];
-    
-    [self configureBorderForElement:acoElem container:container config:acoConfig];
-
-    configBleed(rootView, elem, container, acoConfig);
-
-    renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
-
-    container.frame = viewGroup.frame;
-
     if(flowContainer != nil)
     {
         [container addArrangedSubview:flowContainer];
@@ -125,6 +114,17 @@
               withCardElems:containerElem->GetItems()
               andHostConfig:acoConfig];
     }
+    
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:container withAreaName:areaName];
+    
+    [self configureBorderForElement:acoElem container:container config:acoConfig];
+
+    configBleed(rootView, elem, container, acoConfig);
+
+    renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
+
+    container.frame = viewGroup.frame;
 
     [container setClipsToBounds:NO];
 
