@@ -12,6 +12,7 @@
 #import "ACRUIImageView.h"
 #import "ACRViewPrivate.h"
 #import "ACRSVGImageView.h"
+#import "UtiliOS.h"
 
 @implementation ACRButton
 
@@ -169,7 +170,7 @@
             // it is possible that host config has some size which is not available in CDN.
             unsigned int imageHeight = 24;
             BOOL isFilled = [[iconURL lowercaseString] containsString:@"filled"];
-            NSString *getSVGURL = [NSString stringWithCString:action->GetSVGInfoURL().c_str() encoding:[NSString defaultCStringEncoding]];
+            NSString *getSVGURL = cdnURLForIcon(@(action->GetSVGPath().c_str()));
             UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl isFilled:isFilled size:CGSizeMake(imageHeight, imageHeight) tintColor:button.currentTitleColor];
             button.iconView = view;
             [button addSubview:view];
