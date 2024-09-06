@@ -481,8 +481,4 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return AdaptiveCardObjectModelJNI.ToLowercase(value);
   }
 
-  public static String getBaseIconCDNUrl() {
-    return AdaptiveCardObjectModelJNI.baseIconCDNUrl_get();
-  }
-
 }

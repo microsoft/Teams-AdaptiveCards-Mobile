@@ -110,7 +110,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
             imageView.setVisibility(View.GONE);
         } else {
             boolean isFilledStyle = compoundButton.getIcon().getIconStyle() == IconStyle.Filled;
-            String svgInfoURL = compoundButton.getIcon().GetSVGInfoURL();
+            String svgInfoURL = Util.getSvgInfoUrl(compoundButton.getIcon().GetSVGPath());
             String foregroundColorIcon = hostConfig.GetForegroundColor(ContainerStyle.Default, compoundButton.getIcon().getForgroundColor(), false);
             FluentIconImageLoaderAsync fluentIconImageLoaderAsync = new FluentIconImageLoaderAsync(
                 renderedCard,

@@ -72,11 +72,4 @@
     XCTAssertTrue(cardParseResult.isValid);
 }
 
-- (void)testRatingInputMaxValue
-{
-    NSString *payload = [NSString stringWithContentsOfFile:[_classBundle pathForResource:@"RatingInputInvalid" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
-    ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:payload];
-    XCTAssertFalse(cardParseResult.isValid);
-}
-
 @end

@@ -64,7 +64,6 @@
 		46B78E642C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46B78E632C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm */; };
 		46B78E662C0586D500EF4566 /* RatingInputValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E652C0586D500EF4566 /* RatingInputValid.json */; };
 		46B78E682C0587B700EF4566 /* RatingLabelValid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E672C0587B700EF4566 /* RatingLabelValid.json */; };
-		46B78E6A2C058A8200EF4566 /* RatingInputInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 46B78E692C058A8200EF4566 /* RatingInputInvalid.json */; };
 		46CBB6372C22BA24008FC5D5 /* IconInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46CBB6352C22BA24008FC5D5 /* IconInfo.cpp */; };
 		46CBB6382C22BA24008FC5D5 /* IconInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 46CBB6362C22BA24008FC5D5 /* IconInfo.h */; };
 		46CBB63B2C22BA33008FC5D5 /* CompoundButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46CBB6392C22BA33008FC5D5 /* CompoundButton.cpp */; };
@@ -598,7 +597,6 @@
 		46B78E632C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsRatingElementTests.mm; sourceTree = "<group>"; };
 		46B78E652C0586D500EF4566 /* RatingInputValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingInputValid.json; sourceTree = "<group>"; };
 		46B78E672C0587B700EF4566 /* RatingLabelValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingLabelValid.json; sourceTree = "<group>"; };
-		46B78E692C058A8200EF4566 /* RatingInputInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RatingInputInvalid.json; sourceTree = "<group>"; };
 		46CBB6352C22BA24008FC5D5 /* IconInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IconInfo.cpp; path = ../../../../shared/cpp/ObjectModel/IconInfo.cpp; sourceTree = "<group>"; };
 		46CBB6362C22BA24008FC5D5 /* IconInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IconInfo.h; path = ../../../../shared/cpp/ObjectModel/IconInfo.h; sourceTree = "<group>"; };
 		46CBB6392C22BA33008FC5D5 /* CompoundButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompoundButton.cpp; path = ../../../../shared/cpp/ObjectModel/CompoundButton.cpp; sourceTree = "<group>"; };
@@ -1353,7 +1351,6 @@
 				6BE6C7C226E2F07C009E9171 /* sample.json */,
 				46B78E652C0586D500EF4566 /* RatingInputValid.json */,
 				46B78E672C0587B700EF4566 /* RatingLabelValid.json */,
-				46B78E692C058A8200EF4566 /* RatingInputInvalid.json */,
 				B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */,
 				B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */,
 			);
@@ -2236,7 +2233,6 @@
 				6B654C752708168D00DF6A5F /* Action.ToggleVisibilityExhaustive.json in Resources */,
 				46CBB6462C22BA96008FC5D5 /* CompoundButtonValid.json in Resources */,
 				46B78E662C0586D500EF4566 /* RatingInputValid.json in Resources */,
-				46B78E6A2C058A8200EF4566 /* RatingInputInvalid.json in Resources */,
 				6BE6C7C526E7CDD0009E9171 /* ColumnSet.Input.ChoiceSet.VerticalStretch.json in Resources */,
 				6BE6C7BA26E2E30A009E9171 /* Container.VerticalContentAlignment.json in Resources */,
 				46B78E682C0587B700EF4566 /* RatingLabelValid.json in Resources */,

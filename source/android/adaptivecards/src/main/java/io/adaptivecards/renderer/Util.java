@@ -797,6 +797,23 @@ public final class Util {
         return closestSize;
     }
 
+    /**
+     * format: "<fluentIconCdnRoot><fluentIconCdnPath><Icon Name>/<IconName>.json"
+     * https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/Rss/Rss.json
+     **/
+    public static String getSvgInfoUrl(String svgPath) {
+        String fluentIconCdnRoot = FeatureFlagResolverUtility.INSTANCE.fetchFluentIconCdnRoot();
+        String fluentIconCdnPath = FeatureFlagResolverUtility.INSTANCE.fetchFluentIconCdnPath();
+        return String.format("%s/%s/%s", fluentIconCdnRoot, fluentIconCdnPath, svgPath);
+    }
+
+    public static String getUnavailableIconSvgInfoUrl() {
+        String unavailableIconName = "Square";
+        String fluentIconCdnRoot = FeatureFlagResolverUtility.INSTANCE.fetchFluentIconCdnRoot();
+        String fluentIconCdnPath = FeatureFlagResolverUtility.INSTANCE.fetchFluentIconCdnPath();
+        return String.format("%s/%s/%s/%s.json", fluentIconCdnRoot, fluentIconCdnPath, unavailableIconName, unavailableIconName);
+    }
+
     private static final String FLUENT_ICON_URL_PREFIX = "icon:";
 
     public static String getOpenUrlAnnouncement(Context context, String urlTitle) {

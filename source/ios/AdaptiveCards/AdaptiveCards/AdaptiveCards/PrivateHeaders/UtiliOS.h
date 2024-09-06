@@ -40,6 +40,8 @@ using namespace AdaptiveCards;
 
 extern const CGFloat kACRScalerTolerance;
 
+extern NSString const *baseFluentIconCDNURL;
+
 // configures tag and initial visibility of the given view. Toggle visibility action
 // will access the view by the tag to change the visibility.
 void configVisibility(UIView *view, std::shared_ptr<BaseCardElement> const &visibilityInfo);
@@ -180,3 +182,7 @@ NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, N
 BOOL isNullOrEmpty(NSString *string);
 
 NSString *stringForCString(const std::optional<std::string> cString);
+
+//CDN URL for icon path
+NSString *cdnURLForIcon(NSString *iconPath);
+

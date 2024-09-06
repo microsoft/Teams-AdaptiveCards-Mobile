@@ -15,7 +15,7 @@
 			"isRequired": true,
 			"label": "Pick a rating",
 			"errorMessage": "Please pick a rating",
-			"horizontalAlignment": "left",
+			"horizontalAlignment": "Left",
 			"max": 5
 		},
 		{
@@ -27,7 +27,7 @@
 			"errorMessage": "Please pick a rating",
 			"color": "marigold",
 			"value": 2,
-			"horizontalAlignment": "left",
+			"horizontalAlignment": "Left",
 			"max": 5
 		},
 		{
@@ -41,7 +41,7 @@
 			"type": "Rating",
 			"value": 3.2,
 			"size": "medium",
-			"horizontalAlignment": "left",
+			"horizontalAlignment": "Left",
 			"count": 10
 		},
 		{
@@ -50,7 +50,7 @@
 			"value": 3.2,
 			"color": "marigold",
 			"size": "large",
-			"horizontalAlignment": "left",
+			"horizontalAlignment": "Left",
 			"count": 150
 		},
 		{
@@ -60,7 +60,7 @@
 			"color": "marigold",
 			"count": 1500,
 			"size": "large",
-			"horizontalAlignment": "left"
+			"horizontalAlignment": "Left"
 		}
 	],
 	"actions": [
