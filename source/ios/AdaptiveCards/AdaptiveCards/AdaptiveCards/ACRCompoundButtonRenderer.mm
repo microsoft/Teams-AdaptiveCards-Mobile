@@ -61,7 +61,7 @@
     horizontalStack.translatesAutoresizingMaskIntoConstraints = NO;
     horizontalStack.spacing = 8;
     horizontalStack.alignment = UIStackViewAlignmentCenter;
-    horizontalStack.distribution = UIStackViewDistributionEqualSpacing;
+    horizontalStack.distribution = UIStackViewDistributionEqualCentering;
     
     if(icon != nil)
     {
@@ -73,7 +73,6 @@
    
     
     UILabel *titleLabel = [self getTitleLabelWithText:compoundButton->getTitle() viewGroup:viewGroup hostConfig:acoConfig];
-    [titleLabel setContentCompressionResistancePriority:251 forAxis:UILayoutConstraintAxisHorizontal];
     
     UILabel* descriptionLabel = [self getDescriptionLabelWithText:compoundButton->getDescription()
                                                            viewGroup:viewGroup
@@ -125,6 +124,8 @@
     titleLabel.text = @(title.c_str());
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
+    titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    [titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     return titleLabel;
 }
 
@@ -182,13 +183,14 @@
     badgeLabel.text = @(badge.c_str());
     badgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     badgeLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+    badgeLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [badgeContainerView addSubview:badgeLabel];
-
     [NSLayoutConstraint activateConstraints:@[
         [badgeLabel.leadingAnchor constraintEqualToAnchor:badgeContainerView.leadingAnchor constant:7.2],
         [badgeLabel.trailingAnchor constraintEqualToAnchor:badgeContainerView.trailingAnchor constant:-7.2],
         [badgeLabel.topAnchor constraintEqualToAnchor:badgeContainerView.topAnchor constant:2.4],
-        [badgeLabel.bottomAnchor constraintEqualToAnchor:badgeContainerView.bottomAnchor constant:-2.4]
+        [badgeLabel.bottomAnchor constraintEqualToAnchor:badgeContainerView.bottomAnchor constant:-2.4],
+        [badgeLabel.widthAnchor constraintLessThanOrEqualToConstant:80]
     ]];
 
     return badgeContainerView;
