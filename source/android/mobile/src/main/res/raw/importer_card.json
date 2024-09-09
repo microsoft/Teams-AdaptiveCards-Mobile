@@ -172,10 +172,6 @@
 										"value": "v1.5/Scenarios/CompoundButtonSample.json"
 									},
 									{
-										"title": "ContainerAreaGrid",
-										"value": "v1.5/Scenarios/ContainerAreaGrid.json"
-									},
-									{
 										"title": "AdaptiveCardAreaGrid",
 										"value": "v1.5/Scenarios/AdaptiveCardAreaGrid.json"
 									},
@@ -186,8 +182,52 @@
 									{
 										"title": "TableAreaGrid",
 										"value": "v1.5/Scenarios/TableAreaGrid.json"
+									},
+									{
+										"title": "ContainerAreaGrid",
+										"value": "v1.5/Scenarios/ContainerAreaGrid.json"
+									},
+									{
+										"title": "ContainerAreaGrid2",
+										"value": "v1.5/Scenarios/ContainerAreaGrid2.json"
+									},
+									{
+										"title": "ContainerAreaGrid3",
+										"value": "v1.5/Scenarios/ContainerAreaGrid3.json"
+									},
+									{
+										"title": "ContainerAreaGrid4",
+										"value": "v1.5/Scenarios/ContainerAreaGrid4.json"
+									},
+									{
+										"title": "ContainerAreaGrid5",
+										"value": "v1.5/Scenarios/ContainerAreaGrid5.json"
+									},
+									{
+										"title": "ContainerAreaGrid6",
+										"value": "v1.5/Scenarios/ContainerAreaGrid6.json"
+									},
+									{
+										"title": "ContainerAreaGrid7",
+										"value": "v1.5/Scenarios/ContainerAreaGrid7.json"
+									},
+									{
+										"title": "ContainerAreaGrid8",
+										"value": "v1.5/Scenarios/ContainerAreaGrid8.json"
+									},
+									{
+										"title": "ContainerAreaGrid9",
+										"value": "v1.5/Scenarios/ContainerAreaGrid9.json"
+									},
+									{
+										"title": "ContainerAreaGrid10",
+										"value": "v1.5/Scenarios/ContainerAreaGrid10.json"
+									},
+									{
+										"title": "ContainerAreaGrid11",
+										"value": "v1.5/Scenarios/ContainerAreaGrid11.json"
 									}
-                                ],
+								],
                                 "placeholder": "(choose sample)",
                                 "id": "sampleCardName"
                             }
