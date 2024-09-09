@@ -96,6 +96,16 @@ void BaseCardElement::SetAreaGridName(const std::optional<std::string> &value)
     m_areaGridName = value;
 }
 
+std::string BaseCardElement::GetNonOptionalAreaGridName() const
+{
+    return m_nonOptionalAreaGridName;
+}
+
+void BaseCardElement::SetNonOptionalAreaGridName(const std::string &value)
+{
+    m_nonOptionalAreaGridName = value;
+}
+
 CardElementType BaseCardElement::GetElementType() const
 {
     return m_type;
@@ -119,7 +129,7 @@ Json::Value BaseCardElement::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Separator)] = true;
     }
-    
+
     if (m_areaGridName.has_value())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::AreaGridName)] = m_areaGridName.value();
@@ -228,4 +238,6 @@ void BaseCardElement::DeserializeBaseProperties(ParseContext& context, const Jso
     element->SetSeparator(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Separator, false));
     element->SetSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::Spacing, Spacing::Default, SpacingFromString));
     element->SetAreaGridName(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::AreaGridName));
+    element->SetNonOptionalAreaGridName(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::AreaGridName).has_value() ?
+    ParseUtil::GetString(json, AdaptiveCardSchemaKey::AreaGridName):"");
 }

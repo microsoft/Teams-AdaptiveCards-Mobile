@@ -32,6 +32,10 @@
 										"value": "v1.5/Scenarios/ContainerFlowLayout.json"
 									},
 									{
+										"title": "ContainerAreaGrid",
+										"value": "v1.5/Scenarios/ContainerAreaGrid.json"
+									},
+									{
 										"title": "RatingInputsFlowLayout",
 										"value": "v1.5/Scenarios/RatingInputsFlowLayout.json"
 									},
