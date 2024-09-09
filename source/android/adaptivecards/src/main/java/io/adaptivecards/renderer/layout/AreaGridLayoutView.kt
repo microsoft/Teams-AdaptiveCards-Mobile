@@ -12,15 +12,14 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.objectmodel.AreaGridLayout
-import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.StringVector
 import io.adaptivecards.renderer.AreaGridUtil.getAreaAt
 import io.adaptivecards.renderer.AreaGridUtil.getColumnsVectorWithAutoFill
 import io.adaptivecards.renderer.AreaGridUtil.getFixedWidth
-import io.adaptivecards.renderer.AreaGridUtil.getRowsCount
+import io.adaptivecards.renderer.AreaGridUtil.getMaxRowsCountFromAreas
 import io.adaptivecards.renderer.AreaGridUtil.isAuto
 import io.adaptivecards.renderer.AreaGridUtil.isFixedWidth
-import io.adaptivecards.renderer.TagContent
+import io.adaptivecards.renderer.Util
 
 /**
  * View that add FlexBoxLayout like a grid for
@@ -46,7 +45,7 @@ class AreaGridLayoutView(context: Context) : FrameLayout(context) {
             )
         }
 
-        val rowCount = layout.getRowsCount()
+        val rowCount = layout.getMaxRowsCountFromAreas()
         val columnsVector = layout.getColumnsVectorWithAutoFill()
         for (row in 0 until rowCount) {
             addColumns(row, flexboxLayout, layout, columnsVector)
@@ -77,7 +76,7 @@ class AreaGridLayoutView(context: Context) : FrameLayout(context) {
                         width = 0
                         flexBasisPercent = columnValue.toFloat()/100f
                     } else if(columnValue.isFixedWidth()) {
-                        width = columnValue.getFixedWidth()
+                        width = Util.dpToPixels(flexboxLayout.context, columnValue.getFixedWidth())
                     } else if(columnValue.isAuto()) {
                         width = 0
                         flexGrow = area?.GetColumnSpan()?.toFloat()?:1.0f

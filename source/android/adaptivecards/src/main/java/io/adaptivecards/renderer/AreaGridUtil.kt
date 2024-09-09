@@ -22,7 +22,7 @@ object AreaGridUtil {
      * [AreaGridLayout.GetColumns] length, it fills the remaining value with "auto" value
      */
     fun AreaGridLayout.getColumnsVectorWithAutoFill(): StringVector {
-        val columnCount = this.getColumnsCount()
+        val columnCount = this.getMaxColumnsCountFromAreas()
         val columns = StringVector()
         if(this.GetColumns() != null) {
             columns.addAll(this.GetColumns())
@@ -37,7 +37,7 @@ object AreaGridUtil {
     /**
      * Returns rows count based on max value of row in AreaGridLayout.areas vector
      */
-    fun AreaGridLayout.getRowsCount(): Int {
+    fun AreaGridLayout.getMaxRowsCountFromAreas(): Int {
         var rowCount = 0
         for (area in this.GetAreas()) {
             rowCount = if(area.GetRow() > rowCount) area.GetRow() else rowCount
@@ -48,7 +48,7 @@ object AreaGridUtil {
     /**
      * Returns columns count based on max value of columns in AreaGridLayout.areas vector
      */
-    fun AreaGridLayout.getColumnsCount(): Int {
+    fun AreaGridLayout.getMaxColumnsCountFromAreas(): Int {
         var columnCount = 0
         for (area in this.GetAreas()){
             columnCount = if (area.GetColumn() > columnCount) area.GetColumn() else columnCount
@@ -58,7 +58,7 @@ object AreaGridUtil {
 
     fun String.isFixedWidth() = this.endsWith(PIXEL_SUFFIX)
 
-    fun String.getFixedWidth() = if (this.isFixedWidth()) this.substring(0, this.length - PIXEL_SUFFIX.length).toInt() else 0
+    fun String.getFixedWidth() = if (this.isFixedWidth()) this.substring(0, this.length - PIXEL_SUFFIX.length).toFloat() else 0f
 
     fun  String.isAuto() = this.equals(DEFAULT_COLUMN_WIDTH)
 

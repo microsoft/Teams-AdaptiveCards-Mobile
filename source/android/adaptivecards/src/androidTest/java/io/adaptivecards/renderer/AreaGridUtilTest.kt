@@ -9,7 +9,7 @@ import io.adaptivecards.objectmodel.StringVector
 import io.adaptivecards.renderer.AreaGridUtil.getAreaAt
 import io.adaptivecards.renderer.AreaGridUtil.getColumnsVectorWithAutoFill
 import io.adaptivecards.renderer.AreaGridUtil.getFixedWidth
-import io.adaptivecards.renderer.AreaGridUtil.getRowsCount
+import io.adaptivecards.renderer.AreaGridUtil.getMaxRowsCountFromAreas
 import io.adaptivecards.renderer.AreaGridUtil.isAuto
 import io.adaptivecards.renderer.AreaGridUtil.isFixedWidth
 import junit.framework.TestCase
@@ -54,19 +54,19 @@ class AreaGridUtilTest : TestCase() {
     @Test
     fun test_getRowsCount_should_return_max_row(){
         val areaGridLayout = mock_AreaGridLayout(mock_ColumnVector(), mock_GridAreaVector())
-        assertEquals(2, areaGridLayout.getRowsCount())
+        assertEquals(2, areaGridLayout.getMaxRowsCountFromAreas())
     }
 
     @Test
     fun test_getColumnCount_should_return_max_row(){
         val areaGridLayout = mock_AreaGridLayout(mock_ColumnVector(), mock_GridAreaVector())
-        assertEquals(3, areaGridLayout.getRowsCount())
+        assertEquals(3, areaGridLayout.getMaxRowsCountFromAreas())
     }
 
     @Test
     fun test_getColumnCount_with_empty_column_should_return_max_row(){
         val areaGridLayout = mock_AreaGridLayout(StringVector(), mock_GridAreaVector())
-        assertEquals(3, areaGridLayout.getRowsCount())
+        assertEquals(3, areaGridLayout.getMaxRowsCountFromAreas())
     }
 
     @Test
