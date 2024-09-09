@@ -11,7 +11,7 @@
 					"columnSpacing": "Small",
 					"verticalContentAlignment": "bottom",
 					"columns": [
-						"200px",
+						35,
 						"auto"
 					],
 					"areas": [
