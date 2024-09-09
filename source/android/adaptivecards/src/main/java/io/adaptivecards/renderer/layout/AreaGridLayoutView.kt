@@ -12,6 +12,7 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.objectmodel.AreaGridLayout
+import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.StringVector
 import io.adaptivecards.renderer.AreaGridUtil.getAreaAt
 import io.adaptivecards.renderer.AreaGridUtil.getColumnsVectorWithAutoFill
@@ -19,6 +20,7 @@ import io.adaptivecards.renderer.AreaGridUtil.getFixedWidth
 import io.adaptivecards.renderer.AreaGridUtil.getRowsCount
 import io.adaptivecards.renderer.AreaGridUtil.isAuto
 import io.adaptivecards.renderer.AreaGridUtil.isFixedWidth
+import io.adaptivecards.renderer.TagContent
 
 /**
  * View that add FlexBoxLayout like a grid for
@@ -33,7 +35,7 @@ class AreaGridLayoutView(context: Context) : FrameLayout(context) {
     /**
      * Creates an empty grid based on @param layout properties
      */
-    fun setUpGrids(layout: AreaGridLayout){
+    fun setUpAreaGrids(layout: AreaGridLayout){
         flexboxLayout = FlexboxLayout(context).apply {
             flexDirection = FlexDirection.ROW
             flexWrap = FlexWrap.WRAP
@@ -99,5 +101,17 @@ class AreaGridLayoutView(context: Context) : FrameLayout(context) {
             flexGrow = 1.0f
         }
         view.layoutParams = param
+    }
+
+    fun addAreaView(view: View, areaName: String?, rowSpacing: Int, columnSpacing: Int) {
+        val areaFrame: FrameLayout = findViewWithTag(areaName)
+        areaFrame?.let {
+            val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+            layoutParams.setMargins(rowSpacing, columnSpacing, rowSpacing, columnSpacing)
+            view.setLayoutParams(layoutParams)
+            areaFrame.addView(view)
+        } ?: run {
+            addViewAtTheEnd(view)
+        }
     }
 }

@@ -461,10 +461,10 @@ public class ContainerRenderer extends BaseCardElementRenderer
             flexboxLayout.setTag(new TagContent(container));
             layoutContainer = flexboxLayout;
         } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
-            AreaGridLayoutView flexboxLayout = new AreaGridLayoutView(context);
-            flexboxLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            flexboxLayout.setTag(new TagContent(container));
-            layoutContainer = flexboxLayout;
+            AreaGridLayoutView areaGridLayoutView = new AreaGridLayoutView(context);
+            areaGridLayoutView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            areaGridLayoutView.setTag(new TagContent(container));
+            layoutContainer = areaGridLayoutView;
         } else {
             StretchableElementLayout stackLayout = new StretchableElementLayout(context, container.GetHeight() == HeightType.Stretch);
             stackLayout.setTag(new TagContent(container));

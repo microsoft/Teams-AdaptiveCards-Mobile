@@ -167,7 +167,7 @@ public final class Util {
         final int childCount = origin.getChildCount();
 
         if(layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid && destination instanceof AreaGridLayoutView) {
-            updateAreaGridLayoutView(origin, (AreaGridLayoutView)destination, layoutToApply, tagContent, hostConfig);
+            moveChildrenViewsToAreaGridLayoutView(origin, (AreaGridLayoutView)destination, layoutToApply, tagContent, hostConfig);
             return;
         }
 
@@ -185,11 +185,15 @@ public final class Util {
 
     }
 
-    private static void updateAreaGridLayoutView(ViewGroup origin, AreaGridLayoutView destination, Layout layoutToApply, TagContent tagContent, HostConfig hostConfig) {
-        final int childCount = origin.getChildCount();
+    private static void moveChildrenViewsToAreaGridLayoutView(ViewGroup origin, AreaGridLayoutView areaGridLayoutView, Layout layoutToApply, TagContent tagContent, HostConfig hostConfig) {
 
         AreaGridLayout areaGridLayout = Util.castTo(layoutToApply, AreaGridLayout.class);
-        destination.setUpGrids(areaGridLayout);
+        areaGridLayoutView.setUpAreaGrids(areaGridLayout);
+        addChildrenToAreas(origin, areaGridLayoutView, areaGridLayout, tagContent, hostConfig);
+    }
+
+    private static void addChildrenToAreas(ViewGroup origin, AreaGridLayoutView areaGridLayoutView, AreaGridLayout areaGridLayout, TagContent tagContent, HostConfig hostConfig) {
+        final int childCount = origin.getChildCount();
 
         int rowSpacing = Util.dpToPixels(origin.getContext(), BaseCardElementRenderer.getSpacingSize(areaGridLayout.GetRowSpacing(), hostConfig.GetSpacing()));
         int columnSpacing = Util.dpToPixels(origin.getContext(), BaseCardElementRenderer.getSpacingSize(areaGridLayout.GetColumnSpacing(), hostConfig.GetSpacing()));
@@ -197,15 +201,7 @@ public final class Util {
         for (int i = 0; i < childCount; ++i) {
             View v = origin.getChildAt(i);
             origin.removeView(v);
-            FrameLayout areaFrame = destination.findViewWithTag(tagContent.GetBaseElement().GetNonOptionalAreaGridName());
-            if (areaFrame != null) {
-                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-                layoutParams.setMargins(rowSpacing, columnSpacing, rowSpacing, columnSpacing);
-                v.setLayoutParams(layoutParams);
-                areaFrame.addView(v);
-            } else {
-                destination.addViewAtTheEnd(v);
-            }
+            areaGridLayoutView.addAreaView(v, tagContent.GetBaseElement().GetNonOptionalAreaGridName(), rowSpacing, columnSpacing);
         }
     }
 

@@ -32,10 +32,6 @@
 										"value": "v1.5/Scenarios/ContainerFlowLayout.json"
 									},
 									{
-										"title": "ContainerAreaGrid",
-										"value": "v1.5/Scenarios/ContainerAreaGrid.json"
-									},
-									{
 										"title": "RatingInputsFlowLayout",
 										"value": "v1.5/Scenarios/RatingInputsFlowLayout.json"
 									},
@@ -174,6 +170,22 @@
 									{
 										"title": "CompoundButton",
 										"value": "v1.5/Scenarios/CompoundButtonSample.json"
+									},
+									{
+										"title": "ContainerAreaGrid",
+										"value": "v1.5/Scenarios/ContainerAreaGrid.json"
+									},
+									{
+										"title": "AdaptiveCardAreaGrid",
+										"value": "v1.5/Scenarios/AdaptiveCardAreaGrid.json"
+									},
+									{
+										"title": "ColumnAreaGrid",
+										"value": "v1.5/Scenarios/ColumnAreaGrid.json"
+									},
+									{
+										"title": "TableAreaGrid",
+										"value": "v1.5/Scenarios/TableAreaGrid.json"
 									}
                                 ],
                                 "placeholder": "(choose sample)",
