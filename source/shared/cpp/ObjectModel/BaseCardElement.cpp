@@ -237,7 +237,7 @@ void BaseCardElement::DeserializeBaseProperties(ParseContext& context, const Jso
     element->SetIsVisible(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsVisible, true));
     element->SetSeparator(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Separator, false));
     element->SetSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::Spacing, Spacing::Default, SpacingFromString));
-    element->SetAreaGridName(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::AreaGridName));
+    element->SetAreaGridName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::AreaGridName, "", false));
     element->SetNonOptionalAreaGridName(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::AreaGridName).has_value() ?
-    ParseUtil::GetString(json, AdaptiveCardSchemaKey::AreaGridName):"");
+    ParseUtil::GetString(json, AdaptiveCardSchemaKey::AreaGridName) : "");
 }

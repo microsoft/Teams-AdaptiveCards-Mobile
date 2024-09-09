@@ -8,8 +8,8 @@
             "layouts": [
                 {
                     "type": "Layout.Flow",
-                    "minItemWidth": "150px",
-                    "itemWidth": "200px"
+                    "minItemWidth": "100px",
+                    "itemWidth": "150px"
                 }
             ],
             "items": [

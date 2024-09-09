@@ -175,7 +175,8 @@
             }
     }
 
-    [viewGroup addArrangedSubview:inputview];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:inputview withAreaName:areaName];
 
     inputview.translatesAutoresizingMaskIntoConstraints = false;
 
@@ -237,6 +238,8 @@
                 if (![acoSelectAction isEnabled]) {
                     quickReplyView.accessibilityTraits |= UIAccessibilityTraitNotEnabled;
                 }
+            } else if (action->GetElementType() == ActionType::OpenUrl) {
+                button.accessibilityTraits = UIAccessibilityTraitLink;
             }
             [viewGroup addTarget:target];
         }

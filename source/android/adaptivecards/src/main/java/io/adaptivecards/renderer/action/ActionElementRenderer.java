@@ -152,7 +152,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         button.post(() -> Util.expandClickArea(button, minHeight));
 
         String iconUrl = baseActionElement.GetIconUrl();
-        String svgInfoURL = baseActionElement.GetSVGInfoURL();
+        String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
 
         if (!iconUrl.isEmpty())
         {

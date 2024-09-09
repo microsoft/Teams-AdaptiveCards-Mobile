@@ -57,8 +57,8 @@ public class IconInfo {
     return (cPtr == 0) ? null : new IconInfo(cPtr, true);
   }
 
-  public String GetSVGInfoURL() {
-    return AdaptiveCardObjectModelJNI.IconInfo_GetSVGInfoURL(swigCPtr, this);
+  public String GetSVGPath() {
+    return AdaptiveCardObjectModelJNI.IconInfo_GetSVGPath(swigCPtr, this);
   }
 
   public ForegroundColor getForgroundColor() {

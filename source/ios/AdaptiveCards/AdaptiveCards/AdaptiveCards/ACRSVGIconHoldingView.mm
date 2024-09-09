@@ -56,20 +56,19 @@
     
     NSLayoutConstraint *trailing = [NSLayoutConstraint constraintWithItem:_imageView
                                  attribute:NSLayoutAttributeTrailing
-                                 relatedBy:NSLayoutRelationEqual
+                                 relatedBy:NSLayoutRelationLessThanOrEqual
                                     toItem:self
                                  attribute:NSLayoutAttributeTrailing
                                 multiplier:1
                                   constant:0];
     NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:_imageView
                                  attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
+                                 relatedBy:NSLayoutRelationGreaterThanOrEqual
                                     toItem:self
                                  attribute:NSLayoutAttributeLeading
                                 multiplier:1
                                   constant:0];
-    trailing.priority = 499;
-    leading.priority = 499;
+
     [self addConstraints:@[trailing, leading]];
     
     [self setContentHuggingPriority:249 forAxis:UILayoutConstraintAxisHorizontal];

@@ -14731,7 +14731,7 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseActionElement_1GetSVGInfoURL(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseActionElement_1GetSVGPath(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   AdaptiveCards::BaseActionElement *arg1 = (AdaptiveCards::BaseActionElement *) 0 ;
   std::shared_ptr< AdaptiveCards::BaseActionElement const > *smartarg1 = 0 ;
@@ -14743,7 +14743,7 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
   
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::BaseActionElement > **)&jarg1;
   arg1 = (AdaptiveCards::BaseActionElement *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::BaseActionElement const *)arg1)->GetSVGInfoURL();
+  result = ((AdaptiveCards::BaseActionElement const *)arg1)->GetSVGPath();
   jresult = jenv->NewStringUTF((&result)->c_str()); 
   return jresult;
 }
@@ -17127,18 +17127,6 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_baseIconCDNUrl_1get(JNIEnv *jenv, jclass jcls) {
-  jstring jresult = 0 ;
-  char *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (char *)(char *)AdaptiveCards::baseIconCDNUrl;
-  if (result) jresult = jenv->NewStringUTF((const char *)result);
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1Icon_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   AdaptiveCards::Icon *result = 0 ;
@@ -17387,7 +17375,7 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Icon_1GetSVGInfoURL(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Icon_1GetSVGPath(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   AdaptiveCards::Icon *arg1 = (AdaptiveCards::Icon *) 0 ;
   std::shared_ptr< AdaptiveCards::Icon const > *smartarg1 = 0 ;
@@ -17399,7 +17387,7 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
   
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::Icon > **)&jarg1;
   arg1 = (AdaptiveCards::Icon *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::Icon const *)arg1)->GetSVGInfoURL();
+  result = ((AdaptiveCards::Icon const *)arg1)->GetSVGPath();
   jresult = jenv->NewStringUTF((&result)->c_str()); 
   return jresult;
 }
@@ -41647,7 +41635,7 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_IconInfo_1GetSVGInfoURL(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_IconInfo_1GetSVGPath(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   AdaptiveCards::IconInfo *arg1 = (AdaptiveCards::IconInfo *) 0 ;
   std::shared_ptr< AdaptiveCards::IconInfo const > *smartarg1 = 0 ;
@@ -41659,7 +41647,7 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
   
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::IconInfo > **)&jarg1;
   arg1 = (AdaptiveCards::IconInfo *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::IconInfo const *)arg1)->GetSVGInfoURL();
+  result = ((AdaptiveCards::IconInfo const *)arg1)->GetSVGPath();
   jresult = jenv->NewStringUTF((&result)->c_str()); 
   return jresult;
 }

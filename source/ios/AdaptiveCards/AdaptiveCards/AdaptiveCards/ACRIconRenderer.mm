@@ -45,7 +45,7 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Icon> icon = std::dynamic_pointer_cast<Icon>(elem);
     
-    NSString *svgPayloadURL = @(icon->GetSVGInfoURL().c_str());
+    NSString *svgPayloadURL = cdnURLForIcon(@(icon->GetSVGPath().c_str()));
     CGSize size = CGSizeMake(getIconSize(icon->getIconSize()), getIconSize(icon->getIconSize()));
     
     UIColor *imageTintColor = [acoConfig getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:icon->getForgroundColor() subtleOption:false];
@@ -60,7 +60,8 @@
 
     wrappingView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [viewGroup addArrangedSubview:wrappingView];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:wrappingView withAreaName:areaName];
     
     configRtl(iconView, rootView.context);
     configRtl(wrappingView, rootView.context);

@@ -78,7 +78,8 @@
             ]];
     }
     
-    [viewGroup addArrangedSubview:wrapperView];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:wrapperView withAreaName:areaName];
   
     return wrapperView;
 }

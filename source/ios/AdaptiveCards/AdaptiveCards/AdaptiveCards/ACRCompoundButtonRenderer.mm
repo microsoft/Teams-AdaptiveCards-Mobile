@@ -24,6 +24,7 @@
 #import "ACRCompoundButtonRenderer.h"
 #import "ACRUILabel.h"
 #import "UtiliOS.h"
+#import "ARCGridViewLayout.h"
 
 @implementation ACRCompoundButtonRenderer
 
@@ -53,12 +54,14 @@
     verticalStack.axis = UILayoutConstraintAxisVertical;
     verticalStack.translatesAutoresizingMaskIntoConstraints = NO;
     verticalStack.alignment = UIStackViewAlignmentLeading;
+    verticalStack.distribution = UIStackViewDistributionEqualSpacing;
     verticalStack.spacing = 4;
     
     UIStackView *horizontalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     horizontalStack.translatesAutoresizingMaskIntoConstraints = NO;
     horizontalStack.spacing = 8;
     horizontalStack.alignment = UIStackViewAlignmentCenter;
+    horizontalStack.distribution = UIStackViewDistributionEqualCentering;
     
     if(icon != nil)
     {
@@ -74,7 +77,6 @@
     UILabel* descriptionLabel = [self getDescriptionLabelWithText:compoundButton->getDescription()
                                                            viewGroup:viewGroup
                                                           hostConfig:acoConfig];
-    
 
    
     
@@ -99,7 +101,7 @@
         [verticalStack.leadingAnchor constraintEqualToAnchor:compoundButtonView.leadingAnchor constant:16],
         [verticalStack.trailingAnchor constraintEqualToAnchor:compoundButtonView.trailingAnchor constant:-16],
         [verticalStack.topAnchor constraintEqualToAnchor:compoundButtonView.topAnchor constant:16],
-        [verticalStack.bottomAnchor constraintEqualToAnchor:compoundButtonView.bottomAnchor constant:-16]
+        [verticalStack.bottomAnchor constraintLessThanOrEqualToAnchor:compoundButtonView.bottomAnchor constant:-16]
     ]];
 
     configRtl(compoundButtonView, rootView.context);
@@ -108,7 +110,8 @@
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, compoundButtonView, viewGroup);
     compoundButtonView.accessibilityLabel = @(compoundButton->getTitle().c_str());
-    [viewGroup addArrangedSubview:compoundButtonView];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:compoundButtonView withAreaName:areaName];
     return compoundButtonView;
 }
 
@@ -121,6 +124,8 @@
     titleLabel.text = @(title.c_str());
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
+    titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    [titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     return titleLabel;
 }
 
@@ -128,7 +133,8 @@
                                       rootView:(ACRView *)rootView
                                     hostConfig:(ACOHostConfig *)acoConfig;
 {
-    NSString *svgPayloadURL = @(icon->GetSVGInfoURL().c_str());
+    
+    NSString *svgPayloadURL = cdnURLForIcon(@(icon->GetSVGPath().c_str()));
     UIColor *imageTintColor = [acoConfig getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:icon->getForgroundColor() subtleOption:false];
     
     CGSize size = CGSizeMake(getIconSize(icon->getIconSize()), getIconSize(icon->getIconSize()));
@@ -177,13 +183,14 @@
     badgeLabel.text = @(badge.c_str());
     badgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     badgeLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+    badgeLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [badgeContainerView addSubview:badgeLabel];
-
     [NSLayoutConstraint activateConstraints:@[
         [badgeLabel.leadingAnchor constraintEqualToAnchor:badgeContainerView.leadingAnchor constant:7.2],
         [badgeLabel.trailingAnchor constraintEqualToAnchor:badgeContainerView.trailingAnchor constant:-7.2],
         [badgeLabel.topAnchor constraintEqualToAnchor:badgeContainerView.topAnchor constant:2.4],
-        [badgeLabel.bottomAnchor constraintEqualToAnchor:badgeContainerView.bottomAnchor constant:-2.4]
+        [badgeLabel.bottomAnchor constraintEqualToAnchor:badgeContainerView.bottomAnchor constant:-2.4],
+        [badgeLabel.widthAnchor constraintLessThanOrEqualToConstant:80]
     ]];
 
     return badgeContainerView;
