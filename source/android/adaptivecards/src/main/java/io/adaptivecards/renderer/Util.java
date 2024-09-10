@@ -201,7 +201,7 @@ public final class Util {
         for (int i = 0; i < childCount; ++i) {
             View v = origin.getChildAt(i);
             origin.removeView(v);
-            areaGridLayoutView.addAreaView(v, tagContent.GetBaseElement().GetAreaGridName(), rowSpacing, columnSpacing);
+            areaGridLayoutView.addAreaView(v, tagContent.GetBaseElement().GetNonOptionalAreaGridName(), rowSpacing, columnSpacing);
         }
     }
 
