@@ -232,6 +232,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Weight, "weight"},
             {AdaptiveCardSchemaKey::Width, "width"},
             {AdaptiveCardSchemaKey::CompoundButton,"compoundButton"},
+            {AdaptiveCardSchemaKey::CarouselPage,"CarouselPage"},
+            {AdaptiveCardSchemaKey::Pages,"pages"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
@@ -262,6 +264,7 @@ namespace AdaptiveCards
             {CardElementType::ToggleInput, "Input.Toggle"},
             {CardElementType::CompoundButton,"CompoundButton"},
             {CardElementType::Carousel,"Carousel"},
+            {CardElementType::CarouselPage,"CarouselPage"},
             {CardElementType::Unknown, "Unknown"}});
 
     DEFINE_ADAPTIVECARD_ENUM(ActionType, {

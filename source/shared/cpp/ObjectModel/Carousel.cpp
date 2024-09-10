@@ -11,6 +11,7 @@
 #include "ParseContext.h"
 #include "Util.h"
 #include "Carousel.h"
+#import "CarouselPage.h"
 
 using namespace AdaptiveCards;
 
@@ -53,7 +54,25 @@ std::shared_ptr<BaseCardElement> CarouselParser::DeserializeWithoutCheckingType(
 
 void Carousel::DeserializeChildren(ParseContext& context, const Json::Value& value)
 {
+    auto elementArray = ParseUtil::GetArray(value, AdaptiveCardSchemaKey::Pages, false);
+
+    std::vector<std::shared_ptr<CarouselPage>> elements;
+    if (elementArray.empty())
+    {
+        return;
+    }
     
+    elements.reserve(elementArray.size());
+
+  for (const Json::Value& CarouselPage : elementArray)
+    {
+        auto el = CarouselPage::Deserialize(context,CarouselPage);
+        if (el != nullptr)
+        {
+            elements.push_back(el);
+        }
+    }
+    m_pages = elements;
 }
 
 void Carousel::PopulateKnownPropertiesSet()

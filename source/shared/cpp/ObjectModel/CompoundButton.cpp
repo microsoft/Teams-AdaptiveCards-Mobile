@@ -14,7 +14,7 @@ CompoundButton::CompoundButton() :
         BaseCardElement(CardElementType::CompoundButton)
 {
     PopulateKnownPropertiesSet();
-}
+}     
 
 Json::Value CompoundButton::SerializeToJsonValue() const
 {

@@ -28,24 +28,19 @@ public:
 
     Json::Value SerializeToJsonValue() const override;
     void DeserializeChildren(ParseContext& context, const Json::Value& value) override;
-    // std::string getPageAnimation() const;
-    // void setPageAnimation(const std::string value);
+    
+     std::string getPageAnimation() const;
+     void setPageAnimation(const std::string value);
 
-    // std::string getStyle() const;
-    // void setStyle(const std::string value);
-
-    // std::string getDescription() const;
-    // void setDescription(const std::string value);
-
-    std::shared_ptr<BaseActionElement> GetSelectAction() const;
-
+     std::string getStyle() const;
+     void setStyle(const std::string value);
+    
 private:
     void PopulateKnownPropertiesSet();
 
     std::string m_pageAnimation;
     std::string m_style;
-    // std::vector<std::shared_ptr<AdaptiveCards::CarouselPage>> m_pages;
-   // std::shared_ptr<BaseActionElement> m_selectAction;
+    std::vector<std::shared_ptr<AdaptiveCards::CarouselPage>> m_pages;
 };
 
 class CarouselParser : public BaseCardElementParser

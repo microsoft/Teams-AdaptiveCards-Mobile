@@ -234,7 +234,9 @@ enum class AdaptiveCardSchemaKey
     Weight,
     Width,
     Wrap,
-    CompoundButton
+    CompoundButton,
+    CarouselPage,
+    Pages
 };
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 
@@ -269,6 +271,7 @@ enum class CardElementType
     ToggleInput,
     CompoundButton,
     Carousel,
+    CarouselPage,
     Unknown,
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);

@@ -16,19 +16,21 @@ namespace AdaptiveCards
     class CarouselPage : public StyledCollectionElement
     {
         public:
+            CarouselPage();
             CarouselPage(const CarouselPage&) = default;
             CarouselPage(CarouselPage&&) = default;
             CarouselPage& operator=(const CarouselPage&) = default;
             CarouselPage& operator=(CarouselPage&&) = default;
-
             Json::Value SerializeToJsonValue() const override;
-            void DeserializeChildren(ParseContext& context, const Json::Value& value) override;
-        private:
             void PopulateKnownPropertiesSet();
-            std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
-            const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;
-        
-        std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_items;
+            std::vector<std::shared_ptr<BaseCardElement>>& getItems();
+            void setItems(std::vector<std::shared_ptr<BaseCardElement>> items);
+            static std::shared_ptr<CarouselPage> Deserialize(ParseContext& context, const Json::Value& root) ;
+
+        private:
+            std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_items;
+        static std::shared_ptr<CarouselPage> DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& root);
+        static std::shared_ptr<CarouselPage> DeserializeFromString(ParseContext& context, const std::string& jsonString) ;
     };
 
     class CarouselPageParser : public BaseCardElementParser
@@ -40,7 +42,7 @@ namespace AdaptiveCards
             CarouselPageParser& operator=(const class CarouselPageParser&) = default;
             CarouselPageParser& operator=(CarouselPageParser&&) = default;
             virtual ~CarouselPageParser() = default;
-
+            
             std::shared_ptr<BaseCardElement> Deserialize(ParseContext& context, const Json::Value& root) override;
             std::shared_ptr<BaseCardElement> DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& root);
             std::shared_ptr<BaseCardElement> DeserializeFromString(ParseContext& context, const std::string& jsonString) override;
