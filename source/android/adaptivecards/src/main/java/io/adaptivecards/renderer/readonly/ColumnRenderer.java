@@ -6,6 +6,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.layout.AreaGridLayoutView;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
@@ -129,8 +131,9 @@ public class ColumnRenderer extends BaseCardElementRenderer
         // Spacing between elements in a Layout.Flow is solely controlled by the columnSpacing and rowSpacing properties
         // provided by the flow layout. The spacing and separator properties on items are ignored.
         View separator = null;
-        boolean isFlowLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow;
-        if (!isFlowLayout) {
+        boolean isFlowOrAreaLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow
+            || layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid;
+        if (!isFlowOrAreaLayout) {
             separator = setSpacingAndSeparator(context, viewGroup, column.GetSpacing(), column.GetSeparator(), hostConfig, false);
         }
 
@@ -199,6 +202,11 @@ public class ColumnRenderer extends BaseCardElementRenderer
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
             flexboxLayout.setTag(new TagContent(column));
             layoutContainer = flexboxLayout;
+        } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
+            AreaGridLayoutView areaGridLayoutView = new AreaGridLayoutView(context);
+            areaGridLayoutView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            areaGridLayoutView.setTag(new TagContent(column));
+            layoutContainer = areaGridLayoutView;
         } else {
             LinearLayout columnLayout = new LinearLayout(context);
             columnLayout.setOrientation(LinearLayout.VERTICAL);

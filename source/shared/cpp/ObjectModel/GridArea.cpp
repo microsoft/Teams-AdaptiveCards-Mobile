@@ -83,7 +83,7 @@ Json::Value GridArea::SerializeToJsonValue() const
 
 std::shared_ptr<GridArea> GridArea::Deserialize(const Json::Value& json)
 {
-    
+
     std::shared_ptr<GridArea> area = std::make_shared<GridArea>();
     area->SetName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Name));
     area->SetRow(ParseUtil::GetInt(json, AdaptiveCardSchemaKey::Row, 1));

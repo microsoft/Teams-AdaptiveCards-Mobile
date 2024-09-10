@@ -10,9 +10,9 @@ import androidx.fragment.app.FragmentManager;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
@@ -22,13 +22,10 @@ import io.adaptivecards.objectmodel.BaseActionElementVector;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HostConfig;
-import io.adaptivecards.objectmodel.HostWidth;
-import io.adaptivecards.objectmodel.HostWidthConfig;
 import io.adaptivecards.objectmodel.Layout;
 import io.adaptivecards.objectmodel.LayoutContainerType;
-import io.adaptivecards.objectmodel.LayoutVector;
-import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.layout.AreaGridLayoutView;
 import io.adaptivecards.renderer.layout.StretchableElementLayout;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
@@ -191,6 +188,10 @@ public class AdaptiveCardRenderer
             renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, flexboxLayout, renderArgs, layoutToApply);
             ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, flexboxLayout);
             cardLayout.addView(flexboxLayout);
+        } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
+            AreaGridLayoutView areaGridLayoutView = getAreaGridLayoutView(context);
+            renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, areaGridLayoutView, renderArgs, layoutToApply);
+            cardLayout.addView(areaGridLayoutView);
         } else {
             renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, cardLayout, renderArgs, layoutToApply);
         }
@@ -244,6 +245,12 @@ public class AdaptiveCardRenderer
         ContainerRenderer.setSelectAction(renderedCard, renderedCard.getAdaptiveCard().GetSelectAction(), rootLayout, cardActionHandler, renderArgs);
 
         return rootLayout;
+    }
+
+    private AreaGridLayoutView getAreaGridLayoutView(Context context) {
+        AreaGridLayoutView areaGridLayoutView = new AreaGridLayoutView(context);
+        areaGridLayoutView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return areaGridLayoutView;
     }
 
     private static FlexboxLayout getFlexboxContainerForLayout(Context context) {

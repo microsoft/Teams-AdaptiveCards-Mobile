@@ -522,7 +522,8 @@ public class CardRendererRegistration
 
             // Only columns render vertical spacing, so if it's not a column, then we need a horizontal spacing
             // if the layoutToApply is a flow layout, then the spacing and separator properties on items are ignored
-            boolean isFlowLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow;
+            boolean isFlowLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow ||
+                layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid;
             HandleSpacing(context, viewGroup, renderedElement, hostConfig, tagContent, !isColumn, isFlowLayout);
 
             // Check if the element is an input or must be stretched
@@ -545,7 +546,7 @@ public class CardRendererRegistration
                 }
                 else
                 {
-                    Util.MoveChildrenViews(mockLayout, viewGroup, layoutToApply, hostConfig);
+                    Util.MoveChildrenViews(mockLayout, viewGroup, layoutToApply, tagContent, hostConfig);
                 }
             }
 
@@ -635,7 +636,7 @@ public class CardRendererRegistration
             }
             else
             {
-                Util.MoveChildrenViews(mockLayout, inputLayout, layoutToApply, hostConfig);
+                Util.MoveChildrenViews(mockLayout, inputLayout, layoutToApply, tagContent, hostConfig);
             }
 
             if (inputHasErrorMessage)
@@ -668,7 +669,7 @@ public class CardRendererRegistration
         }
         else
         {
-            Util.MoveChildrenViews(mockLayout, container, layoutToApply, hostConfig);
+            Util.MoveChildrenViews(mockLayout, container, layoutToApply, tagContent, hostConfig);
         }
     }
 
@@ -685,7 +686,7 @@ public class CardRendererRegistration
         {
             // Create a stretchable input lay
             StretchableElementLayout stretchElementLayout = new StretchableElementLayout(context, mustStretch);
-            Util.MoveChildrenViews(mockLayout, stretchElementLayout, layoutToApply, hostConfig);
+            Util.MoveChildrenViews(mockLayout, stretchElementLayout, layoutToApply, tagContent, hostConfig);
 
             if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
                 stretchElementLayout.setLayoutParams(Util.generateLayoutParamsForFlowLayoutItems(context, layoutToApply, hostConfig));
@@ -697,7 +698,7 @@ public class CardRendererRegistration
         else
         {
             // Just move the generated views into the actual container
-            Util.MoveChildrenViews(mockLayout, container, layoutToApply, hostConfig);
+            Util.MoveChildrenViews(mockLayout, container, layoutToApply, tagContent, hostConfig);
         }
     }
 
