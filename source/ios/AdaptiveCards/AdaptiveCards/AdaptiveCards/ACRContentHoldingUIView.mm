@@ -154,6 +154,16 @@ using namespace AdaptiveCards;
                     [self setImageViewHeightConstraint];
                 }
             }
+//            if (bUpdate) {
+//                if ([(ACRColumnView *)_viewGroup isKindOfClass:[ACRColumnView class]]) {
+//                    ACRColumnSetView *columnSetView = ((ACRColumnView *)_viewGroup).columnsetView;
+//                    if (columnSetView) {
+//                        [columnSetView updateIntrinsicContentSize];
+//                        [columnSetView invalidateIntrinsicContentSize];
+//                    }
+//                }
+//                [(ACRColumnView *)_viewGroup invalidateIntrinsicContentSize];
+//            }
 
             if (bUpdate) 
             {

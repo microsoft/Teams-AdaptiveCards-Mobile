@@ -249,8 +249,7 @@ using namespace AdaptiveCards;
 
     for (const auto &elem : elems) {
         ACRSeparator *separator = nil;
-        BOOL isGridView = ([view isKindOfClass:[ARCGridViewLayout class]]);
-        if (!isGridView && *firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
+        if (*firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
             separator = [ACRSeparator renderSeparation:elem
                                           forSuperview:view
                                         withHostConfig:[config getHostConfig]];
