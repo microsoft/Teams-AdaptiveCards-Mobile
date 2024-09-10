@@ -140,6 +140,14 @@ public class BaseCardElement extends BaseElement {
     AdaptiveCardObjectModelJNI.BaseCardElement_SetAreaGridName(swigCPtr, this, SWIGTYPE_p_std__optionalT_std__string_t.getCPtr(value));
   }
 
+  public String GetNonOptionalAreaGridName() {
+    return AdaptiveCardObjectModelJNI.BaseCardElement_GetNonOptionalAreaGridName(swigCPtr, this);
+  }
+
+  public void SetNonOptionalAreaGridName(String value) {
+    AdaptiveCardObjectModelJNI.BaseCardElement_SetNonOptionalAreaGridName(swigCPtr, this, value);
+  }
+
   public boolean MeetsTargetWidthRequirement(HostWidth hostWidth) {
     return AdaptiveCardObjectModelJNI.BaseCardElement_MeetsTargetWidthRequirement(swigCPtr, this, hostWidth.swigValue());
   }

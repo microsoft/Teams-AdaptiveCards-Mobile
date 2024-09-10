@@ -18,6 +18,7 @@ import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Dimension;
@@ -32,6 +33,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import io.adaptivecards.R;
+import io.adaptivecards.objectmodel.AreaGridLayout;
 import io.adaptivecards.objectmodel.BaseActionElement;
 import io.adaptivecards.objectmodel.BaseActionElementVector;
 import io.adaptivecards.objectmodel.BaseCardElement;
@@ -53,6 +55,7 @@ import io.adaptivecards.objectmodel.Mode;
 import io.adaptivecards.objectmodel.ParseContext;
 import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.renderer.action.ActionElementRendererIconImageLoaderAsync;
+import io.adaptivecards.renderer.layout.AreaGridLayoutView;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
@@ -159,9 +162,15 @@ public final class Util {
         return hostWidth;
     }
 
-    public static void MoveChildrenViews(ViewGroup origin, ViewGroup destination, Layout layoutToApply, HostConfig hostConfig)
+    public static void MoveChildrenViews(ViewGroup origin, ViewGroup destination, Layout layoutToApply, TagContent tagContent, HostConfig hostConfig)
     {
         final int childCount = origin.getChildCount();
+
+        if(layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid && destination instanceof AreaGridLayoutView) {
+            moveChildrenViewsToAreaGridLayoutView(origin, (AreaGridLayoutView)destination, layoutToApply, tagContent, hostConfig);
+            return;
+        }
+
         for (int i = 0; i < childCount; ++i)
         {
             View v = origin.getChildAt(i);
@@ -171,6 +180,28 @@ public final class Util {
                 v.setLayoutParams(generateLayoutParamsForFlowLayoutItems(destination.getContext(), layoutToApply, hostConfig));
             }
             destination.addView(v);
+
+        }
+
+    }
+
+    private static void moveChildrenViewsToAreaGridLayoutView(ViewGroup origin, AreaGridLayoutView areaGridLayoutView, Layout layoutToApply, TagContent tagContent, HostConfig hostConfig) {
+
+        AreaGridLayout areaGridLayout = Util.castTo(layoutToApply, AreaGridLayout.class);
+        areaGridLayoutView.setUpAreaGrids(areaGridLayout);
+        addChildrenToAreas(origin, areaGridLayoutView, areaGridLayout, tagContent, hostConfig);
+    }
+
+    private static void addChildrenToAreas(ViewGroup origin, AreaGridLayoutView areaGridLayoutView, AreaGridLayout areaGridLayout, TagContent tagContent, HostConfig hostConfig) {
+        final int childCount = origin.getChildCount();
+
+        int rowSpacing = Util.dpToPixels(origin.getContext(), BaseCardElementRenderer.getSpacingSize(areaGridLayout.GetRowSpacing(), hostConfig.GetSpacing()));
+        int columnSpacing = Util.dpToPixels(origin.getContext(), BaseCardElementRenderer.getSpacingSize(areaGridLayout.GetColumnSpacing(), hostConfig.GetSpacing()));
+
+        for (int i = 0; i < childCount; ++i) {
+            View v = origin.getChildAt(i);
+            origin.removeView(v);
+            areaGridLayoutView.addAreaView(v, tagContent.GetBaseElement().GetNonOptionalAreaGridName(), rowSpacing, columnSpacing);
         }
     }
 
