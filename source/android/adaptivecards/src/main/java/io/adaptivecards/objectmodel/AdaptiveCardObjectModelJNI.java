@@ -659,10 +659,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native boolean BaseCardElement_GetIsVisible(long jarg1, BaseCardElement jarg1_);
   public final static native void BaseCardElement_SetIsVisible(long jarg1, BaseCardElement jarg1_, boolean jarg2);
   public final static native int BaseCardElement_GetElementType(long jarg1, BaseCardElement jarg1_);
-  public final static native long BaseCardElement_GetAreaGridName(long jarg1, BaseCardElement jarg1_);
-  public final static native void BaseCardElement_SetAreaGridName(long jarg1, BaseCardElement jarg1_, long jarg2);
-  public final static native String BaseCardElement_GetNonOptionalAreaGridName(long jarg1, BaseCardElement jarg1_);
-  public final static native void BaseCardElement_SetNonOptionalAreaGridName(long jarg1, BaseCardElement jarg1_, String jarg2);
+  public final static native String BaseCardElement_GetAreaGridName(long jarg1, BaseCardElement jarg1_);
+  public final static native void BaseCardElement_SetAreaGridName(long jarg1, BaseCardElement jarg1_, String jarg2);
   public final static native boolean BaseCardElement_MeetsTargetWidthRequirement(long jarg1, BaseCardElement jarg1_, int jarg2);
   public final static native long BaseCardElement_DeserializeBasePropertiesFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native long BaseCardElement_DeserializeBaseProperties(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);

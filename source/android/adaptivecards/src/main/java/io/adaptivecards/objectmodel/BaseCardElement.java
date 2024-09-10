@@ -132,20 +132,12 @@ public class BaseCardElement extends BaseElement {
     return CardElementType.swigToEnum(AdaptiveCardObjectModelJNI.BaseCardElement_GetElementType(swigCPtr, this));
   }
 
-  public SWIGTYPE_p_std__optionalT_std__string_t GetAreaGridName() {
-    return new SWIGTYPE_p_std__optionalT_std__string_t(AdaptiveCardObjectModelJNI.BaseCardElement_GetAreaGridName(swigCPtr, this), true);
+  public String GetAreaGridName() {
+    return AdaptiveCardObjectModelJNI.BaseCardElement_GetAreaGridName(swigCPtr, this);
   }
 
-  public void SetAreaGridName(SWIGTYPE_p_std__optionalT_std__string_t value) {
-    AdaptiveCardObjectModelJNI.BaseCardElement_SetAreaGridName(swigCPtr, this, SWIGTYPE_p_std__optionalT_std__string_t.getCPtr(value));
-  }
-
-  public String GetNonOptionalAreaGridName() {
-    return AdaptiveCardObjectModelJNI.BaseCardElement_GetNonOptionalAreaGridName(swigCPtr, this);
-  }
-
-  public void SetNonOptionalAreaGridName(String value) {
-    AdaptiveCardObjectModelJNI.BaseCardElement_SetNonOptionalAreaGridName(swigCPtr, this, value);
+  public void SetAreaGridName(String value) {
+    AdaptiveCardObjectModelJNI.BaseCardElement_SetAreaGridName(swigCPtr, this, value);
   }
 
   public boolean MeetsTargetWidthRequirement(HostWidth hostWidth) {

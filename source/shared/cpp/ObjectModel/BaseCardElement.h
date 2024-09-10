@@ -45,11 +45,8 @@ public:
 
     CardElementType GetElementType() const;
 
-    std::optional<std::string> GetAreaGridName() const;
-    void SetAreaGridName(const std::optional<std::string>& value);
-
-    std::string GetNonOptionalAreaGridName() const;
-    void SetNonOptionalAreaGridName(const std::string& value);
+    std::string GetAreaGridName() const;
+    void SetAreaGridName(const std::string& value);
 
     bool MeetsTargetWidthRequirement(HostWidth hostWidth) const;
     static std::shared_ptr<BaseCardElement> DeserializeBasePropertiesFromString(ParseContext& context, const std::string& jsonString);
@@ -73,8 +70,7 @@ private:
     TargetWidthType m_targetWidth;
     bool m_separator;
     bool m_isVisible;
-    std::optional<std::string> m_areaGridName;
-    std::string m_nonOptionalAreaGridName;
+    std::string m_areaGridName;
 };
 
 template <typename T>
