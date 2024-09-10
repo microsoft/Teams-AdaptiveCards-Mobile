@@ -6,8 +6,9 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.R
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.RatingColor
@@ -19,7 +20,7 @@ import io.adaptivecards.renderer.readonly.RatingElementRendererUtil
 /**
  * View to display the input rating stars
  **/
-class RatingStarInputView: LinearLayout {
+class RatingStarInputView: FlexboxLayout {
 
     private var value: Double = 0.0
 
@@ -61,14 +62,14 @@ class RatingStarInputView: LinearLayout {
     }
 
     private fun initStars(context: Context) {
-        orientation = HORIZONTAL
+        flexWrap = FlexWrap.WRAP
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         val rightMargin = Util.dpToPixels(context, RIGHT_MARGIN.toFloat())
         for (index in 0 until maxStarsCount) {
             val star = ImageView(context)
             star.apply {
-                layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 0f)
-                contentDescription = "Rating Star $index+1"
+                layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+                contentDescription = "Rating Star ${index+1}"
                 setImageDrawable(getStarDrawable())
                 setColorFilter(RatingElementRendererUtil.getInputStarColor(color, index < value, hostConfig))
                 isActivated = index < value.toInt()

@@ -22,6 +22,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.flexbox.AlignContent;
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayout;
+
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.BackgroundImage;
 import io.adaptivecards.objectmodel.BaseActionElement;
@@ -31,11 +37,19 @@ import io.adaptivecards.objectmodel.Container;
 import io.adaptivecards.objectmodel.ContainerBleedDirection;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.ExecuteAction;
+import io.adaptivecards.objectmodel.FlowLayout;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 import io.adaptivecards.objectmodel.HostConfig;
+import io.adaptivecards.objectmodel.HostWidth;
+import io.adaptivecards.objectmodel.HostWidthConfig;
+import io.adaptivecards.objectmodel.ItemFit;
+import io.adaptivecards.objectmodel.Layout;
+import io.adaptivecards.objectmodel.LayoutContainerType;
+import io.adaptivecards.objectmodel.LayoutVector;
 import io.adaptivecards.objectmodel.StyledCollectionElement;
 import io.adaptivecards.objectmodel.SubmitAction;
+import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.objectmodel.VerticalContentAlignment;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.BackgroundImageLoaderAsync;
@@ -79,9 +93,8 @@ public class ContainerRenderer extends BaseCardElementRenderer
     {
         Container container = Util.castTo(baseCardElement, Container.class);
 
-        StretchableElementLayout containerView = new StretchableElementLayout(context, container.GetHeight() == HeightType.Stretch);
-        containerView.setTag(new TagContent(container));
-        containerView.setOrientation(LinearLayout.VERTICAL);
+        Layout layoutToApply = Util.getLayoutToApply(container.GetLayouts(), hostConfig);
+        ViewGroup containerView = getAppropriateContainerForLayout(context, layoutToApply, container);
 
         setMinHeight(container.GetMinHeight(), containerView, context);
 
@@ -89,7 +102,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
         containerView.setClipChildren(false);
         containerView.setClipToPadding(false);
 
-        applyVerticalContentAlignment(containerView, container.GetVerticalContentAlignment());
+        applyVerticalContentAlignment(containerView, container.GetVerticalContentAlignment(), layoutToApply);
 
         ContainerStyle containerStyle = renderArgs.getContainerStyle();
         ContainerStyle styleForThis = getLocalContainerStyle(container, containerStyle);
@@ -115,7 +128,10 @@ public class ContainerRenderer extends BaseCardElementRenderer
                                                               container.GetItems(),
                                                               cardActionHandler,
                                                               hostConfig,
-                                                              containerRenderArgs);
+                                                              containerRenderArgs,
+                                                              layoutToApply);
+
+                applyItemFillForFlowLayout(layoutToApply, containerView);
             }
             catch (AdaptiveFallbackException e)
             {
@@ -124,7 +140,6 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
         ContainerRenderer.setBackgroundImage(renderedCard, context, container.GetBackgroundImage(), hostConfig, containerView);
         setSelectAction(renderedCard, container.GetSelectAction(), containerView, cardActionHandler, renderArgs);
-
         viewGroup.addView(containerView);
         return containerView;
     }
@@ -134,18 +149,33 @@ public class ContainerRenderer extends BaseCardElementRenderer
      * @param container Layout whose children need to be vertically aligned
      * @param verticalContentAlignment Alignment attribute
      */
-    public static void applyVerticalContentAlignment(LinearLayout container, VerticalContentAlignment verticalContentAlignment)
+    public static void applyVerticalContentAlignment(ViewGroup container, VerticalContentAlignment verticalContentAlignment, Layout layoutToApply)
     {
-        int gravity = Gravity.TOP;
-        if(verticalContentAlignment == VerticalContentAlignment.Center)
-        {
-            gravity = Gravity.CENTER;
+        if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow && container instanceof FlexboxLayout) {
+            int alignContent = AlignContent.FLEX_START;
+            if (verticalContentAlignment == VerticalContentAlignment.Center)
+            {
+                alignContent = AlignContent.CENTER;
+            }
+            else if (verticalContentAlignment == VerticalContentAlignment.Bottom)
+            {
+                alignContent = AlignContent.FLEX_END;
+            }
+            ((FlexboxLayout) container).setAlignContent(alignContent);
         }
-        else if(verticalContentAlignment == VerticalContentAlignment.Bottom)
-        {
-            gravity = Gravity.BOTTOM;
+        else {
+            // TODO - handle vertical content alignment for AreaGrid when it is implemented, currently defaulting to stack layout
+            int gravity = Gravity.TOP;
+            if(verticalContentAlignment == VerticalContentAlignment.Center)
+            {
+                gravity = Gravity.CENTER;
+            }
+            else if(verticalContentAlignment == VerticalContentAlignment.Bottom)
+            {
+                gravity = Gravity.BOTTOM;
+            }
+            ((LinearLayout) container).setGravity(gravity);
         }
-        container.setGravity(gravity);
     }
 
     /**
@@ -240,6 +270,20 @@ public class ContainerRenderer extends BaseCardElementRenderer
                 GradientDrawable gradientDrawable = new GradientDrawable();
                 gradientDrawable.setCornerRadius(cornerRadiusInPixels);
                 collectionElementView.setBackground(gradientDrawable);
+            }
+        }
+    }
+
+    public static void applyItemFillForFlowLayout(Layout layoutToApply, ViewGroup flexboxLayout) {
+        if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
+            for (int i = 0; i < flexboxLayout.getChildCount(); i++) {
+                FlowLayout flowLayout = Util.castTo(layoutToApply, FlowLayout.class);
+                View child = flexboxLayout.getChildAt(i);
+                FlexboxLayout.LayoutParams layoutParams = (FlexboxLayout.LayoutParams) child.getLayoutParams();
+                if (flowLayout.GetItemFit() == ItemFit.Fill) {
+                    layoutParams.setFlexGrow(1f);
+                }
+                child.setLayoutParams(layoutParams);
             }
         }
     }
@@ -398,6 +442,25 @@ public class ContainerRenderer extends BaseCardElementRenderer
                 }
             }
         }
+    }
+
+    public static ViewGroup getAppropriateContainerForLayout(Context context, Layout layoutToApply, Container container) {
+        ViewGroup layoutContainer;
+        if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
+            FlexboxLayout flexboxLayout = new FlexboxLayout(context);
+            flexboxLayout.setFlexDirection(FlexDirection.ROW);
+            flexboxLayout.setFlexWrap(FlexWrap.WRAP);
+            Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
+            flexboxLayout.setLayoutParams(new FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            flexboxLayout.setTag(new TagContent(container));
+            layoutContainer = flexboxLayout;
+        } else {
+            StretchableElementLayout stackLayout = new StretchableElementLayout(context, container.GetHeight() == HeightType.Stretch);
+            stackLayout.setTag(new TagContent(container));
+            stackLayout.setOrientation(LinearLayout.VERTICAL);
+            layoutContainer = stackLayout;
+        }
+        return layoutContainer;
     }
 
     private static ContainerRenderer s_instance = null;

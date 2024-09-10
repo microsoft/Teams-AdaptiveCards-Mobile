@@ -30,6 +30,7 @@ using namespace AdaptiveCards;
 
 // tolerance value for computing scaler for background cover size
 const CGFloat kACRScalerTolerance = 0.025f;
+NSString const *baseFluentIconCDNURL = @"https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/";
 
 void configVisibility(UIView *view, std::shared_ptr<BaseCardElement> const &visibilityInfo)
 {
@@ -1277,4 +1278,27 @@ BOOL isNullOrEmpty(NSString *string) {
         return (isNull || isEmpty);
     }
     return YES;
+}
+
+NSString *stringForCString(const std::optional<std::string> cString)
+{
+    if (!cString.has_value())
+    {
+        return @"";
+    }
+    
+    const char* cStr = cString->c_str();
+    if (!cStr)
+    {
+        return @"";
+    }
+    
+    return [NSString stringWithCString:cStr encoding:NSUTF8StringEncoding];
+}
+
+NSString *cdnURLForIcon(NSString *iconPath)
+{
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    NSString const *CDNPath = [featureFlagResolver stringForFlag:@"fluentIconCdnURL"] ?: baseFluentIconCDNURL;
+    return [[NSString alloc] initWithFormat:@"%@%@",CDNPath, iconPath];
 }

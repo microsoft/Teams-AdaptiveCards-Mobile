@@ -63,6 +63,7 @@ using namespace AdaptiveCards;
     NSMutableSet *_useResourceResolverActionsSet;
     id<ACRIBaseActionSetRenderer> _defaultActionSetRenderer;
     ACOParseContext *_parseContext;
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolverImp;
     int _hostCardContainer;
 }
 
@@ -343,6 +344,16 @@ using namespace AdaptiveCards;
 - (void)registerHostCardContainer:(int)hostCardContainer
 {
     _hostCardContainer = hostCardContainer;
+}
+
+- (void)setFeatureFlagResolver:(NSObject<ACRIFeatureFlagResolver> *_Nonnull)featureFlagResolver
+{
+    featureFlagResolverImp = featureFlagResolver;
+}
+
+- (NSObject<ACRIFeatureFlagResolver> *_Nullable)getFeatureFlagResolver
+{
+    return featureFlagResolverImp;
 }
 
 @end

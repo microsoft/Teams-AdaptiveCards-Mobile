@@ -43,7 +43,8 @@ using namespace AdaptiveCards;
                                                                          rootView:rootView];
     [view registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellId"];
 
-    [viewGroup addArrangedSubview:view];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:view withAreaName:areaName];
 
     configRtl(view, rootView.context);
 

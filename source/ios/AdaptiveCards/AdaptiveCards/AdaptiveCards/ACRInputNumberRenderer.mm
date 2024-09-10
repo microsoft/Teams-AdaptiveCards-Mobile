@@ -52,8 +52,9 @@
     }
 
     ACRInputLabelView *inputLabelView = [[ACRInputLabelView alloc] initInputLabelView:rootView acoConfig:acoConfig adaptiveInputElement:numInputBlck inputView:numInput accessibilityItem:numInput viewGroup:viewGroup dataSource:numberInputHandler];
-
-    [viewGroup addArrangedSubview:inputLabelView];
+    
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:inputLabelView withAreaName:areaName];
 
     [inputs addObject:inputLabelView];
 

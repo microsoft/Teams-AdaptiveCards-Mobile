@@ -59,6 +59,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     // flag that's set if didLoadElements delegate is called
     BOOL _hasCalled;
     NSMutableDictionary *_imageContextMap;
+    NSMutableDictionary *_elementWidthMap;
     NSMutableDictionary *_imageViewContextMap;
     NSMutableSet *_setOfRemovedObservers;
     NSMutableDictionary<NSString *, UIView *> *_paddingMap;
@@ -76,6 +77,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         std::shared_ptr<HostConfig> cHostConfig = std::make_shared<HostConfig>();
         _hostConfig = [[ACOHostConfig alloc] initWithConfig:cHostConfig];
         _imageViewMap = [[NSMutableDictionary alloc] init];
+        _elementWidthMap = [[NSMutableDictionary alloc] init];
         _textMap = [[NSMutableDictionary alloc] init];
         _serial_queue = dispatch_queue_create("io.adaptiveCards.serial_queue", DISPATCH_QUEUE_SERIAL);
         _serial_text_queue = dispatch_queue_create("io.adaptiveCards.serial_text_queue", DISPATCH_QUEUE_SERIAL);
@@ -168,6 +170,21 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         _hasCalled = YES;
         [[self acrActionDelegate] didLoadElements];
     }
+}
+
+- (void)setWidthForElememt:(unsigned int)key width:(float)width
+{
+    _elementWidthMap[@(key)] = @(width);
+}
+
+-(float)widthForElement:(unsigned int)key
+{
+    NSNumber *value = _elementWidthMap[@(key)];
+    if(value)
+    {
+        return value.floatValue;
+    }
+    return -1;
 }
 
 - (void)processBaseCardElement:(std::shared_ptr<BaseCardElement> const &)elem registration:(ACRRegistration *)registration
