@@ -116,15 +116,8 @@
     }
     
     NSString *areaName = stringForCString(elem->GetAreaGridName());
-    [viewGroup addArrangedSubview:container withAreaName:areaName];
     
     [self configureBorderForElement:acoElem container:container config:acoConfig];
-
-    configBleed(rootView, elem, container, acoConfig);
-
-    renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
-
-    container.frame = viewGroup.frame;
 
     [container setClipsToBounds:NO];
 
@@ -136,7 +129,13 @@
                                   minHeight:containerElem->GetMinHeight()
                                  heightType:GetACRHeight(containerElem->GetHeight())
                                        type:ACRContainer];
+    
+    [viewGroup addArrangedSubview:container withAreaName:areaName];
 
+    configBleed(rootView, elem, container, acoConfig);
+
+    renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
+    
     [rootView.context popBaseCardElementContext:acoElem];
 
     container.accessibilityElements = [container getArrangedSubviews];
