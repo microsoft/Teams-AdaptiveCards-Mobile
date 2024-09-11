@@ -49,6 +49,7 @@
     std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:containerElem->GetLayouts() andHostConfig:acoConfig];
     ACRFlowLayout *flowContainer;
     ARCGridViewLayout *gridLayout;
+    BOOL useStackLayout = NO;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
@@ -91,6 +92,10 @@
                               andHostConfig:acoConfig];
         }
     }
+    else
+    {
+        useStackLayout = YES;
+    }
 
     ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()
                                                         parentStyle:[viewGroup style]
@@ -102,11 +107,23 @@
     {
         [container addArrangedSubview:flowContainer];
     }
-    else if (gridLayout != nil) 
+    else if (gridLayout != nil)
     {
         [container addArrangedSubview:gridLayout];
-    } 
-    else
+    }
+    
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:container withAreaName:areaName];
+    
+    [self configureBorderForElement:acoElem container:container config:acoConfig];
+
+    configBleed(rootView, elem, container, acoConfig);
+
+    renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
+
+    container.frame = viewGroup.frame;
+    
+    if (useStackLayout)
     {
         [ACRRenderer render:container
                    rootView:rootView
@@ -114,10 +131,6 @@
               withCardElems:containerElem->GetItems()
               andHostConfig:acoConfig];
     }
-    
-    NSString *areaName = stringForCString(elem->GetAreaGridName());
-    
-    [self configureBorderForElement:acoElem container:container config:acoConfig];
 
     [container setClipsToBounds:NO];
 
@@ -129,13 +142,7 @@
                                   minHeight:containerElem->GetMinHeight()
                                  heightType:GetACRHeight(containerElem->GetHeight())
                                        type:ACRContainer];
-    
-    [viewGroup addArrangedSubview:container withAreaName:areaName];
 
-    configBleed(rootView, elem, container, acoConfig);
-
-    renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
-    
     [rootView.context popBaseCardElementContext:acoElem];
 
     container.accessibilityElements = [container getArrangedSubviews];
