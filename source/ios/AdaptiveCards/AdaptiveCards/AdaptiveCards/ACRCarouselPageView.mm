@@ -25,13 +25,14 @@
 
 @implementation CarouselPageView
 
--(UIView *) renderWithCarouselPage:(std::shared_ptr<AdaptiveCards::CarouselPage>) containerElem
+-(UIView *) renderWithCarouselPage:(std::shared_ptr<AdaptiveCards::BaseCardElement>) element
                         viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
                          rootView:(ACRView *)rootView
                            inputs:(NSMutableArray *)inputs
                   baseCardElement:(ACOBaseCardElement *)acoElem
                        hostConfig:(ACOHostConfig *)acoConfig
 {
+    std::shared_ptr<CarouselPage> containerElem = std::dynamic_pointer_cast<CarouselPage>(element);
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:containerElem->GetLayouts() andHostConfig:acoConfig];

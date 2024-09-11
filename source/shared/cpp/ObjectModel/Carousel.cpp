@@ -27,12 +27,12 @@ Json::Value Carousel::SerializeToJsonValue() const
     return root;
 }
 
-const std::vector<std::shared_ptr<CarouselPage>>& Carousel::GetItems() const
+const std::vector<std::shared_ptr<BaseCardElement>>& Carousel::GetItems() const
 {
     return m_pages;
 }
 
-std::vector<std::shared_ptr<CarouselPage>>& Carousel::GetItems()
+std::vector<std::shared_ptr<BaseCardElement>>& Carousel::GetItems()
 {
     return m_pages;
 }
@@ -64,7 +64,7 @@ void Carousel::DeserializeChildren(ParseContext& context, const Json::Value& val
 {
     auto elementArray = ParseUtil::GetArray(value, AdaptiveCardSchemaKey::Pages, false);
 
-    std::vector<std::shared_ptr<CarouselPage>> elements;
+    std::vector<std::shared_ptr<BaseCardElement>> elements;
     if (elementArray.empty())
     {
         return;

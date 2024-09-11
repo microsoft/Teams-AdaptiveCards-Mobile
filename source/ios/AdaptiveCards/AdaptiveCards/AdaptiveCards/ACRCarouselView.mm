@@ -34,6 +34,7 @@
             [view.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
             [view.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
             [view.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+            [view.topAnchor constraintEqualToAnchor:self.topAnchor],
             [self.heightAnchor constraintGreaterThanOrEqualToAnchor:view.heightAnchor]
         ]];
     }

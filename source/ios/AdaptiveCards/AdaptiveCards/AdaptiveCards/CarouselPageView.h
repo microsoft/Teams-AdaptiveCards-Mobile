@@ -15,7 +15,7 @@
 
 @interface CarouselPageView : NSObject 
 
--(UIView *) renderWithCarouselPage:(std::shared_ptr<AdaptiveCards::CarouselPage>) carouselPage
+-(UIView *) renderWithCarouselPage:(std::shared_ptr<AdaptiveCards::BaseCardElement>) carouselPage
                         viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
                          rootView:(ACRView *)rootView
                            inputs:(NSMutableArray *)inputs

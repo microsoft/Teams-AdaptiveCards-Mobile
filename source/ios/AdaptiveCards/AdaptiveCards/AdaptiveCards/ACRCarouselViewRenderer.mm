@@ -71,11 +71,7 @@
     
     [viewGroup addArrangedSubview:carouselView withAreaName:areaName];
     
-    [NSLayoutConstraint activateConstraints:@[
-        [carouselView.leadingAnchor constraintEqualToAnchor:viewGroup.leadingAnchor],
-        [carouselView.trailingAnchor constraintEqualToAnchor:viewGroup.trailingAnchor]
-    ]];
-    
+   // carouselView.backgroundColor = [UIColor systemCyanColor];
     carouselView.translatesAutoresizingMaskIntoConstraints = NO;
     carouselView.clipsToBounds = YES;
     return carouselView;

@@ -35,15 +35,15 @@ public:
      std::string getStyle() const;
      void setStyle(const std::string value);
     
-    std::vector<std::shared_ptr<CarouselPage>>& GetItems();
-    const std::vector<std::shared_ptr<CarouselPage>>& GetItems() const;
+    std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
+    const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;
     
 private:
     void PopulateKnownPropertiesSet();
 
     std::string m_pageAnimation;
     std::string m_style;
-    std::vector<std::shared_ptr<AdaptiveCards::CarouselPage>> m_pages;
+    std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_pages;
 };
 
 class CarouselParser : public BaseCardElementParser
