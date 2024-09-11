@@ -49,11 +49,36 @@
          hostConfig:(ACOHostConfig *)acoConfig;
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
-    std::shared_ptr<Carousel> compoundButton = std::dynamic_pointer_cast<Carousel>(elem);
+    std::shared_ptr<Carousel> carousel = std::dynamic_pointer_cast<Carousel>(elem);
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+    NSMutableArray<UIView *> *carouselPages = [[NSMutableArray alloc] init];
     
+    for( auto carouselPage : carousel->GetItems()) {
+        UIView *carouselPageView = [[CarouselPageView alloc] renderWithCarouselPage:carouselPage
+                                                                          viewGroup:viewGroup
+                                                                           rootView:rootView
+                                                                             inputs:inputs
+                                                                    baseCardElement:acoElem
+                                                                         hostConfig:acoConfig];
+        [carouselPages addObject:carouselPageView];
+    }
     
-    return [[UIView alloc] initWithFrame:CGRectZero];
+    CarouselViewBottomBar *carouselViewBottomBar = [[CarouselViewBottomBar alloc] initWithViews:carouselPages];
+    
+    CarouselView * carouselView = [[CarouselView alloc] initWithCarouselViewBottomBar:carouselViewBottomBar];
+    
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    
+    [viewGroup addArrangedSubview:carouselView withAreaName:areaName];
+    
+    [NSLayoutConstraint activateConstraints:@[
+        [carouselView.leadingAnchor constraintEqualToAnchor:viewGroup.leadingAnchor],
+        [carouselView.trailingAnchor constraintEqualToAnchor:viewGroup.trailingAnchor]
+    ]];
+    
+    carouselView.translatesAutoresizingMaskIntoConstraints = NO;
+    carouselView.clipsToBounds = YES;
+    return carouselView;
 }
 
 @end

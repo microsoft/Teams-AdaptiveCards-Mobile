@@ -14,16 +14,16 @@
 
 @property UIButton* chevronLeftButton;
 @property NSInteger currentViewindex;
-@property NSArray<CarouselPageView *> *views;
+@property NSArray<UIView *> *views;
 
 @end
 
 @implementation CarouselViewBottomBar
 
--(instancetype) initWithViews:(NSArray<CarouselPageView *>*)carouselPageView {
+-(instancetype) initWithViews:(NSArray<UIView *>*)carouselPageView {
     self = [super initWithFrame:CGRectZero];
     self.views = carouselPageView;
-    for(CarouselPageView *view in self.views) {
+    for(UIView *view in self.views) {
         view.hidden = YES;
     }
     self.currentViewindex = 0;

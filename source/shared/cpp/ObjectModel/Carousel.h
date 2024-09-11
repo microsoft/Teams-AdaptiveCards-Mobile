@@ -35,6 +35,9 @@ public:
      std::string getStyle() const;
      void setStyle(const std::string value);
     
+    std::vector<std::shared_ptr<CarouselPage>>& GetItems();
+    const std::vector<std::shared_ptr<CarouselPage>>& GetItems() const;
+    
 private:
     void PopulateKnownPropertiesSet();
 
@@ -56,5 +59,6 @@ public:
     std::shared_ptr<BaseCardElement> Deserialize(ParseContext& context, const Json::Value& root) override;
     std::shared_ptr<BaseCardElement> DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& root);
     std::shared_ptr<BaseCardElement> DeserializeFromString(ParseContext& context, const std::string& jsonString) override;
+    
 };
 } // namespace AdaptiveCards

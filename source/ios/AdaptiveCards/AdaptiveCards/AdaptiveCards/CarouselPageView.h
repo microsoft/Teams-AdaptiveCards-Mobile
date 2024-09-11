@@ -11,14 +11,14 @@
 #import "ACOBaseCardElement.h"
 #import "CarouselPage.h"
 #import "ACRView.h"
+#import "ACRBaseCardElementRenderer.h"
 
-@interface CarouselPageView : UIStackView
+@interface CarouselPageView : NSObject 
 
--(instancetype) initWithViews:(NSArray<UIView *>*)views;
--(instancetype) initWithCarouselPage:(std::shared_ptr<AdaptiveCards::CarouselPage>) carouselPage
-                           viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
-                            rootView:(ACRView *)rootView
-                              inputs:(NSMutableArray *)inputs
-                     baseCardElement:(ACOBaseCardElement *)acoElem
-                          hostConfig:(ACOHostConfig *)acoConfig;;
+-(UIView *) renderWithCarouselPage:(std::shared_ptr<AdaptiveCards::CarouselPage>) carouselPage
+                        viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
+                         rootView:(ACRView *)rootView
+                           inputs:(NSMutableArray *)inputs
+                  baseCardElement:(ACOBaseCardElement *)containerElem
+                        hostConfig:(ACOHostConfig *)acoConfig;
 @end

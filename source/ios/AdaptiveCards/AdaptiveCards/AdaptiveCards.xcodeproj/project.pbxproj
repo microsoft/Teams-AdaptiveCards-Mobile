@@ -77,6 +77,23 @@
 		46CE971B2C7DBECF000508DF /* ARCGridViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 46CE97182C7DBECF000508DF /* ARCGridViewLayout.h */; };
 		46CE971C2C7DBECF000508DF /* ACRFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 46CE97192C7DBECF000508DF /* ACRFlowLayout.h */; };
 		46CE971D2C7DBECF000508DF /* ACRLayoutHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 46CE971A2C7DBECF000508DF /* ACRLayoutHelper.h */; };
+		46DF37AE2C902F97001C254F /* Carousel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37AD2C902F97001C254F /* Carousel.cpp */; };
+		46DF37B02C902FD4001C254F /* CarouselPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 46DF37AF2C902FD4001C254F /* CarouselPage.h */; };
+		46DF37B22C90306E001C254F /* CarouselPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37B12C90306D001C254F /* CarouselPage.cpp */; };
+		46DF37BA2C903377001C254F /* ACRCarouselView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46DF37B32C903377001C254F /* ACRCarouselView.h */; };
+		46DF37BC2C903377001C254F /* ACRCarouselViewRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37B52C903377001C254F /* ACRCarouselViewRenderer.mm */; };
+		46DF37BD2C903377001C254F /* ACRCarouselView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37B62C903377001C254F /* ACRCarouselView.mm */; };
+		46DF37BE2C903377001C254F /* ACRCompoundButtonRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37B72C903377001C254F /* ACRCompoundButtonRenderer.mm */; };
+		46DF37BF2C903377001C254F /* ACRCarouselViewBottomBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37B82C903377001C254F /* ACRCarouselViewBottomBar.mm */; };
+		46DF37C02C903377001C254F /* ACRCarouselViewRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46DF37B92C903377001C254F /* ACRCarouselViewRenderer.h */; };
+		46DF37CA2C9034E6001C254F /* ACRCarouselViewRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37C12C9034E6001C254F /* ACRCarouselViewRenderer.mm */; };
+		46DF37CB2C9034E6001C254F /* ACRCarouselViewBottomBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37C22C9034E6001C254F /* ACRCarouselViewBottomBar.mm */; };
+		46DF37CC2C9034E6001C254F /* ACRCarouselViewRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46DF37C32C9034E6001C254F /* ACRCarouselViewRenderer.h */; };
+		46DF37CD2C9034E6001C254F /* ACRCarouselPageView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37C42C9034E6001C254F /* ACRCarouselPageView.mm */; };
+		46DF37CE2C9034E6001C254F /* ACRCarouselView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37C52C9034E6001C254F /* ACRCarouselView.mm */; };
+		46DF37CF2C9034E6001C254F /* ACRCompoundButtonRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37C62C9034E6001C254F /* ACRCompoundButtonRenderer.mm */; };
+		46DF37D02C9034E6001C254F /* ACRCarouselView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46DF37C72C9034E6001C254F /* ACRCarouselView.h */; };
+		46DF37D22C9034E6001C254F /* CarouselViewBottomBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 46DF37C92C9034E6001C254F /* CarouselViewBottomBar.h */; };
 		46DF58E32C6F12FC00DCBA77 /* ACRFlowLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF58E22C6F12FC00DCBA77 /* ACRFlowLayout.mm */; };
 		46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */; };
 		46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */; };
@@ -611,6 +628,24 @@
 		46CE97182C7DBECF000508DF /* ARCGridViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARCGridViewLayout.h; path = PrivateHeaders/ARCGridViewLayout.h; sourceTree = "<group>"; };
 		46CE97192C7DBECF000508DF /* ACRFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRFlowLayout.h; path = PrivateHeaders/ACRFlowLayout.h; sourceTree = "<group>"; };
 		46CE971A2C7DBECF000508DF /* ACRLayoutHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRLayoutHelper.h; path = PrivateHeaders/ACRLayoutHelper.h; sourceTree = "<group>"; };
+		46DF37AD2C902F97001C254F /* Carousel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Carousel.cpp; path = ../../../../shared/cpp/ObjectModel/Carousel.cpp; sourceTree = "<group>"; };
+		46DF37AF2C902FD4001C254F /* CarouselPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CarouselPage.h; path = ../../../../shared/cpp/ObjectModel/CarouselPage.h; sourceTree = "<group>"; };
+		46DF37B12C90306D001C254F /* CarouselPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CarouselPage.cpp; path = ../../../../shared/cpp/ObjectModel/CarouselPage.cpp; sourceTree = "<group>"; };
+		46DF37B32C903377001C254F /* ACRCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRCarouselView.h; sourceTree = "<group>"; };
+		46DF37B52C903377001C254F /* ACRCarouselViewRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselViewRenderer.mm; sourceTree = "<group>"; };
+		46DF37B62C903377001C254F /* ACRCarouselView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselView.mm; sourceTree = "<group>"; };
+		46DF37B72C903377001C254F /* ACRCompoundButtonRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCompoundButtonRenderer.mm; sourceTree = "<group>"; };
+		46DF37B82C903377001C254F /* ACRCarouselViewBottomBar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselViewBottomBar.mm; sourceTree = "<group>"; };
+		46DF37B92C903377001C254F /* ACRCarouselViewRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRCarouselViewRenderer.h; sourceTree = "<group>"; };
+		46DF37C12C9034E6001C254F /* ACRCarouselViewRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselViewRenderer.mm; sourceTree = "<group>"; };
+		46DF37C22C9034E6001C254F /* ACRCarouselViewBottomBar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselViewBottomBar.mm; sourceTree = "<group>"; };
+		46DF37C32C9034E6001C254F /* ACRCarouselViewRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRCarouselViewRenderer.h; sourceTree = "<group>"; };
+		46DF37C42C9034E6001C254F /* ACRCarouselPageView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselPageView.mm; sourceTree = "<group>"; };
+		46DF37C52C9034E6001C254F /* ACRCarouselView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselView.mm; sourceTree = "<group>"; };
+		46DF37C62C9034E6001C254F /* ACRCompoundButtonRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCompoundButtonRenderer.mm; sourceTree = "<group>"; };
+		46DF37C72C9034E6001C254F /* ACRCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRCarouselView.h; sourceTree = "<group>"; };
+		46DF37C82C9034E6001C254F /* CarouselPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselPageView.h; sourceTree = "<group>"; };
+		46DF37C92C9034E6001C254F /* CarouselViewBottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselViewBottomBar.h; sourceTree = "<group>"; };
 		46DF58E22C6F12FC00DCBA77 /* ACRFlowLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRFlowLayout.mm; sourceTree = "<group>"; };
 		46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
 		46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
@@ -1578,11 +1613,11 @@
 				46CBB6392C22BA33008FC5D5 /* CompoundButton.cpp */,
 				46CBB63A2C22BA33008FC5D5 /* CompoundButton.h */,
 				F44872DB1EE2261F00FCAFAE /* Image.h */,
+				46DF37B12C90306D001C254F /* CarouselPage.cpp */,
 				463C3C062BD8DB1F00A95C4E /* Icon.cpp */,
+				46DF37AF2C902FD4001C254F /* CarouselPage.h */,
 				4615350F2C81D9D100054123 /* Carousel.h */,
-				46DF04382C81DC4E001C254F /* Carousel.cpp */,
-				46DF043C2C81DF88001C254F /* CarouselPage.h */,
-				46DF043D2C857771001C254F /* CarouselPage.cpp */,
+				46DF37AD2C902F97001C254F /* Carousel.cpp */,
 				463C3C0A2BD8DCC000A95C4E /* Icon.h */,
 				46CBB6352C22BA24008FC5D5 /* IconInfo.cpp */,
 				46CBB6362C22BA24008FC5D5 /* IconInfo.h */,
@@ -1789,7 +1824,22 @@
 				F43A940F1F1D60E30001920B /* ACRFactSetRenderer.mm */,
 				F42741061EF8624F00399FBB /* ACRIBaseCardElementRenderer.h */,
 				46CE7DC42C7C554F000508DF /* ACRIFeatureFlagResolver.h */,
+				46DF37B32C903377001C254F /* ACRCarouselView.h */,
+				46DF37C72C9034E6001C254F /* ACRCarouselView.h */,
+				46DF37B62C903377001C254F /* ACRCarouselView.mm */,
+				46DF37C42C9034E6001C254F /* ACRCarouselPageView.mm */,
+				46DF37C52C9034E6001C254F /* ACRCarouselView.mm */,
+				46DF37B82C903377001C254F /* ACRCarouselViewBottomBar.mm */,
+				46DF37B92C903377001C254F /* ACRCarouselViewRenderer.h */,
+				46DF37C22C9034E6001C254F /* ACRCarouselViewBottomBar.mm */,
+				46DF37C32C9034E6001C254F /* ACRCarouselViewRenderer.h */,
+				46DF37B52C903377001C254F /* ACRCarouselViewRenderer.mm */,
+				46DF37B72C903377001C254F /* ACRCompoundButtonRenderer.mm */,
 				6B74403725BA71B60051F2A1 /* ACRImageProperties.h */,
+				46DF37C12C9034E6001C254F /* ACRCarouselViewRenderer.mm */,
+				46DF37C62C9034E6001C254F /* ACRCompoundButtonRenderer.mm */,
+				46DF37C82C9034E6001C254F /* CarouselPageView.h */,
+				46DF37C92C9034E6001C254F /* CarouselViewBottomBar.h */,
 				46CBB63D2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.h */,
 				46CBB63E2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.mm */,
 				6B74403825BA71B60051F2A1 /* ACRImageProperties.mm */,
@@ -1943,7 +1993,6 @@
 				F4F44B98204A160B00A2F24C /* ACRInputRenderer.h in Headers */,
 				F4F44B95204A159A00A2F24C /* ACRImageSetRenderer.h in Headers */,
 				F4F44B90204A14EF00A2F24C /* ACRColumnRenderer.h in Headers */,
-				46DF04372C81DA3F001C254F /* Carousel.h in Headers */,
 				F4F44B92204A153D00A2F24C /* ACRContainerRenderer.h in Headers */,
 				F4F44B91204A152100A2F24C /* ACRColumnSetRenderer.h in Headers */,
 				F43110431F357487001AAE30 /* ACRInputTableView.h in Headers */,
@@ -1987,6 +2036,7 @@
 				F4071C7D1FCCBAEF00AF4FEA /* json.h in Headers */,
 				F4071C7C1FCCBAEF00AF4FEA /* json-forwards.h in Headers */,
 				6B2242A82233442C000ACDA1 /* RichTextBlock.h in Headers */,
+				46DF37D22C9034E6001C254F /* CarouselViewBottomBar.h in Headers */,
 				463C4EDB2BDB666A00A95C4E /* ACRSVGImageView.h in Headers */,
 				6B096D4E225431D0006CC034 /* ACRRichTextBlockRenderer.h in Headers */,
 				300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */,
@@ -2035,9 +2085,11 @@
 				6BFF99ED2600387A0028069F /* ACOTokenExchangeResource.h in Headers */,
 				6BFF99FC26003EBA0028069F /* ACOAuthCardButton.h in Headers */,
 				6BFF99E0260012380028069F /* ACORefresh.h in Headers */,
+				46DF37B02C902FD4001C254F /* CarouselPage.h in Headers */,
 				F974C5372800B8E100C1B3C7 /* CaptionSource.h in Headers */,
 				6B94F2DD24C7997D00E2B310 /* ACRTextInputHandler.h in Headers */,
 				6BD025ED254784670009B019 /* ACOInputResults.h in Headers */,
+				46DF37CC2C9034E6001C254F /* ACRCarouselViewRenderer.h in Headers */,
 				6BFF24162714FA1D00183C59 /* AdaptiveCards.h in Headers */,
 				6BFF23F62714C0F000183C59 /* ACRRendererPrivate.h in Headers */,
 				6BFF23F52714C0F000183C59 /* ACOAdaptiveCardPrivate.h in Headers */,
@@ -2046,6 +2098,7 @@
 				F974C53B2800B8EA00C1B3C7 /* ContentSource.h in Headers */,
 				6BFF23F92714C0F000183C59 /* ACORefreshPrivate.h in Headers */,
 				6BFF240C2714E3D100183C59 /* ACRSeparator.h in Headers */,
+				46DF37D02C9034E6001C254F /* ACRCarouselView.h in Headers */,
 				6BFF24022714DE3600183C59 /* ACRChoiceSetViewDataSourceCompactStyle.h in Headers */,
 				CFF954D92981AF5800F321C3 /* ACRChoiceSetFilteredStyleView.h in Headers */,
 				6BFF240A2714E33000183C59 /* ACRToggleVisibilityTarget.h in Headers */,
@@ -2060,6 +2113,7 @@
 				CFF954D029819AC300F321C3 /* ACOTypeaheadDebouncer.h in Headers */,
 				6BFF24142714EF2200183C59 /* UtiliOS.h in Headers */,
 				6BFF24082714E30B00183C59 /* ACRShowCardTarget.h in Headers */,
+				46DF37C02C903377001C254F /* ACRCarouselViewRenderer.h in Headers */,
 				46CBB63C2C22BA33008FC5D5 /* CompoundButton.h in Headers */,
 				6BFF24102714E46300183C59 /* ACRImageSetUICollectionView.h in Headers */,
 				6BFF23F32714C0F000183C59 /* ACOHostConfigPrivate.h in Headers */,
@@ -2095,6 +2149,7 @@
 				6BDE5C4026FEA7DC003A1DDB /* ACRAggregateTarget.h in Headers */,
 				6BDE5C4426FEA7DC003A1DDB /* ACRBaseTarget.h in Headers */,
 				6B8C766726461E98009548FA /* ACOBundle.h in Headers */,
+				46DF37BA2C903377001C254F /* ACRCarouselView.h in Headers */,
 				4608EE8D2BF5C1B800543095 /* ACRRatingInputRenderer.h in Headers */,
 				6B124C9F26BCB2FE007E9641 /* ACOVisibilityManager.h in Headers */,
 				6B92A7E62677DFAB00CAE3BF /* ACRChoiceSetCompactStyleView.h in Headers */,
@@ -2345,7 +2400,6 @@
 			files = (
 				46058FD82C6086AA00966E76 /* GridArea.cpp in Sources */,
 				7EF8879E21F14CDD00BAFF02 /* BackgroundImage.cpp in Sources */,
-				46DF043B2C81DC4E001C254F /* Carousel.cpp in Sources */,
 				6B5BA8BF2707BBD000719853 /* ACOWarning.mm in Sources */,
 				300ECB63219A12D100371DC5 /* AdaptiveBase64Util.cpp in Sources */,
 				F4F44B8E204A145200A2F24C /* ACOBaseCardElement.mm in Sources */,
@@ -2356,6 +2410,7 @@
 				F44873291EE2261F00FCAFAE /* ToggleInput.cpp in Sources */,
 				6B616C4421CB20D2003E29CE /* ACRActionToggleVisibilityRenderer.mm in Sources */,
 				CA1218C921C4509400152EA8 /* ToggleVisibilityAction.cpp in Sources */,
+				46DF37BF2C903377001C254F /* ACRCarouselViewBottomBar.mm in Sources */,
 				468F1F1A2BFC5BC500C2F561 /* ACRRatingInputDataSource.mm in Sources */,
 				6BFCA143264F54B500195CA7 /* ACRTableView.mm in Sources */,
 				F401A8781F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm in Sources */,
@@ -2390,7 +2445,9 @@
 				F9A9E55126FE9FA000D13410 /* CollectionCoreElement.cpp in Sources */,
 				6BFCA142264F54B500195CA7 /* ACRTableRow.mm in Sources */,
 				6BFCA145264F54B500195CA7 /* ACRTableCellView.mm in Sources */,
+				46DF37CF2C9034E6001C254F /* ACRCompoundButtonRenderer.mm in Sources */,
 				6BFF99FB26003EBA0028069F /* ACOAutoCardButton.mm in Sources */,
+				46DF37CB2C9034E6001C254F /* ACRCarouselViewBottomBar.mm in Sources */,
 				F4F6BA2A204E107F003741B6 /* UnknownElement.cpp in Sources */,
 				CFF954DC2981B2A700F321C3 /* ACRTypeaheadSearchParameters.mm in Sources */,
 				F49683531F6CA24600DF0D3A /* ACRRenderer.mm in Sources */,
@@ -2417,14 +2474,15 @@
 				F448730D1EE2261F00FCAFAE /* FactSet.cpp in Sources */,
 				F44873031EE2261F00FCAFAE /* ColumnSet.cpp in Sources */,
 				F4FE456F1F1985200071D9E5 /* ACRColumnSetView.mm in Sources */,
+				46DF37BD2C903377001C254F /* ACRCarouselView.mm in Sources */,
 				F44872FD1EE2261F00FCAFAE /* ChoiceInput.cpp in Sources */,
 				F42E51761FEC3840008F9642 /* MarkDownParsedResult.cpp in Sources */,
+				46DF37AE2C902F97001C254F /* Carousel.cpp in Sources */,
 				F4D0694A205B27EA003645E4 /* ACRViewController.mm in Sources */,
 				F44872F51EE2261F00FCAFAE /* AdaptiveCardParseException.cpp in Sources */,
 				463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */,
 				F429794D1F32684900E89914 /* ACRDateTextField.mm in Sources */,
 				CFF954E02981B62000F321C3 /* ACRTypeaheadSearchViewController.mm in Sources */,
-				46DF04402C857771001C254F /* CarouselPage.cpp in Sources */,
 				F4F44B8120478C6F00A2F24C /* Util.cpp in Sources */,
 				6BAC0F2E228E2D7300E42DEB /* RichTextElementProperties.cpp in Sources */,
 				6BFF99CC25FFF53E0028069F /* Authentication.cpp in Sources */,
@@ -2469,12 +2527,16 @@
 				6BF430782190DDCA0068E432 /* ACRQuickReplyView.mm in Sources */,
 				F44873211EE2261F00FCAFAE /* SubmitAction.cpp in Sources */,
 				F44872FF1EE2261F00FCAFAE /* ChoiceSetInput.cpp in Sources */,
+				46DF37CD2C9034E6001C254F /* ACRCarouselPageView.mm in Sources */,
+				46DF37B22C90306E001C254F /* CarouselPage.cpp in Sources */,
+				46DF37CA2C9034E6001C254F /* ACRCarouselViewRenderer.mm in Sources */,
 				6BB211FC20FF9FEA009EA1BA /* ACRActionSetRenderer.mm in Sources */,
 				C8DEDF39220CDEB00001AAED /* ActionSet.cpp in Sources */,
 				6BFF99E1260012380028069F /* ACORefresh.mm in Sources */,
 				F44873051EE2261F00FCAFAE /* Container.cpp in Sources */,
 				6BC30F7921E6E49E00B9FAAE /* ACRCustomActionRenderer.mm in Sources */,
 				6B22427A220BAC8B000ACDA1 /* pch.cpp in Sources */,
+				46DF37BE2C903377001C254F /* ACRCompoundButtonRenderer.mm in Sources */,
 				0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */,
 				F44873181EE2261F00FCAFAE /* NumberInput.cpp in Sources */,
 				F4960C052051FE8200780566 /* ACRView.mm in Sources */,
@@ -2514,6 +2576,7 @@
 				6B2242A32233439E000ACDA1 /* TextElementProperties.cpp in Sources */,
 				F42741251EFB274C00399FBB /* ACRColumnRenderer.mm in Sources */,
 				F4F255701F98247600A80D39 /* ACOBaseActionElement.mm in Sources */,
+				46DF37BC2C903377001C254F /* ACRCarouselViewRenderer.mm in Sources */,
 				6BFF99C525FFF53E0028069F /* AuthCardButton.cpp in Sources */,
 				4608EE8E2BF5C1B800543095 /* ACRRatingInputRenderer.mm in Sources */,
 				6BF43080219129600068E432 /* ACRQuickReplyMultilineView.mm in Sources */,
@@ -2536,6 +2599,7 @@
 				F4F6BA32204F18D8003741B6 /* AdaptiveCardParseWarning.cpp in Sources */,
 				F4C1F5E41F2A62190018CB78 /* ACRActionOpenURLRenderer.mm in Sources */,
 				F4071C7F1FCCBAEF00AF4FEA /* ElementParserRegistration.cpp in Sources */,
+				46DF37CE2C9034E6001C254F /* ACRCarouselView.mm in Sources */,
 				F4C1F5EC1F2ABD6B0018CB78 /* ACRBaseActionElementRenderer.mm in Sources */,
 				F4D402141F7DAC2C00D0356B /* ACOHostConfigParseResult.mm in Sources */,
 				6BE8DFD4249C4C1B005EFE66 /* ACRToggleInputView.mm in Sources */,

@@ -27,7 +27,15 @@ Json::Value Carousel::SerializeToJsonValue() const
     return root;
 }
 
+const std::vector<std::shared_ptr<CarouselPage>>& Carousel::GetItems() const
+{
+    return m_pages;
+}
 
+std::vector<std::shared_ptr<CarouselPage>>& Carousel::GetItems()
+{
+    return m_pages;
+}
 
 //std::shared_ptr<BaseActionElement> Carousel::GetSelectAction() const
 //{

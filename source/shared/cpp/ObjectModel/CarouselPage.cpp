@@ -9,7 +9,7 @@
 
 using namespace AdaptiveCards;
 
-CarouselPage::CarouselPage()
+CarouselPage::CarouselPage() : StyledCollectionElement(CardElementType::CarouselPage)
 {
     PopulateKnownPropertiesSet();
 }
@@ -21,19 +21,24 @@ Json::Value CarouselPage::SerializeToJsonValue() const
     return root;
 }
 
-std::vector<std::shared_ptr<BaseCardElement>>& CarouselPage::getItems()
+const std::vector<std::shared_ptr<BaseCardElement>>& CarouselPage::GetItems() const
 {
     return m_items;
 }
 
-void CarouselPage::setItems(std::vector<std::shared_ptr<BaseCardElement>> items)
+std::vector<std::shared_ptr<BaseCardElement>>& CarouselPage::GetItems()
 {
-    m_items = items;
+    return m_items;
 }
 
-std::shared_ptr<CarouselPage> CarouselPage::DeserializeFromString(ParseContext& context, const std::string& jsonString)
+const std::vector<std::shared_ptr<Layout>>& CarouselPage::GetLayouts() const
 {
-    return CarouselPage::Deserialize(context, ParseUtil::GetJsonValueFromString(jsonString));
+    return m_layouts;
+}
+
+void CarouselPage::SetLayouts(const std::vector<std::shared_ptr<Layout>>& value)
+{
+    m_layouts = value;
 }
 
 std::shared_ptr<CarouselPage> CarouselPage::Deserialize(ParseContext& context, const Json::Value& json)
@@ -45,13 +50,19 @@ std::shared_ptr<CarouselPage> CarouselPage::Deserialize(ParseContext& context, c
 std::shared_ptr<CarouselPage> CarouselPage::DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& json)
 {
     std::shared_ptr<CarouselPage> carouselPage = StyledCollectionElement::Deserialize<CarouselPage>(context, json);
-    auto cardElements = ParseUtil::GetElementCollection<BaseCardElement>(true,
-                                                                         context,
-                                                                         json,
-                                                                         AdaptiveCardSchemaKey::Items,
-                                                                         false);
-    carouselPage->setItems(cardElements);
     return carouselPage;
+}
+
+void CarouselPage::DeserializeChildren(ParseContext& context, const Json::Value& value)
+{
+    // Parse items
+    auto cardElements = ParseUtil::GetElementCollection<BaseCardElement>(
+        true, // isTopToBottomContainer
+        context,
+        value,
+        AdaptiveCardSchemaKey::Items,
+        false); // isRequired
+    m_items = std::move(cardElements);
 }
 
 void CarouselPage::PopulateKnownPropertiesSet()

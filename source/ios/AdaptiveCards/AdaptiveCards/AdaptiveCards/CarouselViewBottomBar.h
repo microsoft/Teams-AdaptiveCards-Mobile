@@ -11,9 +11,9 @@
 
 @interface CarouselViewBottomBar : UIView
 
-@property (readonly) NSArray<CarouselPageView *> *views;
+@property (readonly) NSArray<UIView *> *views;
 
--(instancetype) initWithViews:(NSArray<CarouselPageView *>*)carouselPageView;
+-(instancetype) initWithViews:(NSArray<UIView *>*)carouselPageView;
 -(void) showPreviousView;
 -(void) showNextView;
 @end

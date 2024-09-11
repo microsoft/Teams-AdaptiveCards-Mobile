@@ -27,7 +27,7 @@
 
 -(void)layoutSubviews {
     
-    for(CarouselPageView *view in self.carouselViewBottomBar.views) {
+    for(UIView *view in self.carouselViewBottomBar.views) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:view];
         [NSLayoutConstraint activateConstraints:@[
