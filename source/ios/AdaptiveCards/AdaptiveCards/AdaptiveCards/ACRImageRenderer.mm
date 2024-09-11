@@ -67,7 +67,7 @@
         view.image = img;
     }
 
-    ACRContentHoldingUIView *wrappingView = [[ACRContentHoldingUIView alloc] initWithImageProperties:imageProps imageView:view viewGroup:(ACRContentStackView *)viewGroup];
+    ACRContentHoldingUIView *wrappingView = [[ACRContentHoldingUIView alloc] initWithImageProperties:imageProps imageView:view viewGroup:viewGroup];
 
     if (!view || !wrappingView) {
         [viewGroup addSubview:wrappingView];

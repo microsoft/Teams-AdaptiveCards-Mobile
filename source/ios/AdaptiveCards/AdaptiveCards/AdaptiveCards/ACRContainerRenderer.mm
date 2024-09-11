@@ -49,6 +49,7 @@
     std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:containerElem->GetLayouts() andHostConfig:acoConfig];
     ACRFlowLayout *flowContainer;
     ARCGridViewLayout *gridLayout;
+    BOOL useStackLayout = NO;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
@@ -91,6 +92,10 @@
                               andHostConfig:acoConfig];
         }
     }
+    else
+    {
+        useStackLayout = YES;
+    }
 
     ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()
                                                         parentStyle:[viewGroup style]
@@ -102,17 +107,9 @@
     {
         [container addArrangedSubview:flowContainer];
     }
-    else if (gridLayout != nil) 
+    else if (gridLayout != nil)
     {
         [container addArrangedSubview:gridLayout];
-    } 
-    else
-    {
-        [ACRRenderer render:container
-                   rootView:rootView
-                     inputs:inputs
-              withCardElems:containerElem->GetItems()
-              andHostConfig:acoConfig];
     }
     
     NSString *areaName = stringForCString(elem->GetAreaGridName());
@@ -125,6 +122,15 @@
     renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
 
     container.frame = viewGroup.frame;
+    
+    if (useStackLayout)
+    {
+        [ACRRenderer render:container
+                   rootView:rootView
+                     inputs:inputs
+              withCardElems:containerElem->GetItems()
+              andHostConfig:acoConfig];
+    }
 
     [container setClipsToBounds:NO];
 
