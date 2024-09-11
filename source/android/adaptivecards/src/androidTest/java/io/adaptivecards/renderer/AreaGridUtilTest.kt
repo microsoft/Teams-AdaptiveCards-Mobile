@@ -60,13 +60,13 @@ class AreaGridUtilTest : TestCase() {
     @Test
     fun test_getColumnCount_should_return_max_row(){
         val areaGridLayout = mock_AreaGridLayout(mock_ColumnVector(), mock_GridAreaVector())
-        assertEquals(3, areaGridLayout.getMaxRowsCountFromAreas())
+        assertEquals(2, areaGridLayout.getMaxRowsCountFromAreas())
     }
 
     @Test
     fun test_getColumnCount_with_empty_column_should_return_max_row(){
         val areaGridLayout = mock_AreaGridLayout(StringVector(), mock_GridAreaVector())
-        assertEquals(3, areaGridLayout.getMaxRowsCountFromAreas())
+        assertEquals(2, areaGridLayout.getMaxRowsCountFromAreas())
     }
 
     @Test
@@ -79,15 +79,15 @@ class AreaGridUtilTest : TestCase() {
     @Test
     fun test_isAuto(){
         assertTrue("auto".isAuto())
-        assertFalse("35".isFixedWidth())
-        assertFalse("100px".isFixedWidth())
+        assertFalse("35".isAuto())
+        assertFalse("100px".isAuto())
     }
 
     @Test
     fun test_getFixedWidth(){
-        assertEquals(100, "100px".getFixedWidth())
-        assertEquals(0, "35".getFixedWidth())
-        assertEquals(0, "auto".getFixedWidth())
+        assertEquals(100f, "100px".getFixedWidth())
+        assertEquals(0f, "35".getFixedWidth())
+        assertEquals(0f, "auto".getFixedWidth())
     }
 
     fun mock_AreaGridLayout(columnVector: StringVector, areaVector: GridAreaVector): AreaGridLayout{
@@ -118,7 +118,7 @@ class AreaGridUtilTest : TestCase() {
     fun mock_gridArea(row: Int, column: Int, name: String): GridArea {
         return GridArea().apply {
             SetColumn(column+1)
-            SetColumn(row+1)
+            SetRow(row+1)
             SetName(name)
         }
     }
