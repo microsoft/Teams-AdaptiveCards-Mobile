@@ -29,20 +29,16 @@ public:
     Json::Value SerializeToJsonValue() const override;
     void DeserializeChildren(ParseContext& context, const Json::Value& value) override;
     
-     std::string getPageAnimation() const;
-     void setPageAnimation(const std::string value);
-
-     std::string getStyle() const;
-     void setStyle(const std::string value);
+     PageAnimation getPageAnimation();
+     void setPageAnimation(const PageAnimation value);
     
     std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
     const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;
-    
+    void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo) override;
 private:
     void PopulateKnownPropertiesSet();
 
-    std::string m_pageAnimation;
-    std::string m_style;
+    PageAnimation m_pageAnimation;
     std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_pages;
 };
 

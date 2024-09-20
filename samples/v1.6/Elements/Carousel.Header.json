@@ -30,7 +30,8 @@
 								{
 									"type": "Image",
 									"url": "https://picsum.photos/id/100/300/300",
-									"altText": "beach"
+									"altText": "beach",
+                                    "horizontalAlignment": "Center"
 								}
 							],
 							"rtl": false
@@ -42,7 +43,8 @@
 								{
 									"type": "Image",
 									"url": "https://picsum.photos/id/110/300/300",
-									"altText": "sunset"
+									"altText": "sunset",
+                                    "horizontalAlignment": "Center"
 								}
 							],
 							"rtl": false
@@ -54,7 +56,8 @@
 								{
 									"type": "Image",
 									"url": "https://picsum.photos/id/120/300/300",
-									"altText": "starlit night sky"
+									"altText": "starlit night sky",
+                                    "horizontalAlignment": "Center"
 								}
 							],
 							"rtl": false

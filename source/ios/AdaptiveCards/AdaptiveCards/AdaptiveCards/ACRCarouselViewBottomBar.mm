@@ -7,6 +7,7 @@
 //
 
 #import "CarouselViewBottomBar.h"
+#import "ACRPageIndicator.h"
 
 @interface CarouselViewBottomBar ()
 
@@ -15,6 +16,7 @@
 @property UIButton* chevronLeftButton;
 @property NSInteger currentViewindex;
 @property NSArray<UIView *> *views;
+@property PageControl *pageControl;
 
 @end
 
@@ -28,6 +30,17 @@
     }
     self.currentViewindex = 0;
     self.views[0].hidden = NO;
+    PageControlConfig *pageControlConfig = [[PageControlConfig alloc] initWithNumberOfPages:self.views.count
+                                                                               displayPages:@5
+                                                                         hidesForSinglePage:@0
+                                                                   accessibilityValueFormat:@""];
+    
+    self.pageControl = [[PageControl alloc] initWithFrame:CGRectZero];
+    [self.pageControl setConfig:pageControlConfig];
+    [self addSubview:self.pageControl];
+    
+    self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
+    
     return self;
 }
 
@@ -35,103 +48,23 @@
 
     [super layoutSubviews];
     
-    [self configureChevronLeftButton];
-    [self configureChevronRightButton];
-}
-
--(void) configureChevronRightButton {
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeSystem];
-
-    // Set the chevron image using SF Symbols (iOS 13+)
-    UIImage *chevronImage = [UIImage systemImageNamed:@"chevron.right" ];
-    [rightButton setImage:chevronImage forState:UIControlStateNormal];
-    
-    UIView *containerView = [[UIStackView alloc] initWithFrame:CGRectZero];
-    containerView.translatesAutoresizingMaskIntoConstraints = false;
-    [self addSubview:containerView];
-    
-    // set a tint color for the chevron
-    rightButton.tintColor = [UIColor colorWithRed:66/255 green:66/255 blue:66/255 alpha:1.0];
-    
-
-    // Add the button to your view
-    [self addSubview:rightButton];
-    
-    rightButton.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
-        [rightButton.trailingAnchor constraintEqualToAnchor:self.centerXAnchor constant:16],
-        [rightButton.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
-        [rightButton.widthAnchor constraintEqualToConstant:6.5],
-        [rightButton.heightAnchor constraintEqualToConstant:12]
+        [self.centerXAnchor constraintEqualToAnchor:self.pageControl.centerXAnchor],
+        [self.topAnchor constraintEqualToAnchor:self.pageControl.topAnchor],
+        [self.bottomAnchor constraintEqualToAnchor:self.pageControl.bottomAnchor]
     ]];
-    
-    [NSLayoutConstraint activateConstraints:@[
-        [containerView.trailingAnchor constraintEqualToAnchor:rightButton.trailingAnchor constant:5],
-        [containerView.bottomAnchor constraintEqualToAnchor:rightButton.bottomAnchor constant:5],
-        [containerView.topAnchor constraintEqualToAnchor:rightButton.topAnchor constant:-5],
-        [containerView.leadingAnchor constraintEqualToAnchor:rightButton.leadingAnchor constant:-5]
-        
-    ]];
-    
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                 action:@selector(chevronRightButtonTapped:)];
-    [containerView addGestureRecognizer:tapGesture];
-}
-
--(void) configureChevronLeftButton {
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeSystem];
-
-    // Set the chevron image using SF Symbols (iOS 13+)
-    UIImage *chevronImage = [UIImage systemImageNamed:@"chevron.left"];
-    [leftButton setImage:chevronImage forState:UIControlStateNormal];
-    
-    UIView *containerView = [[UIView alloc] initWithFrame:CGRectZero];
-    containerView.translatesAutoresizingMaskIntoConstraints = false;
-    [self addSubview:containerView];
-    
-    // set a tint color for the chevron
-    leftButton.tintColor = [UIColor colorWithRed:66/255 green:66/255 blue:66/255 alpha:1.0];
-    
-
-    // Add the button to your view
-    [self addSubview:leftButton];
-    
-    leftButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:@[
-        [leftButton.trailingAnchor constraintEqualToAnchor:self.centerXAnchor constant:-16],
-        [leftButton.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
-        [leftButton.widthAnchor constraintEqualToConstant:6.5],
-        [leftButton.heightAnchor constraintEqualToConstant:12]
-    ]];
-    
-    [NSLayoutConstraint activateConstraints:@[
-        [containerView.trailingAnchor constraintEqualToAnchor:leftButton.trailingAnchor constant:5],
-        [containerView.bottomAnchor constraintEqualToAnchor:leftButton.bottomAnchor constant:5],
-        [containerView.topAnchor constraintEqualToAnchor:leftButton.topAnchor constant:-5],
-        [containerView.leadingAnchor constraintEqualToAnchor:leftButton.leadingAnchor constant:-5]
-    ]];
-    
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                 action:@selector(chevronLeftButtonTapped:)];
-    [containerView addGestureRecognizer:tapGesture];
-}
-
-- (void)chevronLeftButtonTapped:(UIButton *)sender {
-    [self showPreviousView];
-}
-
-- (void) chevronRightButtonTapped:(UITapGestureRecognizer *)sender {
-    [self showNextView];
 }
 
 -(void) showPreviousView {
     NSInteger newCurrentViewindex = ((self.currentViewindex -1) + self.views.count) % self.views.count;
+    [self.pageControl setCurrentPage:newCurrentViewindex];
     [self slideAnimationForPreviousView:self.views[self.currentViewindex] showView:self.views[newCurrentViewindex]];
     self.currentViewindex = newCurrentViewindex;
 }
 
 -(void) showNextView {
     NSInteger newCurrentViewindex = (self.currentViewindex +1 ) % self.views.count;
+    [self.pageControl setCurrentPage:newCurrentViewindex];
     [self slideAnimationForNextView:self.views[self.currentViewindex] showView:self.views[newCurrentViewindex]];
     self.currentViewindex = newCurrentViewindex;
 }

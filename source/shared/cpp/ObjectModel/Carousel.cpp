@@ -37,10 +37,15 @@ std::vector<std::shared_ptr<BaseCardElement>>& Carousel::GetItems()
     return m_pages;
 }
 
-//std::shared_ptr<BaseActionElement> Carousel::GetSelectAction() const
-//{
-//    return m_selectAction;
-//}
+PageAnimation Carousel::getPageAnimation()
+{
+    return m_pageAnimation;
+}
+
+void Carousel::setPageAnimation(PageAnimation value)
+{
+    m_pageAnimation = value;
+}
 
 std::shared_ptr<BaseCardElement> CarouselParser::DeserializeFromString(ParseContext& context, const std::string& jsonString)
 {
@@ -56,7 +61,7 @@ std::shared_ptr<BaseCardElement> CarouselParser::Deserialize(ParseContext& conte
 std::shared_ptr<BaseCardElement> CarouselParser::DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& json)
 {
     std::shared_ptr<Carousel> carousel = StyledCollectionElement::Deserialize<Carousel>(context, json);
-    
+    carousel->setPageAnimation(ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::PageAnimation,PageAnimation::Slide,PageAnimationFromString));
     return carousel;
 }
 
@@ -87,3 +92,11 @@ void Carousel::PopulateKnownPropertiesSet()
 {
     
 }
+
+void Carousel::GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo)
+{
+    auto items = GetItems();
+    StyledCollectionElement::GetResourceInformation<BaseCardElement>(resourceInfo, items);
+    return;
+}
+

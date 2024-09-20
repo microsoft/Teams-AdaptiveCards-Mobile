@@ -314,6 +314,7 @@
 		6BFF99FC26003EBA0028069F /* ACOAuthCardButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BFF99F926003EBA0028069F /* ACOAuthCardButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BFF9A0326004C580028069F /* ACOAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BFF9A0026004C580028069F /* ACOAuthentication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BFF9A0526004C580028069F /* ACOAuthentication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BFF9A0226004C580028069F /* ACOAuthentication.mm */; };
+		771021A52C92D6C300BD2F16 /* ACRPageIndicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 771021A42C92D6C300BD2F16 /* ACRPageIndicator.mm */; };
 		7ECFB640219A3940004727A9 /* ParseContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFB63E219A3940004727A9 /* ParseContext.cpp */; };
 		7ECFB641219A3940004727A9 /* ParseContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ECFB63F219A3940004727A9 /* ParseContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7EDC0F67213878E800077A13 /* SemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EDC0F65213878E800077A13 /* SemanticVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -874,6 +875,8 @@
 		6BFF9A0226004C580028069F /* ACOAuthentication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOAuthentication.mm; sourceTree = "<group>"; };
 		709889F4E83C1064F49E7DDC /* Pods-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests/Pods-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		75D7DB0E51EC8A155E83E2D0 /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		771021A42C92D6C300BD2F16 /* ACRPageIndicator.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACRPageIndicator.mm; sourceTree = "<group>"; };
+		771021A62C92D87600BD2F16 /* ACRPageIndicator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRPageIndicator.h; sourceTree = "<group>"; };
 		7749A56FE5104914C2BA9D02 /* Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		777DD1173C03E3F4EC695141 /* Pods-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		7DC49373563AE22454C070D6 /* Pods-Fluent-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCards/Pods-Fluent-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1616,6 +1619,8 @@
 				46DF37B12C90306D001C254F /* CarouselPage.cpp */,
 				463C3C062BD8DB1F00A95C4E /* Icon.cpp */,
 				46DF37AF2C902FD4001C254F /* CarouselPage.h */,
+				771021A42C92D6C300BD2F16 /* ACRPageIndicator.mm */,
+				771021A62C92D87600BD2F16 /* ACRPageIndicator.h */,
 				4615350F2C81D9D100054123 /* Carousel.h */,
 				46DF37AD2C902F97001C254F /* Carousel.cpp */,
 				463C3C0A2BD8DCC000A95C4E /* Icon.h */,
@@ -2513,6 +2518,7 @@
 				F429793F1F3155EF00E89914 /* ACRTextField.mm in Sources */,
 				F43A94191F20502D0001920B /* ACRInputToggleRenderer.mm in Sources */,
 				6B124C9B26B9F7AD007E9641 /* ACOVisibilityManager.mm in Sources */,
+				771021A52C92D6C300BD2F16 /* ACRPageIndicator.mm in Sources */,
 				F44873271EE2261F00FCAFAE /* TimeInput.cpp in Sources */,
 				6BFCA1492653270200195CA7 /* ACRTableCellRenderer.mm in Sources */,
 				46DF58E32C6F12FC00DCBA77 /* ACRFlowLayout.mm in Sources */,

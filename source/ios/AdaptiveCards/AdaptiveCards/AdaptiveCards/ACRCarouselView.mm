@@ -8,6 +8,7 @@
 #import "ACRCarouselView.h"
 #include "CarouselViewBottomBar.h"
 #import "CarouselPageView.h"
+#import "ACRPageIndicator.h"
 
 @interface CarouselView ()
 
@@ -27,17 +28,31 @@
 
 -(void)layoutSubviews {
     
+    UIView * pageView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self addSubview:pageView];
+    pageView.translatesAutoresizingMaskIntoConstraints = NO;
     for(UIView *view in self.carouselViewBottomBar.views) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self addSubview:view];
+        [pageView addSubview:view];
         [NSLayoutConstraint activateConstraints:@[
-            [view.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-            [view.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-            [view.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
-            [view.topAnchor constraintEqualToAnchor:self.topAnchor],
-            [self.heightAnchor constraintGreaterThanOrEqualToAnchor:view.heightAnchor]
+            [pageView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+            [pageView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+            [pageView.topAnchor constraintEqualToAnchor:self.topAnchor],
+            [view.leadingAnchor constraintEqualToAnchor:pageView.leadingAnchor],
+            [view.trailingAnchor constraintEqualToAnchor:pageView.trailingAnchor],
+            [view.topAnchor constraintEqualToAnchor:pageView.topAnchor],
+            [pageView.heightAnchor constraintGreaterThanOrEqualToAnchor:view.heightAnchor]
         ]];
     }
+    self.carouselViewBottomBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.carouselViewBottomBar];
+    [NSLayoutConstraint activateConstraints:@[
+        [self.carouselViewBottomBar.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [self.carouselViewBottomBar.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        [self.carouselViewBottomBar.topAnchor constraintEqualToAnchor:pageView.bottomAnchor constant:20],
+        [self.bottomAnchor constraintEqualToAnchor:self.carouselViewBottomBar.bottomAnchor]
+    ]];
+    
     [self constructSwipeActions];
 }
 

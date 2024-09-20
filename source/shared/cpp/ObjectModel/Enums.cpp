@@ -248,6 +248,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::CompoundButton,"compoundButton"},
             {AdaptiveCardSchemaKey::CarouselPage,"CarouselPage"},
             {AdaptiveCardSchemaKey::Pages,"pages"},
+            {AdaptiveCardSchemaKey::PageAnimation,"pageAnimation"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
@@ -470,6 +471,11 @@ namespace AdaptiveCards
             {VerticalContentAlignment::Top, "Top"},
             {VerticalContentAlignment::Center, "Center"},
             {VerticalContentAlignment::Bottom, "Bottom"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(PageAnimation, {
+            {PageAnimation::Slide,"Slide"},
+            {PageAnimation::CrossFade,"CrossFade"},
+            {PageAnimation::None,"None"}});
 
     DEFINE_ADAPTIVECARD_ENUM(InlineElementType, {
             {InlineElementType::TextRun, "TextRun"}});

@@ -250,7 +250,8 @@ enum class AdaptiveCardSchemaKey
     Wrap,
     CompoundButton,
     CarouselPage,
-    Pages
+    Pages,
+    PageAnimation
 };
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 
@@ -635,13 +636,24 @@ enum class VerticalContentAlignment
     Center,
     Bottom
 };
+
 DECLARE_ADAPTIVECARD_ENUM(VerticalContentAlignment);
+
+enum class PageAnimation
+{
+    Slide =0,
+    CrossFade,
+    None
+};
+
+DECLARE_ADAPTIVECARD_ENUM(PageAnimation);
 
 enum class HeightType
 {
     Auto = 0,
     Stretch
 };
+
 DECLARE_ADAPTIVECARD_ENUM(HeightType);
 
 enum class RatingSize
