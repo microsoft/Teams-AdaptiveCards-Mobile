@@ -154,7 +154,7 @@ using namespace AdaptiveCards;
                     [self setImageViewHeightConstraint];
                 }
             }
-
+           
             if (bUpdate) 
             {
                 NSObject *container = (NSObject *)_viewGroup;

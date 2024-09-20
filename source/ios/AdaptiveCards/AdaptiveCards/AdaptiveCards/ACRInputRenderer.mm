@@ -192,6 +192,7 @@
         NSString *key = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
         UIImage *img = imageViewMap[key];
         button.iconPlacement = ACRNoTitle;
+        button.accessibilityLabel = title;
 
         if (img) {
             UIImageView *iconView = [[ACRUIImageView alloc] init];

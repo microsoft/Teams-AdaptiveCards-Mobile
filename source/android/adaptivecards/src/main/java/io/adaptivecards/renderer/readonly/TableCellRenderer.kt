@@ -22,6 +22,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.TagContent
 import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
+import io.adaptivecards.renderer.layout.AreaGridLayoutView
 import io.adaptivecards.renderer.registration.CardRendererRegistration
 import android.widget.TableRow as TableRowLayout
 
@@ -153,6 +154,12 @@ object TableCellRenderer : BaseCardElementRenderer() {
             }
             Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply)
             layoutContainer = flexboxLayout
+        } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
+            val areaGridLayout = AreaGridLayoutView(context).apply {
+                tag = TagContent(tableCell)
+                layoutParams = TableRowLayout.LayoutParams(0, TableLayout.LayoutParams.MATCH_PARENT)
+            }
+            layoutContainer = areaGridLayout
         } else {
             val cellLayout = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL

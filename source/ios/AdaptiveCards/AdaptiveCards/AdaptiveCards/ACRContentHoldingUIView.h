@@ -21,7 +21,7 @@ const extern NSInteger eACRUIImageTag;
 @property BOOL isMediaType;
 @property (weak, readonly) UIView *contentView;
 
-- (instancetype)initWithImageProperties:(ACRImageProperties *)imageProperties imageView:(UIImageView *)imageView viewGroup:(ACRContentStackView *)viewGroup;
+- (instancetype)initWithImageProperties:(ACRImageProperties *)imageProperties imageView:(UIImageView *)imageView viewGroup:(id<ACRIContentHoldingView>)viewGroup;
 - (void)update:(ACRImageProperties *)imageProperties;
 
 @end
