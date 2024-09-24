@@ -166,6 +166,16 @@
     return self;
 }
 
+- (void)addAccessibleItems:(NSArray *)items
+{
+    if (items != nil)
+    {
+        NSMutableArray *accessibilityElements = [[NSMutableArray alloc] initWithArray:items];
+        [accessibilityElements insertObject:self.inputAccessibilityItem atIndex:0];
+        self.accessibilityElements = accessibilityElements;
+    }
+}
+
 - (void)setRtl:(ACRRtl)rtl
 {
     if (rtl == ACRRtlNone) {
