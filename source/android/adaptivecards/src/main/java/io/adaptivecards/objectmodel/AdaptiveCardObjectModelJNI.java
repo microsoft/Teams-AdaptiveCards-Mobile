@@ -511,6 +511,9 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getVerticalContentAlignmentEnum();
   public final static native String VerticalContentAlignmentToString(int jarg1);
   public final static native int VerticalContentAlignmentFromString(String jarg1);
+  public final static native long getPageAnimationEnum();
+  public final static native String PageAnimationToString(int jarg1);
+  public final static native int PageAnimationFromString(String jarg1);
   public final static native long getHeightTypeEnum();
   public final static native String HeightTypeToString(int jarg1);
   public final static native int HeightTypeFromString(String jarg1);
@@ -1660,6 +1663,13 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long CompoundButtonConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, CompoundButtonConfig jarg2_);
   public final static native long new_CompoundButtonConfig();
   public final static native void delete_CompoundButtonConfig(long jarg1);
+  public final static native void PageControlConfig_selectedTintColor_set(long jarg1, PageControlConfig jarg1_, String jarg2);
+  public final static native String PageControlConfig_selectedTintColor_get(long jarg1, PageControlConfig jarg1_);
+  public final static native void PageControlConfig_unselectedTintColor_set(long jarg1, PageControlConfig jarg1_, String jarg2);
+  public final static native String PageControlConfig_unselectedTintColor_get(long jarg1, PageControlConfig jarg1_);
+  public final static native long PageControlConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, PageControlConfig jarg2_);
+  public final static native long new_PageControlConfig();
+  public final static native void delete_PageControlConfig(long jarg1);
   public final static native long new_HostConfig();
   public final static native long HostConfig_Deserialize(long jarg1, JsonValue jarg1_);
   public final static native long HostConfig_DeserializeFromString(String jarg1);
@@ -1721,6 +1731,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void HostConfig_SetTable(long jarg1, HostConfig jarg1_, long jarg2, TableConfig jarg2_);
   public final static native long HostConfig_GetCompoundButtonConfig(long jarg1, HostConfig jarg1_);
   public final static native void HostConfig_SetCompoundButtonConfig(long jarg1, HostConfig jarg1_, long jarg2, CompoundButtonConfig jarg2_);
+  public final static native long HostConfig_GetPageControlConfig(long jarg1, HostConfig jarg1_);
+  public final static native void HostConfig_SetPageControlConfig(long jarg1, HostConfig jarg1_, long jarg2, PageControlConfig jarg2_);
   public final static native void delete_HostConfig(long jarg1);
   public final static native long new_MarkDownParser(String jarg1);
   public final static native String MarkDownParser_TransformToHtml(long jarg1, MarkDownParser jarg1_);
