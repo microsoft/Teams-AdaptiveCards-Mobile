@@ -21,7 +21,7 @@
     if (self) {
         self.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
         if (@available(iOS 13.0, *)) {
-            _placeholderColor = [UIColor placeholderTextColor];
+            _placeholderColor = [UIColor colorWithRed:0.4313 green:0.4313 blue:0.4313 alpha:1.0];
         } else {
             // Fallback on earlier versions
             _placeholderColor = [UIColor lightGrayColor];
