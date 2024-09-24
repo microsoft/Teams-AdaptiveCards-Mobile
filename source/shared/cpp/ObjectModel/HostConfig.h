@@ -420,7 +420,7 @@ struct CompoundButtonConfig
 
 struct PageControlConfig
 {
-    std::string selectedTintColor = "";
+    std::string selectedTintColor = "#5B5FC7";
     std::string unselectedTintColor = "#6E6E6E";
     static PageControlConfig Deserialize(const Json::Value& json, const PageControlConfig& defaultValue);
 };
