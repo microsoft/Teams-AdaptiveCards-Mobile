@@ -26,8 +26,6 @@
 #import "UtiliOS.h"
 #import "ACRCarouselViewRenderer.h"
 #import "Carousel.h"
-#import "ACRCarouselView.h"
-#import "CarouselViewBottomBar.h"
 #import "ACRRenderer.h"
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
@@ -36,12 +34,12 @@
 #import "ACRLayoutHelper.h"
 #import "CarouselPage.h"
 #import "ACRRendererPrivate.h"
-#import "ACRPageIndicator.h"
+#import "ACRPageControl.h"
 
 @interface ACRCarouselViewRenderer()
 
 @property NSInteger carouselPageViewIndex;
-@property PageControl *pageControl;
+@property ACRPageControl *pageControl;
 @property NSMutableArray<UIView *> *carouselPageViewList;
 @property std::shared_ptr<Carousel> carousel;
 @end
@@ -75,13 +73,17 @@
     
     UIView * carouselPagesContainerView = [[UIView alloc] init];
     carouselPagesContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+    
     for(auto carouselPage: carousel->GetItems()) {
-        UIView * carouselPageView = [self getCarouselPageView:carouselPage
-                                                    viewGroup:viewGroup
-                                                     rootView:rootView
-                                                       inputs:inputs
-                                              baseCardElement:acoElem
-                                                   hostConfig:acoConfig];
+        
+        ACOBaseCardElement *acoElement = [[ACOBaseCardElement alloc] initWithBaseCardElement:carouselPage];
+        
+        UIView * carouselPageView = [self renderCarouselPage:viewGroup
+                                                    rootView:rootView
+                                                      inputs:inputs
+                                             baseCardElement:acoElement
+                                                  hostConfig:acoConfig];
+        
         [self.carouselPageViewList addObject:carouselPageView];
     }
     
@@ -110,16 +112,24 @@
         self.carouselPageViewIndex = 0;
     }
     
-    PageControlConfig *pageControlConfig = [[PageControlConfig alloc] initWithNumberOfPages:self.carouselPageViewList.count
-                                                                               displayPages:@5
-                                                                         hidesForSinglePage:@0
-                                                                   accessibilityValueFormat:@""];
+    std::string selctedPageControlTintColor = config->GetPageControlConfig().selectedTintColor;
+    std::string unselctedPageControlTintColor = config->GetPageControlConfig().unselectedTintColor;
     
-    self.pageControl = [[PageControl alloc] initWithFrame:CGRectZero];
-    self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.pageControl setConfig:pageControlConfig];
+    ACRPageControlConfig *pageControlConfig = [[ACRPageControlConfig alloc] initWithNumberOfPages:self.carouselPageViewList.count
+                                                                                     displayPages:@5
+                                                                                 selctedTintColor:[ACOHostConfig convertHexColorCodeToUIColor:selctedPageControlTintColor]
+                                                                               unselctedTintColor:[ACOHostConfig convertHexColorCodeToUIColor:unselctedPageControlTintColor]];
+    
+    self.pageControl = [[ACRPageControl alloc] initWithConfig:pageControlConfig];
+    
+    ACRColumnView *carouselViewContainer = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)carousel->GetStyle()
+                                                        parentStyle:[viewGroup style]
+                                                         hostConfig:acoConfig
+                                                          superview:viewGroup];
     
     UIStackView *carouselView = [[UIStackView alloc] init];
+    [carouselViewContainer addArrangedSubview:carouselView];
+    
     carouselView.axis = UILayoutConstraintAxisVertical;
     carouselView.alignment = UIStackViewAlignmentCenter;
     carouselView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -129,10 +139,12 @@
     [carouselView addArrangedSubview:carouselPagesContainerView];
     [carouselView addArrangedSubview:self.pageControl];
     
+    configBleed(rootView, elem, carouselViewContainer, acoConfig);
+
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:carouselView withAreaName:areaName];
     
-    return carouselView;
+    return carouselViewContainer;
 }
 
 -(void) constructSwipeActions:(UIView *)view {
@@ -161,7 +173,7 @@
     
     switch (self.carousel->getPageAnimation()) {
         case PageAnimation::Slide:
-            [self slideAnimationForNextView:oldView
+            [self slideAnimationForLeftSwipeForViewToHide:oldView
                                    showView:newView];
             break;
         case PageAnimation::CrossFade:
@@ -189,7 +201,7 @@
     
     switch (self.carousel->getPageAnimation()) {
         case PageAnimation::Slide:
-            [self slideAnimationForPreviousView:oldView
+            [self slideAnimationForRightSwipeForViewToHide:oldView
                                    showView:newView];
             break;
         case PageAnimation::CrossFade:
@@ -215,7 +227,7 @@
                     completion:nil];
 }
 
-- (void)slideAnimationForNextView:(UIView *)viewToHide showView:(UIView *)viewToShow {
+- (void)slideAnimationForLeftSwipeForViewToHide:(UIView *)viewToHide showView:(UIView *)viewToShow {
     // Prepare the view to show
     viewToShow.transform = CGAffineTransformMakeTranslation(viewToShow.bounds.size.width, 0);
     viewToShow.hidden = NO;
@@ -231,7 +243,7 @@
     }];
 }
 
-- (void)slideAnimationForPreviousView:(UIView *)viewToHide showView:(UIView *)viewToShow {
+- (void)slideAnimationForRightSwipeForViewToHide:(UIView *)viewToHide showView:(UIView *)viewToShow {
     // Prepare the view to show
     viewToShow.transform = CGAffineTransformMakeTranslation(-viewToShow.bounds.size.width, 0);
     viewToShow.hidden = NO;
@@ -247,20 +259,23 @@
     }];
 }
 
-- (UIView *)  getCarouselPageView:(std::shared_ptr<AdaptiveCards::BaseCardElement>) element
-                        viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
-                         rootView:(ACRView *)rootView
-                           inputs:(NSMutableArray *)inputs
-                  baseCardElement:(ACOBaseCardElement *)acoElem
-                       hostConfig:(ACOHostConfig *)acoConfig
+- (UIView *)renderCarouselPage:(UIView<ACRIContentHoldingView> *)viewGroup
+           rootView:(ACRView *)rootView
+             inputs:(NSMutableArray *)inputs
+    baseCardElement:(ACOBaseCardElement *)acoElem
+         hostConfig:(ACOHostConfig *)acoConfig;
 {
-    std::shared_ptr<CarouselPage> containerElem = std::dynamic_pointer_cast<CarouselPage>(element);
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<CarouselPage> containerElem = std::dynamic_pointer_cast<CarouselPage>(elem);
+    
+    [rootView.context pushBaseCardElementContext:acoElem];
+    
+    //Layout
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:containerElem->GetLayouts() andHostConfig:acoConfig];
-    [rootView.context pushBaseCardElementContext:acoElem];
     ACRFlowLayout *flowContainer;
     ARCGridViewLayout *gridLayout;
+    BOOL useStackLayout = NO;
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
@@ -303,6 +318,10 @@
                               andHostConfig:acoConfig];
         }
     }
+    else
+    {
+        useStackLayout = YES;
+    }
 
     ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()
                                                         parentStyle:[viewGroup style]
@@ -318,7 +337,18 @@
     {
         [container addArrangedSubview:gridLayout];
     }
-    else
+    
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:container withAreaName:areaName];
+    
+    [self configureBorderForElement:acoElem container:container config:acoConfig];
+
+
+    renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
+
+    container.frame = viewGroup.frame;
+    
+    if (useStackLayout)
     {
         [ACRRenderer render:container
                    rootView:rootView
@@ -326,12 +356,6 @@
               withCardElems:containerElem->GetItems()
               andHostConfig:acoConfig];
     }
-    
-    [self configureBorderForCarouselPage:containerElem container:container config:acoConfig];
-    
-    renderBackgroundImage(containerElem->GetBackgroundImage(), container, rootView);
-
-    container.frame = viewGroup.frame;
 
     [container setClipsToBounds:NO];
 
@@ -344,15 +368,17 @@
                                  heightType:GetACRHeight(containerElem->GetHeight())
                                        type:ACRContainer];
 
-    container.accessibilityElements = [container getArrangedSubviews];
     [rootView.context popBaseCardElementContext:acoElem];
+
+    container.accessibilityElements = [container getArrangedSubviews];
+
     return container;
 }
 
-- (void)configureBorderForCarouselPage:(std::shared_ptr<CarouselPage> ) containerElem
-                             container:(ACRContentStackView *)container
-                                config:(ACOHostConfig *)acoConfig
+- (void)configureBorderForElement:(ACOBaseCardElement *)acoElem container:(ACRContentStackView *)container config:(ACOHostConfig *)acoConfig
 {
+    std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<CarouselPage> containerElem = std::dynamic_pointer_cast<CarouselPage>(elem);
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     bool shouldShowBorder = containerElem->GetShowBorder();
     if(shouldShowBorder)

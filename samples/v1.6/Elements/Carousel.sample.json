@@ -11,13 +11,14 @@
         },
         {
             "type": "Carousel",
-            "pageAnimation": "None",
+            "pageAnimation": "Slide",
             "pages": [
                 {
                     "type": "CarouselPage",
                     "style": "emphasis",
                     "showBorder": true,
                     "roundedCorners": true,
+                    "verticalContentAlignment":"Bottom",
                     "items": [
                         {
                             "type": "TextBlock",
@@ -44,6 +45,7 @@
                     "style": "accent",
                     "showBorder": true,
                     "roundedCorners": true,
+                    "verticalContentAlignment":"Bottom",
                     "items": [
                         {
                             "type": "TextBlock",
@@ -70,6 +72,7 @@
                     "style": "good",
                     "showBorder": true,
                     "roundedCorners": true,
+                    "verticalContentAlignment":"Bottom",
                     "items": [
                         {
                             "type": "TextBlock",
@@ -96,6 +99,7 @@
                     "style": "warning",
                     "showBorder": true,
                     "roundedCorners": true,
+                    "verticalContentAlignment":"Bottom",
                     "items": [
                         {
                             "type": "TextBlock",
@@ -146,6 +150,7 @@
                     "style": "attention",
                     "showBorder": true,
                     "roundedCorners": true,
+                    "verticalContentAlignment":"Bottom",
                     "items": [
                         {
                             "type": "TextBlock",

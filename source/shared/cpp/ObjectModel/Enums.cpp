@@ -249,6 +249,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::CarouselPage,"CarouselPage"},
             {AdaptiveCardSchemaKey::Pages,"pages"},
             {AdaptiveCardSchemaKey::PageAnimation,"pageAnimation"},
+            {AdaptiveCardSchemaKey::PageControl,"pageControl"},
+            {AdaptiveCardSchemaKey::SelectedTintColor,"selectedTintColor"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {

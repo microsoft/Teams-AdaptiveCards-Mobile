@@ -251,8 +251,11 @@ enum class AdaptiveCardSchemaKey
     CompoundButton,
     CarouselPage,
     Pages,
-    PageAnimation
+    PageAnimation,
+    PageControl,
+    SelectedTintColor
 };
+
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 
 enum class CardElementType

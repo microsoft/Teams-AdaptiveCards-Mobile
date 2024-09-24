@@ -23,9 +23,17 @@ Carousel::Carousel() : StyledCollectionElement(CardElementType::Carousel)
 Json::Value Carousel::SerializeToJsonValue() const
 {
     Json::Value root = StyledCollectionElement::SerializeToJsonValue();
-
+    
+    std::string const& itemsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Pages);
+    root[itemsPropertyName] = Json::Value(Json::arrayValue);
+    for (const auto& cardElement : m_pages)
+    {
+        root[itemsPropertyName].append(cardElement->SerializeToJsonValue());
+    }
+    
     return root;
 }
+
 
 const std::vector<std::shared_ptr<BaseCardElement>>& Carousel::GetItems() const
 {
@@ -90,7 +98,7 @@ void Carousel::DeserializeChildren(ParseContext& context, const Json::Value& val
 
 void Carousel::PopulateKnownPropertiesSet()
 {
-    
+    m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::PageAnimation)});
 }
 
 void Carousel::GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo)

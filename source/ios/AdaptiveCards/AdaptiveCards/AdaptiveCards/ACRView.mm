@@ -404,15 +404,15 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             break;
         }
         case CardElementType::Carousel: {
-            std::shared_ptr<Carousel> container = std::static_pointer_cast<Carousel>(elem);
+            std::shared_ptr<Carousel> carousel = std::static_pointer_cast<Carousel>(elem);
 
-            auto backgroundImageProperties = container->GetBackgroundImage();
+            auto backgroundImageProperties = carousel->GetBackgroundImage();
             if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
-                ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, container);
+                ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carousel);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
 
-            std::vector<std::shared_ptr<BaseCardElement>> &new_body = container->GetItems();
+            std::vector<std::shared_ptr<BaseCardElement>> &new_body = carousel->GetItems();
             [self addBaseCardElementListToConcurrentQueue:new_body registration:registration];
             break;
         }
@@ -448,6 +448,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             
         case CardElementType::CarouselPage: {
             std::shared_ptr<CarouselPage> carouselPage = std::static_pointer_cast<CarouselPage>(elem);
+            auto backgroundImageProperties = carouselPage->GetBackgroundImage();
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+                ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carouselPage);
+                [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
+            }
             [self addBaseCardElementListToConcurrentQueue:carouselPage->GetItems() registration:registration];
         }
             

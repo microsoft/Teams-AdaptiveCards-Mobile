@@ -6,46 +6,49 @@
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 
-#import "ACRPageIndicator.h"
+#import "ACRPageControl.h"
 
-@implementation PageControlConfig
+@interface ACRPageControlConfig()
 
-- (instancetype)initWithNumberOfPages:(NSInteger)numberOfPages
-                         displayPages:(nullable NSNumber *)displayPages
-                    hidesForSinglePage:(nullable NSNumber *)hidesForSinglePage
-              accessibilityValueFormat:(nullable NSString *)accessibilityValueFormat {
+@property (nonatomic, assign) NSInteger numberOfPages;
+@property (nonatomic, assign, nonnull) NSNumber *displayPages;
+@property (nonatomic, assign, nonnull) NSNumber *hidesForSinglePage;
+@property (nonatomic, strong, nonnull) UIColor *selctedTintColor;
+@property (nonatomic, strong, nonnull) UIColor *unselctedTintColor;
+
+@end
+
+@implementation ACRPageControlConfig
+
+- (instancetype _Nonnull)initWithNumberOfPages:(NSInteger)numberOfPages displayPages:(nullable NSNumber *)displayPages
+                              selctedTintColor:(UIColor * _Nonnull)selctedTintColor
+                            unselctedTintColor:(UIColor * _Nonnull)unselctedTintColor 
+{
     self = [super init];
-    if (self) {
+    if(self) {
         _numberOfPages = numberOfPages;
         _displayPages = displayPages;
-        _hidesForSinglePage = hidesForSinglePage;
-        _accessibilityValueFormat = accessibilityValueFormat;
+        _selctedTintColor = selctedTintColor;
+        _unselctedTintColor = unselctedTintColor;
     }
     return self;
 }
 
 @end
 
-@implementation PageControl
+@interface ACRPageControl()
 
-// Initialization
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
+@property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, strong, nullable) ACRPageControlConfig *config;
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
+@end
 
-- (void)commonInit {
+@implementation ACRPageControl
+
+-(instancetype) initWithConfig:(ACRPageControlConfig *)config
+{
+    self = [super initWithFrame:CGRectZero];
+    _config = config;
     self.backgroundColor = [UIColor clearColor];
     
     [self setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
@@ -54,6 +57,7 @@
     [self setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
     self.contentMode = UIViewContentModeRedraw;
+    return self;
 }
 
 // Properties
@@ -78,32 +82,12 @@
     }
 }
 
-- (void)setConfig:(nullable PageControlConfig *)config {
+- (void)setConfig:(nullable ACRPageControlConfig *)config {
     _config = config;
     [self render];
 }
 
 // Accessibility
-
-- (NSString *)accessibilityValue {
-    if (self.config.numberOfPages > 0) {
-        NSString *format = self.config.accessibilityValueFormat ?: NSLocalizedString(@"PageXofY", @"Format for a paging control. %1$@ is the current value, %2$@ is the max value");
-        return [NSString stringWithFormat:format, @(self.currentPage + 1), @(self.config.numberOfPages)];
-    }
-    return [NSString stringWithFormat:@"%ld", (long)(self.currentPage + 1)];
-}
-
-- (void)accessibilityIncrement {
-    if (self.config.accessibilityPageChange && self.config.numberOfPages > self.currentPage) {
-        self.config.accessibilityPageChange(self.currentPage + 1);
-    }
-}
-
-- (void)accessibilityDecrement {
-    if (self.config.accessibilityPageChange && self.currentPage > 0) {
-        self.config.accessibilityPageChange(self.currentPage - 1);
-    }
-}
 
 // Private methods
 
@@ -171,7 +155,7 @@
         
         point.y = floor((self.bounds.size.height - diameter) / 2.0);
         
-        CGContextSetFillColorWithColor(context, (isSelectedPage ? [UIColor blueColor].CGColor: [UIColor redColor].CGColor ));
+        CGContextSetFillColorWithColor(context, (isSelectedPage ? self.config.selctedTintColor.CGColor: self.config.unselctedTintColor.CGColor));
         
         if ((leadingHalfSize && i == displayRange.location) || (trailingHalfSize && i == NSMaxRange(displayRange) - 1)) {
             CGContextFillEllipseInRect(context, CGRectMake(point.x + diameter / 4, point.y + diameter / 4, diameter / 2, diameter / 2));
@@ -188,18 +172,9 @@
 // Rendering
 
 - (void)render {
-    BOOL isAccessible = (self.config.accessibilityPageChange != nil);
-    self.isAccessibilityElement = isAccessible;
-    self.accessibilityTraits = isAccessible ? UIAccessibilityTraitAdjustable : 0;
     self.hidden = self.shouldBeHidden;
     [self setNeedsDisplay];
     [self invalidateIntrinsicContentSize];
-}
-
-// Stylesheet
-
-- (void)didChangeAppearanceProxy {
-    [self render];
 }
 
 @end

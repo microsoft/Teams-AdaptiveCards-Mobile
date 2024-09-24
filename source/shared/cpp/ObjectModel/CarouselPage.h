@@ -11,7 +11,7 @@
 #include "ElementParserRegistration.h"
 #include "StyledCollectionElement.h"
 #include "Layout.h"
-
+#include "pch.h"
 namespace AdaptiveCards
 {
     class CarouselPage : public StyledCollectionElement
@@ -26,14 +26,18 @@ namespace AdaptiveCards
             void PopulateKnownPropertiesSet();
             static std::shared_ptr<CarouselPage> Deserialize(ParseContext& context, const Json::Value& root) ;
             void DeserializeChildren(ParseContext& context, const Json::Value& value) override;
-            const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts() const;
+            std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts();
             void SetLayouts(const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& value);
             std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
             const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;
+            std::optional<bool> GetRtl() const;
+            void SetRtl(const std::optional<bool>& value);
+
         private:
             std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_items;
             static std::shared_ptr<CarouselPage> DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& root);
             std::vector<std::shared_ptr<Layout>> m_layouts;
+            std::optional<bool> m_rtl;
     };
 
     class CarouselPageParser : public BaseCardElementParser
