@@ -305,6 +305,9 @@
 		6BFF9A0526004C580028069F /* ACOAuthentication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BFF9A0226004C580028069F /* ACOAuthentication.mm */; };
 		771021A52C92D6C300BD2F16 /* ACRPageControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 771021A42C92D6C300BD2F16 /* ACRPageControl.mm */; };
 		7773A9102CA2C91300097C06 /* ACRCarouselViewRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7773A90F2CA2C91300097C06 /* ACRCarouselViewRenderer.h */; };
+		7773A9152CA2D32E00097C06 /* Carousel.valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 7773A9142CA2D32E00097C06 /* Carousel.valid.json */; };
+		7773A9172CA2D33400097C06 /* Carousel.invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 7773A9162CA2D33400097C06 /* Carousel.invalid.json */; };
+		7773A91A2CA2D53400097C06 /* AdaptiveCardCarouselTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7773A9112CA2D20100097C06 /* AdaptiveCardCarouselTests.mm */; };
 		7ECFB640219A3940004727A9 /* ParseContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFB63E219A3940004727A9 /* ParseContext.cpp */; };
 		7ECFB641219A3940004727A9 /* ParseContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ECFB63F219A3940004727A9 /* ParseContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7EDC0F67213878E800077A13 /* SemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EDC0F65213878E800077A13 /* SemanticVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -857,6 +860,9 @@
 		771021A62C92D87600BD2F16 /* ACRPageControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRPageControl.h; sourceTree = "<group>"; };
 		7749A56FE5104914C2BA9D02 /* Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		7773A90F2CA2C91300097C06 /* ACRCarouselViewRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRCarouselViewRenderer.h; sourceTree = "<group>"; };
+		7773A9112CA2D20100097C06 /* AdaptiveCardCarouselTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AdaptiveCardCarouselTests.mm; sourceTree = "<group>"; };
+		7773A9142CA2D32E00097C06 /* Carousel.valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Carousel.valid.json; sourceTree = "<group>"; };
+		7773A9162CA2D33400097C06 /* Carousel.invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Carousel.invalid.json; sourceTree = "<group>"; };
 		777DD1173C03E3F4EC695141 /* Pods-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		7DC49373563AE22454C070D6 /* Pods-Fluent-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCards/Pods-Fluent-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		7ECFB63E219A3940004727A9 /* ParseContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParseContext.cpp; path = ../../../../shared/cpp/ObjectModel/ParseContext.cpp; sourceTree = "<group>"; };
@@ -1361,7 +1367,9 @@
 				6BE6C7B826E2E30A009E9171 /* ColumnSet.Image.VerticalStretch.json */,
 				6BE6C7C426E7CDCF009E9171 /* ColumnSet.Input.ChoiceSet.VerticalStretch.json */,
 				46CBB6432C22BA96008FC5D5 /* CompoundButtonInvalid.json */,
+				7773A9162CA2D33400097C06 /* Carousel.invalid.json */,
 				46CBB6442C22BA96008FC5D5 /* CompoundButtonValid.json */,
+				7773A9142CA2D32E00097C06 /* Carousel.valid.json */,
 				6BE6C7BD26E2E4EC009E9171 /* ColumnSet.VerticalStretch.json */,
 				6BE6C7A426E17132009E9171 /* ColumnSet.VerticalStretch.json */,
 				6BE6C7B726E2E30A009E9171 /* Container.VerticalContentAlignment.json */,
@@ -1510,6 +1518,7 @@
 				30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */,
 				30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */,
 				6B124CA326D04CA9007E9641 /* AdaptiveCardsUtiliOSTest.mm */,
+				7773A9112CA2D20100097C06 /* AdaptiveCardCarouselTests.mm */,
 				46CBB6412C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm */,
 				46B78E632C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm */,
 				B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */,
@@ -2261,12 +2270,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B654C752708168D00DF6A5F /* Action.ToggleVisibilityExhaustive.json in Resources */,
+				7773A9172CA2D33400097C06 /* Carousel.invalid.json in Resources */,
 				46CBB6462C22BA96008FC5D5 /* CompoundButtonValid.json in Resources */,
 				46B78E662C0586D500EF4566 /* RatingInputValid.json in Resources */,
 				6BE6C7C526E7CDD0009E9171 /* ColumnSet.Input.ChoiceSet.VerticalStretch.json in Resources */,
 				6BE6C7BA26E2E30A009E9171 /* Container.VerticalContentAlignment.json in Resources */,
 				46B78E682C0587B700EF4566 /* RatingLabelValid.json in Resources */,
 				6BE6C7BE26E2E4EC009E9171 /* ColumnSet.VerticalStretch.json in Resources */,
+				7773A9152CA2D32E00097C06 /* Carousel.valid.json in Resources */,
 				6BE6C7BB26E2E30A009E9171 /* ColumnSet.Image.VerticalStretch.json in Resources */,
 				46CBB6452C22BA96008FC5D5 /* CompoundButtonInvalid.json in Resources */,
 				6BE6C7C326E2F07C009E9171 /* sample.json in Resources */,
@@ -2585,6 +2596,7 @@
 				6BE6C7B026E2C9A3009E9171 /* ACRCustomRenderers.mm in Sources */,
 				CFF95C0B2982E38500F321C3 /* ACRChoiceSetCompactStyleViewTests.mm in Sources */,
 				30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */,
+				7773A91A2CA2D53400097C06 /* AdaptiveCardCarouselTests.mm in Sources */,
 				6B124C9526B8AE72007E9641 /* MockContext.mm in Sources */,
 				30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */,
 				CFF95C072982E30E00F321C3 /* ACRTypeaheadSearchParametersTests.mm in Sources */,
