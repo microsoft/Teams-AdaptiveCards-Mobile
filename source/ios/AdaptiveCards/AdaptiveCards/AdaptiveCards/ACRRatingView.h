@@ -36,6 +36,7 @@
 
 - (NSInteger)getValue;
 - (void)setValue:(NSInteger)value;
+- (NSArray *)accessibleChildren;
 
 
 @end
