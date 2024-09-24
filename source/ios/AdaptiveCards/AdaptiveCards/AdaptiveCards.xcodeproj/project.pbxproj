@@ -83,7 +83,6 @@
 		46DF37BC2C903377001C254F /* ACRCarouselViewRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37B52C903377001C254F /* ACRCarouselViewRenderer.mm */; };
 		46DF37BE2C903377001C254F /* ACRCompoundButtonRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37B72C903377001C254F /* ACRCompoundButtonRenderer.mm */; };
 		46DF37CF2C9034E6001C254F /* ACRCompoundButtonRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF37C62C9034E6001C254F /* ACRCompoundButtonRenderer.mm */; };
-		46DF37D22C9034E6001C254F /* CarouselViewBottomBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 46DF37C92C9034E6001C254F /* CarouselViewBottomBar.h */; };
 		46DF58E32C6F12FC00DCBA77 /* ACRFlowLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46DF58E22C6F12FC00DCBA77 /* ACRFlowLayout.mm */; };
 		46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */; };
 		46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */; };
@@ -626,8 +625,6 @@
 		46DF37B52C903377001C254F /* ACRCarouselViewRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselViewRenderer.mm; sourceTree = "<group>"; };
 		46DF37B72C903377001C254F /* ACRCompoundButtonRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCompoundButtonRenderer.mm; sourceTree = "<group>"; };
 		46DF37C62C9034E6001C254F /* ACRCompoundButtonRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCompoundButtonRenderer.mm; sourceTree = "<group>"; };
-		46DF37C82C9034E6001C254F /* CarouselPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselPageView.h; sourceTree = "<group>"; };
-		46DF37C92C9034E6001C254F /* CarouselViewBottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselViewBottomBar.h; sourceTree = "<group>"; };
 		46DF58E22C6F12FC00DCBA77 /* ACRFlowLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRFlowLayout.mm; sourceTree = "<group>"; };
 		46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
 		46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
@@ -1816,8 +1813,6 @@
 				46DF37B72C903377001C254F /* ACRCompoundButtonRenderer.mm */,
 				6B74403725BA71B60051F2A1 /* ACRImageProperties.h */,
 				46DF37C62C9034E6001C254F /* ACRCompoundButtonRenderer.mm */,
-				46DF37C82C9034E6001C254F /* CarouselPageView.h */,
-				46DF37C92C9034E6001C254F /* CarouselViewBottomBar.h */,
 				46CBB63D2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.h */,
 				46CBB63E2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.mm */,
 				6B74403825BA71B60051F2A1 /* ACRImageProperties.mm */,
@@ -2014,7 +2009,6 @@
 				F4071C7D1FCCBAEF00AF4FEA /* json.h in Headers */,
 				F4071C7C1FCCBAEF00AF4FEA /* json-forwards.h in Headers */,
 				6B2242A82233442C000ACDA1 /* RichTextBlock.h in Headers */,
-				46DF37D22C9034E6001C254F /* CarouselViewBottomBar.h in Headers */,
 				463C4EDB2BDB666A00A95C4E /* ACRSVGImageView.h in Headers */,
 				6B096D4E225431D0006CC034 /* ACRRichTextBlockRenderer.h in Headers */,
 				300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */,
