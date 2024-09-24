@@ -18,6 +18,7 @@
     ACRRatingStyle _style;
     ACOHostConfig *_hostConfig;
     NSMutableArray<UIImageView *> *_starImageViews;
+    NSMutableArray<UIImageView *> *_accessibleChildren;
     UILabel *_ratingLabel;
     NSInteger _max;
     double _value;
@@ -44,6 +45,7 @@
         _count = 0;
         _style = ACRDefaultStyle;
         _hostConfig = hostConfig;
+        _accessibleChildren = [NSMutableArray array];
         [self setupViewForInput];
     }
     return self;
@@ -73,6 +75,11 @@
     return self;
 }
 
+- (NSArray *)accessibleChildren
+{
+    return [_accessibleChildren copy];
+}
+
 - (void)setupViewForInput
 {
     _starImageViews = [NSMutableArray array];
@@ -84,8 +91,11 @@
         [self addSubview:starImageView];
         [_starImageViews addObject:starImageView];
         starImageView.userInteractionEnabled = YES;
+        starImageView.isAccessibilityElement = YES;
+        starImageView.accessibilityLabel = [NSString stringWithFormat:@"Rate %d Star", (int)i+1];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleStarTap:)];
         [starImageView addGestureRecognizer:tapGesture];
+        [_accessibleChildren addObject:starImageView];
     }
     
     [self setupConstraints];
@@ -116,6 +126,15 @@
     _ratingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _ratingLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _ratingLabel.attributedText = [self atrributedStringForLabel];
+    if (_count > 0)
+    {
+        _ratingLabel.accessibilityLabel = [[NSString alloc] initWithFormat:@"Rating %.1f,", (float)_value];
+    }
+    else
+    {
+        _ratingLabel.accessibilityLabel = [[NSString alloc] initWithFormat:@"Rating %.1f, Count %d", (float)_value, (int)_count];
+    }
+    
     [self addSubview:_ratingLabel];
     
     [self setupConstraints];
