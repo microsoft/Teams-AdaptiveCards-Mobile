@@ -142,7 +142,7 @@
     configBleed(rootView, elem, carouselViewContainer, acoConfig);
 
     NSString *areaName = stringForCString(elem->GetAreaGridName());
-    [viewGroup addArrangedSubview:carouselView withAreaName:areaName];
+    [viewGroup addArrangedSubview:carouselViewContainer withAreaName:areaName];
     
     return carouselViewContainer;
 }
