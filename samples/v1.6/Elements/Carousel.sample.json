@@ -19,24 +19,80 @@
                     "showBorder": true,
                     "roundedCorners": true,
                     "verticalContentAlignment":"Bottom",
+                    "layouts": [
+                        {
+                            "type": "Layout.AreaGrid",
+                            "columns": [
+                                35,
+                                "auto"
+                            ],
+                            "areas": [
+                                {
+                                    "name": "image"
+                                },
+                                {
+                                    "name": "text",
+                                    "column": 2
+                                },
+                                {
+                                    "name": "text1",
+                                    "column": 1,
+                                    "row": 2
+                                },
+                                {
+                                    "name": "image1",
+                                    "column": 2,
+                                    "row": 2
+                                }
+                            ]
+                        }
+                    ],
                     "items": [
                         {
-                            "type": "TextBlock",
-                            "text": "PAGE 1 of 6",
-                            "wrap": true,
-                            "size": "Large"
+                            "type": "Image",
+                            "url": "https://www.wallpaperbetter.com/wallpaper/905/859/738/beautiful-nature-landscape-mountains-trees-lake-sky-clouds-water-reflection-1080P-wallpaper.jpg",
+                            "grid.area": "image"
                         },
                         {
-                            "type": "TextBlock",
-                            "text": "First TextBlock",
-                            "wrap": true
+                            "type": "Container",
+                            "grid.area": "text",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "This is a beautiful landscape",
+                                    "wrap": true,
+                                    "size": "ExtraLarge",
+                                    "weight": "Bolder"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "You can see mountains, a lake, trees in the foreground. The sun is shining, there's some mist in the background.",
+                                    "wrap": true
+                                }
+                            ]
                         },
                         {
-                            "type": "TextBlock",
-                            "text": "Second TextBlock with separator",
-                            "wrap": true,
-                            "separator": true,
-                            "spacing": "Medium"
+                            "type": "Container",
+                            "grid.area": "text1",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "This is a beautiful landscape",
+                                    "wrap": true,
+                                    "size": "ExtraLarge",
+                                    "weight": "Bolder"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "You can see mountains, a lake, trees in the foreground. The sun is shining, there's some mist in the background.",
+                                    "wrap": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Image",
+                            "url": "https://www.wallpaperbetter.com/wallpaper/905/859/738/beautiful-nature-landscape-mountains-trees-lake-sky-clouds-water-reflection-1080P-wallpaper.jpg",
+                            "grid.area": "image1"
                         }
                     ]
                 },
