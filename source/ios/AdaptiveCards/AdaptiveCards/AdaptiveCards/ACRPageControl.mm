@@ -65,7 +65,7 @@
 
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, strong, nullable) ACRPageControlConfig *config;
-@property (nonatomic, strong) NSMutableArray<CircularView *> *viewArray;
+@property (nonatomic, strong) NSMutableArray<CircularView *> *circleViewArray;
 @property (nonatomic, assign) CGFloat diameter;
 @property (nonatomic, assign) CGFloat spacing;
 @end
@@ -84,10 +84,10 @@
     [self setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
     self.contentMode = UIViewContentModeRedraw;
-    self.viewArray = [[NSMutableArray alloc] init];
+    self.circleViewArray = [[NSMutableArray alloc] init];
     for(int i=0; i<config.numberOfPages;i++) {
         CircularView * circleView = [[CircularView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-        [self.viewArray addObject:circleView];
+        [self.circleViewArray addObject:circleView];
         [self addSubview:circleView];
     }
     self.clipsToBounds = YES;
@@ -212,8 +212,8 @@
         
         CGFloat diameter = _diameter * scale;
         point.y = floor((self.bounds.size.height - diameter) / 2.0);
-        _viewArray[i].frame = CGRectMake(point.x, point.y, diameter, diameter);
-        _viewArray[i].tintColor = isSelectedPage ? _config.selctedTintColor : _config.unselctedTintColor;
+        _circleViewArray[i].frame = CGRectMake(point.x, point.y, diameter, diameter);
+        _circleViewArray[i].tintColor = isSelectedPage ? _config.selctedTintColor : _config.unselctedTintColor;
         
         CGFloat offset =  _spacing + diameter;
         
