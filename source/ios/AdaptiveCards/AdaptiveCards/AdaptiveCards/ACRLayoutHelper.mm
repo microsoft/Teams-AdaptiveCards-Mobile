@@ -15,6 +15,7 @@
 #import "UtiliOS.h"
 #import "ACOHostConfigPrivate.h"
 #import "FlowLayout.h"
+#import "Carousel.h"
 
 using namespace AdaptiveCards;
 
@@ -155,6 +156,35 @@ using namespace AdaptiveCards;
             column->SetPixelWidth(parentWidth);
             break;
         }
+        case CardElementType::Carousel:
+        {
+            std::shared_ptr<Carousel> carousel = std::dynamic_pointer_cast<Carousel>(elem);
+            long numberOfItems = carousel->GetItems().size();
+            if(numberOfItems > 0)
+            {
+                for (const auto &item : carousel->GetItems())
+                {
+                    [self distribute:parentWidth rootView:rootView forElement:item andHostConfig:config];
+                }
+            }
+            
+            break;
+        }
+        case CardElementType::CarouselPage:
+        {
+            std::shared_ptr<CarouselPage> carouselPage = std::dynamic_pointer_cast<CarouselPage>(elem);
+            long numberOfItems = carouselPage->GetItems().size();
+            if(numberOfItems > 0)
+            {
+                float childrenWidth = [self carouselPageWidthDistributor:carouselPage availableWidth:parentWidth andHostConfig:config];
+                for (const auto &item : carouselPage->GetItems())
+                {
+                    [self distribute:childrenWidth rootView:rootView forElement:item andHostConfig:config];
+                }
+            }
+            
+            break;
+        }
             
         default:
             break;
@@ -244,6 +274,34 @@ using namespace AdaptiveCards;
             std::shared_ptr<AdaptiveCards::Layout> layout = [self layoutToApplyFrom:container->GetLayouts() andHostConfig:config];
             return (layout->GetLayoutContainerType() == LayoutContainerType::Flow);
         }
+        case CardElementType::Carousel:
+        {
+            std::shared_ptr<Carousel> carousel = std::dynamic_pointer_cast<Carousel>(elem);
+            
+            BOOL isFlow = NO;
+            
+            for (const auto &item : carousel->GetItems())
+            {
+                isFlow = isFlow || ([self shouldUseNewLayoutForView:rootView forElement:item andHostConfig:config]);
+            }
+
+            return isFlow;
+        }
+            
+        case CardElementType::CarouselPage:
+        {
+            std::shared_ptr<CarouselPage> carouselPage = std::dynamic_pointer_cast<CarouselPage>(elem);
+            std::shared_ptr<AdaptiveCards::Layout> layout = [self layoutToApplyFrom:carouselPage->GetLayouts() andHostConfig:config];
+            
+            BOOL isFlow = (layout->GetLayoutContainerType() == LayoutContainerType::Flow);
+            
+            for (const auto &item : carouselPage->GetItems())
+            {
+                isFlow = isFlow || ([self shouldUseNewLayoutForView:rootView forElement:item andHostConfig:config]);
+            }
+
+            return isFlow;
+        }
             
         default:
             break;
@@ -294,6 +352,28 @@ using namespace AdaptiveCards;
                      andHostConfig:(ACOHostConfig *)config
 {
     std::shared_ptr<Layout> final_layout = [self layoutToApplyFrom:container->GetLayouts() andHostConfig:config];
+    if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
+    {
+        std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
+        
+        int pixelWidth = [self pixelWidthForItemsInFlow:flow_layout];
+        if (pixelWidth != -1)
+        {
+            return pixelWidth;
+        }
+    }
+    
+    return availableWidth;
+}
+
+/**
+ * This methods distributes available width amongst all items of given carousel page
+ */
+- (float)carouselPageWidthDistributor:(std::shared_ptr<CarouselPage> const)carouselPage
+                    availableWidth:(float)availableWidth
+                     andHostConfig:(ACOHostConfig *)config
+{
+    std::shared_ptr<Layout> final_layout = [self layoutToApplyFrom:carouselPage->GetLayouts() andHostConfig:config];
     if(final_layout->GetLayoutContainerType() == LayoutContainerType::Flow)
     {
         std::shared_ptr<FlowLayout> flow_layout = std::dynamic_pointer_cast<FlowLayout>(final_layout);
