@@ -8,6 +8,31 @@
 
 #import "ACRPageControl.h"
 
+@interface CircularView : UIView
+@end
+
+@implementation CircularView
+
+- (void)tintColorDidChange {
+    self.backgroundColor = self.tintColor;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self updateCornerRadius];
+}
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [self updateCornerRadius];
+}
+
+- (void)updateCornerRadius {
+    self.layer.cornerRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
+}
+
+@end
+
 @interface ACRPageControlConfig()
 
 @property (nonatomic, assign) NSInteger numberOfPages;
@@ -15,7 +40,6 @@
 @property (nonatomic, assign, nonnull) NSNumber *hidesForSinglePage;
 @property (nonatomic, strong, nonnull) UIColor *selctedTintColor;
 @property (nonatomic, strong, nonnull) UIColor *unselctedTintColor;
-
 @end
 
 @implementation ACRPageControlConfig
@@ -30,6 +54,7 @@
         _displayPages = displayPages;
         _selctedTintColor = selctedTintColor;
         _unselctedTintColor = unselctedTintColor;
+
     }
     return self;
 }
@@ -40,7 +65,9 @@
 
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, strong, nullable) ACRPageControlConfig *config;
-
+@property (nonatomic, strong) NSMutableArray<CircularView *> *viewArray;
+@property (nonatomic, assign) CGFloat diameter;
+@property (nonatomic, assign) CGFloat spacing;
 @end
 
 @implementation ACRPageControl
@@ -57,13 +84,22 @@
     [self setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
     self.contentMode = UIViewContentModeRedraw;
+    self.viewArray = [[NSMutableArray alloc] init];
+    for(int i=0; i<config.numberOfPages;i++) {
+        CircularView * circleView = [[CircularView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+        [self.viewArray addObject:circleView];
+        [self addSubview:circleView];
+    }
+    self.clipsToBounds = YES;
+    _diameter = 10;
+    _spacing = 7;
     return self;
 }
 
 // Properties
 
 - (CGSize)contentSize {
-    CGFloat height = 10;
+    CGFloat height = _diameter;
     return CGSizeMake(self.requiredLength, height);
 }
 
@@ -76,15 +112,23 @@
 }
 
 - (void)setCurrentPage:(NSInteger)currentPage {
-    if (_currentPage != currentPage) {
         _currentPage = currentPage;
         [self render];
-    }
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [self updatePositions];
+    }];
+    
 }
 
 - (void)setConfig:(nullable ACRPageControlConfig *)config {
     _config = config;
     [self render];
+}
+
+-(void) layoutSubviews
+{
+    [self updatePositions];
 }
 
 // Accessibility
@@ -97,8 +141,8 @@
 
 - (CGFloat)requiredLength {
     if (self.shouldBeHidden) return 0.0;
-    CGFloat diameterSum = (self.displayPages - 1) * 6 + 10;
-    return diameterSum + MAX(0.0, (self.displayPages - 1)) *7;
+    CGFloat diameterSum = (self.displayPages - 1) * _spacing + _diameter;
+    return diameterSum + MAX(0.0, (self.displayPages - 1)) * _spacing;
 }
 
 - (NSInteger)numberOfPages {
@@ -112,64 +156,70 @@
     return self.config.numberOfPages;
 }
 
-// Drawing
-
-- (void)drawRect:(CGRect)rect {
+-(void) updatePositions
+{
     if (self.shouldBeHidden) return;
     
-    [[UIColor clearColor] setFill];
-    UIRectFill(rect);
-    
-    NSInteger currentPage = MIN(MAX(self.currentPage, 0), self.numberOfPages - 1);
-
-    NSRange displayRange;
+    NSInteger visibleViewStartIndex = 0;
     BOOL leadingHalfSize = NO;
     BOOL trailingHalfSize = NO;
-
-    if (self.config.displayPages && self.config.displayPages.integerValue < self.numberOfPages) {
-        NSInteger adjustedPage = (NSInteger)((currentPage + 1) / 3) * 3;
-        NSInteger halfDisplayPages = self.config.displayPages.integerValue / 2;
-        
-        if (currentPage <= halfDisplayPages) {
-            displayRange = NSMakeRange(0, self.config.displayPages.integerValue);
-        } else if (adjustedPage >= self.numberOfPages - halfDisplayPages) {
-            displayRange = NSMakeRange(self.numberOfPages - self.config.displayPages.integerValue, self.config.displayPages.integerValue);
-        } else {
-            displayRange = NSMakeRange(adjustedPage - halfDisplayPages, self.config.displayPages.integerValue);
-        }
-        
-        leadingHalfSize = currentPage - halfDisplayPages > 0;
-        trailingHalfSize = currentPage + halfDisplayPages < self.numberOfPages;
-    } else {
-        displayRange = NSMakeRange(0, self.numberOfPages);
-    }
-
-    CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetAllowsAntialiasing(context, YES);
+    if (self.config.displayPages && self.config.displayPages.integerValue < self.numberOfPages) {
+            NSInteger adjustedPage = (NSInteger)((_currentPage + 1) / 3) * 3;
+            NSInteger halfDisplayPages = self.config.displayPages.integerValue / 2;
+            if (_currentPage <= halfDisplayPages) {
+                visibleViewStartIndex = 0;
+            } else if (adjustedPage >= self.numberOfPages - halfDisplayPages) {
+                visibleViewStartIndex = self.numberOfPages - self.config.displayPages.integerValue;
+            } else {
+                visibleViewStartIndex = _currentPage - halfDisplayPages;
+            }
+        
+            leadingHalfSize =  _currentPage - halfDisplayPages > 0;
+            trailingHalfSize =  _currentPage + halfDisplayPages < self.numberOfPages;
+        } else {
+            visibleViewStartIndex = 0;
+        }
+    
+    [[UIColor clearColor] setFill];
+    UIRectFill(self.bounds);
+    NSLog(@"%@", NSStringFromCGRect(self.bounds));
+    NSInteger currentPage = MIN(MAX(self.currentPage, 0), self.numberOfPages - 1);
+    
     CGPoint point = CGPointMake( floor((self.bounds.size.width - self.requiredLength) / 2.0 ), 0.0);
     
-    for (NSInteger i = displayRange.location; i < NSMaxRange(displayRange); i++) {
+    point.x -= _spacing *(visibleViewStartIndex);
+    
+    for(NSInteger i =0 ; i< self.numberOfPages; i++) {
+        
         BOOL isSelectedPage = (i == currentPage);
-        CGFloat diameter = isSelectedPage ? 10 : 6;
+
+     
         
-        point.y = floor((self.bounds.size.height - diameter) / 2.0);
-        
-        CGContextSetFillColorWithColor(context, (isSelectedPage ? self.config.selctedTintColor.CGColor: self.config.unselctedTintColor.CGColor));
-        
-        if ((leadingHalfSize && i == displayRange.location) || (trailingHalfSize && i == NSMaxRange(displayRange) - 1)) {
-            CGContextFillEllipseInRect(context, CGRectMake(point.x + diameter / 4, point.y + diameter / 4, diameter / 2, diameter / 2));
-        } else {
-            CGContextFillEllipseInRect(context, CGRectMake(point.x, point.y, diameter, diameter));
+        CGFloat scale;
+        NSInteger distance = abs(i-_currentPage);
+        if(distance == 0) {
+            scale = 1;
+        } else if(distance <=2) {
+            scale = 0.6;
+        }
+        else if (distance == 3) {
+            scale = 0.4;
+        }
+        else {
+            scale = 0;
         }
         
-        CGFloat offset =  7 + diameter;
- 
+        CGFloat diameter = _diameter * scale;
+        point.y = floor((self.bounds.size.height - diameter) / 2.0);
+        _viewArray[i].frame = CGRectMake(point.x, point.y, diameter, diameter);
+        _viewArray[i].tintColor = isSelectedPage ? _config.selctedTintColor : _config.unselctedTintColor;
+        
+        CGFloat offset =  _spacing + diameter;
+        
         point.x += offset;
     }
 }
-
-// Rendering
 
 - (void)render {
     self.hidden = self.shouldBeHidden;
