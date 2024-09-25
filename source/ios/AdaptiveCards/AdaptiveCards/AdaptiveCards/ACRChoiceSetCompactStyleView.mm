@@ -98,6 +98,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         if (!_filteredDataSource.isEnabled) {
             self.accessibilityTraits |= (UIAccessibilityTraitButton | UIAccessibilityTraitStaticText);
         }
+        [self updateAccessibilityProperties];
         _validator = [[ACOChoiceSetFilteredStyleValidator alloc] init:acoElem dataSource:_filteredDataSource];
 
         if (@available(iOS 11.0, *)) {
@@ -166,12 +167,26 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         _button.selected = YES;
     }
 
+    [self updateAccessibilityProperties];
+
     if (_stateManager.shouldUpdateFilteredList) {
         if (_stateManager.isFilteredListVisible) {
             [self showListView];
         } else {
             [self hideListView];
         }
+    }
+}
+
+- (void)updateAccessibilityProperties
+{
+    if (!_stateManager.isShowFilteredListControlSelected)
+    {
+        self.accessibilityHint = @"combo box, collapsed, double tap to activate it";
+    }
+    else
+    {
+        self.accessibilityHint = @"combo box, expanded, double tap to activate it";
     }
 }
 
