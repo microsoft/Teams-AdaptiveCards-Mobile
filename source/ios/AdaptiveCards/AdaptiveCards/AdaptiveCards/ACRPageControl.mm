@@ -113,7 +113,6 @@
 
 - (void)setCurrentPage:(NSInteger)currentPage {
         _currentPage = currentPage;
-        [self render];
     
     [UIView animateWithDuration:0.5 animations:^{
         [self updatePositions];
@@ -121,19 +120,10 @@
     
 }
 
-- (void)setConfig:(nullable ACRPageControlConfig *)config {
-    _config = config;
-    [self render];
-}
-
 -(void) layoutSubviews
 {
     [self updatePositions];
 }
-
-// Accessibility
-
-// Private methods
 
 - (BOOL)shouldBeHidden {
     return self.config.numberOfPages == 0 || (self.config.hidesForSinglePage.boolValue && self.config.numberOfPages == 1) || self.config == nil;
@@ -181,9 +171,6 @@
             visibleViewStartIndex = 0;
         }
     
-    [[UIColor clearColor] setFill];
-    UIRectFill(self.bounds);
-    NSLog(@"%@", NSStringFromCGRect(self.bounds));
     NSInteger currentPage = MIN(MAX(self.currentPage, 0), self.numberOfPages - 1);
     
     CGPoint point = CGPointMake( floor((self.bounds.size.width - self.requiredLength) / 2.0 ), 0.0);
@@ -219,12 +206,6 @@
         
         point.x += offset;
     }
-}
-
-- (void)render {
-    self.hidden = self.shouldBeHidden;
-    [self setNeedsDisplay];
-    [self invalidateIntrinsicContentSize];
 }
 
 @end
