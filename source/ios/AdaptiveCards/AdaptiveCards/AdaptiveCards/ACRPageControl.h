@@ -1,5 +1,5 @@
 //
-//  ACRPageIndicator.h
+//  ACRPageControl.h
 //  AdaptiveCards
 //
 //  Created by Abhishek Gupta on 12/09/24.
