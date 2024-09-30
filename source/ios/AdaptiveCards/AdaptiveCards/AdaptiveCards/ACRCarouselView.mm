@@ -141,12 +141,16 @@
                                            initWithTarget:self
                                            action:@selector(handleLeftSwipe:)];
     leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    leftSwipe.delegate = self;
     [view addGestureRecognizer:leftSwipe];
     
     UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc]
                                             initWithTarget:self
                                             action:@selector(handleRightSwipe:)];
     rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    rightSwipe.delegate = self;
     [view addGestureRecognizer:rightSwipe];
 }
 
@@ -248,6 +252,10 @@
     }];
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    // Return NO to prevent other gesture recognizers (in superviews) from being triggered
+    return NO;
+}
 @end
 
 
