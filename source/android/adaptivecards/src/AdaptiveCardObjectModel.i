@@ -499,6 +499,7 @@ namespace Json {
 %template(RemoteResourceInformationVector) std::vector<AdaptiveCards::RemoteResourceInformation>;
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;
 %template(BaseCardElementVector) std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement> >;
+%template(CarouselPageVector) std::vector<std::shared_ptr<AdaptiveCards::CarouselPage> >;
 %template(LayoutVector) std::vector<std::shared_ptr<AdaptiveCards::Layout> >;
 %template(GridAreaVector) std::vector<std::shared_ptr<AdaptiveCards::GridArea> >;
 %template(ImageVector) std::vector<std::shared_ptr<AdaptiveCards::Image> >;
