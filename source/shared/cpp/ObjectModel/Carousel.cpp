@@ -20,6 +20,11 @@ Carousel::Carousel() : StyledCollectionElement(CardElementType::Carousel)
     PopulateKnownPropertiesSet();
 }
 
+Carousel::Carousel(CardElementType derivedType) : StyledCollectionElement(derivedType)
+{
+    PopulateKnownPropertiesSet();
+}
+
 Json::Value Carousel::SerializeToJsonValue() const
 {
     Json::Value root = StyledCollectionElement::SerializeToJsonValue();
@@ -34,12 +39,12 @@ Json::Value Carousel::SerializeToJsonValue() const
     return root;
 }
 
-const std::vector<std::shared_ptr<CarouselPage>>& Carousel::GetPages() const
+const std::vector<std::shared_ptr<AdaptiveCards::CarouselPage>>& Carousel::GetPages() const
 {
     return m_pages;
 }
 
-std::vector<std::shared_ptr<CarouselPage>>& Carousel::GetPages()
+std::vector<std::shared_ptr<AdaptiveCards::CarouselPage>>& Carousel::GetPages()
 {
     return m_pages;
 }

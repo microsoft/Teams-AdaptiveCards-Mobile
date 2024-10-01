@@ -8,12 +8,13 @@
 
 package io.adaptivecards.objectmodel;
 
-public class CarouselPage {
+public class CarouselPage extends StyledCollectionElement {
   private transient long swigCPtr;
-  private transient boolean swigCMemOwn;
+  private transient boolean swigCMemOwnDerived;
 
   protected CarouselPage(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
+    super(AdaptiveCardObjectModelJNI.CarouselPage_SWIGSmartPtrUpcast(cPtr), true);
+    swigCMemOwnDerived = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
@@ -22,7 +23,8 @@ public class CarouselPage {
   }
 
   protected void swigSetCMemOwn(boolean own) {
-    swigCMemOwn = own;
+    swigCMemOwnDerived = own;
+    super.swigSetCMemOwn(own);
   }
 
   @SuppressWarnings("deprecation")
@@ -32,12 +34,13 @@ public class CarouselPage {
 
   public synchronized void delete() {
     if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
+      if (swigCMemOwnDerived) {
+        swigCMemOwnDerived = false;
         AdaptiveCardObjectModelJNI.delete_CarouselPage(swigCPtr);
       }
       swigCPtr = 0;
     }
+    super.delete();
   }
 
   public CarouselPage() {
@@ -58,6 +61,11 @@ public class CarouselPage {
 
   public static CarouselPage Deserialize(ParseContext context, JsonValue root) {
     long cPtr = AdaptiveCardObjectModelJNI.CarouselPage_Deserialize(ParseContext.getCPtr(context), context, JsonValue.getCPtr(root), root);
+    return (cPtr == 0) ? null : new CarouselPage(cPtr, true);
+  }
+
+  public static CarouselPage DeserializeWithoutCheckingType(ParseContext context, JsonValue root) {
+    long cPtr = AdaptiveCardObjectModelJNI.CarouselPage_DeserializeWithoutCheckingType(ParseContext.getCPtr(context), context, JsonValue.getCPtr(root), root);
     return (cPtr == 0) ? null : new CarouselPage(cPtr, true);
   }
 
@@ -87,6 +95,10 @@ public class CarouselPage {
     {
       AdaptiveCardObjectModelJNI.CarouselPage_SetRtl(swigCPtr, this, StdOptionalBool.getCPtr(optvalue), optvalue);
     }
+  }
+
+  public void GetResourceInformation(RemoteResourceInformationVector resourceInfo) {
+    AdaptiveCardObjectModelJNI.CarouselPage_GetResourceInformation(swigCPtr, this, RemoteResourceInformationVector.getCPtr(resourceInfo), resourceInfo);
   }
 
   public static CarouselPage dynamic_cast(BaseCardElement baseCardElement) {

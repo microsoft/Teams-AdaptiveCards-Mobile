@@ -20,6 +20,7 @@ class Carousel : public StyledCollectionElement
 {
 public:
     Carousel();
+    Carousel(CardElementType derivedType);
     Carousel(const Carousel&) = default;
     Carousel(Carousel&&) = default;
     Carousel& operator=(const Carousel&) = default;
@@ -32,15 +33,15 @@ public:
     PageAnimation getPageAnimation();
     void setPageAnimation(const PageAnimation value);
 
-    std::vector<std::shared_ptr<CarouselPage>>& GetPages();
-    const std::vector<std::shared_ptr<CarouselPage>>& GetPages() const;
+    std::vector<std::shared_ptr<AdaptiveCards::CarouselPage>>& GetPages();
+    const std::vector<std::shared_ptr<AdaptiveCards::CarouselPage>>& GetPages() const;
 
     void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo) override;
 private:
     void PopulateKnownPropertiesSet();
 
     PageAnimation m_pageAnimation;
-    std::vector<std::shared_ptr<CarouselPage>> m_pages;
+    std::vector<std::shared_ptr<AdaptiveCards::CarouselPage>> m_pages;
 };
 
 class CarouselParser : public BaseCardElementParser

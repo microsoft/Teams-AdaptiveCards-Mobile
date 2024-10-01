@@ -8,12 +8,13 @@
 
 package io.adaptivecards.objectmodel;
 
-public class Carousel {
+public class Carousel extends StyledCollectionElement {
   private transient long swigCPtr;
-  private transient boolean swigCMemOwn;
+  private transient boolean swigCMemOwnDerived;
 
   protected Carousel(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
+    super(AdaptiveCardObjectModelJNI.Carousel_SWIGSmartPtrUpcast(cPtr), true);
+    swigCMemOwnDerived = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
@@ -22,7 +23,8 @@ public class Carousel {
   }
 
   protected void swigSetCMemOwn(boolean own) {
-    swigCMemOwn = own;
+    swigCMemOwnDerived = own;
+    super.swigSetCMemOwn(own);
   }
 
   @SuppressWarnings("deprecation")
@@ -32,12 +34,13 @@ public class Carousel {
 
   public synchronized void delete() {
     if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
+      if (swigCMemOwnDerived) {
+        swigCMemOwnDerived = false;
         AdaptiveCardObjectModelJNI.delete_Carousel(swigCPtr);
       }
       swigCPtr = 0;
     }
+    super.delete();
   }
 
   public Carousel() {
@@ -68,8 +71,8 @@ public class Carousel {
     AdaptiveCardObjectModelJNI.Carousel_setPageAnimation(swigCPtr, this, value.swigValue());
   }
 
-  public BaseCardElementVector GetItems() {
-    return new BaseCardElementVector(AdaptiveCardObjectModelJNI.Carousel_GetItems__SWIG_0(swigCPtr, this), false);
+  public CarouselPageVector GetPages() {
+    return new CarouselPageVector(AdaptiveCardObjectModelJNI.Carousel_GetPages__SWIG_0(swigCPtr, this), false);
   }
 
   public void GetResourceInformation(RemoteResourceInformationVector resourceInfo) {
