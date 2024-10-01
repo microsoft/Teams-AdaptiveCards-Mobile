@@ -23,24 +23,23 @@ Carousel::Carousel() : StyledCollectionElement(CardElementType::Carousel)
 Json::Value Carousel::SerializeToJsonValue() const
 {
     Json::Value root = StyledCollectionElement::SerializeToJsonValue();
-    
+
     std::string const& itemsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Pages);
     root[itemsPropertyName] = Json::Value(Json::arrayValue);
     for (const auto& cardElement : m_pages)
     {
         root[itemsPropertyName].append(cardElement->SerializeToJsonValue());
     }
-    
+
     return root;
 }
 
-
-const std::vector<std::shared_ptr<BaseCardElement>>& Carousel::GetItems() const
+const std::vector<std::shared_ptr<CarouselPage>>& Carousel::GetPages() const
 {
     return m_pages;
 }
 
-std::vector<std::shared_ptr<BaseCardElement>>& Carousel::GetItems()
+std::vector<std::shared_ptr<CarouselPage>>& Carousel::GetPages()
 {
     return m_pages;
 }
@@ -77,17 +76,17 @@ void Carousel::DeserializeChildren(ParseContext& context, const Json::Value& val
 {
     auto elementArray = ParseUtil::GetArray(value, AdaptiveCardSchemaKey::Pages, false);
 
-    std::vector<std::shared_ptr<BaseCardElement>> elements;
+    std::vector<std::shared_ptr<CarouselPage>> elements;
     if (elementArray.empty())
     {
         return;
     }
-    
+
     elements.reserve(elementArray.size());
 
   for (const Json::Value& CarouselPage : elementArray)
     {
-        auto el = CarouselPage::Deserialize(context,CarouselPage);
+        auto el = CarouselPage::Deserialize(context, CarouselPage);
         if (el != nullptr)
         {
             elements.push_back(el);
@@ -98,13 +97,16 @@ void Carousel::DeserializeChildren(ParseContext& context, const Json::Value& val
 
 void Carousel::PopulateKnownPropertiesSet()
 {
-    m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::PageAnimation)});
+    m_knownProperties.insert({
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::PageAnimation),
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::CarouselPage)
+    });
 }
 
 void Carousel::GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo)
 {
-    auto items = GetItems();
-    StyledCollectionElement::GetResourceInformation<BaseCardElement>(resourceInfo, items);
+    auto pages = GetPages();
+    StyledCollectionElement::GetResourceInformation<CarouselPage>(resourceInfo, pages);
     return;
 }
 

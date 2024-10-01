@@ -5,6 +5,7 @@
 //  Created by Abhishek Gupta on 30/08/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
+#pragma once
 
 #include "pch.h"
 #include "BaseActionElement.h"
@@ -19,7 +20,6 @@ class Carousel : public StyledCollectionElement
 {
 public:
     Carousel();
-    Carousel(CardElementType derivedType);
     Carousel(const Carousel&) = default;
     Carousel(Carousel&&) = default;
     Carousel& operator=(const Carousel&) = default;
@@ -28,18 +28,19 @@ public:
 
     Json::Value SerializeToJsonValue() const override;
     void DeserializeChildren(ParseContext& context, const Json::Value& value) override;
-    
-     PageAnimation getPageAnimation();
-     void setPageAnimation(const PageAnimation value);
-    
-    std::vector<std::shared_ptr<BaseCardElement>>& GetItems();
-    const std::vector<std::shared_ptr<BaseCardElement>>& GetItems() const;
+
+    PageAnimation getPageAnimation();
+    void setPageAnimation(const PageAnimation value);
+
+    std::vector<std::shared_ptr<CarouselPage>>& GetPages();
+    const std::vector<std::shared_ptr<CarouselPage>>& GetPages() const;
+
     void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo) override;
 private:
     void PopulateKnownPropertiesSet();
 
     PageAnimation m_pageAnimation;
-    std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement>> m_pages;
+    std::vector<std::shared_ptr<CarouselPage>> m_pages;
 };
 
 class CarouselParser : public BaseCardElementParser
@@ -55,6 +56,6 @@ public:
     std::shared_ptr<BaseCardElement> Deserialize(ParseContext& context, const Json::Value& root) override;
     std::shared_ptr<BaseCardElement> DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& root);
     std::shared_ptr<BaseCardElement> DeserializeFromString(ParseContext& context, const std::string& jsonString) override;
-    
+
 };
 } // namespace AdaptiveCards

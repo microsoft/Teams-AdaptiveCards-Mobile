@@ -37,7 +37,7 @@ Json::Value CarouselPage::SerializeToJsonValue() const
     {
         root[itemsPropertyName].append(cardElement->SerializeToJsonValue());
     }
-    
+
     std::string const& layoutsPropertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Layouts);
     root[layoutsPropertyName] = Json::Value(Json::arrayValue);
     for (const auto& layout : m_layouts)
@@ -49,8 +49,6 @@ Json::Value CarouselPage::SerializeToJsonValue() const
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Rtl)] = m_rtl.value_or("");
     }
-
-    return root;
 
     return root;
 }
@@ -85,7 +83,7 @@ std::shared_ptr<CarouselPage> CarouselPage::DeserializeWithoutCheckingType(Parse
 {
     std::shared_ptr<CarouselPage> carouselPage = StyledCollectionElement::Deserialize<CarouselPage>(context, json);
     carouselPage->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
-    
+
     if (const auto& layoutArray = ParseUtil::GetArray(json, AdaptiveCardSchemaKey::Layouts, false); !layoutArray.empty())
     {
         auto &layouts = carouselPage->GetLayouts();
@@ -120,7 +118,7 @@ std::shared_ptr<CarouselPage> CarouselPage::DeserializeWithoutCheckingType(Parse
             }
         }
     }
-    
+
     return carouselPage;
 }
 
@@ -141,4 +139,11 @@ void CarouselPage::PopulateKnownPropertiesSet()
     m_knownProperties.insert(
             {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Items),
              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Layouts)});
+}
+
+void CarouselPage::GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo)
+{
+    auto items = GetItems();
+    StyledCollectionElement::GetResourceInformation<BaseCardElement>(resourceInfo, items);
+    return;
 }
