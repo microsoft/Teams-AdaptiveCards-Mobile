@@ -2,7 +2,6 @@
 //  ACRCarouselView.mm
 //  AdaptiveCards
 //
-//  Created by Abhishek Gupta on 25/09/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 
@@ -10,36 +9,15 @@
 #import "ACOHostConfigPrivate.h"
 #import "ACRColumnView.h"
 #import "ACRContentHoldingUIView.h"
-#import "ACRImageProperties.h"
-#import "ACRTapGestureRecognizerFactory.h"
-#import "ACRUIImageView.h"
-#import "ACRView.h"
-#import "Enums.h"
-#import "Icon.h"
-#import "SharedAdaptiveCard.h"
-#import "UtiliOS.h"
-#import "ACRSVGImageView.h"
-#import "ACRSVGIconHoldingView.h"
-#import "CompoundButton.h"
-#import "ACRCompoundButtonRenderer.h"
-#import "ACRUILabel.h"
-#import "UtiliOS.h"
-#import "ACRCarouselViewRenderer.h"
-#import "Carousel.h"
-#import "ACRRenderer.h"
-#import "FlowLayout.h"
-#import "AreaGridLayout.h"
-#import "ACRFlowLayout.h"
-#import "ARCGridViewLayout.h"
-#import "ACRLayoutHelper.h"
 #import "CarouselPage.h"
 #import "ACRRendererPrivate.h"
 #import "ACRPageControl.h"
 #import "ACRCarouselPageView.h"
 #import "ACRCarouselPageContainerView.h"
 #import "ACRCarouselView.h"
-#import "ACRCarouselView.h"
 #import "ACRCarouselPageContainerView.h"
+#import "Carousel.h"
+#import "UtiliOS.h"
 
 @interface ACRCarouselView()
 
@@ -47,6 +25,7 @@
 @property ACRPageControl *pageControl;
 @property NSMutableArray<UIView *> *carouselPageViewList;
 @property std::shared_ptr<Carousel> carousel;
+@property ACRCarouselPageContainerView *carouselPagesContainerView;
 
 @end
 
@@ -73,7 +52,8 @@
                                                          hostConfig:acoConfig
                                                           superview:viewGroup];
     
-    for(auto carouselPage: carousel->GetItems()) {
+    for(auto carouselPage: carousel->GetPages())
+    {
         
         ACOBaseCardElement *acoElement = [[ACOBaseCardElement alloc] initWithBaseCardElement:carouselPage];
         
@@ -87,13 +67,14 @@
         [self.carouselPageViewList addObject:carouselPageView];
     }
     
-    if (self.carouselPageViewList.count == 0) {
+    if (self.carouselPageViewList.count == 0)
+    {
         return self;
     }
     
-    UIView * carouselPagesContainerView = [[ACRCarouselPageContainerView alloc] initWithCarouselPageViewList:_carouselPageViewList];
-    
-    self.carouselPageViewList[0].hidden = NO;
+    ACRCarouselPageContainerView * carouselPagesContainerView = [[ACRCarouselPageContainerView alloc] initWithCarouselPageViewList:_carouselPageViewList
+                                                                                               pageAnimation:carousel->getPageAnimation()];
+    self.carouselPagesContainerView = carouselPagesContainerView;
     self.carouselPageViewIndex = 0;
     
     std::string selctedPageControlTintColor = config->GetPageControlConfig().selectedTintColor;
@@ -120,7 +101,7 @@
     [carouselStackView addArrangedSubview:[[UIView alloc] initWithFrame:CGRectZero]];
     
     configBleed(rootView, elem, carouselViewContainer, acoConfig);
-    [self constructSwipeActions:carouselViewContainer];
+  
     
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:self withAreaName:areaName];
@@ -133,129 +114,72 @@
         [self.topAnchor constraintEqualToAnchor:carouselViewContainer.topAnchor]
     ]];
     
+    [self constructGestures:self];
+    
     return self;
 }
 
--(void) constructSwipeActions:(UIView *)view {
-    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc]
-                                           initWithTarget:self
-                                           action:@selector(handleLeftSwipe:)];
-    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    leftSwipe.delegate = self;
-    [view addGestureRecognizer:leftSwipe];
-    
-    UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc]
-                                            initWithTarget:self
-                                            action:@selector(handleRightSwipe:)];
-    rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    rightSwipe.delegate = self;
-    [view addGestureRecognizer:rightSwipe];
+-(void) constructGestures:(UIView *)view
+{
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handlePanGesture:)];
+    [self addGestureRecognizer:panGesture];
+    panGesture.delegate = self;
 }
 
-- (void)handleLeftSwipe:(UISwipeGestureRecognizer *)gesture {
+- (void)handleLeftSwipe
+{
     NSInteger newCarouselPageViewIndex = MIN(self.carouselPageViewIndex+1, self.carouselPageViewList.count-1);
-    if(newCarouselPageViewIndex == self.carouselPageViewIndex) {
+    if(newCarouselPageViewIndex == self.carouselPageViewIndex)
+    {
         return;
     }
     [self.pageControl setCurrentPage:newCarouselPageViewIndex];
     
-    UIView *oldView = self.carouselPageViewList[self.carouselPageViewIndex];
-    UIView *newView = self.carouselPageViewList[newCarouselPageViewIndex];
-    
-    switch (self.carousel->getPageAnimation()) {
-        case PageAnimation::Slide:
-            [self slideAnimationForLeftSwipeForViewToHide:oldView
-                                   showView:newView];
-            break;
-        case PageAnimation::CrossFade:
-            [self crossfadeFromView:oldView toView:newView];
-        case PageAnimation::None:
-            oldView.hidden = YES;
-            newView.hidden = NO;
-        default:
-            break;
-    }
-    self.carouselPageViewIndex = newCarouselPageViewIndex;
+    [_carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
+    _carouselPageViewIndex = newCarouselPageViewIndex;
 }
 
-- (void)handleRightSwipe:(UISwipeGestureRecognizer *)gesture {
+- (void)handleRightSwipe
+{
     NSInteger newCarouselPageViewIndex = MAX(self.carouselPageViewIndex-1, 0);
     
-    if(newCarouselPageViewIndex == self.carouselPageViewIndex) {
+    if(newCarouselPageViewIndex == self.carouselPageViewIndex)
+    {
         return;
     }
     
     [self.pageControl setCurrentPage:newCarouselPageViewIndex];
-
-    UIView *oldView = self.carouselPageViewList[self.carouselPageViewIndex];
-    UIView *newView = self.carouselPageViewList[newCarouselPageViewIndex];
-    
-    switch (self.carousel->getPageAnimation()) {
-        case PageAnimation::Slide:
-            [self slideAnimationForRightSwipeForViewToHide:oldView
-                                   showView:newView];
-            break;
-        case PageAnimation::CrossFade:
-            [self crossfadeFromView:oldView toView:newView];
-        case PageAnimation::None:
-            oldView.hidden = YES;
-            newView.hidden = NO;
-        default:
-            break;
-    }
-    self.carouselPageViewIndex = newCarouselPageViewIndex;
+    [self.carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
+    _carouselPageViewIndex = newCarouselPageViewIndex;
 }
 
-- (void)crossfadeFromView:(UIView *)fromView toView:(UIView *)toView {
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gesture
+{
+    // Get the translation and velocity of the pan gesture
+    CGPoint translation = [gesture translationInView:self];
     
-    [UIView transitionWithView:fromView.superview
-                      duration:0.3
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        fromView.hidden = YES;  // Hide the current view
-                        toView.hidden = NO;    // Show the next view
-                    }
-                    completion:nil];
-}
+    // Calculate distance based on translation
+    CGFloat distance = fabs(translation.x);
 
-- (void)slideAnimationForLeftSwipeForViewToHide:(UIView *)viewToHide showView:(UIView *)viewToShow {
-    // Prepare the view to show
-    viewToShow.transform = CGAffineTransformMakeTranslation(viewToShow.bounds.size.width, 0);
-    viewToShow.hidden = NO;
-    [UIView animateWithDuration:0.3 animations:^{
-        // Slide out the current view
-        viewToHide.transform = CGAffineTransformMakeTranslation(-viewToHide.bounds.size.width, 0);
+    // Thresholds
+    CGFloat minimumSwipeDistance = 60.0;
+    
+    // Check the state of the gesture recognizer
+    if (gesture.state == UIGestureRecognizerStateEnded)
+    {
         
-        // Slide in the new view
-        viewToShow.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
-        viewToHide.hidden = YES;
-        viewToHide.transform = CGAffineTransformIdentity; // Reset transform for future use
-    }];
+        if(distance > minimumSwipeDistance)
+        {
+            if(translation.x > 0 )
+            {
+                [self handleRightSwipe];
+            } else
+            {
+                [self handleLeftSwipe];
+            }
+        }
+    }
 }
 
-- (void)slideAnimationForRightSwipeForViewToHide:(UIView *)viewToHide showView:(UIView *)viewToShow {
-    // Prepare the view to show
-    viewToShow.transform = CGAffineTransformMakeTranslation(-viewToShow.bounds.size.width, 0);
-    viewToShow.hidden = NO;
-    [UIView animateWithDuration:0.3 animations:^{
-        // Slide out the current view
-        viewToHide.transform = CGAffineTransformMakeTranslation(viewToHide.bounds.size.width, 0);
-
-        // Slide in the new view
-        viewToShow.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
-        viewToHide.hidden = YES;
-        viewToHide.transform = CGAffineTransformIdentity; // Reset transform for future use
-    }];
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    // Return NO to prevent other gesture recognizers (in superviews) from being triggered
-    return NO;
-}
 @end
-
-

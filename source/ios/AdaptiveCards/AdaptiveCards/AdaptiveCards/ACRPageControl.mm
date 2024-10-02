@@ -2,7 +2,6 @@
 //  ACRPageControl.mm
 //  AdaptiveCards
 //
-//  Created by Abhishek Gupta on 12/09/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 
@@ -13,21 +12,25 @@
 
 @implementation CircularView
 
-- (void)tintColorDidChange {
+- (void)tintColorDidChange
+{
     self.backgroundColor = self.tintColor;
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     [super layoutSubviews];
     [self updateCornerRadius];
 }
 
-- (void)setFrame:(CGRect)frame {
+- (void)setFrame:(CGRect)frame
+{
     [super setFrame:frame];
     [self updateCornerRadius];
 }
 
-- (void)updateCornerRadius {
+- (void)updateCornerRadius
+{
     self.layer.cornerRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
 }
 
@@ -85,7 +88,8 @@
     
     self.contentMode = UIViewContentModeRedraw;
     self.circleViewArray = [[NSMutableArray alloc] init];
-    for(int i=0; i<config.numberOfPages;i++) {
+    for(int i=0; i<config.numberOfPages;i++)
+    {
         CircularView * circleView = [[CircularView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
         [self.circleViewArray addObject:circleView];
         [self addSubview:circleView];
@@ -98,20 +102,24 @@
 
 // Properties
 
-- (CGSize)contentSize {
+- (CGSize)contentSize
+{
     CGFloat height = _diameter;
     return CGSizeMake(self.requiredLength, height);
 }
 
-- (CGSize)intrinsicContentSize {
+- (CGSize)intrinsicContentSize
+{
     return self.shouldBeHidden ? CGSizeZero : [self contentSize];
 }
 
-- (CGSize)sizeThatFits:(CGSize)size {
+- (CGSize)sizeThatFits:(CGSize)size
+{
     return [self contentSize];
 }
 
-- (void)setCurrentPage:(NSInteger)currentPage {
+- (void)setCurrentPage:(NSInteger)currentPage
+{
         _currentPage = currentPage;
     
     [UIView animateWithDuration:0.5 animations:^{
@@ -125,21 +133,25 @@
     [self updatePositions];
 }
 
-- (BOOL)shouldBeHidden {
+- (BOOL)shouldBeHidden
+{
     return self.config.numberOfPages == 0 || (self.config.hidesForSinglePage.boolValue && self.config.numberOfPages == 1) || self.config == nil;
 }
 
-- (CGFloat)requiredLength {
+- (CGFloat)requiredLength
+{
     if (self.shouldBeHidden) return 0.0;
     CGFloat diameterSum = (self.displayPages - 1) * _spacing + _diameter;
     return diameterSum + MAX(0.0, (self.displayPages - 1)) * _spacing;
 }
 
-- (NSInteger)numberOfPages {
+- (NSInteger)numberOfPages
+{
     return self.config.numberOfPages;
 }
 
-- (NSInteger)displayPages {
+- (NSInteger)displayPages
+{
     if (self.config.displayPages) {
         return MIN(self.config.displayPages.integerValue, self.config.numberOfPages);
     }
@@ -154,22 +166,27 @@
     BOOL leadingHalfSize = NO;
     BOOL trailingHalfSize = NO;
     
-    if (self.config.displayPages && self.config.displayPages.integerValue < self.numberOfPages) {
+    if (self.config.displayPages && self.config.displayPages.integerValue < self.numberOfPages)
+    {
             NSInteger adjustedPage = (NSInteger)((_currentPage + 1) / 3) * 3;
             NSInteger halfDisplayPages = self.config.displayPages.integerValue / 2;
-            if (_currentPage <= halfDisplayPages) {
+            if (_currentPage <= halfDisplayPages)
+            {
                 visibleViewStartIndex = 0;
-            } else if (adjustedPage >= self.numberOfPages - halfDisplayPages) {
+            } else if (adjustedPage >= self.numberOfPages - halfDisplayPages)
+            {
                 visibleViewStartIndex = self.numberOfPages - self.config.displayPages.integerValue;
-            } else {
+            } else
+            {
                 visibleViewStartIndex = _currentPage - halfDisplayPages;
             }
         
             leadingHalfSize =  _currentPage - halfDisplayPages > 0;
             trailingHalfSize =  _currentPage + halfDisplayPages < self.numberOfPages;
-        } else {
-            visibleViewStartIndex = 0;
-        }
+    } else
+    {
+        visibleViewStartIndex = 0;
+    }
     
     NSInteger currentPage = MIN(MAX(self.currentPage, 0), self.numberOfPages - 1);
     
@@ -177,12 +194,10 @@
     
     point.x -= _spacing *(visibleViewStartIndex);
     
-    for(NSInteger i =0 ; i< self.numberOfPages; i++) {
+    for(NSInteger i =0 ; i< self.numberOfPages; i++)
+    {
         
         BOOL isSelectedPage = (i == currentPage);
-
-     
-        
         CGFloat scale;
         NSInteger distance = abs(i-_currentPage);
         if(distance == 0) {

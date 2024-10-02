@@ -2,7 +2,6 @@
 //  ACRPageControl.h
 //  AdaptiveCards
 //
-//  Created by Abhishek Gupta on 12/09/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 

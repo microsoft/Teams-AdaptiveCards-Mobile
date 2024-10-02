@@ -411,8 +411,12 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carousel);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
-
-            std::vector<std::shared_ptr<BaseCardElement>> &new_body = carousel->GetItems();
+            
+            std::vector<std::shared_ptr<BaseCardElement>> new_body;
+            
+            for(auto &carouselPage: carousel->GetPages()) {
+                new_body.push_back(carouselPage);
+            }
             [self addBaseCardElementListToConcurrentQueue:new_body registration:registration];
             break;
         }

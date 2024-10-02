@@ -2,39 +2,17 @@
 //  ACRCarouselPageView.mm
 //  AdaptiveCards
 //
-//  Created by Abhishek Gupta on 25/09/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 
 #import "ACOBaseCardElementPrivate.h"
 #import "ACOHostConfigPrivate.h"
-#import "ACRColumnView.h"
-#import "ACRContentHoldingUIView.h"
-#import "ACRImageProperties.h"
-#import "ACRTapGestureRecognizerFactory.h"
-#import "ACRUIImageView.h"
-#import "ACRView.h"
-#import "Enums.h"
-#import "Icon.h"
-#import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
-#import "ACRSVGImageView.h"
-#import "ACRSVGIconHoldingView.h"
-#import "CompoundButton.h"
-#import "ACRCompoundButtonRenderer.h"
-#import "ACRUILabel.h"
-#import "UtiliOS.h"
-#import "ACRCarouselViewRenderer.h"
-#import "Carousel.h"
-#import "ACRRenderer.h"
-#import "FlowLayout.h"
-#import "AreaGridLayout.h"
 #import "ACRFlowLayout.h"
 #import "ARCGridViewLayout.h"
 #import "ACRLayoutHelper.h"
 #import "CarouselPage.h"
 #import "ACRRendererPrivate.h"
-#import "ACRPageControl.h"
 #import "ACRCarouselPageView.h"
 
 @implementation ACRCarouselPageView

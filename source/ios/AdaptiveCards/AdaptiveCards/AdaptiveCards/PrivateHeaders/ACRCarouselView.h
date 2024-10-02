@@ -2,7 +2,6 @@
 //  ACRCarouselView.h
 //  AdaptiveCards
 //
-//  Created by Abhishek Gupta on 25/09/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 
@@ -11,7 +10,7 @@
 #import "ACRView.h"
 #import <UIKit/UIKit.h>
 
-@interface ACRCarouselView : UIView
+@interface ACRCarouselView : UIView<UIGestureRecognizerDelegate>
 
 -(instancetype) initWithViewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
                       rootView:(ACRView *)rootView

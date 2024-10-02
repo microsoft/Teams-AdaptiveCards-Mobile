@@ -159,10 +159,10 @@ using namespace AdaptiveCards;
         case CardElementType::Carousel:
         {
             std::shared_ptr<Carousel> carousel = std::dynamic_pointer_cast<Carousel>(elem);
-            long numberOfItems = carousel->GetItems().size();
+            long numberOfItems = carousel->GetPages().size();
             if(numberOfItems > 0)
             {
-                for (const auto &item : carousel->GetItems())
+                for (const auto &item : carousel->GetPages())
                 {
                     [self distribute:parentWidth rootView:rootView forElement:item andHostConfig:config];
                 }
@@ -280,7 +280,7 @@ using namespace AdaptiveCards;
             
             BOOL isFlow = NO;
             
-            for (const auto &item : carousel->GetItems())
+            for (const auto &item : carousel->GetPages())
             {
                 isFlow = isFlow || ([self shouldUseNewLayoutForView:rootView forElement:item andHostConfig:config]);
             }

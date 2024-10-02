@@ -2,7 +2,6 @@
 //  ACRCarouselPageContainerView.h
 //  AdaptiveCards
 //
-//  Created by Abhishek Gupta on 25/09/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 
@@ -13,6 +12,7 @@
 
 @interface ACRCarouselPageContainerView : UIView
 
--(instancetype) initWithCarouselPageViewList:(NSMutableArray<UIView *> *)initWithCarouselPageViewList;
+-(instancetype) initWithCarouselPageViewList:(NSMutableArray<UIView *> *)initWithCarouselPageViewList pageAnimation:(PageAnimation) pageAnimation;
+-(void) setCurrentPage:(NSInteger) page;
 
 @end
