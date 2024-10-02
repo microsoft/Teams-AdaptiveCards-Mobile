@@ -29,4 +29,4 @@ steps:
     signingOption: 'default'
     sdk: 'iphonesimulator'
     destinationPlatformOption: 'iOS'
-    destinationSimulators: 'iPhone 12'
+    destinationSimulators: 'iPhone 15'
