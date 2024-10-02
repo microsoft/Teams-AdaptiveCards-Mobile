@@ -2,7 +2,6 @@
 //  AdaptiveCardCarouselTests.cpp
 //  AdaptiveCardsTests
 //
-//  Created by Abhishek Gupta on 24/09/24.
 //  Copyright © 2024 Microsoft. All rights reserved.
 //
 

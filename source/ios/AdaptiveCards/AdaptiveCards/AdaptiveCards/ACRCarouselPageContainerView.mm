@@ -25,7 +25,8 @@
     self.pageAnimation = pageAnimation;
     self.carouselPageViewIndex = 0;
     
-    for(UIView *carouselPageView in carouselPageViewList) {
+    for(UIView *carouselPageView in carouselPageViewList)
+    {
         carouselPageView.translatesAutoresizingMaskIntoConstraints = NO;
         carouselPageView.clipsToBounds = YES;
         carouselPageView.hidden = YES;

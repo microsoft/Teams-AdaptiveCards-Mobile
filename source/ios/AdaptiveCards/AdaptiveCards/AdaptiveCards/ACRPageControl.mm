@@ -202,13 +202,16 @@
         NSInteger distance = abs(i-_currentPage);
         if(distance == 0) {
             scale = 1;
-        } else if(distance <=2) {
+        } else if(distance <=2)
+        {
             scale = 0.6;
         }
-        else if (distance == 3) {
+        else if (distance == 3)
+        {
             scale = 0.4;
         }
-        else {
+        else
+        {
             scale = 0;
         }
         
