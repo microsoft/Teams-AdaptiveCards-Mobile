@@ -16,6 +16,7 @@ steps:
     signingOption: 'default'
     sdk: 'iphonesimulator'
     destinationPlatformOption: 'iOS'
+    destinationSimulators: 'iPhone 15 Pro'
 
 - task: Xcode@5
   displayName: 'Framework Unit Test'
@@ -28,3 +29,4 @@ steps:
     signingOption: 'default'
     sdk: 'iphonesimulator'
     destinationPlatformOption: 'iOS'
+    destinationSimulators: 'iPhone 15 Pro'
