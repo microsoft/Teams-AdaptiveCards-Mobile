@@ -90,6 +90,11 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
                                                                                   AdaptiveCardSchemaKey::CompoundButton,
                                                                                   result._compoundButtonConfig,
                                                                                   CompoundButtonConfig::Deserialize);
+    
+    result._pageControlConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<PageControlConfig>(json,
+                                                                                                  AdaptiveCardSchemaKey::PageControl,
+                                                                                                  result._pageControlConfig,
+                                                                                                  PageControlConfig::Deserialize);
     return result;
 }
 
@@ -541,6 +546,13 @@ CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, 
     result.borderColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BorderColor, result.borderColor);
     return result;
 }
+
+PageControlConfig PageControlConfig::Deserialize(const Json::Value &json, const PageControlConfig &defaultValue)
+{
+    PageControlConfig result;
+    result.selectedTintColor =  ParseUtil::GetString(json, AdaptiveCardSchemaKey::SelectedTintColor, result.selectedTintColor);
+    return result;
+};
 
 BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig &defaultValue)
 {
@@ -1055,4 +1067,14 @@ CompoundButtonConfig HostConfig::GetCompoundButtonConfig() const
 void  HostConfig::SetCompoundButtonConfig(const CompoundButtonConfig value)
 {
     _compoundButtonConfig = value;
+}
+
+PageControlConfig HostConfig::GetPageControlConfig() const
+{
+    return _pageControlConfig;
+}
+
+void HostConfig::SetPageControlConfig(const PageControlConfig value)
+{
+    _pageControlConfig = value;
 }

@@ -418,6 +418,13 @@ struct CompoundButtonConfig
     static CompoundButtonConfig Deserialize(const Json::Value& json, const CompoundButtonConfig& defaultValue);
 };
 
+struct PageControlConfig
+{
+    std::string selectedTintColor = "#5B5FC7";
+    std::string unselectedTintColor = "#6E6E6E";
+    static PageControlConfig Deserialize(const Json::Value& json, const PageControlConfig& defaultValue);
+};
+
 class HostConfig
 {
 public:
@@ -508,6 +515,9 @@ public:
 
     CompoundButtonConfig GetCompoundButtonConfig() const;
     void SetCompoundButtonConfig(const CompoundButtonConfig value);
+    
+    PageControlConfig GetPageControlConfig() const;
+    void SetPageControlConfig(const PageControlConfig value);
 
 private:
     const ContainerStyleDefinition& GetContainerStyle(ContainerStyle style) const;
@@ -539,5 +549,6 @@ private:
     Json::Value _borderWidth;
     Json::Value _cornerRadius;
     CompoundButtonConfig _compoundButtonConfig;
+    PageControlConfig _pageControlConfig;
 };
 } // namespace AdaptiveCards

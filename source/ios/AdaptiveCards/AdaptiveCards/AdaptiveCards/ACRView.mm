@@ -40,6 +40,8 @@
 #import "TextInput.h"
 #import "TextRun.h"
 #import "UtiliOS.h"
+#import "CarouselPage.h"
+#import "Carousel.h"
 #import <AVFoundation/AVFoundation.h>
 
 using namespace AdaptiveCards;
@@ -401,6 +403,23 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             [self addBaseCardElementListToConcurrentQueue:new_body registration:registration];
             break;
         }
+        case CardElementType::Carousel: {
+            std::shared_ptr<Carousel> carousel = std::static_pointer_cast<Carousel>(elem);
+
+            auto backgroundImageProperties = carousel->GetBackgroundImage();
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+                ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carousel);
+                [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
+            }
+            
+            std::vector<std::shared_ptr<BaseCardElement>> new_body;
+            
+            for(auto &carouselPage: carousel->GetPages()) {
+                new_body.push_back(carouselPage);
+            }
+            [self addBaseCardElementListToConcurrentQueue:new_body registration:registration];
+            break;
+        }
         // continue on search
         case CardElementType::ColumnSet: {
             std::shared_ptr<ColumnSet> columSet = std::static_pointer_cast<ColumnSet>(elem);
@@ -430,6 +449,17 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             [self loadImagesForActionsAndCheckIfAllActionsHaveIconImages:actions hostconfig:_hostConfig hash:iOSInternalIdHash(actionSet->GetInternalId().Hash())];
             break;
         }
+            
+        case CardElementType::CarouselPage: {
+            std::shared_ptr<CarouselPage> carouselPage = std::static_pointer_cast<CarouselPage>(elem);
+            auto backgroundImageProperties = carouselPage->GetBackgroundImage();
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+                ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carouselPage);
+                [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
+            }
+            [self addBaseCardElementListToConcurrentQueue:carouselPage->GetItems() registration:registration];
+        }
+            
         case AdaptiveCards::CardElementType::AdaptiveCard:
         case AdaptiveCards::CardElementType::ChoiceInput:
         case AdaptiveCards::CardElementType::ChoiceSetInput:

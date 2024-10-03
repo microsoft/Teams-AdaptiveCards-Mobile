@@ -331,5 +331,8 @@
             "backgroundColor":"#5B5FC7"
         },
         "borderColor":"#E1E1E1"
+    },
+    "pageControl":{
+        "selectedTintColor":"#5B5FC7"
     }
 }
