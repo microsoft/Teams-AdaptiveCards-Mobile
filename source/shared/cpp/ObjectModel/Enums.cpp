@@ -20,6 +20,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::AllowCustomStyle, "allowCustomStyle"},
             {AdaptiveCardSchemaKey::AllowInlinePlayback, "allowInlinePlayback"},
             {AdaptiveCardSchemaKey::AltText, "altText"},
+            {AdaptiveCardSchemaKey::Appearance, "appearance"},
+            {AdaptiveCardSchemaKey::IconPosition, "iconPosition"},
             {AdaptiveCardSchemaKey::Name, "name"},
             {AdaptiveCardSchemaKey::AssociatedInputs, "associatedInputs"},
             {AdaptiveCardSchemaKey::Attention, "attention"},
@@ -251,6 +253,7 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
             {CardElementType::AdaptiveCard, "AdaptiveCard"},
+            {CardElementType::Badge, "Badge"},
             {CardElementType::ChoiceSetInput, "Input.ChoiceSet"},
             {CardElementType::Column, "Column"},
             {CardElementType::ColumnSet, "ColumnSet"},
@@ -295,7 +298,7 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(RatingSize, {
             {RatingSize::Medium, "medium"},
             {RatingSize::Large, "large"}});
-    
+
     DEFINE_ADAPTIVECARD_ENUM(RatingColor, {
             {RatingColor::Neutral, "neutral"},
             {RatingColor::Marigold, "marigold"}});
@@ -500,4 +503,37 @@ namespace AdaptiveCards
 
     DEFINE_ADAPTIVECARD_ENUM(ValueChangedActionType, {
             {ValueChangedActionType::ResetInputs, "Action.ResetInputs"},});
+
+    DEFINE_ADAPTIVECARD_ENUM(IconPosition, {
+        {IconPosition::Before, "Before"},
+        {IconPosition::After, "After"},
+    });
+
+    DEFINE_ADAPTIVECARD_ENUM(Shape, {
+        {Shape::Square, "Square"},
+        {Shape::Rounded, "Rounded"},
+        {Shape::Circular, "Circular"}
+    });
+
+    DEFINE_ADAPTIVECARD_ENUM(BadgeStyle, {
+        {BadgeStyle::Default, "Default"},
+        {BadgeStyle::Accent, "Accent"},
+        {BadgeStyle::Attention, "Attention"},
+        {BadgeStyle::Good, "Good"},
+        {BadgeStyle::Informative, "Informative"},
+        {BadgeStyle::Subtle, "Subtle"},
+        {BadgeStyle::Warning, "Warning"},
+    });
+
+    DEFINE_ADAPTIVECARD_ENUM(BadgeSize, {
+        {BadgeSize::Medium, "Medium"},
+        {BadgeSize::Large, "Large"},
+        {BadgeSize::ExtraLarge, "ExtraLarge"}
+    });
+
+    DEFINE_ADAPTIVECARD_ENUM(BadgeAppearance, {
+        {BadgeAppearance::Filled, "Filled"},
+        {BadgeAppearance::Tint, "Tint"},
+    });
+
 }

@@ -24,6 +24,7 @@
 #include "UnknownElement.h"
 #include "RatingInput.h"
 #include "RatingLabel.h"
+#include "Badge.h"
 
 namespace AdaptiveCards
 {
@@ -53,6 +54,7 @@ ElementParserRegistration::ElementParserRegistration()
 {
     m_knownElements.insert(
                            {CardElementTypeToString(CardElementType::ActionSet),
+                               CardElementTypeToString(CardElementType::Badge),
                                CardElementTypeToString(CardElementType::ChoiceSetInput),
                                CardElementTypeToString(CardElementType::Column),
                                CardElementTypeToString(CardElementType::ColumnSet),
@@ -77,6 +79,7 @@ ElementParserRegistration::ElementParserRegistration()
 
     m_cardElementParsers.insert(
         {{CardElementTypeToString(CardElementType::ActionSet), std::make_shared<ActionSetParser>()},
+         {CardElementTypeToString(CardElementType::Badge), std::make_shared<BadgeParser>()},
          {CardElementTypeToString(CardElementType::ChoiceSetInput), std::make_shared<ChoiceSetInputParser>()},
          {CardElementTypeToString(CardElementType::Column), std::make_shared<ColumnParser>()},
          {CardElementTypeToString(CardElementType::ColumnSet), std::make_shared<ColumnSetParser>()},
