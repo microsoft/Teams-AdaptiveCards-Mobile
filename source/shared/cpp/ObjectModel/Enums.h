@@ -22,6 +22,7 @@ enum class AdaptiveCardSchemaKey
     AllowCustomStyle,
     AllowInlinePlayback,
     AltText,
+    Appearance,
     Name,
     AssociatedInputs,
     Attention,
@@ -37,6 +38,7 @@ enum class AdaptiveCardSchemaKey
     BorderColor,
     Bottom,
     Badge,
+    BadgeStyle,
     ButtonSpacing,
     Buttons,
     CaptionSources,
@@ -103,6 +105,7 @@ enum class AdaptiveCardSchemaKey
     Id,
     Image,
     Icon,
+    IconPosition,
     ImageBaseUrl,
     ImageSet,
     ImageSize,
@@ -171,6 +174,7 @@ enum class AdaptiveCardSchemaKey
     Schema,
     SelectAction,
     Separator,
+    Shape,
     ShowActionMode,
     ShowCard,
     ShowCardActionConfig,
@@ -257,6 +261,7 @@ enum class CardElementType
     // When the order of existing enums are changed, corresponding changes are needed in iOS (ACOBaseCardElement.h)
     ActionSet = 0,
     AdaptiveCard,
+    Badge,
     ChoiceInput,
     ChoiceSetInput,
     Column,
@@ -702,4 +707,45 @@ enum class ValueChangedActionType
 };
 DECLARE_ADAPTIVECARD_ENUM(ValueChangedActionType);
 
+enum class IconPosition
+{
+   Before,
+   After
+};
+DECLARE_ADAPTIVECARD_ENUM(IconPosition);
+
+enum class Shape
+{
+    Square,
+    Rounded,
+    Circular
+};
+DECLARE_ADAPTIVECARD_ENUM(Shape);
+
+enum class BadgeStyle
+{
+    Default,
+    Accent,
+    Attention,
+    Good,
+    Informative,
+    Subtle,
+    Warning
+};
+DECLARE_ADAPTIVECARD_ENUM(BadgeStyle);
+
+enum class BadgeSize
+{
+    Medium,
+    Large,
+    ExtraLarge
+};
+DECLARE_ADAPTIVECARD_ENUM(BadgeSize);
+
+enum class BadgeAppearance
+{
+    Filled,
+    Tint
+};
+DECLARE_ADAPTIVECARD_ENUM(BadgeAppearance);
 } // namespace AdaptiveCards
