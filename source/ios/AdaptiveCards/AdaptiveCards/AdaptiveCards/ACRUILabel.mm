@@ -48,6 +48,7 @@
         }
     }
     _area = area;
+    [self updateAccessibility];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -88,6 +89,12 @@
             }
         }
     }
+}
+
+- (void)updateAccessibility
+{
+    self.isAccessibilityElement = YES;
+    self.accessibilityHint = self.text;
 }
 
 - (ACRBaseTarget *)retrieveTarget:(UIGestureRecognizer *)gestureRecognizer
