@@ -279,7 +279,6 @@ enum class CardElementType
     NumberInput,
     RatingInput,
     RatingLabel,
-    Unknown,
     RichTextBlock,
     Table,
     TableCell,
@@ -290,7 +289,8 @@ enum class CardElementType
     ToggleInput,
     CompoundButton,
     Carousel,
-    CarouselPage
+    CarouselPage,
+    Unknown
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);
 
