@@ -26,7 +26,8 @@
 @property NSMutableArray<UIView *> *carouselPageViewList;
 @property std::shared_ptr<Carousel> carousel;
 @property ACRCarouselPageContainerView *carouselPagesContainerView;
-
+@property UISwipeGestureRecognizer *rightSwipeGesture;
+@property UISwipeGestureRecognizer *leftSwipeGesture;
 @end
 
 @implementation ACRCarouselView
@@ -121,26 +122,34 @@
 
 -(void) constructGestures:(UIView *)view
 {
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]
-                                          initWithTarget:self action:@selector(handlePanGesture:)];
-    [self addGestureRecognizer:panGesture];
-    panGesture.delegate = self;
+    _leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                  action:@selector(handleLeftSwipe:)];
+    
+    _leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+    _leftSwipeGesture.delegate = self;
+    [self addGestureRecognizer:_leftSwipeGesture];
+    
+   _rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                  action:@selector(handleRightSwipe:)];
+    _rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    _rightSwipeGesture.delegate = self;
+    [self addGestureRecognizer:_rightSwipeGesture];
 }
 
-- (void)handleLeftSwipe
+- (void)handleLeftSwipe:(UISwipeGestureRecognizer *)gesture
 {
     NSInteger newCarouselPageViewIndex = MIN(self.carouselPageViewIndex+1, self.carouselPageViewList.count-1);
     if(newCarouselPageViewIndex == self.carouselPageViewIndex)
     {
         return;
     }
-    [self.pageControl setCurrentPage:newCarouselPageViewIndex];
+    [_pageControl setCurrentPage:newCarouselPageViewIndex];
     
     [_carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
     _carouselPageViewIndex = newCarouselPageViewIndex;
 }
 
-- (void)handleRightSwipe
+- (void)handleRightSwipe:(UISwipeGestureRecognizer *)gesture
 {
     NSInteger newCarouselPageViewIndex = MAX(self.carouselPageViewIndex-1, 0);
     
@@ -149,37 +158,27 @@
         return;
     }
     
-    [self.pageControl setCurrentPage:newCarouselPageViewIndex];
-    [self.carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
+    [_pageControl setCurrentPage:newCarouselPageViewIndex];
+    [_carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
     _carouselPageViewIndex = newCarouselPageViewIndex;
 }
 
-- (void)handlePanGesture:(UIPanGestureRecognizer *)gesture
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    // Get the translation and velocity of the pan gesture
-    CGPoint translation = [gesture translationInView:self];
-    
-    // Calculate distance based on translation
-    CGFloat distance = fabs(translation.x);
-
-    // Thresholds
-    CGFloat minimumSwipeDistance = 60.0;
-    
-    // Check the state of the gesture recognizer
-    if (gesture.state == UIGestureRecognizerStateEnded)
+    // Do not begin the pan until the swipe fails.
+    if (gestureRecognizer == self.leftSwipeGesture &&
+        [otherGestureRecognizer isKindOfClass:UIPanGestureRecognizer.class])
     {
-        
-        if(distance > minimumSwipeDistance)
-        {
-            if(translation.x > 0 )
-            {
-                [self handleRightSwipe];
-            } else
-            {
-                [self handleLeftSwipe];
-            }
-        }
+        return YES;
     }
+    
+    if (gestureRecognizer == self.rightSwipeGesture &&
+        [otherGestureRecognizer isKindOfClass:UIPanGestureRecognizer.class])
+    {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end
