@@ -44,4 +44,19 @@ namespace AdaptiveCards
             std::vector<std::shared_ptr<Layout>> m_layouts;
             std::optional<bool> m_rtl;
     };
+
+    class CarouselPageParser : public BaseCardElementParser
+    {
+        public:
+            CarouselPageParser() = default;
+            CarouselPageParser(const CarouselPageParser&) = default;
+            CarouselPageParser(CarouselPageParser&&) = default;
+            CarouselPageParser& operator=(const class CarouselPageParser&) = default;
+            CarouselPageParser& operator=(CarouselPageParser&&) = default;
+            virtual ~CarouselPageParser() = default;
+
+            std::shared_ptr<BaseCardElement> Deserialize(ParseContext& context, const Json::Value& root) override;
+            std::shared_ptr<BaseCardElement> DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& root);
+            std::shared_ptr<BaseCardElement> DeserializeFromString(ParseContext& context, const std::string& jsonString) override;
+    };
 }
