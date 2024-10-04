@@ -164,6 +164,18 @@
                     UIColor *highlightColor = [acoConfig getHighlightColor:style
                                                            foregroundColor:textRun->GetTextColor().value_or(ForegroundColor::Default)
                                                               subtleOption:textRun->GetIsSubtle().value_or(false)];
+                    #if TARGET_OS_VISION
+                    // Reduce alpha component and add shadow to ensure is visible on Vision Pro
+                    highlightColor = [highlightColor colorWithAlphaComponent:0.3];
+                    
+                    NSShadow *shadow = [[NSShadow alloc] init];
+                    [shadow setShadowColor:[UIColor darkGrayColor]];
+                    [shadow setShadowOffset:CGSizeMake(0, 1.0f)];
+                    [textRunContent addAttribute:NSShadowAttributeName
+                                           value:shadow
+                                           range:NSMakeRange(0, textRunContent.length)];
+                    #endif
+                    
                     [textRunContent addAttribute:NSBackgroundColorAttributeName
                                            value:highlightColor
                                            range:NSMakeRange(0, textRunContent.length)];
