@@ -32,6 +32,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::BaseCardElement, "baseCardElement"},
             {AdaptiveCardSchemaKey::BaseContainerStyle, "baseContainerStyle"},
             {AdaptiveCardSchemaKey::Badge,"badge"},
+            {AdaptiveCardSchemaKey::BadgeStyles, "badgeStyles"},
             {AdaptiveCardSchemaKey::Bleed, "bleed"},
             {AdaptiveCardSchemaKey::Body, "body"},
             {AdaptiveCardSchemaKey::Bolder, "bolder"},
@@ -78,6 +79,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Fallback, "fallback"},
             {AdaptiveCardSchemaKey::FallbackText, "fallbackText"},
             {AdaptiveCardSchemaKey::FillMode, "fillMode"},
+            {AdaptiveCardSchemaKey::Filled, "Filled"},
             {AdaptiveCardSchemaKey::FirstRowAsHeaders, "firstRowAsHeaders"},
             {AdaptiveCardSchemaKey::FontFamily, "fontFamily"},
             {AdaptiveCardSchemaKey::FontSizes, "fontSizes"},
@@ -108,6 +110,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ImageSize, "imageSize"},
             {AdaptiveCardSchemaKey::ImageSizes, "imageSizes"},
             {AdaptiveCardSchemaKey::Images, "images"},
+            {AdaptiveCardSchemaKey::Informative, "informative"},
             {AdaptiveCardSchemaKey::InlineAction, "inlineAction"},
             {AdaptiveCardSchemaKey::InlineTopMargin, "inlineTopMargin"},
             {AdaptiveCardSchemaKey::Inlines, "inlines"},
@@ -209,6 +212,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Thickness, "thickness"},
             {AdaptiveCardSchemaKey::TimeInput, "timeInput"},
             {AdaptiveCardSchemaKey::Title, "title"},
+            {AdaptiveCardSchemaKey::Tint, "Tint"},
             {AdaptiveCardSchemaKey::ToggleInput, "toggleInput"},
             {AdaptiveCardSchemaKey::Layout, "Layout"},
             {AdaptiveCardSchemaKey::ItemFit, "itemFit"},
@@ -248,6 +252,9 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Weight, "weight"},
             {AdaptiveCardSchemaKey::Width, "width"},
             {AdaptiveCardSchemaKey::CompoundButton,"compoundButton"},
+            {AdaptiveCardSchemaKey::TextColor, "textColor"},
+            {AdaptiveCardSchemaKey::StrokeColor, "strokeColor"},
+            {AdaptiveCardSchemaKey::Shape, "shape"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {

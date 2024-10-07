@@ -280,4 +280,12 @@ public class HostConfig {
     AdaptiveCardObjectModelJNI.HostConfig_SetCompoundButtonConfig(swigCPtr, this, CompoundButtonConfig.getCPtr(value), value);
   }
 
+  public BadgeStylesDefinition GetBadgeStyles() {
+    return new BadgeStylesDefinition(AdaptiveCardObjectModelJNI.HostConfig_GetBadgeStyles(swigCPtr, this), true);
+  }
+
+  public void SetBadgeStyles(BadgeStylesDefinition value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetBadgeStyles(swigCPtr, this, BadgeStylesDefinition.getCPtr(value), value);
+  }
+
 }

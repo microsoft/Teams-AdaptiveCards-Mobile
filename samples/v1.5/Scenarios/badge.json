@@ -31,7 +31,6 @@
 					"type": "Badge",
 					"text": "Medium with icon",
 					"icon": "Calendar",
-					"iconPosition": "After",
 					"horizontalAlignment": "Center"
 				},
 				{
@@ -44,7 +43,7 @@
 					"type": "Badge",
 					"text": "Large with rounded corners and icon",
 					"icon": "Calendar",
-					"shape": "rounded",
+					"shape": "Rounded",
 					"style": "Attention",
 					"size": "large",
 					"horizontalAlignment": "Center"
@@ -59,7 +58,7 @@
 					"type": "Badge",
 					"text": "Large with square corners and icon",
 					"icon": "Calendar",
-					"shape": "square",
+					"shape": "Square",
 					"style": "Accent",
 					"size": "large"
 				},
@@ -74,7 +73,7 @@
 				{
 					"type": "Badge",
 					"text": "ExtraLarge with rounded corners and icon on the right",
-					"shape": "rounded",
+					"shape": "Rounded",
 					"icon": "Calendar",
 					"iconPosition": "After",
 					"size": "extraLarge",

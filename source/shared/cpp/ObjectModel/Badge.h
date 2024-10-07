@@ -33,6 +33,9 @@ public:
     std::string GetBadgeIcon() const;
     void SetBadgeIcon(const std::string& value);
 
+    std::string GetTooltip() const;
+    void SetTooltip(const std::string& value);
+
     BadgeStyle GetBadgeStyle() const;
     void SetBadgeStyle(BadgeStyle value);
 
@@ -52,6 +55,7 @@ private:
     void PopulateKnownPropertiesSet();
     std::string  m_text;
     std::string m_icon;
+    std::string m_tooltip;
     BadgeStyle m_badgeStyle;
     Shape m_shape;
     BadgeSize m_badgeSize;

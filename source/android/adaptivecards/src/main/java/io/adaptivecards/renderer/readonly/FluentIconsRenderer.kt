@@ -3,6 +3,7 @@
 package io.adaptivecards.renderer.readonly
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
         val icon = Util.castTo(baseCardElement, Icon::class.java)
         val view = ImageView(context)
         val svgURL = Util.getSvgInfoUrl(icon.GetSVGPath())
+        Log.e("PRPATWA", "svgUrl $svgURL")
         val foregroundColor = hostConfig.GetForegroundColor(ContainerStyle.Default, icon.forgroundColor, false)
         val isFilledStyle = icon.iconStyle == IconStyle.Filled
 

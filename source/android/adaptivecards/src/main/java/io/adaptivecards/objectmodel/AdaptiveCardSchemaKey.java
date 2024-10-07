@@ -39,7 +39,7 @@ public enum AdaptiveCardSchemaKey {
   BorderColor,
   Bottom,
   Badge,
-  BadgeStyle,
+  BadgeStyles,
   ButtonSpacing,
   Buttons,
   CaptionSources,
@@ -112,6 +112,7 @@ public enum AdaptiveCardSchemaKey {
   ImageSize,
   ImageSizes,
   Images,
+  Informative,
   InlineAction,
   InlineTopMargin,
   Inlines,
@@ -224,6 +225,7 @@ public enum AdaptiveCardSchemaKey {
   EmptyStar,
   RatingTextColor,
   CountTextColor,
+  TextColor,
   TextWeight,
   Thickness,
   TimeInput,
@@ -253,7 +255,10 @@ public enum AdaptiveCardSchemaKey {
   Weight,
   Width,
   Wrap,
-  CompoundButton;
+  CompoundButton,
+  Filled,
+  Tint,
+  StrokeColor;
 
   public final int swigValue() {
     return swigValue;

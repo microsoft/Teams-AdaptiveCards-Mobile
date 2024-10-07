@@ -38,7 +38,7 @@ enum class AdaptiveCardSchemaKey
     BorderColor,
     Bottom,
     Badge,
-    BadgeStyle,
+    BadgeStyles,
     ButtonSpacing,
     Buttons,
     CaptionSources,
@@ -111,6 +111,7 @@ enum class AdaptiveCardSchemaKey
     ImageSize,
     ImageSizes,
     Images,
+    Informative,
     InlineAction,
     InlineTopMargin,
     Inlines,
@@ -223,6 +224,7 @@ enum class AdaptiveCardSchemaKey
     EmptyStar,
     RatingTextColor,
     CountTextColor,
+    TextColor,
     TextWeight,
     Thickness,
     TimeInput,
@@ -252,7 +254,10 @@ enum class AdaptiveCardSchemaKey
     Weight,
     Width,
     Wrap,
-    CompoundButton
+    CompoundButton,
+    Filled,
+    Tint,
+    StrokeColor
 };
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 

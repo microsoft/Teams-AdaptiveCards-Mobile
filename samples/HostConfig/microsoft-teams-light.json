@@ -62,6 +62,92 @@
     "textBlock": {
         "headingLevel": 2
     },
+	"badgeStyles": {
+		"default": {
+			"Filled": {
+				"backgroundColor": "#212121",
+				"strokeColor": "#212121",
+				"textColor": "#ffffff"
+			},
+			"Tint": {
+				"backgroundColor": "#6E6E6E",
+				"strokeColor": "#6E6E6E",
+				"textColor": "#ffffff"
+			}
+		},
+		"accent": {
+			"Filled": {
+				"backgroundColor": "#5B5FC7",
+				"strokeColor": "#5B5FC7",
+				"textColor": "#ffffff"
+			},
+			"Tint": {
+				"backgroundColor": "#E8EBFA",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#5b5fc7"
+			}
+		},
+		"attention": {
+			"Filled": {
+				"backgroundColor": "#d92c2c",
+				"strokeColor": "#d92c2c",
+				"textColor": "#ffffff"
+			},
+			"Tint": {
+				"backgroundColor": "#F9D9D9",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#d92c2c"
+			}
+		},
+		"good": {
+			"Filled": {
+				"backgroundColor": "#0F7A0B",
+				"strokeColor": "#0F7A0B",
+				"textColor": "#ffffff"
+			},
+			"Tint": {
+				"backgroundColor": "#E7F2DA",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#0F7A0B"
+			}
+		},
+		"informative": {
+			"Filled": {
+				"backgroundColor": "#ffffff",
+				"strokeColor": "#ffffff",
+				"textColor": "#212121"
+			},
+			"Tint": {
+				"backgroundColor": "#ffffff",
+				"strokeColor": "#E1E1E1",
+				"textColor": "#212121"
+			}
+		},
+		"subtle": {
+			"Filled": {
+				"backgroundColor": "#F1F1F1",
+				"strokeColor": "#F1F1F1",
+				"textColor": "#6e6e6e"
+			},
+			"Tint": {
+				"backgroundColor": "#f1f1f1",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#6e6e6e"
+			}
+		},
+		"warning": {
+			"Filled": {
+				"backgroundColor": "#835C00",
+				"strokeColor": "#835C00",
+				"textColor": "#ffffff"
+			},
+			"Tint": {
+				"backgroundColor": "#FBF6D9",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#835C00"
+			}
+		}
+	},
     "containerStyles": {
         "default": {
             "foregroundColors": {

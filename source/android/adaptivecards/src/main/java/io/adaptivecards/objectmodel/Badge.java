@@ -83,6 +83,14 @@ public class Badge extends BaseCardElement {
     AdaptiveCardObjectModelJNI.Badge_SetBadgeIcon(swigCPtr, this, value);
   }
 
+  public String GetTooltip() {
+    return AdaptiveCardObjectModelJNI.Badge_GetTooltip(swigCPtr, this);
+  }
+
+  public void SetTooltip(String value) {
+    AdaptiveCardObjectModelJNI.Badge_SetTooltip(swigCPtr, this, value);
+  }
+
   public BadgeStyle GetBadgeStyle() {
     return BadgeStyle.swigToEnum(AdaptiveCardObjectModelJNI.Badge_GetBadgeStyle(swigCPtr, this));
   }

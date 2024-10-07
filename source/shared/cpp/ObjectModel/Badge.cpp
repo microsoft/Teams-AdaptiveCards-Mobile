@@ -36,6 +36,14 @@ std::string Badge::GetBadgeIcon() const {
     return m_icon;
 }
 
+void Badge::SetTooltip(const std::string &value) {
+    m_tooltip = value;
+}
+
+std::string Badge::GetTooltip() const {
+    return m_tooltip;
+}
+
 void Badge::SetShape(Shape value) {
     m_shape = value;
 }
@@ -94,6 +102,8 @@ Json::Value Badge::SerializeToJsonValue() const
 
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon)] = GetBadgeIcon();
 
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Tooltip)] = GetTooltip();
+
     if (m_hAlignment.has_value())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalAlignment)] =
@@ -148,6 +158,11 @@ std::shared_ptr<BaseCardElement> BadgeParser::Deserialize(ParseContext& context,
     badge->SetIconPosition(ParseUtil::GetEnumValue<IconPosition>(
             json, AdaptiveCardSchemaKey::IconPosition, IconPosition::Before,
             IconPositionFromString));
+
+    badge->SetBadgeAppearance(ParseUtil::GetEnumValue<BadgeAppearance>(
+            json, AdaptiveCardSchemaKey::Appearance, BadgeAppearance::Filled,
+            BadgeAppearanceFromString));
+    badge->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip, "",false));
 
     return badge;
 }

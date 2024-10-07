@@ -150,8 +150,6 @@ struct RatingElementConfig
     static RatingElementConfig Deserialize(const Json::Value& json, const RatingElementConfig& defaultValue);
 };
 
-
-
 struct TextStylesConfig
 {
     TextStyleConfig heading = {TextWeight::Bolder, TextSize::Large, false, ForegroundColor::Default, FontType::Default};
@@ -418,6 +416,116 @@ struct CompoundButtonConfig
     static CompoundButtonConfig Deserialize(const Json::Value& json, const CompoundButtonConfig& defaultValue);
 };
 
+struct BadgeAppearanceDefinition
+{
+    std::string backgroundColor = "#000000";
+    std::string strokeColor = "#E1E1E1";
+    std::string textColor = "#FFFFFF";
+
+    static BadgeAppearanceDefinition Deserialize(const Json::Value& json, const BadgeAppearanceDefinition& defaultValue);
+};
+
+struct BadgeStyleDefinition
+{
+    BadgeAppearanceDefinition filledStyle;
+    BadgeAppearanceDefinition tintStyle;
+
+    static BadgeStyleDefinition Deserialize(const Json::Value& json, const BadgeStyleDefinition& defaultValue);
+};
+
+struct BadgeStylesDefinition
+{
+    BadgeStyleDefinition defaultPalette = {
+            {
+                    "#212121",
+                    "#212121",
+                    "#ffffff"
+            },
+            {
+                    "#6E6E6E",
+                    "#6e6e6e",
+                    "#ffffff"
+            }
+          };
+    BadgeStyleDefinition accentPalette = {
+            {
+                    "#5B5FC7",
+                    "#5B5FC7",
+                    "#ffffff"
+            },
+            {
+                    "#E8EBFA",
+                    "#e1e1e1",
+                    "#5b5fc7"
+            }
+    };
+    BadgeStyleDefinition attentionPalette = {
+            {
+                    "#d92c2c",
+                    "#d92c2c",
+                    "#ffffff"
+            },
+            {
+                    "#F9D9D9",
+                    "#e1e1e1",
+                    "#d92c2c"
+            }
+    };
+    BadgeStyleDefinition goodPalette = {
+            {
+                    "#0F7A0B",
+                    "#0F7A0B",
+                    "#ffffff"
+            },
+            {
+                    "#E7F2DA",
+                    "#e1e1e1",
+                    "#0F7A0B"
+            }
+    };
+
+    BadgeStyleDefinition informativePalette = {
+            {
+                    "#ffffff",
+                    "#ffffff",
+                    "#212121"
+            },
+            {
+                    "#ffffff",
+                    "#E1E1E1",
+                    "#212121"
+            }
+    };
+
+    BadgeStyleDefinition subtlePalette = {
+            {
+                    "#F1F1F1",
+                    "#F1F1F1",
+                    "#6e6e6e"
+            },
+            {
+                    "#f1f1f1",
+                    "#e1e1e1",
+                    "#6e6e6e"
+            }
+    };
+
+    BadgeStyleDefinition warningPalette = {
+            {
+                    "#835C00",
+                    "#835C00",
+                    "#ffffff"
+            },
+            {
+                    "#FBF6D9",
+                    "#e1e1e1",
+                    "#835C00"
+            }
+    };
+
+    static BadgeStylesDefinition Deserialize(const Json::Value& json, const BadgeStylesDefinition& defaultValue);
+};
+
 class HostConfig
 {
 public:
@@ -509,9 +617,13 @@ public:
     CompoundButtonConfig GetCompoundButtonConfig() const;
     void SetCompoundButtonConfig(const CompoundButtonConfig value);
 
+    BadgeStylesDefinition GetBadgeStyles() const;
+    void SetBadgeStyles(const BadgeStylesDefinition value);
+
 private:
     const ContainerStyleDefinition& GetContainerStyle(ContainerStyle style) const;
     const ColorConfig& GetContainerColorConfig(const ColorsConfig& colors, ForegroundColor color) const;
+    const BadgeStyleDefinition& GetBadgeStyle(BadgeStyle style) const;
 
     std::string _fontFamily;
     FontSizesConfig _fontSizes;
@@ -539,5 +651,6 @@ private:
     Json::Value _borderWidth;
     Json::Value _cornerRadius;
     CompoundButtonConfig _compoundButtonConfig;
+    BadgeStylesDefinition _badgeStyles;
 };
 } // namespace AdaptiveCards
