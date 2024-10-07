@@ -308,6 +308,8 @@
 		7751C0782CAC0F0B00C876DD /* ACRCarouselViewRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7751C0752CAC0F0B00C876DD /* ACRCarouselViewRenderer.h */; };
 		7751C0792CAC0F0B00C876DD /* ACRCarouselPageContainerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7751C0762CAC0F0B00C876DD /* ACRCarouselPageContainerView.h */; };
 		7751C07B2CAC0F4100C876DD /* ACRCarouselPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7751C07A2CAC0F4100C876DD /* ACRCarouselPageView.h */; };
+		7762DE932CB3B8BD0051C112 /* ACRDirectionalPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7762DE922CB3B8BD0051C112 /* ACRDirectionalPanGestureRecognizer.m */; };
+		7762DE982CB3F8500051C112 /* ACRDirectionalPanGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7762DE972CB3F8500051C112 /* ACRDirectionalPanGestureRecognizer.h */; };
 		7773A9152CA2D32E00097C06 /* Carousel.valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 7773A9142CA2D32E00097C06 /* Carousel.valid.json */; };
 		7773A9172CA2D33400097C06 /* Carousel.invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 7773A9162CA2D33400097C06 /* Carousel.invalid.json */; };
 		7773A91A2CA2D53400097C06 /* AdaptiveCardCarouselTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7773A9112CA2D20100097C06 /* AdaptiveCardCarouselTests.mm */; };
@@ -869,6 +871,8 @@
 		7751C0752CAC0F0B00C876DD /* ACRCarouselViewRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRCarouselViewRenderer.h; path = PrivateHeaders/ACRCarouselViewRenderer.h; sourceTree = "<group>"; };
 		7751C0762CAC0F0B00C876DD /* ACRCarouselPageContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRCarouselPageContainerView.h; path = PrivateHeaders/ACRCarouselPageContainerView.h; sourceTree = "<group>"; };
 		7751C07A2CAC0F4100C876DD /* ACRCarouselPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRCarouselPageView.h; path = PrivateHeaders/ACRCarouselPageView.h; sourceTree = "<group>"; };
+		7762DE922CB3B8BD0051C112 /* ACRDirectionalPanGestureRecognizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRDirectionalPanGestureRecognizer.m; sourceTree = "<group>"; };
+		7762DE972CB3F8500051C112 /* ACRDirectionalPanGestureRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRDirectionalPanGestureRecognizer.h; sourceTree = "<group>"; };
 		7773A9112CA2D20100097C06 /* AdaptiveCardCarouselTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = AdaptiveCardCarouselTests.mm; sourceTree = "<group>"; };
 		7773A9142CA2D32E00097C06 /* Carousel.valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Carousel.valid.json; sourceTree = "<group>"; };
 		7773A9162CA2D33400097C06 /* Carousel.invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Carousel.invalid.json; sourceTree = "<group>"; };
@@ -1822,6 +1826,8 @@
 				7751C0742CAC0F0B00C876DD /* ACRCarouselView.h */,
 				7751C0752CAC0F0B00C876DD /* ACRCarouselViewRenderer.h */,
 				7773C2DA2CA3FF8600097C06 /* ACRCarouselPageView.mm */,
+				7762DE972CB3F8500051C112 /* ACRDirectionalPanGestureRecognizer.h */,
+				7762DE922CB3B8BD0051C112 /* ACRDirectionalPanGestureRecognizer.m */,
 				7773C2E42CA5592200097C06 /* ACRCarouselView.mm */,
 				46DF37B52C903377001C254F /* ACRCarouselViewRenderer.mm */,
 				7751C0722CAC0EEB00C876DD /* ACRPageControl.h */,
@@ -1950,6 +1956,7 @@
 				F44873151EE2261F00FCAFAE /* ImageSet.h in Headers */,
 				F44873131EE2261F00FCAFAE /* Image.h in Headers */,
 				F448730F1EE2261F00FCAFAE /* HostConfig.h in Headers */,
+				7762DE982CB3F8500051C112 /* ACRDirectionalPanGestureRecognizer.h in Headers */,
 				F448730E1EE2261F00FCAFAE /* FactSet.h in Headers */,
 				F448730C1EE2261F00FCAFAE /* Fact.h in Headers */,
 				F44873081EE2261F00FCAFAE /* DateInput.h in Headers */,
@@ -2497,6 +2504,7 @@
 				6B8C765826449B09009548FA /* TableRow.cpp in Sources */,
 				6BD025EE254784670009B019 /* ACOInputResults.mm in Sources */,
 				6BFF99CB25FFF53E0028069F /* TokenExchangeResource.cpp in Sources */,
+				7762DE932CB3B8BD0051C112 /* ACRDirectionalPanGestureRecognizer.m in Sources */,
 				6B8C766526461E98009548FA /* ACOBundle.mm in Sources */,
 				F495FC0E2022AC920093D4DE /* ACRChoiceSetViewDataSourceCompactStyle.mm in Sources */,
 				F4F44B7D20478C5C00A2F24C /* DateTimePreparser.cpp in Sources */,

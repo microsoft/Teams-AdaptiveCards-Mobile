@@ -66,7 +66,14 @@ void StyledCollectionElement::SetRoundedCorners(const bool value)
 void StyledCollectionElement::ConfigPadding(const ParseContext& context)
 {
     // We set padding when child's style is set explicitly (not None) and is different than the parental style
-    const bool padding = (GetStyle() != ContainerStyle::None) && (context.GetParentalContainerStyle() != GetStyle());
+    bool padding = (GetStyle() != ContainerStyle::None) && (context.GetParentalContainerStyle() != GetStyle());
+    
+    /// required to support bleed
+    if(GetElementType() == CardElementType::Carousel)
+    {
+        padding = true;
+    }
+    
     SetPadding(padding);
 }
 
