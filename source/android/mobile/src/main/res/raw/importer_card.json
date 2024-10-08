@@ -230,6 +230,50 @@
 									{
 										"title": "Carousel",
 										"value": "v1.5/Scenarios/Carousel.json"
+									},
+									{
+										"title": "Carousel.Header",
+										"value": "v1.6/Elements/Carousel.Header.json"
+									},
+									{
+										"title": "Carousel.Height",
+										"value": "v1.6/Elements/Carousel.Header.json"
+									},
+									{
+										"title": "Carousel.Height.Vertical",
+										"value": "v1.6/Elements/Carousel.Height.Vertical.json"
+									},
+									{
+										"title": "Carousel.HeightInPixels",
+										"value": "v1.6/Elements/Carousel.HeightInPixels.json"
+									},
+									{
+										"title": "Carousel.InitialPage",
+										"value": "v1.6/Elements/Carousel.InitialPage.json"
+									},
+									{
+										"title": "Carousel",
+										"value": "v1.6/Elements/Carousel.json"
+									},
+									{
+										"title": "Carousel.Loop",
+										"value": "v1.6/Elements/Carousel.Loop.json"
+									},
+									{
+										"title": "Carousel.sample",
+										"value": "v1.6/Elements/Carousel.sample.json"
+									},
+									{
+										"title": "Carousel.ScenarioCards",
+										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
+									},
+									{
+										"title": "Carousel.ScenarioCards.Timer",
+										"value": "v1.6/Elements/Carousel.ScenarioCards.Timer.json"
+									},
+									{
+										"title": "Carousel.Styles",
+										"value": "v1.6/Elements/Carousel.Styles.json"
 									}
 								],
                                 "placeholder": "(choose sample)",
