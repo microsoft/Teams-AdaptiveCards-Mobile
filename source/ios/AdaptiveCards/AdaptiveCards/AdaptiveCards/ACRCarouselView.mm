@@ -38,7 +38,7 @@
                baseCardElement:(ACOBaseCardElement *)acoElem
                     hostConfig:(ACOHostConfig *)acoConfig
 {
-    self = [super initWithStyle:ACRContainerStyle::[viewGroup style]
+    self = [super initWithStyle:[viewGroup style]
                     parentStyle:[viewGroup style]
                      hostConfig:acoConfig
                       superview:rootView];
