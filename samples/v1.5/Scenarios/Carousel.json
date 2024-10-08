@@ -15,18 +15,20 @@
 				{
 					"type": "CarouselPage",
 					"style": "emphasis",
+					"backgroundImage": "https://picsum.photos/id/237/200/200",
 					"showBorder": true,
 					"roundedCorners": false,
 					"items": [
 						{
 							"type": "TextBlock",
-							"text": "PAGE 1 of 6",
+							"text": "PAGE 1 of 7",
 							"wrap": true,
 							"size": "Large"
 						},
 						{
 							"type": "TextBlock",
 							"text": "First TextBlock",
+							"size": "Large",
 							"wrap": true
 						},
 						{
@@ -53,32 +55,97 @@
 							"type": "TextBlock",
 							"text": "Sixth TextBlock",
 							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "Fourth TextBlock",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "Fifth TextBlock",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "Sixth TextBlock",
+							"wrap": true
 						}
 					]
 				},
 				{
 					"type": "CarouselPage",
-					"style": "accent",
-					"showBorder": true,
-					"roundedCorners": true,
 					"items": [
 						{
 							"type": "TextBlock",
-							"text": "PAGE 2 of 6",
+							"text": "PAGE 2 of 7",
 							"wrap": true,
 							"size": "Large"
 						},
 						{
 							"type": "TextBlock",
-							"text": "First TextBlock",
-							"wrap": true
+							"text": "Default text input"
 						},
 						{
-							"type": "TextBlock",
-							"text": "Second TextBlock with separator",
-							"wrap": true,
-							"separator": true,
-							"spacing": "Medium"
+							"type": "Input.Text",
+							"id": "defaultInputId",
+							"placeholder": "enter comment",
+							"maxLength": 500
+						},
+						{
+							"type": "Input.ChoiceSet",
+							"id": "myCountry",
+							"style": "compact",
+							"label": "Country",
+							"isMultiSelect": false,
+							"value": "1",
+							"choices": [
+								{
+									"title": "India",
+									"value": "1"
+								},
+								{
+									"title": "USA",
+									"value": "2"
+								},
+								{
+									"title": "UK",
+									"value": "3"
+								}
+							],
+							"valueChangedAction": {
+								"type": "Action.ResetInputs",
+								"targetInputIds": [
+									"defaultInputId",
+									"myZone"
+								]
+							}
+						},
+						{
+							"type": "Input.ChoiceSet",
+							"id": "myZone",
+							"style": "compact",
+							"label": "Zone",
+							"isMultiSelect": false,
+							"value": "1",
+							"choices": [
+								{
+									"title": "East",
+									"value": "1"
+								},
+								{
+									"title": "West",
+									"value": "2"
+								},
+								{
+									"title": "North",
+									"value": "3"
+								},
+								{
+									"title": "South",
+									"value": "3"
+								}
+							]
 						}
 					]
 				},
@@ -90,7 +157,7 @@
 					"items": [
 						{
 							"type": "TextBlock",
-							"text": "PAGE 3 of 6",
+							"text": "PAGE 3 of 7",
 							"wrap": true,
 							"size": "Large"
 						},
@@ -117,13 +184,39 @@
 				},
 				{
 					"type": "CarouselPage",
+					"style": "accent",
+					"showBorder": true,
+					"roundedCorners": true,
+					"items": [
+						{
+							"type": "TextBlock",
+							"text": "PAGE 4 of 7",
+							"wrap": true,
+							"size": "Large"
+						},
+						{
+							"type": "TextBlock",
+							"text": "First TextBlock",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "Second TextBlock with separator",
+							"wrap": true,
+							"separator": true,
+							"spacing": "Medium"
+						}
+					]
+				},
+				{
+					"type": "CarouselPage",
 					"style": "warning",
 					"showBorder": true,
 					"roundedCorners": true,
 					"items": [
 						{
 							"type": "TextBlock",
-							"text": "PAGE 4 of 6",
+							"text": "PAGE 5 of 7",
 							"wrap": true,
 							"size": "Large"
 						},
@@ -173,7 +266,7 @@
 					"items": [
 						{
 							"type": "TextBlock",
-							"text": "PAGE 5 of 6",
+							"text": "PAGE 6 of 7",
 							"wrap": true,
 							"size": "Large"
 						},
@@ -207,26 +300,81 @@
 				},
 				{
 					"type": "CarouselPage",
-					"showBorder": true,
-					"roundedCorners": true,
 					"items": [
 						{
 							"type": "TextBlock",
-							"text": "PAGE 6 of 6",
+							"text": "PAGE 7 of 7",
 							"wrap": true,
 							"size": "Large"
 						},
 						{
 							"type": "TextBlock",
 							"text": "First TextBlock",
-							"wrap": true
+							"wrap": true,
+							"size": "Large"
 						},
 						{
 							"type": "TextBlock",
 							"text": "Second TextBlock with separator",
 							"wrap": true,
 							"separator": true,
-							"spacing": "Medium"
+							"spacing": "Medium",
+							"size": "Large"
+						},
+						{
+							"type": "TextBlock",
+							"text": "Third TextBlock",
+							"size": "Large",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "Fourth TextBlock",
+							"size": "Large",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "Fifth TextBlock",
+							"size": "Large",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "7th TextBlock",
+							"size": "Large",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "8th Hello",
+							"size": "Large",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "9th Hello",
+							"size": "Large",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "9th Hello",
+							"size": "Large",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"text": "6th Hello",
+							"size": "Large",
+							"wrap": true
+						},
+						{
+							"type": "Image",
+							"url": "https://adaptivecards.io/content/cats/2.png",
+							"altText": "Skins cat team emblem",
+							"size": "medium",
+							"horizontalAlignment": "center"
 						}
 					]
 				}
@@ -244,6 +392,10 @@
 			"type": "Action.OpenUrl",
 			"title": "Click me",
 			"url": "https://www.microsoft.com"
+		},
+		{
+			"type": "Action.Submit",
+			"title": "OK"
 		}
 	]
 }

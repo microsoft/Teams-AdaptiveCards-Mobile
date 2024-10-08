@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import io.adaptivecards.objectmodel.BaseCardElement
 import io.adaptivecards.objectmodel.Carousel
-import io.adaptivecards.objectmodel.HeightType
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.PageAnimation
 import io.adaptivecards.renderer.BaseCardElementRenderer
@@ -19,7 +18,6 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.TagContent
 import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
-import io.adaptivecards.renderer.layout.StretchableElementLayout
 import io.adaptivecards.renderer.layout.carousel.CarouselPageAdapter
 import io.adaptivecards.renderer.layout.carousel.CrossFadePageTransformer
 
@@ -46,30 +44,40 @@ object CarouselRenderer : BaseCardElementRenderer() {
         }
 
         val carouselView = createCarouselView(context, carousel)
-        val viewPager = createViewPager(context, carousel)
-        viewPager.adapter = CarouselPageAdapter(pages, renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
+        val viewPager = createViewPager(context, carousel, renderedCard, fragmentManager, cardActionHandler, hostConfig, renderArgs)
         carouselView.addView(viewPager)
         viewGroup.addView(carouselView)
         return carouselView
     }
 
     private fun createCarouselView(context: Context, carousel: Carousel): ViewGroup {
-        val carouselView = StretchableElementLayout(context, carousel.GetHeight() === HeightType.Stretch)
+        val carouselView = LinearLayout(context)
+        carouselView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         carouselView.tag = TagContent(carousel)
         carouselView.orientation = LinearLayout.VERTICAL
         return carouselView
     }
 
-    private fun createViewPager(context: Context, carousel: Carousel): ViewPager2 {
+    private fun createViewPager(
+        context: Context,
+        carousel: Carousel,
+        renderedCard: RenderedAdaptiveCard,
+        fragmentManager: FragmentManager,
+        cardActionHandler: ICardActionHandler?,
+        hostConfig: HostConfig,
+        renderArgs: RenderArgs
+    ): ViewPager2 {
         val viewPager = ViewPager2(context)
         val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         viewPager.layoutParams = layoutParams
+        viewPager.offscreenPageLimit = carousel.GetPages().size
+        viewPager.adapter = CarouselPageAdapter(carousel.GetPages(), renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
         getViewPagerPageTransformer(carousel.pageAnimation)?.apply { viewPager.setPageTransformer(this) }
         return viewPager
     }
 
     private fun getViewPagerPageTransformer(pageAnimation: PageAnimation): ViewPager2.PageTransformer? {
-        return when(pageAnimation) {
+        return when (pageAnimation) {
             PageAnimation.None -> null // For None should we use default
             PageAnimation.CrossFade -> CrossFadePageTransformer()
             PageAnimation.Slide -> null // Default behaviour is sliding

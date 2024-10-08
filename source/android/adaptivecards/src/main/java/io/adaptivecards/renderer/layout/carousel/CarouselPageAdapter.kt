@@ -32,17 +32,19 @@ class CarouselPageAdapter(
     override fun getItemCount() = pages.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarouselPageHolder {
-
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_viewpager, parent, false)
         return CarouselPageHolder(view)
     }
 
     override fun onBindViewHolder(holder: CarouselPageHolder, position: Int) =
-        holder.bind(pages[position], renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
+        holder.bind(position, pages[position], renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
 
     class CarouselPageHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        private val views = mutableMapOf<Int, View>()
+
         fun bind(
+            position: Int,
             page: CarouselPage,
             renderedCard: RenderedAdaptiveCard,
             cardActionHandler: ICardActionHandler?,
@@ -54,16 +56,22 @@ class CarouselPageAdapter(
             val root = (itemView as ViewGroup)
             root.removeAllViews()
 
-            CardRendererRegistration.getInstance().renderElementAndPerformFallback(
-                    renderedCard,
-                    root.context,
-                    fragmentManager,
-                    page,
-                    root,
-                    cardActionHandler,
-                    hostConfig,
-                    renderArgs,
-                    featureRegistration)
+            if (views.containsKey(position)) {
+                val carouselPageView = views[position]
+                root.addView(carouselPageView)
+            } else {
+                CardRendererRegistration.getInstance().renderElementAndPerformFallback(
+                        renderedCard,
+                        root.context,
+                        fragmentManager,
+                        page,
+                        root,
+                        cardActionHandler,
+                        hostConfig,
+                        renderArgs,
+                        featureRegistration)
+                views[position] = root.getChildAt(0)
+            }
         }
     }
 }
