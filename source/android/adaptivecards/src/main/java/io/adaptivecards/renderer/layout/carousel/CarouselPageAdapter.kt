@@ -20,14 +20,14 @@ import io.adaptivecards.renderer.registration.CardRendererRegistration
 /**
  * Implementation of [ViewPager2] adapter for Carousel
  */
-class CarouselAdapter(
+class CarouselPageAdapter(
     val pages: CarouselPageVector,
     val renderedCard: RenderedAdaptiveCard,
     val cardActionHandler: ICardActionHandler?,
     val hostConfig: HostConfig,
     val renderArgs: RenderArgs,
     val fragmentManager: FragmentManager
-) : RecyclerView.Adapter<CarouselAdapter.CarouselPageHolder>() {
+) : RecyclerView.Adapter<CarouselPageAdapter.CarouselPageHolder>() {
 
     override fun getItemCount() = pages.size
 
