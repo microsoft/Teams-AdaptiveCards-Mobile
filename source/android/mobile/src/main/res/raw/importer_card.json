@@ -226,6 +226,10 @@
 									{
 										"title": "ContainerAreaGrid11",
 										"value": "v1.5/Scenarios/ContainerAreaGrid11.json"
+									},
+									{
+										"title": "Carousel",
+										"value": "v1.5/Scenarios/Carousel.json"
 									}
 								],
                                 "placeholder": "(choose sample)",
