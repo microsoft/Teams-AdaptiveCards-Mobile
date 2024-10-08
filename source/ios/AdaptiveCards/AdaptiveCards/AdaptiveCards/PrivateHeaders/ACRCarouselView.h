@@ -10,7 +10,7 @@
 #import "ACRView.h"
 #import <UIKit/UIKit.h>
 
-@interface ACRCarouselView : UIView<UIGestureRecognizerDelegate>
+@interface ACRCarouselView : ACRColumnView<UIGestureRecognizerDelegate>
 
 -(instancetype) initWithViewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
                       rootView:(ACRView *)rootView

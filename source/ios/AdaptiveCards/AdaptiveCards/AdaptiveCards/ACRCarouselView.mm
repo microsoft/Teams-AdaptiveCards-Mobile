@@ -18,6 +18,7 @@
 #import "ACRCarouselPageContainerView.h"
 #import "Carousel.h"
 #import "UtiliOS.h"
+#import "ACRDirectionalPanGestureRecognizer.h"
 
 @interface ACRCarouselView()
 
@@ -37,7 +38,11 @@
                baseCardElement:(ACOBaseCardElement *)acoElem
                     hostConfig:(ACOHostConfig *)acoConfig
 {
-    self = [super initWithFrame:CGRectZero];
+    self = [super initWithStyle:[viewGroup style]
+                    parentStyle:[viewGroup style]
+                     hostConfig:acoConfig
+                      superview:rootView];
+    
     self.translatesAutoresizingMaskIntoConstraints = NO;
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Carousel> carousel = std::dynamic_pointer_cast<Carousel>(elem);
@@ -46,18 +51,12 @@
     
     self.carousel = carousel;
     
-    
-    ACRColumnView *carouselViewContainer = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)carousel->GetStyle()
-                                                        parentStyle:[viewGroup style]
-                                                         hostConfig:acoConfig
-                                                          superview:viewGroup];
-    
     for(auto carouselPage: carousel->GetPages())
     {
         
         ACOBaseCardElement *acoElement = [[ACOBaseCardElement alloc] initWithBaseCardElement:carouselPage];
         
-        UIView * carouselPageView = [[ACRCarouselPageView alloc] render:carouselViewContainer
+        UIView * carouselPageView = [[ACRCarouselPageView alloc] render:self
                                                                rootView:rootView
                                                                  inputs:inputs
                                                         baseCardElement:acoElement
@@ -88,7 +87,7 @@
     self.pageControl = [[ACRPageControl alloc] initWithConfig:pageControlConfig];
     
     UIStackView *carouselStackView = [[UIStackView alloc] init];
-    [carouselViewContainer addArrangedSubview:carouselStackView];
+    [self addArrangedSubview:carouselStackView];
     
     carouselStackView.axis = UILayoutConstraintAxisVertical;
     carouselStackView.alignment = UIStackViewAlignmentCenter;
@@ -100,20 +99,12 @@
     [carouselStackView addArrangedSubview:self.pageControl];
     [carouselStackView addArrangedSubview:[[UIView alloc] initWithFrame:CGRectZero]];
     
-    configBleed(rootView, elem, carouselViewContainer, acoConfig);
-  
-    
     NSString *areaName = stringForCString(elem->GetAreaGridName());
+    
     [viewGroup addArrangedSubview:self withAreaName:areaName];
     
-    [self addSubview:carouselViewContainer];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.leadingAnchor constraintEqualToAnchor:carouselViewContainer.leadingAnchor],
-        [self.trailingAnchor constraintEqualToAnchor:carouselViewContainer.trailingAnchor],
-        [self.bottomAnchor constraintEqualToAnchor:carouselViewContainer.bottomAnchor],
-        [self.topAnchor constraintEqualToAnchor:carouselViewContainer.topAnchor]
-    ]];
-    
+    configBleed(rootView, elem, self, acoConfig);
+        
     [self constructGestures:self];
     
     return self;
@@ -121,10 +112,17 @@
 
 -(void) constructGestures:(UIView *)view
 {
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]
-                                          initWithTarget:self action:@selector(handlePanGesture:)];
-    [self addGestureRecognizer:panGesture];
-    panGesture.delegate = self;
+    ACRDirectionalPanGestureRecognizer *leftPanGesture = [[ACRDirectionalPanGestureRecognizer alloc] initWithTarget:self
+                                                                                                             action:@selector(handlePanGestureOfLeftDirection:)
+                                                                                                          direction:ACRDirectionalPanLeft];
+    [self addGestureRecognizer:leftPanGesture];
+    leftPanGesture.delegate = self;
+    
+    ACRDirectionalPanGestureRecognizer *rightPanGesture = [[ACRDirectionalPanGestureRecognizer alloc] initWithTarget:self
+                                                                                                             action:@selector(handlePanGestureOfRightDirection:)
+                                                                                                          direction:ACRDirectionalPanRight];
+    [self addGestureRecognizer:rightPanGesture];
+    rightPanGesture.delegate = self;
 }
 
 - (void)handleLeftSwipe
@@ -154,7 +152,7 @@
     _carouselPageViewIndex = newCarouselPageViewIndex;
 }
 
-- (void)handlePanGesture:(UIPanGestureRecognizer *)gesture
+- (void)handlePanGestureOfLeftDirection:(UIPanGestureRecognizer *)gesture
 {
     // Get the translation and velocity of the pan gesture
     CGPoint translation = [gesture translationInView:self];
@@ -171,13 +169,29 @@
         
         if(distance > minimumSwipeDistance)
         {
-            if(translation.x > 0 )
-            {
-                [self handleRightSwipe];
-            } else
-            {
-                [self handleLeftSwipe];
-            }
+            [self handleLeftSwipe];
+        }
+    }
+}
+
+- (void)handlePanGestureOfRightDirection:(UIPanGestureRecognizer *)gesture
+{
+    // Get the translation and velocity of the pan gesture
+    CGPoint translation = [gesture translationInView:self];
+    
+    // Calculate distance based on translation
+    CGFloat distance = fabs(translation.x);
+
+    // Thresholds
+    CGFloat minimumSwipeDistance = 60.0;
+    
+    // Check the state of the gesture recognizer
+    if (gesture.state == UIGestureRecognizerStateEnded)
+    {
+        
+        if(distance > minimumSwipeDistance)
+        {
+            [self handleRightSwipe];
         }
     }
 }
