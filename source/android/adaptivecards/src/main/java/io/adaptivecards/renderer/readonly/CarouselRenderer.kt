@@ -5,9 +5,9 @@ package io.adaptivecards.renderer.readonly
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.objectmodel.BaseCardElement
 import io.adaptivecards.objectmodel.Carousel
 import io.adaptivecards.objectmodel.HostConfig
@@ -51,10 +51,9 @@ object CarouselRenderer : BaseCardElementRenderer() {
     }
 
     private fun createCarouselView(context: Context, carousel: Carousel): ViewGroup {
-        val carouselView = LinearLayout(context)
-        carouselView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val carouselView = FlexboxLayout(context)
+        carouselView.layoutParams = FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         carouselView.tag = TagContent(carousel)
-        carouselView.orientation = LinearLayout.VERTICAL
         return carouselView
     }
 
@@ -68,7 +67,7 @@ object CarouselRenderer : BaseCardElementRenderer() {
         renderArgs: RenderArgs
     ): ViewPager2 {
         val viewPager = ViewPager2(context)
-        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         viewPager.layoutParams = layoutParams
         viewPager.offscreenPageLimit = carousel.GetPages().size
         viewPager.adapter = CarouselPageAdapter(carousel.GetPages(), renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)

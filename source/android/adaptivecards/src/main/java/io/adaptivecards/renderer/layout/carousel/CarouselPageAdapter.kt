@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.R
 import io.adaptivecards.objectmodel.CarouselPage
 import io.adaptivecards.objectmodel.CarouselPageVector
@@ -70,7 +71,9 @@ class CarouselPageAdapter(
                         hostConfig,
                         renderArgs,
                         featureRegistration)
-                views[position] = root.getChildAt(0)
+                val childView = root.getChildAt(0)
+                views[position] = childView
+                childView?.layoutParams = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.MATCH_PARENT, FlexboxLayout.LayoutParams.MATCH_PARENT)
             }
         }
     }
