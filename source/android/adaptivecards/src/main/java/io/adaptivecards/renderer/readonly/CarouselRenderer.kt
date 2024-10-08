@@ -65,15 +65,14 @@ object CarouselRenderer : BaseCardElementRenderer() {
         val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         viewPager.layoutParams = layoutParams
         getViewPagerPageTransformer(carousel.pageAnimation)?.apply { viewPager.setPageTransformer(this) }
-
         return viewPager
     }
 
     private fun getViewPagerPageTransformer(pageAnimation: PageAnimation): ViewPager2.PageTransformer? {
         return when(pageAnimation) {
-            PageAnimation.None -> null
+            PageAnimation.None -> null // For None should we use default
             PageAnimation.CrossFade -> CrossFadePageTransformer()
-            PageAnimation.Slide -> null
+            PageAnimation.Slide -> null // Default behaviour is sliding
         }
     }
 }
