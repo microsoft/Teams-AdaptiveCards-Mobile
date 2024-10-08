@@ -2,7 +2,6 @@
 //  TSDirectionalPanGestureRecognizer.m
 //  TeamSpaceApp
 //
-//  Created by Michael Burford on 6/7/19.
 //  Copyright © Microsoft Corporation. All rights reserved.
 //
 
