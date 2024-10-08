@@ -38,7 +38,7 @@
                baseCardElement:(ACOBaseCardElement *)acoElem
                     hostConfig:(ACOHostConfig *)acoConfig
 {
-    self = [super initWithStyle:ACRContainerStyle::ACRDefault
+    self = [super initWithStyle:ACRContainerStyle::[viewGroup style]
                     parentStyle:[viewGroup style]
                      hostConfig:acoConfig
                       superview:rootView];
@@ -50,7 +50,6 @@
     self.carouselPageViewList = [[NSMutableArray alloc] init];
     
     self.carousel = carousel;
-    
     
     for(auto carouselPage: carousel->GetPages())
     {
@@ -100,13 +99,10 @@
     [carouselStackView addArrangedSubview:self.pageControl];
     [carouselStackView addArrangedSubview:[[UIView alloc] initWithFrame:CGRectZero]];
     
-  
-    
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     
     [viewGroup addArrangedSubview:self withAreaName:areaName];
     
-
     configBleed(rootView, elem, self, acoConfig);
         
     [self constructGestures:self];
