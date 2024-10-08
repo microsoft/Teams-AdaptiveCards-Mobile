@@ -15,7 +15,6 @@
 				{
 					"type": "CarouselPage",
 					"style": "emphasis",
-					"backgroundImage": "https://picsum.photos/id/237/200/200",
 					"showBorder": true,
 					"roundedCorners": false,
 					"items": [
@@ -185,6 +184,7 @@
 				{
 					"type": "CarouselPage",
 					"style": "accent",
+					"backgroundImage": "https://picsum.photos/id/237/200/200",
 					"showBorder": true,
 					"roundedCorners": true,
 					"items": [
