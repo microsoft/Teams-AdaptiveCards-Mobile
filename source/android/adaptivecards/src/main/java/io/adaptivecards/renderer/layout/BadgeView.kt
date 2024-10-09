@@ -28,13 +28,13 @@ import io.adaptivecards.renderer.FluentIconImageLoaderAsync
 import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Util
 
-class BadgeView: FlexboxLayout {
-    constructor(
-        context: Context,
-        badge: Badge,
-        renderedCard: RenderedAdaptiveCard,
-        hostConfig: HostConfig
-    ): super(context){
+class BadgeView(
+    context: Context,
+    badge: Badge,
+    renderedCard: RenderedAdaptiveCard,
+    hostConfig: HostConfig
+): FlexboxLayout(context) {
+    init {
         val badgeConfig = getBadgeConfig(hostConfig, badge)
         flexDirection = FlexDirection.ROW
         flexWrap = FlexWrap.NOWRAP
@@ -66,7 +66,7 @@ class BadgeView: FlexboxLayout {
             when(badge.GetIconPosition()){
                 IconPosition.After -> {
                     leftIconView.visibility = GONE
-                    setIconView(rightIconView, icon, badge.GetBadgeSize(), badgeConfig, renderedCard);
+                    setIconView(rightIconView, icon, badge.GetBadgeSize(), badgeConfig, renderedCard)
                 }
                 else -> {
                     rightIconView.visibility = GONE
@@ -105,7 +105,7 @@ class BadgeView: FlexboxLayout {
 
     private fun getBackgroundDrawable(badge: Badge, badgeConfig: BadgeAppearanceDefinition): GradientDrawable {
         val gradientDrawable = GradientDrawable()
-        val backgroundColor = Color.parseColor(badgeConfig.backgroundColor);
+        val backgroundColor = Color.parseColor(badgeConfig.backgroundColor)
         gradientDrawable.apply {
             colors = intArrayOf(backgroundColor, backgroundColor)
             cornerRadius = when(badge.GetShape()) {
