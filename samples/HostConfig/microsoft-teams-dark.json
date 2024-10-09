@@ -335,84 +335,84 @@
 	},
 	"badgeStyles": {
 		"default": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#e1e1e1",
 				"strokeColor": "#e1e1e1",
 				"textColor": "#000000"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#919191",
 				"strokeColor": "#919191",
 				"textColor": "#000000"
 			}
 		},
 		"accent": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#7f85f5",
 				"strokeColor": "#7f85f5",
 				"textColor": "#000000"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#2f2f4a",
 				"strokeColor": "#292929",
 				"textColor": "#7f85f5"
 			}
 		},
 		"attention": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#e83a3a",
 				"strokeColor": "#e83a3a",
 				"textColor": "#000000"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#250909",
 				"strokeColor": "#292929",
 				"textColor": "#e83a3a"
 			}
 		},
 		"good": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#0eb244",
 				"strokeColor": "#0eb244",
 				"textColor": "#000000"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#0d2e0d",
 				"strokeColor": "#292929",
 				"textColor": "#0eb244"
 			}
 		},
 		"informative": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#292929",
 				"strokeColor": "#292929",
 				"textColor": "#919191"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#212121",
 				"strokeColor": "#292929",
 				"textColor": "#919191"
 			}
 		},
 		"subtle": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#000000",
 				"strokeColor": "#000000",
 				"textColor": "#e1e1e1"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#000000",
 				"strokeColor": "#292929",
 				"textColor": "#e1e1e1"
 			}
 		},
 		"warning": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#ffb900",
 				"strokeColor": "#ffb900",
 				"textColor": "#000000"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#4d3a0c",
 				"strokeColor": "#292929",
 				"textColor": "#ffb900"

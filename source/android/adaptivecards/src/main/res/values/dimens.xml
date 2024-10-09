@@ -4,7 +4,5 @@
     <dimen name="check_box_min_height">48dp</dimen>
     <dimen name="action_min_height">48dp</dimen>
     <dimen name="spinner_min_height">48dp</dimen>
-    <dimen name="badge_padding_start_end">8dp</dimen>
     <dimen name="badge_padding_top_bottom">4dp</dimen>
-    <dimen name="badge_margin">8dp</dimen>
 </resources>

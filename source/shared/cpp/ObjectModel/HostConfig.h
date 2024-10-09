@@ -436,91 +436,91 @@ struct BadgeStyleDefinition
 struct BadgeStylesDefinition
 {
     BadgeStyleDefinition defaultPalette = {
-            {
-                    "#212121",
-                    "#212121",
-                    "#ffffff"
-            },
-            {
-                    "#6E6E6E",
-                    "#6e6e6e",
-                    "#ffffff"
-            }
-          };
+        {
+            "#212121",
+            "#212121",
+            "#ffffff"
+        },
+        {
+            "#6e6e6e",
+            "#6e6e6e",
+            "#ffffff"
+        }
+    };
     BadgeStyleDefinition accentPalette = {
-            {
-                    "#5B5FC7",
-                    "#5B5FC7",
-                    "#ffffff"
+        {
+            "#5b5fc7",
+            "#5b5fc7",
+            "#ffffff"
             },
-            {
-                    "#E8EBFA",
-                    "#e1e1e1",
-                    "#5b5fc7"
-            }
+        {
+            "#e8b8fa",
+            "#e1e1e1",
+            "#5b5fc7"
+        }
     };
     BadgeStyleDefinition attentionPalette = {
-            {
-                    "#d92c2c",
-                    "#d92c2c",
-                    "#ffffff"
-            },
-            {
-                    "#F9D9D9",
-                    "#e1e1e1",
-                    "#d92c2c"
-            }
+        {
+            "#d92c2c",
+            "#d92c2c",
+            "#ffffff"
+        },
+        {
+            "#f9d9d9",
+            "#e1e1e1",
+            "#d92c2c"
+        }
     };
     BadgeStyleDefinition goodPalette = {
-            {
-                    "#0F7A0B",
-                    "#0F7A0B",
-                    "#ffffff"
-            },
-            {
-                    "#E7F2DA",
-                    "#e1e1e1",
-                    "#0F7A0B"
-            }
+        {
+            "#0f7a0b",
+            "#0f7a0b",
+            "#ffffff"
+        },
+        {
+            "#e7f2da",
+            "#e1e1e1",
+            "#0f7a0b"
+        }
     };
 
     BadgeStyleDefinition informativePalette = {
-            {
-                    "#ffffff",
-                    "#ffffff",
-                    "#212121"
-            },
-            {
-                    "#ffffff",
-                    "#E1E1E1",
-                    "#212121"
-            }
+        {
+            "#ffffff",
+            "#ffffff",
+            "#212121"
+        },
+        {
+            "#ffffff",
+            "#e1e1e1",
+            "#212121"
+        }
     };
 
     BadgeStyleDefinition subtlePalette = {
-            {
-                    "#F1F1F1",
-                    "#F1F1F1",
-                    "#6e6e6e"
-            },
-            {
-                    "#f1f1f1",
-                    "#e1e1e1",
-                    "#6e6e6e"
-            }
+        {
+            "#f1f1f1",
+            "#f1f1f1",
+            "#6e6e6e"
+        },
+        {
+            "#f1f1f1",
+            "#e1e1e1",
+            "#6e6e6e"
+        }
     };
 
     BadgeStyleDefinition warningPalette = {
-            {
-                    "#835C00",
-                    "#835C00",
-                    "#ffffff"
-            },
-            {
-                    "#FBF6D9",
-                    "#e1e1e1",
-                    "#835C00"
-            }
+        {
+            "#835c00",
+            "#835c00",
+            "#ffffff"
+        },
+        {
+            "#fbf6d9",
+            "#e1e1e1",
+            "#835C00"
+        }
     };
 
     static BadgeStylesDefinition Deserialize(const Json::Value& json, const BadgeStylesDefinition& defaultValue);

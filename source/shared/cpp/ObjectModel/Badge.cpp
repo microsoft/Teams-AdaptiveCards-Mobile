@@ -175,7 +175,13 @@ std::shared_ptr<BaseCardElement> BadgeParser::DeserializeFromString(ParseContext
 void Badge::PopulateKnownPropertiesSet()
 {
     m_knownProperties.insert(
-            {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Text),
-             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon)});
+            {AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Appearance),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Icon),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IconPosition),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Appearance),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Shape),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Style),
+             AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Text)});
 }
 

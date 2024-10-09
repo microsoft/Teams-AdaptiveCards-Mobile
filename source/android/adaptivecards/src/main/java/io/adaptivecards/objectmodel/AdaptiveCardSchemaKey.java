@@ -81,6 +81,7 @@ public enum AdaptiveCardSchemaKey {
   Fallback,
   FallbackText,
   FillMode,
+  Filled,
   FirstRowAsHeaders,
   FontFamily,
   FontSizes,
@@ -190,6 +191,7 @@ public enum AdaptiveCardSchemaKey {
   Standard,
   Stretch,
   Strikethrough,
+  StrokeColor,
   Style,
   Subtle,
   Suffix,
@@ -219,6 +221,7 @@ public enum AdaptiveCardSchemaKey {
   TextConfig,
   TextInput,
   TextStyles,
+  Tint,
   MarigoldColor,
   NeutralColor,
   FilledStar,
@@ -255,10 +258,7 @@ public enum AdaptiveCardSchemaKey {
   Weight,
   Width,
   Wrap,
-  CompoundButton,
-  Filled,
-  Tint,
-  StrokeColor;
+  CompoundButton;
 
   public final int swigValue() {
     return swigValue;

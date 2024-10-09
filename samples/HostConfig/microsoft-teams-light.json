@@ -335,85 +335,85 @@
 	},
 	"badgeStyles": {
 		"default": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#212121",
 				"strokeColor": "#212121",
 				"textColor": "#ffffff"
 			},
-			"Tint": {
-				"backgroundColor": "#6E6E6E",
-				"strokeColor": "#6E6E6E",
+			"tint": {
+				"backgroundColor": "#6e6e6e",
+				"strokeColor": "#6e6e6e",
 				"textColor": "#ffffff"
 			}
 		},
 		"accent": {
-			"Filled": {
-				"backgroundColor": "#5B5FC7",
-				"strokeColor": "#5B5FC7",
+			"filled": {
+				"backgroundColor": "#5b5fc7",
+				"strokeColor": "#5b5fc7",
 				"textColor": "#ffffff"
 			},
-			"Tint": {
-				"backgroundColor": "#E8EBFA",
+			"tint": {
+				"backgroundColor": "#e8b8fa",
 				"strokeColor": "#e1e1e1",
 				"textColor": "#5b5fc7"
 			}
 		},
 		"attention": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#d92c2c",
 				"strokeColor": "#d92c2c",
 				"textColor": "#ffffff"
 			},
-			"Tint": {
-				"backgroundColor": "#F9D9D9",
+			"tint": {
+				"backgroundColor": "#f9d9d9",
 				"strokeColor": "#e1e1e1",
 				"textColor": "#d92c2c"
 			}
 		},
 		"good": {
-			"Filled": {
-				"backgroundColor": "#0F7A0B",
-				"strokeColor": "#0F7A0B",
+			"filled": {
+				"backgroundColor": "#0f7a0b",
+				"strokeColor": "#0f7a0b",
 				"textColor": "#ffffff"
 			},
-			"Tint": {
-				"backgroundColor": "#E7F2DA",
+			"tint": {
+				"backgroundColor": "#e7f2da",
 				"strokeColor": "#e1e1e1",
-				"textColor": "#0F7A0B"
+				"textColor": "#0f7a0b"
 			}
 		},
 		"informative": {
-			"Filled": {
+			"filled": {
 				"backgroundColor": "#ffffff",
 				"strokeColor": "#ffffff",
 				"textColor": "#212121"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#ffffff",
-				"strokeColor": "#E1E1E1",
+				"strokeColor": "#e1e1e1",
 				"textColor": "#212121"
 			}
 		},
 		"subtle": {
-			"Filled": {
-				"backgroundColor": "#F1F1F1",
-				"strokeColor": "#F1F1F1",
+			"filled": {
+				"backgroundColor": "#f1f1f1",
+				"strokeColor": "#f1f1f1",
 				"textColor": "#6e6e6e"
 			},
-			"Tint": {
+			"tint": {
 				"backgroundColor": "#f1f1f1",
 				"strokeColor": "#e1e1e1",
 				"textColor": "#6e6e6e"
 			}
 		},
 		"warning": {
-			"Filled": {
-				"backgroundColor": "#835C00",
-				"strokeColor": "#835C00",
+			"filled": {
+				"backgroundColor": "#835c00",
+				"strokeColor": "#835c00",
 				"textColor": "#ffffff"
 			},
-			"Tint": {
-				"backgroundColor": "#FBF6D9",
+			"tint": {
+				"backgroundColor": "#fbf6d9",
 				"strokeColor": "#e1e1e1",
 				"textColor": "#835C00"
 			}

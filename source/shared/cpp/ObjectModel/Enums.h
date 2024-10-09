@@ -80,6 +80,7 @@ enum class AdaptiveCardSchemaKey
     Fallback,
     FallbackText,
     FillMode,
+    Filled,
     FirstRowAsHeaders,
     FontFamily,
     FontSizes,
@@ -189,6 +190,7 @@ enum class AdaptiveCardSchemaKey
     Standard,
     Stretch,
     Strikethrough,
+    StrokeColor,
     Style,
     Subtle,
     Suffix,
@@ -218,6 +220,7 @@ enum class AdaptiveCardSchemaKey
     TextConfig,
     TextInput,
     TextStyles,
+    Tint,
     MarigoldColor,
     NeutralColor,
     FilledStar,
@@ -254,10 +257,7 @@ enum class AdaptiveCardSchemaKey
     Weight,
     Width,
     Wrap,
-    CompoundButton,
-    Filled,
-    Tint,
-    StrokeColor
+    CompoundButton
 };
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 
@@ -714,8 +714,8 @@ DECLARE_ADAPTIVECARD_ENUM(ValueChangedActionType);
 
 enum class IconPosition
 {
-   Before,
-   After
+    Before,
+    After
 };
 DECLARE_ADAPTIVECARD_ENUM(IconPosition);
 
