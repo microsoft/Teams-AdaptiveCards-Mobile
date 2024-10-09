@@ -3,7 +3,6 @@ package io.adaptivecards.renderer.layout
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
@@ -49,17 +48,17 @@ class BadgeView(
             badge.getRightPadding(),
             context.resources.getDimensionPixelOffset(R.dimen.badge_padding_top_bottom)
         )
-        justifyContent = JustifyContent.FLEX_START
-        alignItems = badge.getBadgeAlignment()
-
+        alignItems = AlignItems.CENTER
         badge.takeIf {
             it.GetBadgeIcon().isNotBlank() && it.GetIconPosition() == IconPosition.Before
         }?.let {
             addIconView(it, badgeConfig, renderedCard)
         }
 
-        badge.GetText()?.takeIf { it.isNotBlank() }?.let {
-            addTextView(it, badge.GetBadgeSize(), badgeConfig)
+        //Add TextView if badge has text or
+        //if badge has neither text nor icon, add an empty TextView.
+        badge.takeIf { it.GetText().isNotBlank() || it.GetBadgeIcon().isBlank() }?.let {
+            addTextView(badge.GetText(), badge.GetBadgeSize(), badgeConfig)
         }
 
         badge.takeIf {
@@ -132,12 +131,6 @@ class BadgeView(
             this
         )
         fluentIconImageLoaderAsync.execute(svgInfoURL)
-    }
-
-    private fun Badge.getBadgeAlignment(): Int = when (this.GetHorizontalAlignment()) {
-        HorizontalAlignment.Left -> AlignItems.FLEX_START;
-        HorizontalAlignment.Right -> AlignItems.FLEX_END;
-        else -> AlignItems.CENTER;
     }
 
     /*
