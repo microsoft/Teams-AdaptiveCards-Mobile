@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.Log
+import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.TooltipCompat
@@ -16,6 +17,7 @@ import io.adaptivecards.R
 import io.adaptivecards.objectmodel.Badge
 import io.adaptivecards.objectmodel.BadgeAppearance
 import io.adaptivecards.objectmodel.BadgeAppearanceDefinition
+import io.adaptivecards.objectmodel.BadgeSize
 import io.adaptivecards.objectmodel.BadgeStyle
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.IconPosition
@@ -36,44 +38,39 @@ class BadgeView: FlexboxLayout {
         val badgeConfig = getBadgeConfig(hostConfig, badge)
         flexDirection = FlexDirection.ROW
         flexWrap = FlexWrap.NOWRAP
-        setPadding(context.resources.getDimensionPixelOffset(R.dimen.badge_padding_start_end),
+        setPadding(getBadgeLeftPadding(badge),
             context.resources.getDimensionPixelOffset(R.dimen.badge_padding_top_bottom),
-            context.resources.getDimensionPixelOffset(R.dimen.badge_padding_start_end),
+            getBadgeRightPadding(badge),
             context.resources.getDimensionPixelOffset(R.dimen.badge_padding_top_bottom))
         justifyContent = JustifyContent.FLEX_START
         alignItems = AlignItems.CENTER
         val leftIconView = ImageView(context)
-        val textView = TextView(context)
+        addView(leftIconView)
+
+        badge.GetText()?.takeIf { it.isNotBlank() }?.apply {
+            val textView = TextView(context)
+            addView(textView)
+            textView.apply {
+                text = badge.GetText()
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, getBadgeTextSize(badge.GetBadgeSize()))
+                setTextColor(Color.parseColor(badgeConfig.textColor))
+            }
+            textView.setPadding(Util.dpToPixels(context, 6f), 0, Util.dpToPixels(context, 6f), 0)
+        }
+
         val rightIconView = ImageView(context)
-
-        val leftParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-        if(badge.GetText().isNotBlank()){
-            leftParams.setMargins(0, 0, context.resources.getDimensionPixelOffset(R.dimen.badge_margin), 0)
-        }
-        addView(leftIconView, leftParams)
-
-        addView(textView)
-        textView.apply {
-            text = badge.GetText()
-            setTextColor(Color.parseColor(badgeConfig.textColor))
-        }
-
-        val rightParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-        if(badge.GetText().isNotBlank()){
-            rightParams.setMargins(context.resources.getDimensionPixelOffset(R.dimen.badge_margin), 0, 0, 0)
-        }
-        addView(rightIconView, rightParams)
+        addView(rightIconView)
 
         Log.e("PRPATWA", "GetBadgeIcon ${badge.GetBadgeIcon()}")
         badge.GetBadgeIcon()?.takeIf { it.isNotBlank() }?.let { icon ->
             when(badge.GetIconPosition()){
                 IconPosition.After -> {
                     leftIconView.visibility = GONE
-                    setIconView(rightIconView, icon, badgeConfig, renderedCard);
+                    setIconView(rightIconView, icon, badge.GetBadgeSize(), badgeConfig, renderedCard);
                 }
                 else -> {
                     rightIconView.visibility = GONE
-                    setIconView(leftIconView, icon, badgeConfig, renderedCard)
+                    setIconView(leftIconView, icon, badge.GetBadgeSize(), badgeConfig, renderedCard)
                 }
             }
         }?:run {
@@ -84,6 +81,26 @@ class BadgeView: FlexboxLayout {
             TooltipCompat.setTooltipText(this@BadgeView, this)
         }
         background = getBackgroundDrawable(badge, badgeConfig)
+    }
+
+    private fun getBadgeLeftPadding(badge: Badge): Int =  badge.GetBadgeIcon()?.takeIf { it.isNotBlank() }?.let {
+            if(badge.GetIconPosition() == IconPosition.Before || badge.GetText().isNullOrEmpty()) {
+                return Util.dpToPixels(context, 8f)
+            }
+            return Util.dpToPixels(context, 2f)
+        }?:Util.dpToPixels(context, 2f)
+
+    private fun getBadgeRightPadding(badge: Badge): Int = badge.GetBadgeIcon()?.takeIf { it.isNotBlank() }?.let {
+        if(badge.GetIconPosition() == IconPosition.After || badge.GetText().isNullOrEmpty()) {
+            return Util.dpToPixels(context, 8f)
+        }
+        return Util.dpToPixels(context, 2f)
+        }?:Util.dpToPixels(context, 2f)
+
+    private fun getBadgeTextSize(badgeSize: BadgeSize) = when(badgeSize){
+        BadgeSize.Medium -> 12f
+        BadgeSize.Large -> 14f
+        else -> 16f
     }
 
     private fun getBackgroundDrawable(badge: Badge, badgeConfig: BadgeAppearanceDefinition): GradientDrawable {
@@ -121,7 +138,7 @@ class BadgeView: FlexboxLayout {
         }
     }
 
-    private fun setIconView(imageView: ImageView, icon: String, badgeConfig: BadgeAppearanceDefinition, renderedCard: RenderedAdaptiveCard) {
+    private fun setIconView(imageView: ImageView, icon: String, badgeSize: BadgeSize, badgeConfig: BadgeAppearanceDefinition, renderedCard: RenderedAdaptiveCard) {
         var iconName = icon
         var isFilled = true
         val iconInfo = icon.takeIf { it.contains(",") }?.split(",")
@@ -133,9 +150,13 @@ class BadgeView: FlexboxLayout {
 
         val foregroundColorIcon: String = badgeConfig.textColor
         Log.e("PRPATWA", "foregroundColorIcon : $foregroundColorIcon")
+        val iconSize = when(badgeSize){
+            BadgeSize.Medium, BadgeSize.Large -> 12
+            else -> Util.getFluentIconSize(IconSize.xxSmall)
+        }
         val fluentIconImageLoaderAsync = FluentIconImageLoaderAsync(
             renderedCard,
-            Util.getFluentIconSize(IconSize.xxSmall),
+            iconSize,
             foregroundColorIcon,
             isFilled,
             imageView

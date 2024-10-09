@@ -418,9 +418,9 @@ struct CompoundButtonConfig
 
 struct BadgeAppearanceDefinition
 {
-    std::string backgroundColor = "#000000";
-    std::string strokeColor = "#E1E1E1";
-    std::string textColor = "#FFFFFF";
+    std::string backgroundColor = "#212121";
+    std::string strokeColor = "#212121";
+    std::string textColor = "#ffffff";
 
     static BadgeAppearanceDefinition Deserialize(const Json::Value& json, const BadgeAppearanceDefinition& defaultValue);
 };
