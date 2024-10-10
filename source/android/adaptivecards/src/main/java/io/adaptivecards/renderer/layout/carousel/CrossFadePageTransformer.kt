@@ -16,9 +16,13 @@ class CrossFadePageTransformer : ViewPager2.PageTransformer {
             page.alpha = 0f // This page is way off-screen to the left.
         } else if (position <= 1) { // [-1,1]
             // Fade in/out the page
-            page.alpha = 1 - abs(position)
+            page.alpha = 1 - 1f * abs(position)
+            page.translationX = -position * page.width // Snap to position
         } else { // (1,+Infinity]
             page.alpha = 0f // This page is way off-screen to the right.
         }
+
+        // Optionally adjust the scale to add more depth
+        page.scaleY = 0.95f + (1 - abs(position)) * 0.05f
     }
 }
