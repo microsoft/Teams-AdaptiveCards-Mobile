@@ -20,6 +20,7 @@ import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 import io.adaptivecards.renderer.layout.carousel.CarouselPageAdapter
 import io.adaptivecards.renderer.layout.carousel.CrossFadePageTransformer
+import io.adaptivecards.renderer.layout.carousel.NoAnimationPageTransformer
 
 /**
  * Renderer for [Carousel] element.
@@ -77,7 +78,7 @@ object CarouselRenderer : BaseCardElementRenderer() {
 
     private fun getViewPagerPageTransformer(pageAnimation: PageAnimation): ViewPager2.PageTransformer? {
         return when (pageAnimation) {
-            PageAnimation.None -> null // For None should we use default
+            PageAnimation.None -> NoAnimationPageTransformer()
             PageAnimation.CrossFade -> CrossFadePageTransformer()
             PageAnimation.Slide -> null // Default behaviour is sliding
         }
