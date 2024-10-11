@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, ACRCardElementType) {
     // The order of enums must match with ones in enums.h
     ACRActionSet = 0,
     ACRAdaptiveCard,
+    ACRBadge,
     ACRChoiceInput,
     ACRChoiceSetInput,
     ACRColumn,
@@ -110,4 +111,36 @@ typedef NS_ENUM(NSUInteger, ACRVerticalContentAlignment) {
 typedef NS_ENUM(NSUInteger, ACRHeightType) {
     ACRHeightAuto = 0,
     ACRHeightStretch
+};
+
+typedef NS_ENUM(NSUInteger, ACRIconPosition) {
+   ACRBeforePosition = 0,
+   ACRAfterPosition
+};
+
+typedef NS_ENUM(NSUInteger, ACRShape) {
+    ACRSquare = 0,
+    ACRRounded,
+    ACRCircular
+};
+
+typedef NS_ENUM(NSUInteger, ACRBadgeStyle) {
+    ACRBadgeDefaultStyle = 0,
+    ACRBadgeAccentStyle,
+    ACRBadgeAttentionStyle,
+    ACRBadgeGoodStyle,
+    ACRBadgeInformativeStyle,
+    ACRBadgeSubtleStyle,
+    ACRBadgeWarningStyle
+};
+
+typedef NS_ENUM(NSUInteger, ACRBadgeSize) {
+    ACRMediumSize = 0,
+    ACRLargeSize,
+    ACRExtraLargeSize
+};
+
+typedef NS_ENUM(NSUInteger, ACRBadgeAppearance) {
+    ACRFilled = 0,
+    ACRTint
 };

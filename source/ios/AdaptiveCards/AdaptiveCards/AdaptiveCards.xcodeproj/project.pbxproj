@@ -310,6 +310,11 @@
 		84AE295A27FFA26F00D01B82 /* ContentSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295527FFA26F00D01B82 /* ContentSource.h */; };
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
+		B337FF7D2CB5093500BC36D0 /* ACRBadgeRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = B337FF7C2CB5093500BC36D0 /* ACRBadgeRenderer.mm */; };
+		B337FF802CB509DB00BC36D0 /* Badge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B337FF7E2CB509DB00BC36D0 /* Badge.cpp */; };
+		B337FF812CB509DB00BC36D0 /* Badge.h in Headers */ = {isa = PBXBuildFile; fileRef = B337FF7F2CB509DB00BC36D0 /* Badge.h */; };
+		B337FF842CB648D900BC36D0 /* ACRBadgeView.h in Headers */ = {isa = PBXBuildFile; fileRef = B337FF822CB648D900BC36D0 /* ACRBadgeView.h */; };
+		B337FF852CB648D900BC36D0 /* ACRBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B337FF832CB648D900BC36D0 /* ACRBadgeView.m */; };
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
 		B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */; };
@@ -856,6 +861,12 @@
 		84AE295727FFA26F00D01B82 /* CaptionSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CaptionSource.cpp; path = ../../../../shared/cpp/ObjectModel/CaptionSource.cpp; sourceTree = "<group>"; };
 		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
 		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		B337FF7B2CB5090700BC36D0 /* ACRBadgeRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBadgeRenderer.h; sourceTree = "<group>"; };
+		B337FF7C2CB5093500BC36D0 /* ACRBadgeRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBadgeRenderer.mm; sourceTree = "<group>"; };
+		B337FF7E2CB509DB00BC36D0 /* Badge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Badge.cpp; path = ../../../../shared/cpp/ObjectModel/Badge.cpp; sourceTree = "<group>"; };
+		B337FF7F2CB509DB00BC36D0 /* Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Badge.h; path = ../../../../shared/cpp/ObjectModel/Badge.h; sourceTree = "<group>"; };
+		B337FF822CB648D900BC36D0 /* ACRBadgeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBadgeView.h; sourceTree = "<group>"; };
+		B337FF832CB648D900BC36D0 /* ACRBadgeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRBadgeView.m; sourceTree = "<group>"; };
 		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
 		B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionValid.json; sourceTree = "<group>"; };
 		B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionInvalid.json; sourceTree = "<group>"; };
@@ -1505,6 +1516,8 @@
 		F423C0D71EE1FF2F00905679 /* SharedLib */ = {
 			isa = PBXGroup;
 			children = (
+				B337FF7E2CB509DB00BC36D0 /* Badge.cpp */,
+				B337FF7F2CB509DB00BC36D0 /* Badge.h */,
 				CFB972002941C079008E3795 /* ChoicesData.cpp */,
 				CFB971FF2941C079008E3795 /* ChoicesData.h */,
 				84AE295727FFA26F00D01B82 /* CaptionSource.cpp */,
@@ -1716,6 +1729,8 @@
 				468F1F192BFC5BC500C2F561 /* ACRRatingInputDataSource.mm */,
 				46445D882BF72A5300831973 /* ACRRatingView.h */,
 				46445D8A2BF7324100831973 /* ACRRatingView.mm */,
+				B337FF822CB648D900BC36D0 /* ACRBadgeView.h */,
+				B337FF832CB648D900BC36D0 /* ACRBadgeView.m */,
 				6BE8DFD5249C5126005EFE66 /* ACRToggleInputView.h */,
 				6BE8DFD3249C4C1B005EFE66 /* ACRToggleInputView.mm */,
 				CFF954CC29819A6B00F321C3 /* DynamicTypeahead */,
@@ -1770,6 +1785,8 @@
 		F42979341F3007C500E89914 /* ReadOnlyObjects */ = {
 			isa = PBXGroup;
 			children = (
+				B337FF7B2CB5090700BC36D0 /* ACRBadgeRenderer.h */,
+				B337FF7C2CB5093500BC36D0 /* ACRBadgeRenderer.mm */,
 				4608EE872BF5C1AB00543095 /* ACRRatingLabelRenderer.h */,
 				4608EE882BF5C1AB00543095 /* ACRRatingLabelRenderer.mm */,
 				F42741081EF864A900399FBB /* ACRBaseCardElementRenderer.h */,
@@ -1974,6 +1991,7 @@
 				6B268FE720CF19E200D99C1B /* RemoteResourceInformation.h in Headers */,
 				F9A9E55626FE9FE400D13410 /* StyledCollectionElement.h in Headers */,
 				CA1218C621C4509400152EA8 /* ToggleVisibilityTarget.h in Headers */,
+				B337FF812CB509DB00BC36D0 /* Badge.h in Headers */,
 				CA1218C721C4509400152EA8 /* ToggleVisibilityAction.h in Headers */,
 				6BAC0F2D228E2D7300E42DEB /* RichTextElementProperties.h in Headers */,
 				6B2242AE22334452000ACDA1 /* TextRun.h in Headers */,
@@ -2075,6 +2093,7 @@
 				84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */,
 				6BFF23EE2714C0F000183C59 /* ACOBaseCardElementPrivate.h in Headers */,
 				6BFF23FD2714C0F000183C59 /* ACOAuthCardButtonPrivate.h in Headers */,
+				B337FF842CB648D900BC36D0 /* ACRBadgeView.h in Headers */,
 				6BFF23F72714C0F000183C59 /* ACRRegistrationPrivate.h in Headers */,
 				6BFF23FA2714C0F000183C59 /* ACOBaseActionElementPrivate.h in Headers */,
 				6BFF23FC2714C0F000183C59 /* ACOMediaEventPrivate.h in Headers */,
@@ -2438,6 +2457,7 @@
 				F974C53A2800B8EA00C1B3C7 /* ContentSource.cpp in Sources */,
 				0D3485F126180F8F00614EB9 /* ACOActionOverflow.mm in Sources */,
 				6BCE4B232108EB4E00021A62 /* ACRAVPlayerViewHoldingUIView.mm in Sources */,
+				B337FF7D2CB5093500BC36D0 /* ACRBadgeRenderer.mm in Sources */,
 				6BDE5C4326FEA7DC003A1DDB /* ACRBaseTarget.mm in Sources */,
 				46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */,
 				6B22425F21E80647000ACDA1 /* ACOParseContext.mm in Sources */,
@@ -2475,6 +2495,7 @@
 				F44873121EE2261F00FCAFAE /* Image.cpp in Sources */,
 				46B329182BF3228F009671AE /* RatingInput.cpp in Sources */,
 				F4CAE77B1F7325DF00545555 /* Separator.cpp in Sources */,
+				B337FF802CB509DB00BC36D0 /* Badge.cpp in Sources */,
 				F448731F1EE2261F00FCAFAE /* ShowCardAction.cpp in Sources */,
 				6B8C766626461E98009548FA /* ACRInputTableView.mm in Sources */,
 				F4C1F5DE1F218F920018CB78 /* ACRInputNumberRenderer.mm in Sources */,
@@ -2484,6 +2505,7 @@
 				F4CA74A02016B3B9002041DF /* ACRTapGestureRecognizerEventHandler.mm in Sources */,
 				F42741171EF895AB00399FBB /* ACRTextBlockRenderer.mm in Sources */,
 				6BDE5C4626FEA7DC003A1DDB /* ACRShowCardTarget.mm in Sources */,
+				B337FF852CB648D900BC36D0 /* ACRBadgeView.m in Sources */,
 				7ECFB640219A3940004727A9 /* ParseContext.cpp in Sources */,
 				CFF954D82981AF5800F321C3 /* ACRChoiceSetFilteredStyleView.mm in Sources */,
 				6BC30F6E21E56CF900B9FAAE /* UtiliOS.mm in Sources */,
