@@ -397,6 +397,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return VerticalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.VerticalContentAlignmentFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__PageAnimation_t getPageAnimationEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__PageAnimation_t(AdaptiveCardObjectModelJNI.getPageAnimationEnum(), false);
+  }
+
+  public static String PageAnimationToString(PageAnimation t) {
+    return AdaptiveCardObjectModelJNI.PageAnimationToString(t.swigValue());
+  }
+
+  public static PageAnimation PageAnimationFromString(String t) {
+    return PageAnimation.swigToEnum(AdaptiveCardObjectModelJNI.PageAnimationFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HeightType_t getHeightTypeEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HeightType_t(AdaptiveCardObjectModelJNI.getHeightTypeEnum(), false);
   }

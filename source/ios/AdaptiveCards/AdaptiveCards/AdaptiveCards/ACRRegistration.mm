@@ -44,6 +44,7 @@
 #import "ACRRatingInputRenderer.h"
 #import "ACRRatingLabelRenderer.h"
 #import "ACRCompoundButtonRenderer.h"
+#import "ACRCarouselViewRenderer.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -94,6 +95,7 @@ using namespace AdaptiveCards;
                                              [ACRTableCellRenderer getInstance], [NSNumber numberWithInt:(int)[ACRTableCellRenderer elemType]],
                                              [ACRTableRenderer getInstance], [NSNumber numberWithInt:(int)[ACRTableRenderer elemType]],
                                              [ACRCompoundButtonRenderer getInstance], [NSNumber numberWithInt:(int)[ACRCompoundButtonRenderer elemType]],
+                                             [ACRCarouselViewRenderer getInstance],[NSNumber numberWithInt:(int)[ACRCarouselViewRenderer elemType]],
                                              [ACRCustomRenderer getInstance], [NSNumber numberWithInt:(int)[ACRCustomRenderer elemType]],
                                              nil];
         actionRendererDict =

@@ -120,6 +120,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/FeatureRegistration.h"
 #include "../../../shared/cpp/ObjectModel/BackgroundImage.h"
 #include "../../../shared/cpp/ObjectModel/Container.h"
+#include "../../../shared/cpp/ObjectModel/Carousel.h"
+#include "../../../shared/cpp/ObjectModel/CarouselPage.h"
 #include "../../../shared/cpp/ObjectModel/Icon.h"
 #include "../../../shared/cpp/ObjectModel/RatingLabel.h"
 #include "../../../shared/cpp/ObjectModel/Image.h"
@@ -202,6 +204,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::StyledCollectionElement)
 %shared_ptr(AdaptiveCards::FeatureRegistration)
 %shared_ptr(AdaptiveCards::BackgroundImage)
+%shared_ptr(AdaptiveCards::Carousel)
+%shared_ptr(AdaptiveCards::CarouselPage)
 %shared_ptr(AdaptiveCards::Container)
 %shared_ptr(AdaptiveCards::TextBlock)
 %shared_ptr(AdaptiveCards::Icon)
@@ -233,6 +237,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ParseResult)
 %shared_ptr(AdaptiveCards::RemoteResourceInformation)
 %shared_ptr(AdaptiveCards::AdaptiveCard)
+%shared_ptr(AdaptiveCards::CarouselParser)
 %shared_ptr(AdaptiveCards::ContainerParser)
 %shared_ptr(AdaptiveCards::TextBlockParser)
 %shared_ptr(AdaptiveCards::IconParser)
@@ -496,6 +501,7 @@ namespace Json {
 %template(RemoteResourceInformationVector) std::vector<AdaptiveCards::RemoteResourceInformation>;
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;
 %template(BaseCardElementVector) std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement> >;
+%template(CarouselPageVector) std::vector<std::shared_ptr<AdaptiveCards::CarouselPage> >;
 %template(LayoutVector) std::vector<std::shared_ptr<AdaptiveCards::Layout> >;
 %template(GridAreaVector) std::vector<std::shared_ptr<AdaptiveCards::GridArea> >;
 %template(ImageVector) std::vector<std::shared_ptr<AdaptiveCards::Image> >;
@@ -589,6 +595,36 @@ namespace Json {
 %extend AdaptiveCards::AreaGridLayout {
         static AdaptiveCards::AreaGridLayout *dynamic_cast(AdaptiveCards::Layout *layout) {
             return dynamic_cast<AdaptiveCards::AreaGridLayout *>(layout);
+        }
+};
+
+%exception AdaptiveCards::Carousel::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::Carousel {
+        static AdaptiveCards::Carousel *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::Carousel *>(baseCardElement);
+        }
+};
+
+%exception AdaptiveCards::CarouselPage::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::CarouselPage {
+        static AdaptiveCards::CarouselPage *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::CarouselPage *>(baseCardElement);
         }
 };
 
@@ -1080,6 +1116,8 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/FeatureRegistration.h"
 %include "../../../shared/cpp/ObjectModel/SemanticVersion.h"
 %include "../../../shared/cpp/ObjectModel/Container.h"
+%include "../../../shared/cpp/ObjectModel/Carousel.h"
+%include "../../../shared/cpp/ObjectModel/CarouselPage.h"
 %include "../../../shared/cpp/ObjectModel/Icon.h"
 %include "../../../shared/cpp/ObjectModel/RatingLabel.h"
 %include "../../../shared/cpp/ObjectModel/Image.h"

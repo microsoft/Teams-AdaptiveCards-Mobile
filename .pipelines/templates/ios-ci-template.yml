@@ -14,9 +14,9 @@ steps:
     xcodeVersion: 'default'
     packageApp: false
     signingOption: 'default'
-    sdk: 'iphonesimulator'
+    sdk: 'iphonesimulator17.5'
     destinationPlatformOption: 'iOS'
-    destinationSimulators: 'iPhone 12'
+    destinationSimulators: 'iPhone 15 Pro'
 
 - task: Xcode@5
   displayName: 'Framework Unit Test'
@@ -27,6 +27,6 @@ steps:
     xcodeVersion: 'default'
     packageApp: false
     signingOption: 'default'
-    sdk: 'iphonesimulator'
+    sdk: 'iphonesimulator17.5'
     destinationPlatformOption: 'iOS'
-    destinationSimulators: 'iPhone 12'
+    destinationSimulators: 'iPhone 15 Pro'

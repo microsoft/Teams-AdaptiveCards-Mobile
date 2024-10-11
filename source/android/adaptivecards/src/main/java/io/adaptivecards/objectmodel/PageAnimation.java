@@ -8,66 +8,38 @@
 
 package io.adaptivecards.objectmodel;
 
-public enum CardElementType {
-  ActionSet(0),
-  AdaptiveCard,
-  Badge,
-  ChoiceInput,
-  ChoiceSetInput,
-  Column,
-  ColumnSet,
-  Container,
-  Custom,
-  DateInput,
-  Fact,
-  FactSet,
-  Image,
-  Icon,
-  ImageSet,
-  Media,
-  NumberInput,
-  RatingInput,
-  RatingLabel,
-  RichTextBlock,
-  Table,
-  TableCell,
-  TableRow,
-  TextBlock,
-  TextInput,
-  TimeInput,
-  ToggleInput,
-  CompoundButton,
-  Carousel,
-  CarouselPage,
-  Unknown;
+public enum PageAnimation {
+  Slide(0),
+  CrossFade,
+  None;
 
   public final int swigValue() {
     return swigValue;
   }
 
-  public static CardElementType swigToEnum(int swigValue) {
-    CardElementType[] swigValues = CardElementType.class.getEnumConstants();
+  public static PageAnimation swigToEnum(int swigValue) {
+    PageAnimation[] swigValues = PageAnimation.class.getEnumConstants();
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
-    for (CardElementType swigEnum : swigValues)
+    for (PageAnimation swigEnum : swigValues)
       if (swigEnum.swigValue == swigValue)
         return swigEnum;
-    throw new IllegalArgumentException("No enum " + CardElementType.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + PageAnimation.class + " with value " + swigValue);
   }
 
   @SuppressWarnings("unused")
-  private CardElementType() {
+  private PageAnimation() {
     this.swigValue = SwigNext.next++;
   }
 
   @SuppressWarnings("unused")
-  private CardElementType(int swigValue) {
+  private PageAnimation(int swigValue) {
     this.swigValue = swigValue;
     SwigNext.next = swigValue+1;
   }
 
   @SuppressWarnings("unused")
-  private CardElementType(CardElementType swigEnum) {
+  private PageAnimation(PageAnimation swigEnum) {
     this.swigValue = swigEnum.swigValue;
     SwigNext.next = this.swigValue+1;
   }
