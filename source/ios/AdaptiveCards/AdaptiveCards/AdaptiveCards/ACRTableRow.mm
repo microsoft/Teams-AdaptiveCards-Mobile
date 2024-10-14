@@ -59,6 +59,8 @@
                inputs:(NSMutableArray *)inputs
            hostConfig:(ACOHostConfig *)acoConfig
             gridStyle:(ACRContainerStyle)gridStyle
+            rowIndex:(int)rowIndex
+            totalRows:(int)totalRows
 {
     self = [super init];
     if (self) {
@@ -104,6 +106,10 @@
                                                      rootView:rootView
                                                        inputs:inputs
                                                    hostConfig:acoConfig];
+                    
+                    cellView.isAccessibilityElement = YES;
+                    cellView.accessibilityValue = [NSString stringWithFormat:@"Row %i of %i, Column %i of %i", (rowIndex + 1), totalRows, (idx + 1), (int)endIdx];
+                    
                     [[ACRTableCellRenderer getInstance] render:cellView rootView:rootView inputs:inputs baseCardElement:cellElement hostConfig:acoConfig];
                     [rootView.context popBaseCardElementContext:cellElement];
                 } else {

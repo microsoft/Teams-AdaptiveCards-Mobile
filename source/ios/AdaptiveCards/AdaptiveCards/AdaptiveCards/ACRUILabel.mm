@@ -94,7 +94,10 @@
 - (void)updateAccessibility
 {
     self.isAccessibilityElement = YES;
-    self.accessibilityHint = self.text;
+    if (self.accessibilityTraits == UIAccessibilityTraitLink)
+    {
+        self.accessibilityHint = self.text;
+    }
 }
 
 - (ACRBaseTarget *)retrieveTarget:(UIGestureRecognizer *)gestureRecognizer

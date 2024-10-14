@@ -51,7 +51,9 @@ NS_ASSUME_NONNULL_BEGIN
              rootView:(ACRView *)rootView
                inputs:(NSMutableArray *)inputs
            hostConfig:(ACOHostConfig *)acoConfig
-            gridStyle:(ACRContainerStyle)gridStyle;
+            gridStyle:(ACRContainerStyle)gridStyle
+           rowIndex:(int)rowIndex
+           totalRows:(int)totalRows;
 
 @end
 
