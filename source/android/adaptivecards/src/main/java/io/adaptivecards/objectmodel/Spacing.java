@@ -11,6 +11,7 @@ package io.adaptivecards.objectmodel;
 public enum Spacing {
   Default(0),
   None,
+  ExtraSmall,
   Small,
   Medium,
   Large,
