@@ -41,35 +41,34 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Badge> badge = std::dynamic_pointer_cast<Badge>(elem);
-    std::shared_ptr<IconInfo> icon = std::make_shared<IconInfo>();
-    icon->SetName(badge->GetBadgeIcon());
-    icon->setIconSize(AdaptiveCards::IconSize::Large);
-    icon->setIconStyle(AdaptiveCards::IconStyle::Filled);
-    icon->setForgroundColor(AdaptiveCards::ForegroundColor::Good);
-
-    
-    NSString *svgPayloadURL = cdnURLForIcon(@(icon->GetSVGPath().c_str()));
-    CGSize size = CGSizeMake(getIconSize(IconSize::Standard), getIconSize(IconSize::Standard));
-    
-    UIColor *imageTintColor = [acoConfig getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:icon->getForgroundColor() subtleOption:false];
-    BOOL isFilled = (badge->GetBadgeAppearance() == BadgeAppearance::Filled);
-    ACRSVGImageView *iconView = [[ACRSVGImageView alloc] init:svgPayloadURL
-                                                          rtl:rootView.context.rtl
-                                                     isFilled:isFilled
-                                                         size:size
-                                                    tintColor:imageTintColor];
-    
-    ACRSVGIconHoldingView *imageView = [[ACRSVGIconHoldingView alloc] init:iconView size:size];
-    
-    ACRBadgeView *badgeView = [[ACRBadgeView alloc] initWithText:[NSString stringWithCString:badge->GetText().c_str() encoding:NSUTF8StringEncoding]
-                                                            image:imageView
+    NSString *iconName = [NSString stringWithCString:badge->GetBadgeIcon().c_str() encoding:NSUTF8StringEncoding];
+    NSArray *components = [iconName componentsSeparatedByString:@","];
+    BOOL isFilled = NO;
+    NSString *svgPayloadURL;
+    if(components != nil && components.count >1)
+    {
+        iconName = components[0];
+        NSString  *iconStyle = components[1];
+        NSString *filled = [NSString stringWithCString:IconStyleToString(IconStyle::Filled).c_str() encoding:NSUTF8StringEncoding];
+        if ([iconStyle isEqualToString:filled]){
+            isFilled = YES;
+        }
+    }
+    if(iconName != nil && iconName.length != 0)
+    {
+        NSString *iconUrl = [[NSString alloc] initWithFormat:@"%@/%@.json",iconName,iconName];
+        svgPayloadURL = cdnURLForIcon(iconUrl);
+    }
+    ACRBadgeView *badgeView = [[ACRBadgeView alloc] initWithRootView:rootView
+                               text:[NSString stringWithCString:badge->GetText().c_str() encoding:NSUTF8StringEncoding]
+                                                             iconUrl:svgPayloadURL
+                                                            isFilled:isFilled
                                                             appearance:getBadgeAppearance(badge->GetBadgeAppearance())
                                                             iconPosition:getIconPosition(badge->GetIconPosition())
                                                             size:getBadgeSize(badge->GetBadgeSize())
                                                             shape:getShape(badge->GetShape())
                                                             style:getBadgeStyle(badge->GetBadgeStyle())
                                                       hostConfig:acoConfig];
-
     
     
     UIView *wrapperView = [[UIView alloc] initWithFrame:CGRectZero];

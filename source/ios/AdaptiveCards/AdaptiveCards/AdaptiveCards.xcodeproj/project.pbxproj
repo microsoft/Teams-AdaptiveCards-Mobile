@@ -314,7 +314,7 @@
 		B337FF802CB509DB00BC36D0 /* Badge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B337FF7E2CB509DB00BC36D0 /* Badge.cpp */; };
 		B337FF812CB509DB00BC36D0 /* Badge.h in Headers */ = {isa = PBXBuildFile; fileRef = B337FF7F2CB509DB00BC36D0 /* Badge.h */; };
 		B337FF842CB648D900BC36D0 /* ACRBadgeView.h in Headers */ = {isa = PBXBuildFile; fileRef = B337FF822CB648D900BC36D0 /* ACRBadgeView.h */; };
-		B337FF852CB648D900BC36D0 /* ACRBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B337FF832CB648D900BC36D0 /* ACRBadgeView.m */; };
+		B337FF852CB648D900BC36D0 /* ACRBadgeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B337FF832CB648D900BC36D0 /* ACRBadgeView.mm */; };
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
 		B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */; };
@@ -866,7 +866,7 @@
 		B337FF7E2CB509DB00BC36D0 /* Badge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Badge.cpp; path = ../../../../shared/cpp/ObjectModel/Badge.cpp; sourceTree = "<group>"; };
 		B337FF7F2CB509DB00BC36D0 /* Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Badge.h; path = ../../../../shared/cpp/ObjectModel/Badge.h; sourceTree = "<group>"; };
 		B337FF822CB648D900BC36D0 /* ACRBadgeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBadgeView.h; sourceTree = "<group>"; };
-		B337FF832CB648D900BC36D0 /* ACRBadgeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRBadgeView.m; sourceTree = "<group>"; };
+		B337FF832CB648D900BC36D0 /* ACRBadgeView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBadgeView.mm; sourceTree = "<group>"; };
 		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
 		B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionValid.json; sourceTree = "<group>"; };
 		B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionInvalid.json; sourceTree = "<group>"; };
@@ -1730,7 +1730,7 @@
 				46445D882BF72A5300831973 /* ACRRatingView.h */,
 				46445D8A2BF7324100831973 /* ACRRatingView.mm */,
 				B337FF822CB648D900BC36D0 /* ACRBadgeView.h */,
-				B337FF832CB648D900BC36D0 /* ACRBadgeView.m */,
+				B337FF832CB648D900BC36D0 /* ACRBadgeView.mm */,
 				6BE8DFD5249C5126005EFE66 /* ACRToggleInputView.h */,
 				6BE8DFD3249C4C1B005EFE66 /* ACRToggleInputView.mm */,
 				CFF954CC29819A6B00F321C3 /* DynamicTypeahead */,
@@ -2505,7 +2505,7 @@
 				F4CA74A02016B3B9002041DF /* ACRTapGestureRecognizerEventHandler.mm in Sources */,
 				F42741171EF895AB00399FBB /* ACRTextBlockRenderer.mm in Sources */,
 				6BDE5C4626FEA7DC003A1DDB /* ACRShowCardTarget.mm in Sources */,
-				B337FF852CB648D900BC36D0 /* ACRBadgeView.m in Sources */,
+				B337FF852CB648D900BC36D0 /* ACRBadgeView.mm in Sources */,
 				7ECFB640219A3940004727A9 /* ParseContext.cpp in Sources */,
 				CFF954D82981AF5800F321C3 /* ACRChoiceSetFilteredStyleView.mm in Sources */,
 				6BC30F6E21E56CF900B9FAAE /* UtiliOS.mm in Sources */,

@@ -8,11 +8,14 @@
 #import <UIKit/UIKit.h>
 #import "ACRView.h"
 #import "ACOEnums.h"
+#import "Badge.h"
 
 @interface ACRBadgeView : UIView
 
-- (instancetype)initWithText:(NSString*)text
-                        image:(UIView*)imageView
+- (instancetype)initWithRootView:(ACRView *)rootView
+                            text:(NSString*)text
+                        iconUrl:(NSString*)iconUrl
+                        isFilled:(BOOL)isFilled
                     appearance:(ACRBadgeAppearance)appearance
                     iconPosition:(ACRIconPosition)iconPosition
                             size:(ACRBadgeSize)size
