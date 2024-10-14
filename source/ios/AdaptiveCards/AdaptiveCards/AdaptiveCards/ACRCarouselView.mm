@@ -107,6 +107,11 @@
         
     [self constructGestures:self];
     
+    [NSLayoutConstraint activateConstraints:@[
+        [carouselPagesContainerView.leadingAnchor constraintEqualToAnchor:carouselStackView.leadingAnchor],
+        [carouselPagesContainerView.trailingAnchor constraintEqualToAnchor:carouselStackView.trailingAnchor]
+    ]];
+    
     return self;
 }
 
