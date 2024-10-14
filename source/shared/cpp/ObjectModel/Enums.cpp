@@ -260,6 +260,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TextColor, "textColor"},
             {AdaptiveCardSchemaKey::StrokeColor, "strokeColor"},
             {AdaptiveCardSchemaKey::Shape, "shape"},
+            {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
@@ -328,6 +329,7 @@ namespace AdaptiveCards
             {Spacing::Medium, "medium"},
             {Spacing::Large, "large"},
             {Spacing::ExtraLarge, "extraLarge"},
+            {Spacing::ExtraSmall, "extraSmall"},
             {Spacing::Padding, "padding"}});
 
     DEFINE_ADAPTIVECARD_ENUM(SeparatorThickness, {

@@ -262,7 +262,8 @@ enum class AdaptiveCardSchemaKey
     Pages,
     PageAnimation,
     PageControl,
-    SelectedTintColor
+    SelectedTintColor,
+    ExtraSmall
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -493,6 +494,7 @@ enum class Spacing
 {
     Default = 0,
     None,
+    ExtraSmall,
     Small,
     Medium,
     Large,

@@ -263,7 +263,8 @@ public enum AdaptiveCardSchemaKey {
   Pages,
   PageAnimation,
   PageControl,
-  SelectedTintColor;
+  SelectedTintColor,
+  ExtraSmall;
 
   public final int swigValue() {
     return swigValue;

@@ -1550,6 +1550,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long SpacingConfig_extraLargeSpacing_get(long jarg1, SpacingConfig jarg1_);
   public final static native void SpacingConfig_paddingSpacing_set(long jarg1, SpacingConfig jarg1_, long jarg2);
   public final static native long SpacingConfig_paddingSpacing_get(long jarg1, SpacingConfig jarg1_);
+  public final static native void SpacingConfig_extraSmallSpacing_set(long jarg1, SpacingConfig jarg1_, long jarg2);
+  public final static native long SpacingConfig_extraSmallSpacing_get(long jarg1, SpacingConfig jarg1_);
   public final static native long SpacingConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, SpacingConfig jarg2_);
   public final static native long new_SpacingConfig();
   public final static native void delete_SpacingConfig(long jarg1);

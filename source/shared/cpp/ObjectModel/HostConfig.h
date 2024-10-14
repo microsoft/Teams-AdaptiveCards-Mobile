@@ -166,7 +166,7 @@ struct SpacingConfig
     unsigned int largeSpacing = 30;
     unsigned int extraLargeSpacing = 40;
     unsigned int paddingSpacing = 20;
-
+    unsigned int extraSmallSpacing = 4;
     static SpacingConfig Deserialize(const Json::Value& json, const SpacingConfig& defaultValue);
 };
 
