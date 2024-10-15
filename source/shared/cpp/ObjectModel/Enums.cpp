@@ -20,6 +20,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::AllowCustomStyle, "allowCustomStyle"},
             {AdaptiveCardSchemaKey::AllowInlinePlayback, "allowInlinePlayback"},
             {AdaptiveCardSchemaKey::AltText, "altText"},
+            {AdaptiveCardSchemaKey::Appearance, "appearance"},
             {AdaptiveCardSchemaKey::Name, "name"},
             {AdaptiveCardSchemaKey::AssociatedInputs, "associatedInputs"},
             {AdaptiveCardSchemaKey::Attention, "attention"},
@@ -30,6 +31,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::BaseCardElement, "baseCardElement"},
             {AdaptiveCardSchemaKey::BaseContainerStyle, "baseContainerStyle"},
             {AdaptiveCardSchemaKey::Badge,"badge"},
+            {AdaptiveCardSchemaKey::BadgeStyles, "badgeStyles"},
             {AdaptiveCardSchemaKey::Bleed, "bleed"},
             {AdaptiveCardSchemaKey::Body, "body"},
             {AdaptiveCardSchemaKey::Bolder, "bolder"},
@@ -76,6 +78,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Fallback, "fallback"},
             {AdaptiveCardSchemaKey::FallbackText, "fallbackText"},
             {AdaptiveCardSchemaKey::FillMode, "fillMode"},
+            {AdaptiveCardSchemaKey::Filled, "filled"},
             {AdaptiveCardSchemaKey::FirstRowAsHeaders, "firstRowAsHeaders"},
             {AdaptiveCardSchemaKey::FontFamily, "fontFamily"},
             {AdaptiveCardSchemaKey::FontSizes, "fontSizes"},
@@ -96,6 +99,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::HorizontalCellContentAlignment, "horizontalCellContentAlignment"},
             {AdaptiveCardSchemaKey::HostWidthBreakpoints, "hostWidthBreakpoints"},
             {AdaptiveCardSchemaKey::IconPlacement, "iconPlacement"},
+            {AdaptiveCardSchemaKey::IconPosition, "iconPosition"},
             {AdaptiveCardSchemaKey::IconSize, "iconSize"},
             {AdaptiveCardSchemaKey::IconUrl, "iconUrl"},
             {AdaptiveCardSchemaKey::Id, "id"},
@@ -106,6 +110,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ImageSize, "imageSize"},
             {AdaptiveCardSchemaKey::ImageSizes, "imageSizes"},
             {AdaptiveCardSchemaKey::Images, "images"},
+            {AdaptiveCardSchemaKey::Informative, "informative"},
             {AdaptiveCardSchemaKey::InlineAction, "inlineAction"},
             {AdaptiveCardSchemaKey::InlineTopMargin, "inlineTopMargin"},
             {AdaptiveCardSchemaKey::Inlines, "inlines"},
@@ -207,6 +212,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Thickness, "thickness"},
             {AdaptiveCardSchemaKey::TimeInput, "timeInput"},
             {AdaptiveCardSchemaKey::Title, "title"},
+            {AdaptiveCardSchemaKey::Tint, "tint"},
             {AdaptiveCardSchemaKey::ToggleInput, "toggleInput"},
             {AdaptiveCardSchemaKey::Layout, "Layout"},
             {AdaptiveCardSchemaKey::ItemFit, "itemFit"},
@@ -251,12 +257,16 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::PageAnimation,"pageAnimation"},
             {AdaptiveCardSchemaKey::PageControl,"pageControl"},
             {AdaptiveCardSchemaKey::SelectedTintColor,"selectedTintColor"},
+            {AdaptiveCardSchemaKey::TextColor, "textColor"},
+            {AdaptiveCardSchemaKey::StrokeColor, "strokeColor"},
+            {AdaptiveCardSchemaKey::Shape, "shape"},
             {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
             {CardElementType::AdaptiveCard, "AdaptiveCard"},
+            {CardElementType::Badge, "Badge"},
             {CardElementType::ChoiceSetInput, "Input.ChoiceSet"},
             {CardElementType::Column, "Column"},
             {CardElementType::ColumnSet, "ColumnSet"},
@@ -303,7 +313,7 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(RatingSize, {
             {RatingSize::Medium, "medium"},
             {RatingSize::Large, "large"}});
-    
+
     DEFINE_ADAPTIVECARD_ENUM(RatingColor, {
             {RatingColor::Neutral, "neutral"},
             {RatingColor::Marigold, "marigold"}});
@@ -514,4 +524,32 @@ namespace AdaptiveCards
 
     DEFINE_ADAPTIVECARD_ENUM(ValueChangedActionType, {
             {ValueChangedActionType::ResetInputs, "Action.ResetInputs"},});
+
+    DEFINE_ADAPTIVECARD_ENUM(IconPosition, {
+        {IconPosition::Before, "Before"},
+        {IconPosition::After, "After"},});
+
+    DEFINE_ADAPTIVECARD_ENUM(Shape, {
+        {Shape::Square, "Square"},
+        {Shape::Rounded, "Rounded"},
+        {Shape::Circular, "Circular"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(BadgeStyle, {
+        {BadgeStyle::Default, "Default"},
+        {BadgeStyle::Accent, "Accent"},
+        {BadgeStyle::Attention, "Attention"},
+        {BadgeStyle::Good, "Good"},
+        {BadgeStyle::Informative, "Informative"},
+        {BadgeStyle::Subtle, "Subtle"},
+        {BadgeStyle::Warning, "Warning"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(BadgeSize, {
+        {BadgeSize::Medium, "Medium"},
+        {BadgeSize::Large, "Large"},
+        {BadgeSize::ExtraLarge, "ExtraLarge"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(BadgeAppearance, {
+        {BadgeAppearance::Filled, "Filled"},
+        {BadgeAppearance::Tint, "Tint"}});
+
 }

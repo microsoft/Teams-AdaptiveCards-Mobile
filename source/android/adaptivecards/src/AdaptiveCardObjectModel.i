@@ -183,6 +183,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
 #include "../../../shared/cpp/ObjectModel/CompoundButton.h"
 #include "../../../shared/cpp/ObjectModel/IconInfo.h"
+#include "../../../shared/cpp/ObjectModel/Badge.h"
 %}
 
 
@@ -292,6 +293,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::TableRow)
 %shared_ptr(AdaptiveCards::Table)
 %shared_ptr(AdaptiveCards::ValueChangedAction)
+%shared_ptr(AdaptiveCards::Badge)
+%shared_ptr(AdaptiveCards::BadgeParser)
 
 
 %apply unsigned int& INOUT { unsigned int& };
@@ -1076,6 +1079,21 @@ namespace Json {
         }
 };
 
+%exception AdaptiveCards::Badge::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::Badge {
+        static AdaptiveCards::Badge *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::Badge *>(baseCardElement);
+        }
+};
+
 %include "../../../shared/cpp/ObjectModel/pch.h"
 %include "../../../shared/cpp/ObjectModel/EnumMagic.h"
 %include "../../../shared/cpp/ObjectModel/Enums.h"
@@ -1158,3 +1176,4 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
 %include "../../../shared/cpp/ObjectModel/CompoundButton.h"
 %include "../../../shared/cpp/ObjectModel/IconInfo.h"
+%include "../../../shared/cpp/ObjectModel/Badge.h"

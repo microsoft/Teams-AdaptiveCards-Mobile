@@ -226,6 +226,10 @@
 									{
 										"title": "ContainerAreaGrid11",
 										"value": "v1.5/Scenarios/ContainerAreaGrid11.json"
+									},
+									{
+										"title": "Badge",
+										"value": "v1.5/Scenarios/badge.json"
 									}
 								],
                                 "placeholder": "(choose sample)",
