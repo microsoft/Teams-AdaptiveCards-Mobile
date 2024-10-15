@@ -76,7 +76,6 @@
     _textLabel.textColor = [ACOHostConfig convertHexColorCodeToUIColor: definition.textColor.c_str()];
     _textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize] weight:UIFontWeightRegular];
     _textLabel.numberOfLines = 0;
-    _textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self addSubview:_textLabel];
     self.layer.cornerRadius = [self getCornerRadius];
     [self setupConstraints];
@@ -128,6 +127,10 @@
     ACRSVGIconHoldingView *imageView = [[ACRSVGIconHoldingView alloc] init:iconView size:size];
     _iconImageView = imageView;
     _iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:@[
+        [_iconImageView.widthAnchor constraintEqualToConstant:size.width],
+        [_iconImageView.heightAnchor constraintEqualToConstant:size.height]
+    ]];
     [self addSubview:_iconImageView];
 }
 

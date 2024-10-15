@@ -79,9 +79,7 @@
     
     [NSLayoutConstraint activateConstraints:@[
         [wrapperView.topAnchor constraintEqualToAnchor:badgeView.topAnchor],
-        [wrapperView.bottomAnchor constraintEqualToAnchor:badgeView.bottomAnchor],
-        [wrapperView.leadingAnchor constraintLessThanOrEqualToAnchor:badgeView.leadingAnchor constant:0],
-        [wrapperView.trailingAnchor constraintGreaterThanOrEqualToAnchor:badgeView.trailingAnchor constant:0]
+        [wrapperView.bottomAnchor constraintEqualToAnchor:badgeView.bottomAnchor]
     ]];
     
     ACRHorizontalAlignment acrHorizontalAlignment = getACRHorizontalAlignment(badge->GetHorizontalAlignment().value_or(HorizontalAlignment::Right));
@@ -95,7 +93,7 @@
             break;
         case ACRRight:
             [NSLayoutConstraint activateConstraints:@[
-                [wrapperView.trailingAnchor constraintEqualToAnchor:badgeView.trailingAnchor]
+                [wrapperView.trailingAnchor constraintEqualToAnchor:badgeView.trailingAnchor],
             ]];
             break;
         case ACRLeft:
@@ -103,7 +101,9 @@
                 [wrapperView.leadingAnchor constraintEqualToAnchor:badgeView.leadingAnchor]
             ]];
     }
-    
+    NSLayoutConstraint *width = [wrapperView.widthAnchor constraintEqualToAnchor:badgeView.widthAnchor];
+    width.priority = 239;
+    [width setActive:YES];
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:wrapperView withAreaName:areaName];
   
