@@ -27,7 +27,6 @@ typedef NS_ENUM(NSInteger, ACRCardElementType) {
     // The order of enums must match with ones in enums.h
     ACRActionSet = 0,
     ACRAdaptiveCard,
-    ACRBadge,
     ACRChoiceInput,
     ACRChoiceSetInput,
     ACRColumn,

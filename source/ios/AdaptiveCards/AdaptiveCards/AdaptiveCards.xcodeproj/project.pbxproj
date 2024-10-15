@@ -335,6 +335,10 @@
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
 		B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */; };
+		B37FE7572CBEAAEC00537817 /* ACRBadgeRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = B37FE7542CBEAAEC00537817 /* ACRBadgeRenderer.mm */; };
+		B37FE7582CBEAAEC00537817 /* ACRBadgeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B37FE7562CBEAAEC00537817 /* ACRBadgeView.mm */; };
+		B37FE7592CBEAAEC00537817 /* ACRBadgeRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B37FE7532CBEAAEC00537817 /* ACRBadgeRenderer.h */; };
+		B37FE75A2CBEAAEC00537817 /* ACRBadgeView.h in Headers */ = {isa = PBXBuildFile; fileRef = B37FE7552CBEAAEC00537817 /* ACRBadgeView.h */; };
 		C8DEDF39220CDEB00001AAED /* ActionSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8DEDF37220CDEB00001AAED /* ActionSet.cpp */; };
 		C8DEDF3A220CDEB00001AAED /* ActionSet.h in Headers */ = {isa = PBXBuildFile; fileRef = C8DEDF38220CDEB00001AAED /* ActionSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA1218C621C4509400152EA8 /* ToggleVisibilityTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = CA1218C221C4509300152EA8 /* ToggleVisibilityTarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -904,6 +908,10 @@
 		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
 		B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionValid.json; sourceTree = "<group>"; };
 		B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionInvalid.json; sourceTree = "<group>"; };
+		B37FE7532CBEAAEC00537817 /* ACRBadgeRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBadgeRenderer.h; sourceTree = "<group>"; };
+		B37FE7542CBEAAEC00537817 /* ACRBadgeRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBadgeRenderer.mm; sourceTree = "<group>"; };
+		B37FE7552CBEAAEC00537817 /* ACRBadgeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBadgeView.h; sourceTree = "<group>"; };
+		B37FE7562CBEAAEC00537817 /* ACRBadgeView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBadgeView.mm; sourceTree = "<group>"; };
 		C1BFE0C10A542B2DABBE89DC /* Pods-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests/Pods-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8DEDF37220CDEB00001AAED /* ActionSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActionSet.cpp; path = ../../../../shared/cpp/ObjectModel/ActionSet.cpp; sourceTree = "<group>"; };
 		C8DEDF38220CDEB00001AAED /* ActionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionSet.h; path = ../../../../shared/cpp/ObjectModel/ActionSet.h; sourceTree = "<group>"; };
@@ -1824,6 +1832,10 @@
 		F42979341F3007C500E89914 /* ReadOnlyObjects */ = {
 			isa = PBXGroup;
 			children = (
+				B37FE7532CBEAAEC00537817 /* ACRBadgeRenderer.h */,
+				B37FE7542CBEAAEC00537817 /* ACRBadgeRenderer.mm */,
+				B37FE7552CBEAAEC00537817 /* ACRBadgeView.h */,
+				B37FE7562CBEAAEC00537817 /* ACRBadgeView.mm */,
 				F42741081EF864A900399FBB /* ACRBaseCardElementRenderer.h */,
 				F42741091EF864A900399FBB /* ACRBaseCardElementRenderer.mm */,
 				7773C2E12CA558AE00097C06 /* ACRCarouselPageContainerView.mm */,
@@ -2070,6 +2082,8 @@
 				46058FDD2C608D0800966E76 /* AreaGridLayout.h in Headers */,
 				7751C0732CAC0EEB00C876DD /* ACRPageControl.h in Headers */,
 				6B9BDF8020F40D1000F13155 /* ACOResourceResolvers.h in Headers */,
+				B37FE7592CBEAAEC00537817 /* ACRBadgeRenderer.h in Headers */,
+				B37FE75A2CBEAAEC00537817 /* ACRBadgeView.h in Headers */,
 				6BB211FD20FF9FEA009EA1BA /* ACRActionSetRenderer.h in Headers */,
 				6B9BDFCA20F6BF5D00F13155 /* ACOIResourceResolver.h in Headers */,
 				6B7B1A9420B4D2AB00260731 /* Media.h in Headers */,
@@ -2538,6 +2552,8 @@
 				F401A87C1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm in Sources */,
 				6B2242B422334492000ACDA1 /* Inline.cpp in Sources */,
 				6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */,
+				B37FE7572CBEAAEC00537817 /* ACRBadgeRenderer.mm in Sources */,
+				B37FE7582CBEAAEC00537817 /* ACRBadgeView.mm in Sources */,
 				F4F44B6E203FAF9300A2F24C /* ACRUILabel.mm in Sources */,
 				F4F44B7C20478C5C00A2F24C /* DateTimePreparsedToken.cpp in Sources */,
 				46731C0C2CBD198F0092B7A9 /* Badge.cpp in Sources */,
