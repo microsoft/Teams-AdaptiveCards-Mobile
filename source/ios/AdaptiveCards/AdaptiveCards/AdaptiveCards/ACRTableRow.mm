@@ -54,13 +54,13 @@
 @implementation ACRTableRowView
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem
-    columnDefinitions:(NSArray<ACRColumnDefinition *> *)columnDefinition
-             rootView:(ACRView *)rootView
-               inputs:(NSMutableArray *)inputs
-           hostConfig:(ACOHostConfig *)acoConfig
-            gridStyle:(ACRContainerStyle)gridStyle
+   columnDefinitions:(NSArray<ACRColumnDefinition *> *)columnDefinition
+            rootView:(ACRView *)rootView
+              inputs:(NSMutableArray *)inputs
+          hostConfig:(ACOHostConfig *)acoConfig
+           gridStyle:(ACRContainerStyle)gridStyle
             rowIndex:(int)rowIndex
-            totalRows:(int)totalRows
+           totalRows:(int)totalRows
 {
     self = [super init];
     if (self) {

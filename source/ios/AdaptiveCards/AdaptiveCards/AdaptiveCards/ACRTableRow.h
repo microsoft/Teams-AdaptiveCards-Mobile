@@ -47,12 +47,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property CGFloat spacing;
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem
-    columnDefinitions:(NSArray<ACRColumnDefinition *> *)columnDefinition
-             rootView:(ACRView *)rootView
-               inputs:(NSMutableArray *)inputs
-           hostConfig:(ACOHostConfig *)acoConfig
-            gridStyle:(ACRContainerStyle)gridStyle
-           rowIndex:(int)rowIndex
+   columnDefinitions:(NSArray<ACRColumnDefinition *> *)columnDefinition
+            rootView:(ACRView *)rootView
+              inputs:(NSMutableArray *)inputs
+          hostConfig:(ACOHostConfig *)acoConfig
+           gridStyle:(ACRContainerStyle)gridStyle
+            rowIndex:(int)rowIndex
            totalRows:(int)totalRows;
 
 @end
