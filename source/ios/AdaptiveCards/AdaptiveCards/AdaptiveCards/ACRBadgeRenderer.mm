@@ -79,7 +79,9 @@
     
     [NSLayoutConstraint activateConstraints:@[
         [wrapperView.topAnchor constraintEqualToAnchor:badgeView.topAnchor],
-        [wrapperView.bottomAnchor constraintEqualToAnchor:badgeView.bottomAnchor]
+        [wrapperView.bottomAnchor constraintEqualToAnchor:badgeView.bottomAnchor],
+        [wrapperView.leadingAnchor constraintLessThanOrEqualToAnchor:badgeView.leadingAnchor constant:0],
+        [wrapperView.trailingAnchor constraintGreaterThanOrEqualToAnchor:badgeView.trailingAnchor constant:0]
     ]];
     
     ACRHorizontalAlignment acrHorizontalAlignment = getACRHorizontalAlignment(badge->GetHorizontalAlignment().value_or(HorizontalAlignment::Right));

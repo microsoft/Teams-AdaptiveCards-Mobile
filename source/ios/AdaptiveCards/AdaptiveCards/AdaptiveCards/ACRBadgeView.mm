@@ -76,6 +76,7 @@
     _textLabel.textColor = [ACOHostConfig convertHexColorCodeToUIColor: definition.textColor.c_str()];
     _textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize] weight:UIFontWeightRegular];
     _textLabel.numberOfLines = 0;
+    _textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self addSubview:_textLabel];
     self.layer.cornerRadius = [self getCornerRadius];
     [self setupConstraints];
