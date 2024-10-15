@@ -13,8 +13,8 @@
 - (instancetype _Nonnull)initWithNumberOfPages:(NSInteger)numberOfPages
                          displayPages:(nullable NSNumber *)displayPages
                               selctedTintColor:(UIColor *_Nonnull)selctedTintColor
-                            unselctedTintColor:(UIColor *_Nonnull)unselctedTintColor;
-
+                            unselctedTintColor:(UIColor *_Nonnull)unselctedTintColor
+                            hidesForSinglePage:(BOOL) hidesForSinglePage;
 @end
 
 // PageControl interface
