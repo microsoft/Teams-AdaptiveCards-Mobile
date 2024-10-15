@@ -90,11 +90,15 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
                                                                                   AdaptiveCardSchemaKey::CompoundButton,
                                                                                   result._compoundButtonConfig,
                                                                                   CompoundButtonConfig::Deserialize);
-    
+
     result._pageControlConfig = ParseUtil::ExtractJsonValueAndMergeWithDefault<PageControlConfig>(json,
                                                                                                   AdaptiveCardSchemaKey::PageControl,
                                                                                                   result._pageControlConfig,
                                                                                                   PageControlConfig::Deserialize);
+
+    result._badgeStyles = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeStylesDefinition>(
+            json, AdaptiveCardSchemaKey::BadgeStyles, result._badgeStyles, BadgeStylesDefinition::Deserialize);
+
     return result;
 }
 
@@ -565,6 +569,58 @@ BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig 
     return result;
 }
 
+BadgeStyleDefinition BadgeStyleDefinition::Deserialize(const Json::Value& json, const BadgeStyleDefinition& defaultValue)
+{
+    BadgeStyleDefinition result;
+
+    result.filledStyle = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeAppearanceDefinition>(
+            json, AdaptiveCardSchemaKey::Filled, defaultValue.filledStyle, BadgeAppearanceDefinition::Deserialize);
+
+    result.tintStyle = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeAppearanceDefinition>(
+            json, AdaptiveCardSchemaKey::Tint, defaultValue.tintStyle, BadgeAppearanceDefinition::Deserialize);
+
+    return result;
+}
+
+BadgeStylesDefinition BadgeStylesDefinition::Deserialize(const Json::Value& json, const BadgeStylesDefinition& defaultValue)
+{
+    BadgeStylesDefinition result;
+
+    result.defaultPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeStyleDefinition>(
+            json, AdaptiveCardSchemaKey::Default, defaultValue.defaultPalette, BadgeStyleDefinition::Deserialize);
+
+    result.accentPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeStyleDefinition>(
+            json, AdaptiveCardSchemaKey::Accent, defaultValue.accentPalette, BadgeStyleDefinition::Deserialize);
+
+    result.attentionPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeStyleDefinition>(
+            json, AdaptiveCardSchemaKey::Attention, defaultValue.goodPalette, BadgeStyleDefinition::Deserialize);
+
+    result.goodPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeStyleDefinition>(
+            json, AdaptiveCardSchemaKey::Good, defaultValue.attentionPalette, BadgeStyleDefinition::Deserialize);
+
+    result.informativePalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeStyleDefinition>(
+            json, AdaptiveCardSchemaKey::Informative, defaultValue.warningPalette, BadgeStyleDefinition::Deserialize);
+
+    result.subtlePalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeStyleDefinition>(
+            json, AdaptiveCardSchemaKey::Subtle, defaultValue.accentPalette, BadgeStyleDefinition::Deserialize);
+
+    result.warningPalette = ParseUtil::ExtractJsonValueAndMergeWithDefault<BadgeStyleDefinition>(
+            json, AdaptiveCardSchemaKey::Warning, defaultValue.accentPalette, BadgeStyleDefinition::Deserialize);
+
+    return result;
+}
+
+BadgeAppearanceDefinition BadgeAppearanceDefinition::Deserialize(const Json::Value &json,
+                                                                 const AdaptiveCards::BadgeAppearanceDefinition &defaultValue) {
+    BadgeAppearanceDefinition result;
+    result.backgroundColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BackgroundColor, defaultValue.backgroundColor);
+    result.textColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::TextColor, defaultValue.textColor);
+    result.strokeColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::StrokeColor, defaultValue.strokeColor);
+    return result;
+
+}
+
+
 FontTypeDefinition HostConfig::GetFontType(FontType type) const
 {
     switch (type)
@@ -764,6 +820,28 @@ const ContainerStyleDefinition& HostConfig::GetContainerStyle(ContainerStyle sty
     case ContainerStyle::Default:
     default:
         return _containerStyles.defaultPalette;
+    }
+}
+
+const BadgeStyleDefinition& HostConfig::GetBadgeStyle(BadgeStyle style) const
+{
+    switch (style)
+    {
+        case BadgeStyle::Accent:
+            return _badgeStyles.accentPalette;
+        case BadgeStyle::Attention:
+            return _badgeStyles.attentionPalette;
+        case BadgeStyle::Good:
+            return _badgeStyles.goodPalette;
+        case BadgeStyle::Informative:
+            return _badgeStyles.informativePalette;
+        case BadgeStyle::Subtle:
+            return _badgeStyles.subtlePalette;
+        case BadgeStyle::Warning:
+            return _badgeStyles.warningPalette;
+        case BadgeStyle::Default:
+        default:
+            return _badgeStyles.defaultPalette;
     }
 }
 
@@ -1079,4 +1157,14 @@ PageControlConfig HostConfig::GetPageControlConfig() const
 void HostConfig::SetPageControlConfig(const PageControlConfig value)
 {
     _pageControlConfig = value;
+}
+
+BadgeStylesDefinition HostConfig::GetBadgeStyles() const
+{
+    return _badgeStyles;
+}
+
+void  HostConfig::SetBadgeStyles(const AdaptiveCards::BadgeStylesDefinition value)
+{
+    _badgeStyles = value;
 }
