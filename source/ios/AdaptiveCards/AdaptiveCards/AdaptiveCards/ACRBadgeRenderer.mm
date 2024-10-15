@@ -19,7 +19,7 @@
 #include "IconInfo.h"
 #import "ACRBadgeView.h"
 
-@implementation ACRBadgeRenderer 
+@implementation ACRBadgeRenderer
 
 + (ACRBadgeRenderer *)getInstance
 {
@@ -33,25 +33,26 @@
 }
 
 - (UIView *)render:(UIView<ACRIContentHoldingView> *)viewGroup
-           rootView:(ACRView *)rootView
-             inputs:(NSMutableArray *)inputs
-    baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+          rootView:(ACRView *)rootView
+            inputs:(NSMutableArray *)inputs
+   baseCardElement:(ACOBaseCardElement *)acoElem
+        hostConfig:(ACOHostConfig *)acoConfig;
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Badge> badge = std::dynamic_pointer_cast<Badge>(elem);
     NSString *iconName = [NSString stringWithCString:badge->GetBadgeIcon().c_str() encoding:NSUTF8StringEncoding];
     NSArray *components = [iconName componentsSeparatedByString:@","];
-    BOOL isFilled = NO;
+    BOOL isFilled = YES;
     NSString *svgPayloadURL;
     if(components != nil && components.count >1)
     {
         iconName = components[0];
         NSString  *iconStyle = components[1];
-        NSString *filled = [NSString stringWithCString:IconStyleToString(IconStyle::Filled).c_str() encoding:NSUTF8StringEncoding];
-        if ([iconStyle isEqualToString:filled]){
-            isFilled = YES;
+        NSString *regular = [NSString stringWithCString:IconStyleToString(IconStyle::Regular).c_str() encoding:NSUTF8StringEncoding];
+        if ([iconStyle isEqualToString:regular])
+        {
+            isFilled = NO;
         }
     }
     if(iconName != nil && iconName.length != 0)
@@ -60,15 +61,15 @@
         svgPayloadURL = cdnURLForIcon(iconUrl);
     }
     ACRBadgeView *badgeView = [[ACRBadgeView alloc] initWithRootView:rootView
-                               text:[NSString stringWithCString:badge->GetText().c_str() encoding:NSUTF8StringEncoding]
+                                                                text:[NSString stringWithCString:badge->GetText().c_str() encoding:NSUTF8StringEncoding]
                                                              iconUrl:svgPayloadURL
                                                             isFilled:isFilled
-                                                            appearance:getBadgeAppearance(badge->GetBadgeAppearance())
-                                                            iconPosition:getIconPosition(badge->GetIconPosition())
-                                                            size:getBadgeSize(badge->GetBadgeSize())
-                                                            shape:getShape(badge->GetShape())
-                                                            style:getBadgeStyle(badge->GetBadgeStyle())
-                                                      hostConfig:acoConfig];
+                                                          appearance:getBadgeAppearance(badge->GetBadgeAppearance())
+                                                        iconPosition:getIconPosition(badge->GetIconPosition())
+                                                                size:getBadgeSize(badge->GetBadgeSize())
+                                                               shape:getShape(badge->GetShape())
+                                                               style:getBadgeStyle(badge->GetBadgeStyle())
+                                                          hostConfig:acoConfig];
     
     
     UIView *wrapperView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -78,7 +79,9 @@
     
     [NSLayoutConstraint activateConstraints:@[
         [wrapperView.topAnchor constraintEqualToAnchor:badgeView.topAnchor],
-        [wrapperView.bottomAnchor constraintEqualToAnchor:badgeView.bottomAnchor]
+        [wrapperView.bottomAnchor constraintEqualToAnchor:badgeView.bottomAnchor],
+        [wrapperView.leadingAnchor constraintLessThanOrEqualToAnchor:badgeView.leadingAnchor constant:0],
+        [wrapperView.trailingAnchor constraintGreaterThanOrEqualToAnchor:badgeView.trailingAnchor constant:0]
     ]];
     
     ACRHorizontalAlignment acrHorizontalAlignment = getACRHorizontalAlignment(badge->GetHorizontalAlignment().value_or(HorizontalAlignment::Right));

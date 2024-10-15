@@ -33,14 +33,14 @@
 
 - (instancetype)initWithRootView:(ACRView *)rootView
                             text:(NSString*)text
-                        iconUrl:(NSString*)iconUrl
+                         iconUrl:(NSString*)iconUrl
                         isFilled:(BOOL)isFilled
-                    appearance:(ACRBadgeAppearance)appearance
+                      appearance:(ACRBadgeAppearance)appearance
                     iconPosition:(ACRIconPosition)iconPosition
                             size:(ACRBadgeSize)size
                            shape:(ACRShape)shape
-                            style:(ACRBadgeStyle)style
-                        hostConfig:(ACOHostConfig *)hostConfig
+                           style:(ACRBadgeStyle)style
+                      hostConfig:(ACOHostConfig *)hostConfig
 {
     self = [super initWithFrame:CGRectZero];
     if (self)
@@ -65,7 +65,7 @@
     BadgeAppearanceDefinition definition = [self getBadgeAppearanceDefinition];
     self.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor: definition.backgroundColor.c_str()];
     self.layer.borderColor  =  [ACOHostConfig convertHexColorCodeToUIColor: definition.strokeColor.c_str()].CGColor;
-    self.layer.borderWidth = 2;
+    self.layer.borderWidth = 1;
     if(_iconUrl != nil)
     {
         [self addIconView:definition];
@@ -87,13 +87,13 @@
 {
     switch (_size) {
         case ACRMediumSize:
-            return 12;
+            return 13;
         case ACRLargeSize:
-            return 14;
+            return 15;
         case ACRExtraLargeSize:
-            return 16;
+            return 15;
         default:
-            return 12;
+            return 13;
     }
 }
 
@@ -113,10 +113,10 @@
 
 -(void)addIconView:(BadgeAppearanceDefinition) definition
 {
-    CGSize size = CGSizeMake(16,16);
+    CGSize size = CGSizeMake(12,12);
     if(_size == ACRExtraLargeSize)
     {
-        size = CGSizeMake(20, 20);
+        size = CGSizeMake(16, 16);
     }
     UIColor *imageTintColor = [ACOHostConfig convertHexColorCodeToUIColor: definition.textColor.c_str()];
     ACRSVGImageView *iconView = [[ACRSVGImageView alloc] init:_iconUrl
@@ -133,16 +133,22 @@
 
 - (void)setupConstraints
 {
-    [NSLayoutConstraint activateConstraints:@[
-        [_textLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:6],
-        [_textLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-6],
-    ]];
-    
     if(_iconImageView == nil)
     {
         [NSLayoutConstraint activateConstraints:@[
             [_textLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10],
-            [_textLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10]
+            [_textLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10],
+            [_textLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:6],
+            [_textLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-6]
+        ]];
+    }
+    else if([_textLabel.text isEqualToString:@"" ])
+    {
+        [NSLayoutConstraint activateConstraints:@[
+            [_iconImageView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10],
+            [_iconImageView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10],
+            [_iconImageView.topAnchor constraintEqualToAnchor:self.topAnchor constant:10],
+            [_iconImageView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-10]
         ]];
     }
     else if(_iconPosition == ACRBeforePosition)
@@ -151,7 +157,9 @@
             [_iconImageView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10],
             [_textLabel.leadingAnchor constraintEqualToAnchor:_iconImageView.trailingAnchor constant:10],
             [_textLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10],
-            [_iconImageView.centerYAnchor constraintEqualToAnchor:_textLabel.centerYAnchor]
+            [_iconImageView.centerYAnchor constraintEqualToAnchor:_textLabel.centerYAnchor],
+            [_textLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:6],
+            [_textLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-6]
         ]];
     } else
     {
@@ -159,7 +167,9 @@
             [_textLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10],
             [_iconImageView.leadingAnchor constraintEqualToAnchor:_textLabel.trailingAnchor constant:10],
             [_iconImageView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10],
-            [_iconImageView.centerYAnchor constraintEqualToAnchor:_textLabel.centerYAnchor]
+            [_iconImageView.centerYAnchor constraintEqualToAnchor:_textLabel.centerYAnchor],
+            [_textLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:6],
+            [_textLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-6]
         ]];
     }
 }

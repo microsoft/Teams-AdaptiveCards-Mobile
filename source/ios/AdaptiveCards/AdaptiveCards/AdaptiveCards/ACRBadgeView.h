@@ -14,13 +14,13 @@
 
 - (instancetype)initWithRootView:(ACRView *)rootView
                             text:(NSString*)text
-                        iconUrl:(NSString*)iconUrl
+                         iconUrl:(NSString*)iconUrl
                         isFilled:(BOOL)isFilled
-                    appearance:(ACRBadgeAppearance)appearance
+                      appearance:(ACRBadgeAppearance)appearance
                     iconPosition:(ACRIconPosition)iconPosition
                             size:(ACRBadgeSize)size
                            shape:(ACRShape)shape
-                            style:(ACRBadgeStyle)style
-                        hostConfig:(ACOHostConfig *)hostConfig;
+                           style:(ACRBadgeStyle)style
+                      hostConfig:(ACOHostConfig *)hostConfig;
 
 @end
