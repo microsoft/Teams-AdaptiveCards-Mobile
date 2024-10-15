@@ -11,7 +11,6 @@ package io.adaptivecards.objectmodel;
 public enum CardElementType {
   ActionSet(0),
   AdaptiveCard,
-  Badge,
   ChoiceInput,
   ChoiceSetInput,
   Column,
@@ -39,6 +38,7 @@ public enum CardElementType {
   CompoundButton,
   Carousel,
   CarouselPage,
+  Badge,
   Unknown;
 
   public final int swigValue() {
