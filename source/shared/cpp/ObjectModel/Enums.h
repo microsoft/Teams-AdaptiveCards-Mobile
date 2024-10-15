@@ -273,7 +273,6 @@ enum class CardElementType
     // When the order of existing enums are changed, corresponding changes are needed in iOS (ACOBaseCardElement.h)
     ActionSet = 0,
     AdaptiveCard,
-    Badge,
     ChoiceInput,
     ChoiceSetInput,
     Column,
@@ -301,6 +300,7 @@ enum class CardElementType
     CompoundButton,
     Carousel,
     CarouselPage,
+    Badge,
     Unknown
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);
