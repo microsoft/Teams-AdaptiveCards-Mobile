@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="scrollingpagecontrolview_diameter_selected">10.0dp</dimen>
+    <dimen name="scrollingpagecontrolview_diameter_unselected">8.0dp</dimen>
+    <dimen name="scrollingpagecontrolview_dotSpacing">7dp</dimen>
+    <dimen name="scrollingpagecontrolview_padding_top_bottom">20dp</dimen>
+
+    <integer name="scrollingpagecontrolview_visibleDotCount">5</integer>
+    <integer name="scrollingpagecontrolview_visibleDotThreshold">2</integer>
+
+    <color name="scrollingpagecontrolview_dotColor">#6E6E6E</color>
+    <color name="scrollingpagecontrolview_dotSelectedColor">#5B5FC7</color>
+
+    <string name="page_control_page_index" comment="Index of page, %1 placeholder is the current index an %2 placeholder is the total amount of pages">%1$s of %2$s</string>
+
+</resources>
