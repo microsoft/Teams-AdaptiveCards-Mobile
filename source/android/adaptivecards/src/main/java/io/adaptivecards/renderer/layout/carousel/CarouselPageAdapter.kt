@@ -38,14 +38,11 @@ class CarouselPageAdapter(
     }
 
     override fun onBindViewHolder(holder: CarouselPageHolder, position: Int) =
-        holder.bind(position, pages[position], renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
+        holder.bind(pages[position], renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
 
     class CarouselPageHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private val views = mutableMapOf<Int, View>()
-
         fun bind(
-            position: Int,
             page: CarouselPage,
             renderedCard: RenderedAdaptiveCard,
             cardActionHandler: ICardActionHandler?,
@@ -57,24 +54,18 @@ class CarouselPageAdapter(
             val root = (itemView as ViewGroup)
             root.removeAllViews()
 
-            if (views.containsKey(position)) {
-                val carouselPageView = views[position]
-                root.addView(carouselPageView)
-            } else {
-                CardRendererRegistration.getInstance().renderElementAndPerformFallback(
-                        renderedCard,
-                        root.context,
-                        fragmentManager,
-                        page,
-                        root,
-                        cardActionHandler,
-                        hostConfig,
-                        renderArgs,
-                        featureRegistration)
-                val childView = root.getChildAt(0)
-                views[position] = childView
-                childView?.layoutParams = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.MATCH_PARENT, FlexboxLayout.LayoutParams.MATCH_PARENT)
-            }
+            CardRendererRegistration.getInstance().renderElementAndPerformFallback(
+                    renderedCard,
+                    root.context,
+                    fragmentManager,
+                    page,
+                    root,
+                    cardActionHandler,
+                    hostConfig,
+                    renderArgs,
+                    featureRegistration)
+            val childView = root.getChildAt(0)
+            childView?.layoutParams = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.MATCH_PARENT, FlexboxLayout.LayoutParams.MATCH_PARENT)
         }
     }
 }
