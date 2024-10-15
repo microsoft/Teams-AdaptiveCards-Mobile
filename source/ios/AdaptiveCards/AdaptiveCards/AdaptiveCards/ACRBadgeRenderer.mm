@@ -62,6 +62,7 @@
     }
     ACRBadgeView *badgeView = [[ACRBadgeView alloc] initWithRootView:rootView
                                                                 text:[NSString stringWithCString:badge->GetText().c_str() encoding:NSUTF8StringEncoding]
+                                                             toolTip:[NSString stringWithCString:badge->GetTooltip().c_str() encoding:NSUTF8StringEncoding]
                                                              iconUrl:svgPayloadURL
                                                             isFilled:isFilled
                                                           appearance:getBadgeAppearance(badge->GetBadgeAppearance())
@@ -108,7 +109,7 @@
     [width setActive:YES];
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:wrapperView withAreaName:areaName];
-  
+    
     return wrapperView;
 }
 

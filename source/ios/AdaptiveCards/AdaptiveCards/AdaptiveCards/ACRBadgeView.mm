@@ -13,10 +13,15 @@
 #import "Icon.h"
 #import "ACRSVGImageView.h"
 #import "ACRSVGIconHoldingView.h"
+#import "ACRBaseTarget.h"
+#if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS)
+#import <FluentUI/FluentUI-Swift.h>
+#endif
 
 @implementation ACRBadgeView
 {
     NSString *_text;
+    NSString *_toolTip;
     NSString *_iconUrl;
     BOOL _isFilled;
     ACRBadgeAppearance _appearance;
@@ -33,6 +38,7 @@
 
 - (instancetype)initWithRootView:(ACRView *)rootView
                             text:(NSString*)text
+                         toolTip:(NSString*)toolTip
                          iconUrl:(NSString*)iconUrl
                         isFilled:(BOOL)isFilled
                       appearance:(ACRBadgeAppearance)appearance
@@ -46,6 +52,7 @@
     if (self)
     {
         _text = text;
+        _toolTip = toolTip;
         _iconUrl = iconUrl;
         _isFilled = isFilled;
         _rootView = rootView;
@@ -79,8 +86,26 @@
     _textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self addSubview:_textLabel];
     self.layer.cornerRadius = [self getCornerRadius];
+    [self addGestureRecognizer:self toolTipText:_toolTip];
     [self setupConstraints];
     
+}
+
+- (void)addGestureRecognizer:(UIView *)view toolTipText:(NSString *)toolTipText
+{
+    if (view && toolTipText && toolTipText.length) {
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showToolTip:)];
+        [view addGestureRecognizer:longPress];
+    }
+}
+
+- (void)showToolTip:(UILongPressGestureRecognizer *)recognizer
+{
+#if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS)
+    if (recognizer.state == UIGestureRecognizerStateBegan && _toolTip && recognizer.view) {
+        [MSFTooltip.shared showWith:_toolTip for:recognizer.view preferredArrowDirection:MSFTooltipArrowDirectionUp offset:CGPointZero screenMargins:MSFTooltip.defaultScreenMargins dismissOn:MSFTooltipDismissModeTapAnywhere onTap:nil];
+    }
+#endif
 }
 
 -(CGFloat)getTextLabelFontSize

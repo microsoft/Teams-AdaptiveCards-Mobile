@@ -14,6 +14,7 @@
 
 - (instancetype)initWithRootView:(ACRView *)rootView
                             text:(NSString*)text
+                         toolTip:(NSString*)toolTip
                          iconUrl:(NSString*)iconUrl
                         isFilled:(BOOL)isFilled
                       appearance:(ACRBadgeAppearance)appearance
