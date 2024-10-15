@@ -252,9 +252,15 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Weight, "weight"},
             {AdaptiveCardSchemaKey::Width, "width"},
             {AdaptiveCardSchemaKey::CompoundButton,"compoundButton"},
+            {AdaptiveCardSchemaKey::CarouselPage,"CarouselPage"},
+            {AdaptiveCardSchemaKey::Pages,"pages"},
+            {AdaptiveCardSchemaKey::PageAnimation,"pageAnimation"},
+            {AdaptiveCardSchemaKey::PageControl,"pageControl"},
+            {AdaptiveCardSchemaKey::SelectedTintColor,"selectedTintColor"},
             {AdaptiveCardSchemaKey::TextColor, "textColor"},
             {AdaptiveCardSchemaKey::StrokeColor, "strokeColor"},
             {AdaptiveCardSchemaKey::Shape, "shape"},
+            {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
@@ -285,6 +291,8 @@ namespace AdaptiveCards
             {CardElementType::TimeInput, "Input.Time"},
             {CardElementType::ToggleInput, "Input.Toggle"},
             {CardElementType::CompoundButton,"CompoundButton"},
+            {CardElementType::Carousel,"Carousel"},
+            {CardElementType::CarouselPage,"CarouselPage"},
             {CardElementType::Unknown, "Unknown"}});
 
     DEFINE_ADAPTIVECARD_ENUM(ActionType, {
@@ -321,6 +329,7 @@ namespace AdaptiveCards
             {Spacing::Medium, "medium"},
             {Spacing::Large, "large"},
             {Spacing::ExtraLarge, "extraLarge"},
+            {Spacing::ExtraSmall, "extraSmall"},
             {Spacing::Padding, "padding"}});
 
     DEFINE_ADAPTIVECARD_ENUM(SeparatorThickness, {
@@ -476,6 +485,11 @@ namespace AdaptiveCards
             {VerticalContentAlignment::Top, "Top"},
             {VerticalContentAlignment::Center, "Center"},
             {VerticalContentAlignment::Bottom, "Bottom"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(PageAnimation, {
+            {PageAnimation::Slide,"Slide"},
+            {PageAnimation::CrossFade,"CrossFade"},
+            {PageAnimation::None,"None"}});
 
     DEFINE_ADAPTIVECARD_ENUM(InlineElementType, {
             {InlineElementType::TextRun, "TextRun"}});

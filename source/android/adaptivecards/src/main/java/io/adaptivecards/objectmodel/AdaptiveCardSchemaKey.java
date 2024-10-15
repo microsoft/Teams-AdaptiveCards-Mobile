@@ -258,7 +258,13 @@ public enum AdaptiveCardSchemaKey {
   Weight,
   Width,
   Wrap,
-  CompoundButton;
+  CompoundButton,
+  CarouselPage,
+  Pages,
+  PageAnimation,
+  PageControl,
+  SelectedTintColor,
+  ExtraSmall;
 
   public final int swigValue() {
     return swigValue;

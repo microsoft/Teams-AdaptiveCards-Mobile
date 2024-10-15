@@ -84,6 +84,14 @@ public class SpacingConfig {
     return AdaptiveCardObjectModelJNI.SpacingConfig_paddingSpacing_get(swigCPtr, this);
   }
 
+  public void setExtraSmallSpacing(long value) {
+    AdaptiveCardObjectModelJNI.SpacingConfig_extraSmallSpacing_set(swigCPtr, this, value);
+  }
+
+  public long getExtraSmallSpacing() {
+    return AdaptiveCardObjectModelJNI.SpacingConfig_extraSmallSpacing_get(swigCPtr, this);
+  }
+
   public static SpacingConfig Deserialize(JsonValue json, SpacingConfig defaultValue) {
     return new SpacingConfig(AdaptiveCardObjectModelJNI.SpacingConfig_Deserialize(JsonValue.getCPtr(json), json, SpacingConfig.getCPtr(defaultValue), defaultValue), true);
   }

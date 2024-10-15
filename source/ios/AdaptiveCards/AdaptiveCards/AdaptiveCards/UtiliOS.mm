@@ -927,6 +927,8 @@ unsigned int getSpacing(Spacing spacing, std::shared_ptr<HostConfig> const &conf
             return config->GetSpacing().paddingSpacing;
         case Spacing::Default:
             return config->GetSpacing().defaultSpacing;
+        case Spacing::ExtraSmall:
+            return config->GetSpacing().extraSmallSpacing;
         default:
             break;
     }

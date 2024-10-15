@@ -719,6 +719,8 @@
     XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingColor::Marigold) == ACRMarigold);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingStyle::Compact) == ACRCompactStyle);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingStyle::Default) == ACRDefaultStyle);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::Carousel) == ACRCarousel);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::CarouselPage) == ACRCarouselPage);
 }
 
 - (void)testACRInputToggleViewCustomRendering

@@ -1,11 +1,12 @@
 {
 	"spacing": {
-		"small": 3,
-		"default": 8,
-		"medium": 20,
-		"large": 30,
-		"extraLarge": 40,
-		"padding": 10
+		"extraSmall":4,
+		"small": 8,
+		"default": 10,
+		"medium": 12,
+		"large": 16,
+		"extraLarge": 20,
+		"padding": 8
 	},
     "hostWidthBreakpoints": {
           "veryNarrow": 216,
@@ -331,5 +332,8 @@
             "backgroundColor":"#5B5FC7"
         },
         "borderColor":"#E1E1E1"
+    },
+    "pageControl":{
+        "selectedTintColor":"#5B5FC7"
     }
 }

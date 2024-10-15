@@ -257,8 +257,15 @@ enum class AdaptiveCardSchemaKey
     Weight,
     Width,
     Wrap,
-    CompoundButton
+    CompoundButton,
+    CarouselPage,
+    Pages,
+    PageAnimation,
+    PageControl,
+    SelectedTintColor,
+    ExtraSmall
 };
+
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 
 enum class CardElementType
@@ -266,7 +273,6 @@ enum class CardElementType
     // When the order of existing enums are changed, corresponding changes are needed in iOS (ACOBaseCardElement.h)
     ActionSet = 0,
     AdaptiveCard,
-    Badge,
     ChoiceInput,
     ChoiceSetInput,
     Column,
@@ -292,7 +298,10 @@ enum class CardElementType
     TimeInput,
     ToggleInput,
     CompoundButton,
-    Unknown,
+    Carousel,
+    CarouselPage,
+    Badge,
+    Unknown
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);
 
@@ -485,6 +494,7 @@ enum class Spacing
 {
     Default = 0,
     None,
+    ExtraSmall,
     Small,
     Medium,
     Large,
@@ -641,13 +651,24 @@ enum class VerticalContentAlignment
     Center,
     Bottom
 };
+
 DECLARE_ADAPTIVECARD_ENUM(VerticalContentAlignment);
+
+enum class PageAnimation
+{
+    Slide =0,
+    CrossFade,
+    None
+};
+
+DECLARE_ADAPTIVECARD_ENUM(PageAnimation);
 
 enum class HeightType
 {
     Auto = 0,
     Stretch
 };
+
 DECLARE_ADAPTIVECARD_ENUM(HeightType);
 
 enum class RatingSize
