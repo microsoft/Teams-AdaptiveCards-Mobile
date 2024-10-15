@@ -240,6 +240,10 @@
 										"value": "v1.6/Elements/Carousel.sample.json"
 									},
 									{
+										"title": "Carousel.sample.CrossFade",
+										"value": "v1.6/Elements/Carousel.sample.CrossFade.json"
+									},
+									{
 										"title": "Carousel.ScenarioCards",
 										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
 									}
