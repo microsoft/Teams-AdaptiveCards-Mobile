@@ -184,7 +184,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:' + androidxAppCompatVersion
     implementation 'androidx.constraintlayout:constraintlayout:' + androidxConstraintLayoutVersion
     implementation 'com.google.android.flexbox:flexbox:' + androidFlexboxVersion
-    implementation "com.google.android.material:material:${androidxMaterialVersion}"
     testImplementation 'junit:junit:' + junitVersion
     implementation 'androidx.core:core-ktx:' + androidxKotlinCoreVersion
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
