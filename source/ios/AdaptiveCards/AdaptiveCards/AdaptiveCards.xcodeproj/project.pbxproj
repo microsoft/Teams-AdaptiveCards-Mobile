@@ -58,6 +58,8 @@
 		46445D892BF72A5300831973 /* ACRRatingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46445D882BF72A5300831973 /* ACRRatingView.h */; };
 		46445D8B2BF7324100831973 /* ACRRatingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46445D8A2BF7324100831973 /* ACRRatingView.mm */; };
 		465352612C16FD9800DCEE25 /* ACRRatingInputDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 465352602C16FD9800DCEE25 /* ACRRatingInputDataSource.h */; };
+		46731C0C2CBD198F0092B7A9 /* Badge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46731C0A2CBD198F0092B7A9 /* Badge.cpp */; };
+		46731C0D2CBD198F0092B7A9 /* Badge.h in Headers */ = {isa = PBXBuildFile; fileRef = 46731C0B2CBD198F0092B7A9 /* Badge.h */; };
 		468F1F1A2BFC5BC500C2F561 /* ACRRatingInputDataSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 468F1F192BFC5BC500C2F561 /* ACRRatingInputDataSource.mm */; };
 		46B329162BF32057009671AE /* RatingInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B329152BF32057009671AE /* RatingInput.h */; };
 		46B329182BF3228F009671AE /* RatingInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B329172BF3228F009671AE /* RatingInput.cpp */; };
@@ -612,6 +614,8 @@
 		46445D882BF72A5300831973 /* ACRRatingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRRatingView.h; sourceTree = "<group>"; };
 		46445D8A2BF7324100831973 /* ACRRatingView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingView.mm; sourceTree = "<group>"; };
 		465352602C16FD9800DCEE25 /* ACRRatingInputDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRRatingInputDataSource.h; path = PrivateHeaders/ACRRatingInputDataSource.h; sourceTree = "<group>"; };
+		46731C0A2CBD198F0092B7A9 /* Badge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Badge.cpp; path = ../../../../shared/cpp/ObjectModel/Badge.cpp; sourceTree = "<group>"; };
+		46731C0B2CBD198F0092B7A9 /* Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Badge.h; path = ../../../../shared/cpp/ObjectModel/Badge.h; sourceTree = "<group>"; };
 		468F1F192BFC5BC500C2F561 /* ACRRatingInputDataSource.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingInputDataSource.mm; sourceTree = "<group>"; };
 		46B329152BF32057009671AE /* RatingInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RatingInput.h; path = ../../../../shared/cpp/ObjectModel/RatingInput.h; sourceTree = "<group>"; };
 		46B329172BF3228F009671AE /* RatingInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RatingInput.cpp; path = ../../../../shared/cpp/ObjectModel/RatingInput.cpp; sourceTree = "<group>"; };
@@ -1549,6 +1553,8 @@
 		F423C0D71EE1FF2F00905679 /* SharedLib */ = {
 			isa = PBXGroup;
 			children = (
+				46731C0A2CBD198F0092B7A9 /* Badge.cpp */,
+				46731C0B2CBD198F0092B7A9 /* Badge.h */,
 				CFB972002941C079008E3795 /* ChoicesData.cpp */,
 				CFB971FF2941C079008E3795 /* ChoicesData.h */,
 				84AE295727FFA26F00D01B82 /* CaptionSource.cpp */,
@@ -1988,6 +1994,7 @@
 				F4D0694B205B27EA003645E4 /* ACRViewController.h in Headers */,
 				46CE7DC52C7C554F000508DF /* ACRIFeatureFlagResolver.h in Headers */,
 				F4FE45661F196E7B0071D9E5 /* ACRColumnView.h in Headers */,
+				46731C0D2CBD198F0092B7A9 /* Badge.h in Headers */,
 				F4F6BA36204F200F003741B6 /* ACRParseWarning.h in Headers */,
 				F4F44B9D204A16BC00A2F24C /* ACRTextBlockRenderer.h in Headers */,
 				F4F44B9C204A169D00A2F24C /* ACRErrors.h in Headers */,
@@ -2533,6 +2540,7 @@
 				6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */,
 				F4F44B6E203FAF9300A2F24C /* ACRUILabel.mm in Sources */,
 				F4F44B7C20478C5C00A2F24C /* DateTimePreparsedToken.cpp in Sources */,
+				46731C0C2CBD198F0092B7A9 /* Badge.cpp in Sources */,
 				0D45F59B2617319D00EF03C5 /* ACRActionOverflowRenderer.mm in Sources */,
 				6BF430782190DDCA0068E432 /* ACRQuickReplyView.mm in Sources */,
 				F44873211EE2261F00FCAFAE /* SubmitAction.cpp in Sources */,
