@@ -251,6 +251,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::PageAnimation,"pageAnimation"},
             {AdaptiveCardSchemaKey::PageControl,"pageControl"},
             {AdaptiveCardSchemaKey::SelectedTintColor,"selectedTintColor"},
+            {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
@@ -318,6 +319,7 @@ namespace AdaptiveCards
             {Spacing::Medium, "medium"},
             {Spacing::Large, "large"},
             {Spacing::ExtraLarge, "extraLarge"},
+            {Spacing::ExtraSmall, "extraSmall"},
             {Spacing::Padding, "padding"}});
 
     DEFINE_ADAPTIVECARD_ENUM(SeparatorThickness, {
