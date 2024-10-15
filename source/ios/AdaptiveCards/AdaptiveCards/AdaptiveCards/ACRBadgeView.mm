@@ -74,32 +74,50 @@
     _textLabel.text = _text;
     _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _textLabel.textColor = [ACOHostConfig convertHexColorCodeToUIColor: definition.textColor.c_str()];
+    _textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize] weight:UIFontWeightRegular];
+    _textLabel.numberOfLines = 0;
+    _textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self addSubview:_textLabel];
-    [self setCornerRadius];
+    self.layer.cornerRadius = [self getCornerRadius];
     [self setupConstraints];
     
 }
 
--(void)setCornerRadius
+-(CGFloat)getTextLabelFontSize
+{
+    switch (_size) {
+        case ACRMediumSize:
+            return 12;
+        case ACRLargeSize:
+            return 14;
+        case ACRExtraLargeSize:
+            return 16;
+        default:
+            return 12;
+    }
+}
+
+-(CGFloat)getCornerRadius
 {
     switch (_shape) {
         case ACRSquare:
-            self.layer.cornerRadius = 0;
-            break;
+            return 0;
         case ACRRounded:
-            self.layer.cornerRadius = 4;
-            break;
+            return 4;
         case ACRCircular:
-            self.layer.cornerRadius = 15;
-            break;
+            return 15;
         default:
-            self.layer.cornerRadius = 0;
+            return 15;
     }
 }
 
 -(void)addIconView:(BadgeAppearanceDefinition) definition
 {
-    CGSize size = CGSizeMake(16.0,16.0);
+    CGSize size = CGSizeMake(16,16);
+    if(_size == ACRExtraLargeSize)
+    {
+        size = CGSizeMake(20, 20);
+    }
     UIColor *imageTintColor = [ACOHostConfig convertHexColorCodeToUIColor: definition.textColor.c_str()];
     ACRSVGImageView *iconView = [[ACRSVGImageView alloc] init:_iconUrl
                                                           rtl:_rootView.context.rtl
@@ -116,8 +134,8 @@
 - (void)setupConstraints
 {
     [NSLayoutConstraint activateConstraints:@[
-        [_textLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:2],
-        [_textLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-2],
+        [_textLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:6],
+        [_textLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-6],
     ]];
     
     if(_iconImageView == nil)
@@ -133,9 +151,7 @@
             [_iconImageView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10],
             [_textLabel.leadingAnchor constraintEqualToAnchor:_iconImageView.trailingAnchor constant:10],
             [_textLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10],
-            [_iconImageView.centerYAnchor constraintEqualToAnchor:_textLabel.centerYAnchor],
-            [_iconImageView.widthAnchor constraintEqualToConstant:16],
-            [_iconImageView.heightAnchor constraintEqualToConstant:16],
+            [_iconImageView.centerYAnchor constraintEqualToAnchor:_textLabel.centerYAnchor]
         ]];
     } else
     {
@@ -143,9 +159,7 @@
             [_textLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10],
             [_iconImageView.leadingAnchor constraintEqualToAnchor:_textLabel.trailingAnchor constant:10],
             [_iconImageView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10],
-            [_iconImageView.centerYAnchor constraintEqualToAnchor:_textLabel.centerYAnchor],
-            [_iconImageView.widthAnchor constraintEqualToConstant:40],
-            [_iconImageView.heightAnchor constraintEqualToConstant:40]
+            [_iconImageView.centerYAnchor constraintEqualToAnchor:_textLabel.centerYAnchor]
         ]];
     }
 }
