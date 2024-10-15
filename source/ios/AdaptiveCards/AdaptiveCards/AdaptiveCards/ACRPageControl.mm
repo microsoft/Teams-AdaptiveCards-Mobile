@@ -40,7 +40,7 @@
 
 @property (nonatomic, assign) NSInteger numberOfPages;
 @property (nonatomic, assign, nonnull) NSNumber *displayPages;
-@property (nonatomic, assign, nonnull) NSNumber *hidesForSinglePage;
+@property (nonatomic, assign) BOOL hidesForSinglePage;
 @property (nonatomic, strong, nonnull) UIColor *selctedTintColor;
 @property (nonatomic, strong, nonnull) UIColor *unselctedTintColor;
 @end
@@ -49,7 +49,8 @@
 
 - (instancetype _Nonnull)initWithNumberOfPages:(NSInteger)numberOfPages displayPages:(nullable NSNumber *)displayPages
                               selctedTintColor:(UIColor * _Nonnull)selctedTintColor
-                            unselctedTintColor:(UIColor * _Nonnull)unselctedTintColor 
+                            unselctedTintColor:(UIColor * _Nonnull)unselctedTintColor
+                            hidesForSinglePage:(BOOL) hidesForSinglePage
 {
     self = [super init];
     if(self) {
@@ -57,7 +58,7 @@
         _displayPages = displayPages;
         _selctedTintColor = selctedTintColor;
         _unselctedTintColor = unselctedTintColor;
-
+        _hidesForSinglePage = hidesForSinglePage;
     }
     return self;
 }
@@ -135,7 +136,7 @@
 
 - (BOOL)shouldBeHidden
 {
-    return self.config.numberOfPages == 0 || (self.config.hidesForSinglePage.boolValue && self.config.numberOfPages == 1) || self.config == nil;
+    return self.config.numberOfPages == 0 || (self.config.hidesForSinglePage && self.config.numberOfPages == 1) || self.config == nil;
 }
 
 - (CGFloat)requiredLength
@@ -160,7 +161,7 @@
 
 -(void) updatePositions
 {
-    if (self.shouldBeHidden) return;
+    if (self.shouldBeHidden || [self numberOfPages] <= 1) return;
     
     NSInteger visibleViewStartIndex = 0;
     BOOL leadingHalfSize = NO;
