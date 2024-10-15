@@ -1,0 +1,1 @@
+source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/PrivateHeaders/ACRBadgeRenderer.h
