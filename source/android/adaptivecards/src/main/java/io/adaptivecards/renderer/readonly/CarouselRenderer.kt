@@ -53,7 +53,7 @@ object CarouselRenderer : BaseCardElementRenderer() {
 
         val carouselView = createCarouselView(context, carousel)
         val viewPager = createViewPager(context, carousel, renderedCard, fragmentManager, cardActionHandler, hostConfig, renderArgs)
-        val tabLayout = createScrollingIndicator(context, viewPager, hostConfig)
+        val tabLayout = createScrollingIndicator(context, viewPager)
         carouselView.addView(viewPager)
         carouselView.addView(tabLayout)
         viewGroup.addView(carouselView)
@@ -89,13 +89,7 @@ object CarouselRenderer : BaseCardElementRenderer() {
     }
 
     @SuppressLint("InflateParams")
-    private fun createScrollingIndicator(
-        context: Context,
-        viewPager2: ViewPager2,
-        hostConfig: HostConfig
-    ) : TabLayout {
-        val selectedTintColor = hostConfig.GetPageControlConfig().selectedTintColor
-        val unselectedTintColor = hostConfig.GetPageControlConfig().unselectedTintColor
+    private fun createScrollingIndicator(context: Context, viewPager2: ViewPager2) : TabLayout {
         val inflater = LayoutInflater.from(context)
         val tabLayout = inflater.inflate(R.layout.carousel_tablayout, null) as TabLayout
         TabLayoutMediator(tabLayout, viewPager2) { _, _ -> }.attach()
