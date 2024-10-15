@@ -1081,6 +1081,80 @@ ACRRatingStyle getRatingStyle(RatingStyle ratingStyle)
     }
 }
 
+ACRIconPosition getIconPosition(IconPosition iconPosition)
+{
+    switch (iconPosition) {
+        case IconPosition::Before:
+            return ACRBeforePosition;
+        case IconPosition::After:
+            return ACRAfterPosition;
+        default:
+            return ACRBeforePosition;
+    }
+}
+
+ACRShape getShape(Shape shape)
+{
+    switch (shape) {
+        case Shape::Square:
+            return ACRSquare;
+        case Shape::Rounded:
+            return ACRRounded;
+        case Shape::Circular:
+            return ACRCircular;
+        default:
+            return ACRSquare;
+    }
+}
+
+ACRBadgeStyle getBadgeStyle(BadgeStyle badgeStyle)
+{
+    switch (badgeStyle) {
+        case BadgeStyle::Default:
+            return ACRBadgeDefaultStyle;
+        case BadgeStyle::Accent:
+            return ACRBadgeAccentStyle;
+        case BadgeStyle::Attention:
+            return ACRBadgeAttentionStyle;
+        case BadgeStyle::Good:
+            return ACRBadgeGoodStyle;
+        case BadgeStyle::Informative:
+            return ACRBadgeInformativeStyle;
+        case BadgeStyle::Subtle:
+            return ACRBadgeSubtleStyle;
+        case BadgeStyle::Warning:
+            return ACRBadgeWarningStyle;
+        default:
+            return ACRBadgeDefaultStyle;
+    }
+}
+
+ACRBadgeSize getBadgeSize(BadgeSize badgeSize)
+{
+    switch (badgeSize) {
+        case BadgeSize::Medium:
+            return ACRMediumSize;
+        case BadgeSize::Large:
+            return ACRLargeSize;
+        case BadgeSize::ExtraLarge:
+            return ACRExtraLargeSize;
+        default:
+            return ACRMediumSize;
+    }
+}
+
+ACRBadgeAppearance getBadgeAppearance(BadgeAppearance badgeAppearance)
+{
+    switch (badgeAppearance) {
+        case BadgeAppearance::Filled:
+            return ACRFilled;
+        case BadgeAppearance::Tint:
+            return ACRTint;
+        default:
+            return ACRFilled;
+    }
+}
+
 ACRHeightType GetACRHeight(HeightType adaptiveHeight)
 {
     ACRHeightType height = ACRHeightAuto;
