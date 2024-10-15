@@ -33,8 +33,6 @@ object CarouselPageRenderer : BaseCardElementRenderer() {
         hostConfig: HostConfig,
         renderArgs: RenderArgs
     ): View? {
-        // Note: Do we check that parent is Carousel View
-
         val carouselPage = Util.castTo(baseCardElement, CarouselPage::class.java)
         val layoutToApply = Util.getLayoutToApply(carouselPage.GetLayouts(), hostConfig)
         val carouselPageView = ContainerRenderer.getAppropriateContainerForLayout(context, layoutToApply, carouselPage)

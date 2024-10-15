@@ -2,12 +2,20 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.readonly
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.flexbox.AlignContent
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import io.adaptivecards.R
 import io.adaptivecards.objectmodel.BaseCardElement
 import io.adaptivecards.objectmodel.Carousel
 import io.adaptivecards.objectmodel.HostConfig
@@ -39,21 +47,25 @@ object CarouselRenderer : BaseCardElementRenderer() {
     ): View? {
         val carousel = Util.castTo(baseCardElement, Carousel::class.java)
         val pages = carousel.GetPages()
-
         if (pages.isEmpty()) {
             return null
         }
 
         val carouselView = createCarouselView(context, carousel)
         val viewPager = createViewPager(context, carousel, renderedCard, fragmentManager, cardActionHandler, hostConfig, renderArgs)
+        val tabLayout = createScrollingIndicator(context, viewPager, hostConfig)
         carouselView.addView(viewPager)
+        carouselView.addView(tabLayout)
         viewGroup.addView(carouselView)
         return carouselView
     }
 
     private fun createCarouselView(context: Context, carousel: Carousel): ViewGroup {
         val carouselView = FlexboxLayout(context)
-        carouselView.layoutParams = FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        carouselView.layoutParams = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.MATCH_PARENT, FlexboxLayout.LayoutParams.MATCH_PARENT)
+        carouselView.flexDirection = FlexDirection.COLUMN
+        carouselView.alignContent = AlignContent.CENTER
+        carouselView.alignItems = AlignItems.CENTER
         carouselView.tag = TagContent(carousel)
         return carouselView
     }
@@ -74,6 +86,20 @@ object CarouselRenderer : BaseCardElementRenderer() {
         viewPager.adapter = CarouselPageAdapter(carousel.GetPages(), renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
         getViewPagerPageTransformer(carousel.pageAnimation)?.apply { viewPager.setPageTransformer(this) }
         return viewPager
+    }
+
+    @SuppressLint("InflateParams")
+    private fun createScrollingIndicator(
+        context: Context,
+        viewPager2: ViewPager2,
+        hostConfig: HostConfig
+    ) : TabLayout {
+        val selectedTintColor = hostConfig.GetPageControlConfig().selectedTintColor
+        val unselectedTintColor = hostConfig.GetPageControlConfig().unselectedTintColor
+        val inflater = LayoutInflater.from(context)
+        val tabLayout = inflater.inflate(R.layout.carousel_tablayout, null) as TabLayout
+        TabLayoutMediator(tabLayout, viewPager2) { _, _ -> }.attach()
+        return tabLayout
     }
 
     private fun getViewPagerPageTransformer(pageAnimation: PageAnimation): ViewPager2.PageTransformer? {

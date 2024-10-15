@@ -33,7 +33,7 @@ class CarouselPageAdapter(
     override fun getItemCount() = pages.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarouselPageHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_viewpager, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.carousel_item_viewpager, parent, false)
         return CarouselPageHolder(view)
     }
 
