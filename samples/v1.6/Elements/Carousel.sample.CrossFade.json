@@ -11,6 +11,7 @@
 		},
 		{
 			"type": "Carousel",
+			"pageAnimation": "CrossFade",
 			"pages": [
 				{
 					"type": "CarouselPage",

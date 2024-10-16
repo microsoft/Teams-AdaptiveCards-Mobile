@@ -147,3 +147,19 @@ void CarouselPage::GetResourceInformation(std::vector<RemoteResourceInformation>
     StyledCollectionElement::GetResourceInformation<BaseCardElement>(resourceInfo, items);
     return;
 }
+
+std::shared_ptr<BaseCardElement> CarouselPageParser::DeserializeFromString(ParseContext& context, const std::string& jsonString)
+{
+    return CarouselPageParser::Deserialize(context, ParseUtil::GetJsonValueFromString(jsonString));
+}
+
+std::shared_ptr<BaseCardElement> CarouselPageParser::Deserialize(ParseContext& context, const Json::Value& json)
+{
+    ParseUtil::ExpectTypeString(json, CardElementType::CarouselPage);
+    return CarouselPageParser::DeserializeWithoutCheckingType(context, json);
+}
+
+std::shared_ptr<BaseCardElement> CarouselPageParser::DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& json)
+{
+    return CarouselPage::DeserializeWithoutCheckingType(context, json);
+}

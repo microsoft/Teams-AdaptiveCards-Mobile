@@ -145,6 +145,16 @@ ACRRatingColor getRatingColor(RatingColor ratingColor);
 
 ACRRatingStyle getRatingStyle(RatingStyle ratingStyle);
 
+ACRIconPosition getIconPosition(IconPosition iconPosition);
+
+ACRShape getShape(Shape shape);
+
+ACRBadgeStyle getBadgeStyle(BadgeStyle badgeStyle);
+
+ACRBadgeSize getBadgeSize(BadgeSize badgeSize);
+
+ACRBadgeAppearance getBadgeAppearance(BadgeAppearance badgeAppearance);
+
 ACRHeightType GetACRHeight(HeightType adaptiveHeight);
 
 ACRVerticalContentAlignment GetACRVerticalContentAlignment(VerticalContentAlignment adaptiveVerticalContentAlignment);

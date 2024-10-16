@@ -103,6 +103,7 @@
     self.spacing = [acoConfig getHostConfig]->GetTable().cellSpacing;
     CGFloat spacing = 0.0f;
     auto i = 0;
+    int totalRows = (int)table->GetRows().size();
     for (const auto &row : table->GetRows()) {
         [acoRowWrapper setElem:row];
 
@@ -121,7 +122,9 @@
                                        rootView:rootView
                                          inputs:inputs
                                      hostConfig:acoConfig
-                                      gridStyle:_gridStyle];
+                                      gridStyle:_gridStyle
+                                      rowIndex:i
+                                      totalRows:totalRows];
 
         [self addSubview:rowView];
         [self.widthAnchor constraintEqualToAnchor:rowView.widthAnchor].active = YES;

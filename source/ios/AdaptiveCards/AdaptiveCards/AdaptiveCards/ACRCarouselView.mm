@@ -82,7 +82,8 @@
     ACRPageControlConfig *pageControlConfig = [[ACRPageControlConfig alloc] initWithNumberOfPages:self.carouselPageViewList.count
                                                                                      displayPages:@7
                                                                                  selctedTintColor:[ACOHostConfig convertHexColorCodeToUIColor:selctedPageControlTintColor]
-                                                                               unselctedTintColor:[ACOHostConfig convertHexColorCodeToUIColor:unselctedPageControlTintColor]];
+                                                                               unselctedTintColor:[ACOHostConfig convertHexColorCodeToUIColor:unselctedPageControlTintColor]
+                                                                               hidesForSinglePage:YES];
     
     self.pageControl = [[ACRPageControl alloc] initWithConfig:pageControlConfig];
     
@@ -106,6 +107,11 @@
     configBleed(rootView, elem, self, acoConfig);
         
     [self constructGestures:self];
+    
+    [NSLayoutConstraint activateConstraints:@[
+        [carouselPagesContainerView.leadingAnchor constraintEqualToAnchor:carouselStackView.leadingAnchor],
+        [carouselPagesContainerView.trailingAnchor constraintEqualToAnchor:carouselStackView.trailingAnchor]
+    ]];
     
     return self;
 }
