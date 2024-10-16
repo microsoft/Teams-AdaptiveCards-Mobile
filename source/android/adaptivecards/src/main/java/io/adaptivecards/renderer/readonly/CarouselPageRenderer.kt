@@ -17,6 +17,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 import io.adaptivecards.renderer.registration.CardRendererRegistration
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility
 
 /**
  * Renderer for [CarouselPage] element.
@@ -33,6 +34,8 @@ object CarouselPageRenderer : BaseCardElementRenderer() {
         hostConfig: HostConfig,
         renderArgs: RenderArgs
     ): View? {
+        if (!FeatureFlagResolverUtility.isCarouselEnabled()) return null
+
         val carouselPage = Util.castTo(baseCardElement, CarouselPage::class.java)
         val layoutToApply = Util.getLayoutToApply(carouselPage.GetLayouts(), hostConfig)
         val carouselPageView = ContainerRenderer.getAppropriateContainerForLayout(context, layoutToApply, carouselPage)

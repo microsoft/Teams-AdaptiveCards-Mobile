@@ -7,6 +7,12 @@ package io.adaptivecards.renderer
  **/
 interface IFeatureFlagResolver {
 
+    /**
+     * Returns whether app is in debug mode.
+     * Can be used to enable / override features in debug mode.
+     */
+    fun isDebugMode() : Boolean
+
     fun getEcsSettingAsBoolean(key: String): Boolean
 
     fun getEcsSettingAsString(key: String): String?

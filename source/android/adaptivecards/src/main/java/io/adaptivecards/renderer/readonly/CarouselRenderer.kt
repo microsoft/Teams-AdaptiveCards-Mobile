@@ -27,6 +27,7 @@ import io.adaptivecards.renderer.layout.carousel.CrossFadePageTransformer
 import io.adaptivecards.renderer.layout.carousel.NoAnimationPageTransformer
 import io.adaptivecards.renderer.layout.scrollingpage.ScrollingPageControlView
 import io.adaptivecards.renderer.layout.scrollingpage.ScrollingPageControlViewConfiguration
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility
 
 /**
  * Renderer for [Carousel] element.
@@ -43,6 +44,8 @@ object CarouselRenderer : BaseCardElementRenderer() {
         hostConfig: HostConfig,
         renderArgs: RenderArgs
     ): View? {
+        if (!FeatureFlagResolverUtility.isCarouselEnabled()) return null
+
         val carousel = Util.castTo(baseCardElement, Carousel::class.java)
         val pages = carousel.GetPages()
         if (pages.isEmpty()) {
