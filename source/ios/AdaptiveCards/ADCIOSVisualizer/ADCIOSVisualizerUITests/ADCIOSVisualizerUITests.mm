@@ -227,11 +227,7 @@
 {
     [self openCardForVersion:@"v1.3" forCardType:@"Elements" withCardName:@"Input.ChoiceSet.json"];
 
-    XCUIElement *chatWindow = testApp.tables[@"ChatWindow"];
-    [chatWindow swipeUp];
-
-    XCUIElementQuery *buttons = testApp.buttons;
-    [buttons[@"OK"] tap];
+    [self tapOKButton];
 
     NSString *resultsString = [self getInputsString];
     NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
@@ -252,11 +248,8 @@
 
     XCUIElementQuery *tablesQuery = testApp.tables;
     [tablesQuery.cells[@"myColor, Blue"].staticTexts[@"Blue"] tap];
-
-    [chatWindow swipeUp];
-
-    XCUIElementQuery *buttons = testApp.buttons;
-    [buttons[@"OK"] tap];
+    
+    [self tapOKButton];
 
     NSString *resultsString = [self getInputsString];
     NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
@@ -277,11 +270,7 @@
     [chatWindow.tables[@"myColor2"].staticTexts[@"myColor2, Green"] tap];
     [chatWindow /*@START_MENU_TOKEN@*/.tables[@"myColor3"].staticTexts[@"myColor3, Red"] /*[[".cells.tables[@\"myColor3\"]",".cells[@\"Empty list, Red\"]",".staticTexts[@\"Red\"]",".staticTexts[@\"myColor3, Red\"]",".tables[@\"myColor3\"]"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/ tap];
 
-    [chatWindow swipeUp];
-
-    // Execute a drag from the 4th element to the 2nd element
-    XCUIElementQuery *buttons = testApp.buttons;
-    [buttons[@"OK"] tap];
+    [self tapOKButton];
 
     NSString *resultsString = [self getInputsString];
     NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
@@ -301,10 +290,7 @@
     [chatWindow.tables[@"myColor3"].staticTexts[@"myColor3, Blue"] tap];
     [chatWindow /*@START_MENU_TOKEN@*/.tables[@"myColor3"].staticTexts[@"myColor3, Red"] /*[[".cells.tables[@\"myColor3\"]",".cells[@\"Empty list, Red\"]",".staticTexts[@\"Red\"]",".staticTexts[@\"myColor3, Red\"]",".tables[@\"myColor3\"]"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/ tap];
 
-    [chatWindow swipeUp];
-
-    XCUIElementQuery *buttons = testApp.buttons;
-    [buttons[@"OK"] tap];
+    [self tapOKButton];
 
     NSString *resultsString = [self getInputsString];
     NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
@@ -440,6 +426,21 @@
     resultsDictionary = [self parseJsonToDictionary:resultsString];
     inputs = [self getInputsFromResultsDictionary:resultsDictionary];
     [self verifyInput:@"choiceset1" matchesExpectedValue:@"Hosting and startup abstractions for applications." inInputSet:inputs];
+}
+
+- (void)tapOKButton
+{
+    XCUIElement *chatWindow = testApp.tables[@"ChatWindow"];
+    XCUIElementQuery *buttons = testApp.buttons;
+    XCUIElement *OKButton = buttons[@"OK"];
+    int numberOfSwipes = 0;
+    int maxSwipes = 20;
+    while(numberOfSwipes < maxSwipes && ![OKButton isHittable])
+    {
+        [chatWindow swipeUp];
+        numberOfSwipes += 1;
+    }
+    [buttons[@"OK"] tap];
 }
 
 @end
