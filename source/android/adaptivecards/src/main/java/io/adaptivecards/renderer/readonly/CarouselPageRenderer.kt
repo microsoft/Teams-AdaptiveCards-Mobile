@@ -17,7 +17,6 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 import io.adaptivecards.renderer.registration.CardRendererRegistration
-import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility
 
 /**
  * Renderer for [CarouselPage] element.
