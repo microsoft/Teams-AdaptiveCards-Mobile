@@ -266,6 +266,10 @@
 			"type": "Action.OpenUrl",
 			"title": "Click me",
 			"url": "https://www.microsoft.com"
+		},
+		{
+			"type": "Action.Submit",
+			"title": "Submit"
 		}
 	]
 }
