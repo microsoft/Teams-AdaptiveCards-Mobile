@@ -103,6 +103,7 @@ ElementParserRegistration::ElementParserRegistration()
          {CardElementTypeToString(CardElementType::ToggleInput), std::make_shared<ToggleInputParser>()},
          {CardElementTypeToString(CardElementType::CompoundButton), std::make_shared<CompoundButtonParser>()},
          {CardElementTypeToString(CardElementType::Carousel), std::make_shared<CarouselParser>()},
+         {CardElementTypeToString(CardElementType::CarouselPage), std::make_shared<CarouselPageParser>()},
          {CardElementTypeToString(CardElementType::Unknown), std::make_shared<UnknownElementParser>()}});
 }
 
