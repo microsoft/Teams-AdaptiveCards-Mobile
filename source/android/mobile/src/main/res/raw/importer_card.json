@@ -236,12 +236,16 @@
 										"value": "v1.5/Scenarios/Carousel.json"
 									},
 									{
-										"title": "Carousel.sample",
+										"title": "Carousel.Slide",
 										"value": "v1.6/Elements/Carousel.sample.json"
 									},
 									{
-										"title": "Carousel.sample.CrossFade",
+										"title": "Carousel.CrossFade",
 										"value": "v1.6/Elements/Carousel.sample.CrossFade.json"
+									},
+									{
+										"title": "Carousel.None",
+										"value": "v1.6/Elements/Carousel.sample.None.json"
 									},
 									{
 										"title": "Carousel.ScenarioCards",

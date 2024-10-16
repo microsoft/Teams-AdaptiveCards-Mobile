@@ -2,22 +2,19 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.readonly
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.view.LayoutInflater
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.flexbox.AlignContent
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayout
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import io.adaptivecards.R
 import io.adaptivecards.objectmodel.BaseCardElement
 import io.adaptivecards.objectmodel.Carousel
+import io.adaptivecards.objectmodel.CarouselPageVector
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.PageAnimation
 import io.adaptivecards.renderer.BaseCardElementRenderer
@@ -29,6 +26,8 @@ import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 import io.adaptivecards.renderer.layout.carousel.CarouselPageAdapter
 import io.adaptivecards.renderer.layout.carousel.CrossFadePageTransformer
 import io.adaptivecards.renderer.layout.carousel.NoAnimationPageTransformer
+import io.adaptivecards.renderer.layout.scrollingpage.ScrollingPageControlView
+import io.adaptivecards.renderer.layout.scrollingpage.ScrollingPageControlViewConfiguration
 
 /**
  * Renderer for [Carousel] element.
@@ -53,19 +52,16 @@ object CarouselRenderer : BaseCardElementRenderer() {
 
         val carouselView = createCarouselView(context, carousel)
         val viewPager = createViewPager(context, carousel, renderedCard, fragmentManager, cardActionHandler, hostConfig, renderArgs)
-        val tabLayout = createScrollingIndicator(context, viewPager)
+        val scrollingIndicator = createScrollingPageControlView(context, pages, hostConfig, viewPager)
         carouselView.addView(viewPager)
-        carouselView.addView(tabLayout)
+        scrollingIndicator?.let { carouselView.addView(it) }
+
         viewGroup.addView(carouselView)
         return carouselView
     }
 
     private fun createCarouselView(context: Context, carousel: Carousel): ViewGroup {
-        val carouselView = FlexboxLayout(context)
-        carouselView.layoutParams = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.MATCH_PARENT, FlexboxLayout.LayoutParams.MATCH_PARENT)
-        carouselView.flexDirection = FlexDirection.COLUMN
-        carouselView.alignContent = AlignContent.CENTER
-        carouselView.alignItems = AlignItems.CENTER
+        val carouselView = createContainerLayout(context)
         carouselView.tag = TagContent(carousel)
         return carouselView
     }
@@ -80,7 +76,7 @@ object CarouselRenderer : BaseCardElementRenderer() {
         renderArgs: RenderArgs
     ): ViewPager2 {
         val viewPager = ViewPager2(context)
-        val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewPager.layoutParams = layoutParams
         viewPager.offscreenPageLimit = carousel.GetPages().size
         viewPager.adapter = CarouselPageAdapter(carousel.GetPages(), renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
@@ -88,12 +84,36 @@ object CarouselRenderer : BaseCardElementRenderer() {
         return viewPager
     }
 
-    @SuppressLint("InflateParams")
-    private fun createScrollingIndicator(context: Context, viewPager2: ViewPager2) : TabLayout {
-        val inflater = LayoutInflater.from(context)
-        val tabLayout = inflater.inflate(R.layout.carousel_tablayout, null) as TabLayout
-        TabLayoutMediator(tabLayout, viewPager2) { _, _ -> }.attach()
-        return tabLayout
+    private fun createScrollingPageControlView(
+        context: Context,
+        pages: CarouselPageVector,
+        hostConfig: HostConfig,
+        viewPager2: ViewPager2
+    ) : ViewGroup? {
+        if (pages.size <= 1) return null
+
+        val dotColor = Color.parseColor(hostConfig.GetPageControlConfig().unselectedTintColor)
+        val dotSelectedColor = Color.parseColor(hostConfig.GetPageControlConfig().selectedTintColor)
+        val configuration = ScrollingPageControlViewConfiguration(dotColor = dotColor, dotSelectedColor = dotSelectedColor)
+
+        val scrollingPageControlView = ScrollingPageControlView(context = context, configuration = configuration).apply {
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            this.attachToPager(viewPager2)
+        }
+
+        return createContainerLayout(context).apply {
+            val padding = context.resources.getDimensionPixelSize(R.dimen.scrollingpagecontrolview_padding_top_bottom)
+            this.setPadding(0, padding, 0, padding)
+            addView(scrollingPageControlView)
+        }
+    }
+
+    private fun createContainerLayout(context: Context) : FlexboxLayout {
+        return FlexboxLayout(context).apply {
+            layoutParams = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.MATCH_PARENT, FlexboxLayout.LayoutParams.WRAP_CONTENT)
+            flexDirection = FlexDirection.COLUMN
+            alignItems = AlignItems.CENTER
+        }
     }
 
     private fun getViewPagerPageTransformer(pageAnimation: PageAnimation): ViewPager2.PageTransformer? {
