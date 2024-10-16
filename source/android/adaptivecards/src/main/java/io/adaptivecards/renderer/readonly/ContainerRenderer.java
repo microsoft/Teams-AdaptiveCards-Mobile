@@ -450,7 +450,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
     }
 
-    public static ViewGroup getAppropriateContainerForLayout(Context context, Layout layoutToApply, Container container) {
+    public static ViewGroup getAppropriateContainerForLayout(Context context, Layout layoutToApply, StyledCollectionElement container) {
         ViewGroup layoutContainer;
         if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow ) {
             FlexboxLayout flexboxLayout = new FlexboxLayout(context);

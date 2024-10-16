@@ -238,6 +238,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::RemoteResourceInformation)
 %shared_ptr(AdaptiveCards::AdaptiveCard)
 %shared_ptr(AdaptiveCards::CarouselParser)
+%shared_ptr(AdaptiveCards::CarouselPageParser)
 %shared_ptr(AdaptiveCards::ContainerParser)
 %shared_ptr(AdaptiveCards::TextBlockParser)
 %shared_ptr(AdaptiveCards::IconParser)

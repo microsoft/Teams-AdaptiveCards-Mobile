@@ -184,9 +184,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:' + androidxAppCompatVersion
     implementation 'androidx.constraintlayout:constraintlayout:' + androidxConstraintLayoutVersion
     implementation 'com.google.android.flexbox:flexbox:' + androidFlexboxVersion
+    implementation "com.google.android.material:material:${androidxMaterialVersion}"
     testImplementation 'junit:junit:' + junitVersion
     implementation 'androidx.core:core-ktx:' + androidxKotlinCoreVersion
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.caverock:androidsvg-aar:$androidsvg"
+
+    //viewpager2
+    implementation "androidx.viewpager2:viewpager2:${androidxViewPager2Version}"
 }
