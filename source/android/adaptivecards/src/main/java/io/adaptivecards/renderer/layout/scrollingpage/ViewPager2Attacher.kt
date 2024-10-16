@@ -55,6 +55,7 @@ class ViewPager2Attacher : IPagerAttacher<ViewPager2> {
     }
 
     override fun detachFromPager() {
+        // Detach registered observers from viewpager.
         dataSetObserver2?.let { attachedAdapter?.unregisterAdapterDataObserver(it) }
         onPageChangeListener2?.let { pager?.unregisterOnPageChangeCallback(it) }
     }
