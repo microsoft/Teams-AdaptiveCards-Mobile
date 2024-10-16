@@ -34,8 +34,6 @@ object CarouselPageRenderer : BaseCardElementRenderer() {
         hostConfig: HostConfig,
         renderArgs: RenderArgs
     ): View? {
-        if (!FeatureFlagResolverUtility.isCarouselEnabled()) return null
-
         val carouselPage = Util.castTo(baseCardElement, CarouselPage::class.java)
         val layoutToApply = Util.getLayoutToApply(carouselPage.GetLayouts(), hostConfig)
         val carouselPageView = ContainerRenderer.getAppropriateContainerForLayout(context, layoutToApply, carouselPage)
