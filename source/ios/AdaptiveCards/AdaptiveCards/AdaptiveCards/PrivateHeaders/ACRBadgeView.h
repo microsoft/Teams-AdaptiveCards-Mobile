@@ -8,7 +8,6 @@
 #import <UIKit/UIKit.h>
 #import "ACRView.h"
 #import "ACOEnums.h"
-#import "Badge.h"
 
 @interface ACRBadgeView : UIView
 
