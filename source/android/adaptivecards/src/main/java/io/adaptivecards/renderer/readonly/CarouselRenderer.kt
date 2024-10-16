@@ -14,6 +14,7 @@ import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.R
 import io.adaptivecards.objectmodel.BaseCardElement
 import io.adaptivecards.objectmodel.Carousel
+import io.adaptivecards.objectmodel.CarouselPageVector
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.PageAnimation
 import io.adaptivecards.renderer.BaseCardElementRenderer
@@ -27,7 +28,6 @@ import io.adaptivecards.renderer.layout.carousel.CrossFadePageTransformer
 import io.adaptivecards.renderer.layout.carousel.NoAnimationPageTransformer
 import io.adaptivecards.renderer.layout.scrollingpage.ScrollingPageControlView
 import io.adaptivecards.renderer.layout.scrollingpage.ScrollingPageControlViewConfiguration
-import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility
 
 /**
  * Renderer for [Carousel] element.
@@ -52,12 +52,10 @@ object CarouselRenderer : BaseCardElementRenderer() {
 
         val carouselView = createCarouselView(context, carousel)
         val viewPager = createViewPager(context, carousel, renderedCard, fragmentManager, cardActionHandler, hostConfig, renderArgs)
+        val scrollingIndicator = createScrollingPageControlView(context, pages, hostConfig, viewPager)
         carouselView.addView(viewPager)
+        scrollingIndicator?.let { carouselView.addView(it) }
 
-        if (pages.size > 1) {
-            val scrollingIndicator = createScrollingPageControlView(context, hostConfig, viewPager)
-            carouselView.addView(scrollingIndicator)
-        }
         viewGroup.addView(carouselView)
         return carouselView
     }
@@ -86,7 +84,14 @@ object CarouselRenderer : BaseCardElementRenderer() {
         return viewPager
     }
 
-    private fun createScrollingPageControlView(context: Context, hostConfig: HostConfig, viewPager2: ViewPager2) : ViewGroup {
+    private fun createScrollingPageControlView(
+        context: Context,
+        pages: CarouselPageVector,
+        hostConfig: HostConfig,
+        viewPager2: ViewPager2
+    ) : ViewGroup? {
+        if (pages.size <= 1) return null
+
         val dotColor = Color.parseColor(hostConfig.GetPageControlConfig().unselectedTintColor)
         val dotSelectedColor = Color.parseColor(hostConfig.GetPageControlConfig().selectedTintColor)
         val configuration = ScrollingPageControlViewConfiguration(dotColor = dotColor, dotSelectedColor = dotSelectedColor)
