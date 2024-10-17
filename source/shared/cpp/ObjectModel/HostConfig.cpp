@@ -415,9 +415,9 @@ SpacingConfig SpacingConfig::Deserialize(const Json::Value& json, const SpacingC
     result.extraLargeSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::ExtraLarge, defaultValue.extraLargeSpacing);
 
     result.paddingSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::Padding, defaultValue.paddingSpacing);
-    
+
     result.extraSmallSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::ExtraSmall, defaultValue.extraSmallSpacing);
-    
+
     return result;
 }
 
@@ -557,6 +557,7 @@ PageControlConfig PageControlConfig::Deserialize(const Json::Value &json, const 
 {
     PageControlConfig result;
     result.selectedTintColor =  ParseUtil::GetString(json, AdaptiveCardSchemaKey::SelectedTintColor, result.selectedTintColor);
+    result.unselectedTintColor =  ParseUtil::GetString(json, AdaptiveCardSchemaKey::UnselectedTintColor, result.unselectedTintColor);
     return result;
 };
 
