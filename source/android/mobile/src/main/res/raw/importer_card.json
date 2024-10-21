@@ -250,6 +250,10 @@
 									{
 										"title": "Carousel.ScenarioCards",
 										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
+									},
+									{
+										"title": "Spacing Sample",
+										"value": "v1.5/Scenarios/spacing_sample.json"
 									}
 								],
                                 "placeholder": "(choose sample)",
