@@ -2,8 +2,8 @@
     "choiceSetInputValueSeparator": ",",
     "supportsInteractivity": true,
     "spacing": {
-		"extraSmall": 4,
-        "small": 8,
+        "extraSmall": 4,
+		"small": 8,
         "default": 12,
         "medium": 16,
         "large": 20,
