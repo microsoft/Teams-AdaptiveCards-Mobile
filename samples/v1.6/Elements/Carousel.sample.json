@@ -35,6 +35,25 @@
 							"wrap": true,
 							"separator": true,
 							"spacing": "Medium"
+						},
+						{
+							"type": "Input.Rating",
+							"id": "rating01",
+							"label": "Pick a rating",
+							"size": "medium",
+							"isRequired": true,
+							"errorMessage": "Please pick a rating"
+						},
+						{
+							"type": "Input.Rating",
+							"id": "rating02",
+							"label": "Pick a rating",
+							"allowHalfSteps": true,
+							"size": "large",
+							"isRequired": true,
+							"errorMessage": "Please pick a rating",
+							"color": "marigold",
+							"value": 3
 						}
 					]
 				},
