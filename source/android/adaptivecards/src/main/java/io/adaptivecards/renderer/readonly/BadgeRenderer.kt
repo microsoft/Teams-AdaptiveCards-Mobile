@@ -39,9 +39,7 @@ object BadgeRenderer: BaseCardElementRenderer() {
         badgeView.layoutParams = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT)
         if (viewGroup is LinearLayout) {
             val linearLayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            badge.GetHorizontalAlignment()?.let {
-                linearLayoutParams.gravity = it.getLinearLayoutGravity()
-            }
+            linearLayoutParams.gravity = badge.GetHorizontalAlignment().getLinearLayoutGravity()
             viewGroup.addView(badgeView, linearLayoutParams)
         } else {
             viewGroup.addView(badgeView)
@@ -53,11 +51,11 @@ object BadgeRenderer: BaseCardElementRenderer() {
     private fun HorizontalAlignment?.getLinearLayoutGravity() : Int =
         this?.let {
             when (this) {
-                HorizontalAlignment.Right -> Gravity.RIGHT
+                HorizontalAlignment.Right -> Gravity.END
                 HorizontalAlignment.Center -> Gravity.CENTER
-                else -> Gravity.LEFT
+                else -> Gravity.START
             }
         } ?: run {
-            Gravity.LEFT
+            Gravity.START
         }
 }
