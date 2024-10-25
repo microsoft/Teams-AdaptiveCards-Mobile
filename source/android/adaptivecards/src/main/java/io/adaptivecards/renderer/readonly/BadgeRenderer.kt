@@ -50,9 +50,14 @@ object BadgeRenderer: BaseCardElementRenderer() {
         return badgeView
     }
 
-    private fun HorizontalAlignment.getLinearLayoutGravity() : Int = when(this) {
-        HorizontalAlignment.Left -> Gravity.LEFT
-        HorizontalAlignment.Right -> Gravity.RIGHT
-        else -> Gravity.CENTER
-    }
+    private fun HorizontalAlignment?.getLinearLayoutGravity() : Int =
+        this?.let {
+            when (this) {
+                HorizontalAlignment.Right -> Gravity.RIGHT
+                HorizontalAlignment.Center -> Gravity.CENTER
+                else -> Gravity.LEFT
+            }
+        } ?: run {
+            Gravity.LEFT
+        }
 }
