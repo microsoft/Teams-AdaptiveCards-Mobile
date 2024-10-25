@@ -1,12 +1,15 @@
 package io.adaptivecards.renderer.readonly
 
 import android.content.Context
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.FragmentManager
 import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.objectmodel.Badge
 import io.adaptivecards.objectmodel.BaseCardElement
+import io.adaptivecards.objectmodel.HorizontalAlignment
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.renderer.BaseCardElementRenderer
 import io.adaptivecards.renderer.RenderArgs
@@ -34,7 +37,22 @@ object BadgeRenderer: BaseCardElementRenderer() {
         val badgeView = BadgeView(context, badge, renderedCard, hostConfig)
         badgeView.tag = TagContent(badge)
         badgeView.layoutParams = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT)
-        viewGroup.addView(badgeView)
+        if (viewGroup is LinearLayout) {
+            val linearLayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            badge.GetHorizontalAlignment()?.let {
+                linearLayoutParams.gravity = it.getLinearLayoutGravity()
+            }
+            viewGroup.addView(badgeView, linearLayoutParams)
+        } else {
+            viewGroup.addView(badgeView)
+        }
+
         return badgeView
+    }
+
+    private fun HorizontalAlignment.getLinearLayoutGravity() : Int = when(this) {
+        HorizontalAlignment.Left -> Gravity.LEFT
+        HorizontalAlignment.Right -> Gravity.RIGHT
+        else -> Gravity.CENTER
     }
 }

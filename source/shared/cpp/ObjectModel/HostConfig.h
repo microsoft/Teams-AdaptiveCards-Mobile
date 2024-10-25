@@ -461,7 +461,7 @@ struct BadgeStylesDefinition
             "#ffffff"
             },
         {
-            "#e8b8fa",
+            "#e8ebfa",
             "#e1e1e1",
             "#5b5fc7"
         }
