@@ -18,7 +18,7 @@
     self.isLastColumn = NO;
 }
 
-- (void)addArrangedSubview:(UIView *)view
+- (void)addArrangedSubview:(UIView *)view withAreaName:(NSString *)areaName
 {
     [super addArrangedSubview:view];
     [self increaseIntrinsicContentSize:view];

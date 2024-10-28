@@ -80,8 +80,12 @@ public class HostConfig {
     return AdaptiveCardObjectModelJNI.HostConfig_GetBorderColor(swigCPtr, this, style.swigValue());
   }
 
-  public long GetBorderThickness(ContainerStyle style) {
-    return AdaptiveCardObjectModelJNI.HostConfig_GetBorderThickness(swigCPtr, this, style.swigValue());
+  public long GetBorderWidth(CardElementType elementType) {
+    return AdaptiveCardObjectModelJNI.HostConfig_GetBorderWidth(swigCPtr, this, elementType.swigValue());
+  }
+
+  public long GetCornerRadius(CardElementType elementType) {
+    return AdaptiveCardObjectModelJNI.HostConfig_GetCornerRadius(swigCPtr, this, elementType.swigValue());
   }
 
   public String GetFontFamily() {
@@ -236,6 +240,22 @@ public class HostConfig {
     AdaptiveCardObjectModelJNI.HostConfig_SetTextStyles(swigCPtr, this, TextStylesConfig.getCPtr(value), value);
   }
 
+  public RatingElementConfig GetRatingLabelConfig() {
+    return new RatingElementConfig(AdaptiveCardObjectModelJNI.HostConfig_GetRatingLabelConfig(swigCPtr, this), true);
+  }
+
+  public void SetRatingLabelConfig(RatingElementConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetRatingLabelConfig(swigCPtr, this, RatingElementConfig.getCPtr(value), value);
+  }
+
+  public RatingElementConfig GetRatingInputConfig() {
+    return new RatingElementConfig(AdaptiveCardObjectModelJNI.HostConfig_GetRatingInputConfig(swigCPtr, this), true);
+  }
+
+  public void SetRatingInputConfig(RatingElementConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetRatingInputConfig(swigCPtr, this, RatingElementConfig.getCPtr(value), value);
+  }
+
   public TextBlockConfig GetTextBlock() {
     return new TextBlockConfig(AdaptiveCardObjectModelJNI.HostConfig_GetTextBlock(swigCPtr, this), true);
   }
@@ -250,6 +270,30 @@ public class HostConfig {
 
   public void SetTable(TableConfig value) {
     AdaptiveCardObjectModelJNI.HostConfig_SetTable(swigCPtr, this, TableConfig.getCPtr(value), value);
+  }
+
+  public CompoundButtonConfig GetCompoundButtonConfig() {
+    return new CompoundButtonConfig(AdaptiveCardObjectModelJNI.HostConfig_GetCompoundButtonConfig(swigCPtr, this), true);
+  }
+
+  public void SetCompoundButtonConfig(CompoundButtonConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetCompoundButtonConfig(swigCPtr, this, CompoundButtonConfig.getCPtr(value), value);
+  }
+
+  public PageControlConfig GetPageControlConfig() {
+    return new PageControlConfig(AdaptiveCardObjectModelJNI.HostConfig_GetPageControlConfig(swigCPtr, this), true);
+  }
+
+  public void SetPageControlConfig(PageControlConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetPageControlConfig(swigCPtr, this, PageControlConfig.getCPtr(value), value);
+  }
+
+  public BadgeStylesDefinition GetBadgeStyles() {
+    return new BadgeStylesDefinition(AdaptiveCardObjectModelJNI.HostConfig_GetBadgeStyles(swigCPtr, this), true);
+  }
+
+  public void SetBadgeStyles(BadgeStylesDefinition value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetBadgeStyles(swigCPtr, this, BadgeStylesDefinition.getCPtr(value), value);
   }
 
 }

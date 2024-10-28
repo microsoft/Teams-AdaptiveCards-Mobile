@@ -4,6 +4,9 @@ package io.adaptivecards.renderer;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -20,7 +23,12 @@ public class RenderedAdaptiveCard {
     private AdaptiveCard adaptiveCard;
 
     private Map<Long, Long> submitActionCard;
-    private Map<Long, Vector<IInputHandler>> inputsInCard;
+
+    /**
+     * Map of card id to a map of input id to input handler
+     * Map<cardId, Map<inputId, inputHandler>>
+     */
+    private Map<Long, Map<String, IInputHandler>> inputsInCard;
     private Map<Long, Long> parentCardForCard;
     private Map<String, String> prevalidatedInputs;
 
@@ -72,9 +80,9 @@ public class RenderedAdaptiveCard {
     {
         if (!inputsInCard.containsKey(cardId))
         {
-            inputsInCard.put(cardId, new Vector<IInputHandler>());
+            inputsInCard.put(cardId, new HashMap<>());
         }
-        inputsInCard.get(cardId).add(handler);
+        inputsInCard.get(cardId).put(handler.getId(), handler);
 
         handlers.add(handler);
     }
@@ -110,24 +118,38 @@ public class RenderedAdaptiveCard {
         submitActionCard.put(actionId, parentCardId);
     }
 
-    private Vector<IInputHandler> getInputsToValidate(long clickedActionId)
+    /**
+     * from buttonId it fetches card Id
+     * from cardId it fetches the list of input handler
+     * @param clickedActionId
+     * @return list of input handlers
+     */
+    @NonNull
+    public Vector<IInputHandler> getInputsToValidate(long clickedActionId)
     {
         Long cardId = submitActionCard.get(clickedActionId);
         Vector<IInputHandler> inputHandlers = new Vector<>();
 
         while ((cardId != null) && (cardId != View.NO_ID))
         {
-            Vector<IInputHandler> handlersInCard = inputsInCard.get(cardId);
-
-            if (handlersInCard != null)
-            {
-                inputHandlers.addAll(handlersInCard);
+            Map inputHandlersMap = getInputsHandlerFromCardId(cardId);
+            if (inputHandlersMap != null && inputHandlersMap.values() != null) {
+                inputHandlers.addAll(inputHandlersMap.values());
             }
-
             cardId = parentCardForCard.get(cardId);
         }
 
         return inputHandlers;
+    }
+
+    /**
+     * from cardId it fetches the list of input handler
+     * @return map of BaseInputElement.Id and InputHandlers
+     */
+    @Nullable
+    public Map<String, IInputHandler> getInputsHandlerFromCardId(long cardId)
+    {
+        return inputsInCard.get(cardId);
     }
 
     protected boolean areInputsValid(long actionId)

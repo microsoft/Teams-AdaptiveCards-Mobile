@@ -10,16 +10,14 @@ import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ChoiceInput;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
-
-import java.text.ParseException;
-import java.util.Map;
 
 public class RadioGroupInputHandler extends BaseInputHandler
 {
-    public RadioGroupInputHandler(BaseInputElement baseInputElement)
+    public RadioGroupInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
     }
 
     protected RadioGroup getRadioGroup()
@@ -70,6 +68,20 @@ public class RadioGroupInputHandler extends BaseInputHandler
             // Indicates no item was selected
             radioGroup.check(-1);
         }
+    }
+
+    @Override
+    public void registerInputObserver() {
+        getRadioGroup().setOnCheckedChangeListener((group, checkedId) -> notifyAllInputWatchers());
+        addValueChangedActionInputWatcher();
+    }
+
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, ChoiceSetInput.class)) {
+            return Util.castTo(m_baseInputElement, ChoiceSetInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     @Override

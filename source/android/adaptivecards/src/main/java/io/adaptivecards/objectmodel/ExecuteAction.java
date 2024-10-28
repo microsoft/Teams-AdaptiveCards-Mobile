@@ -83,8 +83,24 @@ public class ExecuteAction extends BaseActionElement {
     AdaptiveCardObjectModelJNI.ExecuteAction_SetAssociatedInputs(swigCPtr, this, value.swigValue());
   }
 
+  public boolean GetConditionallyEnabled() {
+    return AdaptiveCardObjectModelJNI.ExecuteAction_GetConditionallyEnabled(swigCPtr, this);
+  }
+
+  public void SetConditionallyEnabled(boolean value) {
+    AdaptiveCardObjectModelJNI.ExecuteAction_SetConditionallyEnabled(swigCPtr, this, value);
+  }
+
   public JsonValue SerializeToJsonValue() {
     return new JsonValue(AdaptiveCardObjectModelJNI.ExecuteAction_SerializeToJsonValue(swigCPtr, this), true);
+  }
+
+  public void setM_conditionallyEnabled(boolean value) {
+    AdaptiveCardObjectModelJNI.ExecuteAction_m_conditionallyEnabled_set(swigCPtr, this, value);
+  }
+
+  public boolean getM_conditionallyEnabled() {
+    return AdaptiveCardObjectModelJNI.ExecuteAction_m_conditionallyEnabled_get(swigCPtr, this);
   }
 
   public static ExecuteAction dynamic_cast(BaseActionElement baseActionElement) {

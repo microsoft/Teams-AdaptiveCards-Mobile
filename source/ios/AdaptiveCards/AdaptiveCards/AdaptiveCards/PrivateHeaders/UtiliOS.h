@@ -40,6 +40,8 @@ using namespace AdaptiveCards;
 
 extern const CGFloat kACRScalerTolerance;
 
+extern NSString const *baseFluentIconCDNURL;
+
 // configures tag and initial visibility of the given view. Toggle visibility action
 // will access the view by the tag to change the visibility.
 void configVisibility(UIView *view, std::shared_ptr<BaseCardElement> const &visibilityInfo);
@@ -121,6 +123,8 @@ UIFont *getFont(ACOHostConfig *hostConfig, const AdaptiveCards::RichTextElementP
 
 void UpdateFontWithDynamicType(NSMutableAttributedString *content);
 
+unsigned int getIconSize(IconSize iconSize);
+
 ACOBaseActionElement *deserializeUnknownActionToCustomAction(const std::shared_ptr<UnknownAction> action);
 
 UIColor *getForegroundUIColorFromAdaptiveAttribute(std::shared_ptr<HostConfig> const &config, ACRContainerStyle style, ForegroundColor textColor = ForegroundColor::Default, bool isSubtle = false);
@@ -134,6 +138,22 @@ NSString *makeKeyForImage(ACOHostConfig *acoConfig, NSString *keyType, NSDiction
 ACRImageSize getACRImageSize(ImageSize adaptiveImageSize, BOOL hasExplicitDimensions);
 
 ACRHorizontalAlignment getACRHorizontalAlignment(HorizontalAlignment horizontalAlignment);
+
+ACRRatingSize getRatingSize(RatingSize ratingSize);
+
+ACRRatingColor getRatingColor(RatingColor ratingColor);
+
+ACRRatingStyle getRatingStyle(RatingStyle ratingStyle);
+
+ACRIconPosition getIconPosition(IconPosition iconPosition);
+
+ACRShape getShape(Shape shape);
+
+ACRBadgeStyle getBadgeStyle(BadgeStyle badgeStyle);
+
+ACRBadgeSize getBadgeSize(BadgeSize badgeSize);
+
+ACRBadgeAppearance getBadgeAppearance(BadgeAppearance badgeAppearance);
 
 ACRHeightType GetACRHeight(HeightType adaptiveHeight);
 
@@ -164,3 +184,15 @@ HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthCo
 
 // Validate date of type "YYYY. MM. DD. HH:MM AM|PM" to prevent parsing issues
 bool matchHungarianDateRegex(NSString *stringToValidate);
+
+// Retuns a string with removed symbols of type \\x
+NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, NSSet<NSString *> *symbolsSet);
+
+// check if string is Null or Empty
+BOOL isNullOrEmpty(NSString *string);
+
+NSString *stringForCString(const std::optional<std::string> cString);
+
+//CDN URL for icon path
+NSString *cdnURLForIcon(NSString *iconPath);
+

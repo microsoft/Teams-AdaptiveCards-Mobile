@@ -62,7 +62,7 @@ public class DateInputRenderer extends TextInputRenderer
         }
 
         DateInput dateInput = Util.castTo(baseCardElement, DateInput.class);
-        DateInputHandler dateInputHandler = new DateInputHandler(dateInput, new WeakReference<>(fragmentManager));
+        DateInputHandler dateInputHandler = new DateInputHandler(dateInput, new WeakReference<>(fragmentManager), renderedCard, renderArgs.getContainerCardId());
 
         String dateInputValue = dateInput.GetValue();
         String dateString = "";

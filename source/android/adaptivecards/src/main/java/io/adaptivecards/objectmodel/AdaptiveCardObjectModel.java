@@ -133,6 +133,30 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return VerticalAlignment.swigToEnum(AdaptiveCardObjectModelJNI.VerticalAlignmentFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__IconSize_t getIconSizeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__IconSize_t(AdaptiveCardObjectModelJNI.getIconSizeEnum(), false);
+  }
+
+  public static String IconSizeToString(IconSize t) {
+    return AdaptiveCardObjectModelJNI.IconSizeToString(t.swigValue());
+  }
+
+  public static IconSize IconSizeFromString(String t) {
+    return IconSize.swigToEnum(AdaptiveCardObjectModelJNI.IconSizeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__IconStyle_t getIconStyleEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__IconStyle_t(AdaptiveCardObjectModelJNI.getIconStyleEnum(), false);
+  }
+
+  public static String IconStyleToString(IconStyle t) {
+    return AdaptiveCardObjectModelJNI.IconStyleToString(t.swigValue());
+  }
+
+  public static IconStyle IconStyleFromString(String t) {
+    return IconStyle.swigToEnum(AdaptiveCardObjectModelJNI.IconStyleFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ImageFillMode_t getImageFillModeEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ImageFillMode_t(AdaptiveCardObjectModelJNI.getImageFillModeEnum(), false);
   }
@@ -143,6 +167,30 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
 
   public static ImageFillMode ImageFillModeFromString(String t) {
     return ImageFillMode.swigToEnum(AdaptiveCardObjectModelJNI.ImageFillModeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ItemFit_t getItemFitEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ItemFit_t(AdaptiveCardObjectModelJNI.getItemFitEnum(), false);
+  }
+
+  public static String ItemFitToString(ItemFit t) {
+    return AdaptiveCardObjectModelJNI.ItemFitToString(t.swigValue());
+  }
+
+  public static ItemFit ItemFitFromString(String t) {
+    return ItemFit.swigToEnum(AdaptiveCardObjectModelJNI.ItemFitFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__LayoutContainerType_t getLayoutContainerTypeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__LayoutContainerType_t(AdaptiveCardObjectModelJNI.getLayoutContainerTypeEnum(), false);
+  }
+
+  public static String LayoutContainerTypeToString(LayoutContainerType t) {
+    return AdaptiveCardObjectModelJNI.LayoutContainerTypeToString(t.swigValue());
+  }
+
+  public static LayoutContainerType LayoutContainerTypeFromString(String t) {
+    return LayoutContainerType.swigToEnum(AdaptiveCardObjectModelJNI.LayoutContainerTypeFromString(t));
   }
 
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ImageStyle_t getImageStyleEnum() {
@@ -349,6 +397,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return VerticalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.VerticalContentAlignmentFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__PageAnimation_t getPageAnimationEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__PageAnimation_t(AdaptiveCardObjectModelJNI.getPageAnimationEnum(), false);
+  }
+
+  public static String PageAnimationToString(PageAnimation t) {
+    return AdaptiveCardObjectModelJNI.PageAnimationToString(t.swigValue());
+  }
+
+  public static PageAnimation PageAnimationFromString(String t) {
+    return PageAnimation.swigToEnum(AdaptiveCardObjectModelJNI.PageAnimationFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HeightType_t getHeightTypeEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HeightType_t(AdaptiveCardObjectModelJNI.getHeightTypeEnum(), false);
   }
@@ -361,6 +421,42 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return HeightType.swigToEnum(AdaptiveCardObjectModelJNI.HeightTypeFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingSize_t getRatingSizeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingSize_t(AdaptiveCardObjectModelJNI.getRatingSizeEnum(), false);
+  }
+
+  public static String RatingSizeToString(RatingSize t) {
+    return AdaptiveCardObjectModelJNI.RatingSizeToString(t.swigValue());
+  }
+
+  public static RatingSize RatingSizeFromString(String t) {
+    return RatingSize.swigToEnum(AdaptiveCardObjectModelJNI.RatingSizeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingColor_t getRatingColorEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingColor_t(AdaptiveCardObjectModelJNI.getRatingColorEnum(), false);
+  }
+
+  public static String RatingColorToString(RatingColor t) {
+    return AdaptiveCardObjectModelJNI.RatingColorToString(t.swigValue());
+  }
+
+  public static RatingColor RatingColorFromString(String t) {
+    return RatingColor.swigToEnum(AdaptiveCardObjectModelJNI.RatingColorFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingStyle_t getRatingStyleEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__RatingStyle_t(AdaptiveCardObjectModelJNI.getRatingStyleEnum(), false);
+  }
+
+  public static String RatingStyleToString(RatingStyle t) {
+    return AdaptiveCardObjectModelJNI.RatingStyleToString(t.swigValue());
+  }
+
+  public static RatingStyle RatingStyleFromString(String t) {
+    return RatingStyle.swigToEnum(AdaptiveCardObjectModelJNI.RatingStyleFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TargetWidthType_t getTargetWidthTypeEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TargetWidthType_t(AdaptiveCardObjectModelJNI.getTargetWidthTypeEnum(), false);
   }
@@ -371,6 +467,78 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
 
   public static TargetWidthType TargetWidthTypeFromString(String t) {
     return TargetWidthType.swigToEnum(AdaptiveCardObjectModelJNI.TargetWidthTypeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ValueChangedActionType_t getValueChangedActionTypeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ValueChangedActionType_t(AdaptiveCardObjectModelJNI.getValueChangedActionTypeEnum(), false);
+  }
+
+  public static String ValueChangedActionTypeToString(ValueChangedActionType t) {
+    return AdaptiveCardObjectModelJNI.ValueChangedActionTypeToString(t.swigValue());
+  }
+
+  public static ValueChangedActionType ValueChangedActionTypeFromString(String t) {
+    return ValueChangedActionType.swigToEnum(AdaptiveCardObjectModelJNI.ValueChangedActionTypeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__IconPosition_t getIconPositionEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__IconPosition_t(AdaptiveCardObjectModelJNI.getIconPositionEnum(), false);
+  }
+
+  public static String IconPositionToString(IconPosition t) {
+    return AdaptiveCardObjectModelJNI.IconPositionToString(t.swigValue());
+  }
+
+  public static IconPosition IconPositionFromString(String t) {
+    return IconPosition.swigToEnum(AdaptiveCardObjectModelJNI.IconPositionFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__Shape_t getShapeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__Shape_t(AdaptiveCardObjectModelJNI.getShapeEnum(), false);
+  }
+
+  public static String ShapeToString(Shape t) {
+    return AdaptiveCardObjectModelJNI.ShapeToString(t.swigValue());
+  }
+
+  public static Shape ShapeFromString(String t) {
+    return Shape.swigToEnum(AdaptiveCardObjectModelJNI.ShapeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__BadgeStyle_t getBadgeStyleEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__BadgeStyle_t(AdaptiveCardObjectModelJNI.getBadgeStyleEnum(), false);
+  }
+
+  public static String BadgeStyleToString(BadgeStyle t) {
+    return AdaptiveCardObjectModelJNI.BadgeStyleToString(t.swigValue());
+  }
+
+  public static BadgeStyle BadgeStyleFromString(String t) {
+    return BadgeStyle.swigToEnum(AdaptiveCardObjectModelJNI.BadgeStyleFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__BadgeSize_t getBadgeSizeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__BadgeSize_t(AdaptiveCardObjectModelJNI.getBadgeSizeEnum(), false);
+  }
+
+  public static String BadgeSizeToString(BadgeSize t) {
+    return AdaptiveCardObjectModelJNI.BadgeSizeToString(t.swigValue());
+  }
+
+  public static BadgeSize BadgeSizeFromString(String t) {
+    return BadgeSize.swigToEnum(AdaptiveCardObjectModelJNI.BadgeSizeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__BadgeAppearance_t getBadgeAppearanceEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__BadgeAppearance_t(AdaptiveCardObjectModelJNI.getBadgeAppearanceEnum(), false);
+  }
+
+  public static String BadgeAppearanceToString(BadgeAppearance t) {
+    return AdaptiveCardObjectModelJNI.BadgeAppearanceToString(t.swigValue());
+  }
+
+  public static BadgeAppearance BadgeAppearanceFromString(String t) {
+    return BadgeAppearance.swigToEnum(AdaptiveCardObjectModelJNI.BadgeAppearanceFromString(t));
   }
 
   public static void HandleUnknownProperties(JsonValue json, SWIGTYPE_p_std__unordered_setT_std__string_t knownProperties, JsonValue unknownProperties) {

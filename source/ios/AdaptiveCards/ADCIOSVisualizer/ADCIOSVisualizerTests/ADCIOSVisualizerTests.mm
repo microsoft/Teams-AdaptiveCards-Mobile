@@ -698,6 +698,8 @@
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::TableCell) == ACRTableCell);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::TimeInput) == ACRTimeInput);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::ToggleInput) == ACRToggleInput);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::RatingInput) == ACRRatingInput);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::RatingLabel) == ACRRatingLabel);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::Unknown) == ACRUnknown);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::RichTextBlock) == ACRRichTextBlock);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::ActionType::ShowCard) == ACRShowCard);
@@ -711,6 +713,14 @@
     XCTAssertTrue(static_cast<int>(AdaptiveCards::ContainerStyle::Warning) == ACRWarning);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::ContainerStyle::Attention) == ACRAttention);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::ContainerStyle::Accent) == ACRAccent);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingSize::Large) == ACRLarge);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingSize::Medium) == ACRMedium);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingColor::Neutral) == ACRNeutral);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingColor::Marigold) == ACRMarigold);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingStyle::Compact) == ACRCompactStyle);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::RatingStyle::Default) == ACRDefaultStyle);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::Carousel) == ACRCarousel);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::CarouselPage) == ACRCarouselPage);
 }
 
 - (void)testACRInputToggleViewCustomRendering

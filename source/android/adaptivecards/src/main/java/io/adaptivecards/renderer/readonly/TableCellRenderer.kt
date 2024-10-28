@@ -11,9 +11,18 @@ import android.widget.LinearLayout
 import android.widget.TableLayout
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.FragmentManager
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.objectmodel.*
-import io.adaptivecards.renderer.*
+import io.adaptivecards.renderer.BaseCardElementRenderer
+import io.adaptivecards.renderer.RenderArgs
+import io.adaptivecards.renderer.RenderedAdaptiveCard
+import io.adaptivecards.renderer.TagContent
+import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
+import io.adaptivecards.renderer.layout.AreaGridLayoutView
 import io.adaptivecards.renderer.registration.CardRendererRegistration
 import android.widget.TableRow as TableRowLayout
 
@@ -27,11 +36,9 @@ object TableCellRenderer : BaseCardElementRenderer() {
         val col = renderArgs.table.GetColumns()[renderArgs.colIndex]
 
         val cell = Util.castTo(baseCardElement, TableCell::class.java)
-        val cellLayout = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            tag = TagContent(cell)
-            layoutParams = TableRowLayout.LayoutParams(0, TableLayout.LayoutParams.MATCH_PARENT)
-        }
+
+        val layoutToApply = Util.getLayoutToApply(cell.GetLayouts(), hostConfig)
+        val cellLayout = getAppropriateContainerForLayout(context, layoutToApply, cell)
 
         var stretch = false
         if (col.GetPixelWidth() != null) {
@@ -42,6 +49,8 @@ object TableCellRenderer : BaseCardElementRenderer() {
             cellLayout.updateLayoutParams<TableRowLayout.LayoutParams> { weight = col.GetWidth()?.toFloat() ?: 1f }
             stretch = true
         }
+
+
         renderArgs.tableLayout.setColumnShrinkable(renderArgs.colIndex, stretch)
         renderArgs.tableLayout.setColumnStretchable(renderArgs.colIndex, stretch)
 
@@ -56,20 +65,23 @@ object TableCellRenderer : BaseCardElementRenderer() {
         ContainerRenderer.applyPadding(computedStyle, renderArgs.containerStyle, cellLayout, hostConfig, renderArgs.table.GetShowGridLines())
         ContainerRenderer.applyContainerStyle(computedStyle, renderArgs.containerStyle, cellLayout, hostConfig)
         ContainerRenderer.applyVerticalContentAlignment(cellLayout,
-                computeVerticalContentAlignment(cell.GetVerticalContentAlignment(), row, col, renderArgs.table))
+                computeVerticalContentAlignment(cell.GetVerticalContentAlignment(), row, col, renderArgs.table), layoutToApply)
         ContainerRenderer.setSelectAction(renderedCard, cell.GetSelectAction(), cellLayout, cardActionHandler, renderArgs)
 
         CardRendererRegistration.getInstance().renderElements(renderedCard,
-                context,
-                fragmentManager,
-                cellLayout,
-                cell.GetItems(),
-                cardActionHandler,
-                hostConfig,
-                RenderArgs(renderArgs).apply {
-                    containerStyle = computedStyle
-                    horizontalAlignment = computeHorizontalAlignment(row, col, renderArgs.table)
-                })
+            context,
+            fragmentManager,
+            cellLayout,
+            cell.GetItems(),
+            cardActionHandler,
+            hostConfig,
+            RenderArgs(renderArgs).apply {
+                containerStyle = computedStyle
+                horizontalAlignment = computeHorizontalAlignment(row, col, renderArgs.table)
+            },
+            layoutToApply)
+
+        ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, cellLayout)
 
         viewGroup.addView(cellLayout)
         return cellLayout
@@ -125,5 +137,37 @@ object TableCellRenderer : BaseCardElementRenderer() {
                 ?: col.GetHorizontalCellContentAlignment()
                 ?: table.GetHorizontalCellContentAlignment()
                 ?: HorizontalAlignment.Left
+    }
+
+    private fun getAppropriateContainerForLayout(
+        context: Context,
+        layoutToApply: Layout,
+        tableCell: TableCell
+    ): ViewGroup {
+        val layoutContainer: ViewGroup
+        if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
+            val flexboxLayout = FlexboxLayout(context).apply {
+                flexDirection = FlexDirection.ROW
+                flexWrap = FlexWrap.WRAP
+                tag = TagContent(tableCell)
+                layoutParams = TableRowLayout.LayoutParams(0, TableLayout.LayoutParams.MATCH_PARENT)
+            }
+            Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply)
+            layoutContainer = flexboxLayout
+        } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
+            val areaGridLayout = AreaGridLayoutView(context).apply {
+                tag = TagContent(tableCell)
+                layoutParams = TableRowLayout.LayoutParams(0, TableLayout.LayoutParams.MATCH_PARENT)
+            }
+            layoutContainer = areaGridLayout
+        } else {
+            val cellLayout = LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                tag = TagContent(tableCell)
+                layoutParams = TableRowLayout.LayoutParams(0, TableLayout.LayoutParams.MATCH_PARENT)
+            }
+            layoutContainer = cellLayout
+        }
+        return layoutContainer
     }
 }

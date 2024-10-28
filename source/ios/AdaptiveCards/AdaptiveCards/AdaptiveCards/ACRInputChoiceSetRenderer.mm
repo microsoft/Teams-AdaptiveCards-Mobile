@@ -76,6 +76,7 @@
         [choiceSetView registerClass:[ACRChoiceSetCell class] forCellReuseIdentifier:uncheckedRadioButtonReuseID];
         NSObject<UITableViewDelegate, UITableViewDataSource, ACRIBaseInputHandler> *dataSource = [[ACRChoiceSetViewDataSource alloc] initWithInputChoiceSet:choiceSet WithHostConfig:config];
         ((ACRChoiceSetViewDataSource *)dataSource).spacing = choiceSetView.inputTableViewSpacing;
+        ((ACRChoiceSetViewDataSource *)dataSource).tableView = choiceSetView;
         [choiceSetView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 
         // removes leading padding
@@ -90,8 +91,9 @@
 
     [inputs addObject:inputLabelView];
 
-    [viewGroup addArrangedSubview:inputLabelView];
-
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:inputLabelView withAreaName:areaName];
+    
     return inputLabelView;
 }
 

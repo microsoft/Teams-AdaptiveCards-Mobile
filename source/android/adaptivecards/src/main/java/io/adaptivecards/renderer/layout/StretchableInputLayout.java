@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.flexbox.FlexboxLayout;
+
 import io.adaptivecards.renderer.BaseCardElementRenderer;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.input.customcontrols.IValidatedInputView;
@@ -57,6 +59,11 @@ public class StretchableInputLayout extends StretchableElementLayout
             LinearLayout layout = (LinearLayout) input;
             m_inputView = layout.getChildAt(0);
             m_viewWithVisualCues = input;
+        }
+        else if (input instanceof RatingStarInputView || input instanceof RatingStarDisplayView) {
+            FlexboxLayout layout = (FlexboxLayout) input;
+            m_inputView = layout;
+            m_viewWithVisualCues = layout;
         }
         // Input.Text with an inline action render inside a regular LinearLayout, but in this case
         // the view inside of the Layout has the visual cue. We have to verify that the expanded

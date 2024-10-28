@@ -10,14 +10,22 @@ import androidx.fragment.app.FragmentManager;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayout;
 
 import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.BaseActionElementVector;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HostConfig;
+import io.adaptivecards.objectmodel.Layout;
+import io.adaptivecards.objectmodel.LayoutContainerType;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.layout.AreaGridLayoutView;
 import io.adaptivecards.renderer.layout.StretchableElementLayout;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
@@ -82,11 +90,12 @@ public class AdaptiveCardRenderer
                                     ICardActionHandler cardActionHandler,
                                     HostConfig hostConfig,
                                     ViewGroup cardLayout,
-                                    RenderArgs renderArgs)
+                                    RenderArgs renderArgs,
+                                    Layout layoutToApply)
     {
         try
         {
-            CardRendererRegistration.getInstance().renderElements(renderedCard, context, fragmentManager, cardLayout, adaptiveCard.GetBody(), cardActionHandler, hostConfig, renderArgs);
+            CardRendererRegistration.getInstance().renderElements(renderedCard, context, fragmentManager, cardLayout, adaptiveCard.GetBody(), cardActionHandler, hostConfig, renderArgs, layoutToApply);
         }
         // Catches the exception as the method throws it for performing fallback with elements inside the card,
         // no fallback should be performed here so we just catch the exception
@@ -125,6 +134,8 @@ public class AdaptiveCardRenderer
         rootLayout.setClipChildren(false);
         rootLayout.setClipToPadding(false);
 
+        Layout layoutToApply = Util.getLayoutToApply(adaptiveCard.GetLayouts(), hostConfig);
+
         // cardLayout only contains the rendered card composed of elements and actions
         long cardMinHeight = adaptiveCard.GetMinHeight();
         LinearLayout cardLayout = new StretchableElementLayout(context, (adaptiveCard.GetHeight() == HeightType.Stretch) || (cardMinHeight != 0));
@@ -136,7 +147,7 @@ public class AdaptiveCardRenderer
 
         BaseCardElementRenderer.setMinHeight(cardMinHeight, rootLayout, context);
         BaseCardElementRenderer.applyRtl(adaptiveCard.GetRtl(), cardLayout);
-        ContainerRenderer.applyVerticalContentAlignment(cardLayout, adaptiveCard.GetVerticalContentAlignment());
+        ContainerRenderer.applyVerticalContentAlignment(cardLayout, adaptiveCard.GetVerticalContentAlignment(), layoutToApply);
 
         cardLayout.setOrientation(LinearLayout.VERTICAL);
         int padding = Util.dpToPixels(context, hostConfig.GetSpacing().getPaddingSpacing());
@@ -167,7 +178,23 @@ public class AdaptiveCardRenderer
         // Render the body section of the Adaptive Card
         String color = hostConfig.GetBackgroundColor(style);
         cardLayout.setBackgroundColor(Color.parseColor(color));
-        renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, cardLayout, renderArgs);
+        /**
+         * Rendering the body section of adaptive card inside the flexbox layout if the layout is flow
+         * and adding the flow layout to the card layout
+         **/
+        if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow) {
+            FlexboxLayout flexboxLayout = getFlexboxContainerForLayout(context);
+            Util.setHorizontalAlignmentForFlowLayout(flexboxLayout, layoutToApply);
+            renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, flexboxLayout, renderArgs, layoutToApply);
+            ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, flexboxLayout);
+            cardLayout.addView(flexboxLayout);
+        } else if (layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid) {
+            AreaGridLayoutView areaGridLayoutView = getAreaGridLayoutView(context);
+            renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, areaGridLayoutView, renderArgs, layoutToApply);
+            cardLayout.addView(areaGridLayoutView);
+        } else {
+            renderCardElements(renderedCard, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, cardLayout, renderArgs, layoutToApply);
+        }
 
         if (hostConfig.GetSupportsInteractivity())
         {
@@ -218,6 +245,20 @@ public class AdaptiveCardRenderer
         ContainerRenderer.setSelectAction(renderedCard, renderedCard.getAdaptiveCard().GetSelectAction(), rootLayout, cardActionHandler, renderArgs);
 
         return rootLayout;
+    }
+
+    private AreaGridLayoutView getAreaGridLayoutView(Context context) {
+        AreaGridLayoutView areaGridLayoutView = new AreaGridLayoutView(context);
+        areaGridLayoutView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return areaGridLayoutView;
+    }
+
+    private static FlexboxLayout getFlexboxContainerForLayout(Context context) {
+        FlexboxLayout flexboxLayout = new FlexboxLayout(context);
+        flexboxLayout.setFlexDirection(FlexDirection.ROW);
+        flexboxLayout.setFlexWrap(FlexWrap.WRAP);
+        flexboxLayout.setLayoutParams(new FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return flexboxLayout;
     }
 
     private static AdaptiveCardRenderer s_instance = null;

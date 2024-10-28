@@ -2,6 +2,7 @@
     "choiceSetInputValueSeparator": ",",
     "supportsInteractivity": true,
     "spacing": {
+		"extraSmall": 4,
         "small": 8,
         "default": 12,
         "medium": 16,
@@ -304,5 +305,119 @@
             "warp": true
         },
         "spacing": 16
-    }
+    },
+	"ratingInput": {
+		"filledStar": {
+			"marigoldColor": "#EAA300",
+			"neutralColor": "#212121"
+		},
+
+		"emptyStar": {
+			"marigoldColor": "#EAA300",
+			"neutralColor": "#212121"
+		},
+
+		"ratingTextColor": "#000000",
+		"countTextColor": "#000000"
+	},
+	"ratingLabel": {
+		"filledStar": {
+			"marigoldColor": "#EAA300",
+			"neutralColor": "#242424"
+		},
+
+		"emptyStar": {
+			"marigoldColor": "#F9E2AE",
+			"neutralColor": "#E1E1E1"
+		},
+
+		"ratingTextColor": "#000000",
+		"countTextColor": "#000000"
+	},
+	"badgeStyles": {
+		"default": {
+			"filled": {
+				"backgroundColor": "#212121",
+				"strokeColor": "#212121",
+				"textColor": "#ffffff"
+			},
+			"tint": {
+				"backgroundColor": "#6e6e6e",
+				"strokeColor": "#6e6e6e",
+				"textColor": "#ffffff"
+			}
+		},
+		"accent": {
+			"filled": {
+				"backgroundColor": "#5b5fc7",
+				"strokeColor": "#5b5fc7",
+				"textColor": "#ffffff"
+			},
+			"tint": {
+				"backgroundColor": "#e8ebfa",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#5b5fc7"
+			}
+		},
+		"attention": {
+			"filled": {
+				"backgroundColor": "#d92c2c",
+				"strokeColor": "#d92c2c",
+				"textColor": "#ffffff"
+			},
+			"tint": {
+				"backgroundColor": "#f9d9d9",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#d92c2c"
+			}
+		},
+		"good": {
+			"filled": {
+				"backgroundColor": "#0f7a0b",
+				"strokeColor": "#0f7a0b",
+				"textColor": "#ffffff"
+			},
+			"tint": {
+				"backgroundColor": "#e7f2da",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#0f7a0b"
+			}
+		},
+		"informative": {
+			"filled": {
+				"backgroundColor": "#ffffff",
+				"strokeColor": "#ffffff",
+				"textColor": "#212121"
+			},
+			"tint": {
+				"backgroundColor": "#ffffff",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#212121"
+			}
+		},
+		"subtle": {
+			"filled": {
+				"backgroundColor": "#f1f1f1",
+				"strokeColor": "#f1f1f1",
+				"textColor": "#6e6e6e"
+			},
+			"tint": {
+				"backgroundColor": "#f1f1f1",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#6e6e6e"
+			}
+		},
+		"warning": {
+			"filled": {
+				"backgroundColor": "#835c00",
+				"strokeColor": "#835c00",
+				"textColor": "#ffffff"
+			},
+			"tint": {
+				"backgroundColor": "#fbf6d9",
+				"strokeColor": "#e1e1e1",
+				"textColor": "#835C00"
+			}
+		}
+	}
 }

@@ -29,7 +29,7 @@ public class ToggleInputValidationTest
 
     private ToggleInputHandler createInputHandler(ToggleInput toggleInput)
     {
-        ToggleInputHandler toggleInputHandler = new ToggleInputHandler(toggleInput);
+        ToggleInputHandler toggleInputHandler = new ToggleInputHandler(toggleInput, null, 0L);
         toggleInputHandler.setView(new CheckBox(InstrumentationRegistry.getContext()));
         return toggleInputHandler;
     }

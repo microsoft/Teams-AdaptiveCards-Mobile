@@ -52,6 +52,15 @@ void BaseInputElement::SetErrorMessage(const std::string errorMessage)
     m_errorMessage = errorMessage;
 }
 
+std::shared_ptr<ValueChangedAction> BaseInputElement::GetValueChangedAction() const
+{
+    return m_valueChangedAction;
+}
+void BaseInputElement::SetValueChangedAction(const std::shared_ptr<ValueChangedAction> value)
+{
+    m_valueChangedAction = value;
+}
+
 Json::Value BaseInputElement::SerializeToJsonValue() const
 {
     Json::Value root = BaseCardElement::SerializeToJsonValue();
@@ -102,4 +111,5 @@ void BaseInputElement::DeserializeBaseProperties(ParseContext& /*context*/, cons
     element->SetIsRequired(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsRequired, false));
     element->SetErrorMessage(ParseUtil::GetString(json, AdaptiveCardSchemaKey::ErrorMessage));
     element->SetLabel(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Label));
+    element->SetValueChangedAction(ParseUtil::GetValueChangedAction(json));
 }

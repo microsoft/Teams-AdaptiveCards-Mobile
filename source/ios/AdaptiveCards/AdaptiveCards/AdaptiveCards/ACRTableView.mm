@@ -28,7 +28,8 @@
     if (self) {
         std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
         std::shared_ptr<Table> table = std::dynamic_pointer_cast<Table>([acoElement element]);
-        [viewGroup addArrangedSubview:self];
+        NSString *areaName = [NSString stringWithCString:table->GetAreaGridName()->c_str() encoding:NSUTF8StringEncoding];
+        [viewGroup addArrangedSubview:self withAreaName:areaName];
         _columnDefinitions = [[NSMutableArray alloc] init];
         _showGridLines = table->GetShowGridLines();
         _gridStyle = [viewGroup style];
@@ -37,6 +38,19 @@
         }
         [self defineColumnDefinitions:table];
         [self buildRowView:table rootView:rootView inputs:inputs hostConfig:acoConfig];
+        bool roundedCorner = table->GetRoundedCorners();
+        if (roundedCorner)
+        {
+            self.layer.cornerRadius = config->GetCornerRadius(table->GetElementType());
+            self.layer.masksToBounds = YES;
+            if (self.showGridLines)
+            {
+                auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:_gridStyle]);
+                UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
+                self.layer.borderWidth = config->GetBorderWidth(table->GetElementType());
+                self.layer.borderColor = [color CGColor];
+            }
+        }
     }
     return self;
 }
@@ -89,6 +103,7 @@
     self.spacing = [acoConfig getHostConfig]->GetTable().cellSpacing;
     CGFloat spacing = 0.0f;
     auto i = 0;
+    int totalRows = (int)table->GetRows().size();
     for (const auto &row : table->GetRows()) {
         [acoRowWrapper setElem:row];
 
@@ -107,7 +122,9 @@
                                        rootView:rootView
                                          inputs:inputs
                                      hostConfig:acoConfig
-                                      gridStyle:_gridStyle];
+                                      gridStyle:_gridStyle
+                                      rowIndex:i
+                                      totalRows:totalRows];
 
         [self addSubview:rowView];
         [self.widthAnchor constraintEqualToAnchor:rowView.widthAnchor].active = YES;

@@ -3,24 +3,25 @@
 
 package io.adaptivecards.renderer.inputhandler;
 
+import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ChoiceInput;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedSpinnerLayout;
 
-import java.text.ParseException;
-import java.util.Map;
 
 public class ComboBoxInputHandler extends BaseInputHandler
 {
-    public ComboBoxInputHandler(BaseInputElement baseInputElement)
+    public ComboBoxInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
     }
 
     protected Spinner getSpinner()
@@ -64,6 +65,33 @@ public class ComboBoxInputHandler extends BaseInputHandler
         }
 
         getSpinner().setSelection(selectedPosition);
+    }
+
+    @Override
+    public void registerInputObserver() {
+        getSpinner().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                notifyAllInputWatchers();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+                notifyAllInputWatchers();
+            }
+        });
+        addValueChangedActionInputWatcher();
+    }
+
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, ChoiceSetInput.class)) {
+            return Util.castTo(m_baseInputElement, ChoiceSetInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     @Override

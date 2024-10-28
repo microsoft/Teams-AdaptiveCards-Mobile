@@ -93,6 +93,7 @@ const CGFloat minimumRowHeight = 44.0;
     std::shared_ptr<HostConfig> _config;
     CGSize _contentSize;
     NSString *_accessibilityString;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
 - (instancetype)initWithInputChoiceSet:(std::shared_ptr<AdaptiveCards::ChoiceSetInput> const &)choiceSet WithHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)hostConfig;
@@ -131,6 +132,7 @@ const CGFloat minimumRowHeight = 44.0;
         }
         
         self.hasValidationProperties = self.isRequired;
+        _completionHandlers = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -188,7 +190,7 @@ const CGFloat minimumRowHeight = 44.0;
     {
         cell.accessibilityLabel = [NSString stringWithFormat:@"%@ %@, %@, %@", _accessibilityString, @"(Required)", cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
         cell.accessibilityLabel = [cell.accessibilityLabel stringByReplacingOccurrencesOfString:@"*" withString:@""];
-    } 
+    }
     else
     {
         cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@, %@", _accessibilityString, cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
@@ -246,7 +248,7 @@ const CGFloat minimumRowHeight = 44.0;
             _userSelections[[NSNumber numberWithInteger:indexPath.row]] = [NSNumber numberWithBool:YES];
         }
     }
-
+    [self notifyDelegates];
     [tableView reloadData];
     _currentSelectedIndexPath = indexPath;
 }
@@ -286,6 +288,16 @@ const CGFloat minimumRowHeight = 44.0;
     CGFloat rowHeight = labelStringSize.height + _spacing;
     
     return (rowHeight < minimumRowHeight) ? minimumRowHeight : rowHeight;
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [_completionHandlers addObject:completion];
+}
+
+- (void)notifyDelegates {
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
+    }
 }
 
 - (BOOL)validate:(NSError **)error
@@ -331,6 +343,21 @@ const CGFloat minimumRowHeight = 44.0;
         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, view);
         [ACRInputLabelView commonSetFocus:shouldBecomeFirstResponder view:view];
     }
+}
+
+- (void)resetInput {
+    [_userSelections removeAllObjects];
+    NSUInteger index = 0;
+    for (const auto &choice : _choiceSetDataSource->GetChoices()) {
+        NSString *keyForDefaultValue = [NSString stringWithCString:choice->GetValue().c_str()
+                                                          encoding:NSUTF8StringEncoding];
+
+        if ([_defaultValuesSet containsObject:keyForDefaultValue]) {
+            _userSelections[[NSNumber numberWithInteger:index]] = [NSNumber numberWithBool:YES];
+        }
+        ++index;
+    }
+    [_tableView reloadData];
 }
 
 - (NSString *)getTitlesOfChoices

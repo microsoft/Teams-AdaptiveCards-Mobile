@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.DateInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.readonly.RendererUtil;
 
@@ -19,9 +20,9 @@ import java.util.Date;
 
 public class DateInputHandler extends TextInputHandler
 {
-    public DateInputHandler(BaseInputElement baseInputElement, WeakReference<FragmentManager> fragmentManager)
+    public DateInputHandler(BaseInputElement baseInputElement, WeakReference<FragmentManager> fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
         m_fragmentManager = fragmentManager;
         s_simpleDateFormat.setLenient(false);
     }
@@ -121,8 +122,15 @@ public class DateInputHandler extends TextInputHandler
         return (beforeYear < afterYear || beforeOrSameMonthOfTheSameYear);
     }
 
-    private WeakReference<FragmentManager> m_fragmentManager;
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, DateInput.class)) {
+            return Util.castTo(m_baseInputElement, DateInput.class).GetValue();
+        }
+        return super.getDefaultValue();
+    }
 
+    private WeakReference<FragmentManager> m_fragmentManager;
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static DateFormat s_simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
 }

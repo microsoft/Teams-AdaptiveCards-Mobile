@@ -120,6 +120,10 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/FeatureRegistration.h"
 #include "../../../shared/cpp/ObjectModel/BackgroundImage.h"
 #include "../../../shared/cpp/ObjectModel/Container.h"
+#include "../../../shared/cpp/ObjectModel/Carousel.h"
+#include "../../../shared/cpp/ObjectModel/CarouselPage.h"
+#include "../../../shared/cpp/ObjectModel/Icon.h"
+#include "../../../shared/cpp/ObjectModel/RatingLabel.h"
 #include "../../../shared/cpp/ObjectModel/Image.h"
 #include "../../../shared/cpp/ObjectModel/ImageSet.h"
 #include "../../../shared/cpp/ObjectModel/InternalId.h"
@@ -131,6 +135,11 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/DateInput.h"
 #include "../../../shared/cpp/ObjectModel/NumberInput.h"
 #include "../../../shared/cpp/ObjectModel/TextInput.h"
+#include "../../../shared/cpp/ObjectModel/RatingInput.h"
+#include "../../../shared/cpp/ObjectModel/Layout.h"
+#include "../../../shared/cpp/ObjectModel/FlowLayout.h"
+#include "../../../shared/cpp/ObjectModel/AreaGridLayout.h"
+#include "../../../shared/cpp/ObjectModel/GridArea.h"
 #include "../../../shared/cpp/ObjectModel/TimeInput.h"
 #include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 #include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
@@ -171,6 +180,10 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/Authentication.h"
 #include "../../../shared/cpp/ObjectModel/TokenExchangeResource.h"
 #include "../../../shared/cpp/ObjectModel/AuthCardButton.h"
+#include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
+#include "../../../shared/cpp/ObjectModel/CompoundButton.h"
+#include "../../../shared/cpp/ObjectModel/IconInfo.h"
+#include "../../../shared/cpp/ObjectModel/Badge.h"
 %}
 
 
@@ -191,8 +204,13 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::StyledCollectionElement)
 %shared_ptr(AdaptiveCards::FeatureRegistration)
 %shared_ptr(AdaptiveCards::BackgroundImage)
+%shared_ptr(AdaptiveCards::Carousel)
+%shared_ptr(AdaptiveCards::CarouselPage)
 %shared_ptr(AdaptiveCards::Container)
 %shared_ptr(AdaptiveCards::TextBlock)
+%shared_ptr(AdaptiveCards::Icon)
+%shared_ptr(AdaptiveCards::IconInfo)
+%shared_ptr(AdaptiveCards::RatingLabel)
 %shared_ptr(AdaptiveCards::Image)
 %shared_ptr(AdaptiveCards::ImageSet)
 %shared_ptr(AdaptiveCards::Column)
@@ -205,6 +223,11 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::DateInput)
 %shared_ptr(AdaptiveCards::NumberInput)
 %shared_ptr(AdaptiveCards::TextInput)
+%shared_ptr(AdaptiveCards::RatingInput)
+%shared_ptr(AdaptiveCards::Layout)
+%shared_ptr(AdaptiveCards::FlowLayout)
+%shared_ptr(AdaptiveCards::AreaGridLayout)
+%shared_ptr(AdaptiveCards::GridArea)
 %shared_ptr(AdaptiveCards::TimeInput)
 %shared_ptr(AdaptiveCards::ToggleInput)
 %shared_ptr(AdaptiveCards::ExecuteAction)
@@ -214,11 +237,17 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ParseResult)
 %shared_ptr(AdaptiveCards::RemoteResourceInformation)
 %shared_ptr(AdaptiveCards::AdaptiveCard)
+%shared_ptr(AdaptiveCards::CarouselParser)
+%shared_ptr(AdaptiveCards::CarouselPageParser)
 %shared_ptr(AdaptiveCards::ContainerParser)
 %shared_ptr(AdaptiveCards::TextBlockParser)
+%shared_ptr(AdaptiveCards::IconParser)
+%shared_ptr(AdaptiveCards::RatingLabelParser)
 %shared_ptr(AdaptiveCards::ImageParser)
 %shared_ptr(AdaptiveCards::ColumnParser)
 %shared_ptr(AdaptiveCards::ColumnSetParser)
+%shared_ptr(AdaptiveCards::CompoundButton)
+%shared_ptr(AdaptiveCards::CompoundButtonParser)
 %shared_ptr(AdaptiveCards::FactSetParser)
 %shared_ptr(AdaptiveCards::ChoiceSetInputParser)
 %shared_ptr(AdaptiveCards::NumberInputParser)
@@ -226,6 +255,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::TableCellParser)
 %shared_ptr(AdaptiveCards::TableRowParser)
 %shared_ptr(AdaptiveCards::TextInputParser)
+%shared_ptr(AdaptiveCards::RatingInputParser)
 %shared_ptr(AdaptiveCards::TimeInputParser)
 %shared_ptr(AdaptiveCards::ToggleInputParser)
 %shared_ptr(AdaptiveCards::ExecuteActionParser)
@@ -263,6 +293,9 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::TableColumnDefinition)
 %shared_ptr(AdaptiveCards::TableRow)
 %shared_ptr(AdaptiveCards::Table)
+%shared_ptr(AdaptiveCards::ValueChangedAction)
+%shared_ptr(AdaptiveCards::Badge)
+%shared_ptr(AdaptiveCards::BadgeParser)
 
 
 %apply unsigned int& INOUT { unsigned int& };
@@ -469,6 +502,9 @@ namespace Json {
 %template(RemoteResourceInformationVector) std::vector<AdaptiveCards::RemoteResourceInformation>;
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;
 %template(BaseCardElementVector) std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement> >;
+%template(CarouselPageVector) std::vector<std::shared_ptr<AdaptiveCards::CarouselPage> >;
+%template(LayoutVector) std::vector<std::shared_ptr<AdaptiveCards::Layout> >;
+%template(GridAreaVector) std::vector<std::shared_ptr<AdaptiveCards::GridArea> >;
 %template(ImageVector) std::vector<std::shared_ptr<AdaptiveCards::Image> >;
 %template(FactVector) std::vector<std::shared_ptr<AdaptiveCards::Fact> >;
 %template(ColumnVector) std::vector<std::shared_ptr<AdaptiveCards::Column> >;
@@ -533,6 +569,66 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::FlowLayout::dynamic_cast(AdaptiveCards::Layout *layout) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::FlowLayout {
+        static AdaptiveCards::FlowLayout *dynamic_cast(AdaptiveCards::Layout *layout) {
+            return dynamic_cast<AdaptiveCards::FlowLayout *>(layout);
+        }
+};
+
+%exception AdaptiveCards::AreaGridLayout::dynamic_cast(AdaptiveCards::Layout *layout) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::AreaGridLayout {
+        static AdaptiveCards::AreaGridLayout *dynamic_cast(AdaptiveCards::Layout *layout) {
+            return dynamic_cast<AdaptiveCards::AreaGridLayout *>(layout);
+        }
+};
+
+%exception AdaptiveCards::Carousel::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::Carousel {
+        static AdaptiveCards::Carousel *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::Carousel *>(baseCardElement);
+        }
+};
+
+%exception AdaptiveCards::CarouselPage::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::CarouselPage {
+        static AdaptiveCards::CarouselPage *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::CarouselPage *>(baseCardElement);
+        }
+};
+
 %exception AdaptiveCards::Container::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {
@@ -561,6 +657,36 @@ namespace Json {
     static AdaptiveCards::TextBlock *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
         return dynamic_cast<AdaptiveCards::TextBlock *>(baseCardElement);
     }
+};
+
+%exception AdaptiveCards::Icon::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::Icon {
+        static AdaptiveCards::Icon *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::Icon *>(baseCardElement);
+        }
+};
+
+%exception AdaptiveCards::RatingLabel::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::RatingLabel {
+        static AdaptiveCards::RatingLabel *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::RatingLabel *>(baseCardElement);
+        }
 };
 
 %exception AdaptiveCards::Image::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
@@ -728,6 +854,21 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::RatingInput::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::RatingInput {
+        static AdaptiveCards::RatingInput *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::RatingInput *>(baseCardElement);
+        }
+};
+
 %exception AdaptiveCards::TimeInput::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {
@@ -848,6 +989,21 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::ValueChangedAction::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::ValueChangedAction {
+        static AdaptiveCards::ValueChangedAction *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::ValueChangedAction *>(baseCardElement);
+        }
+};
+
 %exception AdaptiveCards::ActionSet::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {
@@ -893,6 +1049,52 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::CompoundButton::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+
+%extend AdaptiveCards::CompoundButton {
+        static AdaptiveCards::CompoundButton *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::CompoundButton *>(baseCardElement);
+        }
+};
+
+%exception AdaptiveCards::IconInfo::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::IconInfo {
+        static AdaptiveCards::IconInfo *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::IconInfo *>(baseCardElement);
+        }
+};
+
+%exception AdaptiveCards::Badge::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::Badge {
+        static AdaptiveCards::Badge *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::Badge *>(baseCardElement);
+        }
+};
+
 %include "../../../shared/cpp/ObjectModel/pch.h"
 %include "../../../shared/cpp/ObjectModel/EnumMagic.h"
 %include "../../../shared/cpp/ObjectModel/Enums.h"
@@ -915,6 +1117,10 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/FeatureRegistration.h"
 %include "../../../shared/cpp/ObjectModel/SemanticVersion.h"
 %include "../../../shared/cpp/ObjectModel/Container.h"
+%include "../../../shared/cpp/ObjectModel/Carousel.h"
+%include "../../../shared/cpp/ObjectModel/CarouselPage.h"
+%include "../../../shared/cpp/ObjectModel/Icon.h"
+%include "../../../shared/cpp/ObjectModel/RatingLabel.h"
 %include "../../../shared/cpp/ObjectModel/Image.h"
 %include "../../../shared/cpp/ObjectModel/ImageSet.h"
 %include "../../../shared/cpp/ObjectModel/Column.h"
@@ -925,6 +1131,11 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/DateInput.h"
 %include "../../../shared/cpp/ObjectModel/NumberInput.h"
 %include "../../../shared/cpp/ObjectModel/TextInput.h"
+%include "../../../shared/cpp/ObjectModel/Layout.h"
+%include "../../../shared/cpp/ObjectModel/FlowLayout.h"
+%include "../../../shared/cpp/ObjectModel/AreaGridLayout.h"
+%include "../../../shared/cpp/ObjectModel/GridArea.h"
+%include "../../../shared/cpp/ObjectModel/RatingInput.h"
 %include "../../../shared/cpp/ObjectModel/TimeInput.h"
 %include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 %include "../../../shared/cpp/ObjectModel/ExecuteAction.h"
@@ -963,3 +1174,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/RichTextBlock.h"
 %include "../../../shared/cpp/ObjectModel/TextRun.h"
 %include "../../../shared/cpp/ObjectModel/RichTextElementProperties.h"
+%include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
+%include "../../../shared/cpp/ObjectModel/CompoundButton.h"
+%include "../../../shared/cpp/ObjectModel/IconInfo.h"
+%include "../../../shared/cpp/ObjectModel/Badge.h"

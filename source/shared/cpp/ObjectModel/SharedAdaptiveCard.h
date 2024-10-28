@@ -8,6 +8,7 @@
 #include "ParseResult.h"
 #include "Refresh.h"
 #include "Authentication.h"
+#include "Layout.h"
 
 namespace AdaptiveCards
 {
@@ -132,6 +133,10 @@ public:
     const std::vector<std::shared_ptr<BaseCardElement>>& GetBody() const;
     std::vector<std::shared_ptr<BaseActionElement>>& GetActions();
     const std::vector<std::shared_ptr<BaseActionElement>>& GetActions() const;
+    
+    std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts();
+    const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts() const;
+    void SetLayouts(const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& value);
 
     const std::unordered_set<std::string>& GetKnownProperties() const;
     const Json::Value& GetAdditionalProperties() const;
@@ -205,6 +210,8 @@ private:
     InternalId m_internalId;
     std::unordered_set<std::string> m_knownProperties;
     Json::Value m_additionalProperties;
+    
+    std::vector<std::shared_ptr<Layout>> m_layouts;
 
     std::vector<std::shared_ptr<BaseCardElement>> m_body;
     std::vector<std::shared_ptr<BaseActionElement>> m_actions;

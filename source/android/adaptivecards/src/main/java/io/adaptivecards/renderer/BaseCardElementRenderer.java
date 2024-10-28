@@ -46,6 +46,10 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
         {
             spacingSize = defaultSpacingConfig.getSmallSpacing();
         }
+        else if (spacing == Spacing.ExtraSmall)
+        {
+            spacingSize = defaultSpacingConfig.getExtraSmallSpacing();
+        }
         else if (spacing == Spacing.Padding)
         {
             spacingSize = defaultSpacingConfig.getPaddingSpacing();

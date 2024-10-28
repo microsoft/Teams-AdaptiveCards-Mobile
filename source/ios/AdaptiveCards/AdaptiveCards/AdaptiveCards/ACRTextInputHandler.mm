@@ -11,7 +11,6 @@
 #import "NumberInput.h"
 #import "TextInput.h"
 
-
 @implementation ACRTextInputHandler
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem
@@ -31,6 +30,8 @@
         }
         self.hasValidationProperties = self.isRequired || self.maxLength || self.regexPredicate;
         self.text = [NSString stringWithCString:inputBlock->GetValue().c_str() encoding:NSUTF8StringEncoding];
+        self.defaultValue = self.text;
+        self._completionHandlers = [[NSMutableArray alloc] init];
         if (self.text && self.text.length) {
             self.hasText = YES;
         }
@@ -61,6 +62,22 @@
     if (shouldBecomeFirstResponder) {
         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, view);
         [ACRInputLabelView commonSetFocus:shouldBecomeFirstResponder view:inputview];
+    }
+}
+
+- (void)resetInput {
+    _textField.text = self.defaultValue;
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [self._completionHandlers addObject:completion];
+}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    self.text = textField.text;
+    self.hasText = textField.hasText;
+    for(CompletionHandler completion in self._completionHandlers) {
+        completion();
     }
 }
 
@@ -105,6 +122,7 @@
         self.isRequired = numberInputBlock->GetIsRequired();
         auto value = numberInputBlock->GetValue();
         self.text = (value.has_value()) ? [[NSNumber numberWithDouble:value.value_or(0)] stringValue] : nil;
+        self.defaultValue = self.text;
         self.hasText = self.text != nil;
 
         NSMutableCharacterSet *characterSets = [NSMutableCharacterSet characterSetWithCharactersInString:@"-."];
@@ -121,6 +139,7 @@
         self.hasMax = maxVal.has_value();
         self.max = maxVal.value_or(0);
         self.hasValidationProperties = self.isRequired || self.hasMin || self.hasMax;
+        self._completionHandlers = [[NSMutableArray alloc] init];
     }
     return self;
 }

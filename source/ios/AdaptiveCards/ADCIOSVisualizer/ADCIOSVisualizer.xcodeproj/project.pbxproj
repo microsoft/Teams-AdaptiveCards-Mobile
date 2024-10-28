@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D993BFC2C7F123C00B4D1C6 /* ACRCustomFeatureFlagResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BFB2C7F123C00B4D1C6 /* ACRCustomFeatureFlagResolver.m */; };
 		30860BC220C9B5C9009F9D99 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		30860BC420C9B5C9009F9D99 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		62FA4EBE2B45D79A007BB1CC /* visionOsHostConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 62FA4EBD2B45D79A007BB1CC /* visionOsHostConfig.json */; };
@@ -88,7 +89,7 @@
 		6BD6E86125B28475007B0168 /* ACRImageRenderingTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6E86025B28475007B0168 /* ACRImageRenderingTest.mm */; };
 		6BF1E31625539B5500DA7561 /* ACRChatWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BF1E31525539B5500DA7561 /* ACRChatWindow.mm */; };
 		6BF339D620A665E600DA5973 /* CustomTextBlockRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BF339D420A665E600DA5973 /* CustomTextBlockRenderer.mm */; };
-		6BF339E320A66A3F00DA5973 /* AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF339E220A66A3F00DA5973 /* AdaptiveCards.framework */; };
+		6BF339E320A66A3F00DA5973 /* AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF339E220A66A3F00DA5973 /* AdaptiveCards.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6BF339E420A66A4D00DA5973 /* AdaptiveCards.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF339E220A66A3F00DA5973 /* AdaptiveCards.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6BFBF9612457ADD0006FF8FB /* ActionSet.Inputs.Tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 6BFBF9602457ADCF006FF8FB /* ActionSet.Inputs.Tests.json */; };
 		6BFF998525F941BE0028069F /* CustomActionOpenURLRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = F4F255711F993CD200A80D39 /* CustomActionOpenURLRenderer.mm */; };
@@ -144,9 +145,13 @@
 /* Begin PBXFileReference section */
 		0B3F74BE29E1CF92C4FAFB8C /* Pods_ADCIOSVisualizer_ADCIOSVisualizerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ADCIOSVisualizer_ADCIOSVisualizerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D7B946861F80EC28AC9295D /* Pods-ADCIOSVisualizer.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer.apprelease.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer/Pods-ADCIOSVisualizer.apprelease.xcconfig"; sourceTree = "<group>"; };
+		0D993BFA2C7F123B00B4D1C6 /* ACRCustomFeatureFlagResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRCustomFeatureFlagResolver.h; sourceTree = "<group>"; };
+		0D993BFB2C7F123C00B4D1C6 /* ACRCustomFeatureFlagResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACRCustomFeatureFlagResolver.m; sourceTree = "<group>"; };
 		22BA9248EFA6A7D9C9C282A2 /* Pods-Fluent-ADCIOSVisualizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-ADCIOSVisualizer.release.xcconfig"; path = "Target Support Files/Pods-Fluent-ADCIOSVisualizer/Pods-Fluent-ADCIOSVisualizer.release.xcconfig"; sourceTree = "<group>"; };
 		36F7320180C4837D5F18C111 /* Pods-Fluent-ADCIOSVisualizerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-ADCIOSVisualizerUITests.release.xcconfig"; path = "Target Support Files/Pods-Fluent-ADCIOSVisualizerUITests/Pods-Fluent-ADCIOSVisualizerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3A6C0778EC0F075B01F8D22B /* Pods-Fluent-ADCIOSVisualizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-ADCIOSVisualizer.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-ADCIOSVisualizer/Pods-Fluent-ADCIOSVisualizer.debug.xcconfig"; sourceTree = "<group>"; };
+		46CE7DC62C7C5AC4000508DF /* ACRCustomFeatureFlagResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCustomFeatureFlagResolver.h; sourceTree = "<group>"; };
+		46CE7DC72C7C5B41000508DF /* ACRCustomFeatureFlagResolver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCustomFeatureFlagResolver.m; sourceTree = "<group>"; };
 		558066F0B8F2228CDE30FDA1 /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.apprelease.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.apprelease.xcconfig"; sourceTree = "<group>"; };
 		5651E02964EBFDCF8375CE96 /* Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.debug.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		569410F5613D607C5A3B1413 /* Pods-ADCIOSVisualizerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizerUITests.debug.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizerUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -465,6 +470,8 @@
 			children = (
 				6BF1E31425539B5400DA7561 /* ACRChatWindow.h */,
 				6BF1E31525539B5500DA7561 /* ACRChatWindow.mm */,
+				0D993BFA2C7F123B00B4D1C6 /* ACRCustomFeatureFlagResolver.h */,
+				0D993BFB2C7F123C00B4D1C6 /* ACRCustomFeatureFlagResolver.m */,
 				6B250FC7253FB0CC007FFCFB /* ACRCustomSubmitTargetBuilder.h */,
 				6B250FC8253FB0CC007FFCFB /* ACRCustomSubmitTargetBuilder.mm */,
 				6BA88FD02545337B00BF2CDB /* CustomActionSetRenderer.h */,
@@ -500,6 +507,8 @@
 				6BA9091A23985CB5009421CA /* Adaptive1.0.png */,
 				6B31EC7E28E51F3C00F56F05 /* ACEditorViewController.m */,
 				6B31EC8028E51F6800F56F05 /* ACEditorViewController.h */,
+				46CE7DC62C7C5AC4000508DF /* ACRCustomFeatureFlagResolver.h */,
+				46CE7DC72C7C5B41000508DF /* ACRCustomFeatureFlagResolver.m */,
 			);
 			path = ADCIOSVisualizer;
 			sourceTree = "<group>";
@@ -607,7 +616,7 @@
 				TargetAttributes = {
 					F423C0711EE1FB6100905679 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 9KBH5RKYEW;
+						DevelopmentTeam = UBF8T346G9;
 						ProvisioningStyle = Automatic;
 					};
 					F423C08D1EE1FB6100905679 = {
@@ -765,11 +774,15 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests/Pods-ADCIOSVisualizer-ADCIOSVisualizerUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/MicrosoftFluentUI/FluentUI.framework",
+				"${BUILT_PRODUCTS_DIR}/SVGKit/SVGKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FluentUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVGKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -783,11 +796,15 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ADCIOSVisualizer/Pods-ADCIOSVisualizer-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/MicrosoftFluentUI/FluentUI.framework",
+				"${BUILT_PRODUCTS_DIR}/SVGKit/SVGKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FluentUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVGKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -823,6 +840,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D993BFC2C7F123C00B4D1C6 /* ACRCustomFeatureFlagResolver.m in Sources */,
 				6B9BDFCC20F6D11F00F13155 /* ADCResolver.m in Sources */,
 				F4F44BAA204CF98900A2F24C /* CustomProgressBarRenderer.mm in Sources */,
 				F4D33E861F04705800941E44 /* ACVTableViewController.m in Sources */,
@@ -963,7 +981,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.2.5;
-				DEVELOPMENT_TEAM = 9KBH5RKYEW;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -971,7 +989,7 @@
 				);
 				INFOPLIST_FILE = ADCIOSVisualizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-df";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-dfci";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1132,10 +1150,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.2.5;
-				DEVELOPMENT_TEAM = 9KBH5RKYEW;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				INFOPLIST_FILE = ADCIOSVisualizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-df";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-dfci";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1151,10 +1169,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.2.5;
-				DEVELOPMENT_TEAM = 9KBH5RKYEW;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				INFOPLIST_FILE = ADCIOSVisualizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-df";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Microsoft.ADCIOSVisualizer-dfci";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";

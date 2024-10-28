@@ -61,4 +61,17 @@ using namespace AdaptiveCards;
     XCTAssertFalse(matchHungarianDateRegex(diffDateFormat2));
 }
 
+- (void)testStringWithRemovedBackslashedSymbols
+{
+    //Given
+    NSSet* symbolsToRemove = [NSSet setWithObjects:@"*", @"_", nil];
+    NSString* stringToTest = @"The next \\*Test1\\* \\_Test2\\_ should not have backslashes";
+    NSString* stringObjective = @"The next *Test1* _Test2_ should not have backslashes";
+    //When
+    NSString* stringWithRemovedBackslashes = stringWithRemovedBackslashedSymbols(stringToTest, symbolsToRemove);
+    //Then
+    XCTAssertEqualObjects(stringWithRemovedBackslashes, stringObjective);
+}
+
+
 @end

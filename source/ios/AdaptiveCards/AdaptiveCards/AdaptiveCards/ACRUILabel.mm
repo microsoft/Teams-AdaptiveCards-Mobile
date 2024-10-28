@@ -48,6 +48,7 @@
         }
     }
     _area = area;
+    [self updateAccessibility];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -87,6 +88,15 @@
                 [target doSelectAction];
             }
         }
+    }
+}
+
+- (void)updateAccessibility
+{
+    self.isAccessibilityElement = YES;
+    if (self.accessibilityTraits == UIAccessibilityTraitLink)
+    {
+        self.accessibilityHint = self.text;
     }
 }
 

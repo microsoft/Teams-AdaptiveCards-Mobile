@@ -40,6 +40,7 @@ static NSString *pickerCell = @"pickerCell";
     CGFloat _compactViewHeight;
     BOOL _isValid;
     NSString *_accessibilityString;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
 - (instancetype)initWithInputChoiceSet:(std::shared_ptr<AdaptiveCards::ChoiceSetInput> const &)choiceSet
@@ -90,6 +91,7 @@ static NSString *pickerCell = @"pickerCell";
         }
         _userSelectedTitle = valuesMap[defaultValue];
         self.hasValidationProperties = self.isRequired;
+        _completionHandlers = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -260,9 +262,23 @@ static NSString *pickerCell = @"pickerCell";
     }
 }
 
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [_completionHandlers addObject:completion];
+}
+
+- (void)resetInput {
+}
+
+- (void)notifyDelegates {
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
+    }
+}
+
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _userSelectedRow = row;
+    [self notifyDelegates];
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
@@ -295,5 +311,5 @@ static NSString *pickerCell = @"pickerCell";
 @synthesize isRequired;
 @synthesize hasValidationProperties;
 @synthesize hasVisibilityChanged;
-
 @end
+

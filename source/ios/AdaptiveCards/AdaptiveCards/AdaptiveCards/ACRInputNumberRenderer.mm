@@ -44,12 +44,17 @@
 
     ACRNumberInputHandler *numberInputHandler = [[ACRNumberInputHandler alloc] init:acoElem];
 
+    numberInputHandler.textField = numInput;
     numInput.delegate = numberInputHandler;
     numInput.text = numberInputHandler.text;
+    if ([numberInputHandler respondsToSelector:@selector(textFieldDidChange:)]) {
+        [numInput addTarget:numberInputHandler action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    }
 
     ACRInputLabelView *inputLabelView = [[ACRInputLabelView alloc] initInputLabelView:rootView acoConfig:acoConfig adaptiveInputElement:numInputBlck inputView:numInput accessibilityItem:numInput viewGroup:viewGroup dataSource:numberInputHandler];
-
-    [viewGroup addArrangedSubview:inputLabelView];
+    
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:inputLabelView withAreaName:areaName];
 
     [inputs addObject:inputLabelView];
 

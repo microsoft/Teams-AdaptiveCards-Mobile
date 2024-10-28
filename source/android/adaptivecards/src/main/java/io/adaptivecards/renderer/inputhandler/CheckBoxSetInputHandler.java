@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 
 import java.util.Arrays;
@@ -17,9 +18,9 @@ import java.util.Vector;
 
 public class CheckBoxSetInputHandler extends BaseInputHandler
 {
-    public CheckBoxSetInputHandler(BaseInputElement baseInputElement, List<CheckBox> checkBoxList)
+    public CheckBoxSetInputHandler(BaseInputElement baseInputElement, List<CheckBox> checkBoxList, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
         m_checkBoxList = checkBoxList;
     }
 
@@ -59,7 +60,7 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
             return;
         }
 
-        List<String> listValues = Arrays.asList(values.split(";"));
+        List<String> listValues = Arrays.asList(values.split(","));
         for (int i = 0 ; i < choiceInputVector.size(); i++)
         {
             if (listValues.contains(choiceInputVector.get(i).GetValue()))
@@ -74,6 +75,14 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
     }
 
     @Override
+    public void registerInputObserver() {
+        for (CheckBox checkBox : m_checkBoxList) {
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> notifyAllInputWatchers());
+        }
+        addValueChangedActionInputWatcher();
+    }
+
+    @Override
     public void setFocusToView()
     {
         if (m_checkBoxList.size() > 0)
@@ -81,6 +90,14 @@ public class CheckBoxSetInputHandler extends BaseInputHandler
             Util.forceFocus(m_checkBoxList.get(0));
             m_checkBoxList.get(0).sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
         }
+    }
+
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, ChoiceSetInput.class)) {
+            return Util.castTo(m_baseInputElement, ChoiceSetInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     private List<CheckBox> m_checkBoxList;

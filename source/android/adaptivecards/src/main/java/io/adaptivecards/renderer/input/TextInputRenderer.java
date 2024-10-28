@@ -44,6 +44,7 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.TextInput;
 import io.adaptivecards.objectmodel.TextInputStyle;
+import io.adaptivecards.objectmodel.ValueChangedAction;
 import io.adaptivecards.renderer.AdaptiveWarning;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
 import io.adaptivecards.renderer.InnerImageLoaderAsync;
@@ -54,7 +55,10 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.action.ActionElementRenderer;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedEditText;
+import io.adaptivecards.renderer.inputhandler.IInputHandler;
+import io.adaptivecards.renderer.inputhandler.InputUtils;
 import io.adaptivecards.renderer.inputhandler.TextInputHandler;
+import io.adaptivecards.renderer.inputhandler.ValueChangedActionInputWatcher;
 import io.adaptivecards.renderer.readonly.ContainerRenderer;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
@@ -160,35 +164,6 @@ public class TextInputRenderer extends BaseCardElementRenderer
         private BaseActionElement m_action = null;
     }
 
-    private class UnvalidatedTextWatcher implements TextWatcher
-    {
-
-        public UnvalidatedTextWatcher(TextInputHandler inputHandler)
-        {
-            m_textInputHandler = inputHandler;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after)
-        {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count)
-        {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s)
-        {
-            CardRendererRegistration.getInstance().notifyInputChange(m_textInputHandler.getId(), m_textInputHandler.getInput());
-        }
-
-        private TextInputHandler m_textInputHandler;
-    }
-
     protected EditText renderInternal(
             RenderedAdaptiveCard renderedCard,
             Context context,
@@ -235,27 +210,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
         {
             editText.setHint(placeHolder);
         }
-        editText.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                CardRendererRegistration.getInstance().notifyInputChange(textInputHandler.getId(), textInputHandler.getInput());
-            }
-        });
-
+        InputUtils.updateInputHandlerInputWatcher(textInputHandler);
         LinearLayout textInputViewGroup = null;
 
         if (textInput != null)
@@ -312,6 +267,10 @@ public class TextInputRenderer extends BaseCardElementRenderer
                             renderedCard.setCardForSubmitAction(Util.getViewId(inlineButton), renderArgs.getContainerCardId());
                         }
 
+                        if (action.GetElementType() == ActionType.OpenUrl) {
+                            inlineButton.setContentDescription(Util.getOpenUrlAnnouncement(context, action.GetTitle()));
+                        }
+
                         textInputViewGroup.addView(inlineButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
                     }
                     else
@@ -343,6 +302,10 @@ public class TextInputRenderer extends BaseCardElementRenderer
                         if (Util.isOfType(action, ExecuteAction.class) || Util.isOfType(action, SubmitAction.class) || action.GetElementType() == ActionType.Custom)
                         {
                             renderedCard.setCardForSubmitAction(Util.getViewId(inlineButton), renderArgs.getContainerCardId());
+                        }
+
+                        if (action.GetElementType() == ActionType.OpenUrl) {
+                            inlineButton.setContentDescription(Util.getOpenUrlAnnouncement(context, action.GetTitle()));
                         }
 
                         textInputViewGroup.addView(inlineButton, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
@@ -383,7 +346,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
 
         TextInput textInput = Util.castTo(baseCardElement, TextInput.class);
 
-        TextInputHandler textInputHandler = new TextInputHandler(textInput);
+        TextInputHandler textInputHandler = new TextInputHandler(textInput, renderedCard, renderArgs.getContainerCardId());
         TagContent tagContent = new TagContent(textInput, textInputHandler);
         final EditText editText = renderInternal(
                 renderedCard,

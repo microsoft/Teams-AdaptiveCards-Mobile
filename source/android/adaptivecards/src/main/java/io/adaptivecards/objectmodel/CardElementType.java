@@ -21,9 +21,12 @@ public enum CardElementType {
   Fact,
   FactSet,
   Image,
+  Icon,
   ImageSet,
   Media,
   NumberInput,
+  RatingInput,
+  RatingLabel,
   RichTextBlock,
   Table,
   TableCell,
@@ -32,6 +35,10 @@ public enum CardElementType {
   TextInput,
   TimeInput,
   ToggleInput,
+  CompoundButton,
+  Carousel,
+  CarouselPage,
+  Badge,
   Unknown;
 
   public final int swigValue() {

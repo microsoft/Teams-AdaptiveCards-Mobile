@@ -124,6 +124,32 @@ struct FactSetTextConfig : TextStyleConfig
     static FactSetTextConfig Deserialize(const Json::Value& json, const FactSetTextConfig& defaultValue);
 };
 
+struct RatingStarCofig
+{
+    std::string marigoldColor = "#EAA300";
+    std::string neutralColor = "#242424";
+
+    static RatingStarCofig Deserialize(const Json::Value& json, const RatingStarCofig& defaultValue);
+};
+
+struct RatingElementConfig
+{
+    RatingStarCofig filledStar = {
+        "#EAA300",
+        "#212121"
+    };
+
+    RatingStarCofig emptyStar = {
+        "#EAA300",
+        "#212121"
+    };
+
+    std::string ratingTextColor = "#000000";
+    std::string countTextColor = "#000000";
+
+    static RatingElementConfig Deserialize(const Json::Value& json, const RatingElementConfig& defaultValue);
+};
+
 struct TextStylesConfig
 {
     TextStyleConfig heading = {TextWeight::Bolder, TextSize::Large, false, ForegroundColor::Default, FontType::Default};
@@ -140,7 +166,7 @@ struct SpacingConfig
     unsigned int largeSpacing = 30;
     unsigned int extraLargeSpacing = 40;
     unsigned int paddingSpacing = 20;
-
+    unsigned int extraSmallSpacing = 4;
     static SpacingConfig Deserialize(const Json::Value& json, const SpacingConfig& defaultValue);
 };
 
@@ -196,8 +222,6 @@ struct ContainerStyleDefinition
 {
     std::string backgroundColor = "#FFFFFFFF";
     std::string borderColor = "#FF7F7F7F";
-    unsigned int borderThickness = 0; // CAUTION: Experimental feature for iOS. Not in v1 schema, subject to change.
-                                      // (see #1150)
     ColorsConfig foregroundColors;
 
     static ContainerStyleDefinition Deserialize(const Json::Value& json, const ContainerStyleDefinition& defaultValue);
@@ -208,7 +232,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition defaultPalette = {
         "#FFFFFFFF",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -222,7 +245,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition emphasisPalette = {
         "#08000000",
         "#08000000",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -236,7 +258,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition goodPalette = {
         "#FFD5F0DD",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -250,7 +271,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition attentionPalette = {
         "#F7E9E9",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -265,7 +285,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition warningPalette = {
         "#F7F7DF",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -279,7 +298,6 @@ struct ContainerStylesDefinition
     ContainerStyleDefinition accentPalette = {
         "#DCE5F7",
         "#FF7F7F7F",
-        0,
         {
             // Foreground Colors
             {"#FF000000", "#B2000000", {"#FFFFFF00", "#FFFFFFE0"}}, // defaultColor
@@ -385,6 +403,136 @@ struct TableConfig
     static TableConfig Deserialize(const Json::Value& json, const TableConfig& defaultValue);
 };
 
+struct BadgeConfig
+{
+    std::string backgroundColor = "#5B5FC7";
+    static BadgeConfig Deserialize(const Json::Value& json, const BadgeConfig& defaultValue);
+};
+
+struct CompoundButtonConfig
+{
+    BadgeConfig badgeConfig;
+    std::string borderColor = "#E1E1E1";
+    static CompoundButtonConfig Deserialize(const Json::Value& json, const CompoundButtonConfig& defaultValue);
+};
+
+struct PageControlConfig
+{
+    std::string selectedTintColor = "#5B5FC7";
+    std::string unselectedTintColor = "#6E6E6E";
+    static PageControlConfig Deserialize(const Json::Value& json, const PageControlConfig& defaultValue);
+};
+
+struct BadgeAppearanceDefinition
+{
+    std::string backgroundColor = "#212121";
+    std::string strokeColor = "#212121";
+    std::string textColor = "#ffffff";
+
+    static BadgeAppearanceDefinition Deserialize(const Json::Value& json, const BadgeAppearanceDefinition& defaultValue);
+};
+
+struct BadgeStyleDefinition
+{
+    BadgeAppearanceDefinition filledStyle;
+    BadgeAppearanceDefinition tintStyle;
+
+    static BadgeStyleDefinition Deserialize(const Json::Value& json, const BadgeStyleDefinition& defaultValue);
+};
+
+struct BadgeStylesDefinition
+{
+    BadgeStyleDefinition defaultPalette = {
+        {
+            "#212121",
+            "#212121",
+            "#ffffff"
+        },
+        {
+            "#6e6e6e",
+            "#6e6e6e",
+            "#ffffff"
+        }
+    };
+    BadgeStyleDefinition accentPalette = {
+        {
+            "#5b5fc7",
+            "#5b5fc7",
+            "#ffffff"
+            },
+        {
+            "#e8ebfa",
+            "#e1e1e1",
+            "#5b5fc7"
+        }
+    };
+    BadgeStyleDefinition attentionPalette = {
+        {
+            "#d92c2c",
+            "#d92c2c",
+            "#ffffff"
+        },
+        {
+            "#f9d9d9",
+            "#e1e1e1",
+            "#d92c2c"
+        }
+    };
+    BadgeStyleDefinition goodPalette = {
+        {
+            "#0f7a0b",
+            "#0f7a0b",
+            "#ffffff"
+        },
+        {
+            "#e7f2da",
+            "#e1e1e1",
+            "#0f7a0b"
+        }
+    };
+
+    BadgeStyleDefinition informativePalette = {
+        {
+            "#ffffff",
+            "#ffffff",
+            "#212121"
+        },
+        {
+            "#ffffff",
+            "#e1e1e1",
+            "#212121"
+        }
+    };
+
+    BadgeStyleDefinition subtlePalette = {
+        {
+            "#f1f1f1",
+            "#f1f1f1",
+            "#6e6e6e"
+        },
+        {
+            "#f1f1f1",
+            "#e1e1e1",
+            "#6e6e6e"
+        }
+    };
+
+    BadgeStyleDefinition warningPalette = {
+        {
+            "#835c00",
+            "#835c00",
+            "#ffffff"
+        },
+        {
+            "#fbf6d9",
+            "#e1e1e1",
+            "#835C00"
+        }
+    };
+
+    static BadgeStylesDefinition Deserialize(const Json::Value& json, const BadgeStylesDefinition& defaultValue);
+};
+
 class HostConfig
 {
 public:
@@ -401,7 +549,8 @@ public:
     std::string GetForegroundColor(ContainerStyle style, ForegroundColor color, bool isSubtle) const;
     std::string GetHighlightColor(ContainerStyle style, ForegroundColor color, bool isSubtle) const;
     std::string GetBorderColor(ContainerStyle style) const;
-    unsigned int GetBorderThickness(ContainerStyle style) const;
+    unsigned int GetBorderWidth(CardElementType elementType) const;
+    unsigned int GetCornerRadius(CardElementType elementType) const;
 
     std::string GetFontFamily() const;
     void SetFontFamily(const std::string& value);
@@ -460,15 +609,31 @@ public:
     TextStylesConfig GetTextStyles() const;
     void SetTextStyles(const TextStylesConfig value);
 
+    RatingElementConfig GetRatingLabelConfig() const;
+    void SetRatingLabelConfig(const RatingElementConfig value);
+
+    RatingElementConfig GetRatingInputConfig() const;
+    void SetRatingInputConfig(const RatingElementConfig value);
+
     TextBlockConfig GetTextBlock() const;
     void SetTextBlock(const TextBlockConfig value);
 
     TableConfig GetTable() const;
     void SetTable(const TableConfig value);
 
+    CompoundButtonConfig GetCompoundButtonConfig() const;
+    void SetCompoundButtonConfig(const CompoundButtonConfig value);
+
+    PageControlConfig GetPageControlConfig() const;
+    void SetPageControlConfig(const PageControlConfig value);
+
+    BadgeStylesDefinition GetBadgeStyles() const;
+    void SetBadgeStyles(const BadgeStylesDefinition value);
+
 private:
     const ContainerStyleDefinition& GetContainerStyle(ContainerStyle style) const;
     const ColorConfig& GetContainerColorConfig(const ColorsConfig& colors, ForegroundColor color) const;
+    const BadgeStyleDefinition& GetBadgeStyle(BadgeStyle style) const;
 
     std::string _fontFamily;
     FontSizesConfig _fontSizes;
@@ -490,6 +655,13 @@ private:
     HostWidthConfig _hostWidth;
     TextBlockConfig _textBlock;
     TextStylesConfig _textStyles;
+    RatingElementConfig _ratingInputConfig;
+    RatingElementConfig _ratingLabelConfig;
     TableConfig _table;
+    Json::Value _borderWidth;
+    Json::Value _cornerRadius;
+    CompoundButtonConfig _compoundButtonConfig;
+    PageControlConfig _pageControlConfig;
+    BadgeStylesDefinition _badgeStyles;
 };
 } // namespace AdaptiveCards

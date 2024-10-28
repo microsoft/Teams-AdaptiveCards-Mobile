@@ -8,6 +8,7 @@
 #include "TextBlock.h"
 #include "Container.h"
 #include "ShowCardAction.h"
+#include "ValueChangedAction.h"
 
 namespace
 {
@@ -169,6 +170,11 @@ std::string ParseUtil::GetValueAsString(const Json::Value& json, AdaptiveCardSch
     return DeserializeValue<BackgroundImage>(json, AdaptiveCardSchemaKey::BackgroundImage, BackgroundImage::Deserialize);
 }
 
+[[deprecated("Use generalized DeserializeValue<T> instead")]] std::shared_ptr<ValueChangedAction> ParseUtil::GetValueChangedAction(
+        const Json::Value &json) {
+    return DeserializeValue<ValueChangedAction>(json, AdaptiveCardSchemaKey::ValueChangedAction, ValueChangedAction::Deserialize);
+}
+
 bool ParseUtil::GetBool(const Json::Value& json, AdaptiveCardSchemaKey key, bool defaultValue, bool isRequired)
 {
     auto optionalBool = GetOptionalBool(json, key);
@@ -267,6 +273,22 @@ std::optional<int> ParseUtil::GetOptionalInt(const Json::Value& json, AdaptiveCa
     return propertyValue.asInt();
 }
 
+double ParseUtil:: GetDouble(const Json::Value& json, AdaptiveCardSchemaKey key, double defaultValue, bool isRequired)
+{
+    auto optionalDouble = GetOptionalDouble(json, key);
+
+    if (isRequired && !optionalDouble.has_value())
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::RequiredPropertyMissing,
+            "Property is required but was found empty: " + AdaptiveCardSchemaKeyToString(key));
+    }
+    else
+    {
+        return optionalDouble.value_or(defaultValue);
+    }
+}
+
 std::optional<double> ParseUtil::GetOptionalDouble(const Json::Value& json, AdaptiveCardSchemaKey key)
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
@@ -284,6 +306,25 @@ std::optional<double> ParseUtil::GetOptionalDouble(const Json::Value& json, Adap
     }
 
     return propertyValue.asDouble();
+}
+
+std::optional<std::string> ParseUtil::GetOptionalString(const Json::Value& json, AdaptiveCardSchemaKey key)
+{
+    const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
+    auto propertyValue = json.get(propertyName, Json::Value());
+    if (propertyValue.empty())
+    {
+        return std::nullopt;
+    }
+
+    if (!propertyValue.isString())
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue,
+            "Value for property " + propertyName + " was invalid. Expected type String.");
+    }
+
+    return propertyValue.asString();
 }
 
 void ParseUtil::ExpectTypeString(const Json::Value& json, const std::string& expectedTypeStr)

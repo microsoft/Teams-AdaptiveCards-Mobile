@@ -2,17 +2,22 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.inputhandler
 
-import io.adaptivecards.objectmodel.BaseInputElement
-import io.adaptivecards.renderer.inputhandler.BaseInputHandler
-import android.widget.AutoCompleteTextView
-import io.adaptivecards.renderer.input.customcontrols.ValidatedInputLayout
-import io.adaptivecards.objectmodel.ChoiceSetInput
+import android.view.View
 import android.view.accessibility.AccessibilityEvent
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.AutoCompleteTextView
+import io.adaptivecards.objectmodel.BaseInputElement
 import io.adaptivecards.objectmodel.ChoiceInput
 import io.adaptivecards.objectmodel.ChoiceInputVector
+import io.adaptivecards.objectmodel.ChoiceSetInput
+import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Util
+import io.adaptivecards.renderer.input.customcontrols.ValidatedInputLayout
 
-class AutoCompleteTextViewHandler(baseInputElement: BaseInputElement?) : BaseInputHandler(baseInputElement) {
+class AutoCompleteTextViewHandler(baseInputElement: BaseInputElement,
+                                  renderedAdaptiveCard: RenderedAdaptiveCard?, cardId: Long
+) : BaseInputHandler(baseInputElement, renderedAdaptiveCard, cardId) {
     // For validation visual cues we draw the spinner inside a ValidatedSpinnerLayout so we query for this
     protected val autoCompleteTextView: AutoCompleteTextView
         protected get() =// For validation visual cues we draw the spinner inside a ValidatedSpinnerLayout so we query for this
@@ -35,6 +40,24 @@ class AutoCompleteTextViewHandler(baseInputElement: BaseInputElement?) : BaseInp
         val choiceSetInput = m_baseInputElement as ChoiceSetInput
         val title = getTitleForValue(value, choiceSetInput.GetChoices())
         autoCompleteTextView.setText(title)
+    }
+
+    override fun registerInputObserver() {
+        autoCompleteTextView.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                notifyAllInputWatchers()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                notifyAllInputWatchers()
+            }
+        }
+        addValueChangedActionInputWatcher()
     }
 
     override fun setFocusToView() {
@@ -89,5 +112,12 @@ class AutoCompleteTextViewHandler(baseInputElement: BaseInputElement?) : BaseInp
         // Find index for the title
         val index = findTitleIndex(title, choiceInputVector)
         return findStringForIndex(index, choiceInputVector, { choiceInput: ChoiceInput -> choiceInput.GetValue() })
+    }
+
+    override fun getDefaultValue(): String {
+        if (Util.isOfType(m_baseInputElement, ChoiceSetInput::class.java)) {
+            return Util.castTo(m_baseInputElement, ChoiceSetInput::class.java).GetValue()
+        }
+        return super.getDefaultValue()
     }
 }

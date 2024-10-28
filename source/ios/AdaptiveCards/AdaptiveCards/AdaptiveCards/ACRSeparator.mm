@@ -47,7 +47,7 @@ using namespace AdaptiveCards;
             [separator configAutoLayout:superview
                              havingAxis:separator->axis
                                  toAxis:huggingAxis];
-        [superview addArrangedSubview:separator];
+        [superview addArrangedSubview:separator withAreaName:nil];
 
         if (constraints)
             [superview addConstraint:constraints];

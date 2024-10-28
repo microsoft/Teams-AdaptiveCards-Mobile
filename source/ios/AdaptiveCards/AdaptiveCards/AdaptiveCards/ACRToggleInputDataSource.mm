@@ -28,7 +28,10 @@ using namespace AdaptiveCards;
                                             encoding:NSUTF8StringEncoding];
     self.valueOff = [[NSString alloc] initWithCString:toggleInput->GetValueOff().c_str()
                                              encoding:NSUTF8StringEncoding];
+    self.defaultValue = [[NSString alloc] initWithCString:toggleInput->GetValue().c_str()
+                                             encoding:NSUTF8StringEncoding];
     self.hasValidationProperties = self.isRequired;
+    self._completionHandlers = [[NSMutableArray alloc] init];
     return self;
 }
 
@@ -49,6 +52,21 @@ using namespace AdaptiveCards;
 {
     [ACRInputLabelView commonSetFocus:shouldBecomeFirstResponder view:_toggleSwitch];
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _toggleSwitch);
+}
+
+- (void)resetInput {
+    [_toggleSwitch setOn:self.defaultValue animated:YES];
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [_toggleSwitch addTarget:self action:@selector(onSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self._completionHandlers addObject:completion];
+}
+
+- (void)onSwitchValueChanged:(UISwitch *)sender {
+    for(CompletionHandler completion in self._completionHandlers) {
+        completion();
+    }
 }
 
 @synthesize isRequired;

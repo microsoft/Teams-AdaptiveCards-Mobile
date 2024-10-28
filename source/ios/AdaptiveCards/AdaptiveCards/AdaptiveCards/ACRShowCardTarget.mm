@@ -84,6 +84,8 @@
     CGFloat showCardPadding = [_config getHostConfig]->GetSpacing().paddingSpacing;
 
     _adcView.backgroundColor = UIColor.clearColor;
+    
+    _button.accessibilityValue = NSLocalizedString(@"card collapsed", nil);
 
     if (@available(iOS 11.0, *)) {
         _adcView.directionalLayoutMargins = NSDirectionalEdgeInsetsMake(showCardPadding, -showCardPadding, -showCardPadding, -showCardPadding);
@@ -101,8 +103,7 @@
     [backgroundView.topAnchor constraintEqualToAnchor:adcView.layoutMarginsGuide.topAnchor].active = YES;
     [backgroundView.bottomAnchor constraintEqualToAnchor:adcView.layoutMarginsGuide.bottomAnchor].active = YES;
     _adcView.hidden = YES;
-
-    [superview addArrangedSubview:adcView];
+    [superview addArrangedSubview:adcView withAreaName:nil];
     _superview = superview;
     superview.accessibilityElements = [((ACRContentStackView *)superview) getArrangedSubviews];
 }

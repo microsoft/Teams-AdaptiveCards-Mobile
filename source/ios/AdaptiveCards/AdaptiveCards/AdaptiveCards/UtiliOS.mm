@@ -30,6 +30,7 @@ using namespace AdaptiveCards;
 
 // tolerance value for computing scaler for background cover size
 const CGFloat kACRScalerTolerance = 0.025f;
+NSString const *baseFluentIconCDNURL = @"https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/";
 
 void configVisibility(UIView *view, std::shared_ptr<BaseCardElement> const &visibilityInfo)
 {
@@ -419,6 +420,11 @@ void configBleed(ACRView *rootView, std::shared_ptr<BaseCardElement> const &elem
                     [backgroundView layer].borderColor = [container layer].borderColor;
                     [container layer].borderColor = 0;
                 }
+                
+                if ([container layer].cornerRadius) {
+                    [backgroundView layer].cornerRadius = [container layer].cornerRadius;
+                    [container layer].cornerRadius = 0;
+                }
             }
         }
     }
@@ -738,12 +744,23 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
     NSString *parsedString = (markDownParser->HasHtmlTags()) ? [NSString stringWithCString:markdownString.c_str() encoding:NSUTF8StringEncoding] : [NSString stringWithCString:markDownParser->GetRawText().c_str() encoding:NSUTF8StringEncoding];
 
     if (markDownParser->HasHtmlTags() && ([parsedString containsString:@"\n"] || [parsedString containsString:@"\r"])) {
-        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"[\\n\\r]"
+        // Different systems have different line break styles
+        // Windows style: \r\n
+        // Modern mac style: \n
+        // Old mac style: \r
+        NSString *replacementPattern = [parsedString containsString:@"\r\n"] ? @"\r\n" : @"[\\n\\r]";
+        parsedString = [parsedString stringByReplacingOccurrencesOfString:replacementPattern
                                                                withString:@"<br>"
                                                                   options:NSRegularExpressionSearch
                                                                     range:NSMakeRange(0, [parsedString length])];
     }
-
+    // Added manual replace of \\* when the text is used directly, html parsing is exluding this case successfully
+    if (!markDownParser->HasHtmlTags())
+    {
+        NSSet* symbolsToRemove = [NSSet setWithObjects:@"*", @"_", nil];
+        parsedString = stringWithRemovedBackslashedSymbols(parsedString, symbolsToRemove);
+    }
+    
     NSDictionary *data = nil;
 
     FontType sharedFontType = textProperties.GetFontType().value_or(FontType::Default);
@@ -798,6 +815,39 @@ void UpdateFontWithDynamicType(NSMutableAttributedString *content)
                      usingBlock:^(id value, NSRange range, BOOL *stop) {
                          [content addAttribute:NSFontAttributeName value:[UIFontMetrics.defaultMetrics scaledFontForFont:(UIFont *)value] range:range];
                      }];
+}
+
+unsigned int getIconSize(IconSize iconSize)
+{
+    unsigned int _size = 24;
+    switch (iconSize)
+    {
+        case IconSize::xxSmall:
+            _size = 16;
+            break;
+        case IconSize::xSmall:
+            _size = 20;
+            break;
+        case IconSize::Small:
+            _size = 24;
+            break;
+        case IconSize::Standard:
+            _size = 32;
+            break;
+        case IconSize::Medium:
+            _size = 48;
+            break;
+        case IconSize::Large:
+            _size = 56;
+            break;
+        case IconSize::xLarge:
+            _size = 72;
+            break;
+        case IconSize::xxLarge:
+            _size = 96;
+            break;
+    }
+    return _size;
 }
 
 void TexStylesToRichTextElementProperties(const std::shared_ptr<TextBlock> &textBlock,
@@ -877,6 +927,8 @@ unsigned int getSpacing(Spacing spacing, std::shared_ptr<HostConfig> const &conf
             return config->GetSpacing().paddingSpacing;
         case Spacing::Default:
             return config->GetSpacing().defaultSpacing;
+        case Spacing::ExtraSmall:
+            return config->GetSpacing().extraSmallSpacing;
         default:
             break;
     }
@@ -990,6 +1042,116 @@ ACRHorizontalAlignment getACRHorizontalAlignment(HorizontalAlignment horizontalA
             return ACRRight;
         default:
             return ACRLeft;
+    }
+}
+
+ACRRatingSize getRatingSize(RatingSize ratingSize)
+{
+    switch (ratingSize) {
+        case RatingSize::Medium:
+            return ACRMedium;
+        case RatingSize::Large:
+            return ACRLarge;
+        default:
+            return ACRMedium;
+    }
+}
+
+ACRRatingColor getRatingColor(RatingColor ratingColor)
+{
+    switch (ratingColor) {
+        case RatingColor::Neutral:
+            return ACRNeutral;
+        case RatingColor::Marigold:
+            return ACRMarigold;
+        default:
+            return ACRNeutral;
+    }
+}
+
+ACRRatingStyle getRatingStyle(RatingStyle ratingStyle)
+{
+    switch (ratingStyle) {
+        case RatingStyle::Default:
+            return ACRDefaultStyle;
+        case RatingStyle::Compact:
+            return ACRCompactStyle;
+        default:
+            return ACRDefaultStyle;
+    }
+}
+
+ACRIconPosition getIconPosition(IconPosition iconPosition)
+{
+    switch (iconPosition) {
+        case IconPosition::Before:
+            return ACRBeforePosition;
+        case IconPosition::After:
+            return ACRAfterPosition;
+        default:
+            return ACRBeforePosition;
+    }
+}
+
+ACRShape getShape(Shape shape)
+{
+    switch (shape) {
+        case Shape::Square:
+            return ACRSquare;
+        case Shape::Rounded:
+            return ACRRounded;
+        case Shape::Circular:
+            return ACRCircular;
+        default:
+            return ACRSquare;
+    }
+}
+
+ACRBadgeStyle getBadgeStyle(BadgeStyle badgeStyle)
+{
+    switch (badgeStyle) {
+        case BadgeStyle::Default:
+            return ACRBadgeDefaultStyle;
+        case BadgeStyle::Accent:
+            return ACRBadgeAccentStyle;
+        case BadgeStyle::Attention:
+            return ACRBadgeAttentionStyle;
+        case BadgeStyle::Good:
+            return ACRBadgeGoodStyle;
+        case BadgeStyle::Informative:
+            return ACRBadgeInformativeStyle;
+        case BadgeStyle::Subtle:
+            return ACRBadgeSubtleStyle;
+        case BadgeStyle::Warning:
+            return ACRBadgeWarningStyle;
+        default:
+            return ACRBadgeDefaultStyle;
+    }
+}
+
+ACRBadgeSize getBadgeSize(BadgeSize badgeSize)
+{
+    switch (badgeSize) {
+        case BadgeSize::Medium:
+            return ACRMediumSize;
+        case BadgeSize::Large:
+            return ACRLargeSize;
+        case BadgeSize::ExtraLarge:
+            return ACRExtraLargeSize;
+        default:
+            return ACRMediumSize;
+    }
+}
+
+ACRBadgeAppearance getBadgeAppearance(BadgeAppearance badgeAppearance)
+{
+    switch (badgeAppearance) {
+        case BadgeAppearance::Filled:
+            return ACRFilled;
+        case BadgeAppearance::Tint:
+            return ACRTint;
+        default:
+            return ACRFilled;
     }
 }
 
@@ -1171,4 +1333,48 @@ bool matchHungarianDateRegex(NSString *stringToValidate)
     NSTextCheckingResult *match = [regex firstMatchInString:stringToValidate options:0 range:NSMakeRange(0, [stringToValidate length])];
     // Only true if exists a match and is the complete string
     return match != nil && stringToValidate.length == (match.range.length + 1);
+}
+
+NSString* stringWithRemovedBackslashedSymbols(NSString *stringToRemoveSymbols, NSSet<NSString *> *symbolsSet)
+{
+    NSString* tempString = stringToRemoveSymbols;
+    for (NSString* symbol in symbolsSet)
+    {
+        tempString = [tempString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\\%@", symbol]
+                                                           withString:symbol];
+    }
+    return tempString;
+}
+
+BOOL isNullOrEmpty(NSString *string) {
+    if (string) {
+        NSRange range = [string rangeOfString:string];
+        BOOL isEmpty = (range.length <= 0 || [string isEqualToString:@" "]);
+        BOOL isNull = string == (id)[NSNull null];
+        return (isNull || isEmpty);
+    }
+    return YES;
+}
+
+NSString *stringForCString(const std::optional<std::string> cString)
+{
+    if (!cString.has_value())
+    {
+        return @"";
+    }
+    
+    const char* cStr = cString->c_str();
+    if (!cStr)
+    {
+        return @"";
+    }
+    
+    return [NSString stringWithCString:cStr encoding:NSUTF8StringEncoding];
+}
+
+NSString *cdnURLForIcon(NSString *iconPath)
+{
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    NSString const *CDNPath = [featureFlagResolver stringForFlag:@"fluentIconCdnURL"] ?: baseFluentIconCDNURL;
+    return [[NSString alloc] initWithFormat:@"%@%@",CDNPath, iconPath];
 }

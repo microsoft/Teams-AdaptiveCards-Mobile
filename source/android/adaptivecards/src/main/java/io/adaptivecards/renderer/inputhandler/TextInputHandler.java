@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer.inputhandler;
 
+import android.text.Editable;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.EditText;
 
@@ -9,13 +10,14 @@ import java.util.regex.Pattern;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.TextInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
+import io.adaptivecards.renderer.actionhandler.AfterTextChangedListener;
 
 public class TextInputHandler extends BaseInputHandler
 {
-    public TextInputHandler(BaseInputElement baseInputElement)
-    {
-        super(baseInputElement);
+    public TextInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, Long cardId){
+        super(baseInputElement, renderedAdaptiveCard, cardId);
     }
 
     protected EditText getEditText()
@@ -62,6 +64,25 @@ public class TextInputHandler extends BaseInputHandler
         }
 
         return isValid;
+    }
+
+    @Override
+    public void registerInputObserver() {
+        getEditText().addTextChangedListener(new AfterTextChangedListener() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                notifyAllInputWatchers();
+            }
+        });
+        addValueChangedActionInputWatcher();
+    }
+
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, TextInput.class)) {
+            return Util.castTo(m_baseInputElement, TextInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     public void setFocusToView()

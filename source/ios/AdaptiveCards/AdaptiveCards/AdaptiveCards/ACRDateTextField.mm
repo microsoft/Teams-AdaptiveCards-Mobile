@@ -18,6 +18,8 @@ using namespace AdaptiveCards;
     NSDateFormatter *_encodeFormatter;
     NSDateFormatter *_decodeFormatter;
     NSString *_dateFormatString;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
+    NSString *_defaultValue;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -81,7 +83,9 @@ using namespace AdaptiveCards;
             if (preparser.TryParseSimpleDate(dateInput->GetMax(), year, month, day)) {
                 maxDateStr = [NSString stringWithFormat:@"%u-%u-%u", year, month, day];
             }
-
+            
+            _defaultValue = [[NSString alloc] initWithCString:dateInput->GetValue().c_str()
+                                                     encoding:NSUTF8StringEncoding];
             _dateFormatString = @"yyyy-MM-dd";
             picker.datePickerMode = UIDatePickerModeDate;
             picker.calendar = [NSCalendar currentCalendar];
@@ -119,6 +123,8 @@ using namespace AdaptiveCards;
             picker.datePickerMode = UIDatePickerModeTime;
             _dateFormatString = @"HH:mm";
             [_encodeFormatter setDateFormat:_dateFormatString];
+            _defaultValue = [[NSString alloc] initWithCString:timeInput->GetValue().c_str()
+                                                     encoding:NSUTF8StringEncoding];
         }
 
         self.placeholder = placeHolderStr;
@@ -147,6 +153,7 @@ using namespace AdaptiveCards;
 #endif
         self.inputView = picker;
         self.hasValidationProperties = self.isRequired || self.max || self.min;
+        _completionHandlers = [[NSMutableArray alloc] init];
     }
 
     return self;
@@ -157,6 +164,9 @@ using namespace AdaptiveCards;
     [self endEditing:YES];
     self.text = [_decodeFormatter stringFromDate:[self getCurrentDate]];
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self);
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
+    }
 }
 
 - (IBAction)update:(UIDatePicker *)picker
@@ -192,6 +202,15 @@ using namespace AdaptiveCards;
     return isValidated;
 }
 
+- (void)resetInput {
+    self.text = _defaultValue;
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [(UIDatePicker *)self.inputView addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [_completionHandlers addObject:completion];
+}
+
 - (void)getInput:(NSMutableDictionary *)dictionary
 {
     dictionary[self.id] = (self.text.length == 0) ? self.text : [_encodeFormatter stringFromDate:[self getCurrentDate]];
@@ -224,12 +243,15 @@ using namespace AdaptiveCards;
     formatter.locale = [NSLocale currentLocale];
 }
 
+-(void)datePickerValueChanged:(UIDatePicker *)datePicker {
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
+    }
+}
+
 @synthesize hasValidationProperties;
-
 @synthesize id;
-
 @synthesize isRequired;
-
 @synthesize hasVisibilityChanged;
 
 @end

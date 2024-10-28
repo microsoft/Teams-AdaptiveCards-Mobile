@@ -31,18 +31,22 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/AdaptiveCardParseWarning.cpp
              ../../shared/cpp/ObjectModel/AuthCardButton.cpp
              ../../shared/cpp/ObjectModel/Authentication.cpp
+             ../../shared/cpp/ObjectModel/AreaGridLayout.cpp
              ../../shared/cpp/ObjectModel/BackgroundImage.cpp
              ../../shared/cpp/ObjectModel/BaseActionElement.cpp
              ../../shared/cpp/ObjectModel/BaseCardElement.cpp
              ../../shared/cpp/ObjectModel/BaseElement.cpp
              ../../shared/cpp/ObjectModel/BaseInputElement.cpp
              ../../shared/cpp/ObjectModel/CaptionSource.cpp
+             ../../shared/cpp/ObjectModel/Carousel.cpp
+             ../../shared/cpp/ObjectModel/CarouselPage.cpp
              ../../shared/cpp/ObjectModel/ChoicesData.cpp
              ../../shared/cpp/ObjectModel/ChoiceInput.cpp
              ../../shared/cpp/ObjectModel/ChoiceSetInput.cpp
              ../../shared/cpp/ObjectModel/CollectionCoreElement.cpp
              ../../shared/cpp/ObjectModel/Column.cpp
              ../../shared/cpp/ObjectModel/ColumnSet.cpp
+             ../../shared/cpp/ObjectModel/CompoundButton.cpp
              ../../shared/cpp/ObjectModel/Container.cpp
              ../../shared/cpp/ObjectModel/ContentSource.cpp
              ../../shared/cpp/ObjectModel/DateInput.cpp
@@ -51,13 +55,18 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/ElementParserRegistration.cpp
              ../../shared/cpp/ObjectModel/Enums.cpp
              ../../shared/cpp/ObjectModel/ExecuteAction.cpp
+             ../../shared/cpp/ObjectModel/FlowLayout.cpp
              ../../shared/cpp/ObjectModel/Fact.cpp
              ../../shared/cpp/ObjectModel/FactSet.cpp
              ../../shared/cpp/ObjectModel/FeatureRegistration.cpp
+             ../../shared/cpp/ObjectModel/GridArea.cpp
              ../../shared/cpp/ObjectModel/HostConfig.cpp
+             ../../shared/cpp/ObjectModel/Icon.cpp
+             ../../shared/cpp/ObjectModel/IconInfo.cpp
              ../../shared/cpp/ObjectModel/Image.cpp
              ../../shared/cpp/ObjectModel/ImageSet.cpp
              ../../shared/cpp/ObjectModel/Inline.cpp
+             ../../shared/cpp/ObjectModel/Layout.cpp
              ../../shared/cpp/ObjectModel/MarkDownBlockParser.cpp
              ../../shared/cpp/ObjectModel/MarkDownHtmlGenerator.cpp
              ../../shared/cpp/ObjectModel/MarkDownParsedResult.cpp
@@ -72,6 +81,8 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/Refresh.cpp
              ../../shared/cpp/ObjectModel/RichTextBlock.cpp
              ../../shared/cpp/ObjectModel/RichTextElementProperties.cpp
+             ../../shared/cpp/ObjectModel/RatingInput.cpp
+             ../../shared/cpp/ObjectModel/RatingLabel.cpp
              ../../shared/cpp/ObjectModel/SemanticVersion.cpp
              ../../shared/cpp/ObjectModel/SharedAdaptiveCard.cpp
              ../../shared/cpp/ObjectModel/ShowCardAction.cpp
@@ -93,6 +104,8 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/UnknownAction.cpp
              ../../shared/cpp/ObjectModel/UnknownElement.cpp
              ../../shared/cpp/ObjectModel/Util.cpp
+             ../../shared/cpp/ObjectModel/ValueChangedAction.cpp
+             ../../shared/cpp/ObjectModel/Badge.cpp
              src/main/cpp/objectmodel_wrap.cpp
              )
 

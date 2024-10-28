@@ -22,6 +22,8 @@ enum class AdaptiveCardSchemaKey
     AllowCustomStyle,
     AllowInlinePlayback,
     AltText,
+    Appearance,
+    Name,
     AssociatedInputs,
     Attention,
     Authentication,
@@ -34,8 +36,9 @@ enum class AdaptiveCardSchemaKey
     Body,
     Bolder,
     BorderColor,
-    BorderThickness,
     Bottom,
+    Badge,
+    BadgeStyles,
     ButtonSpacing,
     Buttons,
     CaptionSources,
@@ -53,9 +56,12 @@ enum class AdaptiveCardSchemaKey
     ColumnHeader,
     ColumnSet,
     Columns,
+    ConditionallyEnabled,
     ConnectionName,
     Container,
     ContainerStyles,
+    BorderWidth,
+    CornerRadius,
     Dark,
     Data,
     DataQuery,
@@ -63,6 +69,8 @@ enum class AdaptiveCardSchemaKey
     DateInput,
     Default,
     DefaultPoster,
+    Count,
+    Description,
     ElementId,
     Emphasis,
     ErrorMessage,
@@ -72,6 +80,7 @@ enum class AdaptiveCardSchemaKey
     Fallback,
     FallbackText,
     FillMode,
+    Filled,
     FirstRowAsHeaders,
     FontFamily,
     FontSizes,
@@ -96,11 +105,14 @@ enum class AdaptiveCardSchemaKey
     IconUrl,
     Id,
     Image,
+    Icon,
+    IconPosition,
     ImageBaseUrl,
     ImageSet,
     ImageSize,
     ImageSizes,
     Images,
+    Informative,
     InlineAction,
     InlineTopMargin,
     Inlines,
@@ -109,6 +121,8 @@ enum class AdaptiveCardSchemaKey
     IsEnabled,
     IsMultiSelect,
     IsMultiline,
+    ShowBorder,
+    RoundedCorners,
     IsRequired,
     IsSelected,
     IsSubtle,
@@ -140,6 +154,8 @@ enum class AdaptiveCardSchemaKey
     Monospace,
     Narrow,
     NumberInput,
+    RatingInput,
+    RatingLabel,
     OptionalInputs,
     Padding,
     Placeholder,
@@ -160,6 +176,7 @@ enum class AdaptiveCardSchemaKey
     Schema,
     SelectAction,
     Separator,
+    Shape,
     ShowActionMode,
     ShowCard,
     ShowCardActionConfig,
@@ -173,6 +190,7 @@ enum class AdaptiveCardSchemaKey
     Standard,
     Stretch,
     Strikethrough,
+    StrokeColor,
     Style,
     Subtle,
     Suffix,
@@ -181,12 +199,35 @@ enum class AdaptiveCardSchemaKey
     TableCell,
     TableRow,
     TargetElements,
+    Layout,
+    ItemFit,
+    RowSpacing,
+    ColumnSpacing,
+    ItemWidth,
+    MinItemWidth,
+    MaxItemWidth,
+    HorizontalItemsAlignment,
+    Row,
+    RowSpan,
+    ColumnSpan,
+    AreaGridName,
+    Areas,
+    Layouts,
+    TargetInputIds,
     TargetWidth,
     Text,
     TextBlock,
     TextConfig,
     TextInput,
     TextStyles,
+    Tint,
+    MarigoldColor,
+    NeutralColor,
+    FilledStar,
+    EmptyStar,
+    RatingTextColor,
+    CountTextColor,
+    TextColor,
     TextWeight,
     Thickness,
     TimeInput,
@@ -201,6 +242,8 @@ enum class AdaptiveCardSchemaKey
     Url,
     UserIds,
     Value,
+    ValueChangedAction,
+    ValueChangedActionType,
     ValueOff,
     ValueOn,
     Verb,
@@ -214,7 +257,15 @@ enum class AdaptiveCardSchemaKey
     Weight,
     Width,
     Wrap,
+    CompoundButton,
+    CarouselPage,
+    Pages,
+    PageAnimation,
+    PageControl,
+    SelectedTintColor,
+    ExtraSmall
 };
+
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
 
 enum class CardElementType
@@ -232,9 +283,12 @@ enum class CardElementType
     Fact,
     FactSet,
     Image,
+    Icon,
     ImageSet,
     Media,
     NumberInput,
+    RatingInput,
+    RatingLabel,
     RichTextBlock,
     Table,
     TableCell,
@@ -243,7 +297,11 @@ enum class CardElementType
     TextInput,
     TimeInput,
     ToggleInput,
-    Unknown,
+    CompoundButton,
+    Carousel,
+    CarouselPage,
+    Badge,
+    Unknown
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);
 
@@ -313,6 +371,26 @@ enum class VerticalAlignment
 };
 DECLARE_ADAPTIVECARD_ENUM(VerticalAlignment);
 
+enum class IconSize
+{
+    xxSmall = 0,
+    xSmall,
+    Small,
+    Standard,
+    Medium,
+    Large,
+    xLarge,
+    xxLarge
+};
+DECLARE_ADAPTIVECARD_ENUM(IconSize);
+
+enum class IconStyle
+{
+    Regular = 0,
+    Filled
+};
+DECLARE_ADAPTIVECARD_ENUM(IconStyle);
+
 enum class ImageFillMode
 {
     Cover = 0,
@@ -322,10 +400,27 @@ enum class ImageFillMode
 };
 DECLARE_ADAPTIVECARD_ENUM(ImageFillMode);
 
+enum class ItemFit
+{
+    Fit = 0,
+    Fill,
+};
+DECLARE_ADAPTIVECARD_ENUM(ItemFit);
+
+enum class LayoutContainerType
+{
+    None = 0,
+    Stack,
+    Flow,
+    AreaGrid
+};
+DECLARE_ADAPTIVECARD_ENUM(LayoutContainerType);
+
 enum class ImageStyle
 {
     Default = 0,
-    Person
+    Person,
+    RoundedCorners
 };
 DECLARE_ADAPTIVECARD_ENUM(ImageStyle);
 
@@ -399,6 +494,7 @@ enum class Spacing
 {
     Default = 0,
     None,
+    ExtraSmall,
     Small,
     Medium,
     Large,
@@ -555,14 +651,46 @@ enum class VerticalContentAlignment
     Center,
     Bottom
 };
+
 DECLARE_ADAPTIVECARD_ENUM(VerticalContentAlignment);
+
+enum class PageAnimation
+{
+    Slide =0,
+    CrossFade,
+    None
+};
+
+DECLARE_ADAPTIVECARD_ENUM(PageAnimation);
 
 enum class HeightType
 {
     Auto = 0,
     Stretch
 };
+
 DECLARE_ADAPTIVECARD_ENUM(HeightType);
+
+enum class RatingSize
+{
+    Medium = 0,
+    Large
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingSize);
+
+enum class RatingColor
+{
+    Neutral = 0,
+    Marigold
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingColor);
+
+enum class RatingStyle
+{
+    Default = 0,
+    Compact
+};
+DECLARE_ADAPTIVECARD_ENUM(RatingStyle);
 
 // Important: "Content" below is a placeholder for a JSON value -- we can't perform automatic mapping.
 enum class FallbackType
@@ -598,4 +726,52 @@ enum class TargetWidthType
     AtLeastWide
 };
 DECLARE_ADAPTIVECARD_ENUM(TargetWidthType);
+
+enum class ValueChangedActionType
+{
+    ResetInputs
+};
+DECLARE_ADAPTIVECARD_ENUM(ValueChangedActionType);
+
+enum class IconPosition
+{
+    Before,
+    After
+};
+DECLARE_ADAPTIVECARD_ENUM(IconPosition);
+
+enum class Shape
+{
+    Square,
+    Rounded,
+    Circular
+};
+DECLARE_ADAPTIVECARD_ENUM(Shape);
+
+enum class BadgeStyle
+{
+    Default,
+    Accent,
+    Attention,
+    Good,
+    Informative,
+    Subtle,
+    Warning
+};
+DECLARE_ADAPTIVECARD_ENUM(BadgeStyle);
+
+enum class BadgeSize
+{
+    Medium,
+    Large,
+    ExtraLarge
+};
+DECLARE_ADAPTIVECARD_ENUM(BadgeSize);
+
+enum class BadgeAppearance
+{
+    Filled,
+    Tint
+};
+DECLARE_ADAPTIVECARD_ENUM(BadgeAppearance);
 } // namespace AdaptiveCards

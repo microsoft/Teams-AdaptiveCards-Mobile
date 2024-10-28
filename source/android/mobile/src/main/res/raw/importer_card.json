@@ -15,6 +15,54 @@
                             {
                                 "type": "Input.ChoiceSet",
                                 "choices": [
+									{
+										"title": "AdaptiveCardFlowLayout",
+										"value": "v1.5/Scenarios/AdaptiveCardFlowLayout.json"
+									},
+									{
+										"title": "FlowLayoutWithInputElements",
+										"value": "v1.5/Scenarios/AdaptiveCardFlowLayoutWithInputElements.json"
+									},
+									{
+										"title": "NestedFlowLayout",
+										"value": "v1.5/Scenarios/NestedFlowLayout.json"
+									},
+									{
+										"title": "ContainerFlowLayout",
+										"value": "v1.5/Scenarios/ContainerFlowLayout.json"
+									},
+									{
+										"title": "RatingInputsFlowLayout",
+										"value": "v1.5/Scenarios/RatingInputsFlowLayout.json"
+									},
+									{
+										"title": "SingleColumnFlowLayout",
+										"value": "v1.5/Scenarios/SingleColumnFlowLayout.json"
+									},
+									{
+										"title": "MultiColumnFlowLayout",
+										"value": "v1.5/Scenarios/MultiColumnFlowLayout.json"
+									},
+									{
+										"title": "DifferentWidthsColumnSetFlowLayout",
+										"value": "v1.5/Scenarios/ColumnSetWithDifferentWidths.json"
+									},
+									{
+										"title": "TableFlowLayout",
+										"value": "v1.5/Scenarios/TableFlowLayout.json"
+									},
+									{
+										"title": "FlightUpdateTable",
+										"value": "v1.5/Scenarios/FlightUpdateTable.json"
+									},
+									{
+										"title": "FluentIcon",
+										"value": "v1.5/Scenarios/FluentIcon.json"
+									},
+									{
+										"title": "RatingInput",
+										"value": "v1.5/Scenarios/RatingInput.json"
+									},
                                     {
                                         "title": "ActivityUpdate",
                                         "value": "v1.5/Scenarios/ActivityUpdate.json"
@@ -43,6 +91,18 @@
                                         "title": "InputForm",
                                         "value": "v1.5/Scenarios/InputForm.json"
                                     },
+									{
+										"title": "ConditionallyEnabledAction",
+										"value": "v1.5/Scenarios/ConditionallyEnabled.json"
+									},
+									{
+										"title": "ValueChangedAction",
+										"value": "v1.5/Scenarios/ValueChangedAction.json"
+									},
+									{
+										"title": "ValueChangedActionAllInputType",
+										"value": "v1.5/Scenarios/ValueChangedActionAllInputType.json"
+									},
                                     {
                                         "title": "Inputs",
                                         "value": "v1.5/Scenarios/InputsWithValidation.json"
@@ -106,8 +166,96 @@
 									{
 										"title": "NestedFallbackRoot",
 										"value": "v1.5/Scenarios/NestedFallbackRoot.json"
+									},
+									{
+										"title": "CompoundButton",
+										"value": "v1.5/Scenarios/CompoundButtonSample.json"
+									},
+									{
+										"title": "AdaptiveCardAreaGrid",
+										"value": "v1.5/Scenarios/AdaptiveCardAreaGrid.json"
+									},
+									{
+										"title": "ColumnAreaGrid",
+										"value": "v1.5/Scenarios/ColumnAreaGrid.json"
+									},
+									{
+										"title": "TableAreaGrid",
+										"value": "v1.5/Scenarios/TableAreaGrid.json"
+									},
+									{
+										"title": "ContainerAreaGrid",
+										"value": "v1.5/Scenarios/ContainerAreaGrid.json"
+									},
+									{
+										"title": "ContainerAreaGrid2",
+										"value": "v1.5/Scenarios/ContainerAreaGrid2.json"
+									},
+									{
+										"title": "ContainerAreaGrid3",
+										"value": "v1.5/Scenarios/ContainerAreaGrid3.json"
+									},
+									{
+										"title": "ContainerAreaGrid4",
+										"value": "v1.5/Scenarios/ContainerAreaGrid4.json"
+									},
+									{
+										"title": "ContainerAreaGrid5",
+										"value": "v1.5/Scenarios/ContainerAreaGrid5.json"
+									},
+									{
+										"title": "ContainerAreaGrid6",
+										"value": "v1.5/Scenarios/ContainerAreaGrid6.json"
+									},
+									{
+										"title": "ContainerAreaGrid7",
+										"value": "v1.5/Scenarios/ContainerAreaGrid7.json"
+									},
+									{
+										"title": "ContainerAreaGrid8",
+										"value": "v1.5/Scenarios/ContainerAreaGrid8.json"
+									},
+									{
+										"title": "ContainerAreaGrid9",
+										"value": "v1.5/Scenarios/ContainerAreaGrid9.json"
+									},
+									{
+										"title": "ContainerAreaGrid10",
+										"value": "v1.5/Scenarios/ContainerAreaGrid10.json"
+									},
+									{
+										"title": "ContainerAreaGrid11",
+										"value": "v1.5/Scenarios/ContainerAreaGrid11.json"
+									},
+									{
+										"title": "Badge",
+										"value": "v1.5/Scenarios/badge.json"
+									},
+									{
+										"title": "Carousel",
+										"value": "v1.5/Scenarios/Carousel.json"
+									},
+									{
+										"title": "Carousel.Slide",
+										"value": "v1.6/Elements/Carousel.sample.json"
+									},
+									{
+										"title": "Carousel.CrossFade",
+										"value": "v1.6/Elements/Carousel.sample.CrossFade.json"
+									},
+									{
+										"title": "Carousel.None",
+										"value": "v1.6/Elements/Carousel.sample.None.json"
+									},
+									{
+										"title": "Carousel.ScenarioCards",
+										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
+									},
+									{
+										"title": "Spacing Sample",
+										"value": "v1.5/Scenarios/spacing_sample.json"
 									}
-                                ],
+								],
                                 "placeholder": "(choose sample)",
                                 "id": "sampleCardName"
                             }

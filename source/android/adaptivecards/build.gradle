@@ -154,7 +154,7 @@ afterEvaluate {
                 name = 'sonatypeStaging'
                 url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 credentials {
-                    username "adaptivecards"
+                    username System.getenv("AC_SONATYPE_USERNAME") ?: "adaptivecards"
                     password System.getenv("AC_SONATYPE_CREDENTIAL") ?: "${NexusPassword}"
                 }
             }
@@ -168,7 +168,7 @@ tasks.withType(GenerateModuleMetadata) {
 }
 
 nexusStaging {
-    username "adaptivecards"
+    username System.getenv("AC_SONATYPE_USERNAME") ?: "adaptivecards"
     password System.getenv("AC_SONATYPE_CREDENTIAL") ?: "${NexusPassword}"
     packageGroup 'io.adaptivecards'
     stagingProfileId '9ee8e04fa2eec'
@@ -183,9 +183,13 @@ dependencies {
     implementation 'androidx.multidex:multidex:' + androidxMultidexVersion
     implementation 'androidx.appcompat:appcompat:' + androidxAppCompatVersion
     implementation 'androidx.constraintlayout:constraintlayout:' + androidxConstraintLayoutVersion
-    implementation 'com.google.android:flexbox:' + androidFlexboxVersion
+    implementation 'com.google.android.flexbox:flexbox:' + androidFlexboxVersion
     testImplementation 'junit:junit:' + junitVersion
     implementation 'androidx.core:core-ktx:' + androidxKotlinCoreVersion
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.caverock:androidsvg-aar:$androidsvg"
+
+    //viewpager2
+    implementation "androidx.viewpager2:viewpager2:${androidxViewPager2Version}"
 }

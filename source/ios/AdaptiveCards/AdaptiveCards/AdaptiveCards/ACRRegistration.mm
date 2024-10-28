@@ -40,6 +40,12 @@
 #import "BaseCardElement.h"
 #import "FeatureRegistration.h"
 #import "HostConfig.h"
+#import "ACRIconRenderer.h"
+#import "ACRRatingInputRenderer.h"
+#import "ACRRatingLabelRenderer.h"
+#import "ACRCompoundButtonRenderer.h"
+#import "ACRCarouselViewRenderer.h"
+#import "ACRBadgeRenderer.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -58,6 +64,7 @@ using namespace AdaptiveCards;
     NSMutableSet *_useResourceResolverActionsSet;
     id<ACRIBaseActionSetRenderer> _defaultActionSetRenderer;
     ACOParseContext *_parseContext;
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolverImp;
     int _hostCardContainer;
 }
 
@@ -69,6 +76,7 @@ using namespace AdaptiveCards;
             [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                              [ACRMediaRenderer getInstance], [NSNumber numberWithInt:(int)[ACRMediaRenderer elemType]],
                                              [ACRImageRenderer getInstance], [NSNumber numberWithInt:(int)[ACRImageRenderer elemType]],
+                                             [ACRIconRenderer getInstance], [NSNumber numberWithInt:(int)[ACRIconRenderer elemType]],
                                              [ACRImageSetRenderer getInstance], [NSNumber numberWithInt:(int)[ACRImageSetRenderer elemType]],
                                              [ACRTextBlockRenderer getInstance], [NSNumber numberWithInt:(int)[ACRTextBlockRenderer elemType]],
                                              [ACRRichTextBlockRenderer getInstance], [NSNumber numberWithInt:(int)[ACRRichTextBlockRenderer elemType]],
@@ -78,6 +86,9 @@ using namespace AdaptiveCards;
                                              [ACRInputDateRenderer getInstance], [NSNumber numberWithInt:(int)[ACRInputDateRenderer elemType]],
                                              [ACRInputTimeRenderer getInstance], [NSNumber numberWithInt:(int)[ACRInputTimeRenderer elemType]],
                                              [ACRInputNumberRenderer getInstance], [NSNumber numberWithInt:(int)[ACRInputNumberRenderer elemType]],
+                                             [ACRRatingInputRenderer getInstance], [NSNumber numberWithInt:(int)[ACRRatingInputRenderer elemType]],
+                                             [ACRRatingLabelRenderer getInstance], [NSNumber numberWithInt:(int)[ACRRatingLabelRenderer elemType]],
+                                             [ACRBadgeRenderer getInstance], [NSNumber numberWithInt:(int)[ACRBadgeRenderer elemType]],
                                              [ACRFactSetRenderer getInstance], [NSNumber numberWithInt:(int)[ACRFactSetRenderer elemType]],
                                              [ACRContainerRenderer getInstance], [NSNumber numberWithInt:(int)[ACRContainerRenderer elemType]],
                                              [ACRColumnSetRenderer getInstance], [NSNumber numberWithInt:(int)[ACRColumnSetRenderer elemType]],
@@ -85,6 +96,8 @@ using namespace AdaptiveCards;
                                              [ACRActionSetRenderer getInstance], [NSNumber numberWithInt:(int)[ACRActionSetRenderer elemType]],
                                              [ACRTableCellRenderer getInstance], [NSNumber numberWithInt:(int)[ACRTableCellRenderer elemType]],
                                              [ACRTableRenderer getInstance], [NSNumber numberWithInt:(int)[ACRTableRenderer elemType]],
+                                             [ACRCompoundButtonRenderer getInstance], [NSNumber numberWithInt:(int)[ACRCompoundButtonRenderer elemType]],
+                                             [ACRCarouselViewRenderer getInstance],[NSNumber numberWithInt:(int)[ACRCarouselViewRenderer elemType]],
                                              [ACRCustomRenderer getInstance], [NSNumber numberWithInt:(int)[ACRCustomRenderer elemType]],
                                              nil];
         actionRendererDict =
@@ -96,6 +109,7 @@ using namespace AdaptiveCards;
                                              [ACRActionToggleVisibilityRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::ToggleVisibility],
                                              [ACRCustomActionRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::UnknownAction],
                                              [ACRActionOverflowRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::Overflow],
+             
                                              nil];
 
         _elementParserDict = [[NSMutableDictionary alloc] init];
@@ -332,6 +346,16 @@ using namespace AdaptiveCards;
 - (void)registerHostCardContainer:(int)hostCardContainer
 {
     _hostCardContainer = hostCardContainer;
+}
+
+- (void)setFeatureFlagResolver:(NSObject<ACRIFeatureFlagResolver> *_Nonnull)featureFlagResolver
+{
+    featureFlagResolverImp = featureFlagResolver;
+}
+
+- (NSObject<ACRIFeatureFlagResolver> *_Nullable)getFeatureFlagResolver
+{
+    return featureFlagResolverImp;
 }
 
 @end

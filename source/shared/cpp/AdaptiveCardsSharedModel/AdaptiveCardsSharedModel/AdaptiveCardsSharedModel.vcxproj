@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Clang-Debug|Win32">
@@ -266,6 +266,11 @@
     <ClCompile Include="..\..\ObjectModel\FactSet.cpp" />
     <ClCompile Include="..\..\ObjectModel\HostConfig.cpp" />
     <ClCompile Include="..\..\ObjectModel\Image.cpp" />
+    <ClCompile Include="..\..\ObjectModel\Icon.cpp" />
+    <ClCompile Include="..\..\ObjectModel\CompoundButton.cpp"/>
+    <ClCompile Include="..\..\ObjectModel\IconInfo.cpp"/>
+    <ClCompile Include="..\..\ObjectModel\RatingInput.cpp" />
+    <ClCompile Include="..\..\ObjectModel\RatingLabel.cpp" />
     <ClCompile Include="..\..\ObjectModel\ImageSet.cpp" />
     <ClCompile Include="..\..\ObjectModel\jsoncpp.cpp" />
     <ClCompile Include="..\..\ObjectModel\MarkDownBlockParser.cpp" />
@@ -290,6 +295,7 @@
     <ClCompile Include="..\..\ObjectModel\TokenExchangeResource.cpp" />
     <ClCompile Include="..\..\ObjectModel\UnknownAction.cpp" />
     <ClCompile Include="..\..\ObjectModel\UnknownElement.cpp" />
+    <ClCompile Include="..\..\ObjectModel\ValueChangedAction.cpp" />
     <ClCompile Include="..\..\ObjectModel\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +342,11 @@
     <ClInclude Include="..\..\ObjectModel\FactSet.h" />
     <ClInclude Include="..\..\ObjectModel\HostConfig.h" />
     <ClInclude Include="..\..\ObjectModel\Image.h" />
+    <ClInclude Include="..\..\ObjectModel\Icon.h" />
+    <ClInclude Include="..\..\ObjectModel\CompoundButton.h" />
+    <ClInclude Include="..\..\ObjectModel\IconInfo.h" />
+    <ClInclude Include="..\..\ObjectModel\RatingInput.h" />
+    <ClInclude Include="..\..\ObjectModel\RatingLabel.h" />
     <ClInclude Include="..\..\ObjectModel\ImageSet.h" />
     <ClInclude Include="..\..\ObjectModel\MarkDownBlockParser.h" />
     <ClInclude Include="..\..\ObjectModel\MarkDownHtmlGenerator.h" />
@@ -364,6 +375,7 @@
     <ClInclude Include="..\..\ObjectModel\TokenExchangeResource.h" />
     <ClInclude Include="..\..\ObjectModel\UnknownAction.h" />
     <ClInclude Include="..\..\ObjectModel\UnknownElement.h" />
+    <ClInclude Include="..\..\ObjectModel\ValueChangedAction.h" />
     <ClInclude Include="..\..\ObjectModel\RemoteResourceInformation.h" />
     <ClInclude Include="..\..\ObjectModel\Util.h" />
   </ItemGroup>

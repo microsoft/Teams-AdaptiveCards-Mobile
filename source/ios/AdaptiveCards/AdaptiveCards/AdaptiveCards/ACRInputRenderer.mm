@@ -168,10 +168,15 @@
             txtInput = [ACRInputRenderer configTextFiled:inputBlck renderAction:renderAction rootView:rootView viewGroup:viewGroup];
             inputview = [[ACRInputLabelView alloc] initInputLabelView:rootView acoConfig:acoConfig adaptiveInputElement:inputBlck inputView:txtInput accessibilityItem:txtInput viewGroup:viewGroup dataSource:textInputHandler];
         }
+        textInputHandler.textField = txtInput;
         txtInput.delegate = textInputHandler;
+        if ([textInputHandler respondsToSelector:@selector(textFieldDidChange:)]) {
+            [txtInput addTarget:textInputHandler action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            }
     }
 
-    [viewGroup addArrangedSubview:inputview];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:inputview withAreaName:areaName];
 
     inputview.translatesAutoresizingMaskIntoConstraints = false;
 
@@ -187,6 +192,7 @@
         NSString *key = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
         UIImage *img = imageViewMap[key];
         button.iconPlacement = ACRNoTitle;
+        button.accessibilityLabel = title;
 
         if (img) {
             UIImageView *iconView = [[ACRUIImageView alloc] init];
@@ -233,6 +239,8 @@
                 if (![acoSelectAction isEnabled]) {
                     quickReplyView.accessibilityTraits |= UIAccessibilityTraitNotEnabled;
                 }
+            } else if (action->GetElementType() == ActionType::OpenUrl) {
+                button.accessibilityTraits = UIAccessibilityTraitLink;
             }
             [viewGroup addTarget:target];
         }

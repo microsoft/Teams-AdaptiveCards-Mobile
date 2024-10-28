@@ -10,6 +10,8 @@
 #include "SemanticVersion.h"
 #include "ParseContext.h"
 #include "BackgroundImage.h"
+#include "FlowLayout.h"
+#include "AreaGridLayout.h"
 
 using namespace AdaptiveCards;
 
@@ -256,6 +258,40 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
 
     auto backgroundImage =
         ParseUtil::DeserializeValue<BackgroundImage>(json, AdaptiveCardSchemaKey::BackgroundImage, BackgroundImage::Deserialize);
+    std::vector<std::shared_ptr<Layout>> layouts;
+    if (const auto& layoutArray = ParseUtil::GetArray(json, AdaptiveCardSchemaKey::Layouts, false); !layoutArray.empty())
+    {
+        for (const auto& layoutJson : layoutArray)
+        {
+            std::shared_ptr<Layout> layout = Layout::Deserialize(layoutJson);
+            if(layout->GetLayoutContainerType() == LayoutContainerType::Flow)
+            {
+                layouts.push_back(FlowLayout::Deserialize(layoutJson));
+            }
+            else if (layout->GetLayoutContainerType() == LayoutContainerType::AreaGrid)
+            {
+                std::shared_ptr<AreaGridLayout> areaGridLayout = AreaGridLayout::Deserialize(layoutJson);
+                if (areaGridLayout->GetAreas().size() == 0 && areaGridLayout->GetColumns().size() == 0)
+                {
+                    // this needs to be stack layout
+                    std::shared_ptr<Layout> stackLayout = std::make_shared<Layout>();
+                    stackLayout->SetLayoutContainerType(LayoutContainerType::Stack);
+                    layouts.push_back(stackLayout);
+                }
+                else if (areaGridLayout->GetAreas().size() == 0)
+                {
+                    // this needs to be flow layout
+                    std::shared_ptr<FlowLayout> flowLayout = std::make_shared<FlowLayout>();
+                    flowLayout->SetLayoutContainerType(LayoutContainerType::Flow);
+                    layouts.push_back(flowLayout);
+                }
+                else
+                {
+                   layouts.push_back(AreaGridLayout::Deserialize(layoutJson));
+                }
+            }
+        }
+    }
     auto refresh = ParseUtil::DeserializeValue<Refresh>(context, json, AdaptiveCardSchemaKey::Refresh, Refresh::Deserialize);
     auto authentication = ParseUtil::DeserializeValue<Authentication>(
         context, json, AdaptiveCardSchemaKey::Authentication, Authentication::Deserialize);
@@ -300,6 +336,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
         Json::Value additionalProperties;
         HandleUnknownProperties(json, result->GetKnownProperties(), additionalProperties);
         result->SetAdditionalProperties(additionalProperties);
+        result->SetLayouts(layouts);
 
         return std::make_shared<ParseResult>(result, context.warnings);
     }
@@ -323,6 +360,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
 
         // Parse optional selectAction
         result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
+        result->SetLayouts(layouts);
 
         Json::Value additionalProperties;
         HandleUnknownProperties(json, result->GetKnownProperties(), additionalProperties);
@@ -532,6 +570,21 @@ std::shared_ptr<Authentication> AdaptiveCard::GetAuthentication() const
 void AdaptiveCard::SetAuthentication(const std::shared_ptr<Authentication> value)
 {
     m_authentication = value;
+}
+
+std::vector<std::shared_ptr<Layout>>& AdaptiveCard::GetLayouts()
+{
+    return m_layouts;
+}
+
+const std::vector<std::shared_ptr<Layout>>& AdaptiveCard::GetLayouts() const
+{
+    return m_layouts;
+}
+
+void AdaptiveCard::SetLayouts(const std::vector<std::shared_ptr<Layout>>& value)
+{
+    m_layouts = value;
 }
 
 std::string AdaptiveCard::GetSpeak() const

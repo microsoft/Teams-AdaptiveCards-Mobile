@@ -79,6 +79,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     UIButton *_button;
     __weak ACRView *_rootView;
     NSInteger _wrapLines;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
 - (instancetype)initWithInputChoiceSet:(ACOBaseCardElement *)acoElem
@@ -97,6 +98,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         if (!_filteredDataSource.isEnabled) {
             self.accessibilityTraits |= (UIAccessibilityTraitButton | UIAccessibilityTraitStaticText);
         }
+        [self updateAccessibilityProperties];
         _validator = [[ACOChoiceSetFilteredStyleValidator alloc] init:acoElem dataSource:_filteredDataSource];
 
         if (@available(iOS 11.0, *)) {
@@ -126,7 +128,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         _listView.dataSource = self;
         _listView.delegate = self;
         _listView.accessibilityIdentifier = [NSString stringWithUTF8String:choiceSet->GetId().c_str()];
-
+        _completionHandlers = [[NSMutableArray alloc] init];
         self.filteredListView = _listView;
 
         _view = [[UIView alloc] init];
@@ -165,12 +167,26 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         _button.selected = YES;
     }
 
+    [self updateAccessibilityProperties];
+
     if (_stateManager.shouldUpdateFilteredList) {
         if (_stateManager.isFilteredListVisible) {
             [self showListView];
         } else {
             [self hideListView];
         }
+    }
+}
+
+- (void)updateAccessibilityProperties
+{
+    if (!_stateManager.isShowFilteredListControlSelected)
+    {
+        self.accessibilityHint = @"combo box, collapsed, double tap to activate it";
+    }
+    else
+    {
+        self.accessibilityHint = @"combo box, expanded, double tap to activate it";
     }
 }
 
@@ -385,6 +401,20 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     dictionary[self.id] = [_validator getValue:self.text];
 }
 
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [_completionHandlers addObject:completion];
+}
+
+- (void)resetInput {
+    self.text = _validator.userInitialChoice;
+}
+
+- (void)notifyDelegates {
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -419,6 +449,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     [_stateManager collapsed];
     [self updateControls];
 
+    [self notifyDelegates];
     [self resignFirstResponder];
 }
 
@@ -429,7 +460,6 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 @synthesize isRequired;
 
 @synthesize hasVisibilityChanged;
-
 @end
 
 @implementation ACOFilteredDataSource {

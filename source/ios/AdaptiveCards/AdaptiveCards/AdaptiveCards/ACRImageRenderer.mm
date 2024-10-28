@@ -5,11 +5,13 @@
 //  Copyright © 2017 Microsoft. All rights reserved.
 //
 
+#import "ACOParseContext.h"
 #import "ACRImageRenderer.h"
 #import "ACOBaseCardElementPrivate.h"
 #import "ACOHostConfigPrivate.h"
 #import "ACRColumnView.h"
 #import "ACRContentHoldingUIView.h"
+#import "ARCGridViewLayout.h"
 #import "ACRImageProperties.h"
 #import "ACRTapGestureRecognizerFactory.h"
 #import "ACRUIImageView.h"
@@ -18,6 +20,7 @@
 #import "Image.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import <Foundation/Foundation.h>
 
 @implementation ACRImageRenderer
 
@@ -64,7 +67,7 @@
         view.image = img;
     }
 
-    ACRContentHoldingUIView *wrappingView = [[ACRContentHoldingUIView alloc] initWithImageProperties:imageProps imageView:view viewGroup:(ACRContentStackView *)viewGroup];
+    ACRContentHoldingUIView *wrappingView = [[ACRContentHoldingUIView alloc] initWithImageProperties:imageProps imageView:view viewGroup:viewGroup];
 
     if (!view || !wrappingView) {
         [viewGroup addSubview:wrappingView];
@@ -80,8 +83,8 @@
     if (!backgroundColor.empty()) {
         view.backgroundColor = [ACOHostConfig convertHexColorCodeToUIColor:imgElem->GetBackgroundColor()];
     }
-
-    [viewGroup addArrangedSubview:wrappingView];
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:wrappingView withAreaName:areaName];
 
     switch (imageProps.acrHorizontalAlignment) {
         case ACRCenter:
@@ -100,7 +103,7 @@
 
     // added padding to strech for image view because stretching ImageView is not desirable
     if (imgElem->GetHeight() == HeightType::Stretch) {
-        [viewGroup addArrangedSubview:[viewGroup addPaddingFor:wrappingView]];
+        [viewGroup addArrangedSubview:[viewGroup addPaddingFor:wrappingView] withAreaName:areaName];
     }
 
     [wrappingView.widthAnchor constraintGreaterThanOrEqualToAnchor:view.widthAnchor].active = YES;
@@ -142,6 +145,11 @@
 
     if (imgElem->GetImageStyle() == ImageStyle::Person) {
         wrappingView.isPersonStyle = YES;
+    }
+    
+    if (imgElem->GetImageStyle() == ImageStyle::RoundedCorners) {
+        std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+        view.layer.cornerRadius = config->GetCornerRadius(imgElem->GetElementType());
     }
 
     if (view && view.image) {

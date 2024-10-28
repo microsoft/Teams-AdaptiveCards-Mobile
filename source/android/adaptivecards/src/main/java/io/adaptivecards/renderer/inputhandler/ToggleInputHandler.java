@@ -7,16 +7,14 @@ import android.widget.CheckBox;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ToggleInput;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
-
-import java.text.ParseException;
-import java.util.Map;
 
 public class ToggleInputHandler extends BaseInputHandler
 {
-    public ToggleInputHandler(BaseInputElement baseInputElement)
+    public ToggleInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
-        super(baseInputElement);
+        super(baseInputElement, renderedAdaptiveCard, cardId);
     }
 
     protected CheckBox getCheckBox()
@@ -43,6 +41,11 @@ public class ToggleInputHandler extends BaseInputHandler
     @Override
     public boolean isValid()
     {
+        return isValid(true);
+    }
+
+    @Override
+    public boolean isValid(boolean showError) {
         boolean isValid = true;
 
         // Due to toggle not working as all other inputs where isRequired can be satisfied
@@ -51,10 +54,25 @@ public class ToggleInputHandler extends BaseInputHandler
         {
             isValid = getCheckBox().isChecked();
         }
-
-        showValidationErrors(isValid);
+        if (showError) {
+            showValidationErrors(isValid);
+        }
 
         return isValid;
+    }
+
+    @Override
+    public void registerInputObserver() {
+        getCheckBox().setOnCheckedChangeListener((buttonView, isChecked) -> notifyAllInputWatchers());
+        addValueChangedActionInputWatcher();
+    }
+
+    @Override
+    public String getDefaultValue() {
+        if (Util.isOfType(m_baseInputElement, ToggleInput.class)) {
+            return Util.castTo(m_baseInputElement, ToggleInput.class).GetValue();
+        }
+        return super.getDefaultValue();
     }
 
     @Override

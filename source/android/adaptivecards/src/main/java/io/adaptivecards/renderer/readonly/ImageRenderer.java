@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -374,6 +375,22 @@ public class ImageRenderer extends BaseCardElementRenderer
 
         imageView.setTag(tagContent);
         setVisibility(baseCardElement.GetIsVisible(), imageView);
+
+        if (image.GetImageStyle() == ImageStyle.RoundedCorners) {
+            GradientDrawable gradientDrawable;
+            if (imageView.getBackground() instanceof GradientDrawable) {
+                gradientDrawable = (GradientDrawable) imageView.getBackground();
+            } else {
+                gradientDrawable = new GradientDrawable();
+            }
+            float cornerRadius = (float) hostConfig.GetCornerRadius(image.GetElementType());
+            float cornerRadiusInPixels = Util.dpToPixels(imageView.getContext(), cornerRadius);
+            gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+            gradientDrawable.setCornerRadius(cornerRadiusInPixels);
+            gradientDrawable.setColor(backgroundColor);
+            imageView.setBackground(gradientDrawable);
+            imageView.setClipToOutline(true);
+        }
 
         ContainerRenderer.setSelectAction(renderedCard, image.GetSelectAction(), imageView, cardActionHandler, renderArgs);
 

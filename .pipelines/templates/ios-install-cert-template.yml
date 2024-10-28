@@ -3,14 +3,12 @@ steps:
   displayName: 'Install Certificates'
   inputs:
     certSecureFile: 'Certificates.p12' 
-    certPwd: '$(P12password)'
-    keychain: 'temp'
 
 - task: InstallAppleProvisioningProfile@1
   displayName: 'Install Provisioning Profile'
   inputs:
     provisioningProfileLocation: 'secureFiles'
-    provProfileSecureFile: '983e1796-30e0-48a7-9453-c305e1b94259.mobileprovision'
+    provProfileSecureFile: '99cdb8de-c437-448e-8b56-e4e999769e8c.mobileprovision'
 
 - template: ios-build-template.yml
   parameters:
