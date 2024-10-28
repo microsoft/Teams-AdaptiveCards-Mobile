@@ -11,6 +11,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.readonly.RendererUtil;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +20,7 @@ import java.util.Date;
 
 public class DateInputHandler extends TextInputHandler
 {
-    public DateInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
+    public DateInputHandler(BaseInputElement baseInputElement, WeakReference<FragmentManager> fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
         super(baseInputElement, renderedAdaptiveCard, cardId);
         m_fragmentManager = fragmentManager;
@@ -28,7 +29,7 @@ public class DateInputHandler extends TextInputHandler
 
     public FragmentManager getFragmentManager()
     {
-        return m_fragmentManager;
+        return m_fragmentManager.get();
     }
 
     @Override
@@ -129,8 +130,7 @@ public class DateInputHandler extends TextInputHandler
         return super.getDefaultValue();
     }
 
-    private FragmentManager m_fragmentManager;
-
+    private WeakReference<FragmentManager> m_fragmentManager;
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static DateFormat s_simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
 }
