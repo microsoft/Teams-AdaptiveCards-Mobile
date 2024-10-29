@@ -12,6 +12,7 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.input.TimeInputRenderer;
 import io.adaptivecards.renderer.readonly.RendererUtil;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,7 @@ import java.util.Date;
 
 public class TimeInputHandler extends TextInputHandler
 {
-    public TimeInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
+    public TimeInputHandler(BaseInputElement baseInputElement, WeakReference<FragmentManager> fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
     {
         super(baseInputElement, renderedAdaptiveCard, cardId);
         m_fragmentManager = fragmentManager;
@@ -29,7 +30,7 @@ public class TimeInputHandler extends TextInputHandler
 
     public FragmentManager getFragmentManager()
     {
-        return m_fragmentManager;
+        return m_fragmentManager.get();
     }
 
     @Override
@@ -158,8 +159,7 @@ public class TimeInputHandler extends TextInputHandler
         return super.getDefaultValue();
     }
 
-    private FragmentManager m_fragmentManager;
-
+    private WeakReference<FragmentManager> m_fragmentManager;
     public static final String TIME_FORMAT_SUBMIT = "kk:mm";
     public static SimpleDateFormat s_simpleDateFormat = new SimpleDateFormat(TIME_FORMAT_SUBMIT);
 }

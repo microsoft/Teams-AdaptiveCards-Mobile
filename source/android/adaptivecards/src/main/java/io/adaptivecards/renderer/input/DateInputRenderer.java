@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 
 import io.adaptivecards.objectmodel.BaseCardElement;
@@ -62,7 +62,7 @@ public class DateInputRenderer extends TextInputRenderer
         }
 
         DateInput dateInput = Util.castTo(baseCardElement, DateInput.class);
-        DateInputHandler dateInputHandler = new DateInputHandler(dateInput, fragmentManager, renderedCard, renderArgs.getContainerCardId());
+        DateInputHandler dateInputHandler = new DateInputHandler(dateInput, new WeakReference<>(fragmentManager), renderedCard, renderArgs.getContainerCardId());
 
         String dateInputValue = dateInput.GetValue();
         String dateString = "";
@@ -102,7 +102,9 @@ public class DateInputRenderer extends TextInputRenderer
                 datePickerFragment.setArguments(args);
 
                 FragmentManager fm = dateInputHandler.getFragmentManager();
-                datePickerFragment.show(fm, TITLE);
+                if (fm != null) {
+                    datePickerFragment.show(fm, TITLE);
+                }
 
             }
         });
