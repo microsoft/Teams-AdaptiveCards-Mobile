@@ -47,13 +47,6 @@ static NSTimeInterval const ACRkPanCancelSeconds = 0.2;
     
     [self stopTimeoutTimer];
     
-    // Ignore the edges of the screen to avoid being triggered by navigation gestures
-    if (self.beginPoint.x < ACRkEdgeIgnoreSpacing || self.beginPoint.x > self.view.bounds.size.width - ACRkEdgeIgnoreSpacing)
-    {
-        self.state = UIGestureRecognizerStateCancelled;
-        return;
-    }
-
     // Need to cancel this gesture so long-press gesture can trigger, cancel if haven't moved the touch after a time delay
     __weak typeof(self) weakSelf = self;
     self.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:ACRkPanCancelSeconds repeats:NO block:^(NSTimer * _Nonnull timer) {

@@ -98,7 +98,6 @@
     
     [carouselStackView addArrangedSubview:carouselPagesContainerView];
     [carouselStackView addArrangedSubview:self.pageControl];
-    [carouselStackView addArrangedSubview:[[UIView alloc] initWithFrame:CGRectZero]];
     
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     
