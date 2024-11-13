@@ -97,7 +97,11 @@
     carouselStackView.clipsToBounds = YES;
     
     [carouselStackView addArrangedSubview:carouselPagesContainerView];
-    [carouselStackView addArrangedSubview:self.pageControl];
+    
+    if (self.carouselPageViewList.count > 1)
+    {
+        [carouselStackView addArrangedSubview:self.pageControl];
+    }
     
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     
