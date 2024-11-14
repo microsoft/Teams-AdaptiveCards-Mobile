@@ -95,6 +95,7 @@
 {
     if (view && toolTipText && toolTipText.length) {
         UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showToolTip:)];
+        longPress.minimumPressDuration = 0.32f;
         [view addGestureRecognizer:longPress];
     }
 }
