@@ -9,7 +9,7 @@
 #import "ACRView.h"
 #import "ACOEnums.h"
 
-@interface ACRBadgeView : UIView
+@interface ACRBadgeView : UIView<UIGestureRecognizerDelegate>
 
 - (instancetype)initWithRootView:(ACRView *)rootView
                             text:(NSString*)text

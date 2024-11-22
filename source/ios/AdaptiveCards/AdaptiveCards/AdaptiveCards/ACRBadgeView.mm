@@ -33,6 +33,7 @@
     UIView *_iconImageView;
     UILabel *_textLabel;
     ACRView *_rootView;
+    UILongPressGestureRecognizer *_longPressGesture;
 }
 
 
@@ -94,9 +95,10 @@
 - (void)addGestureRecognizer:(UIView *)view toolTipText:(NSString *)toolTipText
 {
     if (view && toolTipText && toolTipText.length) {
-        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showToolTip:)];
-        longPress.minimumPressDuration = 0.32f;
-        [view addGestureRecognizer:longPress];
+        _longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                                action:@selector(showToolTip:)];
+        _longPressGesture.delegate = self;
+        [view addGestureRecognizer:_longPressGesture];
     }
 }
 
@@ -107,6 +109,14 @@
         [MSFTooltip.shared showWith:_toolTip for:recognizer.view preferredArrowDirection:MSFTooltipArrowDirectionUp offset:CGPointZero screenMargins:MSFTooltip.defaultScreenMargins dismissOn:MSFTooltipDismissModeTapAnywhere onTap:nil];
     }
 #endif
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if(gestureRecognizer == _longPressGesture && [otherGestureRecognizer isKindOfClass:UILongPressGestureRecognizer.class])
+    {
+        return YES;
+    }
+    return NO;
 }
 
 -(CGFloat)getTextLabelFontSize
