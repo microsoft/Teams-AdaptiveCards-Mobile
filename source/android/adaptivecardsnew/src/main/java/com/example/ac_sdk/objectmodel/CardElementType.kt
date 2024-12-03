@@ -1,0 +1,32 @@
+package com.example.ac_sdk.objectmodel
+
+enum class CardElementType {
+    ActionSet,
+    AdaptiveCard,
+    ChoiceInput,
+    ChoiceSetInput,
+    Column,
+    ColumnSet,
+    Container,
+    Custom,
+    DateInput,
+    Fact,
+    FactSet,
+    Image,
+    Icon,
+    ImageSet,
+    Media,
+    NumberInput,
+    RatingInput,
+    RatingLabel,
+    RichTextBlock,
+    Table,
+    TableCell,
+    TableRow,
+    TextBlock,
+    TextInput,
+    TimeInput,
+    ToggleInput,
+    CompoundButton,
+    Unknown
+}

@@ -55,4 +55,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
     implementation project(':adaptivecards')
+    //implementation project(':adaptivecardsnew')
 }
