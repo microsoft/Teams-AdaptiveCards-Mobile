@@ -93,6 +93,9 @@
 
 - (void)updateAccessibility
 {
+    if ([self.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet].length == 0) {
+        return;
+    }
     self.isAccessibilityElement = YES;
     if (self.accessibilityTraits == UIAccessibilityTraitLink)
     {
