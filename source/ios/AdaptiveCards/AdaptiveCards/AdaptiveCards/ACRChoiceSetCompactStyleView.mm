@@ -135,6 +135,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         [_view addSubview:_listView];
 
         _button = [UIButton buttonWithType:UIButtonTypeCustom];
+        _button.isAccessibilityElement = NO;
         self.showFilteredListControl = _button;
         [_button addTarget:self action:@selector(toggleStateListView:) forControlEvents:UIControlEventTouchUpInside];
         self.rightView = _button;
