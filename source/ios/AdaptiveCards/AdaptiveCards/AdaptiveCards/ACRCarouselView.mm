@@ -44,6 +44,7 @@
                       superview:rootView];
     
     self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.accessibilityContainerType = UIAccessibilityContainerTypeList;
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Carousel> carousel = std::dynamic_pointer_cast<Carousel>(elem);
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
@@ -94,10 +95,10 @@
     carouselStackView.translatesAutoresizingMaskIntoConstraints = NO;
     carouselStackView.spacing = 20;
     carouselStackView.clipsToBounds = YES;
-    
     [carouselStackView addArrangedSubview:carouselPagesContainerView];
     [carouselStackView addArrangedSubview:self.pageControl];
     [carouselStackView addArrangedSubview:[[UIView alloc] initWithFrame:CGRectZero]];
+   
     
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     
@@ -112,11 +113,23 @@
         [carouselPagesContainerView.trailingAnchor constraintEqualToAnchor:carouselStackView.trailingAnchor]
     ]];
     
-    self.isAccessibilityElement = YES;
-    self.accessibilityLabel = NSLocalizedString(@"Carousel",null);
-    self.accessibilityHint =  NSLocalizedString(@"swipe left or right with 3 fingers to navigate",null);
+    UIView * accessibilityContainer = [[UIView alloc] initWithFrame:CGRectZero];
+    accessibilityContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:accessibilityContainer];
+    
+    [NSLayoutConstraint activateConstraints:@[
+        [accessibilityContainer.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [accessibilityContainer.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        [accessibilityContainer.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+        [accessibilityContainer.topAnchor constraintEqualToAnchor:self.topAnchor]
+    ]];
+    
+    accessibilityContainer.isAccessibilityElement = YES;
+    accessibilityContainer.accessibilityLabel = NSLocalizedString(@"Carousel",null);
+    accessibilityContainer.accessibilityHint =  NSLocalizedString(@"swipe left or right with 3 fingers to navigate",null);
     NSString *accessibilityValue = [NSString stringWithFormat:@"Page %ld of %ld",self.carouselPageViewIndex+1,self.carouselPageViewList.count];
-    self.accessibilityValue = NSLocalizedString(accessibilityValue, null);
+    accessibilityContainer.accessibilityValue = NSLocalizedString(accessibilityValue, null);
+    self.accessibilityElements = @[accessibilityContainer,carouselStackView];
     return self;
 }
 
