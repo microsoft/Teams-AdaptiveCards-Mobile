@@ -123,7 +123,8 @@
             lab.accessibilityValue = @"";
         }
         if ([content.string stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet].length == 0) {
-            lab.accessibilityElementsHidden = YES;
+            lab.accessibilityValue = @"";
+            lab.isAccessibilityElement = NO;
         }
     }
 
