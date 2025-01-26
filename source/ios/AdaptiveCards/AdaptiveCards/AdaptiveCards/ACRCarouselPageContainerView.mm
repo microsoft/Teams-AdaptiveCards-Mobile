@@ -44,7 +44,6 @@
         carouselPageViewList[0].hidden = NO;
     }
     self.clipsToBounds = YES;
-    
     return self;
 }
 

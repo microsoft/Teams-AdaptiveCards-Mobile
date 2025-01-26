@@ -62,7 +62,6 @@
                                                         baseCardElement:acoElement
                                                              hostConfig:acoConfig];
         carouselPageView.hidden = YES;
-        
         [self.carouselPageViewList addObject:carouselPageView];
     }
     
@@ -113,6 +112,11 @@
         [carouselPagesContainerView.trailingAnchor constraintEqualToAnchor:carouselStackView.trailingAnchor]
     ]];
     
+    self.isAccessibilityElement = YES;
+    self.accessibilityLabel = NSLocalizedString(@"Carousel",null);
+    self.accessibilityHint =  NSLocalizedString(@"swipe left or right with 3 fingers to navigate",null);
+    NSString *accessibilityValue = [NSString stringWithFormat:@"Page %ld of %ld",self.carouselPageViewIndex+1,self.carouselPageViewList.count];
+    self.accessibilityValue = NSLocalizedString(accessibilityValue, null);
     return self;
 }
 
@@ -131,31 +135,35 @@
     rightPanGesture.delegate = self;
 }
 
-- (void)handleLeftSwipe
+- (BOOL)handleLeftSwipe
 {
     NSInteger newCarouselPageViewIndex = MIN(self.carouselPageViewIndex+1, self.carouselPageViewList.count-1);
     if(newCarouselPageViewIndex == self.carouselPageViewIndex)
     {
-        return;
+        return NO;
     }
     [self.pageControl setCurrentPage:newCarouselPageViewIndex];
     
     [_carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
     _carouselPageViewIndex = newCarouselPageViewIndex;
+    [self updateAccessibilityValue];
+    return YES;
 }
 
-- (void)handleRightSwipe
+- (BOOL)handleRightSwipe
 {
     NSInteger newCarouselPageViewIndex = MAX(self.carouselPageViewIndex-1, 0);
     
     if(newCarouselPageViewIndex == self.carouselPageViewIndex)
     {
-        return;
+        return NO;
     }
     
     [self.pageControl setCurrentPage:newCarouselPageViewIndex];
     [self.carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
     _carouselPageViewIndex = newCarouselPageViewIndex;
+    [self updateAccessibilityValue];
+    return YES;
 }
 
 - (void)handlePanGestureOfLeftDirection:(UIPanGestureRecognizer *)gesture
@@ -200,6 +208,25 @@
             [self handleRightSwipe];
         }
     }
+}
+
+-(BOOL) accessibilityScroll:(UIAccessibilityScrollDirection)direction {
+    
+    if(direction == UIAccessibilityScrollDirectionLeft) {
+       return [self handleLeftSwipe];
+    }
+    
+    else if(direction == UIAccessibilityScrollDirectionRight) {
+        return [self handleRightSwipe];
+    }
+    
+    return NO;
+}
+
+-(void) updateAccessibilityValue {
+    NSString *accessibilityValue = [NSString stringWithFormat:@"Page %ld of %ld",self.carouselPageViewIndex+1,self.carouselPageViewList.count];
+    self.accessibilityValue = NSLocalizedString(accessibilityValue, null);
+    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
 }
 
 @end
