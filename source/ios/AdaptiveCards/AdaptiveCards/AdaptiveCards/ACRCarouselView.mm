@@ -24,7 +24,6 @@ static NSString * const ACRCarouselAccessibilityLabel = @"Carousel";
 static NSString * const ACRCarouselAccessibilityHint = @"swipe left or right with 3 fingers to navigate";
 static NSString * const ACRCarouselAccessibilityValueFormat = @"Page %ld of %ld";
 
-
 @interface ACRCarouselView()
 
 @property NSInteger carouselPageViewIndex;
@@ -105,7 +104,6 @@ static NSString * const ACRCarouselAccessibilityValueFormat = @"Page %ld of %ld"
     [carouselStackView addArrangedSubview:self.pageControl];
     [carouselStackView addArrangedSubview:[[UIView alloc] initWithFrame:CGRectZero]];
    
-    
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     
     [viewGroup addArrangedSubview:self withAreaName:areaName];
@@ -121,6 +119,7 @@ static NSString * const ACRCarouselAccessibilityValueFormat = @"Page %ld of %ld"
     
     UIView *accessibilityContainerView = [self getAccessibilityContainerView];
     self.accessibilityElements = @[accessibilityContainerView, carouselStackView];
+    
     return self;
 }
 
