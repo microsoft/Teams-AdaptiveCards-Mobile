@@ -8,8 +8,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ACRToggleInputView : UIView
-@property (strong, nonatomic) IBOutlet UIStackView *contentview;
-@property (weak, nonatomic) IBOutlet UILabel *title;
-@property (weak, nonatomic) IBOutlet UISwitch *toggle;
-@property IBInspectable UIColor *switchOffStateColor;
+@property (nonatomic, strong) UIStackView *contentview;
+@property (nonatomic, weak) UILabel *title;
+@property (nonatomic, weak) UISwitch *toggle;
+@property UIColor *switchOffStateColor;
 @end
