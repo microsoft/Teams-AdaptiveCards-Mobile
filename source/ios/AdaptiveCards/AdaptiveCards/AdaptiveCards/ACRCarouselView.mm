@@ -213,27 +213,31 @@ static NSString * const ACRCarouselAccessibilityValueFormat = @"Page %ld of %ld"
     }
 }
 
--(BOOL) accessibilityScroll:(UIAccessibilityScrollDirection)direction {
+-(BOOL) accessibilityScroll:(UIAccessibilityScrollDirection)direction
+{
     
-    if(direction == UIAccessibilityScrollDirectionLeft) {
+    if(direction == UIAccessibilityScrollDirectionLeft)
+    {
        return [self handleLeftSwipe];
     }
     
-    else if(direction == UIAccessibilityScrollDirectionRight) {
+    else if(direction == UIAccessibilityScrollDirectionRight)
+    {
         return [self handleRightSwipe];
     }
     
     return NO;
 }
 
--(void) updateAccessibilityValue {
+-(void) updateAccessibilityValue
+{
     NSString *accessibilityValue = [NSString stringWithFormat:@"Page %ld of %ld",self.carouselPageViewIndex+1,self.carouselPageViewList.count];
     self.accessibilityValue = NSLocalizedString(accessibilityValue, null);
     UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
 }
 
--(UIView *) getAccessibilityContainerView {
-    
+-(UIView *) getAccessibilityContainerView
+{
     UIView * accessibilityContainerView = [[UIView alloc] initWithFrame:CGRectZero];
     accessibilityContainerView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:accessibilityContainerView];
