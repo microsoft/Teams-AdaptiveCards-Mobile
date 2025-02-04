@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import io.adaptivecards.adaptivecardssample.CustomObjects.FeatureFlagResolver;
 import io.adaptivecards.objectmodel.*;
+import io.adaptivecards.parser.AdaptiveCardParser;
 import io.adaptivecards.renderer.AdaptiveCardRenderer;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
@@ -121,6 +122,8 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         m_configEditText.addTextChangedListener(watcher);
 
         renderImporterCard(true);
+
+        new AdaptiveCardParser().deserializeFromString("");
     }
 
     public class SwitchListener implements CompoundButton.OnCheckedChangeListener
