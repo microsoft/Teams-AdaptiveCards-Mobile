@@ -1,9 +1,7 @@
 package com.example.ac_sdk.objectmodel
 
-enum class HeightType(val key: String) {
-    Auto("Auto"),
-    Stretch("Stretch")
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 enum class RatingSize(val key: String) {
     Medium("medium"),
@@ -20,114 +18,14 @@ enum class RatingStyle(val key: String) {
     Compact("compact")
 }
 
-enum class Spacing(val key: String) {
-    Default("default"),
-    None("none"),
-    Small("small"),
-    Medium("medium"),
-    Large("large"),
-    ExtraLarge("extraLarge"),
-    Padding("padding")
-}
-
 enum class SeparatorThickness(val key: String) {
     Default("default"),
     Thick("thick")
 }
 
-enum class ImageStyle(val key: String) {
-    Default("default"),
-    Person("person"),
-    RoundedCorners("roundedCorners")
-}
-
-enum class IconSize(val key: String) {
-    xxSmall("xxSmall"),
-    xSmall("xSmall"),
-    Small("Small"),
-    Standard("Standard"),
-    Medium("Medium"),
-    Large("Large"),
-    xLarge("xLarge"),
-    xxLarge("xxLarge")
-}
-
-enum class IconStyle(val key: String) {
-    Regular("Regular"),
-    Filled("Filled")
-}
-
-enum class VerticalAlignment(val key: String) {
-    Top("top"),
-    Center("center"),
-    Bottom("bottom")
-}
-
-enum class ImageFillMode(val key: String) {
-    Cover("cover"),
-    RepeatHorizontally("repeatHorizontally"),
-    RepeatVertically("repeatVertically"),
-    Repeat("repeat")
-}
-
 enum class ItemFit(val key: String) {
     Fit("Fit"),
     Fill("Fill")
-}
-
-enum class LayoutContainerType(val key: String) {
-    None("Layout.None"),
-    Stack("Layout.Stack"),
-    Flow("Layout.Flow"),
-    AreaGrid("Layout.AreaGrid")
-}
-
-enum class ImageSize(val key: String) {
-    Auto("Auto"),
-    Large("Large"),
-    Medium("Medium"),
-    Small("Small"),
-    Stretch("Stretch")
-}
-
-enum class HorizontalAlignment(val key: String) {
-    Center("center"),
-    Left("left"),
-    Right("right")
-}
-
-enum class ForegroundColor(val key: String) {
-    Accent("Accent"),
-    Attention("Attention"),
-    Dark("Dark"),
-    Default("Default"),
-    Good("Good"),
-    Light("Light"),
-    Warning("Warning")
-}
-
-enum class TextStyle(val key: String) {
-    Default("default"),
-    Heading("heading")
-}
-
-enum class TextWeight(val key: String) {
-    Bolder("Bolder"),
-    Lighter("Lighter"),
-    Default("Default")
-}
-
-enum class TextSize(val key: String) {
-    ExtraLarge("ExtraLarge"),
-    Large("Large"),
-    Medium("Medium"),
-    Default("Default"),
-    Small("Small")
-}
-
-enum class FontType(val key: String) {
-    Default("Default"),
-    Monospace("Monospace")
 }
 
 enum class ActionsOrientation(val key: String) {
@@ -138,14 +36,6 @@ enum class ActionsOrientation(val key: String) {
 enum class ActionMode(val key: String) {
     Inline("Inline"),
     Popup("Popup")
-}
-
-enum class ActionRole(val key: String) {
-    Button("Button"),
-    Link("Link"),
-    Tab("Tab"),
-    Menu("Menu"),
-    MenuItem("MenuItem")
 }
 
 enum class AssociatedInputs(val key: String) {
@@ -167,14 +57,15 @@ enum class TextInputStyle(val key: String) {
     Password("Password")
 }
 
-enum class ContainerStyle(val key: String) {
-    None("None"),
-    Default("Default"),
-    Emphasis("Emphasis"),
-    Good("Good"),
-    Attention("Attention"),
-    Warning("Warning"),
-    Accent("Accent")
+@Serializable
+enum class ContainerStyle {
+    @SerialName("None") NONE,
+    @SerialName("Default") DEFAULT,
+    @SerialName("Emphasis") EMPHASIS,
+    @SerialName("Good") GOOD,
+    @SerialName("Attention") ATTENTION,
+    @SerialName("Warning") WARNING,
+    @SerialName("Accent") ACCENT
 }
 
 enum class ActionAlignment(val key: String) {
@@ -189,25 +80,20 @@ enum class IconPlacement(val key: String) {
     LeftOfTitle("LeftOfTitle")
 }
 
-enum class VerticalContentAlignment(val key: String) {
-    Top("Top"),
-    Center("Center"),
-    Bottom("Bottom")
-}
-
 enum class InlineElementType(val key: String) {
     TextRun("TextRun")
 }
 
+@Serializable
 enum class FallbackType {
-    None,
-    Drop,
-    Content
-};
+    @SerialName("none") NONE,
+    @SerialName("drop") DROP,
+    @SerialName("content") CONTENT
+}
 
-enum class Mode(val key: String) {
-    Primary("primary"),
-    Secondary("secondary")
+enum class Mode {
+    @SerialName("primary") PRIMARY,
+    @SerialName("secondary") SECONDARY
 }
 
 enum class ErrorStatusCode(val key: String) {
@@ -220,6 +106,209 @@ enum class ErrorStatusCode(val key: String) {
     CustomError("CustomError")
 }
 
-enum class ValueChangedActionType(val key: String) {
-    ResetInputs("Action.ResetInputs")
+
+@Serializable
+enum class ValueChangedActionType {
+    @SerialName("Action.ResetInputs") RESET_INPUTS
+}
+
+enum class ContainerBleedDirection(val key: String) {
+    BleedRestricted("restricted"),
+    BleedLeft("left"),
+    BleedRight("right"),
+    BleedLeftRight("leftRight"),
+    BleedUp("up"),
+    BleedLeftUp("leftUp"),
+    BleedRightUp("rightUp"),
+    BleedLeftRightUp("leftRightUp"),
+    BleedDown("down"),
+    BleedLeftDown("leftDown"),
+    BleedRightDown("rightDown"),
+    BleedLeftRightDown("leftRightDown"),
+    BleedUpDown("upDown"),
+    BleedLeftUpDown("leftUpDown"),
+    BleedRightUpDown("rightUpDown"),
+    BleedAll("all")
+}
+
+
+
+@Serializable
+enum class ActionType {
+    @SerialName("Action.Submit") SUBMIT,
+    @SerialName("Action.OpenUrl") OPENURL,
+    @SerialName("Action.ShowCard") SHOWCARD,
+    @SerialName("Action.Execute") EXECUTE,
+    @SerialName("Action.ToggleVisibility") TOGGLEVISIBILITY
+}
+
+@Serializable
+enum class ActionRole {
+    @SerialName("Button") BUTTON,
+    @SerialName("Link") LINK,
+    @SerialName("Tab") TAB,
+    @SerialName("Menu") MENU,
+    @SerialName("MenuItem") MENUITEM,
+}
+
+@Serializable
+enum class CardElementType {
+    @SerialName("TextBlock") TEXTBLOCK,
+    @SerialName("Image") IMAGE,
+    @SerialName("Media") MEDIA,
+    @SerialName("RichTextBlock") RICHTEXTBLOCK,
+    @SerialName("TextRun") TEXTRUN,
+    @SerialName("Icon") ICON,
+    @SerialName("RatingLabel") RATINGLABEL,
+    @SerialName("Container") CONTAINER,
+    @SerialName("ColumnSet") COLUMNSET,
+    @SerialName("Column") COLUMN,
+    @SerialName("FactSet") FACTSET,
+    @SerialName("ImageSet") IMAGESET,
+    @SerialName("ActionSet") ACTIONSET,
+    @SerialName("Input.Text") INPUTTEXT,
+    @SerialName("Input.Number") INPUTNUMBER,
+    @SerialName("Input.Date") INPUTDATE,
+    @SerialName("Input.Time") INPUTTIME,
+    @SerialName("Input.Toggle") INPUTTOGGLE,
+    @SerialName("Input.ChoiceSet") INPUTCHOICESET
+}
+
+@Serializable
+enum class TargetWidthType {
+    @SerialName("Default") DEFAULT,
+    @SerialName("wide") WIDE,
+    @SerialName("standard") STANDARD,
+    @SerialName("narrow") NARROW,
+    @SerialName("veryNarrow") VERYNARROW,
+    @SerialName("atLeast:wide") ATLEASTWIDE,
+    @SerialName("atLeast:standard") ATLEASTSTANDARD,
+    @SerialName("atLeast:narrow") ATLEASTNARROW,
+    @SerialName("atLeast:veryNarrow") ATLEASTVERYNARROW,
+    @SerialName("atMost:wide") ATMOSTWIDE,
+    @SerialName("atMost:standard") ATMOSTSTANDARD,
+    @SerialName("atMost:narrow") ATMOSTNARROW,
+    @SerialName("atMost:veryNarrow") ATMOSTVERYNARROW
+}
+
+enum class Spacing {
+    @SerialName("default") DEFAULT,
+    @SerialName("none") NONE,
+    @SerialName("small") SMALL,
+    @SerialName("medium") MEDIUM,
+    @SerialName("large") LARGE,
+    @SerialName("extraLarge") EXTRA_LARGE,
+    @SerialName("padding") PADDING
+}
+
+@Serializable
+enum class HeightType {
+    @SerialName("Auto") AUTO,
+    @SerialName("Stretch") STRETCH
+}
+
+@Serializable
+enum class HostWidth {
+    @SerialName("default") DEFAULT,
+    @SerialName("wide") WIDE,
+    @SerialName("standard") STANDARD,
+    @SerialName("narrow") NARROW,
+    @SerialName("veryNarrow") VERYNARROW
+}
+
+@Serializable
+enum class VerticalAlignment {
+    @SerialName("top") TOP,
+    @SerialName("center") CENTER,
+    @SerialName("bottom") BOTTOM
+}
+
+@Serializable
+enum class ForegroundColor {
+    @SerialName("Default") DEFAULT,
+    @SerialName("Dark") DARK,
+    @SerialName("Light") LIGHT,
+    @SerialName("Accent") ACCENT,
+    @SerialName("Good") GOOD,
+    @SerialName("Warning") WARNING,
+    @SerialName("Attention") ATTENTION
+}
+
+@Serializable
+enum class TextSize {
+    @SerialName("Small") SMALL,
+    @SerialName("Default") DEFAULT,
+    @SerialName("Medium") MEDIUM,
+    @SerialName("Large") LARGE,
+    @SerialName("ExtraLarge") EXTRA_LARGE
+}
+
+@Serializable
+enum class TextWeight {
+    @SerialName("Default") DEFAULT,
+    @SerialName("Lighter") LIGHTER,
+    @SerialName("Bolder") BOLDER
+}
+
+@Serializable
+enum class TextStyle {
+    @SerialName("default") DEFAULT,
+    @SerialName("heading") HEADING,
+    @SerialName("title") TITLE,
+    @SerialName("subtitle") SUBTITLE
+}
+
+@Serializable
+enum class FontType {
+    @SerialName("Default") DEFAULT,
+    @SerialName("Monospace") MONOSPACE
+}
+
+@Serializable
+enum class ImageFillMode {
+    @SerialName("cover") COVER,
+    @SerialName("repeatHorizontally") REPEAT_HORIZ,
+    @SerialName("repeatVertically") REPEAT_VERT,
+    @SerialName("repeat") REPEAT
+}
+
+@Serializable
+enum class HorizontalAlignment {
+    @SerialName("left") LEFT,
+    @SerialName("center") CENTER,
+    @SerialName("right") RIGHT
+}
+
+@Serializable
+enum class ImageSize {
+    @SerialName("Auto") AUTO,
+    @SerialName("Stretch") STRETCH,
+    @SerialName("Small") SMALL,
+    @SerialName("Medium") MEDIUM,
+    @SerialName("Large") LARGE
+}
+
+@Serializable
+enum class ImageStyle {
+    @SerialName("default") DEFAULT,
+    @SerialName("person") PERSON,
+    @SerialName("roundedCorners") ROUNDCORNERS
+}
+
+@Serializable
+enum class IconSize {
+    @SerialName("xxSmall") XXSMALL,
+    @SerialName("xSmall") XSMALL,
+    @SerialName("Small") SMALL,
+    @SerialName("Standard") STANDARD,
+    @SerialName("Medium") MEDIUM,
+    @SerialName("Large") LARGE,
+    @SerialName("xLarge") XLARGE,
+    @SerialName("xxLarge") XXLARGE
+}
+
+@Serializable
+enum class IconStyle {
+    @SerialName("Regular") REGULAR,
+    @SerialName("Filled") FILLED
 }

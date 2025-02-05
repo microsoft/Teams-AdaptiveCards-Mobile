@@ -1,30 +1,17 @@
 package com.example.ac_sdk.objectmodel
 
-import java.util.regex.Pattern
+import kotlinx.serialization.Serializable
 
-class SemanticVersion(version: String) {
-
-    val major: Int
-    val minor: Int
-    val build: Int
-    val revision: Int
-
-    init {
-        val versionPattern = Pattern.compile("^([\\d]+)(?:\\.([\\d]+))?(?:\\.([\\d]+))?(?:\\.([\\d]+))?$")
-        val matcher = versionPattern.matcher(version)
-
-        if (!matcher.matches()) {
-            throw IllegalArgumentException("Semantic version invalid: $version")
-        }
-
-        major = matcher.group(1)?.toIntOrNull() ?: 0
-        minor = matcher.group(2)?.toIntOrNull() ?: 0
-        build = matcher.group(3)?.toIntOrNull() ?: 0
-        revision = matcher.group(4)?.toIntOrNull() ?: 0
-    }
+@Serializable
+data class SemanticVersion(
+    val major: Int = 0,
+    val minor: Int = 0,
+    val patch: Int = 0,
+    val revision: Int = 0
+) {
 
     override fun toString(): String {
-        return "$major.$minor.$build.$revision"
+        return "$major.$minor.$patch.$revision"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -33,14 +20,14 @@ class SemanticVersion(version: String) {
 
         return major == other.major &&
                 minor == other.minor &&
-                build == other.build &&
+                patch == other.patch &&
                 revision == other.revision
     }
 
     override fun hashCode(): Int {
         var result = major
         result = 31 * result + minor
-        result = 31 * result + build
+        result = 31 * result + patch
         result = 31 * result + revision
         return result
     }
@@ -49,13 +36,8 @@ class SemanticVersion(version: String) {
         return when {
             major != other.major -> major.compareTo(other.major)
             minor != other.minor -> minor.compareTo(other.minor)
-            build != other.build -> build.compareTo(other.build)
+            patch != other.patch -> patch.compareTo(other.patch)
             else -> revision.compareTo(other.revision)
         }
     }
-
-    operator fun component1() = major
-    operator fun component2() = minor
-    operator fun component3() = build
-    operator fun component4() = revision
 }

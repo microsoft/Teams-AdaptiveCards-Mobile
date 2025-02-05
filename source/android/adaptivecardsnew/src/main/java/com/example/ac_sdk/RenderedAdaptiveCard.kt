@@ -3,6 +3,7 @@ package com.example.ac_sdk
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
+import com.example.ac_sdk.objectmodel.AdaptiveCard
 import java.util.*
 
 class RenderedAdaptiveCard(
@@ -48,10 +49,10 @@ class RenderedAdaptiveCard(
         val inputHandlers = Vector<IInputHandler>()
         var cardId: Long? = submitActionCard[clickedActionId]
 
-        while (cardId != null && cardId != View.NO_ID) {
-            inputsInCard[cardId]?.values?.let { inputHandlers.addAll(it) }
-            cardId = parentCardForCard[cardId]
-        }
+//        while (cardId != null && cardId != View.NO_ID) {
+//            inputsInCard[cardId]?.values?.let { inputHandlers.addAll(it) }
+//            cardId = parentCardForCard[cardId]
+//        }
 
         return inputHandlers
     }
@@ -69,16 +70,16 @@ class RenderedAdaptiveCard(
         val inputsToValidate = getInputsToValidate(actionId)
 
         for (i in inputsToValidate) {
-            allInputsAreValid = allInputsAreValid && i.isValid
+           // allInputsAreValid = allInputsAreValid && i.isValid
 
             if (allInputsAreValid) {
                 validatedInputs[i.id] = i.input
             }
 
-            if (!allInputsAreValid && !hasSetFocusToElement) {
-                (i as? BaseInputHandler)?.setFocusToView()
-                hasSetFocusToElement = true
-            }
+//            if (!allInputsAreValid && !hasSetFocusToElement) {
+//                (i as? BaseInputHandler)?.setFocusToView()
+//                hasSetFocusToElement = true
+//            }
         }
 
         if (allInputsAreValid) {
@@ -102,7 +103,8 @@ class RenderedAdaptiveCard(
 
     fun isActionSubmittable(action: View): Boolean {
         val actionId = action.id
-        return submitActionCard.containsKey(actionId)
+        return false
+       // return submitActionCard.containsKey(actionId)
     }
 
     fun clearValidatedInputs() {

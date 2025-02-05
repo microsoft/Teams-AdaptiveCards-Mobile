@@ -74,7 +74,7 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
 
         String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
 
-        Button dropDownItem = new Button(context, null, R.style.Widget_AppCompat_Light_ActionButton_Overflow);
+        Button dropDownItem = new Button(context, null, androidx.appcompat.R.style.Widget_AppCompat_Light_ActionButton_Overflow);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int padding = Util.dpToPixels(context, PADDING);
         layoutParams.gravity = Gravity.CENTER;

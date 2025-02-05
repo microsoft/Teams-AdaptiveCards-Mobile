@@ -28,6 +28,8 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ac_sdk.AdaptiveCardParser;
+
 import io.adaptivecards.adaptivecardssample.CustomObjects.FeatureFlagResolver;
 import io.adaptivecards.objectmodel.*;
 import io.adaptivecards.renderer.AdaptiveCardRenderer;
@@ -367,6 +369,8 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
 
             ParseContext context = createParseContextForCustomElements();
             ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
+            com.example.ac_sdk.objectmodel.AdaptiveCard adaptiveCard = AdaptiveCardParser.Companion.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, new
+                com.example.ac_sdk.objectmodel.ParseContext());
             LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
             layout.removeAllViews();
 
