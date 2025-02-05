@@ -99,7 +99,7 @@ std::shared_ptr<BaseCardElement> ToggleInputParser::Deserialize(ParseContext& co
 
     toggleInput->SetTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title, true));
     toggleInput->SetValue(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Value));
-    toggleInput->SetWrap(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Wrap, false, false));
+    toggleInput->SetWrap(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Wrap, true, false));
     toggleInput->SetValueOff(ParseUtil::GetString(json, AdaptiveCardSchemaKey::ValueOff, std::string("false")));
     toggleInput->SetValueOn(ParseUtil::GetString(json, AdaptiveCardSchemaKey::ValueOn, std::string("true")));
 
