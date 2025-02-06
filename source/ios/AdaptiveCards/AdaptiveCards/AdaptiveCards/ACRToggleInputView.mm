@@ -32,24 +32,46 @@
 
 - (void)commonInit
 {
-    // nib can have more than one view serialized
-    _contentview = [[[ACOBundle getInstance] getBundle] loadNibNamed:@"ACRToggleInputView" owner:self options:nil][0];
+    // Initialize contentView
+     UIStackView *contentview = [[UIStackView alloc] init];
+     contentview.axis = UILayoutConstraintAxisHorizontal;
+     contentview.alignment = UIStackViewAlignmentCenter;
+     contentview.translatesAutoresizingMaskIntoConstraints = NO;
 
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+     // Initialize title label
+     UILabel *title = [[UILabel alloc] init];
+     title.numberOfLines = 0;
+     title.lineBreakMode = NSLineBreakByWordWrapping;
+     title.translatesAutoresizingMaskIntoConstraints = NO;
+     [contentview addArrangedSubview:title];
 
-    _contentview.translatesAutoresizingMaskIntoConstraints = NO;
+     // Initialize toggle switch
+     UISwitch *toggle = [[UISwitch alloc] init];
+     toggle.translatesAutoresizingMaskIntoConstraints = NO;
+     [contentview addArrangedSubview:toggle];
 
-    [self addSubview:_contentview];
+     // Set constraints for contentView
+     [NSLayoutConstraint activateConstraints:@[
+         [contentview.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor],
+         [contentview.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
+         [contentview.centerYAnchor constraintEqualToAnchor:self.layoutMarginsGuide.centerYAnchor],
+         [contentview.heightAnchor constraintEqualToAnchor:self.heightAnchor]
+     ]];
 
-    [_contentview.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor].active = YES;
-    [_contentview.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor].active = YES;
-    [_contentview.centerYAnchor constraintEqualToAnchor:self.layoutMarginsGuide.centerYAnchor].active = YES;
-    [_contentview.heightAnchor constraintEqualToAnchor:self.heightAnchor].active = YES;
-    [_title setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-    self.toggle.tintColor = self.switchOffStateColor;
-    self.toggle.backgroundColor = self.switchOffStateColor;
-    self.toggle.layer.cornerRadius = 16.0f;
-    // we configure the margin to nil, and have users of SDK configure margins through xib interface's container view
+     [title setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+     toggle.tintColor = self.switchOffStateColor;
+     toggle.backgroundColor = self.switchOffStateColor;
+     toggle.layer.cornerRadius = 16.0f;
+
+     // Set properties
+     _contentview = contentview;
+     _title = title;
+     _toggle = toggle;
+    
+    // Add contentview to the view
+    [self addSubview:contentview];
+
+     // Configure margins
     if (@available(iOS 11.0, *)) {
         NSDirectionalEdgeInsets insets = self.directionalLayoutMargins;
         insets.leading = 0.0f;
@@ -69,4 +91,5 @@
     CGSize switchIntrinsicContentSize = [_toggle intrinsicContentSize];
     return CGSizeMake(labelIntrinsicContentSize.width + _contentview.spacing + switchIntrinsicContentSize.width, MAX(labelIntrinsicContentSize.height, switchIntrinsicContentSize.height));
 }
+
 @end
