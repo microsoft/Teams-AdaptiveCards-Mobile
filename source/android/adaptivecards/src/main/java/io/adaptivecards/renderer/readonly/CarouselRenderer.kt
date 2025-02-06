@@ -56,6 +56,10 @@ object CarouselRenderer : BaseCardElementRenderer() {
         carouselView.addView(viewPager)
         scrollingIndicator?.let { carouselView.addView(it) }
 
+        carouselView.isFocusable = true
+        carouselView.isFocusableInTouchMode = true
+        carouselView.importantForAccessibility  = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+
         viewGroup.addView(carouselView)
         return carouselView
     }
@@ -81,6 +85,12 @@ object CarouselRenderer : BaseCardElementRenderer() {
         viewPager.offscreenPageLimit = carousel.GetPages().size
         viewPager.adapter = CarouselPageAdapter(carousel.GetPages(), renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
         getViewPagerPageTransformer(carousel.pageAnimation)?.apply { viewPager.setPageTransformer(this) }
+
+        viewPager.isFocusable = true
+        viewPager.isFocusableInTouchMode = true
+        viewPager.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+        viewPager.contentDescription = context.getString(R.string.carousel_talkback_announcement)
+
         return viewPager
     }
 
@@ -105,6 +115,8 @@ object CarouselRenderer : BaseCardElementRenderer() {
             val padding = context.resources.getDimensionPixelSize(R.dimen.scrollingpagecontrolview_padding_top_bottom)
             this.setPadding(0, padding, 0, padding)
             addView(scrollingPageControlView)
+            this.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+            this.contentDescription = context.getString(R.string.carousel_talkback_announcement)
         }
     }
 

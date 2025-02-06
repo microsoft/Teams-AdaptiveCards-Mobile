@@ -110,7 +110,7 @@ class RatingStarInputView: FlexboxLayout {
     }
 
     companion object {
-        private const val RIGHT_MARGIN = 12
+        private const val RIGHT_MARGIN = 4
     }
 }
 
