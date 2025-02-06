@@ -168,6 +168,11 @@ Json::Value BaseActionElement::SerializeToJsonValue() const
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ActionRole)] = ActionRoleToString(m_role);
     }
 
+    for (const auto& menuActions : m_menuActions)
+    {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MenuActions)].append(menuActions->SerializeToJsonValue());
+    }
+
     return root;
 }
 
@@ -192,6 +197,16 @@ void BaseActionElement::GetResourceInformation(std::vector<RemoteResourceInforma
         imageResourceInfo.mimeType = "image";
         resourceInfo.push_back(imageResourceInfo);
     }
+}
+
+const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& BaseActionElement::GetMenuActions() const
+{
+    return m_menuActions;
+}
+
+std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& BaseActionElement::GetMenuActions()
+{
+    return m_menuActions;
 }
 
 void BaseActionElement::ParseJsonObject(AdaptiveCards::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& baseElement)
@@ -223,4 +238,13 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip));
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
     element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
+
+    //Parse Menu Actions
+    auto menuActions = ParseUtil::GetElementCollection<BaseActionElement>(
+            true,
+            context,
+            json,
+            AdaptiveCardSchemaKey::MenuActions,
+            false);
+    element->m_menuActions = std::move(menuActions);
 }
