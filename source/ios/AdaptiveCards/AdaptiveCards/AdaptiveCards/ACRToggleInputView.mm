@@ -50,14 +50,6 @@
     toggle.translatesAutoresizingMaskIntoConstraints = NO;
     [contentview addArrangedSubview:toggle];
 
-    // Set constraints for contentView
-    [NSLayoutConstraint activateConstraints:@[
-        [contentview.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor],
-        [contentview.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
-        [contentview.centerYAnchor constraintEqualToAnchor:self.layoutMarginsGuide.centerYAnchor],
-        [contentview.heightAnchor constraintEqualToAnchor:self.heightAnchor],
-    ]];
-
     [title setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     toggle.tintColor = self.switchOffStateColor;
     toggle.backgroundColor = self.switchOffStateColor;
@@ -70,6 +62,14 @@
 
     // Add contentview to the view
     [self addSubview:contentview];
+
+    // Set constraints for contentView
+    [NSLayoutConstraint activateConstraints:@[
+        [contentview.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor],
+        [contentview.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
+        [contentview.centerYAnchor constraintEqualToAnchor:self.layoutMarginsGuide.centerYAnchor],
+        [contentview.heightAnchor constraintEqualToAnchor:self.heightAnchor],
+    ]];
 
     // Configure margins
     if (@available(iOS 11.0, *)) {
