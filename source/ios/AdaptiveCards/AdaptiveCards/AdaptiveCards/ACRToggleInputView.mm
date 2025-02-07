@@ -33,45 +33,45 @@
 - (void)commonInit
 {
     // Initialize contentView
-     UIStackView *contentview = [[UIStackView alloc] init];
-     contentview.axis = UILayoutConstraintAxisHorizontal;
-     contentview.alignment = UIStackViewAlignmentCenter;
-     contentview.translatesAutoresizingMaskIntoConstraints = NO;
+    UIStackView *contentview = [[UIStackView alloc] init];
+    contentview.axis = UILayoutConstraintAxisHorizontal;
+    contentview.alignment = UIStackViewAlignmentCenter;
+    contentview.translatesAutoresizingMaskIntoConstraints = NO;
 
-     // Initialize title label
-     UILabel *title = [[UILabel alloc] init];
-     title.numberOfLines = 0;
-     title.lineBreakMode = NSLineBreakByWordWrapping;
-     title.translatesAutoresizingMaskIntoConstraints = NO;
-     [contentview addArrangedSubview:title];
+    // Initialize title label
+    UILabel *title = [[UILabel alloc] init];
+    title.numberOfLines = 0;
+    title.lineBreakMode = NSLineBreakByWordWrapping;
+    title.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentview addArrangedSubview:title];
 
-     // Initialize toggle switch
-     UISwitch *toggle = [[UISwitch alloc] init];
-     toggle.translatesAutoresizingMaskIntoConstraints = NO;
-     [contentview addArrangedSubview:toggle];
+    // Initialize toggle switch
+    UISwitch *toggle = [[UISwitch alloc] init];
+    toggle.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentview addArrangedSubview:toggle];
 
-     // Set constraints for contentView
-     [NSLayoutConstraint activateConstraints:@[
-         [contentview.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor],
-         [contentview.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
-         [contentview.centerYAnchor constraintEqualToAnchor:self.layoutMarginsGuide.centerYAnchor],
-         [contentview.heightAnchor constraintEqualToAnchor:self.heightAnchor]
-     ]];
+    // Set constraints for contentView
+    [NSLayoutConstraint activateConstraints:@[
+        [contentview.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor],
+        [contentview.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
+        [contentview.centerYAnchor constraintEqualToAnchor:self.layoutMarginsGuide.centerYAnchor],
+        [contentview.heightAnchor constraintEqualToAnchor:self.heightAnchor],
+    ]];
 
-     [title setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-     toggle.tintColor = self.switchOffStateColor;
-     toggle.backgroundColor = self.switchOffStateColor;
-     toggle.layer.cornerRadius = 16.0f;
+    [title setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    toggle.tintColor = self.switchOffStateColor;
+    toggle.backgroundColor = self.switchOffStateColor;
+    toggle.layer.cornerRadius = 16.0f;
 
-     // Set properties
-     _contentview = contentview;
-     _title = title;
-     _toggle = toggle;
-    
+    // Set properties
+    _contentview = contentview;
+    _title = title;
+    _toggle = toggle;
+
     // Add contentview to the view
     [self addSubview:contentview];
 
-     // Configure margins
+    // Configure margins
     if (@available(iOS 11.0, *)) {
         NSDirectionalEdgeInsets insets = self.directionalLayoutMargins;
         insets.leading = 0.0f;
