@@ -44,14 +44,13 @@
 + (ACRTextField *)configTextFiled:(std::shared_ptr<TextInput> const &)inputBlock renderAction:(BOOL)renderAction rootView:(ACRView *)rootView viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
 {
     ACRTextField *txtInput = nil;
-    NSBundle *bundle = [[ACOBundle getInstance] getBundle];
     switch (inputBlock->GetTextInputStyle()) {
         case TextInputStyle::Email: {
-            txtInput = [bundle loadNibNamed:@"ACRTextEmailField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextEmailField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             break;
         }
         case TextInputStyle::Tel: {
-            txtInput = [bundle loadNibNamed:@"ACRTextTelelphoneField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextTelelphoneField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
 #if !TARGET_OS_VISION
             CGRect frame = CGRectMake(0, 0, viewGroup.frame.size.width, 30);
             UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:frame];
@@ -64,17 +63,17 @@
             break;
         }
         case TextInputStyle::Url: {
-            txtInput = [bundle loadNibNamed:@"ACRTextUrlField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextUrlField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             break;
         }
         case TextInputStyle::Password: {
-            txtInput = [bundle loadNibNamed:@"ACRTextField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             txtInput.secureTextEntry = YES;
             break;
         }
         case TextInputStyle::Text:
         default: {
-            txtInput = [bundle loadNibNamed:@"ACRTextField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             break;
         }
     }
