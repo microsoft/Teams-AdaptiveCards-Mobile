@@ -1,4 +1,4 @@
-package com.example.ac_sdk.objectmodel
+package com.example.ac_sdk.objectmodel.utils
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -274,9 +274,12 @@ enum class ImageFillMode {
 
 @Serializable
 enum class HorizontalAlignment {
-    @SerialName("left") LEFT,
-    @SerialName("center") CENTER,
-    @SerialName("right") RIGHT
+    @SerialName("left")
+    LEFT,
+    @SerialName("center")
+    CENTER,
+    @SerialName("right")
+    RIGHT
 }
 
 @Serializable

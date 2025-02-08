@@ -1,14 +1,16 @@
-package com.example.ac_sdk.objectmodel
+package com.example.ac_sdk.objectmodel.parser
 
+import com.example.ac_sdk.objectmodel.utils.ActionType
+import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import org.json.JSONObject
 
 abstract class ActionElementParser {
-    abstract fun deserialize(context: ParseContext, value: JSONObject): ActionElement
-    abstract fun deserializeFromString(context: ParseContext, value: String): ActionElement
+    abstract fun deserialize(context: ParseContext, value: JSONObject): BaseActionElement
+    abstract fun deserializeFromString(context: ParseContext, value: String): BaseActionElement
 }
 
 class ActionElementParserWrapper(private val parser: ActionElementParser) : ActionElementParser() {
-    override fun deserialize(context: ParseContext, value: JSONObject): ActionElement {
+    override fun deserialize(context: ParseContext, value: JSONObject): BaseActionElement {
         val idProperty = value.getString("id")
         context.pushElement(idProperty, false)
         val element = parser.deserialize(context, value)
@@ -16,7 +18,7 @@ class ActionElementParserWrapper(private val parser: ActionElementParser) : Acti
         return element
     }
 
-    override fun deserializeFromString(context: ParseContext, value: String): ActionElement {
+    override fun deserializeFromString(context: ParseContext, value: String): BaseActionElement {
         return deserialize(context, JSONObject(value))
     }
 

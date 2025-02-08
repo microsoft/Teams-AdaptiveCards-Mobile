@@ -1,4 +1,4 @@
-package com.example.ac_sdk.objectmodel
+package com.example.ac_sdk.objectmodel.utils
 
 enum class WarningStatusCode {
     UnknownElementType,

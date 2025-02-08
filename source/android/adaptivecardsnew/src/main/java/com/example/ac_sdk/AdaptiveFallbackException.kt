@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.BaseCardElement
+import com.example.ac_sdk.objectmodel.elements.BaseCardElement
 
 
 /**

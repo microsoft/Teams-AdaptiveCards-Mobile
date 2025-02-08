@@ -1,5 +1,6 @@
-package com.example.ac_sdk.objectmodel
+package com.example.ac_sdk.objectmodel.utils
 
+import com.example.ac_sdk.objectmodel.BackgroundImage
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor

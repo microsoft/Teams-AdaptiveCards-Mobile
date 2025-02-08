@@ -1,11 +1,23 @@
 package com.example.ac_sdk
 
 import com.example.ac_sdk.objectmodel.*
-import kotlinx.serialization.PolymorphicSerializer
+import com.example.ac_sdk.objectmodel.elements.ActionElements
+import com.example.ac_sdk.objectmodel.elements.BaseActionElement
+import com.example.ac_sdk.objectmodel.elements.BaseCardElement
+import com.example.ac_sdk.objectmodel.elements.BaseElement
+import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.parser.AdaptiveCardParseException
+import com.example.ac_sdk.objectmodel.parser.AdaptiveCardParseWarning
+import com.example.ac_sdk.objectmodel.parser.ParseContext
+import com.example.ac_sdk.objectmodel.utils.ErrorStatusCode
+import com.example.ac_sdk.objectmodel.utils.FallbackType
+import com.example.ac_sdk.objectmodel.utils.HeightType
+import com.example.ac_sdk.objectmodel.utils.SemanticVersion
+import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
+import com.example.ac_sdk.objectmodel.utils.WarningStatusCode
 import kotlinx.serialization.json.*
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 import java.util.*
 import java.util.regex.Pattern
 
@@ -23,37 +35,20 @@ class AdaptiveCardParser {
 
             val enforceVersion = rendererVersion.isNotEmpty()
 //
-//            val ACModule = SerializersModule {
-//                polymorphic(CardElement::class) {
-//                    subclass(CardElement.TextBlockElement::class, CardElement.TextBlockElement.serializer())
-//                }
-//                polymorphic(BaseCardElement::class) {
-//                    subclass(TextBlock::class, TextBlock.serializer())
-//                }
-//            }
-
             val ACModule = SerializersModule {
-//                polymorphic(CardElement::class) {
-//                    subclass(CardElement.TextBlockElement::class)
+
+//                polymorphic(BaseElement::class) {
+//                   // subclass(BaseCardElement::class, BaseCardElement.serializer())
+//                    subclass(TextBlock::class, TextBlock.serializer())
+//
 //                }
-                polymorphic(BaseCardElement::class) {
-                    subclass(BaseCardElement.TextBlock::class)
-                    subclass(BaseCardElement.StyledCollectionElement::class)
-                    subclass(BaseCardElement.ColumnSet::class)
-                    subclass(BaseCardElement.Column::class)
-                    subclass(BaseCardElement.Container::class)
-                }
-                polymorphic(BaseCardElement.StyledCollectionElement::class) {
-                    subclass(BaseCardElement.ColumnSet::class)
-                    subclass(BaseCardElement.Column::class)
-                    subclass(BaseCardElement.Container::class)
-                }
             }
 
             val json = Json {
                 serializersModule = ACModule
                 classDiscriminator = "type"
-                decodeEnumsCaseInsensitive = true
+                ignoreUnknownKeys = true
+                encodeDefaults = true
             }
             val adaptiveCard = json.decodeFromJsonElement<AdaptiveCard>(jsonObject)
 
@@ -174,7 +169,7 @@ class AdaptiveCardParser {
 
         private fun makeFallbackTextCard(fallbackText: String, language: String, speak: String): AdaptiveCard {
             val fallbackCard = AdaptiveCard(version="1.0", fallbackText=fallbackText, speak=speak, language=language,
-                verticalAlignment=VerticalAlignment.TOP, height=HeightType.AUTO, minHeight=0)
+                verticalAlignment= VerticalAlignment.TOP, height= HeightType.AUTO, minHeight=0)
 
 //            fallbackCard.body.add(
 //                CardElement.TextBlockElement(
