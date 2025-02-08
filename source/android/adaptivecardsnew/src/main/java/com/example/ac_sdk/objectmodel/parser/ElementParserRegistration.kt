@@ -1,5 +1,6 @@
-package com.example.ac_sdk.objectmodel
+package com.example.ac_sdk.objectmodel.parser
 
+import com.example.ac_sdk.objectmodel.elements.BaseCardElement
 import org.json.JSONObject
 
 interface BaseCardElementParser {
@@ -9,7 +10,8 @@ interface BaseCardElementParser {
     }
 }
 
-class BaseCardElementParserWrapper(private val parserToWrap: BaseCardElementParser) : BaseCardElementParser {
+class BaseCardElementParserWrapper(private val parserToWrap: BaseCardElementParser) :
+    BaseCardElementParser {
     override fun deserialize(context: ParseContext, value: JSONObject): BaseCardElement {
         val idProperty = value.optString("id")
        // val internalId = InternalId.next()
