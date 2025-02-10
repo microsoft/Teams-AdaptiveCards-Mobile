@@ -184,10 +184,11 @@ extends:
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
 
-          - task: PublishBuildArtifacts@1
+          - task: 1ES.PublishPipelineArtifact@1
             displayName: 'Publish Artifact: drop'
             inputs:
-              PathtoPublish: '$(build.artifactstagingdirectory)'
+              path: '$(build.artifactstagingdirectory)'
+              artifact: drop
 
       - stage: NexusValidation
         jobs:
