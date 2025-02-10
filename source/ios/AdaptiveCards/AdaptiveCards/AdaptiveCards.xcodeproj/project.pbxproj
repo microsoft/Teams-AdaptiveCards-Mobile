@@ -180,7 +180,6 @@
 		6B8C769126461F1A009548FA /* ACRDateTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767926461F1A009548FA /* ACRDateTextField.xib */; };
 		6B8C769326461F1A009548FA /* ACRTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767B26461F1A009548FA /* ACRTextField.xib */; };
 		6B8C769426461F1A009548FA /* ACRQuickActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767C26461F1A009548FA /* ACRQuickActionView.xib */; };
-		6B8C769526461F1A009548FA /* ACRDatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767D26461F1A009548FA /* ACRDatePicker.xib */; };
 		6B8C769626461F1A009548FA /* ACRInputLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767E26461F1A009548FA /* ACRInputLabelView.xib */; };
 		6B8C769726461F1A009548FA /* ACRChoiceSetCellCompactUnchecked.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767F26461F1A009548FA /* ACRChoiceSetCellCompactUnchecked.xib */; };
 		6B8C769826461F1A009548FA /* ACRQuickActionMultilineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C768026461F1A009548FA /* ACRQuickActionMultilineView.xib */; };
@@ -742,7 +741,6 @@
 		6B8C767926461F1A009548FA /* ACRDateTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRDateTextField.xib; sourceTree = "<group>"; };
 		6B8C767B26461F1A009548FA /* ACRTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRTextField.xib; sourceTree = "<group>"; };
 		6B8C767C26461F1A009548FA /* ACRQuickActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRQuickActionView.xib; sourceTree = "<group>"; };
-		6B8C767D26461F1A009548FA /* ACRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRDatePicker.xib; sourceTree = "<group>"; };
 		6B8C767E26461F1A009548FA /* ACRInputLabelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRInputLabelView.xib; sourceTree = "<group>"; };
 		6B8C767F26461F1A009548FA /* ACRChoiceSetCellCompactUnchecked.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRChoiceSetCellCompactUnchecked.xib; sourceTree = "<group>"; };
 		6B8C768026461F1A009548FA /* ACRQuickActionMultilineView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRQuickActionMultilineView.xib; sourceTree = "<group>"; };
@@ -1246,7 +1244,6 @@
 				6B8C767426461F1A009548FA /* ACRChoiceSetCellCompactChecked.xib */,
 				6B8C767F26461F1A009548FA /* ACRChoiceSetCellCompactUnchecked.xib */,
 				6B8C768126461F1A009548FA /* ACRChoiceSetCellUnchecked.xib */,
-				6B8C767D26461F1A009548FA /* ACRDatePicker.xib */,
 				6B8C767926461F1A009548FA /* ACRDateTextField.xib */,
 				6B8C767E26461F1A009548FA /* ACRInputLabelView.xib */,
 				6B8C767826461F1A009548FA /* ACRInputTableView.xib */,
@@ -2287,7 +2284,6 @@
 				6B8C769326461F1A009548FA /* ACRTextField.xib in Resources */,
 				6B8C769726461F1A009548FA /* ACRChoiceSetCellCompactUnchecked.xib in Resources */,
 				6B8C769126461F1A009548FA /* ACRDateTextField.xib in Resources */,
-				6B8C769526461F1A009548FA /* ACRDatePicker.xib in Resources */,
 				6B8C768F26461F1A009548FA /* ACRTextUrlField.xib in Resources */,
 				6B8C768526461F1A009548FA /* checked-checkbox-24.png in Resources */,
 				6B8C768426461F1A009548FA /* ACRButton.xib in Resources */,
