@@ -178,7 +178,6 @@
 		6B8C768F26461F1A009548FA /* ACRTextUrlField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767726461F1A009548FA /* ACRTextUrlField.xib */; };
 		6B8C769026461F1A009548FA /* ACRInputTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767826461F1A009548FA /* ACRInputTableView.xib */; };
 		6B8C769126461F1A009548FA /* ACRDateTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767926461F1A009548FA /* ACRDateTextField.xib */; };
-		6B8C769226461F1A009548FA /* ACRToggleInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767A26461F1A009548FA /* ACRToggleInputView.xib */; };
 		6B8C769326461F1A009548FA /* ACRTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767B26461F1A009548FA /* ACRTextField.xib */; };
 		6B8C769426461F1A009548FA /* ACRQuickActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767C26461F1A009548FA /* ACRQuickActionView.xib */; };
 		6B8C769526461F1A009548FA /* ACRDatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767D26461F1A009548FA /* ACRDatePicker.xib */; };
@@ -741,7 +740,6 @@
 		6B8C767726461F1A009548FA /* ACRTextUrlField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRTextUrlField.xib; sourceTree = "<group>"; };
 		6B8C767826461F1A009548FA /* ACRInputTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRInputTableView.xib; sourceTree = "<group>"; };
 		6B8C767926461F1A009548FA /* ACRDateTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRDateTextField.xib; sourceTree = "<group>"; };
-		6B8C767A26461F1A009548FA /* ACRToggleInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRToggleInputView.xib; sourceTree = "<group>"; };
 		6B8C767B26461F1A009548FA /* ACRTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRTextField.xib; sourceTree = "<group>"; };
 		6B8C767C26461F1A009548FA /* ACRQuickActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRQuickActionView.xib; sourceTree = "<group>"; };
 		6B8C767D26461F1A009548FA /* ACRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACRDatePicker.xib; sourceTree = "<group>"; };
@@ -1260,7 +1258,6 @@
 				6B8C767B26461F1A009548FA /* ACRTextField.xib */,
 				6B8C766A26461F1A009548FA /* ACRTextTelelphoneField.xib */,
 				6B8C767726461F1A009548FA /* ACRTextUrlField.xib */,
-				6B8C767A26461F1A009548FA /* ACRToggleInputView.xib */,
 				6B8C766C26461F1A009548FA /* Images */,
 				6B3A231B2755A3EF00764971 /* Localizable.strings */,
 				46445D862BF7242700831973 /* FluentAssets.xcassets */,
@@ -2311,7 +2308,6 @@
 				46445D872BF7242700831973 /* FluentAssets.xcassets in Resources */,
 				6B8C769826461F1A009548FA /* ACRQuickActionMultilineView.xib in Resources */,
 				6B8C769926461F1A009548FA /* ACRChoiceSetCellUnchecked.xib in Resources */,
-				6B8C769226461F1A009548FA /* ACRToggleInputView.xib in Resources */,
 				6B8C768826461F1A009548FA /* unchecked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
