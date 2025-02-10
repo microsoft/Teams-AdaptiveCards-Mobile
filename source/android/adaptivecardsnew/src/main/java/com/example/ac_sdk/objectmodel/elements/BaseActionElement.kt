@@ -25,9 +25,6 @@ sealed class BaseActionElement : BaseElement() {
     @SerialName("isEnabled")
     val isEnabled: Boolean? = null
 
-//    @SerialName("type")
-//    var type: ActionType? = null
-
     @SerialName("mode")
     val mode: Mode? = null
 
