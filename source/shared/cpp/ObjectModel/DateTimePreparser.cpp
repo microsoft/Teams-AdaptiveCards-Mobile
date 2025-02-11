@@ -94,13 +94,25 @@ bool DateTimePreparser::IsValidTimeAndDate(const struct tm& parsedTm, const int 
            IsValidTime(parsedTm.tm_hour, parsedTm.tm_min, parsedTm.tm_sec) && IsValidTime(hours, minutes, 0);
 }
 
-constexpr time_t IntToTimeT(int timeToConvert)
+namespace
 {
-#pragma warning(push)
-#pragma warning(disable : 26472)
-    // disable warning about using static_cast since we need to hard cast up.
-    return static_cast<time_t>(timeToConvert);
-#pragma warning(pop)
+    constexpr time_t IntToTimeT(int timeToConvert)
+    {
+    #pragma warning(push)
+    #pragma warning(disable : 26472)
+        // disable warning about using static_cast since we need to hard cast up.
+        return static_cast<time_t>(timeToConvert);
+    #pragma warning(pop)
+    }
+
+    constexpr unsigned int StringToUnsignedInt(const std::string& str)
+    {
+    #pragma warning(push)
+    #pragma warning(disable : 26472)
+        // all string matched the date regex inside the file are within 4 digits, which is safe to cast to unsigned int
+        return static_cast<unsigned int>(std::stoul(str));
+    #pragma warning(pop)
+    }
 }
 
 void DateTimePreparser::ParseDateTime(const std::string& in)
@@ -281,8 +293,8 @@ bool DateTimePreparser::TryParseSimpleTime(const std::string& string, unsigned i
     {
         if (subMatches[1].matched && subMatches[2].matched)
         {
-            unsigned int parsedHours = std::stoul(subMatches[1]);
-            unsigned int parsedMinutes = std::stoul(subMatches[2]);
+            unsigned int parsedHours = StringToUnsignedInt(subMatches[1]);
+            unsigned int parsedMinutes = StringToUnsignedInt(subMatches[2]);
 
             if (IsValidTime(parsedHours, parsedMinutes, 0))
             {
@@ -304,9 +316,9 @@ bool DateTimePreparser::TryParseSimpleDate(const std::string& string, unsigned i
     {
         if (subMatches[1].matched && subMatches[2].matched && subMatches[3].matched)
         {
-            unsigned int parsedYear = std::stoul(subMatches[1]);
-            unsigned int parsedMonth = std::stoul(subMatches[2]);
-            unsigned int parsedDay = std::stoul(subMatches[3]);
+            unsigned int parsedYear = StringToUnsignedInt(subMatches[1]);
+            unsigned int parsedMonth = StringToUnsignedInt(subMatches[2]);
+            unsigned int parsedDay = StringToUnsignedInt(subMatches[3]);
 
             if (IsValidDate(parsedYear, parsedMonth, parsedDay))
             {
