@@ -30,7 +30,29 @@
 	"actions": [
 		{
 			"type": "Action.Execute",
-			"title": "Confirm data"
+			"title": "Confirm data",
+			"menuActions": [
+				{
+					"type": "Action.Execute",
+					"title": "Execute"
+				},
+				{
+					"type": "Action.Submit",
+					"title": "Submit"
+				},
+				{
+					"type": "Action.OpenUrl",
+					"title": "OpenUrl"
+				},
+				{
+					"type": "Action.ShowCard",
+					"title": "ShowCard"
+				},
+				{
+					"type": "Action.ToggleVisibility",
+					"title": "ToggleVisibility"
+				}
+			]
 		},
 		{
 			"type": "Action.Execute",
