@@ -48,7 +48,7 @@ const CGFloat minimumRowHeight = 44.0;
             if (@available(iOS 13.0, *)) {
                 iconImage = [UIImage systemImageNamed:@"square"];
             } else {
-                iconImage = [UIImage imageNamed:@"square" inBundle:bundle compatibleWithTraitCollection:nil];
+                iconImage = [UIImage imageNamed:@"unchecked-checkbox-24.png" inBundle:bundle compatibleWithTraitCollection:nil];
             }
         } else if ([reuseIdentifier isEqualToString:@"unchecked-radiobutton"]) {
             if (@available(iOS 13.0, *)) {
