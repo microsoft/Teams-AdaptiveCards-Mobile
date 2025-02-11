@@ -43,14 +43,9 @@ using namespace AdaptiveCards;
         _encodeFormatter = [[NSDateFormatter alloc] init];
         [self configDateFormatter:_encodeFormatter formatterStyle:dateStyle];
 
-        UIDatePicker *picker = nil;
+        UIDatePicker *picker = [[UIDatePicker alloc] init];
         if (@available(iOS 14.0, *)) {
-            picker = [[UIDatePicker alloc] init];
             picker.preferredDatePickerStyle = UIDatePickerStyleWheels;
-        } else {
-            // Fallback on earlier versions
-            NSBundle *bundle = [[ACOBundle getInstance] getBundle];
-            picker = [bundle loadNibNamed:@"ACRDatePicker" owner:self options:nil][0];
         }
 
         picker.locale = [NSLocale currentLocale];
