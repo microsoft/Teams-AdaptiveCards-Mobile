@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.ViewGroup;
@@ -225,6 +226,8 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         {
             throw new IllegalArgumentException("Action Handler is null.");
         }
+
+        Log.d("ACTesting", "baseActionElement: " + baseActionElement.GetElementType().name());
 
         Button button = renderButton(context, viewGroup, baseActionElement, hostConfig, renderedCard, renderArgs);
         button.setOnClickListener(new BaseActionElementRenderer.ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
