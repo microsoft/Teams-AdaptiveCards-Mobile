@@ -42,15 +42,8 @@
 				},
 				{
 					"type": "Action.OpenUrl",
-					"title": "OpenUrl"
-				},
-				{
-					"type": "Action.ShowCard",
-					"title": "ShowCard"
-				},
-				{
-					"type": "Action.ToggleVisibility",
-					"title": "ToggleVisibility"
+					"title": "OpenUrl",
+					"url": "https://adaptivecards.io"
 				}
 			]
 		},
