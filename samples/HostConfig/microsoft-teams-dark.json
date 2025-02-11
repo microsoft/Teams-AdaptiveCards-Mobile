@@ -419,5 +419,9 @@
 				"textColor": "#ffb900"
 			}
 		}
+	},
+	"pageControl":{
+		"selectedTintColor": "#7F85F5",
+		"unselectedTintColor":"#6E6E6E"
 	}
 }
