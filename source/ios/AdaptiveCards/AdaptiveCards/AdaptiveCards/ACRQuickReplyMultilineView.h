@@ -13,9 +13,9 @@
 @end
 
 @interface ACRQuickReplyMultilineView : UIView <ACRIQuickReply>
-@property (strong, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet ACRTextView *textView;
-@property (weak, nonatomic) IBOutlet UIView *spacing;
-@property (weak, nonatomic) IBOutlet ACRButton *button;
+@property (strong, nonatomic) UIView *contentView;
+@property (weak, nonatomic) ACRTextView *textView;
+@property (weak, nonatomic) UIView *spacing;
+@property (weak, nonatomic) ACRButton *button;
 
 @end
