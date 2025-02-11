@@ -2,4 +2,5 @@
     <string name="app_name">adaptivecards</string>
     <string name="open_url_announcement">%1$s link</string>
     <string name="spinner_talkback_announcement" comment="talkback announcement when user selects a item from dropdown. %1$s is the item. %2$d is the item position. %3$d is the total number of items in list.">%1$s at %2$d in list of %3$d items</string>
+    <string name="carousel_talkback_announcement">Swipe left and right with 2 fingers to move carousel.</string>
 </resources>
