@@ -47,8 +47,9 @@
     numberInputHandler.textField = numInput;
     numInput.delegate = numberInputHandler;
     numInput.text = numberInputHandler.text;
-    if ([numberInputHandler respondsToSelector:@selector(textFieldDidChange:)]) {
-        [numInput addTarget:numberInputHandler action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    SEL textFielsDidChangeSel = NSSelectorFromString(@"textFieldDidChange:");
+    if ([numberInputHandler respondsToSelector:textFielsDidChangeSel]) {
+        [numInput addTarget:numberInputHandler action:textFielsDidChangeSel forControlEvents:UIControlEventEditingChanged];
     }
 
     ACRInputLabelView *inputLabelView = [[ACRInputLabelView alloc] initInputLabelView:rootView acoConfig:acoConfig adaptiveInputElement:numInputBlck inputView:numInput accessibilityItem:numInput viewGroup:viewGroup dataSource:numberInputHandler];
