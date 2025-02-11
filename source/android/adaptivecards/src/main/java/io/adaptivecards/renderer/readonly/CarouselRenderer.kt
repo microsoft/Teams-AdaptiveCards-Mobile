@@ -54,11 +54,9 @@ object CarouselRenderer : BaseCardElementRenderer() {
         val viewPager = createViewPager(context, carousel, renderedCard, fragmentManager, cardActionHandler, hostConfig, renderArgs)
         val scrollingIndicator = createScrollingPageControlView(context, pages, hostConfig, viewPager)
         carouselView.addView(viewPager)
+        carouselView.markFocusable()
+        carouselView.markImportantForAccessibility()
         scrollingIndicator?.let { carouselView.addView(it) }
-
-        carouselView.isFocusable = true
-        carouselView.isFocusableInTouchMode = true
-        carouselView.importantForAccessibility  = View.IMPORTANT_FOR_ACCESSIBILITY_YES
 
         viewGroup.addView(carouselView)
         return carouselView
@@ -85,12 +83,8 @@ object CarouselRenderer : BaseCardElementRenderer() {
         viewPager.offscreenPageLimit = carousel.GetPages().size
         viewPager.adapter = CarouselPageAdapter(carousel.GetPages(), renderedCard, cardActionHandler, hostConfig, renderArgs, fragmentManager)
         getViewPagerPageTransformer(carousel.pageAnimation)?.apply { viewPager.setPageTransformer(this) }
-
-        viewPager.isFocusable = true
-        viewPager.isFocusableInTouchMode = true
-        viewPager.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
-        viewPager.contentDescription = context.getString(R.string.carousel_talkback_announcement)
-
+        viewPager.markFocusable()
+        viewPager.markImportantForAccessibility(context.getString(R.string.carousel_talkback_announcement))
         return viewPager
     }
 
@@ -115,8 +109,7 @@ object CarouselRenderer : BaseCardElementRenderer() {
             val padding = context.resources.getDimensionPixelSize(R.dimen.scrollingpagecontrolview_padding_top_bottom)
             this.setPadding(0, padding, 0, padding)
             addView(scrollingPageControlView)
-            this.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
-            this.contentDescription = context.getString(R.string.carousel_talkback_announcement)
+            markImportantForAccessibility(context.getString(R.string.carousel_talkback_announcement))
         }
     }
 
@@ -134,5 +127,15 @@ object CarouselRenderer : BaseCardElementRenderer() {
             PageAnimation.CrossFade -> CrossFadePageTransformer()
             PageAnimation.Slide -> null // Default behaviour is sliding
         }
+    }
+
+    private fun View.markFocusable() {
+        this.isFocusable = true
+        this.isFocusableInTouchMode = true
+    }
+
+    private fun View.markImportantForAccessibility(contentDescription: String? = null) {
+        this.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+        contentDescription?.let { this.contentDescription = it }
     }
 }
