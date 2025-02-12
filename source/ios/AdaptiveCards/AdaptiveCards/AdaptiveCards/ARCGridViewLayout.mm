@@ -278,7 +278,6 @@ using namespace AdaptiveCards;
             NSMutableArray<NSString *> *columnTypes = [NSMutableArray array];
             NSMutableArray<NSNumber *> *columnValues = [NSMutableArray array];
             
-            CGFloat totalWidth = CGRectGetWidth(self.bounds);
             CGFloat fixedWidthTotal = 0.0;
             NSInteger autoCount = 0;
             
