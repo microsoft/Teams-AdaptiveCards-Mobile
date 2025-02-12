@@ -132,7 +132,6 @@ using namespace AdaptiveCards;
                         // ideally this code should never run, because number of cell in row
                         // and number of columnDefinitions in table should be same
                         // but kept it anyways for wrong payloads
-                        float childrenWidth = availableSpace/numberOfColumns;
                         for (int i = 0; i < tableCells.size(); i++)
                         {
                             std::shared_ptr<TableCell> cell = tableCells[i];
