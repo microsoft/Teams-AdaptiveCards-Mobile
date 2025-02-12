@@ -472,6 +472,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case AdaptiveCards::CardElementType::TimeInput:
         case AdaptiveCards::CardElementType::ToggleInput:
         case AdaptiveCards::CardElementType::Unknown:
+        case AdaptiveCards::CardElementType::RatingLabel:
+        case AdaptiveCards::CardElementType::CompoundButton:
+        case AdaptiveCards::CardElementType::Badge:
             break;
     }
 }
