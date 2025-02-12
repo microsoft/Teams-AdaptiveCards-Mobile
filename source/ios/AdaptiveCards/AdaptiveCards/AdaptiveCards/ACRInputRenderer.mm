@@ -169,8 +169,9 @@
         }
         textInputHandler.textField = txtInput;
         txtInput.delegate = textInputHandler;
-        if ([textInputHandler respondsToSelector:@selector(textFieldDidChange:)]) {
-            [txtInput addTarget:textInputHandler action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        SEL textFielsDidChangeSel = NSSelectorFromString(@"textFieldDidChange:");
+        if ([textInputHandler respondsToSelector:textFielsDidChangeSel]) {
+            [txtInput addTarget:textInputHandler action:textFielsDidChangeSel forControlEvents:UIControlEventEditingChanged];
             }
     }
 
