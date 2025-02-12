@@ -9,12 +9,93 @@
 #import "ACOBaseActionElementPrivate.h"
 #import "ACOBundle.h"
 #import "ACOHostConfigPrivate.h"
+#import "ACRSVGImageView.h"
 #import "ACRUIImageView.h"
 #import "ACRViewPrivate.h"
-#import "ACRSVGImageView.h"
 #import "UtiliOS.h"
 
 @implementation ACRButton
+
+- (instancetype)initWithExpandable:(BOOL)expandable
+{
+    self = [super init];
+    if (self) {
+        if (expandable) {
+            [self setupExpandableConfig];
+        } else {
+            [self setupDefaultConfig];
+        }
+    }
+    return self;
+}
+
+- (void)setupExpandableConfig
+{
+    self.backgroundColor = UIColor.systemBlueColor;
+    self.tintColor = UIColor.systemBackgroundColor;
+
+    // Configure autoresizing mask
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+                            UIViewAutoresizingFlexibleHeight;
+
+    // Set content insets (10 on all sides)
+    self.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+
+    // Set the title font (system font with a point size of 15)
+    self.titleLabel.font = [UIFont systemFontOfSize:15];
+
+    // Set images for various button states using SF Symbols (iOS 13+)
+    if (@available(iOS 13.0, *)) {
+        UIImage *chevronUp = [UIImage systemImageNamed:@"chevron.up"];
+        UIImage *chevronDown = [UIImage systemImageNamed:@"chevron.down"];
+        
+        [self setImage:chevronUp forState:UIControlStateNormal];
+        [self setImage:chevronUp forState:UIControlStateDisabled];
+        [self setImage:chevronDown forState:UIControlStateSelected];
+        [self setImage:chevronUp forState:UIControlStateHighlighted];
+    }
+
+    // Set title color for normal state to white
+    [self setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+
+    // Set corner radius
+    self.layer.cornerRadius = 10;
+
+    // Custom runtime attributes translated as properties
+    self.positiveForegroundColor = [UIColor colorWithWhite:0.6666666667 alpha:1.0];
+    self.positiveBackgroundColor = [UIColor colorWithWhite:0.3333333333 alpha:1.0];
+    self.destructiveForegroundColor = [UIColor colorWithWhite:1 alpha:1];
+    self.destructiveBackgroundColor = [UIColor colorWithWhite:0.3333333333 alpha:1.0];
+    self.positiveUseDefault = YES;
+    self.destructiveUseDefault = NO;
+}
+
+- (void)setupDefaultConfig
+{
+    self.backgroundColor = UIColor.systemBlueColor;
+    self.tintColor = UIColor.systemBlueColor;
+
+    // Configure autoresizing mask
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+                            UIViewAutoresizingFlexibleHeight;
+
+    // Content insets of 10 on all sides.
+    self.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+
+    // Set title color for normal state to white.
+    [self setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+
+    // Set corner radius.
+    self.layer.cornerRadius = 10;
+
+    // Custom runtime attributes translated as properties on ACRButton:
+    self.positiveForegroundColor = [UIColor colorWithWhite:0.6666666667 alpha:1.0];
+    self.positiveBackgroundColor = [UIColor colorWithWhite:0.3333333333 alpha:1.0];
+    self.destructiveForegroundColor = [UIColor colorWithWhite:1 alpha:1.0];
+    self.destructiveBackgroundColor = [UIColor colorWithWhite:0.3333333333 alpha:1.0];
+    self.positiveUseDefault = YES;
+    self.destructiveUseDefault = NO;
+}
 
 - (void)setImageView:(UIImage *)image
           withConfig:(ACOHostConfig *)config
@@ -22,9 +103,9 @@
     [self setImageView:image withConfig:config widthToHeightRatio:0.0f];
 }
 
-- (void)setImageView:(UIImage *)image 
-          withConfig:(ACOHostConfig *)config
-  widthToHeightRatio:(float) widthToHeightRatio
+- (void)setImageView:(UIImage *)image
+            withConfig:(ACOHostConfig *)config
+    widthToHeightRatio:(float)widthToHeightRatio
 {
     float imageHeight = 0.0f;
     CGSize contentSize = [self.titleLabel intrinsicContentSize];
@@ -117,8 +198,7 @@
                  title:(NSString *)title
          andHostConfig:(ACOHostConfig *)config;
 {
-    NSString *nibNameButton = [acoAction type] == ACRShowCard ? @"ACRButtonExpandable" : @"ACRButton";
-    ACRButton *button = [[[ACOBundle getInstance] getBundle] loadNibNamed:nibNameButton owner:rootView options:nil][0];
+    ACRButton *button = [[ACRButton alloc] initWithExpandable:[acoAction type] == ACRShowCard];
     [button setTitle:title forState:UIControlStateNormal];
     button.titleLabel.adjustsFontSizeToFitWidth = NO;
     button.titleLabel.numberOfLines = 0;
@@ -148,23 +228,19 @@
     UIImage *img = imageViewMap[key];
     button.iconPlacement = [ACRButton getIconPlacmentAtCurrentContext:rootView url:key];
 
-    if (img) 
-    {
+    if (img) {
         UIImageView *iconView = [[ACRUIImageView alloc] init];
         iconView.image = img;
         [button addSubview:iconView];
         button.iconView = iconView;
         [button setImageView:img withConfig:config];
-    } 
-    else if (key.length)
-    {
+    } else if (key.length) {
         NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
         NSString *key = [number stringValue];
         UIImageView *view = [rootView getImageView:key];
-        if([iconURL hasPrefix:@"icon:"])
-        {
+        if ([iconURL hasPrefix:@"icon:"]) {
             // Rendering svg fluent icon here on button
-            
+
             // intentionally kept this 24 so that it always loads
             // irrespective of size given in host config.
             // it is possible that host config has some size which is not available in CDN.
@@ -175,30 +251,23 @@
             button.iconView = view;
             [button addSubview:view];
             [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];
-        }
-        else if (view) 
-        {
-            if (view.image) 
-            {
+        } else if (view) {
+            if (view.image) {
                 button.iconView = view;
                 [button addSubview:view];
                 [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
                 [button setImageView:view.image withConfig:config];
-            } 
-            else
-            {
+            } else {
                 button.iconView = view;
                 [button addSubview:view];
                 [rootView setImageView:key view:button];
             }
         }
-    } 
-    else
-    {
+    } else {
         button.heightConstraint = [button.heightAnchor constraintGreaterThanOrEqualToAnchor:button.titleLabel.heightAnchor constant:button.contentEdgeInsets.top + button.contentEdgeInsets.bottom];
         button.heightConstraint.active = YES;
     }
-    
+
     if (button.isEnabled == NO) {
         [button setBackgroundColor:[button.backgroundColor colorWithAlphaComponent:0.5]];
     }
@@ -209,7 +278,7 @@
 - (void)applySentimentStyling
 {
     if ([@"positive" caseInsensitiveCompare:_sentiment] == NSOrderedSame) {
-        BOOL usePositiveDefault = [_positiveUseDefault boolValue];
+        BOOL usePositiveDefault = _positiveUseDefault;
 
         // By default, positive sentiment must have background accentColor and white text/foreground color
         if (usePositiveDefault) {
@@ -221,7 +290,7 @@
             [self setTitleColor:_positiveForegroundColor forState:UIControlStateNormal];
         }
     } else if ([@"destructive" caseInsensitiveCompare:_sentiment] == NSOrderedSame) {
-        BOOL useDestructiveDefault = [_destructiveUseDefault boolValue];
+        BOOL useDestructiveDefault = _destructiveUseDefault;
 
         // By default, destructive sentiment must have a attention text/foreground color
         if (useDestructiveDefault) {
