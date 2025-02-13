@@ -39,7 +39,7 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<NumberInput> numInputBlck = std::dynamic_pointer_cast<NumberInput>(elem);
 
-    ACRNumericTextField *numInput = [[[ACOBundle getInstance] getBundle] loadNibNamed:@"ACRTextNumberField" owner:rootView options:nil][0];
+    ACRNumericTextField *numInput = [[ACRNumericTextField alloc] init];
     numInput.placeholder = [NSString stringWithCString:numInputBlck->GetPlaceholder().c_str() encoding:NSUTF8StringEncoding];
 
     ACRNumberInputHandler *numberInputHandler = [[ACRNumberInputHandler alloc] init:acoElem];
@@ -47,8 +47,9 @@
     numberInputHandler.textField = numInput;
     numInput.delegate = numberInputHandler;
     numInput.text = numberInputHandler.text;
-    if ([numberInputHandler respondsToSelector:@selector(textFieldDidChange:)]) {
-        [numInput addTarget:numberInputHandler action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    SEL textFielsDidChangeSel = NSSelectorFromString(@"textFieldDidChange:");
+    if ([numberInputHandler respondsToSelector:textFielsDidChangeSel]) {
+        [numInput addTarget:numberInputHandler action:textFielsDidChangeSel forControlEvents:UIControlEventEditingChanged];
     }
 
     ACRInputLabelView *inputLabelView = [[ACRInputLabelView alloc] initInputLabelView:rootView acoConfig:acoConfig adaptiveInputElement:numInputBlck inputView:numInput accessibilityItem:numInput viewGroup:viewGroup dataSource:numberInputHandler];

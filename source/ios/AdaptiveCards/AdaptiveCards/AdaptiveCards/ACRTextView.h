@@ -10,11 +10,11 @@
 #import <UIKit/UIKit.h>
 
 @interface ACRTextView : UITextView <ACRIBaseInputHandler, UITextViewDelegate>
-@property NSString *placeholderText;
-@property NSUInteger maxLength;
-@property IBInspectable UIColor *borderColor;
-@property IBInspectable UIColor *placeholderColor;
-@property NSPredicate *regexPredicate;
+@property (nonatomic, copy) NSString *placeholderText;
+@property (nonatomic, assign) NSUInteger maxLength;
+@property (nonatomic, strong) IBInspectable UIColor *borderColor;
+@property (nonatomic, strong) IBInspectable UIColor *placeholderColor;
+@property (nonatomic, strong) NSPredicate *regexPredicate;
 
 - (instancetype)initWithFrame:(CGRect)frame element:(ACOBaseCardElement *)element;
 - (void)configWithSharedModel:(ACOBaseCardElement *)element;

@@ -31,13 +31,50 @@
 
 - (void)commonInit
 {
-    UIView *contentView = [[[ACOBundle getInstance] getBundle] loadNibNamed:@"ACRInputLabelView" owner:self options:nil][0];
-    [self addSubview:contentView];
-    self.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
-    [self.layoutMarginsGuide.leadingAnchor constraintEqualToAnchor:contentView.leadingAnchor].active = YES;
-    [self.layoutMarginsGuide.trailingAnchor constraintEqualToAnchor:contentView.trailingAnchor].active = YES;
-    [self.layoutMarginsGuide.topAnchor constraintEqualToAnchor:contentView.topAnchor].active = YES;
-    [self.layoutMarginsGuide.bottomAnchor constraintEqualToAnchor:contentView.bottomAnchor].active = YES;
+    // Apply user-defined attributes
+    self.validationFailBorderRadius = 5;
+    self.validationFailBorderWidth = 1;
+    self.validationFailBorderColor = [UIColor systemRedColor];
+    self.validationSuccessBorderWidth = 0;
+
+    // Create main text label
+    UILabel *label = [[UILabel alloc] init];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    label.font = [UIFont systemFontOfSize:15];
+    label.numberOfLines = 0;
+    label.lineBreakMode = NSLineBreakByTruncatingTail;
+    label.adjustsFontSizeToFitWidth = NO;
+
+    // Create error message label
+    UILabel *errorMessage = [[UILabel alloc] init];
+    errorMessage.translatesAutoresizingMaskIntoConstraints = NO;
+    errorMessage.font = [UIFont systemFontOfSize:15];
+    errorMessage.numberOfLines = 0;
+    errorMessage.lineBreakMode = NSLineBreakByTruncatingTail;
+    errorMessage.adjustsFontSizeToFitWidth = NO;
+    errorMessage.hidden = YES;
+
+    // Create a vertical stack view to hold the labels
+    UIStackView *stack = [[UIStackView alloc] initWithArrangedSubviews:@[ label, errorMessage ]];
+    stack.translatesAutoresizingMaskIntoConstraints = NO;
+    stack.axis = UILayoutConstraintAxisVertical;
+    stack.distribution = UIStackViewDistributionEqualSpacing;
+    stack.spacing = 8;
+    
+    // Set the properties
+    _stack = stack;
+    _label = label;
+    _errorMessage = errorMessage;
+
+    [self addSubview:stack];
+
+    // Pin the stack view to the view's edges (or use safeAreaLayoutGuide if needed)
+    [NSLayoutConstraint activateConstraints:@[
+        [self.stack.topAnchor constraintEqualToAnchor:self.topAnchor],
+        [self.stack.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [self.stack.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        [self.stack.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
+    ]];
 }
 
 - (instancetype)initInputLabelView:(ACRView *)rootView acoConfig:(ACOHostConfig *)acoConfig adaptiveInputElement:(const std::shared_ptr<BaseInputElement> &)inputBlck inputView:(UIView *)inputView accessibilityItem:(UIView *)accessibilityItem viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup dataSource:(NSObject<ACRIBaseInputHandler> *)dataSource
@@ -52,11 +89,11 @@
         AdaptiveCards::InputLabelConfig *pLabelConfig = &inputConfig.label.requiredInputs;
         NSMutableAttributedString *attributedLabel = nil;
         self.dataSource = dataSource;
-        
+
         if (dataSource) {
             dataSource.isRequired = inputBlck->GetIsRequired();
         }
-        
+
         if (inputBlck->GetIsRequired()) {
             self.isRequired = YES;
             textElementProperties.SetTextSize(pLabelConfig->size);
@@ -70,7 +107,7 @@
             attributedSuffix = initAttributedText(acoConfig, suffix, textElementProperties, viewGroup.style);
             self.label.hidden = NO;
         }
-        
+
         std::string labelstring = inputBlck->GetLabel();
         if (!labelstring.empty()) {
             pLabelConfig = (inputBlck->GetIsRequired()) ? &inputConfig.label.requiredInputs : &inputConfig.label.optionalInputs;
@@ -78,7 +115,7 @@
             textElementProperties.SetTextWeight(pLabelConfig->weight);
             textElementProperties.SetIsSubtle(pLabelConfig->isSubtle);
             textElementProperties.SetTextColor(pLabelConfig->color);
-            
+
             attributedLabel = initAttributedText(acoConfig, labelstring, textElementProperties, viewGroup.style);
             if (attributedSuffix) {
                 [attributedLabel appendAttributedString:attributedSuffix];
@@ -87,7 +124,7 @@
         } else if (!inputBlck->GetIsRequired()) {
             self.label.hidden = YES;
         }
-        
+
         self.label.attributedText = attributedLabel;
         std::string errorMessage = inputBlck->GetErrorMessage();
         if (!errorMessage.empty()) {
@@ -101,12 +138,12 @@
             self.hasErrorMessage = YES;
         }
         self.errorMessage.hidden = YES;
-        
+
         [self.stack insertArrangedSubview:inputView atIndex:1];
         self.validationSuccessBorderColor = inputView.layer.borderColor;
         self.validationSuccessBorderRadius = inputView.layer.cornerRadius;
         self.validationSuccessBorderWidth = inputView.layer.borderWidth;
-        
+
         self.inputView = inputView;
         self.label.isAccessibilityElement = NO;
         self.isAccessibilityElement = NO;
@@ -117,43 +154,42 @@
             self.inputAccessibilityItem = accessibilityItem;
             self.inputAccessibilityItem.accessibilityLabel = inputView.accessibilityLabel;
         }
-        
+
         self.inputAccessibilityItem.isAccessibilityElement = YES;
         self.labelText = self.label.text;
-        
+
         if (HeightType::Stretch == inputBlck->GetHeight() && [inputView isKindOfClass:[ACRQuickReplyView class]]) {
             [self.stack addArrangedSubview:[(ACRColumnView *)viewGroup addPaddingFor:self]];
         }
-        
+
         self.shouldGroupAccessibilityChildren = NO;
-        
+
         NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
         inputHandler.isRequired = self.isRequired;
         inputHandler.hasValidationProperties |= inputHandler.isRequired;
         if (inputHandler.hasValidationProperties && errorMessage.empty()) {
             [rootView addWarnings:ACRMissingInputErrorMessage mesage:@"The input has validation, but there is no associated error message, consider adding error message to the input"];
         }
-        
+
         if (self.isRequired && (!self.label || !self.label.text.length)) {
             [rootView addWarnings:ACRMissingInputErrorMessage mesage:@"There exist required input, but there is no associated label with it, consider adding label to the input"];
         }
-        if(inputBlck->GetValueChangedAction() != nil ){
+        if (inputBlck->GetValueChangedAction() != nil) {
             NSMutableArray *targetInputIds = [NSMutableArray array];
             for (std::string &targetInputId : inputBlck->GetValueChangedAction()->GetTargetInputIds()) {
                 [targetInputIds addObject:[NSString stringWithCString:targetInputId.c_str() encoding:NSUTF8StringEncoding]];
             }
-            if(targetInputIds.count > 0) {
+            if (targetInputIds.count > 0) {
                 [inputHandler addObserverWithCompletion:^{
                     NSArray<ACRIBaseInputHandler> *_allInputHandlers = [rootView.card getInputs];
                     for (NSObject<ACRIBaseInputHandler> *input in _allInputHandlers) {
                         ACRInputLabelView *labelView = (ACRInputLabelView *)input;
                         if (labelView) {
-                            if([targetInputIds containsObject:labelView.getInputHandler.id]) {
+                            if ([targetInputIds containsObject:labelView.getInputHandler.id]) {
                                 [labelView.getInputHandler resetInput];
                             }
-                        } else
-                        {
-                            if([targetInputIds containsObject:input.id]) {
+                        } else {
+                            if ([targetInputIds containsObject:input.id]) {
                                 [input resetInput];
                             }
                         }
@@ -168,8 +204,7 @@
 
 - (void)addAccessibleItems:(NSArray *)items
 {
-    if (items != nil)
-    {
+    if (items != nil) {
         NSMutableArray *accessibilityElements = [[NSMutableArray alloc] initWithArray:items];
         [accessibilityElements insertObject:self.inputAccessibilityItem atIndex:0];
         self.accessibilityElements = accessibilityElements;
@@ -253,7 +288,8 @@
     return inputHandler;
 }
 
-- (void)addObserverWithCompletion:(CompletionHandler)completion {
+- (void)addObserverWithCompletion:(CompletionHandler)completion
+{
     NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
     [inputHandler addObserverWithCompletion:completion];
 }
