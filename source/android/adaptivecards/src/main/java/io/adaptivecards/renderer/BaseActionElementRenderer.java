@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
@@ -337,14 +338,22 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
-        protected boolean handleShowActionElementInOverflowMenu() {
+        /***
+         * Handle overflow menu scenario for the given action element.
+         * By default this is a no-op. Subclasses can override this method
+         * to define the required behavior.
+         *
+         * @return Boolean - true if scenario is handled, false if not.
+         * Default return type is false.
+         */
+        protected boolean handleActionElementInOverflowMenu(@NonNull BaseActionElement baseActionElement) {
             return false;
         }
 
         @Override
         public void onClick(View view)
         {
-            if (handleShowActionElementInOverflowMenu()) {
+            if (handleActionElementInOverflowMenu(m_action)) {
                 return;
             }
 
