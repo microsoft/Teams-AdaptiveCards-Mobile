@@ -11,9 +11,69 @@
 		{
 			"type": "FactSet",
 			"facts": [
-				{ "title": "Item:", "value": "Zombie Halloween costume" },
-				{ "title": "Quantity:", "value": "1" },
-				{ "title": "Price:", "value": "$14.99" }
+				{
+					"title": "Item:",
+					"value": "Zombie Halloween costume"
+				},
+				{
+					"title": "Quantity:",
+					"value": "1"
+				},
+				{
+					"title": "Price:",
+					"value": "$14.99"
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Execute",
+					"title": "Execute",
+					"mode": "secondary",
+					"menuActions": [
+						{
+							"type": "Action.Execute",
+							"title": "Level 1 Execute",
+							"menuActions": [
+								{
+									"type": "Action.Execute",
+									"title": "Level 2 Execute",
+									"menuActions": [
+										{
+											"type": "Action.Execute",
+											"title": "Level 3 Execute"
+										}
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Level 2 Submit"
+								},
+								{
+									"type": "Action.OpenUrl",
+									"title": "Level 2 Open URL",
+									"url": "https://microsoft.com/"
+								}
+							]
+						},
+						{
+							"type": "Action.Submit",
+							"title": "Level 1 Submit"
+						},
+						{
+							"type": "Action.OpenUrl",
+							"title": "Level 1 Open URL",
+							"url": "https://adaptivecards.io/"
+						}
+					]
+				},
+				{
+					"type": "Action.OpenUrl",
+					"title": "OpenUrl",
+					"url": "https://adaptivecards.io/"
+				}
 			]
 		}
 	],
@@ -21,33 +81,6 @@
 		{
 			"type": "Action.Submit",
 			"title": "Confirm"
-		},
-		{
-			"type": "Action.Popover",
-			"title": "Cancel",
-			"displayArrow": true,
-			"content": {
-				"type": "Container",
-				"items": [
-					{
-						"type": "TextBlock",
-						"text": "Are you sure you want to cancel this order?"
-					},
-					{
-						"type": "ActionSet",
-						"actions": [
-							{
-								"type": "Action.Submit",
-								"title": "Yes, cancel my order"
-							},
-							{
-								"type": "Action.Submit",
-								"title": "No, keep my order"
-							}
-						]
-					}
-				]
-			}
 		}
 	]
 }
