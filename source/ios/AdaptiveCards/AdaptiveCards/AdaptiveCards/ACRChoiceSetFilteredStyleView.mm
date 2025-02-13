@@ -153,6 +153,11 @@ using namespace AdaptiveCards;
     dictionary[self.id] = [_validator getValue:self.text];
 }
 
+- (void)resetInput
+{
+
+}
+
 #pragma mark - ACRChoiceSetTypeaheadSearchDelegate Methods
 
 - (void)updateSelectedChoiceInTextField:(NSString *)text

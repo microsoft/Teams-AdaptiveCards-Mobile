@@ -235,6 +235,67 @@
     }
 }
 
+- (NSObject<ACRIBaseInputHandler> *_Nullable)getInputHandler
+{
+    NSObject<ACRIBaseInputHandler> *inputHandler = nil;
+    if (self.dataSource && [self.dataSource conformsToProtocol:@protocol(ACRIBaseInputHandler)]) {
+        inputHandler = self.dataSource;
+    } else {
+        UIView *inputView = [self getInputView];
+        if ([inputView conformsToProtocol:@protocol(ACRIBaseInputHandler)]) {
+            inputHandler = (NSObject<ACRIBaseInputHandler> *)inputView;
+        }
+    }
+
+    return inputHandler;
+}
+
+- (UIView *)getInputView
+{
+    if ((_stack.arrangedSubviews.count) == 3) {
+        return self.stack.arrangedSubviews[1];
+    }
+    return nil;
+}
+
++ (void)commonSetFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *)view
+{
+    if (shouldBecomeFirstResponder) {
+        [view becomeFirstResponder];
+    } else {
+        [view resignFirstResponder];
+    }
+}
+
++ (BOOL)commonTextUIValidate:(BOOL)isRequired hasText:(BOOL)hasText predicate:(NSPredicate *)predicate text:(NSString *)text error:(NSError *__autoreleasing *)error
+{
+    if (isRequired && !hasText) {
+        if (error) {
+            *error = [NSError errorWithDomain:ACRInputErrorDomain code:ACRInputErrorValueMissing userInfo:nil];
+        }
+        return NO;
+    } else if (hasText && predicate) {
+        return [predicate evaluateWithObject:text];
+    }
+    return YES;
+}
+
+// returns intrinsic content size for inputs
+- (CGSize)intrinsicContentSize
+{
+    CGFloat width = 0.0f, height = 0.0f;
+    for (UIView *view in self.stack.arrangedSubviews) {
+        if (!view.hidden) {
+            CGSize size = [view intrinsicContentSize];
+            width = MAX(size.width, width);
+            height += size.height;
+        }
+    }
+
+    return CGSizeMake(width, height);
+}
+
+#pragma mark - ACRIBaseInputHandler
 - (BOOL)validate:(NSError **)error
 {
     NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
@@ -273,35 +334,6 @@
     return NO;
 }
 
-- (NSObject<ACRIBaseInputHandler> *_Nullable)getInputHandler
-{
-    NSObject<ACRIBaseInputHandler> *inputHandler = nil;
-    if (self.dataSource && [self.dataSource conformsToProtocol:@protocol(ACRIBaseInputHandler)]) {
-        inputHandler = self.dataSource;
-    } else {
-        UIView *inputView = [self getInputView];
-        if ([inputView conformsToProtocol:@protocol(ACRIBaseInputHandler)]) {
-            inputHandler = (NSObject<ACRIBaseInputHandler> *)inputView;
-        }
-    }
-
-    return inputHandler;
-}
-
-- (void)addObserverWithCompletion:(CompletionHandler)completion
-{
-    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
-    [inputHandler addObserverWithCompletion:completion];
-}
-
-- (UIView *)getInputView
-{
-    if ((_stack.arrangedSubviews.count) == 3) {
-        return self.stack.arrangedSubviews[1];
-    }
-    return nil;
-}
-
 - (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *)view
 {
     NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
@@ -321,41 +353,15 @@
     }
 }
 
-+ (void)commonSetFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *)view
+- (void)addObserverWithCompletion:(CompletionHandler)completion
 {
-    if (shouldBecomeFirstResponder) {
-        [view becomeFirstResponder];
-    } else {
-        [view resignFirstResponder];
-    }
+    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
+    [inputHandler addObserverWithCompletion:completion];
 }
 
-+ (BOOL)commonTextUIValidate:(BOOL)isRequired hasText:(BOOL)hasText predicate:(NSPredicate *)predicate text:(NSString *)text error:(NSError *__autoreleasing *)error
+- (void)resetInput
 {
-    if (isRequired && !hasText) {
-        if (error) {
-            *error = [NSError errorWithDomain:ACRInputErrorDomain code:ACRInputErrorValueMissing userInfo:nil];
-        }
-        return NO;
-    } else if (hasText && predicate) {
-        return [predicate evaluateWithObject:text];
-    }
-    return YES;
-}
-
-// returns intrinsic content size for inputs
-- (CGSize)intrinsicContentSize
-{
-    CGFloat width = 0.0f, height = 0.0f;
-    for (UIView *view in self.stack.arrangedSubviews) {
-        if (!view.hidden) {
-            CGSize size = [view intrinsicContentSize];
-            width = MAX(size.width, width);
-            height += size.height;
-        }
-    }
-
-    return CGSizeMake(width, height);
+    [[self getInputHandler] resetInput];
 }
 
 @synthesize hasValidationProperties;
