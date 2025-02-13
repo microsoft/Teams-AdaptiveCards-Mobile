@@ -736,6 +736,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void BaseActionElement_GetResourceInformationSwigExplicitBaseActionElement(long jarg1, BaseActionElement jarg1_, long jarg2, RemoteResourceInformationVector jarg2_);
   public final static native long BaseActionElement_SerializeToJsonValue(long jarg1, BaseActionElement jarg1_);
   public final static native long BaseActionElement_SerializeToJsonValueSwigExplicitBaseActionElement(long jarg1, BaseActionElement jarg1_);
+  public final static native long BaseActionElement_GetMenuActions__SWIG_0(long jarg1, BaseActionElement jarg1_);
   public final static native long BaseActionElement_DeserializeBasePropertiesFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native long BaseActionElement_DeserializeBaseProperties(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native void BaseActionElement_ParseJsonObject(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_, long jarg3, BaseElement jarg3_);
@@ -871,6 +872,12 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void CarouselPage_SetRtl(long jarg1, CarouselPage jarg1_, long jarg2, StdOptionalBool jarg2_);
   public final static native void CarouselPage_GetResourceInformation(long jarg1, CarouselPage jarg1_, long jarg2, RemoteResourceInformationVector jarg2_);
   public final static native long CarouselPage_dynamic_cast(long jarg1, BaseCardElement jarg1_);
+  public final static native long new_CarouselPageParser__SWIG_0();
+  public final static native long new_CarouselPageParser__SWIG_1(long jarg1, CarouselPageParser jarg1_);
+  public final static native void delete_CarouselPageParser(long jarg1);
+  public final static native long CarouselPageParser_Deserialize(long jarg1, CarouselPageParser jarg1_, long jarg2, ParseContext jarg2_, long jarg3, JsonValue jarg3_);
+  public final static native long CarouselPageParser_DeserializeWithoutCheckingType(long jarg1, CarouselPageParser jarg1_, long jarg2, ParseContext jarg2_, long jarg3, JsonValue jarg3_);
+  public final static native long CarouselPageParser_DeserializeFromString(long jarg1, CarouselPageParser jarg1_, long jarg2, ParseContext jarg2_, String jarg3);
   public final static native long new_Icon__SWIG_0();
   public final static native long new_Icon__SWIG_1(long jarg1, Icon jarg1_);
   public final static native void delete_Icon(long jarg1);
@@ -2248,6 +2255,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long Carousel_SWIGSmartPtrUpcast(long jarg1);
   public final static native long CarouselParser_SWIGSmartPtrUpcast(long jarg1);
   public final static native long CarouselPage_SWIGSmartPtrUpcast(long jarg1);
+  public final static native long CarouselPageParser_SWIGSmartPtrUpcast(long jarg1);
   public final static native long Icon_SWIGSmartPtrUpcast(long jarg1);
   public final static native long IconParser_SWIGSmartPtrUpcast(long jarg1);
   public final static native long RatingLabel_SWIGSmartPtrUpcast(long jarg1);
