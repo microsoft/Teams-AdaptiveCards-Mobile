@@ -338,6 +338,10 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
+        private boolean isOverflowMenuScenarioForAction(@NonNull BaseActionElement baseActionElement) {
+            return baseActionElement.GetMenuActions() != null && !baseActionElement.GetMenuActions().isEmpty();
+        }
+
         /***
          * Handle overflow menu scenario for the given action element.
          * By default this is a no-op. Subclasses can override this method
@@ -346,14 +350,14 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
          * @return Boolean - true if scenario is handled, false if not.
          * Default return type is false.
          */
-        protected boolean handleActionElementInOverflowMenu(@NonNull BaseActionElement baseActionElement) {
+        protected boolean handleOverflowMenuScenarioForAction(@NonNull BaseActionElement baseActionElement) {
             return false;
         }
 
         @Override
         public void onClick(View view)
         {
-            if (handleActionElementInOverflowMenu(m_action)) {
+            if (isOverflowMenuScenarioForAction(m_action) && handleOverflowMenuScenarioForAction(m_action)) {
                 return;
             }
 
