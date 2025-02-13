@@ -227,7 +227,8 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             throw new IllegalArgumentException("Action Handler is null.");
         }
 
-        Log.d("ACTesting", "baseActionElement: " + baseActionElement.GetElementType().name());
+        Log.d("ACTesting", "baseActionElement: " + baseActionElement.GetTitle() +
+            " type:" + baseActionElement.GetElementType().name() + " mode:" + baseActionElement.GetMode().name());
 
         Button button = renderButton(context, viewGroup, baseActionElement, hostConfig, renderedCard, renderArgs);
         button.setOnClickListener(new BaseActionElementRenderer.ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
