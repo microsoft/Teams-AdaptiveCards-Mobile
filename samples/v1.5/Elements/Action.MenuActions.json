@@ -30,49 +30,54 @@
 			"actions": [
 				{
 					"type": "Action.Execute",
-					"title": "Execute",
+					"title": "0 Execute",
 					"mode": "secondary",
 					"menuActions": [
 						{
 							"type": "Action.Execute",
-							"title": "Level 1 Execute",
+							"title": "0-1 Execute",
 							"menuActions": [
 								{
 									"type": "Action.Execute",
-									"title": "Level 2 Execute",
+									"title": "0-1-2 Execute",
 									"menuActions": [
 										{
 											"type": "Action.Execute",
-											"title": "Level 3 Execute"
+											"title": "0-1-3 Execute"
 										}
 									]
 								},
 								{
 									"type": "Action.Submit",
-									"title": "Level 2 Submit"
+									"title": "0-1-2 Submit"
 								},
 								{
 									"type": "Action.OpenUrl",
-									"title": "Level 2 Open URL",
+									"title": "0-1-2 Open URL",
 									"url": "https://microsoft.com/"
 								}
 							]
 						},
 						{
 							"type": "Action.Submit",
-							"title": "Level 1 Submit"
+							"title": "0-1 Submit"
 						},
 						{
 							"type": "Action.OpenUrl",
-							"title": "Level 1 Open URL",
+							"title": "0-1 Open URL",
 							"url": "https://adaptivecards.io/"
 						}
 					]
 				},
 				{
 					"type": "Action.OpenUrl",
-					"title": "OpenUrl",
+					"title": "0 OpenUrl",
 					"url": "https://adaptivecards.io/"
+				},
+				{
+					"type": "Action.Submit",
+					"title": "0 Submit",
+					"menuActions": []
 				}
 			]
 		}
