@@ -5,7 +5,6 @@
 #include "BaseElement.h"
 #include "ParseUtil.h"
 #include "Icon.h"
-#include <iostream>
 
 using namespace AdaptiveCards;
 
