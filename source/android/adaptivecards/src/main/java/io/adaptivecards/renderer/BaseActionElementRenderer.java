@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
@@ -337,9 +338,29 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
+        private boolean isOverflowMenuScenarioForAction(@NonNull BaseActionElement baseActionElement) {
+            return baseActionElement.GetMenuActions() != null && !baseActionElement.GetMenuActions().isEmpty();
+        }
+
+        /***
+         * Handle overflow menu scenario for the given action element.
+         * By default this is a no-op. Subclasses can override this method
+         * to define the required behavior.
+         *
+         * @return Boolean - true if scenario is handled, false if not.
+         * Default return type is false.
+         */
+        protected boolean handleOverflowMenuScenarioForAction(@NonNull BaseActionElement baseActionElement) {
+            return false;
+        }
+
         @Override
         public void onClick(View view)
         {
+            if (isOverflowMenuScenarioForAction(m_action) && handleOverflowMenuScenarioForAction(m_action)) {
+                return;
+            }
+
             m_renderedAdaptiveCard.clearValidatedInputs();
 
             if (m_isInlineShowCardAction)

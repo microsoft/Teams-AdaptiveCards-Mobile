@@ -59,6 +59,9 @@ public:
     void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceUris) override;
     Json::Value SerializeToJsonValue() const override;
 
+    std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& GetMenuActions();
+    const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& GetMenuActions() const;
+
     template <typename T>
     static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json);
 
@@ -83,6 +86,7 @@ private:
     ActionType m_type;
     Mode m_mode;
     ActionRole m_role;
+    std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> m_menuActions;
 };
 
 template <typename T>
