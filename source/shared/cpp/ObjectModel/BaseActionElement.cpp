@@ -254,8 +254,8 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
 
     element->m_menuActions = std::move(menuActions);
 
-    std::cout << (element->m_title) << "menuActions is " << (menuActions.empty() ? "empty" : "not empty") << std::endl;
-    std::cout << (element->m_title) << "Set mode to: " << ModeToString(element->m_mode) << std::endl;
+    std::cout << "ACTesting " << (element->m_title) << "menuActions is " << (menuActions.empty() ? "empty" : "not empty") << std::endl;
+    std::cout << "ACTesting " << (element->m_title) << "Set mode to: " << ModeToString(element->m_mode) << std::endl;
 
 //    if (!menuActions.empty()) {
 //        for (const auto& menuAction: element->m_menuActions) {
