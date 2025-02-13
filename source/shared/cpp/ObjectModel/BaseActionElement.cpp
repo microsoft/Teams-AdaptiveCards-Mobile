@@ -235,7 +235,6 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title));
     element->SetIconUrl(ParseUtil::GetString(json, AdaptiveCardSchemaKey::IconUrl));
     element->SetStyle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Style, defaultStyle, false));
-    //element->SetMode(ParseUtil::GetEnumValue<Mode>(json, AdaptiveCardSchemaKey::Mode, Mode::Primary, ModeFromString));
     element->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip));
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
     element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
@@ -248,19 +247,16 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
             AdaptiveCardSchemaKey::MenuActions,
             false);
 
+    // Set the mode, override mode to primary if menuActions are present
     element->SetMode(menuActions.empty() ?
-                    ParseUtil::GetEnumValue<Mode>(json, AdaptiveCardSchemaKey::Mode, Mode::Primary,ModeFromString) :
+                    ParseUtil::GetEnumValue<Mode>(json, AdaptiveCardSchemaKey::Mode, Mode::Primary, ModeFromString) :
                     Mode::Primary);
-
     element->m_menuActions = std::move(menuActions);
 
-    std::cout << "ACTesting " << (element->m_title) << "menuActions is " << (menuActions.empty() ? "empty" : "not empty") << std::endl;
-    std::cout << "ACTesting " << (element->m_title) << "Set mode to: " << ModeToString(element->m_mode) << std::endl;
-
+    // Avoid nesting of menuActions within menuActions by setting such instances to empty
     if (!element->m_menuActions.empty()) {
         for (const auto& menuAction: element->m_menuActions) {
             if (!menuAction->m_menuActions.empty()) {
-                std::cout << (menuAction->m_title) << "has menuActions" << std::endl;
                 menuAction->m_menuActions.clear();
             }
         }
