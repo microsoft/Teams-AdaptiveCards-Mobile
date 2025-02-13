@@ -30,22 +30,7 @@
 	"actions": [
 		{
 			"type": "Action.Execute",
-			"title": "Confirm data",
-			"menuActions": [
-				{
-					"type": "Action.Execute",
-					"title": "Execute"
-				},
-				{
-					"type": "Action.Submit",
-					"title": "Submit"
-				},
-				{
-					"type": "Action.OpenUrl",
-					"title": "OpenUrl",
-					"url": "https://adaptivecards.io"
-				}
-			]
+			"title": "Confirm data"
 		},
 		{
 			"type": "Action.Execute",
