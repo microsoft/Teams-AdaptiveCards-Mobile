@@ -1,0 +1,53 @@
+{
+	"type": "AdaptiveCard",
+	"version": "1.5",
+	"body": [
+		{
+			"type": "TextBlock",
+			"weight": "bolder",
+			"size": "large",
+			"text": "Please review your order"
+		},
+		{
+			"type": "FactSet",
+			"facts": [
+				{ "title": "Item:", "value": "Zombie Halloween costume" },
+				{ "title": "Quantity:", "value": "1" },
+				{ "title": "Price:", "value": "$14.99" }
+			]
+		}
+	],
+	"actions": [
+		{
+			"type": "Action.Submit",
+			"title": "Confirm"
+		},
+		{
+			"type": "Action.Popover",
+			"title": "Cancel",
+			"displayArrow": true,
+			"content": {
+				"type": "Container",
+				"items": [
+					{
+						"type": "TextBlock",
+						"text": "Are you sure you want to cancel this order?"
+					},
+					{
+						"type": "ActionSet",
+						"actions": [
+							{
+								"type": "Action.Submit",
+								"title": "Yes, cancel my order"
+							},
+							{
+								"type": "Action.Submit",
+								"title": "No, keep my order"
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}
