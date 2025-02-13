@@ -337,9 +337,17 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
+        protected boolean handleShowActionElementInOverflowMenu() {
+            return false;
+        }
+
         @Override
         public void onClick(View view)
         {
+            if (handleShowActionElementInOverflowMenu()) {
+                return;
+            }
+
             m_renderedAdaptiveCard.clearValidatedInputs();
 
             if (m_isInlineShowCardAction)
