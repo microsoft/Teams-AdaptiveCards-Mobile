@@ -121,8 +121,8 @@ std::shared_ptr<Authentication> Authentication::Deserialize(ParseContext& contex
     authentication->SetConnectionName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::ConnectionName));
     authentication->SetTokenExchangeResource(ParseUtil::DeserializeValue<TokenExchangeResource>(
         context, json, AdaptiveCardSchemaKey::TokenExchangeResource, TokenExchangeResource::Deserialize));
-    authentication->SetButtons(std::move(ParseUtil::GetElementCollectionOfSingleType<AuthCardButton>(
-        context, json, AdaptiveCardSchemaKey::Buttons, AuthCardButton::Deserialize)));
+    authentication->SetButtons(ParseUtil::GetElementCollectionOfSingleType<AuthCardButton>(
+        context, json, AdaptiveCardSchemaKey::Buttons, AuthCardButton::Deserialize));
 
     return authentication;
 }
