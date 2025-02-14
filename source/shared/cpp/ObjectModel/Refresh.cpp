@@ -73,7 +73,7 @@ std::shared_ptr<Refresh> Refresh::Deserialize(ParseContext& context, const Json:
     std::shared_ptr<Refresh> refresh = std::make_shared<Refresh>();
 
     refresh->SetAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::Action));
-    refresh->SetUserIds(std::move(ParseUtil::GetStringArray(json, AdaptiveCardSchemaKey::UserIds)));
+    refresh->SetUserIds(ParseUtil::GetStringArray(json, AdaptiveCardSchemaKey::UserIds));
 
     return refresh;
 }
