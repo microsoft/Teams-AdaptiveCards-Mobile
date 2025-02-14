@@ -362,6 +362,7 @@
 - (void)resetInput
 {
     [[self getInputHandler] resetInput];
+    [self validate:nil];
 }
 
 @synthesize hasValidationProperties;
