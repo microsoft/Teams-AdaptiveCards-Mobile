@@ -368,12 +368,7 @@ using namespace AdaptiveCards;
     CGFloat bottom = (direction & ACRBleedToBottomEdge) ? -paddingInFloat : 0;
     CGFloat trailing = (direction & ACRBleedToTrailingEdge) ? -paddingInFloat : 0;
 
-    if (@available(iOS 11.0, *)) {
-        self.directionalLayoutMargins =
-            NSDirectionalEdgeInsetsMake(top, leading, bottom, trailing);
-    } else {
-        self.layoutMargins = UIEdgeInsetsMake(top, leading, bottom, trailing);
-    }
+    self.directionalLayoutMargins = NSDirectionalEdgeInsetsMake(top, leading, bottom, trailing);
 
     [target.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor]
         .active = YES;

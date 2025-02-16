@@ -22,12 +22,7 @@
     if (self) {
         _completionHandlers = [[NSMutableArray alloc] init];
         self.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-        if (@available(iOS 13.0, *)) {
-            _placeholderColor = [UIColor colorWithRed:0.4313 green:0.4313 blue:0.4313 alpha:1.0];
-        } else {
-            // Fallback on earlier versions
-            _placeholderColor = [UIColor lightGrayColor];
-        }
+        _placeholderColor = [UIColor colorWithRed:0.4313 green:0.4313 blue:0.4313 alpha:1.0];
         [self configWithSharedModel:element];
     }
     return self;
@@ -132,12 +127,7 @@
 {
     if (_isShowingPlaceholder) {
         textView.text = @"";
-        if (@available(iOS 13.0, *)) {
-            textView.textColor = [UIColor labelColor];
-        } else {
-            // Fallback on earlier versions
-            textView.textColor = [UIColor blackColor];
-        }
+        textView.textColor = [UIColor labelColor];
         _isShowingPlaceholder = NO;
     }
     [textView becomeFirstResponder];
@@ -176,7 +166,7 @@
 
 #pragma mark - ACRIBaseInputHandler
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     return [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:self.hasText predicate:self.regexPredicate text:self.text error:error];
 }

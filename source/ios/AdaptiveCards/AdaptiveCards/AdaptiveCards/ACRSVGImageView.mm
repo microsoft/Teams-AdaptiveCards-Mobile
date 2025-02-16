@@ -7,8 +7,8 @@
 //
 
 #import "ACRSVGImageView.h"
-#import "Icon.h"
 #import "ACRErrors.h"
+#import "Icon.h"
 #import "UtiliOS.h"
 #ifdef SWIFT_PACKAGE
 /// Swift Package Imports
@@ -18,8 +18,7 @@
 #import <SVGKit/SVGKit.h>
 #endif
 
-@implementation ACRSVGImageView
-{
+@implementation ACRSVGImageView {
     NSString *_svgPayloadURL;
     ACRRtl _rtl;
     BOOL _isFilled;
@@ -32,8 +31,7 @@
            tintColor:(UIColor *)tintColor
 {
     self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    if (self)
-    {
+    if (self) {
         _svgPayloadURL = iconURL;
         self.size = size;
         _rtl = rtl;
@@ -44,154 +42,150 @@
     return self;
 }
 
--(void)loadIconFromCDN
+- (void)loadIconFromCDN
 {
-    NSURL *svgURL = [[NSURL alloc] initWithString:_svgPayloadURL];
     __weak ACRSVGImageView *weakSelf = self;
-    [self makeIconCDNRequestWithURL:svgURL
-                         completion:^(NSDictionary * _Nullable dict, NSError * _Nullable error) {
+    [ACRSVGImageView requestIcon:_svgPayloadURL
+                             filled:_isFilled
+                               size:_size
+                                rtl:_rtl
+                      completion:^(UIImage *image) {
         ACRSVGImageView *strongSelf = weakSelf;
-        if (dict != nil)
-        {
-            BOOL success = [strongSelf updateImageWithSVGData: dict];
-            if (!success)
-            {
-                [strongSelf showUnavailableIcon];
-            }
-        }
-        else
-        {
-            [strongSelf showUnavailableIcon];
+        strongSelf.contentMode = UIViewContentModeScaleAspectFit;
+        strongSelf.tintColor = strongSelf.svgTintColor;
+        strongSelf.image = image;
+        if (strongSelf.svgImage) {
+            strongSelf.image = strongSelf.svgImage;
         }
     }];
 }
 
-- (void)makeIconCDNRequestWithURL:(NSURL *)url
-                       completion:(void (^)(NSDictionary * _Nullable object, NSError * _Nullable error))completion
++ (void)requestIcon:(NSString *)iconURL
+             filled:(BOOL)filled
+               size:(CGSize)size
+                rtl:(ACRRtl)rtl
+         completion:(void (^)(UIImage *))completion
 {
-    if (url)
-    {
+    NSURL *url = [[NSURL alloc] initWithString:iconURL];
+    [ACRSVGImageView requestIconFromCDN:url
+                             completion:^(NSDictionary *_Nullable dict, __unused NSError *_Nullable error) {
+                                 if (dict != nil) {
+                                     BOOL success = [ACRSVGImageView prepareImage:dict
+                                                                           filled:filled
+                                                                             size:size
+                                                                              rtl:rtl
+                                                                       completion:completion];
+                                     if (success) {
+                                         return;
+                                     }
+                                 }
+
+                                 // If we reach this point, we failed to load the icon from CDN.
+                                 // Show fallback.
+                                 [ACRSVGImageView requestFallbackWithSize:(CGSize)size
+                                                                      rtl:(ACRRtl)rtl
+                                                               completion:completion];
+                             }];
+}
+
++ (void)requestFallbackWithSize:(CGSize)size
+                            rtl:(ACRRtl)rtl
+                     completion:(void (^)(UIImage *))completion
+{
+    NSString *fallbackURLName = @"Square";
+    NSString *fallBackURLString = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, fallbackURLName, fallbackURLName];
+    NSURL *svgURL = [[NSURL alloc] initWithString:fallBackURLString];
+    [ACRSVGImageView requestIconFromCDN:svgURL
+                             completion:^(NSDictionary *_Nullable dict, __unused NSError *_Nullable error) {
+                                 if (dict != nil) {
+                                     [ACRSVGImageView prepareImage:dict
+                                                            filled:YES
+                                                              size:size
+                                                               rtl:rtl
+                                                        completion:completion];
+                                 }
+                             }];
+}
+
++ (void)requestIconFromCDN:(NSURL *)url
+                completion:(void (^)(NSDictionary *_Nullable object, NSError *_Nullable error))completion
+{
+    if (url) {
         NSURLSessionDataTask *iconDataTask = [[NSURLSession sharedSession]
-                                              dataTaskWithURL:url
-                                              completionHandler:^(NSData * _Nullable data,
-                                                                  NSURLResponse * _Nullable response,
-                                                                  NSError * _Nullable error) {
-            NSInteger status = 200;
-            if ([response isKindOfClass:[NSHTTPURLResponse class]])
-            {
-                status = ((NSHTTPURLResponse *)response).statusCode;
-            }
-            if (!error && status == 200)
-            {
-                NSError *err;
-                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
-                                                                     options:NSJSONReadingMutableContainers
-                                                                       error:&err];
-                if(err)
-                {
-                    completion(nil, err);
+              dataTaskWithURL:url
+            completionHandler:^(NSData *_Nullable data,
+                                NSURLResponse *_Nullable response,
+                                NSError *_Nullable error) {
+                NSInteger status = 200;
+                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                    status = ((NSHTTPURLResponse *)response).statusCode;
                 }
-                else
-                {
-                    completion(dict, nil);
+                if (!error && status == 200) {
+                    NSError *err;
+                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
+                                                                         options:NSJSONReadingMutableContainers
+                                                                           error:&err];
+                    if (err) {
+                        completion(nil, err);
+                    } else {
+                        completion(dict, nil);
+                    }
+                } else {
+                    completion(nil, error);
                 }
-            }
-            else
-            {
-                completion(nil, error);
-            }
-        }];
+            }];
         [iconDataTask resume];
-    }
-    else
-    {
+    } else {
         NSError *error = [NSError errorWithDomain:ACRParseErrorDomain
-                                                  code:ACRInputErrorValueMissing
-                                              userInfo:nil];
+                                             code:ACRInputErrorValueMissing
+                                         userInfo:nil];
         completion(nil, error);
     }
 }
 
-- (void)showUnavailableIcon
++ (NSString *)svgXMLPayloadFrom:(NSString *)path size:(CGSize)size viewPort:(CGFloat)viewPort
 {
-    // we will always show hardcoded square icon as fallback
-    NSString *fallbackURLName = @"Square";
-    NSString *fallBackURLString = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, fallbackURLName, fallbackURLName];
-    NSURL *svgURL = [[NSURL alloc] initWithString:fallBackURLString];
-    [self makeIconCDNRequestWithURL:svgURL completion:^(NSDictionary * _Nullable dict, NSError * _Nullable error) {
-        if (dict != nil)
-        {
-            [self updateImageWithSVGData:dict iconFilledStyleKey:@"filled"];
-        }
-    }];
+    return [[NSString alloc] initWithFormat:@"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"%f\" height=\"%f\" viewBox=\"0 0 %f %f\"><path d=\"%@\"/></svg>", size.width, size.height, viewPort, viewPort, path];
 }
 
-- (void)setImageWith:(NSArray<NSString *> *)pathArray flipInRTL:(BOOL)flipInRTL viewPort:(CGFloat)viewPort
++ (BOOL)prepareImage:(NSDictionary *)svgData
+              filled:(BOOL)filled
+                size:(CGSize)size
+                 rtl:(ACRRtl)rtl
+          completion:(void (^)(UIImage *))completion
 {
-    NSString *path = [pathArray firstObject];
-    NSString *svgXML = [self svgXMLPayloadFrom:path viewPort: viewPort];
-    NSData* svgData = [svgXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
-    NSInputStream *stream = [[NSInputStream alloc] initWithData:svgData];
-    SVGKSource *svgSource = [[SVGKSource alloc] initWithInputSteam:stream];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        SVGKImage *document = [SVGKImage imageWithSource:svgSource];
-        UIImage *imageToRender = [self processImage:document.UIImage flipInRTL:flipInRTL];
-        self.image = imageToRender;
-        if(self.svgImage)
-        {
-            self.image = self.svgImage;
-        }
-    });
-}
-
--(UIImage *)processImage:(UIImage *)img flipInRTL:(BOOL)flipInRTL
-{
-    self.tintColor = self.svgTintColor;
-    UIImage *colored = [img imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.contentMode = UIViewContentModeScaleAspectFit;
-    
-    if (_rtl == ACRRtlRTL)
-    {
-        // flip in right to left mode
-        return [colored imageWithHorizontallyFlippedOrientation];
-    }
-    return colored;
-}
-
-- (NSString *)svgXMLPayloadFrom:(NSString *)path viewPort:(CGFloat)viewPort
-{
-    return [[NSString alloc] initWithFormat:@"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"%f\" height=\"%f\" viewBox=\"0 0 %f %f\"><path d=\"%@\"/></svg>", _size.width, _size.height, viewPort, viewPort, path];
-}
-
-- (BOOL)updateImageWithSVGData:(NSDictionary *)svgData
-{
-    NSString *iconFilledStyleKey = _isFilled ? @"filled" : @"regular";
-    return [self updateImageWithSVGData:svgData iconFilledStyleKey:iconFilledStyleKey];
-}
-
-- (BOOL)updateImageWithSVGData:(NSDictionary *)svgData iconFilledStyleKey:(NSString *)iconFilledStyleKey
-{
+    NSString *iconFilledStyleKey = filled ? @"filled" : @"regular";
     NSDictionary *iconDict = svgData[iconFilledStyleKey];
-    if (iconDict)
-    {
+    if (iconDict) {
         // exact size for icon may not be available, try to find closest size of icon which is available
-        NSString *targetKey = [self findClosestIconSizeInArray:[iconDict allKeys] toTarget:@(self.size.height)];
+        NSString *targetKey = [ACRSVGImageView findClosestIconSizeInArray:[iconDict allKeys] toTarget:@(size.height)];
+        CGFloat viewPort = [targetKey doubleValue];
         NSArray<NSString *> *pathArray = iconDict[targetKey];
-        if (pathArray != nil)
-        {
-            BOOL flipInRTL = NO;
-            flipInRTL = svgData[@"flipInRtl"];
-            [self setImageWith:pathArray flipInRTL:flipInRTL viewPort:[targetKey doubleValue]];
+        if (pathArray != nil) {
+            BOOL flipInRTL = [svgData[@"flipInRtl"] boolValue];
+            NSString *path = [pathArray firstObject];
+            NSString *svgXML = [ACRSVGImageView svgXMLPayloadFrom:path size:size viewPort:viewPort];
+            NSData *svgXMLData = [svgXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+            NSInputStream *stream = [[NSInputStream alloc] initWithData:svgXMLData];
+            SVGKSource *svgSource = [[SVGKSource alloc] initWithInputSteam:stream];
+            SVGKImage *document = [SVGKImage imageWithSource:svgSource];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImage *image = [document.UIImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                if (rtl == ACRRtlRTL && flipInRTL) {
+                    // flip in right to left mode
+                    completion([image imageWithHorizontallyFlippedOrientation]);
+                }
+                completion(image);
+            });
             return YES;
         }
     }
     return NO;
 }
 
-- (NSString *)findClosestIconSizeInArray:(NSArray<NSString *> *)numbers toTarget:(NSNumber *)targetNumber
++ (NSString *)findClosestIconSizeInArray:(NSArray<NSString *> *)numbers toTarget:(NSNumber *)targetNumber
 {
-    if (numbers.count == 0)
-    {
+    if (numbers.count == 0) {
         return nil;
     }
 
@@ -199,12 +193,10 @@
     NSNumber *closestNumber = @([closestNumberString doubleValue]);
     double closestDifference = fabs([closestNumber doubleValue] - [targetNumber doubleValue]);
 
-    for (NSString *numberString in numbers)
-    {
+    for (NSString *numberString in numbers) {
         NSNumber *number = @([numberString doubleValue]);
         double currentDifference = fabs([number doubleValue] - [targetNumber doubleValue]);
-        if (currentDifference < closestDifference)
-        {
+        if (currentDifference < closestDifference) {
             closestDifference = currentDifference;
             closestNumberString = numberString;
         }

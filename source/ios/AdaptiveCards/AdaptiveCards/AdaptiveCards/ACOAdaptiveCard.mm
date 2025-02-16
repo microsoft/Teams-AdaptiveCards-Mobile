@@ -153,10 +153,8 @@ using namespace AdaptiveCards;
             // Converts AdaptiveCardParseException to NSError
             ErrorStatusCode errorStatusCode = e.GetStatusCode();
             NSInteger errorCode = (long)errorStatusCode;
-            NSBundle *adaptiveCardsBundle = [[ACOBundle getInstance] getBundle];
-            NSString *localizedFormat = NSLocalizedStringFromTableInBundle(@"AdaptiveCards.Parsing", nil, adaptiveCardsBundle, "Parsing Error Messages");
             NSString *objectModelErrorCodeInString = [NSString stringWithCString:ErrorStatusCodeToString(errorStatusCode).c_str() encoding:NSUTF8StringEncoding];
-            NSDictionary<NSErrorUserInfoKey, id> *userInfo = @{NSLocalizedDescriptionKey : [NSString localizedStringWithFormat:localizedFormat, objectModelErrorCodeInString]};
+            NSDictionary<NSErrorUserInfoKey, id> *userInfo = @{NSLocalizedDescriptionKey : [NSString localizedStringWithFormat:@"Parse Error: %@", objectModelErrorCodeInString]};
             NSError *parseError = [NSError errorWithDomain:ACRParseErrorDomain
                                                       code:errorCode
                                                   userInfo:userInfo];

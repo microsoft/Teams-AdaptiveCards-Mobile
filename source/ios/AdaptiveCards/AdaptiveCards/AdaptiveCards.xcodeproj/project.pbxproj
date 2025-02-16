@@ -54,7 +54,6 @@
 		463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */; };
 		463C4EDF2BDF63E700A95C4E /* ACRSVGIconHoldingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */; };
 		463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */; };
-		46445D872BF7242700831973 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46445D862BF7242700831973 /* FluentAssets.xcassets */; };
 		46445D892BF72A5300831973 /* ACRRatingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46445D882BF72A5300831973 /* ACRRatingView.h */; };
 		46445D8B2BF7324100831973 /* ACRRatingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46445D8A2BF7324100831973 /* ACRRatingView.mm */; };
 		465352612C16FD9800DCEE25 /* ACRRatingInputDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 465352602C16FD9800DCEE25 /* ACRRatingInputDataSource.h */; };
@@ -128,7 +127,6 @@
 		6B3787B720CA00D300015401 /* ACRUILabel.h in Headers */ = {isa = PBXBuildFile; fileRef = F4F44B6A203FA8EF00A2F24C /* ACRUILabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B3787BA20CB3E0E00015401 /* ACRContentHoldingUIScrollView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B3787B820CB3E0E00015401 /* ACRContentHoldingUIScrollView.mm */; };
 		6B3787BB20CB3E0E00015401 /* ACRContentHoldingUIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B3787B920CB3E0E00015401 /* ACRContentHoldingUIScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6B3A23192755A3EF00764971 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B3A231B2755A3EF00764971 /* Localizable.strings */; };
 		6B421CC02101503E002F401A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4CA74A320181B52002041DF /* QuartzCore.framework */; };
 		6B421CC121015EDD002F401A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45A071C1EF4BCC3007C6503 /* CoreGraphics.framework */; };
 		6B4C05BF27864B0800882387 /* ACRImagePropertiesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B4C05BE27864B0800882387 /* ACRImagePropertiesTests.mm */; };
@@ -162,10 +160,6 @@
 		6B8C766526461E98009548FA /* ACOBundle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B8C766226461E97009548FA /* ACOBundle.mm */; };
 		6B8C766626461E98009548FA /* ACRInputTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B8C766326461E98009548FA /* ACRInputTableView.mm */; };
 		6B8C766726461E98009548FA /* ACOBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B8C766426461E98009548FA /* ACOBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6B8C768526461F1A009548FA /* checked-checkbox-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C766D26461F1A009548FA /* checked-checkbox-24.png */; };
-		6B8C768626461F1A009548FA /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C766E26461F1A009548FA /* checked.png */; };
-		6B8C768726461F1A009548FA /* unchecked-checkbox-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C766F26461F1A009548FA /* unchecked-checkbox-24.png */; };
-		6B8C768826461F1A009548FA /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C767026461F1A009548FA /* unchecked.png */; };
 		6B92A7E42677DC8B00CAE3BF /* ACRChoiceSetCompactStyleView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B92A7E32677DC8B00CAE3BF /* ACRChoiceSetCompactStyleView.mm */; };
 		6B92A7E62677DFAB00CAE3BF /* ACRChoiceSetCompactStyleView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B92A7E52677DFAB00CAE3BF /* ACRChoiceSetCompactStyleView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B94F2DD24C7997D00E2B310 /* ACRTextInputHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B94F2DB24C7997D00E2B310 /* ACRTextInputHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -589,7 +583,6 @@
 		463C4EDC2BDB66C600A95C4E /* ACRSVGImageView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGImageView.mm; sourceTree = "<group>"; };
 		463C4EDE2BDF63E700A95C4E /* ACRSVGIconHoldingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRSVGIconHoldingView.h; sourceTree = "<group>"; };
 		463C4EE02BDF640300A95C4E /* ACRSVGIconHoldingView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRSVGIconHoldingView.mm; sourceTree = "<group>"; };
-		46445D862BF7242700831973 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
 		46445D882BF72A5300831973 /* ACRRatingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRRatingView.h; sourceTree = "<group>"; };
 		46445D8A2BF7324100831973 /* ACRRatingView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRatingView.mm; sourceTree = "<group>"; };
 		465352602C16FD9800DCEE25 /* ACRRatingInputDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRRatingInputDataSource.h; path = PrivateHeaders/ACRRatingInputDataSource.h; sourceTree = "<group>"; };
@@ -667,7 +660,6 @@
 		6B377283260194000024E527 /* ACRActionExecuteRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRActionExecuteRenderer.mm; sourceTree = "<group>"; };
 		6B3787B820CB3E0E00015401 /* ACRContentHoldingUIScrollView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRContentHoldingUIScrollView.mm; sourceTree = "<group>"; };
 		6B3787B920CB3E0E00015401 /* ACRContentHoldingUIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRContentHoldingUIScrollView.h; sourceTree = "<group>"; };
-		6B3A231A2755A3EF00764971 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6B4C05BE27864B0800882387 /* ACRImagePropertiesTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRImagePropertiesTests.mm; sourceTree = "<group>"; };
 		6B5BA8BE2707BBD000719853 /* ACOWarning.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOWarning.mm; sourceTree = "<group>"; };
 		6B5D240A212C89E70010EB07 /* ACORemoteResourceInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACORemoteResourceInformation.h; sourceTree = "<group>"; };
@@ -700,10 +692,6 @@
 		6B8C766226461E97009548FA /* ACOBundle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOBundle.mm; sourceTree = "<group>"; };
 		6B8C766326461E98009548FA /* ACRInputTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRInputTableView.mm; sourceTree = "<group>"; };
 		6B8C766426461E98009548FA /* ACOBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACOBundle.h; sourceTree = "<group>"; };
-		6B8C766D26461F1A009548FA /* checked-checkbox-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-checkbox-24.png"; sourceTree = "<group>"; };
-		6B8C766E26461F1A009548FA /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
-		6B8C766F26461F1A009548FA /* unchecked-checkbox-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked-checkbox-24.png"; sourceTree = "<group>"; };
-		6B8C767026461F1A009548FA /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked.png; sourceTree = "<group>"; };
 		6B92A7E32677DC8B00CAE3BF /* ACRChoiceSetCompactStyleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRChoiceSetCompactStyleView.mm; sourceTree = "<group>"; };
 		6B92A7E52677DFAB00CAE3BF /* ACRChoiceSetCompactStyleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRChoiceSetCompactStyleView.h; sourceTree = "<group>"; };
 		6B94F2DB24C7997D00E2B310 /* ACRTextInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRTextInputHandler.h; sourceTree = "<group>"; };
@@ -1187,27 +1175,6 @@
 			name = InputRenderers;
 			sourceTree = "<group>";
 		};
-		6B8C766826461F1A009548FA /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				6B8C766C26461F1A009548FA /* Images */,
-				6B3A231B2755A3EF00764971 /* Localizable.strings */,
-				46445D862BF7242700831973 /* FluentAssets.xcassets */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		6B8C766C26461F1A009548FA /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				6B8C766D26461F1A009548FA /* checked-checkbox-24.png */,
-				6B8C766E26461F1A009548FA /* checked.png */,
-				6B8C766F26461F1A009548FA /* unchecked-checkbox-24.png */,
-				6B8C767026461F1A009548FA /* unchecked.png */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
 		6B92A71B266FE84F00CAE3BF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -1457,7 +1424,6 @@
 				F42979321F30074900E89914 /* Inputs */,
 				F42979351F3007DF00E89914 /* Layouts */,
 				F42979341F3007C500E89914 /* ReadOnlyObjects */,
-				6B8C766826461F1A009548FA /* Resources */,
 				F423C0D71EE1FF2F00905679 /* SharedLib */,
 				6B92A71B266FE84F00CAE3BF /* Utilities */,
 			);
@@ -2207,13 +2173,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B8C768626461F1A009548FA /* checked.png in Resources */,
 				84AE295927FFA26F00D01B82 /* CMakeLists.txt in Resources */,
-				6B8C768526461F1A009548FA /* checked-checkbox-24.png in Resources */,
-				6B3A23192755A3EF00764971 /* Localizable.strings in Resources */,
-				6B8C768726461F1A009548FA /* unchecked-checkbox-24.png in Resources */,
-				46445D872BF7242700831973 /* FluentAssets.xcassets in Resources */,
-				6B8C768826461F1A009548FA /* unchecked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2578,17 +2538,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		6B3A231B2755A3EF00764971 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6B3A231A2755A3EF00764971 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		6BC1C77E286BBC800084D1D9 /* AppRelease */ = {
 			isa = XCBuildConfiguration;
@@ -2638,7 +2587,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2669,7 +2618,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AdaptiveCards/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2769,7 +2718,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2827,7 +2776,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2858,7 +2807,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AdaptiveCards/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2900,7 +2849,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = AdaptiveCards/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

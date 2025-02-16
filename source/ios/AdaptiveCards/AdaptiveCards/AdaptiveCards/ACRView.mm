@@ -796,8 +796,6 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
         if ([object isKindOfClass:[ACRContentHoldingUIView class]]) {
             object = ((UIView *)object).subviews[0];
-        } else if ([object isKindOfClass:[ACRButton class]]) {
-            object = ((ACRButton *)object).iconView;
         }
 
         if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
