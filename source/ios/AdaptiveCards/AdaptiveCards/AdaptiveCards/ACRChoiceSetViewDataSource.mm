@@ -31,31 +31,14 @@ const CGFloat minimumRowHeight = 44.0;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         UIImage *iconImage = nil;
-        NSBundle *bundle = [[ACOBundle getInstance] getBundle];
         if ([reuseIdentifier isEqualToString:@"checked-checkbox"]) {
-            if (@available(iOS 13.0, *)) {
-                iconImage = [UIImage systemImageNamed:@"checkmark.square"];
-            } else {
-                iconImage = [UIImage imageNamed:@"checked-checkbox-24.png" inBundle:bundle compatibleWithTraitCollection:nil];
-            }
+            iconImage = [UIImage systemImageNamed:@"checkmark.square"];
         } else if ([reuseIdentifier isEqualToString:@"checked-radiobutton"]) {
-            if (@available(iOS 13.0, *)) {
-                iconImage = [UIImage systemImageNamed:@"record.circle"];
-            } else {
-                iconImage = [UIImage imageNamed:@"checked.png" inBundle:bundle compatibleWithTraitCollection:nil];
-            }
+            iconImage = [UIImage systemImageNamed:@"record.circle"];
         } else if ([reuseIdentifier isEqualToString:@"unchecked-checkbox"]) {
-            if (@available(iOS 13.0, *)) {
-                iconImage = [UIImage systemImageNamed:@"square"];
-            } else {
-                iconImage = [UIImage imageNamed:@"unchecked-checkbox-24.png" inBundle:bundle compatibleWithTraitCollection:nil];
-            }
+            iconImage = [UIImage systemImageNamed:@"square"];
         } else if ([reuseIdentifier isEqualToString:@"unchecked-radiobutton"]) {
-            if (@available(iOS 13.0, *)) {
-                iconImage = [UIImage systemImageNamed:@"circle"];
-            } else {
-                iconImage = [UIImage imageNamed:@"unchecked.png" inBundle:bundle compatibleWithTraitCollection:nil];
-            }
+            iconImage = [UIImage systemImageNamed:@"circle"];
         }
 
         if (iconImage) {

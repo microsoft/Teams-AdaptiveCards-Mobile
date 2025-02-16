@@ -367,13 +367,12 @@
 - (void)testChoiceSetInputCanGatherDefaultValues
 {
     NSString *payload = [NSString stringWithContentsOfFile:[_mainBundle pathForResource:@"Input.ChoiceSet" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
-    NSDictionary<NSString *, NSString *> *expectedValue = @{
-        @"myColor" : @"1",
-        @"myColor3" : @"1,3",
-        @"myColor2" : @"1",
-        @"myColor1" : @"1",
-        @"myColor4" : @"1"
-    };
+    NSMutableDictionary<NSString *, NSString *> *expectedValue = [[NSMutableDictionary alloc] init];
+    expectedValue[@"myColor"] = @"1";
+    expectedValue[@"myColor3"] = @"1,3";
+    expectedValue[@"myColor2"] = @"1";
+    expectedValue[@"myColor1"] = @"1";
+    expectedValue[@"myColor4"] = @"1";
     NSData *expectedData = [NSJSONSerialization dataWithJSONObject:expectedValue options:NSJSONWritingPrettyPrinted error:nil];
     NSString *expectedString = [[NSString alloc] initWithData:expectedData encoding:NSUTF8StringEncoding];
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:payload];

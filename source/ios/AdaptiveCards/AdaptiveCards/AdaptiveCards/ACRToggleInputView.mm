@@ -72,17 +72,10 @@
     ]];
 
     // Configure margins
-    if (@available(iOS 11.0, *)) {
-        NSDirectionalEdgeInsets insets = self.directionalLayoutMargins;
-        insets.leading = 0.0f;
-        insets.trailing = 2.0f;
-        self.directionalLayoutMargins = insets;
-    } else {
-        UIEdgeInsets insets = self.layoutMargins;
-        insets.left = 0.0f;
-        insets.right = 2.0f;
-        self.layoutMargins = insets;
-    }
+    NSDirectionalEdgeInsets insets = self.directionalLayoutMargins;
+    insets.leading = 0.0f;
+    insets.trailing = 2.0f;
+    self.directionalLayoutMargins = insets;
 }
 
 - (CGSize)intrinsicContentSize
