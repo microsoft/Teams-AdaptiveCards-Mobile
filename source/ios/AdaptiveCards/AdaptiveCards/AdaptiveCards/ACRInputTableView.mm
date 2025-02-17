@@ -25,14 +25,36 @@
 
 - (instancetype)initWithSuperview:(UIView *)view
 {
-    self = [[[ACOBundle getInstance] getBundle] loadNibNamed:@"ACRInputTableView" owner:self options:nil][0];
+    self = [super initWithFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height) style:UITableViewStylePlain];
     if (self) {
-        self.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height);
-    } else {
-        self = [super initWithFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height) style:UITableViewStyleGrouped];
-        self.backgroundColor = UIColor.clearColor;
-        self.translatesAutoresizingMaskIntoConstraints = NO;
-        self.scrollEnabled = false;
+        self.clipsToBounds = YES;
+        self.contentMode = UIViewContentModeCenter;
+
+        self.bounces = NO;
+        self.scrollEnabled = NO;
+        self.showsHorizontalScrollIndicator = NO;
+        self.showsVerticalScrollIndicator = NO;
+        self.bouncesZoom = NO;
+
+        self.backgroundColor = [UIColor clearColor];
+
+        // Separator settings
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.separatorColor = [UIColor colorWithWhite:0.6666666667 alpha:1.0];
+
+        // Section index colors set to transparent.
+        self.sectionIndexColor = [UIColor clearColor];
+        self.sectionIndexBackgroundColor = [UIColor clearColor];
+        self.sectionIndexTrackingBackgroundColor = [UIColor clearColor];
+
+        // Set row height and section header/footer height to auto.
+        self.rowHeight = UITableViewAutomaticDimension;
+        self.estimatedRowHeight = UITableViewAutomaticDimension;
+        self.sectionHeaderHeight = UITableViewAutomaticDimension;
+        self.sectionFooterHeight = UITableViewAutomaticDimension;
+
+        // Set custom runtime attribute.
+        self.inputTableViewSpacing = 10;
     }
     return self;
 }
