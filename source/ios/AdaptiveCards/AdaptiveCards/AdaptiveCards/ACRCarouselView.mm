@@ -20,6 +20,10 @@
 #import "UtiliOS.h"
 #import "ACRDirectionalPanGestureRecognizer.h"
 
+static NSString * const ACRCarouselAccessibilityLabel = @"Carousel";
+static NSString * const ACRCarouselAccessibilityHint = @"swipe left or right with 3 fingers to navigate";
+static NSString * const ACRCarouselAccessibilityValueFormat = @"Page %ld of %ld";
+
 @interface ACRCarouselView()
 
 @property NSInteger carouselPageViewIndex;
@@ -99,7 +103,7 @@
     [carouselStackView addArrangedSubview:carouselPagesContainerView];
     [carouselStackView addArrangedSubview:self.pageControl];
     [carouselStackView addArrangedSubview:[[UIView alloc] initWithFrame:CGRectZero]];
-    
+   
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     
     [viewGroup addArrangedSubview:self withAreaName:areaName];
@@ -112,6 +116,9 @@
         [carouselPagesContainerView.leadingAnchor constraintEqualToAnchor:carouselStackView.leadingAnchor],
         [carouselPagesContainerView.trailingAnchor constraintEqualToAnchor:carouselStackView.trailingAnchor]
     ]];
+    
+    UIView *accessibilityContainerView = [self getAccessibilityContainerView];
+    self.accessibilityElements = @[accessibilityContainerView, carouselStackView];
     
     return self;
 }
@@ -131,31 +138,35 @@
     rightPanGesture.delegate = self;
 }
 
-- (void)handleLeftSwipe
+- (BOOL)handleLeftSwipe
 {
     NSInteger newCarouselPageViewIndex = MIN(self.carouselPageViewIndex+1, self.carouselPageViewList.count-1);
     if(newCarouselPageViewIndex == self.carouselPageViewIndex)
     {
-        return;
+        return NO;
     }
     [self.pageControl setCurrentPage:newCarouselPageViewIndex];
     
     [_carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
     _carouselPageViewIndex = newCarouselPageViewIndex;
+    [self updateAccessibilityValue];
+    return YES;
 }
 
-- (void)handleRightSwipe
+- (BOOL)handleRightSwipe
 {
     NSInteger newCarouselPageViewIndex = MAX(self.carouselPageViewIndex-1, 0);
     
     if(newCarouselPageViewIndex == self.carouselPageViewIndex)
     {
-        return;
+        return NO;
     }
     
     [self.pageControl setCurrentPage:newCarouselPageViewIndex];
     [self.carouselPagesContainerView setCurrentPage:newCarouselPageViewIndex];
     _carouselPageViewIndex = newCarouselPageViewIndex;
+    [self updateAccessibilityValue];
+    return YES;
 }
 
 - (void)handlePanGestureOfLeftDirection:(UIPanGestureRecognizer *)gesture
@@ -200,6 +211,51 @@
             [self handleRightSwipe];
         }
     }
+}
+
+-(BOOL) accessibilityScroll:(UIAccessibilityScrollDirection)direction
+{
+    
+    if(direction == UIAccessibilityScrollDirectionLeft)
+    {
+       return [self handleLeftSwipe];
+    }
+    
+    else if(direction == UIAccessibilityScrollDirectionRight)
+    {
+        return [self handleRightSwipe];
+    }
+    
+    return NO;
+}
+
+-(void) updateAccessibilityValue
+{
+    NSString *accessibilityValue = [NSString stringWithFormat:@"Page %ld of %ld",self.carouselPageViewIndex+1,self.carouselPageViewList.count];
+    self.accessibilityValue = NSLocalizedString(accessibilityValue, null);
+    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
+}
+
+-(UIView *) getAccessibilityContainerView
+{
+    UIView * accessibilityContainerView = [[UIView alloc] initWithFrame:CGRectZero];
+    accessibilityContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:accessibilityContainerView];
+    
+    [NSLayoutConstraint activateConstraints:@[
+        [accessibilityContainerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [accessibilityContainerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        [accessibilityContainerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+        [accessibilityContainerView.topAnchor constraintEqualToAnchor:self.topAnchor]
+    ]];
+    
+    accessibilityContainerView.isAccessibilityElement = YES;
+    accessibilityContainerView.accessibilityLabel = NSLocalizedString(ACRCarouselAccessibilityLabel,null);
+    accessibilityContainerView.accessibilityHint =  NSLocalizedString(ACRCarouselAccessibilityHint,null);
+    NSString *accessibilityValue = [NSString stringWithFormat:ACRCarouselAccessibilityValueFormat,self.carouselPageViewIndex+1,self.carouselPageViewList.count];
+    accessibilityContainerView.accessibilityValue = NSLocalizedString(accessibilityValue, null);
+    
+    return accessibilityContainerView;
 }
 
 @end
