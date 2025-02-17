@@ -214,17 +214,12 @@
 
 - (UIImage *)emptyStarImage 
 {
-    NSString *emptyStarFormat = _readOnly ? @"ic_fluent_star_%ld_filled" : @"ic_fluent_star_%ld_regular";
-    NSString *nameOfStar = [[NSString alloc] initWithFormat:emptyStarFormat, (long)([self sizeOfStar].width)];
-    UIImage *emptyStarImage = [UIImage imageNamed:nameOfStar inBundle:[[ACOBundle getInstance] getBundle] compatibleWithTraitCollection:nil];
-    return emptyStarImage;
+    return [UIImage systemImageNamed:_readOnly ? @"star.fill" : @"star"];
 }
 
 - (UIImage *)filledStarImage 
 {
-    NSString *nameOfStar = [[NSString alloc] initWithFormat:@"ic_fluent_star_%ld_filled", (long)([self sizeOfStar].width)];
-    UIImage *filledStarImage = [UIImage imageNamed:nameOfStar inBundle:[[ACOBundle getInstance] getBundle] compatibleWithTraitCollection:nil];
-    return filledStarImage;
+    return [UIImage systemImageNamed:@"star.fill"];
 }
 
 - (void)handleStarTap:(UITapGestureRecognizer *)gesture 

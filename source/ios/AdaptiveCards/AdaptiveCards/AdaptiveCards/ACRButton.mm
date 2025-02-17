@@ -44,16 +44,13 @@
     // Set the title font (system font with a point size of 15)
     self.titleLabel.font = [UIFont systemFontOfSize:15];
 
-    // Set images for various button states using SF Symbols (iOS 13+)
-    if (@available(iOS 13.0, *)) {
-        UIImage *chevronUp = [UIImage systemImageNamed:@"chevron.up"];
-        UIImage *chevronDown = [UIImage systemImageNamed:@"chevron.down"];
-        
-        [self setImage:chevronUp forState:UIControlStateNormal];
-        [self setImage:chevronUp forState:UIControlStateDisabled];
-        [self setImage:chevronDown forState:UIControlStateSelected];
-        [self setImage:chevronUp forState:UIControlStateHighlighted];
-    }
+    UIImage *chevronUp = [UIImage systemImageNamed:@"chevron.up"];
+    UIImage *chevronDown = [UIImage systemImageNamed:@"chevron.down"];
+    
+    [self setImage:chevronUp forState:UIControlStateNormal];
+    [self setImage:chevronUp forState:UIControlStateDisabled];
+    [self setImage:chevronDown forState:UIControlStateSelected];
+    [self setImage:chevronUp forState:UIControlStateHighlighted];
 
     // Set title color for normal state to white
     [self setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];

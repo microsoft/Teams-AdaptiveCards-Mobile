@@ -150,12 +150,7 @@
                             }
                         }
 
-                        if (@available(iOS 13.0, *)) {
-                            foregroundColor = UIColor.linkColor;
-                        } else {
-                            // Fallback on earlier versions
-                            foregroundColor = [ACOHostConfig convertHexColorCodeToUIColor:"#007affff"];
-                        }
+                        foregroundColor = UIColor.linkColor;
                     }
                 }
 

@@ -114,9 +114,7 @@
 
     // Setup text input traits: email keyboard and email content type.
     self.keyboardType = UIKeyboardTypeEmailAddress;
-    if (@available(iOS 10.0, *)) {
-        self.textContentType = UITextContentTypeEmailAddress;
-    }
+    self.textContentType = UITextContentTypeEmailAddress;
 
     // Set the placeholder label's text value via KVC.
     UIColor *placeholderValue = [UIColor colorWithRed:0.5058823529

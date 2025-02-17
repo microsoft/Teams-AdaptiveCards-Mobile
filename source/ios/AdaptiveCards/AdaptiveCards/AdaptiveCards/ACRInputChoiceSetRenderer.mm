@@ -93,7 +93,7 @@
 
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:inputLabelView withAreaName:areaName];
-    
+
     return inputLabelView;
 }
 
@@ -125,13 +125,8 @@
         UIButton *button = (UIButton *)choiceSetView.showFilteredListControl;
 
         // configure icons for the showFilteredListControl.
-        if (@available(iOS 13.0, *)) {
-            [button setImage:[UIImage systemImageNamed:@"chevron.down"] forState:UIControlStateNormal];
-            [button setImage:[UIImage systemImageNamed:@"chevron.up"] forState:UIControlStateSelected];
-        } else {
-            [button setImage:[UIImage imageNamed:@"chevrondown"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:@"chevronup"] forState:UIControlStateSelected];
-        };
+        [button setImage:[UIImage systemImageNamed:@"chevron.down"] forState:UIControlStateNormal];
+        [button setImage:[UIImage systemImageNamed:@"chevron.up"] forState:UIControlStateSelected];
 
         UITableView *filteredListView = (UITableView *)choiceSetView.filteredListView;
         filteredListView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;

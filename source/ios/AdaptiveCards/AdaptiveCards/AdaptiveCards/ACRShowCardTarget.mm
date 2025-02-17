@@ -87,11 +87,7 @@
     
     _button.accessibilityValue = NSLocalizedString(@"card collapsed", nil);
 
-    if (@available(iOS 11.0, *)) {
-        _adcView.directionalLayoutMargins = NSDirectionalEdgeInsetsMake(showCardPadding, -showCardPadding, -showCardPadding, -showCardPadding);
-    } else {
-        _adcView.layoutMargins = UIEdgeInsetsMake(showCardPadding, -showCardPadding, -showCardPadding, -showCardPadding);
-    }
+    _adcView.directionalLayoutMargins = NSDirectionalEdgeInsetsMake(showCardPadding, -showCardPadding, -showCardPadding, -showCardPadding);
 
     UIView *backgroundView = [[UIView alloc] init];
     [adcView addSubview:backgroundView];

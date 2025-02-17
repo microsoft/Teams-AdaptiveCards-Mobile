@@ -101,11 +101,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         [self updateAccessibilityProperties];
         _validator = [[ACOChoiceSetFilteredStyleValidator alloc] init:acoElem dataSource:_filteredDataSource];
 
-        if (@available(iOS 11.0, *)) {
-            self.spacingTop = self.window.safeAreaInsets.top + 8.0f;
-        } else {
-            self.spacingTop = self.window.layoutMargins.top + 8.0f;
-        }
+        self.spacingTop = self.window.safeAreaInsets.top + 8.0f;
         self.spacingBottom = 8.0f;
 
         // configure UITextField
