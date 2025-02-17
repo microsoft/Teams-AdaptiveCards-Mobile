@@ -89,7 +89,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
@@ -202,8 +202,8 @@
             [button setImageView:img withConfig:acoConfig];
         } else if (key.length) {
             NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
-            NSString *key = [number stringValue];
-            UIImageView *view = [rootView getImageView:key];
+            NSString *k = [number stringValue];
+            UIImageView *view = [rootView getImageView:k];
             if (view && view.image) {
                 button.iconView = view;
                 [button addSubview:view];
@@ -211,7 +211,7 @@
             } else {
                 button.iconView = view;
                 [button addSubview:view];
-                [rootView setImageView:key view:button];
+                [rootView setImageView:k view:button];
             }
             [NSLayoutConstraint constraintWithItem:button
                                          attribute:NSLayoutAttributeWidth

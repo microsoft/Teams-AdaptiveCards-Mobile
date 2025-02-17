@@ -43,7 +43,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<CompoundButton> compoundButton = std::dynamic_pointer_cast<CompoundButton>(elem);
@@ -131,7 +131,7 @@
 
 -(ACRSVGIconHoldingView*) getIconViewWithIconInfo:(std::shared_ptr<IconInfo>) icon
                                       rootView:(ACRView *)rootView
-                                    hostConfig:(ACOHostConfig *)acoConfig;
+                                    hostConfig:(ACOHostConfig *)acoConfig
 {
     
     NSString *svgPayloadURL = cdnURLForIcon(@(icon->GetSVGPath().c_str()));

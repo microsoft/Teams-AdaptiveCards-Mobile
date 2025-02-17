@@ -128,12 +128,12 @@
         self.label.attributedText = attributedLabel;
         std::string errorMessage = inputBlck->GetErrorMessage();
         if (!errorMessage.empty()) {
-            AdaptiveCards::ErrorMessageConfig *pLabelConfig = &inputConfig.errorMessage;
-            RichTextElementProperties textElementProperties;
-            textElementProperties.SetTextSize(pLabelConfig->size);
-            textElementProperties.SetTextWeight(pLabelConfig->weight);
-            textElementProperties.SetTextColor(ForegroundColor::Attention);
-            self.errorMessage.attributedText = initAttributedText(acoConfig, errorMessage, textElementProperties, viewGroup.style);
+            AdaptiveCards::ErrorMessageConfig *pc = &inputConfig.errorMessage;
+            RichTextElementProperties tp;
+            tp.SetTextSize(pc->size);
+            tp.SetTextWeight(pc->weight);
+            tp.SetTextColor(ForegroundColor::Attention);
+            self.errorMessage.attributedText = initAttributedText(acoConfig, errorMessage, tp, viewGroup.style);
             self.errorMessage.isAccessibilityElement = NO;
             self.hasErrorMessage = YES;
         }
@@ -235,7 +235,7 @@
     }
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
     UIView *inputView = [self getInputView];
@@ -243,8 +243,8 @@
         [inputView resignFirstResponder];
     }
     if (inputHandler) {
-        NSError *error = nil;
-        if (NO == [inputHandler validate:&error]) {
+        NSError *e = nil;
+        if (NO == [inputHandler validate:&e]) {
             if (self.hasErrorMessage) {
                 self.hasVisibilityChanged = self.errorMessage.hidden == YES;
                 self.errorMessage.hidden = NO;

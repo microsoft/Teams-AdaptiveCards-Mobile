@@ -28,7 +28,7 @@
                     inputs:(NSMutableArray *)inputs
                  superview:(UIView<ACRIContentHoldingView> *)superview
          baseActionElement:(ACOBaseActionElement *)acoElem
-                hostConfig:(ACOHostConfig *)acoConfig;
+                hostConfig:(ACOHostConfig *)acoConfig
 {
     if (acoElem.type == ACRActionType::ACROverflow) {
         NSString *title = @"...";

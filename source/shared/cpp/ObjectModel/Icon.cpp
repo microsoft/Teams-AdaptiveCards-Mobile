@@ -9,7 +9,7 @@
 using namespace AdaptiveCards;
 
 Icon::Icon() :
-    BaseCardElement(CardElementType::Icon), m_iconStyle(IconStyle::Regular), m_iconSize(IconSize::Standard), m_foregroundColor(ForegroundColor::Default)
+    BaseCardElement(CardElementType::Icon), m_foregroundColor(ForegroundColor::Default), m_iconStyle(IconStyle::Regular), m_iconSize(IconSize::Standard)
 {
     PopulateKnownPropertiesSet();
 }

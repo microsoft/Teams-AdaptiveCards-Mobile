@@ -29,7 +29,7 @@
                  rtl:(ACRRtl)rtl
             isFilled:(BOOL)isFilled
                 size:(CGSize)size
-           tintColor:(UIColor *)tintColor;
+           tintColor:(UIColor *)tintColor
 {
     self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     if (self)

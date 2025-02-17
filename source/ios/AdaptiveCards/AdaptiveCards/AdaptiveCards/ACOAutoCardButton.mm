@@ -13,7 +13,7 @@
     std::shared_ptr<AuthCardButton> _adaptiveAuthCardButton;
 }
 
-- (instancetype)init:(std::shared_ptr<AuthCardButton> const &)adaptiveAuthCardButton;
+- (instancetype)init:(std::shared_ptr<AuthCardButton> const &)adaptiveAuthCardButton
 {
     self = [super init];
     if (self && adaptiveAuthCardButton) {

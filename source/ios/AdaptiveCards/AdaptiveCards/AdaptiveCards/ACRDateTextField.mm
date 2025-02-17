@@ -174,7 +174,7 @@ using namespace AdaptiveCards;
     return NO;
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     BOOL isValidated = YES;
     isValidated = [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:self.hasText predicate:nil text:nil error:error];
