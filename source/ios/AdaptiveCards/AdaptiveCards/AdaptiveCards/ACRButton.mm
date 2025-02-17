@@ -196,7 +196,7 @@
 + (UIButton *)rootView:(ACRView *)rootView
      baseActionElement:(ACOBaseActionElement *)acoAction
                  title:(NSString *)title
-         andHostConfig:(ACOHostConfig *)config;
+         andHostConfig:(ACOHostConfig *)config
 {
     ACRButton *button = [[ACRButton alloc] initWithExpandable:[acoAction type] == ACRShowCard];
     [button setTitle:title forState:UIControlStateNormal];
@@ -236,8 +236,8 @@
         [button setImageView:img withConfig:config];
     } else if (key.length) {
         NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
-        NSString *key = [number stringValue];
-        UIImageView *view = [rootView getImageView:key];
+        NSString *k = [number stringValue];
+        UIImageView *view = [rootView getImageView:k];
         if ([iconURL hasPrefix:@"icon:"]) {
             // Rendering svg fluent icon here on button
 
@@ -247,20 +247,20 @@
             unsigned int imageHeight = 24;
             BOOL isFilled = [[iconURL lowercaseString] containsString:@"filled"];
             NSString *getSVGURL = cdnURLForIcon(@(action->GetSVGPath().c_str()));
-            UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl isFilled:isFilled size:CGSizeMake(imageHeight, imageHeight) tintColor:button.currentTitleColor];
-            button.iconView = view;
-            [button addSubview:view];
+            UIImageView *v = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl isFilled:isFilled size:CGSizeMake(imageHeight, imageHeight) tintColor:button.currentTitleColor];
+            button.iconView = v;
+            [button addSubview:v];
             [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];
         } else if (view) {
             if (view.image) {
                 button.iconView = view;
                 [button addSubview:view];
-                [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
+                [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:k];
                 [button setImageView:view.image withConfig:config];
             } else {
                 button.iconView = view;
                 [button addSubview:view];
-                [rootView setImageView:key view:button];
+                [rootView setImageView:k view:button];
             }
         }
     } else {

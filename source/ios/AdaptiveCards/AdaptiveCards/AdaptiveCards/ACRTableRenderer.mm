@@ -25,7 +25,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     [rootView.context pushBaseCardElementContext:acoElem];
     ACRTableView *tableView = [[ACRTableView alloc] init:acoElem

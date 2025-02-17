@@ -116,8 +116,8 @@ AdaptiveCard::AdaptiveCard(
     m_fallbackText(fallbackText), m_backgroundImage(backgroundImage), m_refresh(refresh),
     m_authentication(authentication), m_speak(speak), m_style(style), m_language(language),
     m_verticalContentAlignment(verticalContentAlignment), m_height(height),
-    m_minHeight(minHeight), m_internalId{InternalId::Next()}, m_body(body), m_actions(actions),
-    m_requires{}, m_fallbackContent{}, m_fallbackType(FallbackType::None), m_additionalProperties{}
+    m_minHeight(minHeight), m_internalId{InternalId::Next()}, m_additionalProperties{}, m_body(body), m_actions(actions),
+    m_requires{}, m_fallbackContent{}, m_fallbackType(FallbackType::None)
 {
     PopulateKnownPropertiesSet();
 }
@@ -142,7 +142,7 @@ AdaptiveCard::AdaptiveCard(
     m_version(version),
     m_fallbackText(fallbackText), m_backgroundImage(backgroundImage), m_refresh(refresh),
     m_authentication(authentication), m_speak(speak), m_style(style), m_language(language),
-    m_verticalContentAlignment(verticalContentAlignment), m_height(height), m_minHeight(minHeight), m_internalId{InternalId::Next()}, m_body(body), m_actions(actions), m_requires(p_requires), m_fallbackContent(fallbackContent), m_fallbackType(fallbackType), m_additionalProperties{}
+    m_verticalContentAlignment(verticalContentAlignment), m_height(height), m_minHeight(minHeight), m_internalId{InternalId::Next()}, m_additionalProperties{}, m_body(body), m_actions(actions), m_requires(p_requires), m_fallbackContent(fallbackContent), m_fallbackType(fallbackType)
 {
     PopulateKnownPropertiesSet();
 }

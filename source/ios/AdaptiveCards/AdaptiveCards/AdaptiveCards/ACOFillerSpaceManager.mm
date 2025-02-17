@@ -106,24 +106,24 @@ const CGFloat kFillerViewLayoutConstraintPriority = UILayoutPriorityDefaultLow -
 - (NSArray<NSLayoutConstraint *> *)activateConstraintsForPadding
 {
     if (_stretchableViews.count > 1) {
-        NSMutableArray<NSLayoutConstraint *> *_paddingConstraints = [[NSMutableArray alloc] init];
+        NSMutableArray<NSLayoutConstraint *> *constraints = [[NSMutableArray alloc] init];
         UIView *prevPadding = nil;
         for (NSValue *paddingValue in _stretchableViews) {
             UIView *padding = paddingValue.nonretainedObjectValue;
             if (prevPadding && !padding.isHidden) {
-                [_paddingConstraints addObject:[prevPadding.heightAnchor constraintEqualToAnchor:padding.heightAnchor]];
-                _paddingConstraints.lastObject.priority = UILayoutPriorityDefaultLow;
+                [constraints addObject:[prevPadding.heightAnchor constraintEqualToAnchor:padding.heightAnchor]];
+                constraints.lastObject.priority = UILayoutPriorityDefaultLow;
             }
             if (!padding.isHidden) {
                 prevPadding = padding;
             }
         }
 
-        if (_paddingConstraints && _paddingConstraints.count) {
-            [NSLayoutConstraint activateConstraints:_paddingConstraints];
+        if (constraints && constraints.count) {
+            [NSLayoutConstraint activateConstraints:constraints];
         }
 
-        return _paddingConstraints;
+        return constraints;
     }
     return nil;
 }

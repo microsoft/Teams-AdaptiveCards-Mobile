@@ -56,7 +56,7 @@ static NSTimeInterval const ACRkPanCancelSeconds = 0.2;
 
     // Need to cancel this gesture so long-press gesture can trigger, cancel if haven't moved the touch after a time delay
     __weak typeof(self) weakSelf = self;
-    self.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:ACRkPanCancelSeconds repeats:NO block:^(NSTimer * _Nonnull timer) {
+    self.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:ACRkPanCancelSeconds repeats:NO block:^(__unused NSTimer * _Nonnull timer) {
         weakSelf.state = UIGestureRecognizerStateCancelled;
     }];
 }

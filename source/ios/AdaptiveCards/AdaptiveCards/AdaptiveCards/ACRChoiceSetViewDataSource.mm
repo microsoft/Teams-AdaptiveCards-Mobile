@@ -96,7 +96,7 @@ const CGFloat minimumRowHeight = 44.0;
     NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
-- (instancetype)initWithInputChoiceSet:(std::shared_ptr<AdaptiveCards::ChoiceSetInput> const &)choiceSet WithHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)hostConfig;
+- (instancetype)initWithInputChoiceSet:(std::shared_ptr<AdaptiveCards::ChoiceSetInput> const &)choiceSet WithHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)hostConfig
 {
     self = [super init];
     if (self) {
@@ -300,7 +300,7 @@ const CGFloat minimumRowHeight = 44.0;
     }
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     if (self.isRequired) {
         if (_isMultiChoicesAllowed) {

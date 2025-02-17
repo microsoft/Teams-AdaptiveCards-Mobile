@@ -15,7 +15,7 @@ class FlowLayout: public Layout
 {
 public:
     FlowLayout() :
-    m_itemFit(ItemFit::Fit), m_columnSpacing(Spacing::Default), m_rowSpacing(Spacing::Default), m_horizontalAlignment(HorizontalAlignment::Center), m_itemMaxPixelWidth(-1), m_itemMinPixelWidth(-1), m_pixelItemWidth(-1)
+    m_itemFit(ItemFit::Fit), m_pixelItemWidth(-1), m_itemMinPixelWidth(-1), m_itemMaxPixelWidth(-1), m_rowSpacing(Spacing::Default), m_columnSpacing(Spacing::Default), m_horizontalAlignment(HorizontalAlignment::Center)
     {
     }
     FlowLayout(const FlowLayout&) = default;

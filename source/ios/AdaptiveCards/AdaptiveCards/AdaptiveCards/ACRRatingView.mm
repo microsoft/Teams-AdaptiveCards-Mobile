@@ -144,7 +144,7 @@
 - (void)setupConstraints 
 {
     CGFloat gap = _readOnly ? 4 : 12;
-    for (NSInteger i = 0; i < _starImageViews.count; i++)
+    for (NSUInteger i = 0; i < _starImageViews.count; i++)
     {
         UIImageView *starImageView = _starImageViews[i];
         
@@ -238,8 +238,8 @@
 
 - (void)updateStarImages 
 {
-    NSInteger totalFilledStars = (NSInteger)_value;
-    for (NSInteger i = 0; i < _starImageViews.count; i++) 
+    NSUInteger totalFilledStars = (NSUInteger)_value;
+    for (NSUInteger i = 0; i < _starImageViews.count; i++) 
     {
         UIImageView *starImageView = _starImageViews[i];
         if (i < totalFilledStars) 

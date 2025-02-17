@@ -14,7 +14,7 @@
     std::shared_ptr<TokenExchangeResource> _adaptiveTokenExchangeResource;
 }
 
-- (instancetype)init:(std::shared_ptr<TokenExchangeResource> const &)adaptiveTokenExchangeResource;
+- (instancetype)init:(std::shared_ptr<TokenExchangeResource> const &)adaptiveTokenExchangeResource
 {
     self = [super init];
     if (self && adaptiveTokenExchangeResource) {

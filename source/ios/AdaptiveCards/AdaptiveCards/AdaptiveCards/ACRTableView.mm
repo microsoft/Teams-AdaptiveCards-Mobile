@@ -22,7 +22,7 @@
            viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
             rootView:(ACRView *)rootView
               inputs:(NSMutableArray *)inputs
-          hostConfig:(ACOHostConfig *)acoConfig;
+          hostConfig:(ACOHostConfig *)acoConfig
 {
     self = [super init];
     if (self) {
@@ -94,7 +94,7 @@
 - (void)buildRowView:(const std::shared_ptr<Table> &)table
             rootView:(ACRView *)rootView
               inputs:(NSMutableArray *)inputs
-          hostConfig:(ACOHostConfig *)acoConfig;
+          hostConfig:(ACOHostConfig *)acoConfig
 {
     ACOBaseCardElement *acoRowWrapper = [[ACOBaseCardElement alloc] init];
     NSLayoutYAxisAnchor *nextTopAnchor = self.topAnchor;

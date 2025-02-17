@@ -37,7 +37,7 @@
     button.backgroundColor = UIColor.redColor;
 }
 
-- (void)updateInputUI:(ACOInputResults *)result button:(UIButton *)button;
+- (void)updateInputUI:(ACOInputResults *)result button:(UIButton *)button
 {
     [super updateInputUI:result button:button];
 

@@ -392,7 +392,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     }
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     return [_validator isValid:self.text];
 }
@@ -509,7 +509,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 
 - (NSString *)getItemAt:(NSInteger)index
 {
-    return (index < 0 or index >= self.count) ? @"" : _filteredList[index];
+    return (index < 0 or (NSUInteger)index >= self.count) ? @"" : _filteredList[index];
 }
 
 - (void)updateFilteredListForStaticTypeahead:(NSString *)key

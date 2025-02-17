@@ -135,13 +135,13 @@ using namespace AdaptiveCards;
 
     if (Spacing::None != requestedSpacing) {
         ACRContentStackView *superview = (ACRContentStackView *)view;
-        unsigned int spacing = getSpacing(requestedSpacing, config);
-        separator = [[ACRSeparator alloc] initWithFrame:CGRectMake(0, 0, spacing, spacing)];
+        unsigned int s = getSpacing(requestedSpacing, config);
+        separator = [[ACRSeparator alloc] initWithFrame:CGRectMake(0, 0, s, s)];
 
         if (separator) {
             // Shared model has not implemented support
-            separator->width = spacing;
-            separator->height = spacing;
+            separator->width = s;
+            separator->height = s;
             if (elem && elem->GetSeparator()) {
                 separator->rgb = std::stoul(config->GetSeparator().lineColor.substr(1), nullptr, 16);
                 separator->lineWidth = config->GetSeparator().lineThickness;

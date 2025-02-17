@@ -532,7 +532,7 @@ using namespace AdaptiveCards;
     return [buildersList getTargetBuilder:actionElementType];
 }
 
-- (void)setTargetBuilder:(ACRTargetBuilder *_Nullable)targetBuilder actionElementType:(ACRActionType)actionElementType capability:(ACRTargetCapability)capability;
+- (void)setTargetBuilder:(ACRTargetBuilder *_Nullable)targetBuilder actionElementType:(ACRActionType)actionElementType capability:(ACRTargetCapability)capability
 {
     // custom action must be registered through set custom action renderer method
     // standard actions element enum value must be higher than ACRUnknownAction
