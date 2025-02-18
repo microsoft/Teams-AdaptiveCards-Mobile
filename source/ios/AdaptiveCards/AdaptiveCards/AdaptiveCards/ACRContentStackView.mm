@@ -94,7 +94,7 @@ using namespace AdaptiveCards;
     if (!_stackView || rtl == ACRRtlNone) {
         return;
     }
-    
+
     _stackView.semanticContentAttribute = (rtl == ACRRtlRTL) ? UISemanticContentAttributeForceRightToLeft : UISemanticContentAttributeForceLeftToRight;
 }
 
@@ -106,7 +106,7 @@ using namespace AdaptiveCards;
 + (UIColor *)colorFromString:(const std::string &)colorString
 {
     long num = std::stoul(colorString.substr(1), nullptr, 16);
-    
+
     return [UIColor colorWithRed:((num & 0x00FF0000) >> 16) / 255.0
                            green:((num & 0x0000FF00) >> 8) / 255.0
                             blue:((num & 0x000000FF)) / 255.0
@@ -117,7 +117,7 @@ using namespace AdaptiveCards;
 {
     auto backgroundColor = config->GetBackgroundColor([ACOHostConfig getSharedContainerStyle:_style]);
     UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:backgroundColor];
-    
+
     self.backgroundColor = color;
 }
 
@@ -125,7 +125,7 @@ using namespace AdaptiveCards;
 {
     auto borderColor = config->GetBorderColor([ACOHostConfig getSharedContainerStyle:_style]);
     UIColor *color = [ACOHostConfig convertHexColorCodeToUIColor:borderColor];
-    
+
     [[self layer] setBorderColor:[color CGColor]];
 }
 
@@ -134,51 +134,51 @@ using namespace AdaptiveCards;
     if (!_stackView) {
         return;
     }
-    
+
     [self addSubview:_stackView];
     _stackView.translatesAutoresizingMaskIntoConstraints = NO;
     self.translatesAutoresizingMaskIntoConstraints = NO;
     _stackView.axis = self.axis;
     _stackView.distribution = self.distribution;
     _stackView.alignment = self.alignment;
-    
+
     _targets = [[NSMutableArray alloc] init];
     _showcardTargets = [[NSMutableArray alloc] init];
-    
+
     CGFloat top = 0, left = 0, bottom = 0, right = 0;
-    
+
     if (attributes) {
         NSNumber *distribAttrib = attributes[@"distribution"];
         if ([distribAttrib boolValue]) {
             _stackView.distribution = (UIStackViewDistribution)[distribAttrib integerValue];
         }
-        
+
         NSNumber *alignAttrib = attributes[@"alignment"];
         if ([alignAttrib boolValue]) {
             _stackView.alignment = (UIStackViewAlignment)[alignAttrib integerValue];
         }
-        
+
         NSNumber *spacingAttrib = attributes[@"spacing"];
         if ([spacingAttrib boolValue]) {
             _stackView.spacing = [spacingAttrib floatValue];
         }
-        
+
         NSNumber *paddingSpacing = attributes[@"padding-spacing"];
         if ([paddingSpacing boolValue]) {
             top = left = bottom = right = [paddingSpacing floatValue];
         }
-        
+
         NSNumber *topPaddingAttrib = attributes[@"padding-top"];
         if ([topPaddingAttrib boolValue]) {
             top = [topPaddingAttrib floatValue];
         }
-        
+
         NSNumber *horizontalAlignment = attributes[@"horizontal-alignment"];
         if ([horizontalAlignment intValue]) {
             _horizontalAlignment = (ACRHorizontalAlignment)[horizontalAlignment intValue];
         }
     }
-    
+
     [self applyPaddingToTop:top
                        left:left
                      bottom:bottom
@@ -251,10 +251,10 @@ using namespace AdaptiveCards;
     CGFloat trailingPadding = (location & ACRBleedToTrailingEdge) ? right : 0;
     CGFloat topPadding = (location & ACRBleedToTopEdge) ? top : 0;
     CGFloat bottomPadding = (location & ACRBleedToBottomEdge) ? bottom : 0;
-    
+
     NSMutableArray<NSLayoutConstraint *> *constraints = [[NSMutableArray alloc] init];
     NSDictionary *dictionary = nil;
-    
+
     if (_horizontalAlignment == ACRRight || _horizontalAlignment == ACRCenter) {
         UILayoutGuide *leftSpacer = [[UILayoutGuide alloc] init];
         [self addLayoutGuide:leftSpacer];
@@ -277,15 +277,15 @@ using namespace AdaptiveCards;
     } else {
         dictionary = NSDictionaryOfVariableBindings(_stackView);
     }
-    
+
     NSString *leftSpacerStr = (_horizontalAlignment == ACRRight || _horizontalAlignment == ACRCenter) ? @"[leftSpacer]-" : @"";
     NSString *rightSpacerStr = (_horizontalAlignment == ACRCenter) ? @"[rightSpacer]-" : @"";
-    
+
     NSString *horString = [[NSString alloc] initWithFormat:@"H:|-(%f@%u)-%@[_stackView]-%@(%f@%u)-|",
                            leadingPadding, priority, leftSpacerStr, rightSpacerStr, trailingPadding, priority];
     NSString *verString = [[NSString alloc] initWithFormat:@"V:|-(%f@%u)-[_stackView]-(%f@%u)-|",
                            topPadding, priority, bottomPadding, priority];
-    
+
     _widthconstraint = [NSLayoutConstraint constraintsWithVisualFormat:horString
                                                                options:0
                                                                metrics:nil
@@ -294,10 +294,10 @@ using namespace AdaptiveCards;
                                                                 options:0
                                                                 metrics:nil
                                                                   views:dictionary];
-    
+
     [constraints addObjectsFromArray:_widthconstraint];
     [constraints addObjectsFromArray:_heightconstraint];
-    
+
     [NSLayoutConstraint activateConstraints:constraints];
 }
 
@@ -310,28 +310,28 @@ using namespace AdaptiveCards;
     // remove existing constraints
     [self removeConstraints:_widthconstraint];
     [self removeConstraints:_heightconstraint];
-    
+
     // inverse the bit pattern that are set by ACRBleedDirection enums
     NSInteger bleedDirection = ~(~0 & direction);
-    
+
     [self applyPadding:padding priority:1000 location:(ACRBleedDirection)bleedDirection];
-    
+
     CGFloat paddingInFloat = padding;
     CGFloat top = (direction & ACRBleedToTopEdge) ? -paddingInFloat : 0;
     CGFloat leading = (direction & ACRBleedToLeadingEdge) ? -paddingInFloat : 0;
     CGFloat bottom = (direction & ACRBleedToBottomEdge) ? -paddingInFloat : 0;
     CGFloat trailing = (direction & ACRBleedToTrailingEdge) ? -paddingInFloat : 0;
-    
+
     if (@available(iOS 11.0, *)) {
         self.directionalLayoutMargins = NSDirectionalEdgeInsetsMake(top, leading, bottom, trailing);
     } else {
         self.layoutMargins = UIEdgeInsetsMake(top, leading, bottom, trailing);
     }
-    
+
     [target.topAnchor constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor].active = YES;
     [target.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor].active = YES;
     [target.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor].active = YES;
-    
+
     if (parent && (direction & ACRBleedToBottomEdge)) {
         [target.bottomAnchor constraintEqualToAnchor:parent.bottomAnchor].active = YES;
     } else {
@@ -342,24 +342,24 @@ using namespace AdaptiveCards;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+
     if ([self.subviews count]) {
         // configures background when this view contains a background image, and does only once
         NSMutableArray<NSLayoutConstraint *> *constraints = [[NSMutableArray alloc] init];
         renderBackgroundCoverMode(self.subviews[0], self.backgroundView, constraints, self);
         [NSLayoutConstraint activateConstraints:constraints];
     }
-    
+
     if (_isActionSet) {
         float accumulatedWidth = 0, accumulatedHeight = 0, spacing = _stackView.spacing, maxWidth = 0, maxHeight = 0;
-        
+
         for (UIView *view in _stackView.subviews) {
             accumulatedWidth += [view intrinsicContentSize].width;
             accumulatedHeight += [view intrinsicContentSize].height;
             maxWidth = MAX(maxWidth, [view intrinsicContentSize].width);
             maxHeight = MAX(maxHeight, [view intrinsicContentSize].height);
         }
-        
+
         float contentWidth = accumulatedWidth, contentHeight = accumulatedHeight;
         if (_stackView.axis == UILayoutConstraintAxisHorizontal) {
             contentWidth += (_stackView.subviews.count - 1) * spacing;
@@ -368,7 +368,7 @@ using namespace AdaptiveCards;
             contentHeight += (_stackView.subviews.count - 1) * spacing;
             contentWidth = maxWidth;
         }
-        
+
         if (contentWidth > self.frame.size.width) {
             [self removeConstraints:_widthconstraint];
         }
@@ -436,7 +436,7 @@ using namespace AdaptiveCards;
     if (super.accessibilityLabel && super.accessibilityLabel.length) {
         [mergedA11yLabels addObject:super.accessibilityLabel];
     }
-    
+
     for (UIView *subview in [self getArrangedSubviews]) {
         if (!subview.isHidden) {
             // if the subview is a collection type
@@ -447,7 +447,7 @@ using namespace AdaptiveCards;
             }
         }
     }
-    
+
     return [mergedA11yLabels componentsJoinedByString:@","];
 }
 
@@ -495,7 +495,7 @@ using namespace AdaptiveCards;
         [_paddings addObject:[self addPaddingFor:self]];
         [self insertArrangedSubview:_paddings.lastObject atIndex:0];
     }
-    
+
     if (_verticalContentAlignment == ACRVerticalContentAlignmentCenter ||
         (_verticalContentAlignment == ACRVerticalContentAlignmentTop &&
          self.distribution == UIStackViewDistributionFill)) {
@@ -509,9 +509,9 @@ using namespace AdaptiveCards;
     if ([self shouldAddPadding:self.hasStretchableView]) {
         [self addPadding];
     }
-    
+
     [_visibilityManager changeVisibilityOfPadding:self visibilityHidden:!_visibilityManager.hasVisibleViews];
-    
+
     [_visibilityManager updatePaddingVisibility];
 }
 
@@ -535,7 +535,7 @@ using namespace AdaptiveCards;
     if (!_invisibleViews) {
         _invisibleViews = [[NSMutableSet alloc] init];
     }
-    
+
     [_invisibleViews addObject:invisibleView];
 }
 
@@ -550,7 +550,7 @@ using namespace AdaptiveCards;
             [_visibilityManager addVisibleView:i];
         }
     }
-    
+
     for (UIView *subview in _invisibleViews) {
         [_visibilityManager hideView:subview hostView:self];
     }
@@ -594,15 +594,15 @@ using namespace AdaptiveCards;
                                 type:(ACRCardElementType)type
 {
     _verticalContentAlignment = verticalContentAlignment;
-    
+
     [self applyVisibilityToSubviews];
-    
+
     BOOL isStretchable = self.hasStretchableView;
-    
+
     if ([self shouldAddPadding:isStretchable]) {
         [self addPadding];
     }
-    
+
     if (minHeight > 0) {
         NSLayoutConstraint *constraint =
         [NSLayoutConstraint constraintWithItem:self
@@ -615,7 +615,7 @@ using namespace AdaptiveCards;
         constraint.priority = 999;
         constraint.active = YES;
     }
-    
+
     [_paddingHandler activateConstraintsForPadding];
 }
 
@@ -680,7 +680,7 @@ using namespace AdaptiveCards;
 - (void)addTarget:(NSObject *)target
 {
     [_targets addObject:target];
-    
+
     if ([target isKindOfClass:[ACRShowCardTarget class]]) {
         [_showcardTargets addObject:(ACRShowCardTarget *)target];
     }
@@ -700,7 +700,7 @@ using namespace AdaptiveCards;
             if (action.inlineTooltip) {
                 [target addGestureRecognizer:self toolTipText:action.inlineTooltip];
             }
-            
+
             if (action.tooltip && action.tooltip.length) {
                 self.accessibilityHint = action.tooltip;
             }
