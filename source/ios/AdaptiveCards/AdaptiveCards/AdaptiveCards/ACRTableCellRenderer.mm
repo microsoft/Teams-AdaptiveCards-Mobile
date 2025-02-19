@@ -36,7 +36,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     auto cellElement = std::dynamic_pointer_cast<TableCell>(elem);

@@ -38,7 +38,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Media> mediaElem = std::dynamic_pointer_cast<Media>(elem);
@@ -157,8 +157,8 @@
     }
 
     if (mediaElem->GetHeight() == HeightType::Stretch) {
-        NSString *areaName = stringForCString(elem->GetAreaGridName());
-        [viewGroup addArrangedSubview:[viewGroup addPaddingFor:contentholdingview] withAreaName:areaName];
+        NSString *name = stringForCString(elem->GetAreaGridName());
+        [viewGroup addArrangedSubview:[viewGroup addPaddingFor:contentholdingview] withAreaName:name];
     }
 
     return contentholdingview;

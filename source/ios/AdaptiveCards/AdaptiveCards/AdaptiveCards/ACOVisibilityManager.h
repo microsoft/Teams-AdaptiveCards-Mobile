@@ -21,7 +21,7 @@
 
 @interface ACOVisibilityManager : NSObject
 
-@property (nonatomic) BOOL hasVisibleViews;
+@property (nonatomic, readonly) BOOL hasVisibleViews;
 
 - (instancetype)init:(ACOFillerSpaceManager *)fillerSpaceManager;
 

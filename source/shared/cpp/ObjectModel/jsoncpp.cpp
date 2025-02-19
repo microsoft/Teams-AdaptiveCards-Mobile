@@ -2521,11 +2521,6 @@ Value const& Value::nullSingleton()
  return nullStatic;
 }
 
-// for backwards compatibility, we'll leave these global references around, but DO NOT
-// use them in JSONCPP library code any more!
-Value const& Value::null = Value::nullSingleton();
-Value const& Value::nullRef = Value::nullSingleton();
-
 const Int Value::minInt = Int(~(UInt(-1) / 2));
 const Int Value::maxInt = Int(UInt(-1) / 2);
 const UInt Value::maxUInt = UInt(-1);
@@ -4079,19 +4074,19 @@ const Value& Path::resolve(const Value& root) const {
     if (arg.kind_ == PathArgument::kindIndex) {
       if (!node->isArray() || !node->isValidIndex(arg.index_)) {
         // Error: unable to resolve path (array value expected at position...
-        return Value::null;
+        return Value::nullSingleton();
       }
       node = &((*node)[arg.index_]);
     } else if (arg.kind_ == PathArgument::kindKey) {
       if (!node->isObject()) {
         // Error: unable to resolve path (object value expected at position...)
-        return Value::null;
+        return Value::nullSingleton();
       }
       node = &((*node)[arg.key_]);
       if (node == &Value::nullSingleton()) {
         // Error: unable to resolve path (object has no member named '' at
         // position...)
-        return Value::null;
+        return Value::nullSingleton();
       }
     }
   }

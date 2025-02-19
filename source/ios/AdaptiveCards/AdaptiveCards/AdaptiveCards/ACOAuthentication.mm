@@ -13,7 +13,7 @@
     std::shared_ptr<Authentication> _adaptiveAuthentication;
 }
 
-- (instancetype)init:(std::shared_ptr<Authentication> const &)adaptiveAuthentication;
+- (instancetype)init:(std::shared_ptr<Authentication> const &)adaptiveAuthentication
 {
     self = [super init];
     if (self && adaptiveAuthentication) {

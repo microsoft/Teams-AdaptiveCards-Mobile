@@ -33,7 +33,7 @@
 @property ACRRtl rtl;
 // there are some subviews that can be stretched
 // it indicates that additional filler views are not needed.
-@property (nonatomic) BOOL hasStretchableView;
+@property (nonatomic, readonly) BOOL hasStretchableView;
 
 - (instancetype _Nonnull)initWithFrame:(CGRect)frame;
 

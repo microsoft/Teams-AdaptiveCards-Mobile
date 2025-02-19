@@ -20,7 +20,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     UIView *view = [super render:viewGroup rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:acoConfig];
     if (acoElem.additionalProperty) {
@@ -47,7 +47,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     UIView *view = [super render:viewGroup rootView:rootView inputs:inputs baseCardElement:acoElem hostConfig:acoConfig];
     if (acoElem.additionalProperty) {

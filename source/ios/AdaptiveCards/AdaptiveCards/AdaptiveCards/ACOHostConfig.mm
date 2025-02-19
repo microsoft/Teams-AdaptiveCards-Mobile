@@ -85,7 +85,7 @@ using namespace AdaptiveCards;
     return result;
 }
 
-+ (ACOHostConfigParseResult *)fromJson:(NSString *)payload;
++ (ACOHostConfigParseResult *)fromJson:(NSString *)payload
 {
     ACOHostConfigParseResult *result = nil;
 
@@ -110,7 +110,7 @@ using namespace AdaptiveCards;
     return [_resolvers getResourceResolverForScheme:scheme];
 }
 
-- (ACOResolverIFType)getResolverIFType:(NSString *)scheme;
+- (ACOResolverIFType)getResolverIFType:(NSString *)scheme
 {
     return [_resolvers getResolverIFType:scheme];
 }

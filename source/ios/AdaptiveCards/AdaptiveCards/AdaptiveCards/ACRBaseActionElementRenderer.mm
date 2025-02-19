@@ -13,7 +13,7 @@
                     inputs:(NSMutableArray *)inputs
                  superview:(UIView *)superview
          baseActionElement:(ACOBaseActionElement *)acoElem
-                hostConfig:(ACOHostConfig *)config;
+                hostConfig:(ACOHostConfig *)config
 {
     return nil;
 }

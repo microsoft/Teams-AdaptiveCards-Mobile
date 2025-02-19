@@ -90,7 +90,7 @@ using namespace AdaptiveCards;
                 
                 NSArray<NSNumber *> *columnWidths =  [self columnSetWidthDistributor:columnSetElem availableWidth:availableSpace andHostConfig:config rootView:rootView];
                 
-                for (int i = 0; i < columns.size(); i++)
+                for (NSUInteger i = 0; i < columns.size(); i++)
                 {
                     std::shared_ptr<Column> column = columns[i];
                     float childrenWidth = [columnWidths[i] floatValue];
@@ -117,7 +117,7 @@ using namespace AdaptiveCards;
                     std::vector<std::shared_ptr<TableCell>> tableCells = row->GetCells();
                     if (tableCells.size() == colums.size())
                     {
-                        for (int i = 0; i < tableCells.size(); i++)
+                        for (NSUInteger i = 0; i < tableCells.size(); i++)
                         {
                             std::shared_ptr<TableCell> cell = tableCells[i];
                             float childrenWidth = cellWidths[i].floatValue;
@@ -132,7 +132,7 @@ using namespace AdaptiveCards;
                         // ideally this code should never run, because number of cell in row
                         // and number of columnDefinitions in table should be same
                         // but kept it anyways for wrong payloads
-                        for (int i = 0; i < tableCells.size(); i++)
+                        for (NSUInteger i = 0; i < tableCells.size(); i++)
                         {
                             std::shared_ptr<TableCell> cell = tableCells[i];
                             float childrenWidth = cellWidths[i].floatValue;
@@ -430,7 +430,7 @@ using namespace AdaptiveCards;
     NSMutableArray *strechOrAutoIndexes = [NSMutableArray array];
     CGFloat minRelativeWidth = CGFLOAT_MAX;
     
-    for (int i = 0; i < columns.size(); i++)
+    for (NSUInteger i = 0; i < columns.size(); i++)
     {
         std::shared_ptr<Column> column = columns[i];
         auto pixelWidth = column->GetPixelWidth();
@@ -445,7 +445,7 @@ using namespace AdaptiveCards;
             // add these columns as relative width as 1
             [finalWidthArray addObject:[NSNumber numberWithInt:-1]];
             [relativeWidthRatios addObject:[NSNumber numberWithInt:1]];
-            [strechOrAutoIndexes addObject:[NSNumber numberWithInt:i]];
+            [strechOrAutoIndexes addObject:[NSNumber numberWithInt:(int)i]];
         }
         else
         {
@@ -501,7 +501,7 @@ using namespace AdaptiveCards;
         widthMultiplier = remainingWidth/sumOfAllRelativeWidth;
     }
   
-    for (NSInteger i = 0; i < finalWidthArray.count; i++)
+    for (NSUInteger i = 0; i < finalWidthArray.count; i++)
     {
         float existingRelativeValue = [finalWidthArray[i] intValue];
         if (existingRelativeValue < 0)
@@ -558,7 +558,7 @@ using namespace AdaptiveCards;
     if (sumOfAllRelativeWidth > 0)
     {
         widthMultiplier = remainingWidth/sumOfAllRelativeWidth;
-        for (NSInteger i = 0; i < finalWidthArray.count; i++)
+        for (NSUInteger i = 0; i < finalWidthArray.count; i++)
         {
             float existingRelativeValue = [finalWidthArray[i] intValue];
             if (existingRelativeValue < 0)

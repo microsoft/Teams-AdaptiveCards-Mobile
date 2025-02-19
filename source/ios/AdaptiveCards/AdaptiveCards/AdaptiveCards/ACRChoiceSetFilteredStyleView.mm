@@ -145,7 +145,7 @@ using namespace AdaptiveCards;
     }
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     return [_validator isValid:self.text];
 }

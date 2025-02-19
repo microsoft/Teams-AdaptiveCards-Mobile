@@ -34,7 +34,7 @@
                     inputs:(NSMutableArray *)inputs
                  superview:(UIView<ACRIContentHoldingView> *)superview
          baseActionElement:(ACOBaseActionElement *)acoElem
-                hostConfig:(ACOHostConfig *)acoConfig;
+                hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<UnknownAction> unknownAction = std::dynamic_pointer_cast<UnknownAction>([acoElem element]);
     // we get back a deserialized action object by calling a custom parser registered via host
