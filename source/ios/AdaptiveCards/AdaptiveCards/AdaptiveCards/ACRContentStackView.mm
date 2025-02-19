@@ -864,18 +864,38 @@ using namespace AdaptiveCards;
         [NSValue valueWithCGSize:[view intrinsicContentSize]];
 }
 
+/// call this method after subview is rendered
+/// it configures height, creates association between the subview and its separator if any
+/// registers subview for its visibility
 - (void)updateLayoutAndVisibilityOfRenderedView:(UIView *)renderedView
                                      acoElement:(ACOBaseCardElement *)acoElem
                                       separator:(ACRSeparator *)separator
                                        rootView:(ACRView *)rootView
 {
-    [self setNeedsLayout];
-    [self layoutSubviews];
+    if (!renderedView) {
+        return;
+    }
+
+    [self configureHeightFor:renderedView acoElement:acoElem];
+    [self associateSeparatorWithOwnerView:separator ownerView:renderedView];
+
+    NSString *hashkey = [NSString stringWithCString:acoElem.element->GetId().c_str()
+                                           encoding:NSUTF8StringEncoding];
+    renderedView.tag = hashkey.hash;
+
+    [rootView.context registerVisibilityManager:self targetViewTag:renderedView.tag];
+
+    if (!acoElem.element->GetIsVisible()) {
+        [self registerInvisibleView:renderedView];
+    }
 }
 
+// use this method if a subview to the content stack view needs a padding
+// use configureHeightFor for all cases except when stretching the subview
+// is not desirable.
 - (UIView *)addPaddingFor:(UIView *)view
 {
-    return view;
+    return [_paddingHandler addPaddingFor:view];
 }
 
 @end
