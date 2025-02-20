@@ -140,7 +140,7 @@ static NSString * const ACRCarouselAccessibilityValueFormat = @"Page %ld of %ld"
 
 - (BOOL)handleLeftSwipe
 {
-    NSInteger newCarouselPageViewIndex = MIN(self.carouselPageViewIndex+1, self.carouselPageViewList.count-1);
+    NSInteger newCarouselPageViewIndex = MIN(self.carouselPageViewIndex+1, (NSInteger)self.carouselPageViewList.count-1);
     if(newCarouselPageViewIndex == self.carouselPageViewIndex)
     {
         return NO;

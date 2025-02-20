@@ -17,6 +17,10 @@
 @end
 
 @interface ACRTypeaheadStateParameters : NSObject <ACRITypeaheadSearchStateDelegate>
+
+@property NSString *_Nullable title;
+@property NSString *_Nullable subtitle;
+
 - (instancetype _Nullable)initWithtitle:(NSString *_Nullable)title
                                subtitle:(NSString *_Nullable)subtitle;
 

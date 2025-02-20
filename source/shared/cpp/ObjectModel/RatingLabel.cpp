@@ -11,7 +11,7 @@
 using namespace AdaptiveCards;
 
 RatingLabel::RatingLabel() :
-    BaseCardElement(CardElementType::RatingLabel), m_max(5), m_hAlignment(std::nullopt)
+    BaseCardElement(CardElementType::RatingLabel), m_hAlignment(std::nullopt), m_max(5)
 {
     PopulateKnownPropertiesSet();
 }

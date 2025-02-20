@@ -76,7 +76,7 @@ using namespace AdaptiveCards;
     [regex enumerateMatchesInString:payload
                             options:0
                               range:NSMakeRange(0, payload.length)
-                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+                         usingBlock:^(NSTextCheckingResult *match, __unused NSMatchingFlags flags, __unused BOOL *stop) {
         if (match.numberOfRanges == 4) { // Ensure we have all 4 capturing groups
             // Adjust ranges by offset to account for previous replacements
             NSRange fullMatchRange = NSMakeRange(match.range.location + offset, match.range.length);
@@ -107,7 +107,7 @@ using namespace AdaptiveCards;
     return [mutablePayload copy];
 }
 
-+ (BOOL)isValidJson:(NSString *)jsonString error:(NSError **)error {
++ (BOOL)isValidJson:(NSString *)jsonString error:(NSError *__autoreleasing *)error {
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     if (!jsonData) {
         return NO;

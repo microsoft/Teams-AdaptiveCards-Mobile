@@ -46,7 +46,7 @@
                                                inSortedRange:range
                                                      options:NSBinarySearchingInsertionIndex
                                              usingComparator:^(id num0, id num1) {
-                                                 return [num0 compare:num1];
+                                                 return [(NSNumber *)num0 compare:(NSNumber *)num1];
                                              }];
     [_visibleViews insertObject:indexAsNumber atIndex:insertionIndex];
 }
@@ -64,7 +64,7 @@
                                              inSortedRange:range
                                                    options:NSBinarySearchingInsertionIndex
                                            usingComparator:^(id num0, id num1) {
-                                               return [num0 compare:num1];
+                                               return [(NSNumber *)num0 compare:(NSNumber *)num1];
                                            }];
     [_visibleViews removeObjectAtIndex:removalIndex];
 }
