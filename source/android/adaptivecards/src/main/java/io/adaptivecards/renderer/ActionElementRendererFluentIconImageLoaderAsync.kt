@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Matrix
@@ -10,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Button
-import com.caverock.androidsvg.SVG
 import io.adaptivecards.objectmodel.IconPlacement
 
 /**
@@ -24,8 +22,8 @@ class ActionElementRendererFluentIconImageLoaderAsync(
     iconColor: String,
     val iconPlacement: IconPlacement,
     val padding: Long,
-    private val iconSizeFromConfig: Long
-): FluentIconImageLoaderAsync(renderedCard, targetIconSize, iconColor, isFilledStyle, view) {
+    iconSizeFromConfig: Long
+): FluentIconImageLoaderAsync(renderedCard, targetIconSize, iconColor, iconSizeFromConfig, isFilledStyle, view) {
     override fun renderFluentIcon(drawable: Drawable?, flipInRtl: Boolean) {
         val view = viewReference.get()
         if (view != null && view is Button) {
@@ -53,17 +51,6 @@ class ActionElementRendererFluentIconImageLoaderAsync(
     }
 
     /**
-     * creates the svg document from the svg string with the desired icon size
-     * for Icon in Action Element, the document width and height are set to the icon size from the host config
-     **/
-    override fun parseSvgString(context: Context, svgString: String): SVG {
-        val svg = SVG.getFromString(svgString)
-        svg.documentWidth = Util.dpToPixels(context, iconSizeFromConfig.toFloat()).toFloat()
-        svg.documentHeight = Util.dpToPixels(context, iconSizeFromConfig.toFloat()).toFloat()
-        return svg
-    }
-
-    /**
      * flips the drawable horizontally if the card is RTL and the flipInRtl property is true for the rendered svg
      **/
     private fun flipDrawableHorizontally(drawable: Drawable, view: View, flipInRtl: Boolean): Drawable {
@@ -82,5 +69,4 @@ class ActionElementRendererFluentIconImageLoaderAsync(
             drawable
         }
     }
-
 }
