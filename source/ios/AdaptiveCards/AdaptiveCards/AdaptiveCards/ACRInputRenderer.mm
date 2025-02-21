@@ -197,21 +197,13 @@
         if (img) {
             UIImageView *iconView = [[ACRUIImageView alloc] init];
             iconView.image = img;
-            [button addSubview:iconView];
-            button.iconView = iconView;
             [button setImageView:img withConfig:acoConfig];
         } else if (key.length) {
             NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
             NSString *k = [number stringValue];
             UIImageView *view = [rootView getImageView:k];
             if (view && view.image) {
-                button.iconView = view;
-                [button addSubview:view];
                 [button setImageView:view.image withConfig:acoConfig];
-            } else {
-                button.iconView = view;
-                [button addSubview:view];
-                [rootView setImageView:k view:button];
             }
             [NSLayoutConstraint constraintWithItem:button
                                          attribute:NSLayoutAttributeWidth
