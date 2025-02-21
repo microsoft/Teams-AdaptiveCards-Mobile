@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import com.caverock.androidsvg.SVG
+import io.adaptivecards.objectmodel.IconPlacement
 import io.adaptivecards.renderer.http.HttpRequestHelper
 import io.adaptivecards.renderer.http.HttpRequestResult
 import org.json.JSONObject
@@ -27,6 +28,38 @@ object IconUtils {
     ) : IconResponse {
         val requestResult = fetchIconInfo(svgURL)
         return processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle, iconSize)
+    }
+
+    @JvmStatic
+    fun getDrawablesForActionElementIcon(bitmap: Bitmap, drawables: Array<Drawable>, iconPlacement: IconPlacement) : Array<Drawable> {
+        val drawableIcon: Drawable = BitmapDrawable(null, bitmap)
+
+        // Preserve any existing icons that may have been added by the host
+        // Per Android docs, this array's order is: start, top, end, bottom
+
+        // Preserve any existing icons that may have been added by the host
+        // Per Android docs, this array's order is: start, top, end, bottom
+        //val drawables = button.compoundDrawablesRelative
+
+        if (iconPlacement == IconPlacement.AboveTitle) {
+            drawables[1] = drawableIcon
+        } else {
+            drawables[0] = drawableIcon
+        }
+        return drawables
+    }
+
+    @JvmStatic
+    fun getPaddingForActionElementIcon(
+        context: Context,
+        padding: Long,
+        iconPlacement: IconPlacement,
+        defaultPadding: Int
+    ) : Int {
+        if (iconPlacement != IconPlacement.AboveTitle) {
+            return Util.dpToPixels(context, padding.toFloat())
+        }
+        return defaultPadding
     }
 
     /**
