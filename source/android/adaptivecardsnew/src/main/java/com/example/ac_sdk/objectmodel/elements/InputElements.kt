@@ -1,4 +1,6 @@
 package com.example.ac_sdk.objectmodel.elements
+
+import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
@@ -14,7 +16,21 @@ sealed class InputElements {
         val placeholder: String? = null,
         val style: String? = null,
         val value: String? = null
-    ) : BaseInputElement()
+    ) : BaseInputElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.IS_MULTILINE,
+                        AdaptiveCardSchemaKey.MAX_LENGTH,
+                        AdaptiveCardSchemaKey.PLACEHOLDER,
+                        AdaptiveCardSchemaKey.STYLE,
+                        AdaptiveCardSchemaKey.VALUE
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("Input.Number")
@@ -23,7 +39,20 @@ sealed class InputElements {
         val max: Double? = null,
         val placeholder: String? = null,
         val value: Double? = null
-    ) : BaseInputElement()
+    ) : BaseInputElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.MIN,
+                        AdaptiveCardSchemaKey.MAX,
+                        AdaptiveCardSchemaKey.PLACEHOLDER,
+                        AdaptiveCardSchemaKey.VALUE
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("Input.Date")
@@ -32,7 +61,20 @@ sealed class InputElements {
         val max: String? = null,
         val value: String? = null,
         val placeholder: String? = null
-    ) : BaseInputElement()
+    ) : BaseInputElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.MIN,
+                        AdaptiveCardSchemaKey.MAX,
+                        AdaptiveCardSchemaKey.VALUE,
+                        AdaptiveCardSchemaKey.PLACEHOLDER
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("Input.Time")
@@ -41,7 +83,20 @@ sealed class InputElements {
         val max: String? = null,
         val value: String? = null,
         val placeholder: String? = null
-    ) : BaseInputElement()
+    ) : BaseInputElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.MIN,
+                        AdaptiveCardSchemaKey.MAX,
+                        AdaptiveCardSchemaKey.VALUE,
+                        AdaptiveCardSchemaKey.PLACEHOLDER
+                    )
+                )
+            }
+        }
+    }
 
     @SerialName("Input.Toggle")
     @Serializable
@@ -51,7 +106,21 @@ sealed class InputElements {
         val valueOn: String? = null,
         val valueOff: String? = null,
         val wrap: Boolean? = null
-    ) : BaseInputElement()
+    ) : BaseInputElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.TITLE,
+                        AdaptiveCardSchemaKey.VALUE,
+                        AdaptiveCardSchemaKey.VALUE_ON,
+                        AdaptiveCardSchemaKey.VALUE_OFF,
+                        AdaptiveCardSchemaKey.WRAP
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     data class InputChoiceSet(
@@ -59,7 +128,20 @@ sealed class InputElements {
         val style: String? = null,
         val value: String? = null,
         val choices: List<Choice>
-    ) : BaseInputElement()
+    ) : BaseInputElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.IS_MULTI_SELECT,
+                        AdaptiveCardSchemaKey.STYLE,
+                        AdaptiveCardSchemaKey.VALUE,
+                        AdaptiveCardSchemaKey.CHOICES
+                    )
+                )
+            }
+        }
+    }
 
 
     @Serializable
@@ -67,8 +149,22 @@ sealed class InputElements {
     data class RatingInput(
         val horizontalAlignment: HorizontalAlignment?,
         val value: Double,
-        val max:Double
-        ) : BaseInputElement()
+        val max: Double
+    ) : BaseInputElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.HORIZONTAL_ALIGNMENT,
+                        AdaptiveCardSchemaKey.VALUE,
+                        AdaptiveCardSchemaKey.MAX
+                    )
+                )
+            }
+        }
+
+    }
 
     companion object {
         fun fromJson(json: String): BaseInputElement {

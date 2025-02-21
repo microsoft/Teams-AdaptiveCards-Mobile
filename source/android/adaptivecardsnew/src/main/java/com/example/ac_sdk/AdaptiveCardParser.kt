@@ -1,51 +1,81 @@
 package com.example.ac_sdk
 
 import com.example.ac_sdk.objectmodel.*
-import com.example.ac_sdk.objectmodel.elements.ActionElements
-import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import com.example.ac_sdk.objectmodel.elements.BaseCardElement
 import com.example.ac_sdk.objectmodel.elements.BaseElement
 import com.example.ac_sdk.objectmodel.elements.CardElements
-import com.example.ac_sdk.objectmodel.parser.AdaptiveCardParseException
-import com.example.ac_sdk.objectmodel.parser.AdaptiveCardParseWarning
+import com.example.ac_sdk.objectmodel.elements.Layout
+import com.example.ac_sdk.objectmodel.elements.LayoutElements
 import com.example.ac_sdk.objectmodel.parser.ParseContext
+import com.example.ac_sdk.objectmodel.parser.ParseException
+import com.example.ac_sdk.objectmodel.parser.ParseResult
+import com.example.ac_sdk.objectmodel.parser.ParseWarning
+import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
+import com.example.ac_sdk.objectmodel.utils.CardElementType
 import com.example.ac_sdk.objectmodel.utils.ErrorStatusCode
 import com.example.ac_sdk.objectmodel.utils.FallbackType
 import com.example.ac_sdk.objectmodel.utils.HeightType
+import com.example.ac_sdk.objectmodel.utils.LayoutContainerType
+import com.example.ac_sdk.objectmodel.utils.ParseUtil
+import com.example.ac_sdk.objectmodel.utils.ParseUtil.expectTypeString
 import com.example.ac_sdk.objectmodel.utils.SemanticVersion
+import com.example.ac_sdk.objectmodel.utils.Util
 import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
 import com.example.ac_sdk.objectmodel.utils.WarningStatusCode
+import com.google.android.material.internal.FlowLayout
 import kotlinx.serialization.json.*
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
+import java.io.File
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 class AdaptiveCardParser {
+
+
     companion object {
-//        fun deserializeFromFile(jsonFile: String, rendererVersion: String, context: ParseContext = ParseContext()): AdaptiveCard {
-//            val jsonFileStream = File(jsonFile).readText()
-//            val root = Json.parseToJsonElement(jsonFileStream).jsonObject
-//            return deserialize(root, rendererVersion, context)
-//        }
+
+
+        fun getFeaturesSupported(): Map<String, SemanticVersion> =
+             mapOf("responsivelayout" to getVersion("1.0"))
+
+        fun deserializeFromFile(jsonFile: String, rendererVersion: String): ParseResult {
+            val context = ParseContext()
+            return deserializeFromFile(jsonFile, rendererVersion, context)
+        }
+
+        fun deserializeFromFile(jsonFile: String, rendererVersion: String, context: ParseContext): ParseResult {
+            val jsonText = File(jsonFile).readText()
+            val json = Json.parseToJsonElement(jsonText)
+            return deserialize(json.jsonObject, rendererVersion, context)
+        }
+
+        private fun _validateLanguage(language: String, warnings: MutableList<ParseWarning>) {
+            try {
+                if (language.isEmpty() || language.length == 2 || language.length == 3) {
+                    // Attempt to create a Locale; in Kotlin we can do:
+                    Locale(language)
+                } else {
+                    warnings.add(
+                        ParseWarning(WarningStatusCode.InvalidLanguage, "Invalid language identifier: $language")
+                    )
+                }
+            } catch (e: RuntimeException) {
+                warnings.add(
+                    ParseWarning(WarningStatusCode.InvalidLanguage, "Invalid language identifier: $language")
+                )
+            }
+        }
+
 
         //@Throws(AdaptiveCardParseException::class)
-        fun deserialize(jsonObject: JsonObject, rendererVersion: String, context: ParseContext): AdaptiveCard {
+        fun deserialize(jsonObject: JsonObject, rendererVersion: String, context: ParseContext): ParseResult {
             throwIfNotJsonObject(jsonObject)
 
             val enforceVersion = rendererVersion.isNotEmpty()
 //
-            val ACModule = SerializersModule {
 
-//                polymorphic(BaseElement::class) {
-//                   // subclass(BaseCardElement::class, BaseCardElement.serializer())
-//                    subclass(TextBlock::class, TextBlock.serializer())
-//
-//                }
-            }
 
             val json = Json {
-                serializersModule = ACModule
                 classDiscriminator = "type"
                 ignoreUnknownKeys = true
                 encodeDefaults = true
@@ -72,55 +102,79 @@ class AdaptiveCardParser {
                         adaptiveCard.speak = adaptiveCard.fallbackText
                     }
 
-                    context.warnings.add(AdaptiveCardParseWarning(WarningStatusCode.UnsupportedSchemaVersion, "Schema version not supported"))
-                    return makeFallbackTextCard(adaptiveCard.fallbackText, adaptiveCard.language, adaptiveCard.speak)
+                    context.warnings.add(ParseWarning(WarningStatusCode.UnsupportedSchemaVersion, "Schema version not supported"))
+                    return ParseResult(makeFallbackTextCard(adaptiveCard.fallbackText, adaptiveCard.language, adaptiveCard.speak), context.warnings)
                 }
             }
 
-//            if (adaptiveCard.layoutArray.isNotEmpty()) {
-//                for (layoutJson in adaptiveCard.layoutArray) {
-//                    val layout = Layout.deserialize(layoutJson)
-//                    when (layout.getLayoutContainerType()) {
-//                        LayoutContainerType.Flow -> layouts.add(FlowLayout.deserialize(layoutJson))
-//                        LayoutContainerType.AreaGrid -> {
-//                            val areaGridLayout = AreaGridLayout.deserialize(layoutJson)
-//                            if (areaGridLayout.getAreas().isEmpty() && areaGridLayout.getColumns().isEmpty()) {
-//                                val stackLayout = Layout()
-//                                stackLayout.setLayoutContainerType(LayoutContainerType.Stack)
-//                                layouts.add(stackLayout)
-//                            } else if (areaGridLayout.getAreas().isEmpty()) {
-//                                val flowLayout = FlowLayout()
-//                                flowLayout.setLayoutContainerType(LayoutContainerType.Flow)
-//                                layouts.add(flowLayout)
-//                            } else {
-//                                layouts.add(areaGridLayout)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            if (adaptiveCard.layoutArray?.isNotEmpty() == true) {
+                for ((index, layout) in adaptiveCard.layoutArray.withIndex()) {
+                    when (layout.layoutContainerType) {
+                        LayoutContainerType.AREAGRID -> {
+                            val areaGridLayout = layout as LayoutElements.AreaGridLayout
+                            if (areaGridLayout.areas.isEmpty() && areaGridLayout.columns.isEmpty()) {
+                                val stackLayout = LayoutElements.StackLayout().apply {
+                                    layoutContainerType = LayoutContainerType.STACK
+                                }
+                                adaptiveCard.layoutArray[index] = stackLayout
+                            } else if (areaGridLayout.areas.isEmpty()) {
+                                val flowLayout = LayoutElements.FlowLayout().apply {
+                                    layoutContainerType = LayoutContainerType.FLOW
+                                }
+                                adaptiveCard.layoutArray[index] = flowLayout
+                            }
+                        }
+                        else -> {
+
+                        }
+                    }
+                }
+            }
+
+            adaptiveCard.minHeight = adaptiveCard.minHeight?.let {
+                Util.parseSizeForPixelSize(it, context.warnings)
+            }.toString()
+
 
             // Parse required if present
             val requiresSet = mutableMapOf<String, SemanticVersion>()
-            //ParseUtil.parseRequires(context, json, requiresSet)
+            ParseUtil.parseRequires(context, jsonObject, requiresSet)
 
             // Parse fallback if present
-            var fallbackBaseElement: BaseCardElement? = null
-            var fallbackType = FallbackType.NONE
-//            ParseUtil.parseFallback(context, json, fallbackType, fallbackBaseElement, "rootFallbackId", InternalId.current())
+            val fallbackBaseElement = adaptiveCard.fallback
 
             if (meetsRootRequirements(requiresSet)) {
-                return adaptiveCard
+                adaptiveCard.additionalProperties = Util.handleUnknownProperties(jsonObject, adaptiveCard.knownProperties)
+                return ParseResult(adaptiveCard, context.warnings)
             } else if (fallbackBaseElement == null) {
                 val fallbackText = "We're sorry, this card couldn't be displayed"
-                context.warnings.add(AdaptiveCardParseWarning(WarningStatusCode.UnsupportedSchemaVersion, "Requirements not met and root Fallback parsing failed"))
-                return makeFallbackTextCard(fallbackText, adaptiveCard.language, adaptiveCard.speak)
+                context.warnings.add(ParseWarning(WarningStatusCode.UnsupportedSchemaVersion, "Requirements not met and root Fallback parsing failed"))
+                return ParseResult(makeFallbackTextCard(fallbackText, adaptiveCard.language, adaptiveCard.speak), context.warnings)
             } else {
                 // Convert parsed fallback to collection of BaseCardElement
                 val fallbackCardElement = fallbackBaseElement
-                val fallbackVector = listOf(fallbackCardElement)
-
-                return adaptiveCard
+                val fallback = AdaptiveCard(adaptiveCard.schema,
+                    adaptiveCard.type,
+                    adaptiveCard.version,
+                    adaptiveCard.unknown,
+                    adaptiveCard.refresh,
+                    adaptiveCard.language,
+                    "",
+                    null,
+                    adaptiveCard.speak,
+                    adaptiveCard.minHeight,
+                    adaptiveCard.height,
+                    adaptiveCard.verticalAlignment,
+                    adaptiveCard.backgroundImage,
+                    arrayListOf(fallbackBaseElement),
+                    adaptiveCard.actions,
+                    adaptiveCard.authentication,
+                    adaptiveCard.rtl,
+                    adaptiveCard.layoutArray
+                )
+                fallback.additionalProperties =
+                    Util.handleUnknownProperties(jsonObject, fallback.knownProperties)
+                return ParseResult(adaptiveCard, context.warnings)
             }
         }
 
@@ -139,15 +193,6 @@ class AdaptiveCardParser {
             return SemanticVersion(major, minor, build, revision)
         }
 
-        fun deserializeFromString(jsonString: String, rendererVersion: String, context: ParseContext = ParseContext()): AdaptiveCard {
-            val root = Json.parseToJsonElement(jsonString).jsonObject
-            return deserialize(root, rendererVersion, context)
-        }
-
-        private fun getFeaturesSupported(): Map<String, SemanticVersion> {
-            return mapOf("responsivelayout" to getVersion("1.0"))
-        }
-
         private fun meetsRootRequirements(requiresSet: Map<String, SemanticVersion>): Boolean {
             val featuresSupported = getFeaturesSupported()
             for ((feature, version) in requiresSet) {
@@ -162,37 +207,35 @@ class AdaptiveCardParser {
 
         private fun throwIfNotJsonObject(json: JsonElement) {
             if (json !is JsonObject) {
-                throw AdaptiveCardParseException(ErrorStatusCode.InvalidJson, "Expected JSON Object\n")
+                throw ParseException(ErrorStatusCode.InvalidJson, "Expected JSON Object\n")
             }
         }
 
 
-        private fun makeFallbackTextCard(fallbackText: String, language: String, speak: String): AdaptiveCard {
-            val fallbackCard = AdaptiveCard(version="1.0", fallbackText=fallbackText, speak=speak, language=language,
-                verticalAlignment= VerticalAlignment.TOP, height= HeightType.AUTO, minHeight=0)
+        private fun makeFallbackTextCard(
+            fallbackText: String,
+            language: String,
+            speak: String
+        ): AdaptiveCard {
+            val fallbackCard = AdaptiveCard(
+                version = "1.0",
+                fallbackText = fallbackText,
+                fallback = null,
+                speak = speak,
+                language = language,
+                verticalAlignment = VerticalAlignment.TOP,
+                height = HeightType.AUTO,
+                minHeight = "0"
+            )
+            fallbackCard.body.add(
 
-//            fallbackCard.body.add(
-//                CardElement.TextBlockElement(
-//                    TextBlock(
-//                        text = fallbackText,
-//                        language = language
-//                    )
-//                )
-//            )
+                CardElements.TextBlock(
+                    text = fallbackText,
+                    language = language
+                )
+            )
 
             return fallbackCard
-        }
-    }
-
-    private fun validateLanguage(language: String, warnings: MutableList<AdaptiveCardParseWarning>) {
-        try {
-            if (language.isEmpty() || language.length == 2 || language.length == 3) {
-                Locale(language)
-            } else {
-                warnings.add(AdaptiveCardParseWarning(WarningStatusCode.InvalidLanguage, "Invalid language identifier: $language"))
-            }
-        } catch (e: RuntimeException) {
-            warnings.add(AdaptiveCardParseWarning(WarningStatusCode.InvalidLanguage, "Invalid language identifier: $language"))
         }
     }
 }

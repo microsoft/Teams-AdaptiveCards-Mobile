@@ -16,8 +16,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -370,7 +370,11 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             ParseContext context = createParseContextForCustomElements();
             ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
             com.example.ac_sdk.objectmodel.AdaptiveCard adaptiveCard = AdaptiveCardParser.Companion.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, new
-                com.example.ac_sdk.objectmodel.ParseContext());
+                com.example.ac_sdk.objectmodel.parser.ParseContext());
+            for (int i=0; i<adaptiveCard.getBody().size(); i++) {
+
+                Log.d("checkPoint", adaptiveCard.getBody().get(i).serialize());
+            }
             LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
             layout.removeAllViews();
 
@@ -389,6 +393,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             {
                 Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
+            Log.d("checkpoint", ex.getMessage());
         }
     }
 

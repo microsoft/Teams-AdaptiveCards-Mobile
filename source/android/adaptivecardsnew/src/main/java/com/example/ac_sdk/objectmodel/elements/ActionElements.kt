@@ -1,6 +1,7 @@
 package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.AdaptiveCard
+import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import kotlinx.serialization.*
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNames
@@ -11,32 +12,72 @@ sealed class ActionElements {
     @SerialName("Action.Submit")
     data class ActionSubmit(
         val data: Map<String, JsonElement>? = null
-    ) : BaseActionElement()
+    ) : BaseActionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                listOf(
+                    AdaptiveCardSchemaKey.DATA
+                )
+            }
+        }
+    }
 
 
     @Serializable
     @SerialName("Action.OpenUrl")
     data class ActionOpenUrl(
         val url: String
-    ) : BaseActionElement()
+    ) : BaseActionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                listOf(
+                    AdaptiveCardSchemaKey.URL
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("Action.ShowCard")
     data class ActionShowCard(
         val card: AdaptiveCard
-    ) : BaseActionElement()
+    ) : BaseActionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                listOf(
+                    AdaptiveCardSchemaKey.CARD
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("Action.Execute")
     data class ActionExecute(
         val verb: String
-    ) : BaseActionElement()
+    ) : BaseActionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                listOf(
+                    AdaptiveCardSchemaKey.VERB
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("Action.ToggleVisibility")
     data class ActionToggleVisibility(
         val targetElements: List<TargetElement>
-    ) : BaseActionElement()
+    ) : BaseActionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                listOf(
+                    AdaptiveCardSchemaKey.TARGET_ELEMENTS
+                )
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalSerializationApi::class)

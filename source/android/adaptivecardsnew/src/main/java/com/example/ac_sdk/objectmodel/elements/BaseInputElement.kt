@@ -1,7 +1,7 @@
 package com.example.ac_sdk.objectmodel.elements
 
 
-import kotlinx.serialization.Polymorphic
+import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,6 +10,18 @@ sealed class BaseInputElement(
     val isRequired: Boolean? = null,
     val errorMessage: String? = null,
     val label: String? = null,
-    //val valueChangedAction: ValueChangedAction? = null
-) : BaseCardElement()
+    val valueChangedAction: ValueChangedAction? = null
+) : BaseCardElement() {
+
+    override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+        return super.populateKnownPropertiesSet().apply {
+            listOf(
+                AdaptiveCardSchemaKey.ID,
+                AdaptiveCardSchemaKey.LABEL,
+                AdaptiveCardSchemaKey.ERROR_MESSAGE,
+                AdaptiveCardSchemaKey.IS_REQUIRED
+            )
+        }
+    }
+}
 

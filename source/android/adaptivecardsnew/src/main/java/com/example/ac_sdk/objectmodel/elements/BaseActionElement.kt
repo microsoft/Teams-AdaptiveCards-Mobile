@@ -2,6 +2,7 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.utils.ActionRole
 import com.example.ac_sdk.objectmodel.utils.ActionType
+import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.Mode
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
@@ -30,4 +31,18 @@ sealed class BaseActionElement : BaseElement() {
 
     @SerialName("role")
     val role: ActionRole? = null
+
+    override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+        return super.populateKnownPropertiesSet().apply {
+            listOf(
+                AdaptiveCardSchemaKey.TITLE,
+                AdaptiveCardSchemaKey.ICON_URL,
+                AdaptiveCardSchemaKey.STYLE,
+                AdaptiveCardSchemaKey.TOOLTIP,
+                AdaptiveCardSchemaKey.IS_ENABLED,
+                AdaptiveCardSchemaKey.MODE,
+                AdaptiveCardSchemaKey.ACTION_ROLE
+            )
+        }
+    }
 }

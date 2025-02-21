@@ -1,5 +1,7 @@
 package com.example.ac_sdk.objectmodel.elements
 
+import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
+import com.example.ac_sdk.objectmodel.utils.ContainerStyle
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -12,19 +14,61 @@ sealed class CollectionElement {
         val width: String? = null,
         val bleed: Boolean? = null,
         val rtl: Boolean? = null
-    ) : StyledCollectionElement()
+    ) : StyledCollectionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.ITEMS,
+                        AdaptiveCardSchemaKey.SELECT_ACTION,
+                        AdaptiveCardSchemaKey.STYLE,
+                        AdaptiveCardSchemaKey.VERTICAL_CONTENT_ALIGNMENT,
+                        AdaptiveCardSchemaKey.BLEED,
+                        AdaptiveCardSchemaKey.BACKGROUND_IMAGE,
+                        AdaptiveCardSchemaKey.MIN_HEIGHT,
+                        AdaptiveCardSchemaKey.RTL
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("ColumnSet")
     data class ColumnSet(
         val columns: List<Column>? = null
-    ) : StyledCollectionElement()
+    ) : StyledCollectionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.BLEED,
+                        AdaptiveCardSchemaKey.COLUMNS,
+                        AdaptiveCardSchemaKey.SELECT_ACTION,
+                        AdaptiveCardSchemaKey.STYLE
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     data class Column(
         val items: List<BaseCardElement>? = null,
         val width: String? = null
-    ) : StyledCollectionElement()
+    ) : StyledCollectionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.WIDTH,
+                        AdaptiveCardSchemaKey.RTL,
+                        AdaptiveCardSchemaKey.LAYOUTS
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     data class TableCell(

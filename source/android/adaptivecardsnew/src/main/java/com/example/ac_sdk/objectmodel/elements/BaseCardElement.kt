@@ -1,7 +1,10 @@
 package com.example.ac_sdk.objectmodel.elements
 
+import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.HeightType
+import com.example.ac_sdk.objectmodel.utils.HostWidth
 import com.example.ac_sdk.objectmodel.utils.Spacing
+import com.example.ac_sdk.objectmodel.utils.TargetWidthType
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -18,6 +21,18 @@ sealed class BaseCardElement: BaseElement() {
     var areaGridName: String? = null
     var nonOptionalAreaGridName: String? = null
 
+    override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+        return super.populateKnownPropertiesSet().apply {
+            listOf(
+                AdaptiveCardSchemaKey.HEIGHT,
+                AdaptiveCardSchemaKey.IS_VISIBLE,
+                AdaptiveCardSchemaKey.MIN_HEIGHT,
+                AdaptiveCardSchemaKey.TARGET_WIDTH,
+                AdaptiveCardSchemaKey.SEPARATOR,
+                AdaptiveCardSchemaKey.SPACING
+            )
+        }
+    }
 
     fun meetsTargetWidthRequirement(hostWidth: HostWidth): Boolean {
         if (targetWidth == TargetWidthType.DEFAULT || hostWidth == HostWidth.DEFAULT) {
@@ -69,65 +84,4 @@ sealed class BaseCardElement: BaseElement() {
     }
 }
 
-// --- Supporting types for BaseCardElement ---
-
-@Serializable
-enum class HostWidth {
-    @SerialName("default")
-    DEFAULT,
-
-    @SerialName("wide")
-    WIDE,
-
-    @SerialName("standard")
-    STANDARD,
-
-    @SerialName("narrow")
-    NARROW,
-
-    @SerialName("veryNarrow")
-    VERY_NARROW;
-}
-
-@Serializable
-enum class TargetWidthType {
-    @SerialName("default")
-    DEFAULT,
-
-    @SerialName("wide")
-    WIDE,
-
-    @SerialName("standard")
-    STANDARD,
-
-    @SerialName("narrow")
-    NARROW,
-
-    @SerialName("veryNarrow")
-    VERY_NARROW,
-
-    @SerialName("atLeastWide")
-    AT_LEAST_WIDE,
-
-    @SerialName("atLeastStandard")
-    AT_LEAST_STANDARD,
-
-    @SerialName("atLeastNarrow")
-    AT_LEAST_NARROW,
-
-    @SerialName("atLeastVeryNarrow")
-    AT_LEAST_VERY_NARROW,
-
-    @SerialName("atMostWide")
-    AT_MOST_WIDE,
-
-    @SerialName("atMostStandard")
-    AT_MOST_STANDARD,
-
-    @SerialName("atMostNarrow")
-    AT_MOST_NARROW,
-
-    @SerialName("atMostVeryNarrow")
-    AT_MOST_VERY_NARROW
-}
 

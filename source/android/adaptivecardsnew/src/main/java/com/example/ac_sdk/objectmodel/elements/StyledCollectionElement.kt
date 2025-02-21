@@ -2,6 +2,7 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.BackgroundImage
 import com.example.ac_sdk.objectmodel.utils.ContainerStyle
+import com.example.ac_sdk.objectmodel.utils.InternalId
 import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable

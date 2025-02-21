@@ -1,5 +1,6 @@
 package com.example.ac_sdk.objectmodel.elements
 
+import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.FontType
 import com.example.ac_sdk.objectmodel.utils.ForegroundColor
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
@@ -33,9 +34,23 @@ sealed class CardElements {
         var style: TextStyle? = null,
         var fontType: FontType? = null,
         var highlight: Boolean? = null,
-        var underline: Boolean? = null
-        //test
-    ) : BaseCardElement()
+        var underline: Boolean? = null,
+        var language: String? = null
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.WRAP,
+                        AdaptiveCardSchemaKey.STYLE,
+                        AdaptiveCardSchemaKey.MAX_LINES,
+                        AdaptiveCardSchemaKey.HORIZONTAL_ALIGNMENT
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("Image")
@@ -45,15 +60,58 @@ sealed class CardElements {
         val horizontalAlignment: HorizontalAlignment? = null,
         val size: ImageSize? = null,
         val style: ImageStyle? = null
-    ) : BaseCardElement()
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.ALT_TEXT,
+                        AdaptiveCardSchemaKey.BACKGROUND_COLOR,
+                        AdaptiveCardSchemaKey.HEIGHT,
+                        AdaptiveCardSchemaKey.HORIZONTAL_ALIGNMENT,
+                        AdaptiveCardSchemaKey.SELECT_ACTION,
+                        AdaptiveCardSchemaKey.SIZE,
+                        AdaptiveCardSchemaKey.STYLE,
+                        AdaptiveCardSchemaKey.URL,
+                        AdaptiveCardSchemaKey.WIDTH
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("media")
-    data class Media(val sources: List<MediaSource>) : BaseCardElement()
+    data class Media(val sources: List<MediaSource>) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.POSTER,
+                        AdaptiveCardSchemaKey.ALT_TEXT,
+                        AdaptiveCardSchemaKey.SOURCES
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("richTextBlock")
-    data class RichTextBlock(val inlines: List<TextRun>) : BaseCardElement()
+    data class RichTextBlock(val inlines: List<TextRun>) : BaseCardElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.HORIZONTAL_ALIGNMENT,
+                        AdaptiveCardSchemaKey.INLINES
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("icon")
@@ -63,7 +121,22 @@ sealed class CardElements {
         val iconSize: IconSize,
         val name: String,
         val selectAction: BaseActionElement?
-    ) : BaseCardElement()
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.NAME,
+                        AdaptiveCardSchemaKey.SIZE,
+                        AdaptiveCardSchemaKey.COLOR,
+                        AdaptiveCardSchemaKey.STYLE,
+                        AdaptiveCardSchemaKey.SELECT_ACTION
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     @SerialName("ratingLabel")
@@ -75,34 +148,99 @@ sealed class CardElements {
         val value: Double?,
         val errorMessage: String?,
         val hAlignment: HorizontalAlignment?
-    ) : BaseCardElement()
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.VALUE,
+                        AdaptiveCardSchemaKey.MAX,
+                        AdaptiveCardSchemaKey.COUNT,
+                        AdaptiveCardSchemaKey.SIZE,
+                        AdaptiveCardSchemaKey.COLOR,
+                        AdaptiveCardSchemaKey.HORIZONTAL_ALIGNMENT
+                    )
+                )
+            }
+        }
+    }
 
 
     @Serializable
     @SerialName("actionSet")
     data class ActionSet(
         val actions: List<BaseActionElement>
-    ) : BaseCardElement()
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.ACTIONS
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     data class FactSet(
         val facts: List<Fact>
-    ) : BaseCardElement()
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.FACTS
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     data class ImageSet(
-        val images: List<CardElements.Image>? = null,
+        val images: List<Image>? = null,
         val imageSize: String? = null
-    ) : BaseCardElement()
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.IMAGES,
+                        AdaptiveCardSchemaKey.IMAGE_SIZE
+                    )
+                )
+            }
+        }
+    }
 
     @Serializable
     data class TableRow(
         val cells: List<CollectionElement.TableCell>
-    ): BaseCardElement()
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.CELLS,
+                        AdaptiveCardSchemaKey.HORIZONTAL_CELL_CONTENT_ALIGNMENT,
+                        AdaptiveCardSchemaKey.RTL,
+                        AdaptiveCardSchemaKey.STYLE,
+                        AdaptiveCardSchemaKey.VERTICAL_CELL_CONTENT_ALIGNMENT
+                    )
+                )
+            }
+        }
+    }
 }
 
 @Serializable
-data class MediaSource (val mimeType: String, var url: String)
+data class MediaSource(val mimeType: String, var url: String)
 
 @Serializable
 data class TextRun(

@@ -180,15 +180,15 @@ enum class TargetWidthType {
     @SerialName("wide") WIDE,
     @SerialName("standard") STANDARD,
     @SerialName("narrow") NARROW,
-    @SerialName("veryNarrow") VERYNARROW,
-    @SerialName("atLeast:wide") ATLEASTWIDE,
-    @SerialName("atLeast:standard") ATLEASTSTANDARD,
-    @SerialName("atLeast:narrow") ATLEASTNARROW,
-    @SerialName("atLeast:veryNarrow") ATLEASTVERYNARROW,
-    @SerialName("atMost:wide") ATMOSTWIDE,
-    @SerialName("atMost:standard") ATMOSTSTANDARD,
-    @SerialName("atMost:narrow") ATMOSTNARROW,
-    @SerialName("atMost:veryNarrow") ATMOSTVERYNARROW
+    @SerialName("veryNarrow") VERY_NARROW,
+    @SerialName("atLeast:wide") AT_LEAST_WIDE,
+    @SerialName("atLeast:standard") AT_LEAST_STANDARD,
+    @SerialName("atLeast:narrow") AT_LEAST_NARROW,
+    @SerialName("atLeast:veryNarrow") AT_LEAST_VERY_NARROW,
+    @SerialName("atMost:wide") AT_MOST_WIDE,
+    @SerialName("atMost:standard") AT_MOST_STANDARD,
+    @SerialName("atMost:narrow") AT_MOST_NARROW,
+    @SerialName("atMost:veryNarrow") AT_MOST_VERY_NARROW
 }
 
 enum class Spacing {
@@ -213,7 +213,7 @@ enum class HostWidth {
     @SerialName("wide") WIDE,
     @SerialName("standard") STANDARD,
     @SerialName("narrow") NARROW,
-    @SerialName("veryNarrow") VERYNARROW
+    @SerialName("veryNarrow") VERY_NARROW
 }
 
 @Serializable
@@ -314,4 +314,12 @@ enum class IconSize {
 enum class IconStyle {
     @SerialName("Regular") REGULAR,
     @SerialName("Filled") FILLED
+}
+
+@Serializable
+enum class LayoutContainerType {
+    @SerialName("None") NONE,
+    @SerialName("Stack") STACK,
+    @SerialName("Flow")  FLOW,
+    @SerialName("AreaGrid") AREAGRID
 }
