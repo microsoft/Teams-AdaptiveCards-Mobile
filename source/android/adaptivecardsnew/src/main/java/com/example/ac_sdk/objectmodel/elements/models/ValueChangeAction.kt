@@ -1,4 +1,4 @@
-package com.example.ac_sdk.objectmodel.elements
+package com.example.ac_sdk.objectmodel.elements.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

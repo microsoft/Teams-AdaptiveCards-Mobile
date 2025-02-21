@@ -1,5 +1,6 @@
 package com.example.ac_sdk.objectmodel.elements
 
+import com.example.ac_sdk.objectmodel.elements.models.Choice
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import kotlinx.serialization.*
@@ -172,9 +173,3 @@ sealed class InputElements {
         }
     }
 }
-
-@Serializable
-data class Choice(
-    val title: String,
-    val value: String
-)

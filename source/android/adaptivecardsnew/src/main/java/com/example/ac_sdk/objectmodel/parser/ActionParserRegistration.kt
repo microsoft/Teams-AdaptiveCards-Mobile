@@ -12,7 +12,7 @@ abstract class ActionElementParser {
 class ActionElementParserWrapper(private val parser: ActionElementParser) : ActionElementParser() {
     override fun deserialize(context: ParseContext, value: JSONObject): BaseActionElement {
         val idProperty = value.getString("id")
-        context.pushElement(idProperty, false)
+        //context.pushElement(idProperty, false)
         val element = parser.deserialize(context, value)
         context.popElement()
         return element

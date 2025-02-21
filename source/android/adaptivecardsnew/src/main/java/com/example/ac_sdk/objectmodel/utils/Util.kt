@@ -3,10 +3,9 @@ package com.example.ac_sdk.objectmodel.utils
 import com.example.ac_sdk.objectmodel.elements.ActionElements
 import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import com.example.ac_sdk.objectmodel.parser.ParseWarning
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.jsonObject
+import java.util.Locale
 import java.util.regex.Pattern
 
 object Util {
@@ -120,4 +119,57 @@ object Util {
             }
         }
     }
+
+    fun getVersion(version: String): SemanticVersion {
+        val versionPattern =
+            Pattern.compile("^([\\d]+)(?:\\.([\\d]+))?(?:\\.([\\d]+))?(?:\\.([\\d]+))?$")
+        val matcher = versionPattern.matcher(version)
+
+        if (!matcher.matches()) {
+            throw IllegalArgumentException("Semantic version invalid: $version")
+        }
+
+        val major = matcher.group(1)?.toIntOrNull() ?: 0
+        val minor = matcher.group(2)?.toIntOrNull() ?: 0
+        val build = matcher.group(3)?.toIntOrNull() ?: 0
+        val revision = matcher.group(4)?.toIntOrNull() ?: 0
+        return SemanticVersion(major, minor, build, revision)
+    }
+
+    fun meetsRootRequirements(requiresSet: Map<String, SemanticVersion>): Boolean {
+        val featuresSupported = getFeaturesSupported()
+        for ((feature, version) in requiresSet) {
+            val supportedVersion = featuresSupported[feature.lowercase(Locale.ROOT)]
+            if (supportedVersion == null || supportedVersion < version) {
+                return false
+            }
+        }
+        return true
+    }
+
+    fun validateLanguage(language: String, warnings: MutableList<ParseWarning>) {
+        try {
+            if (language.isEmpty() || language.length == 2 || language.length == 3) {
+                // Attempt to create a Locale; in Kotlin we can do:
+                Locale(language)
+            } else {
+                warnings.add(
+                    ParseWarning(
+                        WarningStatusCode.InvalidLanguage,
+                        "Invalid language identifier: $language"
+                    )
+                )
+            }
+        } catch (e: RuntimeException) {
+            warnings.add(
+                ParseWarning(
+                    WarningStatusCode.InvalidLanguage,
+                    "Invalid language identifier: $language"
+                )
+            )
+        }
+    }
+
+    private fun getFeaturesSupported(): Map<String, SemanticVersion> =
+        mapOf("responsivelayout" to getVersion("1.0"))
 }

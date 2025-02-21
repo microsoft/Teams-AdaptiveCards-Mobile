@@ -100,49 +100,4 @@ object ParseUtil {
         }
     }
 
-
-    fun parseFallback(
-        context: ParseContext,
-        json: JsonObject,
-        fallbackData: FallbackData,
-        publicId: String,
-        internalId: InternalId
-    ) {
-        // Extract the fallback value from the JSON.
-        val fallbackValue = ParseUtil.extractJsonValue(json, AdaptiveCardSchemaKey.Fallback, isRequired = false)
-        if (fallbackValue !is JsonNull) {
-            // Two valid possibilities: a string "drop", or a JSON object representing fallback content.
-            if (fallbackValue is JsonPrimitive && fallbackValue.isString) {
-                val fallbackStringValue = fallbackValue.content.lowercase()
-                if (fallbackStringValue == "drop") {
-                    fallbackData.fallbackType = FallbackType.Drop
-                    return
-                }
-                throw AdaptiveCardParseException(
-                    ErrorStatusCode.InvalidPropertyValue,
-                    "The only valid string value for the fallback property is 'drop'."
-                )
-            } else if (fallbackValue is JsonObject) {
-                // Fallback is an object: parse it as fallback content.
-                context.pushElement(publicId, internalId, isFallback = true)
-                // Assume that BaseElement.parseJsonObject is a function that parses the JSON into a BaseElement.
-                val fallbackElement = BaseElement.parseJsonObject(context, fallbackValue)
-                context.popElement()
-
-                if (fallbackElement != null) {
-                    fallbackData.fallbackType = FallbackType.Content
-                    fallbackData.fallbackContent = fallbackElement
-                    return
-                }
-                throw AdaptiveCardParseException(
-                    ErrorStatusCode.InvalidPropertyValue,
-                    "Fallback content did not parse correctly."
-                )
-            }
-            throw AdaptiveCardParseException(
-                ErrorStatusCode.InvalidPropertyValue,
-                "Invalid value for fallback"
-            )
-        }
-
 }

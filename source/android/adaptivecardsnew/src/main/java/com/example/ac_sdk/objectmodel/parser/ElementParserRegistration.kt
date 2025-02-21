@@ -17,7 +17,7 @@ class BaseCardElementParserWrapper(private val parserToWrap: BaseCardElementPars
        // val internalId = InternalId.next()
         val internalId = "internalId"
 
-        context.pushElement(idProperty, false)
+        //context.pushElement(idProperty, false)
         val element = parserToWrap.deserialize(context, value)
         context.popElement()
 

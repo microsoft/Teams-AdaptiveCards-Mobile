@@ -1,5 +1,9 @@
 package com.example.ac_sdk.objectmodel.elements
 
+import com.example.ac_sdk.objectmodel.elements.models.Fact
+import com.example.ac_sdk.objectmodel.elements.models.IconInfo
+import com.example.ac_sdk.objectmodel.elements.models.MediaSource
+import com.example.ac_sdk.objectmodel.elements.models.TextRun
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.FontType
 import com.example.ac_sdk.objectmodel.utils.ForegroundColor
@@ -168,7 +172,7 @@ sealed class CardElements {
 
 
     @Serializable
-    @SerialName("actionSet")
+    @SerialName("ActionSet")
     data class ActionSet(
         val actions: List<BaseActionElement>
     ) : BaseCardElement() {
@@ -185,6 +189,7 @@ sealed class CardElements {
     }
 
     @Serializable
+    @SerialName("FactSet")
     data class FactSet(
         val facts: List<Fact>
     ) : BaseCardElement() {
@@ -201,6 +206,7 @@ sealed class CardElements {
     }
 
     @Serializable
+    @SerialName("ImageSet")
     data class ImageSet(
         val images: List<Image>? = null,
         val imageSize: String? = null
@@ -219,6 +225,7 @@ sealed class CardElements {
     }
 
     @Serializable
+    @SerialName("TableRow")
     data class TableRow(
         val cells: List<CollectionElement.TableCell>
     ) : BaseCardElement() {
@@ -237,28 +244,28 @@ sealed class CardElements {
             }
         }
     }
+
+    @Serializable
+    @SerialName("CompoundButton")
+    data class CompoundButton(
+        val badge: String = "",
+        val title: String = "",
+        val description: String? = "",
+        val icon: IconInfo? = null,
+        val selectAction: BaseActionElement? = null
+    ) : BaseCardElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.BADGE,
+                        AdaptiveCardSchemaKey.DESCRIPTION,
+                        AdaptiveCardSchemaKey.ICON,
+                        AdaptiveCardSchemaKey.SELECT_ACTION,
+                        AdaptiveCardSchemaKey.TITLE)
+                )
+            }
+        }
+    }
 }
-
-@Serializable
-data class MediaSource(val mimeType: String, var url: String)
-
-@Serializable
-data class TextRun(
-    val type: String,
-    val text: String,
-    val weight: TextWeight? = null,
-    val highlight: Boolean? = null,
-    val italic: Boolean? = null,
-    val underline: Boolean? = null,
-    val color: ForegroundColor? = null,
-    val size: TextSize? = null,
-    val fontType: String? = null
-)
-
-@Serializable
-data class Fact(
-    val title: String,
-    val value: String
-)
-
 

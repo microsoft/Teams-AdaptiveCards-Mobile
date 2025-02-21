@@ -4,6 +4,7 @@ import android.view.View
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.example.ac_sdk.objectmodel.AdaptiveCard
+import com.example.ac_sdk.objectmodel.utils.Util
 import java.util.*
 
 class RenderedAdaptiveCard(
@@ -97,8 +98,8 @@ class RenderedAdaptiveCard(
     }
 
     fun registerSubmittableAction(renderedAction: View, renderArgs: RenderArgs) {
-        val actionId = Util.getViewId(renderedAction)
-        setCardForSubmitAction(actionId, renderArgs.containerCardId)
+//        val actionId = Util.getViewId(renderedAction)
+//        setCardForSubmitAction(actionId, renderArgs.containerCardId)
     }
 
     fun isActionSubmittable(action: View): Boolean {
