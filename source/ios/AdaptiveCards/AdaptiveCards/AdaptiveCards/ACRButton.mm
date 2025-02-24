@@ -1,3 +1,4 @@
+
 //
 //  ACRButton
 //  ACRButton.mm
@@ -168,7 +169,7 @@
         [self setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -imageHeight - iconPadding, 0)];
         CGFloat insetConstant = (imageSize.height + iconPadding) / 2;
         [self setContentEdgeInsets:UIEdgeInsetsMake(self.contentEdgeInsets.top + insetConstant, 0, self.contentEdgeInsets.bottom + insetConstant, 0)];
-    } else if (_iconPlacement != ACRNoTitle) {
+    } else if (_iconPlacement == ACRLeftOfTitle) {
         int npadding = 0;
         if (self.doesItHaveAnImageView) {
             iconPadding += (self.imageView.frame.size.width + iconPadding);
@@ -190,6 +191,14 @@
 
         self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
         self.heightConstraint.active = YES;
+    } else if (_iconPlacement == ACRRightOfTitle) {
+        _iconView.contentMode = UIViewContentModeScaleAspectFit;
+
+        [_iconView.widthAnchor constraintEqualToConstant:16].active = YES;
+        [_iconView.heightAnchor constraintEqualToConstant:16].active = YES;
+
+        [_iconView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor constant:8].active = YES;
+        [_iconView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
     }
 }
 
@@ -222,6 +231,7 @@
     [button applySentimentStyling];
 
     std::shared_ptr<AdaptiveCards::BaseActionElement> action = [acoAction element];
+    std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> menuActions = action->GetMenuActions();
     NSDictionary *imageViewMap = [rootView getImageMap];
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
@@ -267,7 +277,18 @@
         button.heightConstraint = [button.heightAnchor constraintGreaterThanOrEqualToAnchor:button.titleLabel.heightAnchor constant:button.contentEdgeInsets.top + button.contentEdgeInsets.bottom];
         button.heightConstraint.active = YES;
     }
-
+    
+    if (!menuActions.empty())
+    {
+        button.iconPlacement = ACRRightOfTitle;
+        UIImageView *iconView = [[ACRUIImageView alloc] init];
+        UIImage *image = [UIImage systemImageNamed:@"chevron.down"];
+        iconView.image = image;
+        [button addSubview:iconView];
+        button.iconView = iconView;
+        [button setImageView:image withConfig:config];
+    }
+    
     if (button.isEnabled == NO) {
         [button setBackgroundColor:[button.backgroundColor colorWithAlphaComponent:0.5]];
     }
@@ -318,7 +339,7 @@
         return ACRAboveTitle;
     }
 
-    return ACRLeftOfTitle;
+    return ACRRightOfTitle;
 }
 
 @end
