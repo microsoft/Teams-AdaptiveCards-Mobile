@@ -41,6 +41,7 @@ enum class AdaptiveCardSchemaKey
     BadgeStyles,
     ButtonSpacing,
     Buttons,
+    Buttons2,
     CaptionSources,
     Card,
     CellSpacing,
