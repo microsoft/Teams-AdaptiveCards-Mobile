@@ -334,6 +334,7 @@
         "borderColor":"#E1E1E1"
     },
     "pageControl":{
-        "selectedTintColor":"#5B5FC7"
+        "selectedTintColor":"#5B5FC7",
+        "unselectedTintColor":"#6E6E6E"
     }
 }
