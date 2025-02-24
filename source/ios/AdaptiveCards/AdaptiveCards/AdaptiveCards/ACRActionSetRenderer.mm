@@ -122,7 +122,7 @@
     NSUInteger accessibilityIndex = superview.accessibilityElements.count;
 
     std::size_t renderedBtnNum = primary.size();
-    for (auto i = 0; i < primary.size(); i++) {
+    for (NSUInteger i = 0; i < primary.size(); i++) {
         const auto &elem = primary.at(i);
         ACRBaseActionElementRenderer *actionRenderer =
             [reg getActionRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];

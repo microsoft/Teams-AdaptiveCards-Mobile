@@ -10,25 +10,24 @@
 
 @interface ACRButton : UIButton
 
-@property IBInspectable NSNumber *positiveUseDefault;
-@property IBInspectable UIColor *positiveForegroundColor;
-@property IBInspectable UIColor *positiveBackgroundColor;
-@property IBInspectable NSNumber *destructiveUseDefault;
-@property IBInspectable UIColor *destructiveForegroundColor;
-@property IBInspectable UIColor *destructiveBackgroundColor;
+@property BOOL positiveUseDefault;
+@property UIColor *positiveForegroundColor;
+@property UIColor *positiveBackgroundColor;
+@property BOOL destructiveUseDefault;
+@property UIColor *destructiveForegroundColor;
+@property UIColor *destructiveBackgroundColor;
 @property NSString *sentiment;
 @property UIColor *defaultPositiveBackgroundColor;
 @property UIColor *defaultDestructiveForegroundColor;
 @property ACRIconPlacement iconPlacement;
 @property ACRActionType actionType;
-@property __weak UIImageView *iconView;
-@property NSLayoutConstraint *heightConstraint;
-@property NSLayoutConstraint *titleWidthConstraint;
 
 + (UIButton *)rootView:(ACRView *)rootView
      baseActionElement:(ACOBaseActionElement *)acoAction
                  title:(NSString *)title
          andHostConfig:(ACOHostConfig *)config;
+
+- (instancetype)initWithExpandable:(BOOL)expandable;
 
 - (void)setImageView:(UIImage *)image withConfig:(ACOHostConfig *)config;
 - (void)setImageView:(UIImage *)image withConfig:(ACOHostConfig *)config widthToHeightRatio:(float)widthToHeightRatio;

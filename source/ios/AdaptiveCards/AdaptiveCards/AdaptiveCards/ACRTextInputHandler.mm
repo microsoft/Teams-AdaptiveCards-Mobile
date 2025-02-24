@@ -39,7 +39,7 @@
     return self;
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError *__autoreleasing *)error
 {
     return [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:self.hasText predicate:self.regexPredicate text:self.text error:error];
 }
@@ -65,18 +65,21 @@
     }
 }
 
-- (void)resetInput {
+- (void)resetInput
+{
     _textField.text = self.defaultValue;
 }
 
-- (void)addObserverWithCompletion:(CompletionHandler)completion {
+- (void)addObserverWithCompletion:(CompletionHandler)completion
+{
     [self._completionHandlers addObject:completion];
 }
 
-- (void)textFieldDidChange:(UITextField *)textField {
+- (void)textFieldDidChange:(UITextField *)textField
+{
     self.text = textField.text;
     self.hasText = textField.hasText;
-    for(CompletionHandler completion in self._completionHandlers) {
+    for (CompletionHandler completion in self._completionHandlers) {
         completion();
     }
 }
@@ -144,7 +147,7 @@
     return self;
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError *__autoreleasing *)error
 {
     BOOL isValidated = YES;
     isValidated = [super validate:error];

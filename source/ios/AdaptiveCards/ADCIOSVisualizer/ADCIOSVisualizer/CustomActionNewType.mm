@@ -9,11 +9,12 @@
 #import <AdaptiveCards/ACOBaseActionElementPrivate.h>
 #import <AdaptiveCards/ACOBundle.h>
 #import <AdaptiveCards/ACRAggregateTarget.h>
+#import <AdaptiveCards/ACRButton.h>
 #import <AdaptiveCards/SharedAdaptiveCard.h>
 
 @implementation CustomActionNewType
 
-- (ACOBaseActionElement *)deserialize:(NSData *)json parseContext:(ACOParseContext *)parseContext;
+- (ACOBaseActionElement *)deserialize:(NSData *)json parseContext:(ACOParseContext *)parseContext
 {
     if (json) {
 
@@ -59,7 +60,7 @@
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
-    ACRButton *button = [[[ACOBundle getInstance] getBundle] loadNibNamed:@"ACRButton" owner:rootView options:nil][0];
+    ACRButton *button = [[ACRButton alloc] initWithExpandable:false];
     [button setTitle:acoElem.title forState:UIControlStateNormal];
     CustomActionNewType *newType = (CustomActionNewType *)acoElem;
     button.backgroundColor = newType.color;

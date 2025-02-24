@@ -13,19 +13,16 @@
 
 @implementation ACRTextView {
     BOOL _isShowingPlaceholder;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame element:(ACOBaseCardElement *)element
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _completionHandlers = [[NSMutableArray alloc] init];
         self.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-        if (@available(iOS 13.0, *)) {
-            _placeholderColor = [UIColor colorWithRed:0.4313 green:0.4313 blue:0.4313 alpha:1.0];
-        } else {
-            // Fallback on earlier versions
-            _placeholderColor = [UIColor lightGrayColor];
-        }
+        _placeholderColor = [UIColor colorWithRed:0.4313 green:0.4313 blue:0.4313 alpha:1.0];
         [self configWithSharedModel:element];
     }
     return self;
@@ -95,24 +92,10 @@
     self.scrollEnabled = NO;
 }
 
-- (BOOL)validate:(NSError **)error
-{
-    return [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:self.hasText predicate:self.regexPredicate text:self.text error:error];
-}
-
-- (void)getInput:(NSMutableDictionary *)dictionary
-{
-    dictionary[self.id] = _isShowingPlaceholder ? @"" : self.text;
-}
-
-- (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *_Nullable)view
-{
-    [ACRInputLabelView commonSetFocus:shouldBecomeFirstResponder view:view];
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self resignFirstResponder];
+    [self notifyDelegates];
     return YES;
 }
 
@@ -126,7 +109,7 @@
     return [self computeBoundingRect].size;
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if (!_maxLength) {
         return YES;
@@ -144,24 +127,23 @@
 {
     if (_isShowingPlaceholder) {
         textView.text = @"";
-        if (@available(iOS 13.0, *)) {
-            textView.textColor = [UIColor labelColor];
-        } else {
-            // Fallback on earlier versions
-            textView.textColor = [UIColor blackColor];
-        }
+        textView.textColor = [UIColor labelColor];
         _isShowingPlaceholder = NO;
     }
     [textView becomeFirstResponder];
 }
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
+    [self updatePlaceholderIfNeeded: textView];
+    [textView resignFirstResponder];
+}
+
+- (void)updatePlaceholderIfNeeded:(UITextView *)textView {
     if (![textView.text length]) {
         textView.text = _placeholderText;
         textView.textColor = _placeholderColor;
         _isShowingPlaceholder = YES;
     }
-    [textView resignFirstResponder];
 }
 
 - (CGRect)computeBoundingRect
@@ -180,6 +162,38 @@
         self.text = @"";
     }
     return boundingrect;
+}
+
+#pragma mark - ACRIBaseInputHandler
+
+- (BOOL)validate:(NSError * __autoreleasing *)error
+{
+    return [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:self.hasText predicate:self.regexPredicate text:self.text error:error];
+}
+
+- (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *_Nullable)view
+{
+    [ACRInputLabelView commonSetFocus:shouldBecomeFirstResponder view:view];
+}
+
+- (void)getInput:(NSMutableDictionary *)dictionary
+{
+    dictionary[self.id] = _isShowingPlaceholder ? @"" : self.text;
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion {
+    [_completionHandlers addObject:completion];
+}
+
+- (void)notifyDelegates {
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
+    }
+}
+
+- (void)resetInput {
+    self.text = @"";
+    [self updatePlaceholderIfNeeded:self];
 }
 
 - (void)setPlaceholderColor:(UIColor *)placeholderColor

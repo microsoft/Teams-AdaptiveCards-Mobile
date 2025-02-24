@@ -58,7 +58,7 @@
         NSData *htmlData = data[@"html"];
         NSDictionary *options = data[@"options"];
         NSDictionary *descriptor = data[@"descriptor"];
-        NSString *text = data[@"nonhtml"];
+        NSString *t = data[@"nonhtml"];
 
         std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
         // Initializing NSMutableAttributedString for HTML rendering is very slow
@@ -68,14 +68,14 @@
             [content deleteCharactersInRange:NSMakeRange([content length] - 1, 1)];
             UpdateFontWithDynamicType(content);
         } else {
-            content = [[NSMutableAttributedString alloc] initWithString:text attributes:descriptor];
+            content = [[NSMutableAttributedString alloc] initWithString:t attributes:descriptor];
         }
         // Set paragraph style such as line break mode and alignment
         lab.textContainer.lineBreakMode = textConfig.wrap ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail;
 
         // Obtain text color to apply to the attributed string
-        ACRContainerStyle style = lab.style;
-        auto foregroundColor = [acoConfig getTextBlockColor:style textColor:textConfig.color subtleOption:textConfig.isSubtle];
+        ACRContainerStyle s = lab.style;
+        auto foregroundColor = [acoConfig getTextBlockColor:s textColor:textConfig.color subtleOption:textConfig.isSubtle];
 
         // Add paragraph style, text color, text weight as attributes to a NSMutableAttributedString, content.
         [content addAttributes:@{NSForegroundColorAttributeName : foregroundColor,
@@ -98,7 +98,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];

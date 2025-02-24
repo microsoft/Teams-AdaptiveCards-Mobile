@@ -22,4 +22,11 @@
             isFilled:(BOOL)isFilled
                 size:(CGSize)size
            tintColor:(UIColor *)tintColor;
+
++ (void)requestIcon:(NSString *)iconURL
+             filled:(BOOL)filled
+               size:(CGSize)size
+                rtl:(ACRRtl)rtl
+         completion:(void (^)(UIImage *))completion;
+
 @end

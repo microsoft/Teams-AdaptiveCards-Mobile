@@ -40,7 +40,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
@@ -150,12 +150,7 @@
                             }
                         }
 
-                        if (@available(iOS 13.0, *)) {
-                            foregroundColor = UIColor.linkColor;
-                        } else {
-                            // Fallback on earlier versions
-                            foregroundColor = [ACOHostConfig convertHexColorCodeToUIColor:"#007affff"];
-                        }
+                        foregroundColor = UIColor.linkColor;
                     }
                 }
 
