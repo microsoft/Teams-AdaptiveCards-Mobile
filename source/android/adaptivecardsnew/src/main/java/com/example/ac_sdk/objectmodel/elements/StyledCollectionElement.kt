@@ -17,6 +17,7 @@ sealed class StyledCollectionElement : CollectionCoreElement() {
     var hasBleed: Boolean? = null
     var parentalId: InternalId? = null
     var backgroundImage: BackgroundImage? = null
+    @Polymorphic
     var selectAction: BaseActionElement? = null
     var minHeight: UInt? = null
 }

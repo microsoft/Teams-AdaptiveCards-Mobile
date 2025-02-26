@@ -6,34 +6,40 @@ import com.example.ac_sdk.objectmodel.elements.BaseElement
 import com.example.ac_sdk.objectmodel.elements.Layout
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.BackgroundImageSerializer
+import com.example.ac_sdk.objectmodel.utils.ContainerStyle
 import com.example.ac_sdk.objectmodel.utils.HeightType
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import com.example.ac_sdk.objectmodel.utils.ImageFillMode
 import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
+import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 
 @Serializable
 data class AdaptiveCard(
     @SerialName("\$schema") val schema: String? = null,
     val type: String? = null,
-    var version: String? = null,
+    var version: String? = "",
     val unknown: String? = null,
     val refresh: Refresh? = null,
     var language: String = "",
     var fallbackText: String = "",
     val fallback: BaseElement? = null,
     var speak: String = "",
-    var minHeight: String? = null,
-    val height: HeightType? = null,
-    val verticalAlignment: VerticalAlignment? = null,
+    var minHeight: String? = 0.toString(),
+    val height: HeightType? = HeightType.AUTO,
+    val verticalAlignment: VerticalAlignment? = VerticalAlignment.TOP,
+    val style: ContainerStyle? = ContainerStyle.NONE,
     val backgroundImage: BackgroundImage? = null,
     val body: ArrayList<BaseElement> = arrayListOf(),
     val actions: ArrayList<BaseActionElement> = arrayListOf(),
     val authentication: Authentication? = null,
     val rtl: Boolean? = null,
-    val layoutArray: ArrayList<Layout>? = null,
+    val layouts: ArrayList<Layout>? = null,
+    @Polymorphic
+    val selectAction: BaseActionElement? = null,
 ) {
 
     val knownProperties: Set<AdaptiveCardSchemaKey> by lazy {
@@ -60,6 +66,10 @@ data class AdaptiveCard(
     }
 
     var additionalProperties: JsonElement? = null
+
+    fun serialize(): String {
+        return Json.encodeToString(serializer(), this)
+    }
 }
 
 @Serializable
@@ -102,5 +112,7 @@ data class TokenExchangeResource(
 @Serializable
 data class AuthCardButton(
     val type: String,
-    val title: String
+    val title: String,
+    val image: String? = null,
+    val value: String? = null
 )

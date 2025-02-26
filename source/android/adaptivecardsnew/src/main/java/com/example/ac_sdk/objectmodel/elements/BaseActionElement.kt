@@ -24,7 +24,7 @@ sealed class BaseActionElement : BaseElement() {
     val tooltip: String? = null
 
     @SerialName("isEnabled")
-    val isEnabled: Boolean? = null
+    val isEnabled: Boolean = true
 
     @SerialName("mode")
     val mode: Mode? = null

@@ -4,7 +4,7 @@ import com.example.ac_sdk.objectmodel.elements.InputElements
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class InputChoiceSetPropertiesTest : BaseModelTest() {
+class ChoiceSetInputPropertiesTest : BaseModelTest() {
     @Test
     fun `test InputChoiceSet properties`() {
         val jsonString = """
@@ -26,16 +26,16 @@ class InputChoiceSetPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val inputChoiceSet = json.decodeFromString<InputElements.InputChoiceSet>(jsonString)
+        val choiceSetInput = json.decodeFromString<InputElements.ChoiceSetInput>(jsonString)
 
-        assertEquals(true, inputChoiceSet.isMultiSelect)
-        assertEquals("expanded", inputChoiceSet.style)
-        assertEquals("choice1", inputChoiceSet.value)
-        assertEquals(2, inputChoiceSet.choices.size)
-        assertEquals("Choice 1", inputChoiceSet.choices[0].title)
-        assertEquals("choice1", inputChoiceSet.choices[0].value)
-        assertEquals("Choice 2", inputChoiceSet.choices[1].title)
-        assertEquals("choice2", inputChoiceSet.choices[1].value)
+        assertEquals(true, choiceSetInput.isMultiSelect)
+        assertEquals("expanded", choiceSetInput.style)
+        assertEquals("choice1", choiceSetInput.value)
+        assertEquals(2, choiceSetInput.choices.size)
+        assertEquals("Choice 1", choiceSetInput.choices[0].title)
+        assertEquals("choice1", choiceSetInput.choices[0].value)
+        assertEquals("Choice 2", choiceSetInput.choices[1].title)
+        assertEquals("choice2", choiceSetInput.choices[1].value)
     }
 
 }

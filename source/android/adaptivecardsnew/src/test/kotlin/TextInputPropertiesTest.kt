@@ -4,7 +4,7 @@ import com.example.ac_sdk.objectmodel.elements.InputElements
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class InputTextPropertiesTest : BaseModelTest() {
+class TextInputPropertiesTest : BaseModelTest() {
 
     @Test
     fun `test InputText properties`() {
@@ -19,13 +19,13 @@ class InputTextPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val inputText = json.decodeFromString<InputElements.InputText>(jsonString)
+        val textInput = json.decodeFromString<InputElements.TextInput>(jsonString)
 
-        assertEquals(true, inputText.isMultiline)
-        assertEquals(100, inputText.maxLength)
-        assertEquals("Enter text", inputText.placeholder)
-        assertEquals("text", inputText.style)
-        assertEquals("Sample text", inputText.value)
+        assertEquals(true, textInput.isMultiline)
+        assertEquals(100, textInput.maxLength)
+        assertEquals("Enter text", textInput.placeholder)
+        assertEquals("text", textInput.style)
+        assertEquals("Sample text", textInput.value)
     }
 
 }

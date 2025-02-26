@@ -1,5 +1,6 @@
 package com.example.ac_sdk.objectmodel.utils
 
+import androidx.core.text.isDigitsOnly
 import com.example.ac_sdk.objectmodel.elements.ActionElements
 import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import com.example.ac_sdk.objectmodel.parser.ParseWarning
@@ -50,7 +51,7 @@ object Util {
 
         if (matcher.find()) {
             try {
-                parsedDimension[0] = matcher.group(1).toInt()
+                parsedDimension.add(matcher.group(1).toInt())
             } catch (e: NumberFormatException) {
                 warnings?.add(ParseWarning(
                     WarningStatusCode.InvalidDimensionSpecified, warningMessage + requestedDimension
@@ -63,7 +64,7 @@ object Util {
         }
     }
 
-    fun shouldParseForExplicitDimension(input: String): Boolean {
+    private fun shouldParseForExplicitDimension(input: String): Boolean {
         if (input.isEmpty()) {
             return false
         }
@@ -90,8 +91,10 @@ object Util {
         if (shouldParseForExplicitDimension(sizeString)) {
             val unit = "px"
             validateUserInputForDimensionWithUnit(unit, sizeString, parsedSize, warnings)
+        } else if (sizeString.all { it.isDigit() }) {
+            sizeString.toInt().also { parsedSize.add(it) }
         }
-        return parsedSize[0]
+        return if (parsedSize.isEmpty()) 0 else parsedSize[0]
     }
 
     fun ensureShowCardVersions(actions: List<BaseActionElement>, version: String) {

@@ -4,7 +4,7 @@ import com.example.ac_sdk.objectmodel.elements.InputElements
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class InputNumbersPropertiesTest : BaseModelTest() {
+class NumbersPropertiesTestInput : BaseModelTest() {
 
     @Test
     fun `test InputNumber properties`() {
@@ -18,11 +18,11 @@ class InputNumbersPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val inputNumber = json.decodeFromString<InputElements.InputNumber>(jsonString)
+        val numberInput = json.decodeFromString<InputElements.NumberInput>(jsonString)
 
-        assertEquals(1.0, inputNumber.min)
-        assertEquals(10.0, inputNumber.max)
-        assertEquals("Enter number", inputNumber.placeholder)
-        assertEquals(5.0, inputNumber.value)
+        assertEquals(1.0, numberInput.min)
+        assertEquals(10.0, numberInput.max)
+        assertEquals("Enter number", numberInput.placeholder)
+        assertEquals(5.0, numberInput.value)
     }
 }

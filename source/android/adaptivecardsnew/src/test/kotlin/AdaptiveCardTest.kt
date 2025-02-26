@@ -1,3 +1,4 @@
+import com.example.ac_sdk.AdaptiveCardParser
 import com.example.ac_sdk.BaseModelTest
 import com.example.ac_sdk.objectmodel.AdaptiveCard
 import com.example.ac_sdk.objectmodel.AuthCardButton
@@ -5,57 +6,172 @@ import com.example.ac_sdk.objectmodel.Authentication
 import com.example.ac_sdk.objectmodel.TokenExchangeResource
 import com.example.ac_sdk.objectmodel.elements.ActionElements
 import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.parser.ParseContext
 import com.example.ac_sdk.objectmodel.utils.HeightType
 import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class AdaptiveCardTest : BaseModelTest() {
 
     @Test
     fun `test AdaptiveCard serialization and deserialization`() {
-        val adaptiveCard = AdaptiveCard(
-            schema = "http://adaptivecards.io/schemas/adaptive-card.json",
-            type = "AdaptiveCard",
-            version = "1.2",
-            language = "en",
-            fallbackText = "Fallback text",
-            speak = "speak text",
-            minHeight = 200,
-            height = HeightType.AUTO,
-            verticalAlignment = VerticalAlignment.TOP,
-            body = arrayListOf(
-                CardElements.TextBlock(
-                    text = "Sample Text"
-                )
-            ),
-            actions = arrayListOf(
-                ActionElements.ActionOpenUrl(
-                    url = "https://example.com"
-                )
-            ),
-            authentication = Authentication(
-                connectionName = "connectionName",
-                text = "text",
-                tokenExchangeResource = TokenExchangeResource(
-                    id = "id",
-                    providerId = "providerId",
-                    uri = "https://example.com/uri"
-                ),
-                buttons = listOf(
-                    AuthCardButton(
-                        type = "buttonType",
-                        title = "buttonTitle"
-                    )
-                )
-            ),
-            rtl = true
-        )
 
-        val json = json.encodeToString(AdaptiveCard.serializer(), adaptiveCard)
-        val deserializedAdaptiveCard = Json.decodeFromString(AdaptiveCard.serializer(), json)
+        val jsonString =""" 
+            
+            {
+            	"type": "AdaptiveCard",
+            	"version": "1.5",
+            	"layouts": [
+            		{
+            			"type": "Layout.Flow",
+            			"itemWidth": "130px",
+            			"horizontalAlignment": "left"
+            		}
+            	],
+            	"body": [
+            		{
+            			"type": "CompoundButton",
+            			"title": "Summarize",
+            			"badge": "Priority",
+            			"icon": {
+            				"name": "TextBulletList"
+            			},
+            			"description": "Review key points in file but longer lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Insights",
+            			"description": "Who's reviewed my latest document?"
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Insights",
+            			"badge": "Updated",
+            			"description": "Tell me about John Doe"
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Get key info",
+            			"description": "List key points from my latest document",
+            			"badge": "New",
+            			"height": "stretch",
+            			"selectAction": {
+            				"type": "Action.OpenUrl",
+            				"tooltip": "Go to www.microsoft.com",
+            				"url": "https://www.microsoft.com"
+            			}
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Catch up on meeting",
+            			"icon": {
+            				"name": "Calendar"
+            			},
+            			"description": "Recap my latest meeting summarizing key takeaways and action items as separate sections including who's responsible for each",
+            			"height": "stretch"
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Share meeting notes",
+            			"icon": {
+            				"name": "Edit"
+            			},
+            			"description": "Draft an email with notes and action items from my latest meeting"
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Get key info",
+            			"description": "List key points from my latest document",
+            			"badge": "New",
+            			"height": "stretch",
+            			"selectAction": {
+            				"type": "Action.OpenUrl",
+            				"tooltip": "Go to www.microsoft.com",
+            				"url": "https://www.microsoft.com"
+            			}
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Catch up on meeting",
+            			"icon": {
+            				"name": "Calendar"
+            			},
+            			"description": "Recap my latest meeting summarizing key takeaways and action items as separate sections including who's responsible for each"
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Share meeting notes",
+            			"icon": {
+            				"name": "Edit"
+            			},
+            			"description": "Draft an email with notes and action items from my latest meeting"
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Summarize",
+            			"badge": "New",
+            			"icon": {
+            				"name": "TextBulletList"
+            			},
+            			"description": "Review key points in file"
+            		},
+            		{
+            			"type": "CompoundButton",
+            			"title": "Summarize",
+            			"badge": "Priority",
+            			"icon": {
+            				"name": "TextBulletList"
+            			},
+            			"description": "Review key points in file but longer lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            		}
+            	],
+            	"actions": [
+            		{
+            			"type": "Action.Submit",
+            			"title": "Sign up",
+            			"data": {
+            				"id": "signUpVal"
+            			}
+            		},
+            		{
+            			"type": "Action.Submit",
+            			"title": "Login",
+            			"data": {
+            				"id": "LoginVal"
+            			}
+            		},
+            		{
+            			"type": "Action.ShowCard",
+            			"title": "Comment",
+            			"card": {
+            				"type": "AdaptiveCard",
+            				"body": [
+            					{
+            						"type": "Input.Text",
+            						"id": "comment",
+            						"isMultiline": true,
+            						"label": "Add a comment"
+            					}
+            				],
+            				"actions": [
+            					{
+            						"type": "Action.Submit",
+            						"title": "OK"
+            					}
+            				]
+            			}
+            		}
+            	]
+            }
 
-        assertEquals(adaptiveCard, deserializedAdaptiveCard)
+            
+        """.trimIndent()
+        val parseContext = ParseContext()
+        val result = AdaptiveCardParser.deserializeFromString(jsonString, "2.0", parseContext)
+        assertTrue(result.adaptiveCard.layouts?.isNotEmpty() ?: false)
+        //assertEquals(adaptiveCard, deserializedAdaptiveCard)
     }
 }

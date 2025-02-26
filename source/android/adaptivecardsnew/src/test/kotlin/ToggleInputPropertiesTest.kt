@@ -4,7 +4,7 @@ import com.example.ac_sdk.objectmodel.elements.InputElements
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class InputTogglePropertiesTest : BaseModelTest() {
+class ToggleInputPropertiesTest : BaseModelTest() {
 
     @Test
     fun `test InputToggle properties`() {
@@ -19,12 +19,12 @@ class InputTogglePropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val inputToggle = json.decodeFromString<InputElements.InputToggle>(jsonString)
+        val toggleInput = json.decodeFromString<InputElements.ToggleInput>(jsonString)
 
-        assertEquals("Toggle option", inputToggle.title)
-        assertEquals("true", inputToggle.value)
-        assertEquals("true", inputToggle.valueOn)
-        assertEquals("false", inputToggle.valueOff)
-        assertEquals(true, inputToggle.wrap)
+        assertEquals("Toggle option", toggleInput.title)
+        assertEquals("true", toggleInput.value)
+        assertEquals("true", toggleInput.valueOn)
+        assertEquals("false", toggleInput.valueOff)
+        assertEquals(true, toggleInput.wrap)
     }
 }

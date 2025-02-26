@@ -4,7 +4,7 @@ import com.example.ac_sdk.objectmodel.elements.InputElements
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class InputDateTimePropertiesTest : BaseModelTest() {
+class DateTimeInputPropertiesTest : BaseModelTest() {
 
     @Test
     fun `test InputDate properties`() {
@@ -18,12 +18,12 @@ class InputDateTimePropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val inputDate = json.decodeFromString<InputElements.InputDate>(jsonString)
+        val dateInput = json.decodeFromString<InputElements.DateInput>(jsonString)
 
-        assertEquals("2023-01-01", inputDate.min)
-        assertEquals("2023-12-31", inputDate.max)
-        assertEquals("2023-06-15", inputDate.value)
-        assertEquals("Select date", inputDate.placeholder)
+        assertEquals("2023-01-01", dateInput.min)
+        assertEquals("2023-12-31", dateInput.max)
+        assertEquals("2023-06-15", dateInput.value)
+        assertEquals("Select date", dateInput.placeholder)
     }
 
     @Test
@@ -38,11 +38,11 @@ class InputDateTimePropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val inputTime = json.decodeFromString<InputElements.InputTime>(jsonString)
+        val timeInput = json.decodeFromString<InputElements.TimeInput>(jsonString)
 
-        assertEquals("08:00", inputTime.min)
-        assertEquals("18:00", inputTime.max)
-        assertEquals("12:00", inputTime.value)
-        assertEquals("Select time", inputTime.placeholder)
+        assertEquals("08:00", timeInput.min)
+        assertEquals("18:00", timeInput.max)
+        assertEquals("12:00", timeInput.value)
+        assertEquals("Select time", timeInput.placeholder)
     }
 }

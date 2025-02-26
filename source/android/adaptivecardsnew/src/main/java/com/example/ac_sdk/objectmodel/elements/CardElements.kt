@@ -12,6 +12,7 @@ import com.example.ac_sdk.objectmodel.utils.IconSize
 import com.example.ac_sdk.objectmodel.utils.IconStyle
 import com.example.ac_sdk.objectmodel.utils.ImageSize
 import com.example.ac_sdk.objectmodel.utils.ImageStyle
+import com.example.ac_sdk.objectmodel.utils.RichTextBlockSerializer
 import com.example.ac_sdk.objectmodel.utils.TextSize
 import com.example.ac_sdk.objectmodel.utils.TextStyle
 import com.example.ac_sdk.objectmodel.utils.TextWeight
@@ -61,9 +62,13 @@ sealed class CardElements {
     data class Image(
         val url: String,
         val altText: String? = null,
+        val backgroundColor: String? = "",
         val horizontalAlignment: HorizontalAlignment? = null,
-        val size: ImageSize? = null,
-        val style: ImageStyle? = null
+        val size: ImageSize? = ImageSize.AUTO,
+        val style: ImageStyle? = ImageStyle.DEFAULT,
+        val pixelWidth: Int = 0,
+        val pixelHeight: Int = 0,
+        val selectAction: BaseActionElement? = null
     ) : BaseCardElement() {
 
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
@@ -87,7 +92,9 @@ sealed class CardElements {
 
     @Serializable
     @SerialName("media")
-    data class Media(val sources: List<MediaSource>) : BaseCardElement() {
+    data class Media(
+        val sources: List<MediaSource>
+    ) : BaseCardElement() {
 
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
@@ -102,9 +109,12 @@ sealed class CardElements {
         }
     }
 
-    @Serializable
-    @SerialName("richTextBlock")
-    data class RichTextBlock(val inlines: List<TextRun>) : BaseCardElement() {
+    @Serializable(with = RichTextBlockSerializer::class)
+    @SerialName("RichTextBlock")
+    data class RichTextBlock(
+        val inlines: List<TextRun>,
+        val horizontalAlignment: HorizontalAlignment? = null
+    ) : BaseCardElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
                 addAll(
@@ -209,7 +219,7 @@ sealed class CardElements {
     @SerialName("ImageSet")
     data class ImageSet(
         val images: List<Image>? = null,
-        val imageSize: String? = null
+        val imageSize: ImageSize? = null
     ) : BaseCardElement() {
 
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
@@ -262,7 +272,8 @@ sealed class CardElements {
                         AdaptiveCardSchemaKey.DESCRIPTION,
                         AdaptiveCardSchemaKey.ICON,
                         AdaptiveCardSchemaKey.SELECT_ACTION,
-                        AdaptiveCardSchemaKey.TITLE)
+                        AdaptiveCardSchemaKey.TITLE
+                    )
                 )
             }
         }

@@ -2,7 +2,10 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.elements.models.Choice
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
+import com.example.ac_sdk.objectmodel.utils.HeightType
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
+import com.example.ac_sdk.objectmodel.utils.Spacing
+import com.example.ac_sdk.objectmodel.utils.TargetWidthType
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
@@ -11,12 +14,14 @@ sealed class InputElements {
 
     @Serializable
     @SerialName("Input.Text")
-    data class InputText(
+    data class TextInput(
         val isMultiline: Boolean? = null,
         val maxLength: Int? = null,
         val placeholder: String? = null,
         val style: String? = null,
-        val value: String? = null
+        val value: String? = null,
+        val regex: String? = null,
+        val inlineAction: BaseActionElement? = null
     ) : BaseInputElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
@@ -35,7 +40,7 @@ sealed class InputElements {
 
     @Serializable
     @SerialName("Input.Number")
-    data class InputNumber(
+    data class NumberInput(
         val min: Double? = null,
         val max: Double? = null,
         val placeholder: String? = null,
@@ -57,7 +62,7 @@ sealed class InputElements {
 
     @Serializable
     @SerialName("Input.Date")
-    data class InputDate(
+    data class DateInput(
         val min: String? = null,
         val max: String? = null,
         val value: String? = null,
@@ -79,7 +84,7 @@ sealed class InputElements {
 
     @Serializable
     @SerialName("Input.Time")
-    data class InputTime(
+    data class TimeInput(
         val min: String? = null,
         val max: String? = null,
         val value: String? = null,
@@ -101,7 +106,7 @@ sealed class InputElements {
 
     @SerialName("Input.Toggle")
     @Serializable
-    data class InputToggle(
+    data class ToggleInput(
         val title: String,
         val value: String? = null,
         val valueOn: String? = null,
@@ -124,7 +129,8 @@ sealed class InputElements {
     }
 
     @Serializable
-    data class InputChoiceSet(
+    @SerialName("Input.ChoiceSet")
+    data class ChoiceSetInput(
         val isMultiSelect: Boolean? = null,
         val style: String? = null,
         val value: String? = null,

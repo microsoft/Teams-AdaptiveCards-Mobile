@@ -38,34 +38,56 @@ enum class ActionMode(val key: String) {
     Popup("Popup")
 }
 
-enum class AssociatedInputs(val key: String) {
-    Auto("Auto"),
-    None("None")
+enum class AssociatedInputs() {
+    @SerialName("auto")
+    AUTO,
+    @SerialName("none") NONE
 }
 
-enum class ChoiceSetStyle(val key: String) {
-    Compact("Compact"),
-    Expanded("Expanded"),
-    Filtered("Filtered")
+enum class ChoiceSetStyle {
+    @SerialName("compact")
+    COMPACT,
+
+    @SerialName("expanded")
+    EXPANDED,
+
+    @SerialName("filtered")
+    FILTERED
 }
 
-enum class TextInputStyle(val key: String) {
-    Email("Email"),
-    Tel("Tel"),
-    Text("Text"),
-    Url("Url"),
-    Password("Password")
+enum class TextInputStyle {
+    @SerialName("email")
+    MAIL,
+
+    @SerialName("tel")
+    TEL,
+
+    @SerialName("text")
+    TEXT,
+
+    @SerialName("url")
+    URL,
+
+    @SerialName("password")
+    PASSWORD
 }
 
 @Serializable
 enum class ContainerStyle {
-    @SerialName("None") NONE,
-    @SerialName("Default") DEFAULT,
-    @SerialName("Emphasis") EMPHASIS,
-    @SerialName("Good") GOOD,
-    @SerialName("Attention") ATTENTION,
-    @SerialName("Warning") WARNING,
-    @SerialName("Accent") ACCENT
+    @SerialName("None")
+    NONE,
+    @SerialName("Default")
+    DEFAULT,
+    @SerialName("Emphasis")
+    EMPHASIS,
+    @SerialName("Good")
+    GOOD,
+    @SerialName("Attention")
+    ATTENTION,
+    @SerialName("Warning")
+    WARNING,
+    @SerialName("Accent")
+    ACCENT
 }
 
 enum class ActionAlignment(val key: String) {
@@ -86,14 +108,19 @@ enum class InlineElementType(val key: String) {
 
 @Serializable
 enum class FallbackType {
-    @SerialName("none") NONE,
-    @SerialName("drop") DROP,
-    @SerialName("content") CONTENT
+    @SerialName("none")
+    NONE,
+    @SerialName("drop")
+    DROP,
+    @SerialName("content")
+    CONTENT
 }
 
 enum class Mode {
-    @SerialName("primary") PRIMARY,
-    @SerialName("secondary") SECONDARY
+    @SerialName("primary")
+    PRIMARY,
+    @SerialName("secondary")
+    SECONDARY
 }
 
 enum class ErrorStatusCode(val key: String) {
@@ -109,7 +136,8 @@ enum class ErrorStatusCode(val key: String) {
 
 @Serializable
 enum class ValueChangedActionType {
-    @SerialName("Action.ResetInputs") RESET_INPUTS
+    @SerialName("Action.ResetInputs")
+    RESET_INPUTS
 }
 
 enum class ContainerBleedDirection(val key: String) {
@@ -132,194 +160,302 @@ enum class ContainerBleedDirection(val key: String) {
 }
 
 
-
 @Serializable
 enum class ActionType {
-    @SerialName("Action.Submit") SUBMIT,
-    @SerialName("Action.OpenUrl") OPENURL,
-    @SerialName("Action.ShowCard") SHOWCARD,
-    @SerialName("Action.Execute") EXECUTE,
-    @SerialName("Action.ToggleVisibility") TOGGLEVISIBILITY
+    @SerialName("Action.Submit")
+    SUBMIT,
+    @SerialName("Action.OpenUrl")
+    OPENURL,
+    @SerialName("Action.ShowCard")
+    SHOWCARD,
+    @SerialName("Action.Execute")
+    EXECUTE,
+    @SerialName("Action.ToggleVisibility")
+    TOGGLEVISIBILITY
 }
 
 @Serializable
 enum class ActionRole {
-    @SerialName("Button") BUTTON,
-    @SerialName("Link") LINK,
-    @SerialName("Tab") TAB,
-    @SerialName("Menu") MENU,
-    @SerialName("MenuItem") MENUITEM,
+    @SerialName("Button")
+    BUTTON,
+    @SerialName("Link")
+    LINK,
+    @SerialName("Tab")
+    TAB,
+    @SerialName("Menu")
+    MENU,
+    @SerialName("MenuItem")
+    MENUITEM,
 }
 
 @Serializable
 enum class CardElementType {
-    @SerialName("TextBlock") TEXTBLOCK,
-    @SerialName("Image") IMAGE,
-    @SerialName("Media") MEDIA,
-    @SerialName("RichTextBlock") RICHTEXTBLOCK,
-    @SerialName("TextRun") TEXTRUN,
-    @SerialName("Icon") ICON,
-    @SerialName("RatingLabel") RATINGLABEL,
-    @SerialName("Container") CONTAINER,
-    @SerialName("ColumnSet") COLUMNSET,
-    @SerialName("Column") COLUMN,
-    @SerialName("FactSet") FACTSET,
-    @SerialName("ImageSet") IMAGESET,
-    @SerialName("ActionSet") ACTIONSET,
-    @SerialName("Input.Text") INPUTTEXT,
-    @SerialName("Input.Number") INPUTNUMBER,
-    @SerialName("Input.Date") INPUTDATE,
-    @SerialName("Input.Time") INPUTTIME,
-    @SerialName("Input.Toggle") INPUTTOGGLE,
-    @SerialName("Input.ChoiceSet") INPUTCHOICESET
+    @SerialName("TextBlock")
+    TEXTBLOCK,
+    @SerialName("Image")
+    IMAGE,
+    @SerialName("Media")
+    MEDIA,
+    @SerialName("RichTextBlock")
+    RICHTEXTBLOCK,
+    @SerialName("TextRun")
+    TEXTRUN,
+    @SerialName("Icon")
+    ICON,
+    @SerialName("RatingLabel")
+    RATINGLABEL,
+    @SerialName("Container")
+    CONTAINER,
+    @SerialName("ColumnSet")
+    COLUMNSET,
+    @SerialName("Column")
+    COLUMN,
+    @SerialName("FactSet")
+    FACTSET,
+    @SerialName("ImageSet")
+    IMAGESET,
+    @SerialName("ActionSet")
+    ACTIONSET,
+    @SerialName("Input.Text")
+    INPUTTEXT,
+    @SerialName("Input.Number")
+    INPUTNUMBER,
+    @SerialName("Input.Date")
+    INPUTDATE,
+    @SerialName("Input.Time")
+    INPUTTIME,
+    @SerialName("Input.Toggle")
+    INPUTTOGGLE,
+    @SerialName("Input.ChoiceSet")
+    INPUTCHOICESET
 }
 
 @Serializable
 enum class TargetWidthType {
-    @SerialName("Default") DEFAULT,
-    @SerialName("wide") WIDE,
-    @SerialName("standard") STANDARD,
-    @SerialName("narrow") NARROW,
-    @SerialName("veryNarrow") VERY_NARROW,
-    @SerialName("atLeast:wide") AT_LEAST_WIDE,
-    @SerialName("atLeast:standard") AT_LEAST_STANDARD,
-    @SerialName("atLeast:narrow") AT_LEAST_NARROW,
-    @SerialName("atLeast:veryNarrow") AT_LEAST_VERY_NARROW,
-    @SerialName("atMost:wide") AT_MOST_WIDE,
-    @SerialName("atMost:standard") AT_MOST_STANDARD,
-    @SerialName("atMost:narrow") AT_MOST_NARROW,
-    @SerialName("atMost:veryNarrow") AT_MOST_VERY_NARROW
+    @SerialName("Default")
+    DEFAULT,
+    @SerialName("wide")
+    WIDE,
+    @SerialName("standard")
+    STANDARD,
+    @SerialName("narrow")
+    NARROW,
+    @SerialName("veryNarrow")
+    VERY_NARROW,
+    @SerialName("atLeast:wide")
+    AT_LEAST_WIDE,
+    @SerialName("atLeast:standard")
+    AT_LEAST_STANDARD,
+    @SerialName("atLeast:narrow")
+    AT_LEAST_NARROW,
+    @SerialName("atLeast:veryNarrow")
+    AT_LEAST_VERY_NARROW,
+    @SerialName("atMost:wide")
+    AT_MOST_WIDE,
+    @SerialName("atMost:standard")
+    AT_MOST_STANDARD,
+    @SerialName("atMost:narrow")
+    AT_MOST_NARROW,
+    @SerialName("atMost:veryNarrow")
+    AT_MOST_VERY_NARROW
 }
 
+@Serializable
 enum class Spacing {
-    @SerialName("default") DEFAULT,
-    @SerialName("none") NONE,
-    @SerialName("small") SMALL,
-    @SerialName("medium") MEDIUM,
-    @SerialName("large") LARGE,
-    @SerialName("extraLarge") EXTRA_LARGE,
-    @SerialName("padding") PADDING
+    @SerialName("default")
+    DEFAULT,
+    @SerialName("none")
+    NONE,
+    @SerialName("small")
+    SMALL,
+    @SerialName("medium")
+    MEDIUM,
+    @SerialName("large")
+    LARGE,
+    @SerialName("extraLarge")
+    EXTRA_LARGE,
+    @SerialName("padding")
+    PADDING
 }
 
 @Serializable
 enum class HeightType {
-    @SerialName("Auto") AUTO,
-    @SerialName("Stretch") STRETCH
+    @SerialName("Auto")
+    AUTO,
+    @SerialName("Stretch")
+    STRETCH
 }
 
 @Serializable
 enum class HostWidth {
-    @SerialName("default") DEFAULT,
-    @SerialName("wide") WIDE,
-    @SerialName("standard") STANDARD,
-    @SerialName("narrow") NARROW,
-    @SerialName("veryNarrow") VERY_NARROW
+    @SerialName("default")
+    DEFAULT,
+    @SerialName("wide")
+    WIDE,
+    @SerialName("standard")
+    STANDARD,
+    @SerialName("narrow")
+    NARROW,
+    @SerialName("veryNarrow")
+    VERY_NARROW
 }
 
 @Serializable
 enum class VerticalAlignment {
-    @SerialName("top") TOP,
-    @SerialName("center") CENTER,
-    @SerialName("bottom") BOTTOM
+    @SerialName("top")
+    TOP,
+    @SerialName("center")
+    CENTER,
+    @SerialName("bottom")
+    BOTTOM
 }
 
 @Serializable
 enum class ForegroundColor {
-    @SerialName("Default") DEFAULT,
-    @SerialName("Dark") DARK,
-    @SerialName("Light") LIGHT,
-    @SerialName("Accent") ACCENT,
-    @SerialName("Good") GOOD,
-    @SerialName("Warning") WARNING,
-    @SerialName("Attention") ATTENTION
+    @SerialName("Default")
+    DEFAULT,
+    @SerialName("Dark")
+    DARK,
+    @SerialName("Light")
+    LIGHT,
+    @SerialName("Accent")
+    ACCENT,
+    @SerialName("Good")
+    GOOD,
+    @SerialName("Warning")
+    WARNING,
+    @SerialName("Attention")
+    ATTENTION
 }
 
 @Serializable
 enum class TextSize {
-    @SerialName("Small") SMALL,
-    @SerialName("Default") DEFAULT,
-    @SerialName("Medium") MEDIUM,
-    @SerialName("Large") LARGE,
-    @SerialName("ExtraLarge") EXTRA_LARGE
+    @SerialName("Small")
+    SMALL,
+    @SerialName("Default")
+    DEFAULT,
+    @SerialName("Medium")
+    MEDIUM,
+    @SerialName("Large")
+    LARGE,
+    @SerialName("ExtraLarge")
+    EXTRA_LARGE
 }
 
 @Serializable
 enum class TextWeight {
-    @SerialName("Default") DEFAULT,
-    @SerialName("Lighter") LIGHTER,
-    @SerialName("Bolder") BOLDER
+    @SerialName("Default")
+    DEFAULT,
+    @SerialName("Lighter")
+    LIGHTER,
+    @SerialName("Bolder")
+    BOLDER
 }
 
 @Serializable
 enum class TextStyle {
-    @SerialName("default") DEFAULT,
-    @SerialName("heading") HEADING,
-    @SerialName("title") TITLE,
-    @SerialName("subtitle") SUBTITLE
+    @SerialName("default")
+    DEFAULT,
+    @SerialName("heading")
+    HEADING,
+    @SerialName("title")
+    TITLE,
+    @SerialName("subtitle")
+    SUBTITLE
 }
 
 @Serializable
 enum class FontType {
-    @SerialName("Default") DEFAULT,
-    @SerialName("Monospace") MONOSPACE
+    @SerialName("Default")
+    DEFAULT,
+    @SerialName("Monospace")
+    MONOSPACE
 }
 
 @Serializable
 enum class ImageFillMode {
-    @SerialName("cover") COVER,
-    @SerialName("repeatHorizontally") REPEAT_HORIZ,
-    @SerialName("repeatVertically") REPEAT_VERT,
-    @SerialName("repeat") REPEAT
+    @SerialName("cover")
+    COVER,
+    @SerialName("repeatHorizontally")
+    REPEAT_HORIZ,
+    @SerialName("repeatVertically")
+    REPEAT_VERT,
+    @SerialName("repeat")
+    REPEAT
 }
 
 @Serializable
 enum class HorizontalAlignment {
     @SerialName("left")
     LEFT,
+
     @SerialName("center")
     CENTER,
+
     @SerialName("right")
     RIGHT
 }
 
 @Serializable
 enum class ImageSize {
-    @SerialName("Auto") AUTO,
-    @SerialName("Stretch") STRETCH,
-    @SerialName("Small") SMALL,
-    @SerialName("Medium") MEDIUM,
-    @SerialName("Large") LARGE
+    @SerialName("Auto")
+    AUTO,
+    @SerialName("Stretch")
+    STRETCH,
+    @SerialName("Small")
+    SMALL,
+    @SerialName("Medium")
+    MEDIUM,
+    @SerialName("Large")
+    LARGE
 }
 
 @Serializable
 enum class ImageStyle {
-    @SerialName("default") DEFAULT,
-    @SerialName("person") PERSON,
-    @SerialName("roundedCorners") ROUNDCORNERS
+    @SerialName("default")
+    DEFAULT,
+    @SerialName("person")
+    PERSON,
+    @SerialName("roundedCorners")
+    ROUNDCORNERS
 }
 
 @Serializable
 enum class IconSize {
-    @SerialName("xxSmall") XXSMALL,
-    @SerialName("xSmall") XSMALL,
-    @SerialName("Small") SMALL,
-    @SerialName("Standard") STANDARD,
-    @SerialName("Medium") MEDIUM,
-    @SerialName("Large") LARGE,
-    @SerialName("xLarge") XLARGE,
-    @SerialName("xxLarge") XXLARGE
+    @SerialName("xxSmall")
+    XXSMALL,
+    @SerialName("xSmall")
+    XSMALL,
+    @SerialName("Small")
+    SMALL,
+    @SerialName("Standard")
+    STANDARD,
+    @SerialName("Medium")
+    MEDIUM,
+    @SerialName("Large")
+    LARGE,
+    @SerialName("xLarge")
+    XLARGE,
+    @SerialName("xxLarge")
+    XXLARGE
 }
 
 @Serializable
 enum class IconStyle {
-    @SerialName("Regular") REGULAR,
-    @SerialName("Filled") FILLED
+    @SerialName("Regular")
+    REGULAR,
+    @SerialName("Filled")
+    FILLED
 }
 
 @Serializable
 enum class LayoutContainerType {
-    @SerialName("None") NONE,
-    @SerialName("Stack") STACK,
-    @SerialName("Flow")  FLOW,
-    @SerialName("AreaGrid") AREAGRID
+    @SerialName("None")
+    NONE,
+    @SerialName("Stack")
+    STACK,
+    @SerialName("Flow")
+    FLOW,
+    @SerialName("AreaGrid")
+    AREAGRID
 }

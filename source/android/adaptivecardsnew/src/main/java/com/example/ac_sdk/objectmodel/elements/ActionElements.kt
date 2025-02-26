@@ -2,6 +2,7 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.AdaptiveCard
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
+import com.example.ac_sdk.objectmodel.utils.AssociatedInputs
 import kotlinx.serialization.*
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNames
@@ -11,7 +12,9 @@ sealed class ActionElements {
     @Serializable
     @SerialName("Action.Submit")
     data class ActionSubmit(
-        val data: Map<String, JsonElement>? = null
+        val data: Map<String, JsonElement>? = null,
+        val conditionallyEnabled: Boolean? = false,
+        val associatedInputs: AssociatedInputs? = AssociatedInputs.NONE
     ) : BaseActionElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
@@ -54,7 +57,10 @@ sealed class ActionElements {
     @Serializable
     @SerialName("Action.Execute")
     data class ActionExecute(
-        val verb: String
+        val verb: String,
+        val conditionallyEnabled: Boolean? = false,
+        val data: Map<String, JsonElement>? = null,
+        val associatedInputs: AssociatedInputs? = AssociatedInputs.NONE
     ) : BaseActionElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {

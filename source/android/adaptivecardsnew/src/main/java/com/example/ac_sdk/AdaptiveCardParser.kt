@@ -2,6 +2,9 @@ package com.example.ac_sdk
 
 import android.util.Log
 import com.example.ac_sdk.objectmodel.AdaptiveCard
+import com.example.ac_sdk.objectmodel.elements.ActionElements
+import com.example.ac_sdk.objectmodel.elements.BaseActionElement
+import com.example.ac_sdk.objectmodel.elements.BaseCardElement
 import com.example.ac_sdk.objectmodel.elements.CardElements
 import com.example.ac_sdk.objectmodel.elements.LayoutElements
 import com.example.ac_sdk.objectmodel.parser.ParseContext
@@ -22,8 +25,10 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 import java.io.File
-import java.util.Locale
 
 class AdaptiveCardParser {
 
@@ -33,8 +38,8 @@ class AdaptiveCardParser {
         fun deserializeFromString(jsonText: String, rendererVersion: String, context: ParseContext): ParseResult {
             val json = Json.parseToJsonElement(jsonText)
             return deserialize(json.jsonObject, rendererVersion, context).also {
-                val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
-                Log.d("checkPoint", adaptiveCardJson)
+                //val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
+               // Log.d("checkPoint", adaptiveCardJson)
             }
         }
 
@@ -72,6 +77,19 @@ class AdaptiveCardParser {
                 ignoreUnknownKeys = true
                 encodeDefaults = true
                 decodeEnumsCaseInsensitive = true
+                serializersModule = SerializersModule {
+                    polymorphic(BaseActionElement::class) {
+                        subclass(ActionElements.ActionSubmit::class)
+                        subclass(ActionElements.ActionOpenUrl::class)
+                        subclass(ActionElements.ActionExecute::class)
+                        subclass(ActionElements.ActionToggleVisibility::class)
+                        subclass(ActionElements.ActionShowCard::class)
+                    }
+                    polymorphic(BaseCardElement::class) {
+                        subclass(CardElements.TextBlock::class)
+                        subclass(CardElements.Image::class)
+                    }
+                }
             }
             val adaptiveCard = json.decodeFromJsonElement<AdaptiveCard>(jsonObject)
 
@@ -94,8 +112,8 @@ class AdaptiveCardParser {
                 )
             }
 
-            if (adaptiveCard.layoutArray?.isNotEmpty() == true) {
-                for ((index, layout) in adaptiveCard.layoutArray.withIndex()) {
+            if (adaptiveCard.layouts?.isNotEmpty() == true) {
+                for ((index, layout) in adaptiveCard.layouts.withIndex()) {
                     when (layout.layoutContainerType) {
                         LayoutContainerType.AREAGRID -> {
                             val areaGridLayout = layout as LayoutElements.AreaGridLayout
@@ -103,12 +121,12 @@ class AdaptiveCardParser {
                                 val stackLayout = LayoutElements.StackLayout().apply {
                                     layoutContainerType = LayoutContainerType.STACK
                                 }
-                                adaptiveCard.layoutArray[index] = stackLayout
+                                adaptiveCard.layouts[index] = stackLayout
                             } else if (areaGridLayout.areas.isEmpty()) {
                                 val flowLayout = LayoutElements.FlowLayout().apply {
                                     layoutContainerType = LayoutContainerType.FLOW
                                 }
-                                adaptiveCard.layoutArray[index] = flowLayout
+                                adaptiveCard.layouts[index] = flowLayout
                             }
                         }
 
@@ -120,7 +138,7 @@ class AdaptiveCardParser {
             }
 
             adaptiveCard.minHeight = adaptiveCard.minHeight?.let {
-                Util.parseSizeForPixelSize(it, context.warnings)
+                Util.parseSizeForPixelSize(it.toString(), context.warnings)
             }.toString()
 
 
@@ -164,12 +182,13 @@ class AdaptiveCardParser {
                     adaptiveCard.minHeight,
                     adaptiveCard.height,
                     adaptiveCard.verticalAlignment,
+                    adaptiveCard.style,
                     adaptiveCard.backgroundImage,
                     arrayListOf(fallbackBaseElement),
                     adaptiveCard.actions,
                     adaptiveCard.authentication,
                     adaptiveCard.rtl,
-                    adaptiveCard.layoutArray
+                    adaptiveCard.layouts
                 )
                 fallback.additionalProperties =
                     Util.handleUnknownProperties(jsonObject, fallback.knownProperties)
@@ -213,7 +232,7 @@ class AdaptiveCardParser {
         }
 
 
-        private fun makeFallbackTextCard(
+        public fun makeFallbackTextCard(
             fallbackText: String,
             language: String,
             speak: String
