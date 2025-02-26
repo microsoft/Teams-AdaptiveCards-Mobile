@@ -50,7 +50,7 @@
 
 -(void) setCurrentPage:(NSInteger) page
 {
-    if(page < 0 || page >= _carouselPageViewList.count)
+    if(page < 0 || (NSUInteger)page >= _carouselPageViewList.count)
     {
         return;
     }
@@ -115,7 +115,7 @@
         
         // Slide in the new view
         viewToShow.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
+    } completion:^(__unused BOOL finished) {
         viewToHide.hidden = YES;
         viewToHide.transform = CGAffineTransformIdentity; // Reset transform for future use
     }];
@@ -132,7 +132,7 @@
 
         // Slide in the new view
         viewToShow.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
+    } completion:^(__unused BOOL finished) {
         viewToHide.hidden = YES;
         viewToHide.transform = CGAffineTransformIdentity; // Reset transform for future use
     }];

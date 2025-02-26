@@ -28,7 +28,7 @@ NSMutableArray<ACRIBaseInputHandler> *_inputs;
                     inputs:(NSArray *)inputs
                  superview:(UIView<ACRIContentHoldingView> *)superview
          baseActionElement:(ACOBaseActionElement *)acoElem
-                hostConfig:(ACOHostConfig *)acoConfig;
+                hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<BaseActionElement> elem = [acoElem element];
     std::shared_ptr<SubmitAction> action = std::dynamic_pointer_cast<SubmitAction>(elem);

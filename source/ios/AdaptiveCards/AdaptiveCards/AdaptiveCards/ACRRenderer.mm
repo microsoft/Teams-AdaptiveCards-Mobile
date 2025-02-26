@@ -109,16 +109,16 @@ using namespace AdaptiveCards;
 
     if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
         ObserverActionBlock observerAction =
-            ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
+            ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *root) {
                 UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                 if (view) {
-                    [view addObserver:rootView
+                    [view addObserver:root
                            forKeyPath:@"image"
                               options:NSKeyValueObservingOptionNew
                               context:backgroundImageProperties.get()];
 
                     // store the image view and card for easy retrieval in ACRView::observeValueForKeyPath
-                    [rootView setImageView:key view:view];
+                    [root setImageView:key view:view];
                 }
             };
         [rootView loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:@"backgroundImage" observerAction:observerAction];

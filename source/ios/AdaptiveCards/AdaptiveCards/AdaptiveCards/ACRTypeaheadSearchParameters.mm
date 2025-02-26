@@ -21,9 +21,6 @@
     return self;
 }
 
-@synthesize title;
-@synthesize subtitle;
-
 @end
 
 @implementation ACRTypeaheadOfflineStateParams

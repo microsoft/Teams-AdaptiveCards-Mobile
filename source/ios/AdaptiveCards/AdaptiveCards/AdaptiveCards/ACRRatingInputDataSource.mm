@@ -34,7 +34,7 @@ using namespace AdaptiveCards;
     return self;
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     if (self.isRequired) {
         return [_ratingView getValue] != 0;

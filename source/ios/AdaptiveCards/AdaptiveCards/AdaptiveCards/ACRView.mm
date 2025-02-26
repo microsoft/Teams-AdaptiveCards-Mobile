@@ -250,7 +250,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case CardElementType::Image: {
 
             ObserverActionBlock observerAction =
-                ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
+                ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &element, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                     if (view) {
                         // check image already exists in the returned image view and register the image
@@ -258,11 +258,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         [view addObserver:self
                                forKeyPath:@"image"
                                   options:NSKeyValueObservingOptionNew
-                                  context:elem.get()];
+                                  context:element.get()];
 
                         // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
                         [rootView setImageView:key view:view];
-                        [rootView setImageContext:key context:elem];
+                        [rootView setImageContext:key context:element];
                     }
                 };
             [self loadImageAccordingToResourceResolverIF:elem key:nil observerAction:observerAction];
@@ -276,7 +276,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 img->SetImageSize(imgSetElem->GetImageSize());
 
                 ObserverActionBlock observerAction =
-                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
+                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
                             // check image already exists in the returned image view and register the image
@@ -284,11 +284,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                             [view addObserver:self
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                                      context:element.get()];
 
                             // store the image view and image set element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
-                            [rootView setImageContext:key context:elem];
+                            [rootView setImageContext:key context:element];
                         }
                     };
 
@@ -305,7 +305,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
             if (!poster.empty()) {
                 ObserverActionBlock observerAction =
-                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &imgElem, NSURL *url, ACRView *rootView) {
+                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &imgElem, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         ACRContentHoldingUIView *contentholdingview = [[ACRContentHoldingUIView alloc] initWithFrame:view.frame];
                         if (view) {
@@ -328,7 +328,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
             if (![_hostConfig getHostConfig]->GetMedia().playButton.empty()) {
                 ObserverActionBlock observerAction =
-                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
+                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
                             // check image already exists in the returned image view and register the image
@@ -355,13 +355,13 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             std::shared_ptr<BaseActionElement> action = textInput->GetInlineAction();
             if (action != nullptr && !action->GetIconUrl().empty()) {
                 ObserverActionBlockForBaseAction observerAction =
-                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
+                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
                             [view addObserver:self
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                                      context:element.get()];
 
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -472,6 +472,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case AdaptiveCards::CardElementType::TimeInput:
         case AdaptiveCards::CardElementType::ToggleInput:
         case AdaptiveCards::CardElementType::Unknown:
+        case AdaptiveCards::CardElementType::RatingLabel:
+        case AdaptiveCards::CardElementType::CompoundButton:
+        case AdaptiveCards::CardElementType::Badge:
             break;
     }
 }
@@ -558,17 +561,17 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         url = [NSURL URLWithString:nSUrlStr relativeToURL:_hostConfig.baseURL];
     }
 
-    ImageLoadBlock imageloadblock = ^(NSURL *url) {
+    ImageLoadBlock imageloadblock = ^(NSURL *imgUrl) {
         // download image
         UIImage *img = nil;
-        if ([url.scheme isEqualToString:@"data"]) {
-            NSString *absoluteUri = url.absoluteString;
+        if ([imgUrl.scheme isEqualToString:@"data"]) {
+            NSString *absoluteUri = imgUrl.absoluteString;
             std::string dataUri = AdaptiveCards::AdaptiveBase64Util::ExtractDataFromUri(std::string([absoluteUri UTF8String]));
             std::vector<char> decodedDataUri = AdaptiveCards::AdaptiveBase64Util::Decode(dataUri);
             NSData *decodedBase64 = [NSData dataWithBytes:decodedDataUri.data() length:decodedDataUri.size()];
             img = [UIImage imageWithData:decodedBase64];
         } else {
-            img = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+            img = [UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl]];
         }
         return img;
     };
@@ -793,8 +796,6 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
         if ([object isKindOfClass:[ACRContentHoldingUIView class]]) {
             object = ((UIView *)object).subviews[0];
-        } else if ([object isKindOfClass:[ACRButton class]]) {
-            object = ((ACRButton *)object).iconView;
         }
 
         if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
@@ -874,7 +875,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     [_inputHandlerLookupTable setObject:parent forKey:child];
 }
 
-- (void)pushCurrentShowcard:(ACRColumnView *)showcard;
+- (void)pushCurrentShowcard:(ACRColumnView *)showcard
 {
     if (showcard) {
         [_showcards addObject:showcard];

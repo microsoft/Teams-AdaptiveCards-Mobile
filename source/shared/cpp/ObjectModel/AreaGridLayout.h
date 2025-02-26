@@ -19,7 +19,7 @@ class AreaGridLayout: public Layout
 {
 public:
     AreaGridLayout() :
-    m_columnSpacing(Spacing::Default), m_rowSpacing(Spacing::Default), m_areas({}), m_columns({})
+    m_columns({}), m_areas({}), m_rowSpacing(Spacing::Default), m_columnSpacing(Spacing::Default)
     {
     }
     
