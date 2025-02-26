@@ -7,7 +7,7 @@ import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.view.View
+import androidx.annotation.WorkerThread
 import com.caverock.androidsvg.SVG
 import io.adaptivecards.objectmodel.IconPlacement
 import io.adaptivecards.renderer.http.HttpRequestHelper
@@ -20,6 +20,7 @@ object IconUtils {
     private const val REGULAR_STYLE = "regular"
     private const val FLIP_IN_RTL_PROPERTY = "flipInRtl"
 
+    @WorkerThread
     fun loadIcon(
         context: Context,
         svgURL: String,
@@ -32,10 +33,30 @@ object IconUtils {
         return processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle, iconSize)
     }
 
+    fun getIcon(
+        context: Context,
+        renderedCard: RenderedAdaptiveCard,
+        drawable: Drawable,
+        flipInRtl: Boolean,
+        iconPlacement: IconPlacement,
+        padding: Long,
+        compoundDrawablesRelative: Array<Drawable>,
+        compoundDrawablePadding: Int
+    ) : FluentIconResult {
+        val flippedDrawable = flipDrawableHorizontally(renderedCard, drawable, context, flipInRtl)
+        val drawables = getDrawablesForActionElementIcon(flippedDrawable, compoundDrawablesRelative, iconPlacement)
+
+        return FluentIconResult(drawables, getPaddingForActionElementIcon(
+                context = context,
+                padding = padding,
+                iconPlacement = iconPlacement,
+                defaultPadding = compoundDrawablePadding))
+    }
+
     /**
      * flips the drawable horizontally if the card is RTL and the flipInRtl property is true for the rendered svg
      **/
-    fun flipDrawableHorizontally(renderedCard: RenderedAdaptiveCard, drawable: Drawable, view: View, flipInRtl: Boolean): Drawable {
+    private fun flipDrawableHorizontally(renderedCard: RenderedAdaptiveCard, drawable: Drawable, context: Context, flipInRtl: Boolean): Drawable {
         return if (renderedCard.adaptiveCard.GetRtl() == flipInRtl) {
             val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
@@ -46,7 +67,7 @@ object IconUtils {
             matrix.preScale(-1f, 1f)
             val flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 
-            BitmapDrawable(view.resources, flippedBitmap)
+            BitmapDrawable(context.resources, flippedBitmap)
         } else {
             drawable
         }
@@ -168,4 +189,6 @@ object IconUtils {
     }
 
     data class IconResponse(val drawable: Drawable?, val flipInRtl: Boolean)
+
+    class FluentIconResult(val drawables: Array<Drawable>, val padding: Int)
 }

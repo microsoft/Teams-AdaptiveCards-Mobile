@@ -23,19 +23,30 @@ class ActionElementRendererFluentIconImageLoaderAsync(
     override fun renderFluentIcon(drawable: Drawable?, flipInRtl: Boolean) {
         val view = viewReference.get()
         if (view != null && view is Button && drawable != null) {
-            val flippedDrawable = IconUtils.flipDrawableHorizontally(renderedCard, drawable, view, flipInRtl)
-            val drawables = IconUtils.getDrawablesForActionElementIcon(flippedDrawable, view.compoundDrawablesRelative, iconPlacement)
-            view.compoundDrawablePadding = IconUtils.getPaddingForActionElementIcon(
-                    context = view.context,
-                    padding = padding,
-                    iconPlacement = iconPlacement,
-                    defaultPadding = view.compoundDrawablePadding)
 
+//            val flippedDrawable = IconUtils.flipDrawableHorizontally(renderedCard, drawable, view.context, flipInRtl)
+//
+//            val drawables = IconUtils.getDrawablesForActionElementIcon(flippedDrawable, view.compoundDrawablesRelative, iconPlacement)
+//            view.compoundDrawablePadding = IconUtils.getPaddingForActionElementIcon(
+//                    context = view.context,
+//                    padding = padding,
+//                    iconPlacement = iconPlacement,
+//                    defaultPadding = view.compoundDrawablePadding)
+//
+//            view.setCompoundDrawablesRelativeWithIntrinsicBounds(
+//                    drawables[0],
+//                    drawables[1],
+//                    drawables[2],
+//                    drawables[3]
+//            )
+
+            val result = IconUtils.getIcon(view.context, renderedCard, drawable, flipInRtl, iconPlacement, padding, view.compoundDrawablesRelative, view.compoundDrawablePadding)
+            view.compoundDrawablePadding = result.padding
             view.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    drawables[0],
-                    drawables[1],
-                    drawables[2],
-                    drawables[3]
+                    result.drawables[0],
+                    result.drawables[1],
+                    result.drawables[2],
+                    result.drawables[3],
             )
         }
     }
