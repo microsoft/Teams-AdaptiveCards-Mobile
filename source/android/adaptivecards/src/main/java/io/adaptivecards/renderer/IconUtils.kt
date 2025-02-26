@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.view.View
 import com.caverock.androidsvg.SVG
 import io.adaptivecards.objectmodel.IconPlacement
 import io.adaptivecards.renderer.http.HttpRequestHelper
@@ -30,17 +32,30 @@ object IconUtils {
         return processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle, iconSize)
     }
 
+    /**
+     * flips the drawable horizontally if the card is RTL and the flipInRtl property is true for the rendered svg
+     **/
+    fun flipDrawableHorizontally(renderedCard: RenderedAdaptiveCard, drawable: Drawable, view: View, flipInRtl: Boolean): Drawable {
+        return if (renderedCard.adaptiveCard.GetRtl() == flipInRtl) {
+            val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            drawable.setBounds(0, 0, canvas.width, canvas.height)
+            drawable.draw(canvas)
+
+            val matrix = Matrix()
+            matrix.preScale(-1f, 1f)
+            val flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+
+            BitmapDrawable(view.resources, flippedBitmap)
+        } else {
+            drawable
+        }
+    }
+
     @JvmStatic
-    fun getDrawablesForActionElementIcon(bitmap: Bitmap, drawables: Array<Drawable>, iconPlacement: IconPlacement) : Array<Drawable> {
-        val drawableIcon: Drawable = BitmapDrawable(null, bitmap)
-
+    fun getDrawablesForActionElementIcon(drawableIcon: Drawable, drawables: Array<Drawable>, iconPlacement: IconPlacement) : Array<Drawable> {
         // Preserve any existing icons that may have been added by the host
         // Per Android docs, this array's order is: start, top, end, bottom
-
-        // Preserve any existing icons that may have been added by the host
-        // Per Android docs, this array's order is: start, top, end, bottom
-        //val drawables = button.compoundDrawablesRelative
-
         if (iconPlacement == IconPlacement.AboveTitle) {
             drawables[1] = drawableIcon
         } else {

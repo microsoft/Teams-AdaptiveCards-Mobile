@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Matrix
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Button
@@ -26,47 +22,21 @@ class ActionElementRendererFluentIconImageLoaderAsync(
 ): FluentIconImageLoaderAsync(renderedCard, targetIconSize, iconColor, iconSizeFromConfig, isFilledStyle, view) {
     override fun renderFluentIcon(drawable: Drawable?, flipInRtl: Boolean) {
         val view = viewReference.get()
-        if (view != null && view is Button) {
-            val drawables = view.compoundDrawablesRelative
+        if (view != null && view is Button && drawable != null) {
+            val flippedDrawable = IconUtils.flipDrawableHorizontally(renderedCard, drawable, view, flipInRtl)
+            val drawables = IconUtils.getDrawablesForActionElementIcon(flippedDrawable, view.compoundDrawablesRelative, iconPlacement)
+            view.compoundDrawablePadding = IconUtils.getPaddingForActionElementIcon(
+                    context = view.context,
+                    padding = padding,
+                    iconPlacement = iconPlacement,
+                    defaultPadding = view.compoundDrawablePadding)
 
-            drawable?.let {
-
-                val flippedDrawable = flipDrawableHorizontally(it, view, flipInRtl)
-
-                if (iconPlacement == IconPlacement.AboveTitle) {
-                    drawables[1] = flippedDrawable
-                } else {
-                    drawables[0] = flippedDrawable
-                    view.compoundDrawablePadding = Util.dpToPixels(view.context, padding.toFloat())
-                }
-
-                view.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            view.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     drawables[0],
                     drawables[1],
                     drawables[2],
                     drawables[3]
-                )
-            }
-        }
-    }
-
-    /**
-     * flips the drawable horizontally if the card is RTL and the flipInRtl property is true for the rendered svg
-     **/
-    private fun flipDrawableHorizontally(drawable: Drawable, view: View, flipInRtl: Boolean): Drawable {
-        return if (renderedCard.adaptiveCard.GetRtl() == flipInRtl) {
-            val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            drawable.setBounds(0, 0, canvas.width, canvas.height)
-            drawable.draw(canvas)
-
-            val matrix = Matrix()
-            matrix.preScale(-1f, 1f)
-            val flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-
-            BitmapDrawable(view.resources, flippedBitmap)
-        } else {
-            drawable
+            )
         }
     }
 }
