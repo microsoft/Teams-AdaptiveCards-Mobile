@@ -1,7 +1,9 @@
 package com.example.ac_sdk.objectmodel.elements
 
+import com.example.ac_sdk.objectmodel.parser.ParseWarning
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
-import com.example.ac_sdk.objectmodel.utils.ContainerStyle
+import com.example.ac_sdk.objectmodel.utils.ColumnSerializer
+import com.example.ac_sdk.objectmodel.utils.Util
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -9,6 +11,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class CollectionElement {
     @Serializable
+    @SerialName("Container")
     data class Container(
         val items: List<BaseCardElement>? = null,
         val width: String? = null,
@@ -54,9 +57,25 @@ sealed class CollectionElement {
 
     @Serializable
     data class Column(
-        val items: List<BaseCardElement>? = null,
-        val width: String? = null
+        var width: String = "auto",
+        var pixelWidth: Int = 0,
+        var items: List<@Polymorphic BaseCardElement> = emptyList(),
+        var rtl: Boolean? = null,
+        @Polymorphic
+        var layouts: List<@Polymorphic Layout> = emptyList()
     ) : StyledCollectionElement() {
+
+        // In Kotlin, you can add helper methods if needed (e.g. a setter that sets pixelWidth based on width)
+        fun setWidth(value: String, warnings: MutableList<ParseWarning>? = null) {
+            width = value.lowercase()
+            pixelWidth = Util.parseSizeForPixelSize(width, warnings) ?: 0
+        }
+
+        fun setExplicitPixelWidth(value: Int) {
+            pixelWidth = value
+            width = "${value}px"
+        }
+
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
                 addAll(
@@ -80,7 +99,6 @@ sealed class CollectionElement {
 }
 
 
-
 @Serializable
 @SerialName("Table")
 data class Table(
@@ -90,7 +108,7 @@ data class Table(
     val showGridLines: Boolean? = null,
     val gridStyle: String? = null,
     val horizontalCellContentAlignment: String? = null,
-    val verticalCellContentAlignment: String? = null
+    val verticalCellContentAlignment: String? = null,
 ) : CollectionCoreElement()
 
 
