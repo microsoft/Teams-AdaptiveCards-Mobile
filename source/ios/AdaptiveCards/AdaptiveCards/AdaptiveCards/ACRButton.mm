@@ -284,7 +284,7 @@
         UIImageView *iconView = [[ACRUIImageView alloc] init];
         UIImage *image = [UIImage systemImageNamed:@"chevron.down"];
         iconView.image = image;
-        iconView.tintColor = [config getTextBlockColor:(ACRContainerStyle::ACRAccent) textColor:(ForegroundColor::Accent)subtleOption:false];
+        iconView.tintColor = [config getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:(ForegroundColor::Accent)subtleOption:false];
         [button addSubview:iconView];
         button.iconView = iconView;
         [button setImageView:image withConfig:config];
