@@ -236,7 +236,7 @@
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
     UIImage *img = imageViewMap[key];
-    button.iconPlacement = [ACRButton getIconPlacmentAtCurrentContext:rootView url:key];
+    button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key doesHaveMenuActions: !menuActions.empty()];
 
     if (img) {
         UIImageView *iconView = [[ACRUIImageView alloc] init];
@@ -284,7 +284,7 @@
         UIImageView *iconView = [[ACRUIImageView alloc] init];
         UIImage *image = [UIImage systemImageNamed:@"chevron.down"];
         iconView.image = image;
-        iconView.tintColor = button.currentTitleColor;
+        iconView.tintColor = button.titleLabel.textColor;
         [button addSubview:iconView];
         button.iconView = iconView;
         [button setImageView:image withConfig:config];
@@ -330,7 +330,7 @@
     return (self.actionType == ACRShowCard && self.imageView && self.imageView.frame.size.width);
 }
 
-+ (ACRIconPlacement)getIconPlacmentAtCurrentContext:(ACRView *)rootView url:(NSString *)key
++ (ACRIconPlacement)getIconPlacementAtCurrentContext:(ACRView *)rootView url:(NSString *)key doesHaveMenuActions:(BOOL)doesContainMenuActions
 {
     if (!key or key.length == 0) {
         return ACRNoTitle;
@@ -340,7 +340,7 @@
         return ACRAboveTitle;
     }
 
-    return ACRRightOfTitle;
+    return doesContainMenuActions ? ACRRightOfTitle : ACRLeftOfTitle;
 }
 
 @end
