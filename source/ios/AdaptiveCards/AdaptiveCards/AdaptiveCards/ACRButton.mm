@@ -197,7 +197,7 @@
         [_iconView.widthAnchor constraintEqualToConstant:16].active = YES;
         [_iconView.heightAnchor constraintEqualToConstant:16].active = YES;
 
-        [_iconView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor constant:8].active = YES;
+        [_iconView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor].active = YES;
         [_iconView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
     }
 }
@@ -284,6 +284,7 @@
         UIImageView *iconView = [[ACRUIImageView alloc] init];
         UIImage *image = [UIImage systemImageNamed:@"chevron.down"];
         iconView.image = image;
+        iconView.tintColor = button.currentTitleColor;
         [button addSubview:iconView];
         button.iconView = iconView;
         [button setImageView:image withConfig:config];
