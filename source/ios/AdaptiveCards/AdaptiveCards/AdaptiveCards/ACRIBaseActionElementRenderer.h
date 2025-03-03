@@ -17,7 +17,7 @@
                     inputs:(NSMutableArray *)inputs
                  superview:(UIView *)superview
          baseActionElement:(ACOBaseActionElement *)acoElem
-                hostConfig:(ACOHostConfig *)acoConfig;
+                hostConfig:(ACOHostConfig *)acoConfig NS_SWIFT_UI_ACTOR;
 @end
 
 @protocol ACRIBaseActionSetRenderer
@@ -26,5 +26,5 @@
                    inputs:(NSMutableArray *)inputs
                 superview:(UIView<ACRIContentHoldingView> *)superview
                      card:(ACOAdaptiveCard *)card
-               hostConfig:(ACOHostConfig *)config;
+               hostConfig:(ACOHostConfig *)config NS_SWIFT_UI_ACTOR;
 @end
