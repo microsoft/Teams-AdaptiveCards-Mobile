@@ -167,6 +167,10 @@ public class BaseActionElement extends BaseElement {
     return new JsonValue((getClass() == BaseActionElement.class) ? AdaptiveCardObjectModelJNI.BaseActionElement_SerializeToJsonValue(swigCPtr, this) : AdaptiveCardObjectModelJNI.BaseActionElement_SerializeToJsonValueSwigExplicitBaseActionElement(swigCPtr, this), true);
   }
 
+  public BaseActionElementVector GetMenuActions() {
+    return new BaseActionElementVector(AdaptiveCardObjectModelJNI.BaseActionElement_GetMenuActions__SWIG_0(swigCPtr, this), false);
+  }
+
   public static BaseActionElement DeserializeBasePropertiesFromString(ParseContext context, String jsonString) {
     long cPtr = AdaptiveCardObjectModelJNI.BaseActionElement_DeserializeBasePropertiesFromString(ParseContext.getCPtr(context), context, jsonString);
     return (cPtr == 0) ? null : new BaseActionElement(cPtr, true);
