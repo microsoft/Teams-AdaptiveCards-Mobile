@@ -26,13 +26,13 @@ open class FluentIconImageLoaderAsync(
         return if (args.isEmpty()) {
             null
         } else {
-            IconUtils.fetchIconInfo(args[0])
+            FluentIconUtils.fetchIconInfo(args[0])
         }
     }
 
     override fun onPostExecute(result: HttpRequestResult<String>?) {
         val context = viewReference.get()?.context
-        val response = IconUtils.processResponseAndRenderFluentIcon(
+        val response = FluentIconUtils.processResponseAndRenderFluentIcon(
                 result,
                 context,
                 iconColor,

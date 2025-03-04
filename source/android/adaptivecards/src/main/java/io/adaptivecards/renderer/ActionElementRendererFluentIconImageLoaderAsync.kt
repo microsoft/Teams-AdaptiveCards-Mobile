@@ -22,32 +22,38 @@ class ActionElementRendererFluentIconImageLoaderAsync(
 ): FluentIconImageLoaderAsync(renderedCard, targetIconSize, iconColor, iconSizeFromConfig, isFilledStyle, view) {
     override fun renderFluentIcon(drawable: Drawable?, flipInRtl: Boolean) {
         val view = viewReference.get()
-        if (view != null && view is Button && drawable != null) {
+        if (view != null && view is Button) {
+            val drawables = view.compoundDrawablesRelative
 
-//            val flippedDrawable = IconUtils.flipDrawableHorizontally(renderedCard, drawable, view.context, flipInRtl)
-//
-//            val drawables = IconUtils.getDrawablesForActionElementIcon(flippedDrawable, view.compoundDrawablesRelative, iconPlacement)
-//            view.compoundDrawablePadding = IconUtils.getPaddingForActionElementIcon(
-//                    context = view.context,
-//                    padding = padding,
-//                    iconPlacement = iconPlacement,
-//                    defaultPadding = view.compoundDrawablePadding)
-//
-//            view.setCompoundDrawablesRelativeWithIntrinsicBounds(
-//                    drawables[0],
-//                    drawables[1],
-//                    drawables[2],
-//                    drawables[3]
-//            )
+            drawable?.let {
 
-            val result = IconUtils.getIcon(view.context, renderedCard, drawable, flipInRtl, iconPlacement, padding, view.compoundDrawablesRelative, view.compoundDrawablePadding)
-            view.compoundDrawablePadding = result.padding
-            view.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    result.drawables[0],
-                    result.drawables[1],
-                    result.drawables[2],
-                    result.drawables[3],
-            )
+                val flippedDrawable = flipDrawableHorizontally(it, view, flipInRtl)
+
+                if (iconPlacement == IconPlacement.AboveTitle) {
+                    drawables[1] = flippedDrawable
+                } else {
+                    drawables[0] = flippedDrawable
+                    view.compoundDrawablePadding = Util.dpToPixels(view.context, padding.toFloat())
+                }
+
+                view.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    drawables[0],
+                    drawables[1],
+                    drawables[2],
+                    drawables[3]
+                )
+            }
+        }
+    }
+
+    /**
+     * flips the drawable horizontally if the card is RTL and the flipInRtl property is true for the rendered svg
+     **/
+    private fun flipDrawableHorizontally(drawable: Drawable, view: View, flipInRtl: Boolean): Drawable {
+        return if (renderedCard.adaptiveCard.GetRtl() == flipInRtl) {
+            FluentIconUtils.flipDrawableHorizontally(drawable, view.context)
+        } else {
+            drawable
         }
     }
 }

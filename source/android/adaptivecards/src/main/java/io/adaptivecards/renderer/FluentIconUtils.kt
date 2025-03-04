@@ -9,93 +9,37 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.annotation.WorkerThread
 import com.caverock.androidsvg.SVG
-import io.adaptivecards.objectmodel.IconPlacement
 import io.adaptivecards.renderer.http.HttpRequestHelper
 import io.adaptivecards.renderer.http.HttpRequestResult
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
-object IconUtils {
+object FluentIconUtils {
     private const val FILLED_STYLE = "filled"
     private const val REGULAR_STYLE = "regular"
     private const val FLIP_IN_RTL_PROPERTY = "flipInRtl"
 
     @WorkerThread
-    fun loadIcon(
+    fun getIcon(
         context: Context,
         svgURL: String,
         iconColor: String,
         targetIconSize: Long,
         isFilledStyle: Boolean,
-        iconSize: Long
-    ) : IconResponse {
+        iconSize: Long,
+        isRTL: Boolean,
+        callback: (drawable: Drawable?) -> Void
+    ) {
         val requestResult = fetchIconInfo(svgURL)
-        return processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle, iconSize)
-    }
-
-    fun getIcon(
-        context: Context,
-        renderedCard: RenderedAdaptiveCard,
-        drawable: Drawable,
-        flipInRtl: Boolean,
-        iconPlacement: IconPlacement,
-        padding: Long,
-        compoundDrawablesRelative: Array<Drawable>,
-        compoundDrawablePadding: Int
-    ) : FluentIconResult {
-        val flippedDrawable = flipDrawableHorizontally(renderedCard, drawable, context, flipInRtl)
-        val drawables = getDrawablesForActionElementIcon(flippedDrawable, compoundDrawablesRelative, iconPlacement)
-
-        return FluentIconResult(drawables, getPaddingForActionElementIcon(
-                context = context,
-                padding = padding,
-                iconPlacement = iconPlacement,
-                defaultPadding = compoundDrawablePadding))
-    }
-
-    /**
-     * flips the drawable horizontally if the card is RTL and the flipInRtl property is true for the rendered svg
-     **/
-    private fun flipDrawableHorizontally(renderedCard: RenderedAdaptiveCard, drawable: Drawable, context: Context, flipInRtl: Boolean): Drawable {
-        return if (renderedCard.adaptiveCard.GetRtl() == flipInRtl) {
-            val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            drawable.setBounds(0, 0, canvas.width, canvas.height)
-            drawable.draw(canvas)
-
-            val matrix = Matrix()
-            matrix.preScale(-1f, 1f)
-            val flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-
-            BitmapDrawable(context.resources, flippedBitmap)
-        } else {
-            drawable
+        val iconResponse = processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle, iconSize)
+        iconResponse.drawable?.let {
+            if (isRTL) {
+                val flippedDrawable = flipDrawableHorizontally(it, context)
+                callback(flippedDrawable)
+            } else {
+                callback(it)
+            }
         }
-    }
-
-    @JvmStatic
-    fun getDrawablesForActionElementIcon(drawableIcon: Drawable, drawables: Array<Drawable>, iconPlacement: IconPlacement) : Array<Drawable> {
-        // Preserve any existing icons that may have been added by the host
-        // Per Android docs, this array's order is: start, top, end, bottom
-        if (iconPlacement == IconPlacement.AboveTitle) {
-            drawables[1] = drawableIcon
-        } else {
-            drawables[0] = drawableIcon
-        }
-        return drawables
-    }
-
-    @JvmStatic
-    fun getPaddingForActionElementIcon(
-        context: Context,
-        padding: Long,
-        iconPlacement: IconPlacement,
-        defaultPadding: Int
-    ) : Int {
-        if (iconPlacement != IconPlacement.AboveTitle) {
-            return Util.dpToPixels(context, padding.toFloat())
-        }
-        return defaultPadding
     }
 
     /**
@@ -188,7 +132,22 @@ object IconUtils {
         return svg
     }
 
-    data class IconResponse(val drawable: Drawable?, val flipInRtl: Boolean)
+    /**
+     * flips the drawable horizontally if the card is RTL and the flipInRtl property is true for the rendered svg
+     **/
+    @JvmStatic
+    fun flipDrawableHorizontally(drawable: Drawable, context: Context): Drawable {
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
 
-    class FluentIconResult(val drawables: Array<Drawable>, val padding: Int)
+        val matrix = Matrix()
+        matrix.preScale(-1f, 1f)
+        val flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+
+        return BitmapDrawable(context.resources, flippedBitmap)
+    }
+
+    data class IconResponse(val drawable: Drawable?, val flipInRtl: Boolean)
 }
