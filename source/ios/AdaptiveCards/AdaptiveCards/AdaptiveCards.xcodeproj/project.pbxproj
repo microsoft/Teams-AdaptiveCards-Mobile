@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -303,6 +303,7 @@
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
 		904266D22D7B7665001CEFB6 /* SwiftAdaptiveCards in Frameworks */ = {isa = PBXBuildFile; productRef = 904266D12D7B7665001CEFB6 /* SwiftAdaptiveCards */; };
+		904266D52D7B9AFC001CEFB6 /* SwiftAdaptiveCards in Frameworks */ = {isa = PBXBuildFile; productRef = 904266D42D7B9AFC001CEFB6 /* SwiftAdaptiveCards */; };
 		906040BB2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */; };
 		906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */; };
 		906040BD2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */; };
@@ -1080,6 +1081,7 @@
 			files = (
 				6B421CC121015EDD002F401A /* CoreGraphics.framework in Frameworks */,
 				6B421CC02101503E002F401A /* QuartzCore.framework in Frameworks */,
+				904266D52D7B9AFC001CEFB6 /* SwiftAdaptiveCards in Frameworks */,
 				6BB21219210015A7009EA1BA /* AVKit.framework in Frameworks */,
 				6BB2121821001596009EA1BA /* AVFoundation.framework in Frameworks */,
 				F45A071F1EF4BD67007C6503 /* UIKit.framework in Frameworks */,
@@ -2121,6 +2123,7 @@
 			name = AdaptiveCards;
 			packageProductDependencies = (
 				904266D12D7B7665001CEFB6 /* SwiftAdaptiveCards */,
+				904266D42D7B9AFC001CEFB6 /* SwiftAdaptiveCards */,
 			);
 			productName = AdaptiveCards;
 			productReference = F423C0B51EE1FBA900905679 /* AdaptiveCards.framework */;
@@ -2183,6 +2186,9 @@
 				Base,
 			);
 			mainGroup = F423C0AB1EE1FBA900905679;
+			packageReferences = (
+				904266D32D7B9AFC001CEFB6 /* XCLocalSwiftPackageReference "Packages/SwiftAdaptiveCards" */,
+			);
 			productRefGroup = F423C0B61EE1FBA900905679 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3029,8 +3035,19 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		904266D32D7B9AFC001CEFB6 /* XCLocalSwiftPackageReference "Packages/SwiftAdaptiveCards" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/SwiftAdaptiveCards;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		904266D12D7B7665001CEFB6 /* SwiftAdaptiveCards */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftAdaptiveCards;
+		};
+		904266D42D7B9AFC001CEFB6 /* SwiftAdaptiveCards */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftAdaptiveCards;
 		};
