@@ -4220,8 +4220,53 @@ extension SwiftBaseActionElement {
     }
     
     /// Deserializes a BaseActionElement from a JSON dictionary.
+    class func deepConvertToJSONSerializable(_ value: Any) -> Any {
+        // Handle AnyCodable
+        if let anyCodable = value as? AnyCodable {
+            return deepConvertToJSONSerializable(anyCodable.value)
+        }
+        
+        // Handle dictionaries
+        if let dict = value as? [String: Any] {
+            var newDict = [String: Any]()
+            for (key, value) in dict {
+                newDict[key] = deepConvertToJSONSerializable(value)
+            }
+            return newDict
+        }
+        
+        // Handle arrays
+        if let array = value as? [Any] {
+            return array.map { deepConvertToJSONSerializable($0) }
+        }
+        
+        // Basic types (String, Int, Double, Bool) pass through unchanged
+        return value
+    }
+    
     class func deserializeAction(from originalJson: [String: Any]) throws -> SwiftBaseActionElement {
-        let data = try JSONSerialization.data(withJSONObject: originalJson, options: [])
+        let jsonSerializable = deepConvertToJSONSerializable(originalJson) as! [String: Any]
+        
+        // Verify all values are JSON-serializable
+        func checkSerializable(_ value: Any) -> Bool {
+            if value is String || value is Int || value is Double || value is Bool || value is NSNull {
+                return true
+            } else if let dict = value as? [String: Any] {
+                return dict.values.allSatisfy { checkSerializable($0) }
+            } else if let array = value as? [Any] {
+                return array.allSatisfy { checkSerializable($0) }
+            }
+            debugPrint("Non-serializable value found: \(value) of type \(type(of: value))")
+            return false
+        }
+        
+        // Check if everything is serializable
+        let isSerializable = checkSerializable(jsonSerializable)
+        if !isSerializable {
+            debugPrint("Warning: Non-serializable values found")
+        }
+        
+        let data = try JSONSerialization.data(withJSONObject: jsonSerializable, options: [])
         guard let jsonString = String(data: data, encoding: .utf8) else {
             throw AdaptiveCardParseError.invalidJson
         }
