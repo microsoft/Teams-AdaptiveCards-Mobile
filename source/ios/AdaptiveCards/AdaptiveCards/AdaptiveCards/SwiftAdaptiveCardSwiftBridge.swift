@@ -29,6 +29,18 @@ public class SwiftAdaptiveCardParseResult: NSObject {
 
 @objcMembers
 public class SwiftAdaptiveCardParser: NSObject {
+    public static let main = SwiftAdaptiveCardParser()
+    
+    private var swiftParserEnabled = false
+    
+    // Toggle by ECS flag
+    public static func setSwiftParserEnabled(_ isEnabled: Bool) {
+        main.swiftParserEnabled = isEnabled
+    }
+    
+    public static func isSwiftParserEnabled() -> Bool {
+        return main.swiftParserEnabled
+    }
     
     public static func parse(payload: String) -> SwiftAdaptiveCardParseResult? {
         guard let parseResult = try? SwiftAdaptiveCard.deserializeFromString(payload, version: "1.6") else {
