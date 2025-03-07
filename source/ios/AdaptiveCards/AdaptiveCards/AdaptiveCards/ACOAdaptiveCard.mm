@@ -19,6 +19,8 @@
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
+#import "SwiftAdaptiveCardObjcBridge.h"
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
 
 using namespace AdaptiveCards;
 
