@@ -23,7 +23,8 @@ object IconUtils {
             val getImage = GetImageAsync(
                 iconUrl,
                 context,
-                hostConfig.GetActions().getIconSize().toInt(),
+                maxWidth = -1,
+                hostConfig.GetActions().getIconSize(),
                 callback
             )
             getImage.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl)
