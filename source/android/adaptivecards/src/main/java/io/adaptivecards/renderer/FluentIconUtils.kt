@@ -20,7 +20,7 @@ object FluentIconUtils {
     private const val FLIP_IN_RTL_PROPERTY = "flipInRtl"
 
     @WorkerThread
-    fun getIcon(
+    fun getFluentIcon(
         context: Context,
         svgURL: String,
         iconColor: String,
