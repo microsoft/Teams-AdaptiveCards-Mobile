@@ -37,7 +37,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     if (![viewGroup isKindOfClass:[ACRColumnSetView class]]) {
         return nil;

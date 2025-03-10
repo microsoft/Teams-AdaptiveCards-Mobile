@@ -32,6 +32,7 @@ using namespace AdaptiveCards;
     UIButton *_navigationButton;
     NSString *_typeaheadViewTitle;
     ACRTypeaheadStateAllParameters *_searchStateParams;
+    NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
 - (instancetype)initWithInputChoiceSet:(ACOBaseCardElement *)acoElem
@@ -51,6 +52,7 @@ using namespace AdaptiveCards;
         _typeaheadViewTitle = typeaheadViewTitle;
         _filteredDataSource = [[ACOFilteredDataSource alloc] init];
         _validator = [[ACOChoiceSetFilteredStyleValidator alloc] init:acoElem dataSource:_filteredDataSource];
+        _completionHandlers = [[NSMutableArray alloc] init];
 
         // configure UITextField
         self.delegate = self;
@@ -143,7 +145,7 @@ using namespace AdaptiveCards;
     }
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     return [_validator isValid:self.text];
 }
@@ -153,11 +155,28 @@ using namespace AdaptiveCards;
     dictionary[self.id] = [_validator getValue:self.text];
 }
 
+- (void)addObserverWithCompletion:(CompletionHandler)completion
+{
+    [_completionHandlers addObject:completion];
+}
+
+- (void)notifyObservers {
+    for(CompletionHandler completion in _completionHandlers) {
+        completion();
+    }
+}
+
+- (void)resetInput
+{
+    self.text = _validator.userInitialChoice;
+}
+
 #pragma mark - ACRChoiceSetTypeaheadSearchDelegate Methods
 
 - (void)updateSelectedChoiceInTextField:(NSString *)text
 {
     self.text = text;
+    [self notifyObservers];
 }
 
 - (NSString *)getSelectedText

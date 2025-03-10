@@ -14,7 +14,7 @@
 
 @implementation CustomActionNewType
 
-- (ACOBaseActionElement *)deserialize:(NSData *)json parseContext:(ACOParseContext *)parseContext;
+- (ACOBaseActionElement *)deserialize:(NSData *)json parseContext:(ACOParseContext *)parseContext
 {
     if (json) {
 

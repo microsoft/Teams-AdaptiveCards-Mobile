@@ -44,9 +44,7 @@ using namespace AdaptiveCards;
         [self configDateFormatter:_encodeFormatter formatterStyle:dateStyle];
 
         UIDatePicker *picker = [[UIDatePicker alloc] init];
-        if (@available(iOS 14.0, *)) {
-            picker.preferredDatePickerStyle = UIDatePickerStyleWheels;
-        }
+        picker.preferredDatePickerStyle = UIDatePickerStyleWheels;
 
         picker.locale = [NSLocale currentLocale];
 
@@ -174,7 +172,7 @@ using namespace AdaptiveCards;
     return NO;
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     BOOL isValidated = YES;
     isValidated = [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:self.hasText predicate:nil text:nil error:error];

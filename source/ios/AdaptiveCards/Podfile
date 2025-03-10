@@ -15,7 +15,7 @@ target 'ADCIOSVisualizer' do
 end
 
 workspace 'AdaptiveCards'
-platform :ios, '13'
+platform :ios, '15.0'
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
@@ -23,7 +23,7 @@ post_install do |installer|
             config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
             config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
             config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
-            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
         end
     end
 end

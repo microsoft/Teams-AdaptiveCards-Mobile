@@ -16,7 +16,7 @@ extern const CGFloat kFillerViewLayoutConstraintPriority;
 @interface ACOFillerSpaceManager : NSObject
 
 /// tells if the owner of this object has padding
-@property (nonatomic) BOOL hasPadding;
+@property (nonatomic, readonly) BOOL hasPadding;
 
 /// configures & adds padding for the `view`
 /// having padding makes the owner of the object,

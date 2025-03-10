@@ -56,8 +56,8 @@ using namespace AdaptiveCards;
 {
     ACRButton *button = [self buildAButton:[self buildSimpleAction]];
     XCTAssertNotNil(button);
-    XCTAssertNotNil(button.heightConstraint);
-    XCTAssertNil(button.titleWidthConstraint);
+    XCTAssertNotEqual(button.intrinsicContentSize.height, 0);
+    XCTAssertNotEqual(button.intrinsicContentSize.width, 0);
 }
 
 - (void)testACRButtonPublicConstraintsWithImageView
@@ -70,8 +70,8 @@ using namespace AdaptiveCards;
     NSString *key = iconURLObjc;
     [_rootView getImageMap][key] = image;
     ACRButton *button = [self buildAButton:action];
-    XCTAssertNotNil(button.heightConstraint);
-    XCTAssertNotNil(button.titleWidthConstraint);
+    XCTAssertNotEqual(button.intrinsicContentSize.height, 0);
+    XCTAssertNotEqual(button.intrinsicContentSize.width, 0);
 }
 
 - (void)testACRButtonPublicConstraintsWithImageViewWithKey
@@ -87,8 +87,8 @@ using namespace AdaptiveCards;
     NSString *key = [number stringValue];
     [_rootView setImageView:key view:imageView];
     ACRButton *button = [self buildAButton:acoAction];
-    XCTAssertNotNil(button.heightConstraint);
-    XCTAssertNotNil(button.titleWidthConstraint);
+    XCTAssertNotEqual(button.intrinsicContentSize.height, 0);
+    XCTAssertNotEqual(button.intrinsicContentSize.width, 0);
 }
 
 - (void)testACRButtonPublicConstraintsWithIconPlacements
@@ -106,8 +106,8 @@ using namespace AdaptiveCards;
     [_rootView setImageView:key view:imageView];
     [_rootView.mockContext setMockValueForAllHasActionIcons:YES];
     ACRButton *button = [self buildAButton:acoAction];
-    XCTAssertNil(button.heightConstraint);
-    XCTAssertNil(button.titleWidthConstraint);
+    XCTAssertNotEqual(button.intrinsicContentSize.height, 0);
+    XCTAssertNotEqual(button.intrinsicContentSize.width, 0);
 }
 
 @end

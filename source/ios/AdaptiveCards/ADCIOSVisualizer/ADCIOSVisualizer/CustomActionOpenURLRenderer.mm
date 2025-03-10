@@ -19,7 +19,7 @@
                     inputs:(NSMutableArray *)inputs
                  superview:(UIView *)superview
          baseActionElement:(ACOBaseActionElement *)acoElem
-                hostConfig:(ACOHostConfig *)acoConfig;
+                hostConfig:(ACOHostConfig *)acoConfig
 {
     ACRActionOpenURLRenderer *defaultRenderer = [ACRActionOpenURLRenderer getInstance];
 
