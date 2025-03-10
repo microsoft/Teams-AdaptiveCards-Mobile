@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.utils.ForegroundColor
 import com.example.ac_sdk.objectmodel.utils.IconSize
 import com.example.ac_sdk.objectmodel.utils.IconStyle
@@ -22,7 +22,7 @@ class IconPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val icon = json.decodeFromString<CardElements.Icon>(jsonString)
+        val icon = json.decodeFromString<CardElement.Icon>(jsonString)
 
         assertEquals(ForegroundColor.DEFAULT, icon.foregroundColor)
         assertEquals(IconStyle.REGULAR, icon.iconStyle)

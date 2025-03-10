@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -22,7 +22,7 @@ class RatingLabelPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val ratingLabel = json.decodeFromString<CardElements.RatingLabel>(jsonString)
+        val ratingLabel = json.decodeFromString<CardElement.RatingLabel>(jsonString)
 
         assertEquals(5, ratingLabel.max)
         assertEquals(3, ratingLabel.count)

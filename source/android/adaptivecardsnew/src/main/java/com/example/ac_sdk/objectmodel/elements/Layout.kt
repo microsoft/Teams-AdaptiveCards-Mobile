@@ -1,6 +1,5 @@
 package com.example.ac_sdk.objectmodel.elements
 
-import com.example.ac_sdk.objectmodel.elements.LayoutElements.FlowLayout
 import com.example.ac_sdk.objectmodel.utils.LayoutContainerType
 import com.example.ac_sdk.objectmodel.utils.TargetWidthType
 import kotlinx.serialization.Serializable

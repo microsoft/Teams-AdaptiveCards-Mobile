@@ -1,7 +1,6 @@
 package com.example.ac_sdk.objectmodel.utils
 
-import androidx.core.text.isDigitsOnly
-import com.example.ac_sdk.objectmodel.elements.ActionElements
+import com.example.ac_sdk.objectmodel.elements.ActionElement
 import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import com.example.ac_sdk.objectmodel.parser.ParseWarning
 import kotlinx.serialization.json.JsonObject
@@ -99,7 +98,7 @@ object Util {
 
     fun ensureShowCardVersions(actions: List<BaseActionElement>, version: String) {
         for (action in actions) {
-            if (action is ActionElements.ActionShowCard) {
+            if (action is ActionElement.ActionShowCard) {
                 val showCardAction = action
                 if (showCardAction.card.version?.isEmpty() == true) {
                     showCardAction.card.version = version

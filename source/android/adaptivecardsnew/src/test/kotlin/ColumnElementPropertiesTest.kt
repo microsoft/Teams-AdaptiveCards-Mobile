@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.elements.CollectionElement
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -25,7 +25,7 @@ class ColumnElementPropertiesTest : BaseModelTest() {
         val column = json.decodeFromString<CollectionElement.Column>(jsonString)
 
         assertEquals(1, column.items?.size)
-        assertTrue(column.items?.get(0) is CardElements.TextBlock)
+        assertTrue(column.items?.get(0) is CardElement.TextBlock)
         assertEquals("auto", column.width)
     }
 
@@ -51,7 +51,7 @@ class ColumnElementPropertiesTest : BaseModelTest() {
 
         assertEquals(1, columnSet.columns?.size)
         assertEquals(1, columnSet.columns?.get(0)?.items?.size)
-        assertTrue(columnSet.columns?.get(0)?.items?.get(0) is CardElements.TextBlock)
+        assertTrue(columnSet.columns?.get(0)?.items?.get(0) is CardElement.TextBlock)
         assertEquals("auto", columnSet.columns?.get(0)?.width)
     }
 }

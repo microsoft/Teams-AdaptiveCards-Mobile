@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.InputElements
+import com.example.ac_sdk.objectmodel.elements.InputElement
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -19,7 +19,7 @@ class TextInputPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val textInput = json.decodeFromString<InputElements.TextInput>(jsonString)
+        val textInput = json.decodeFromString<InputElement.TextInput>(jsonString)
 
         assertEquals(true, textInput.isMultiline)
         assertEquals(100, textInput.maxLength)

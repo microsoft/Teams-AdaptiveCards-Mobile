@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.InputElements
+import com.example.ac_sdk.objectmodel.elements.InputElement
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -17,7 +17,7 @@ class RatingInputPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val ratingInput = json.decodeFromString<InputElements.RatingInput>(jsonString)
+        val ratingInput = json.decodeFromString<InputElement.RatingInput>(jsonString)
 
         assertEquals(HorizontalAlignment.CENTER, ratingInput.horizontalAlignment)
         assertEquals(4.5, ratingInput.value, 0.0)

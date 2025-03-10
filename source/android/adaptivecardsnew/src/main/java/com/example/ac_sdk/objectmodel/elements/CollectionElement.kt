@@ -2,9 +2,7 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.parser.ParseWarning
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
-import com.example.ac_sdk.objectmodel.utils.ColumnSerializer
 import com.example.ac_sdk.objectmodel.utils.Util
-import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -102,7 +100,7 @@ sealed class CollectionElement {
 @SerialName("Table")
 data class Table(
     val columns: List<TableColumnDefinition>,
-    val rows: List<CardElements.TableRow>,
+    val rows: List<CardElement.TableRow>,
     val firstRowAsHeaders: Boolean? = null,
     val showGridLines: Boolean? = null,
     val gridStyle: String? = null,

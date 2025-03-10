@@ -8,7 +8,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class LayoutElements {
+sealed class LayoutElement {
 
     @Serializable
     @SerialName("Layout.Flow")

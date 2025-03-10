@@ -1,7 +1,7 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.ActionElements
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.ActionElement
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -21,11 +21,11 @@ class ActionSetPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val actionSet = json.decodeFromString<CardElements.ActionSet>(jsonString)
+        val actionSet = json.decodeFromString<CardElement.ActionSet>(jsonString)
         assertEquals(1, actionSet.actions.size)
         assertEquals(
             "https://example.com",
-            (actionSet.actions[0] as ActionElements.ActionOpenUrl).url
+            (actionSet.actions[0] as ActionElement.ActionOpenUrl).url
         )
     }
 }

@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.utils.FontType
 import com.example.ac_sdk.objectmodel.utils.ForegroundColor
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
@@ -35,7 +35,7 @@ class TextBlockPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val textBlock = json.decodeFromString<CardElements.TextBlock>(jsonString)
+        val textBlock = json.decodeFromString<CardElement.TextBlock>(jsonString)
 
         assertEquals("id1", textBlock.id)
         assertEquals("Sample Text", textBlock.text)

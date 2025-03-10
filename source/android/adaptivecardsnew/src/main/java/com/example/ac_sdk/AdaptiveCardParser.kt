@@ -2,11 +2,8 @@ package com.example.ac_sdk
 
 import android.util.Log
 import com.example.ac_sdk.objectmodel.AdaptiveCard
-import com.example.ac_sdk.objectmodel.elements.ActionElements
-import com.example.ac_sdk.objectmodel.elements.BaseActionElement
-import com.example.ac_sdk.objectmodel.elements.BaseCardElement
-import com.example.ac_sdk.objectmodel.elements.CardElements
-import com.example.ac_sdk.objectmodel.elements.LayoutElements
+import com.example.ac_sdk.objectmodel.elements.CardElement
+import com.example.ac_sdk.objectmodel.elements.LayoutElement
 import com.example.ac_sdk.objectmodel.parser.ParseContext
 import com.example.ac_sdk.objectmodel.parser.ParseException
 import com.example.ac_sdk.objectmodel.parser.ParseResult
@@ -25,9 +22,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 import java.io.File
 
 class AdaptiveCardParser {
@@ -38,8 +32,8 @@ class AdaptiveCardParser {
         fun deserializeFromString(jsonText: String, rendererVersion: String, context: ParseContext): ParseResult {
             val json = Json.parseToJsonElement(jsonText)
             return deserialize(json.jsonObject, rendererVersion, context).also {
-                val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
-                Log.d("checkPoint", adaptiveCardJson)
+               // val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
+                //Log.d("checkPoint", adaptiveCardJson)
             }
         }
 
@@ -103,14 +97,14 @@ class AdaptiveCardParser {
                 for ((index, layout) in adaptiveCard.layouts.withIndex()) {
                     when (layout.layoutContainerType) {
                         LayoutContainerType.AREAGRID -> {
-                            val areaGridLayout = layout as LayoutElements.AreaGridLayout
+                            val areaGridLayout = layout as LayoutElement.AreaGridLayout
                             if (areaGridLayout.areas.isEmpty() && areaGridLayout.columns.isEmpty()) {
-                                val stackLayout = LayoutElements.StackLayout().apply {
+                                val stackLayout = LayoutElement.StackLayout().apply {
                                     layoutContainerType = LayoutContainerType.STACK
                                 }
                                 adaptiveCard.layouts[index] = stackLayout
                             } else if (areaGridLayout.areas.isEmpty()) {
-                                val flowLayout = LayoutElements.FlowLayout().apply {
+                                val flowLayout = LayoutElement.FlowLayout().apply {
                                     layoutContainerType = LayoutContainerType.FLOW
                                 }
                                 adaptiveCard.layouts[index] = flowLayout
@@ -236,7 +230,7 @@ class AdaptiveCardParser {
             )
             fallbackCard.body.add(
 
-                CardElements.TextBlock(
+                CardElement.TextBlock(
                     text = fallbackText,
                     language = language
                 )

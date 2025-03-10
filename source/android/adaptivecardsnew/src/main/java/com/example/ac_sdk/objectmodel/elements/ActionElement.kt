@@ -8,7 +8,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNames
 
 @Serializable
-sealed class ActionElements {
+sealed class ActionElement {
     @Serializable
     @SerialName("Action.Submit")
     data class ActionSubmit(

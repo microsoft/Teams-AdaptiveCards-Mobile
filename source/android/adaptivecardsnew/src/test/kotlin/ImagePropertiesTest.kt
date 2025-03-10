@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import com.example.ac_sdk.objectmodel.utils.ImageSize
 import com.example.ac_sdk.objectmodel.utils.ImageStyle
@@ -23,7 +23,7 @@ class ImagePropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val image = json.decodeFromString<CardElements.Image>(jsonString)
+        val image = json.decodeFromString<CardElement.Image>(jsonString)
 
         assertEquals("Id1", image.id)
         assertEquals("https://example.com/image.png", image.url)

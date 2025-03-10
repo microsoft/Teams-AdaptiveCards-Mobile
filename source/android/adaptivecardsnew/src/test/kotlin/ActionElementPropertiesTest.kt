@@ -1,13 +1,13 @@
 package com.example.ac_sdk
 
 import com.example.ac_sdk.objectmodel.AdaptiveCard
-import com.example.ac_sdk.objectmodel.elements.ActionElements
+import com.example.ac_sdk.objectmodel.elements.ActionElement
 import com.example.ac_sdk.objectmodel.elements.TargetElement
 import kotlinx.serialization.json.JsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ActionElementsPropertiesTest : BaseModelTest() {
+class ActionElementPropertiesTest : BaseModelTest() {
 
     @Test
     fun `test ActionSubmit properties`() {
@@ -20,7 +20,7 @@ class ActionElementsPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val actionSubmit = json.decodeFromString<ActionElements.ActionSubmit>(jsonString)
+        val actionSubmit = json.decodeFromString<ActionElement.ActionSubmit>(jsonString)
 
         val expectedData = mapOf(
             "key1" to JsonPrimitive("value1"),
@@ -39,7 +39,7 @@ class ActionElementsPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val actionOpenUrl = json.decodeFromString<ActionElements.ActionOpenUrl>(jsonString)
+        val actionOpenUrl = json.decodeFromString<ActionElement.ActionOpenUrl>(jsonString)
 
         assertEquals("https://example.com", actionOpenUrl.url)
     }
@@ -57,7 +57,7 @@ class ActionElementsPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val actionShowCard = json.decodeFromString<ActionElements.ActionShowCard>(jsonString)
+        val actionShowCard = json.decodeFromString<ActionElement.ActionShowCard>(jsonString)
 
         val expectedCard = AdaptiveCard(
             type = "AdaptiveCard",
@@ -77,7 +77,7 @@ class ActionElementsPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val actionExecute = json.decodeFromString<ActionElements.ActionExecute>(jsonString)
+        val actionExecute = json.decodeFromString<ActionElement.ActionExecute>(jsonString)
 
         assertEquals("exampleVerb", actionExecute.verb)
     }
@@ -97,7 +97,7 @@ class ActionElementsPropertiesTest : BaseModelTest() {
         """.trimIndent()
 
         val actionToggleVisibility =
-            json.decodeFromString<ActionElements.ActionToggleVisibility>(jsonString)
+            json.decodeFromString<ActionElement.ActionToggleVisibility>(jsonString)
 
         val expectedTargetElements = listOf(
             TargetElement(

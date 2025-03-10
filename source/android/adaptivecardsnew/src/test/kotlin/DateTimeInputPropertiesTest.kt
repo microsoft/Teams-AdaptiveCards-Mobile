@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.InputElements
+import com.example.ac_sdk.objectmodel.elements.InputElement
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -18,7 +18,7 @@ class DateTimeInputPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val dateInput = json.decodeFromString<InputElements.DateInput>(jsonString)
+        val dateInput = json.decodeFromString<InputElement.DateInput>(jsonString)
 
         assertEquals("2023-01-01", dateInput.min)
         assertEquals("2023-12-31", dateInput.max)
@@ -38,7 +38,7 @@ class DateTimeInputPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val timeInput = json.decodeFromString<InputElements.TimeInput>(jsonString)
+        val timeInput = json.decodeFromString<InputElement.TimeInput>(jsonString)
 
         assertEquals("08:00", timeInput.min)
         assertEquals("18:00", timeInput.max)

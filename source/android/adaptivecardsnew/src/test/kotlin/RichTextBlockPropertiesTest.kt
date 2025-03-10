@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.elements.models.TextRun
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -22,7 +22,7 @@ class RichTextBlockPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val richTextBlock = json.decodeFromString<CardElements.RichTextBlock>(jsonString)
+        val richTextBlock = json.decodeFromString<CardElement.RichTextBlock>(jsonString)
 
         assertEquals(1, richTextBlock.inlines.size)
         assertTrue(richTextBlock.inlines[0] is TextRun)

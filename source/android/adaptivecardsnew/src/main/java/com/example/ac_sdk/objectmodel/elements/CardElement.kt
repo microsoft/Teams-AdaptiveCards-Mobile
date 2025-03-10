@@ -4,7 +4,6 @@ import com.example.ac_sdk.objectmodel.elements.models.Fact
 import com.example.ac_sdk.objectmodel.elements.models.IconInfo
 import com.example.ac_sdk.objectmodel.elements.models.Inline
 import com.example.ac_sdk.objectmodel.elements.models.MediaSource
-import com.example.ac_sdk.objectmodel.elements.models.TextRun
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.FontType
 import com.example.ac_sdk.objectmodel.utils.ForegroundColor
@@ -21,7 +20,7 @@ import kotlinx.serialization.Serializable
 
 // Sealed hierarchy for card elements
 @Serializable
-sealed class CardElements {
+sealed class CardElement {
     // AC elements
     @Serializable
     @SerialName("TextBlock")

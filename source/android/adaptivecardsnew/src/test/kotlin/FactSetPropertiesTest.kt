@@ -1,6 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -19,7 +19,7 @@ class FactSetPropertiesTest : BaseModelTest() {
                 ]
             }
             """.trimIndent()
-        val factSet = json.decodeFromString<CardElements.FactSet>(jsonString)
+        val factSet = json.decodeFromString<CardElement.FactSet>(jsonString)
 
         assertEquals("Fact 1", factSet.facts[0].title)
         assertEquals("Value 1", factSet.facts[0].value)

@@ -1,7 +1,6 @@
 package com.example.ac_sdk
 
-import com.example.ac_sdk.objectmodel.elements.CardElements
-import kotlinx.serialization.json.Json
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -21,7 +20,7 @@ class MediaPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val media = json.decodeFromString<CardElements.Media>(jsonString)
+        val media = json.decodeFromString<CardElement.Media>(jsonString)
 
         assertEquals(1, media.sources.size)
         assertEquals("video/mp4", media.sources[0].mimeType)

@@ -1,16 +1,6 @@
 import com.example.ac_sdk.AdaptiveCardParser
 import com.example.ac_sdk.BaseModelTest
-import com.example.ac_sdk.objectmodel.AdaptiveCard
-import com.example.ac_sdk.objectmodel.AuthCardButton
-import com.example.ac_sdk.objectmodel.Authentication
-import com.example.ac_sdk.objectmodel.TokenExchangeResource
-import com.example.ac_sdk.objectmodel.elements.ActionElements
-import com.example.ac_sdk.objectmodel.elements.CardElements
 import com.example.ac_sdk.objectmodel.parser.ParseContext
-import com.example.ac_sdk.objectmodel.utils.HeightType
-import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
-import kotlinx.serialization.json.Json
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 

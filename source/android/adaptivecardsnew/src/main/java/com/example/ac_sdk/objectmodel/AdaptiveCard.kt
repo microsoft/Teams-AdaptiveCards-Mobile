@@ -1,6 +1,6 @@
 package com.example.ac_sdk.objectmodel
 
-import com.example.ac_sdk.objectmodel.elements.ActionElements
+import com.example.ac_sdk.objectmodel.elements.ActionElement
 import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import com.example.ac_sdk.objectmodel.elements.BaseElement
 import com.example.ac_sdk.objectmodel.elements.Layout
@@ -11,7 +11,6 @@ import com.example.ac_sdk.objectmodel.utils.HeightType
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import com.example.ac_sdk.objectmodel.utils.ImageFillMode
 import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
-import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -97,7 +96,7 @@ data class Authentication(
 
 @Serializable
 data class Refresh(
-    val action: ActionElements.ActionExecute,
+    val action: ActionElement.ActionExecute,
     val userIds: List<String>
 )
 

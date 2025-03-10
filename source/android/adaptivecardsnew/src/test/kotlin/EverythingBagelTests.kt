@@ -3,10 +3,10 @@ import com.example.ac_sdk.objectmodel.AdaptiveCard
 import com.example.ac_sdk.objectmodel.Authentication
 import com.example.ac_sdk.objectmodel.BackgroundImage
 import com.example.ac_sdk.objectmodel.Refresh
-import com.example.ac_sdk.objectmodel.elements.ActionElements
-import com.example.ac_sdk.objectmodel.elements.CardElements
+import com.example.ac_sdk.objectmodel.elements.ActionElement
+import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.elements.CollectionElement
-import com.example.ac_sdk.objectmodel.elements.InputElements
+import com.example.ac_sdk.objectmodel.elements.InputElement
 import com.example.ac_sdk.objectmodel.elements.models.Fact
 import com.example.ac_sdk.objectmodel.elements.models.PlainTextInline
 import com.example.ac_sdk.objectmodel.elements.models.TextRun
@@ -510,7 +510,7 @@ class EverythingBagelTests {
     }
 
     private fun validateTextBlock(
-        textBlock: CardElements.TextBlock,
+        textBlock: CardElement.TextBlock,
         fontType: FontType?,
         style: TextStyle?,
         id: String
@@ -531,7 +531,7 @@ class EverythingBagelTests {
         assertFalse(textBlock.wrap == true)
     }
 
-    private fun validateImage(image: CardElements.Image) {
+    private fun validateImage(image: CardElement.Image) {
         assertEquals("Image_id", image.id)
         assertEquals("Image_altText", image.altText)
         assertEquals("https://adaptivecards.io/content/cats/1.png", image.url)
@@ -543,8 +543,8 @@ class EverythingBagelTests {
         assertEquals(ImageSize.AUTO, image.size)
         assertTrue(image.separator == true)
         assertFalse(image.isVisible == true)
-        if (image.selectAction is ActionElements.ActionOpenUrl) {
-            val imageAction = image.selectAction as ActionElements.ActionOpenUrl
+        if (image.selectAction is ActionElement.ActionOpenUrl) {
+            val imageAction = image.selectAction as ActionElement.ActionOpenUrl
             assertEquals("Image_Action.OpenUrl", imageAction.title)
             assertEquals("https://adaptivecards.io/", imageAction.url)
             assertTrue(imageAction.isEnabled)
@@ -569,7 +569,7 @@ class EverythingBagelTests {
         assertFalse(firstColumn?.rtl!!)
         val firstItems = firstColumn.items
         assertEquals(1, firstItems.size)
-        val firstImage = firstItems.first() as? CardElements.Image
+        val firstImage = firstItems.first() as? CardElement.Image
         assertEquals("https://adaptivecards.io/content/cats/1.png", firstImage?.url)
         // Second column.
         val secondColumn = columns.get(1)
@@ -577,7 +577,7 @@ class EverythingBagelTests {
         assertEquals("20px", secondColumn.width)
         val secondItems = secondColumn.items
         assertEquals(1, secondItems.size)
-        val secondImage = secondItems.first() as? CardElements.Image
+        val secondImage = secondItems.first() as? CardElement.Image
         assertEquals("https://adaptivecards.io/content/cats/2.png", secondImage?.url)
         // Third column.
         val thirdColumn = columns.get(2) as? CollectionElement.Column
@@ -586,9 +586,9 @@ class EverythingBagelTests {
         assertEquals(ContainerStyle.DEFAULT, thirdColumn?.style)
         val thirdItems = thirdColumn?.items
         assertEquals(2, thirdItems?.size)
-        val thirdImage = thirdItems?.get(0) as? CardElements.Image
+        val thirdImage = thirdItems?.get(0) as? CardElement.Image
         assertEquals("https://adaptivecards.io/content/cats/3.png", thirdImage?.url)
-        val thirdTextBlock = thirdItems?.get(1) as? CardElements.TextBlock
+        val thirdTextBlock = thirdItems?.get(1) as? CardElement.TextBlock
         assertEquals("Column3_TextBlock_text", thirdTextBlock?.text)
         assertEquals("Column3_TextBlock_id", thirdTextBlock?.id)
     }
@@ -599,7 +599,7 @@ class EverythingBagelTests {
         assertEquals(ContainerStyle.DEFAULT, container.style)
         assertNotNull(container.rtl)
         assertTrue(container.rtl!!)
-        val action = container.selectAction as? ActionElements.ActionSubmit
+        val action = container.selectAction as? ActionElement.ActionSubmit
         assertEquals("Container_Action.Submit", action?.title)
         when (val data = action?.data) {
             is Map<String, JsonElement> -> {
@@ -616,7 +616,7 @@ class EverythingBagelTests {
         validateColumnSet(columnSet)
     }
 
-    private fun validateFactSet(factSet: CardElements.FactSet) {
+    private fun validateFactSet(factSet: CardElement.FactSet) {
         assertEquals("FactSet_id", factSet.id)
         val facts = factSet.facts
         assertEquals(2, facts.size)
@@ -628,19 +628,19 @@ class EverythingBagelTests {
         assertEquals("onion flakes", secondFact?.value)
     }
 
-    private fun validateImageSet(imageSet: CardElements.ImageSet) {
+    private fun validateImageSet(imageSet: CardElement.ImageSet) {
         assertEquals("ImageSet_id", imageSet.id)
         assertEquals(ImageSize.AUTO, imageSet.imageSize)
         val images = imageSet.images
         assertEquals(3, images?.size)
         images?.forEachIndexed { index, image ->
-            val currImage = image as? CardElements.Image
+            val currImage = image as? CardElement.Image
             val expectedUrl = "https://adaptivecards.io/content/cats/${index + 1}.png"
             assertEquals(expectedUrl, currImage?.url)
         }
     }
 
-    private fun validateInputText(textInput: InputElements.TextInput) {
+    private fun validateInputText(textInput: InputElement.TextInput) {
         assertEquals("Input.Text_id", textInput.id)
         assertFalse(textInput.isMultiline == true)
         assertFalse(textInput.isRequired == true)
@@ -652,14 +652,14 @@ class EverythingBagelTests {
         assertTrue(textInput.errorMessage.isNullOrEmpty())
         assertEquals("([A-Z])\\\\w+", textInput.regex)
         assertEquals("Input.Text_label", textInput.label)
-        val inlineAction = textInput.inlineAction as? ActionElements.ActionSubmit
+        val inlineAction = textInput.inlineAction as? ActionElement.ActionSubmit
         assertEquals("Input.Text_Action.Submit", inlineAction?.title)
         assertEquals("https://adaptivecards.io/content/cats/1.png", inlineAction?.iconUrl)
         assertEquals(AssociatedInputs.NONE, inlineAction?.associatedInputs)
         assertTrue(inlineAction?.isEnabled == true)
     }
 
-    private fun validateInputNumber(numberInput: InputElements.NumberInput) {
+    private fun validateInputNumber(numberInput: InputElement.NumberInput) {
         assertEquals("Input.Number_id", numberInput.id)
         assertTrue(numberInput.isRequired == true)
         assertEquals(9.5, numberInput.max)
@@ -670,7 +670,7 @@ class EverythingBagelTests {
         assertEquals("Input.Number_label", numberInput.label)
     }
 
-    private fun validateInputDate(dateInput: InputElements.DateInput) {
+    private fun validateInputDate(dateInput: InputElement.DateInput) {
         assertEquals("Input.Date_id", dateInput.id)
         assertEquals("1/1/2020", dateInput.max)
         assertEquals("8/1/2018", dateInput.min)
@@ -681,7 +681,7 @@ class EverythingBagelTests {
         assertEquals("Input.Date_label", dateInput.label)
     }
 
-    private fun validateInputTime(timeInput: InputElements.TimeInput) {
+    private fun validateInputTime(timeInput: InputElement.TimeInput) {
         assertEquals("Input.Time_id", timeInput.id)
         assertEquals("10:00", timeInput.min)
         assertEquals("17:00", timeInput.max)
@@ -691,7 +691,7 @@ class EverythingBagelTests {
         assertEquals("Input.Time_label", timeInput.label)
     }
 
-    private fun validateInputToggle(toggleInput: InputElements.ToggleInput) {
+    private fun validateInputToggle(toggleInput: InputElement.ToggleInput) {
         assertEquals("Input.Toggle_id", toggleInput.id)
         assertEquals("Input.Toggle_title", toggleInput.title)
         assertEquals("Input.Toggle_on", toggleInput.value)
@@ -702,14 +702,14 @@ class EverythingBagelTests {
         assertEquals("Input.Toggle_label", toggleInput.label)
     }
 
-    private fun validateTextBlockInInput(textBlock: CardElements.TextBlock) {
+    private fun validateTextBlockInInput(textBlock: CardElement.TextBlock) {
         assertNull(textBlock.id)
         assertEquals("Everybody's got choices", textBlock.text)
         assertEquals(TextWeight.BOLDER, textBlock.weight)
         assertEquals(TextSize.LARGE, textBlock.size)
     }
 
-    private fun validateInputChoiceSet(choiceSet: InputElements.ChoiceSetInput) {
+    private fun validateInputChoiceSet(choiceSet: InputElement.ChoiceSetInput) {
         assertEquals("Input.ChoiceSet_id", choiceSet.id)
         assertEquals(ChoiceSetStyle.COMPACT.toString().lowercase(), choiceSet.style)
         assertEquals("Input.Choice2,Input.Choice4", choiceSet.value)
@@ -733,48 +733,48 @@ class EverythingBagelTests {
         assertNull(container.rtl)
         val items = container.items
         assertEquals(7, items?.size)
-        if (items?.get(0) is InputElements.TextInput) {
-            validateInputText(items[0] as InputElements.TextInput)
+        if (items?.get(0) is InputElement.TextInput) {
+            validateInputText(items[0] as InputElement.TextInput)
         } else {
             fail("Expected TextInput in input container")
         }
-        if (items?.get(1) is InputElements.NumberInput) {
-            validateInputNumber(items[1] as InputElements.NumberInput)
+        if (items?.get(1) is InputElement.NumberInput) {
+            validateInputNumber(items[1] as InputElement.NumberInput)
         } else {
             fail("Expected NumberInput in input container")
         }
-        if (items?.get(2) is InputElements.DateInput) {
-            validateInputDate(items[2] as InputElements.DateInput)
+        if (items?.get(2) is InputElement.DateInput) {
+            validateInputDate(items[2] as InputElement.DateInput)
         } else {
             fail("Expected DateInput in input container")
         }
-        if (items?.get(3) is InputElements.TimeInput) {
-            validateInputTime(items[3] as InputElements.TimeInput)
+        if (items?.get(3) is InputElement.TimeInput) {
+            validateInputTime(items[3] as InputElement.TimeInput)
         } else {
             fail("Expected TimeInput in input container")
         }
-        if (items?.get(4) is InputElements.ToggleInput) {
-            validateInputToggle(items[4] as InputElements.ToggleInput)
+        if (items?.get(4) is InputElement.ToggleInput) {
+            validateInputToggle(items[4] as InputElement.ToggleInput)
         } else {
             fail("Expected ToggleInput in input container")
         }
-        if (items?.get(5) is CardElements.TextBlock) {
-            validateTextBlockInInput(items[5] as CardElements.TextBlock)
+        if (items?.get(5) is CardElement.TextBlock) {
+            validateTextBlockInInput(items[5] as CardElement.TextBlock)
         } else {
             fail("Expected TextBlock in input container")
         }
-        if (items?.get(6) is InputElements.ChoiceSetInput) {
-            validateInputChoiceSet(items[6] as InputElements.ChoiceSetInput)
+        if (items?.get(6) is InputElement.ChoiceSetInput) {
+            validateInputChoiceSet(items[6] as InputElement.ChoiceSetInput)
         } else {
             fail("Expected ChoiceSetInput in input container")
         }
     }
 
-    private fun validateActionSet(actionSet: CardElements.ActionSet) {
+    private fun validateActionSet(actionSet: CardElement.ActionSet) {
         val actions = actionSet.actions
         assertEquals(2, actions.size)
-        if (actions[0] is ActionElements.ActionSubmit) {
-            val submitAction = actions[0] as ActionElements.ActionSubmit
+        if (actions[0] is ActionElement.ActionSubmit) {
+            val submitAction = actions[0] as ActionElement.ActionSubmit
             assertEquals("ActionSet.Action.Submit_id", submitAction.id)
             assertEquals(AssociatedInputs.NONE, submitAction.associatedInputs)
             assertEquals("tooltip", submitAction.tooltip)
@@ -782,8 +782,8 @@ class EverythingBagelTests {
         } else {
             fail("Expected SubmitAction in ActionSet")
         }
-        if (actions[1] is ActionElements.ActionOpenUrl) {
-            val openUrlAction = actions[1] as ActionElements.ActionOpenUrl
+        if (actions[1] is ActionElement.ActionOpenUrl) {
+            val openUrlAction = actions[1] as ActionElement.ActionOpenUrl
             assertEquals("ActionSet.Action.OpenUrl_id", openUrlAction.id)
             assertEquals("tooltip", openUrlAction.tooltip)
             assertTrue(openUrlAction.isEnabled)
@@ -792,8 +792,7 @@ class EverythingBagelTests {
         }
     }
 
-    private fun validateRichTextBlock(richTextBlock: CardElements.RichTextBlock) {
-       // assertNull(richTextBlock.horizontalAlignment)
+    private fun validateRichTextBlock(richTextBlock: CardElement.RichTextBlock) {
         val inlines = richTextBlock.inlines
         assertEquals(3, inlines.size)
         if (inlines[0] is TextRun) {
@@ -817,9 +816,9 @@ class EverythingBagelTests {
         }
         if (inlines[1] is TextRun) {
             val inlineTextElement = inlines[1] as TextRun
-            assertTrue(inlineTextElement.selectAction is ActionElements.ActionSubmit)
-            if (inlineTextElement.selectAction is ActionElements.ActionSubmit) {
-                val selectAction = inlineTextElement.selectAction as ActionElements.ActionSubmit
+            assertTrue(inlineTextElement.selectAction is ActionElement.ActionSubmit)
+            if (inlineTextElement.selectAction is ActionElement.ActionSubmit) {
+                val selectAction = inlineTextElement.selectAction as ActionElement.ActionSubmit
                 assertEquals(AssociatedInputs.NONE, selectAction.associatedInputs)
             } else {
                 fail("Expected inline text selectAction to be SubmitAction")
@@ -837,9 +836,9 @@ class EverythingBagelTests {
     private fun validateBody(card: AdaptiveCard) {
         val body = card.body
         assertEquals(10, body.size)
-        if (body[0] is CardElements.TextBlock) {
+        if (body[0] is CardElement.TextBlock) {
             validateTextBlock(
-                body[0] as CardElements.TextBlock,
+                body[0] as CardElement.TextBlock,
                 fontType = null,
                 style = TextStyle.HEADING,
                 id = "TextBlock_id"
@@ -847,9 +846,9 @@ class EverythingBagelTests {
         } else {
             fail("Expected TextBlock as first element in body")
         }
-        if (body[1] is CardElements.TextBlock) {
+        if (body[1] is CardElement.TextBlock) {
             validateTextBlock(
-                body[1] as CardElements.TextBlock,
+                body[1] as CardElement.TextBlock,
                 fontType = FontType.MONOSPACE,
                 style = null,
                 id = "TextBlock_id_mono"
@@ -857,9 +856,9 @@ class EverythingBagelTests {
         } else {
             fail("Expected TextBlock as second element in body")
         }
-        if (body[2] is CardElements.TextBlock) {
+        if (body[2] is CardElement.TextBlock) {
             validateTextBlock(
-                body[2] as CardElements.TextBlock,
+                body[2] as CardElement.TextBlock,
                 fontType = FontType.DEFAULT,
                 style = null,
                 id = "TextBlock_id_def"
@@ -867,8 +866,8 @@ class EverythingBagelTests {
         } else {
             fail("Expected TextBlock as third element in body")
         }
-        if (body[3] is CardElements.Image) {
-            validateImage(body[3] as CardElements.Image)
+        if (body[3] is CardElement.Image) {
+            validateImage(body[3] as CardElement.Image)
         } else {
             fail("Expected Image as fourth element in body")
         }
@@ -877,13 +876,13 @@ class EverythingBagelTests {
         } else {
             fail("Expected Container as fifth element in body")
         }
-        if (body[5] is CardElements.FactSet) {
-            validateFactSet(body[5] as CardElements.FactSet)
+        if (body[5] is CardElement.FactSet) {
+            validateFactSet(body[5] as CardElement.FactSet)
         } else {
             fail("Expected FactSet as sixth element in body")
         }
-        if (body[6] is CardElements.ImageSet) {
-            validateImageSet(body[6] as CardElements.ImageSet)
+        if (body[6] is CardElement.ImageSet) {
+            validateImageSet(body[6] as CardElement.ImageSet)
         } else {
             fail("Expected ImageSet as seventh element in body")
         }
@@ -892,13 +891,13 @@ class EverythingBagelTests {
         } else {
             fail("Expected input Container as eighth element in body")
         }
-        if (body[8] is CardElements.ActionSet) {
-            validateActionSet(body[8] as CardElements.ActionSet)
+        if (body[8] is CardElement.ActionSet) {
+            validateActionSet(body[8] as CardElement.ActionSet)
         } else {
             fail("Expected ActionSet as ninth element in body")
         }
-        if (body[9] is CardElements.RichTextBlock) {
-            validateRichTextBlock(body[9] as CardElements.RichTextBlock)
+        if (body[9] is CardElement.RichTextBlock) {
+            validateRichTextBlock(body[9] as CardElement.RichTextBlock)
         } else {
             fail("Expected RichTextBlock as tenth element in body")
         }
@@ -907,8 +906,8 @@ class EverythingBagelTests {
     private fun validateToplevelActions(card: AdaptiveCard) {
         val actions = card.actions
         assertEquals(3, actions.size)
-        if (actions[0] is ActionElements.ActionSubmit) {
-            val submitAction = actions[0] as ActionElements.ActionSubmit
+        if (actions[0] is ActionElement.ActionSubmit) {
+            val submitAction = actions[0] as ActionElement.ActionSubmit
             assertEquals("Action.Submit_id", submitAction.id)
             assertEquals("Action.Submit", submitAction.title)
             when (val data = submitAction.data) {
@@ -928,8 +927,8 @@ class EverythingBagelTests {
         } else {
             fail("Expected SubmitAction as first top-level action")
         }
-        if (actions[1] is ActionElements.ActionExecute) {
-            val executeAction = actions[1] as ActionElements.ActionExecute
+        if (actions[1] is ActionElement.ActionExecute) {
+            val executeAction = actions[1] as ActionElement.ActionExecute
             assertEquals("Action.Execute_id", executeAction.id)
             assertEquals("Action.Execute_title", executeAction.title)
             assertEquals("Action.Execute_verb", executeAction.verb)
@@ -949,8 +948,8 @@ class EverythingBagelTests {
         } else {
             fail("Expected ExecuteAction as second top-level action")
         }
-        if (actions[2] is ActionElements.ActionShowCard) {
-            val showCardAction = actions[2] as ActionElements.ActionShowCard
+        if (actions[2] is ActionElement.ActionShowCard) {
+            val showCardAction = actions[2] as ActionElement.ActionShowCard
             assertEquals("Action.ShowCard_id", showCardAction.id)
             assertEquals("Action.ShowCard", showCardAction.title)
             assertEquals("tooltip", showCardAction.tooltip)
@@ -986,7 +985,7 @@ class EverythingBagelTests {
 
     private fun validateFallbackCard(card: AdaptiveCard) {
         val fallbackCard = AdaptiveCardParser.makeFallbackTextCard("fallback", "en", "speak")
-        val fallbackTextBlock = fallbackCard.body.firstOrNull() as? CardElements.TextBlock
+        val fallbackTextBlock = fallbackCard.body.firstOrNull() as? CardElement.TextBlock
         assertEquals("fallback", fallbackTextBlock?.text)
         assertEquals("en", fallbackCard.language)
         assertEquals("speak", fallbackCard.speak)

@@ -1,5 +1,5 @@
 import com.example.ac_sdk.BaseModelTest
-import com.example.ac_sdk.objectmodel.elements.LayoutElements
+import com.example.ac_sdk.objectmodel.elements.LayoutElement
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import com.example.ac_sdk.objectmodel.utils.ItemFit
 import com.example.ac_sdk.objectmodel.utils.Spacing
@@ -26,7 +26,7 @@ class FlowLayoutPropertiesTest : BaseModelTest() {
             }
         """.trimIndent()
 
-        val flowLayout = json.decodeFromString<LayoutElements.FlowLayout>(jsonString)
+        val flowLayout = json.decodeFromString<LayoutElement.FlowLayout>(jsonString)
 
         assertEquals(ItemFit.Fit, flowLayout.itemFit)
         assertEquals("100px", flowLayout.itemWidth)

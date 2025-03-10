@@ -2,15 +2,12 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.elements.models.Choice
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
-import com.example.ac_sdk.objectmodel.utils.HeightType
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
-import com.example.ac_sdk.objectmodel.utils.Spacing
-import com.example.ac_sdk.objectmodel.utils.TargetWidthType
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
 @Serializable
-sealed class InputElements {
+sealed class InputElement {
 
     @Serializable
     @SerialName("Input.Text")
