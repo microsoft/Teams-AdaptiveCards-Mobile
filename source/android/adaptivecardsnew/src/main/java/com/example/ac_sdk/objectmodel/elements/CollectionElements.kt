@@ -59,10 +59,9 @@ sealed class CollectionElement {
     data class Column(
         var width: String = "auto",
         var pixelWidth: Int = 0,
-        var items: List<@Polymorphic BaseCardElement> = emptyList(),
+        var items: List<BaseCardElement> = emptyList(),
         var rtl: Boolean? = null,
-        @Polymorphic
-        var layouts: List<@Polymorphic Layout> = emptyList()
+        var layouts: List<Layout> = emptyList()
     ) : StyledCollectionElement() {
 
         // In Kotlin, you can add helper methods if needed (e.g. a setter that sets pixelWidth based on width)

@@ -38,8 +38,8 @@ class AdaptiveCardParser {
         fun deserializeFromString(jsonText: String, rendererVersion: String, context: ParseContext): ParseResult {
             val json = Json.parseToJsonElement(jsonText)
             return deserialize(json.jsonObject, rendererVersion, context).also {
-                //val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
-               // Log.d("checkPoint", adaptiveCardJson)
+                val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
+                Log.d("checkPoint", adaptiveCardJson)
             }
         }
 
@@ -77,19 +77,6 @@ class AdaptiveCardParser {
                 ignoreUnknownKeys = true
                 encodeDefaults = true
                 decodeEnumsCaseInsensitive = true
-                serializersModule = SerializersModule {
-                    polymorphic(BaseActionElement::class) {
-                        subclass(ActionElements.ActionSubmit::class)
-                        subclass(ActionElements.ActionOpenUrl::class)
-                        subclass(ActionElements.ActionExecute::class)
-                        subclass(ActionElements.ActionToggleVisibility::class)
-                        subclass(ActionElements.ActionShowCard::class)
-                    }
-                    polymorphic(BaseCardElement::class) {
-                        subclass(CardElements.TextBlock::class)
-                        subclass(CardElements.Image::class)
-                    }
-                }
             }
             val adaptiveCard = json.decodeFromJsonElement<AdaptiveCard>(jsonObject)
 

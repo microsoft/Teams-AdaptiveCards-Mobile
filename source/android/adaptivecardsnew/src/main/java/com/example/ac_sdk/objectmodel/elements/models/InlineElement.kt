@@ -2,10 +2,19 @@ package com.example.ac_sdk.objectmodel.elements.models
 
 import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import com.example.ac_sdk.objectmodel.utils.ForegroundColor
+import com.example.ac_sdk.objectmodel.utils.InlineSerializer
 import com.example.ac_sdk.objectmodel.utils.TextSize
 import com.example.ac_sdk.objectmodel.utils.TextWeight
-import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
+
+@Serializable(with = InlineSerializer::class)
+sealed interface Inline
+
+@Serializable
+data class PlainTextInline(
+    var text: String
+) : Inline
+
 
 @Serializable
 data class TextRun(
@@ -21,10 +30,5 @@ data class TextRun(
     val size: TextSize? = null,
     val fontType: String? = null,
     val isSubtle: Boolean? = null,
-    @Polymorphic
     val selectAction: BaseActionElement? = null,
-)
-
-fun TextRun.isSimple(): Boolean {
-    return this.type == null
-}
+) : Inline

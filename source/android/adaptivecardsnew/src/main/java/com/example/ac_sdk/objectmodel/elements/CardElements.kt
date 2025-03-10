@@ -2,6 +2,7 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.elements.models.Fact
 import com.example.ac_sdk.objectmodel.elements.models.IconInfo
+import com.example.ac_sdk.objectmodel.elements.models.Inline
 import com.example.ac_sdk.objectmodel.elements.models.MediaSource
 import com.example.ac_sdk.objectmodel.elements.models.TextRun
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
@@ -12,7 +13,6 @@ import com.example.ac_sdk.objectmodel.utils.IconSize
 import com.example.ac_sdk.objectmodel.utils.IconStyle
 import com.example.ac_sdk.objectmodel.utils.ImageSize
 import com.example.ac_sdk.objectmodel.utils.ImageStyle
-import com.example.ac_sdk.objectmodel.utils.RichTextBlockSerializer
 import com.example.ac_sdk.objectmodel.utils.TextSize
 import com.example.ac_sdk.objectmodel.utils.TextStyle
 import com.example.ac_sdk.objectmodel.utils.TextWeight
@@ -109,10 +109,10 @@ sealed class CardElements {
         }
     }
 
-    @Serializable(with = RichTextBlockSerializer::class)
+    @Serializable
     @SerialName("RichTextBlock")
     data class RichTextBlock(
-        val inlines: List<TextRun>,
+        val inlines: List<Inline>,
         val horizontalAlignment: HorizontalAlignment? = null
     ) : BaseCardElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {

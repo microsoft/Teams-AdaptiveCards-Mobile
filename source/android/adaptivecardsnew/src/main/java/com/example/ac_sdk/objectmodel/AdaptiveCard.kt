@@ -38,7 +38,6 @@ data class AdaptiveCard(
     val authentication: Authentication? = null,
     val rtl: Boolean? = null,
     val layouts: ArrayList<Layout>? = null,
-    @Polymorphic
     val selectAction: BaseActionElement? = null,
 ) {
 
