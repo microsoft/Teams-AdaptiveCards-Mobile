@@ -6,44 +6,43 @@ import android.os.AsyncTask
 import io.adaptivecards.objectmodel.HostConfig
 
 object IconUtils {
-    private const val FILLED_STYLE = "filled"
-    private const val REGULAR_STYLE = "regular"
-    private const val FLIP_IN_RTL_PROPERTY = "flipInRtl"
-    private const val FLUENT_ICON_URL_PREFIX: String = "icon:"
-
+    /**
+     * Pass iconUrl and other params, it returns the icon drawable either from public url or fluent icon drawable
+     * @param iconUrl The url of the icon, can be any public url or fluent icon
+     * @param svgPath svgPath of Fluent icon
+     * @param iconHexColor hexColor of Fluent icon
+     * @param isRTL if layout is RTL or not
+     * @param iconSize size of downloaded icon or fluent icon
+     * @param callback if successful then called with drawable, else called with null
+     */
     fun getIcon(
         context: Context,
         iconUrl: String,
         svgPath: String?,
+        iconHexColor: String?,
         isRTL: Boolean,
-        hostConfig: HostConfig,
+        iconSize: Long,
         callback: (drawable: Drawable?) -> Void
     ) {
-        if (!iconUrl.startsWith(FLUENT_ICON_URL_PREFIX)) {
+        if (!iconUrl.startsWith(Util.FLUENT_ICON_URL_PREFIX)) {
             val getImage = GetImageAsync(
                 iconUrl,
                 context,
                 maxWidth = -1,
-                hostConfig.GetActions().getIconSize(),
+                iconSize,
                 callback
             )
             getImage.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl)
         } else {
-            // intentionally kept this 24 so that it always loads
-            // irrespective of size given in host config.
-            // it is possible that host config has some size which is not available in CDN.
-//            val fluentIconSize: Long = 24
-            val hexColor = "3498F3"
             val isFilledStyle = iconUrl.contains("filled")
             val svgInfoURL = Util.getSvgInfoUrl(svgPath)
             AsyncTask.execute {
                 FluentIconUtils.getFluentIcon(
                     context,
                     svgInfoURL,
-                    hexColor,
-                    hostConfig.GetActions().getIconSize(),
+                    iconHexColor ?: "#FFFFFF",
+                    iconSize,
                     isFilledStyle,
-                    hostConfig.GetActions().getIconSize(),
                     isRTL
                 ) { drawable: Drawable? ->
                     callback(drawable)

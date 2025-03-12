@@ -840,7 +840,7 @@ public final class Util {
         return String.format("%s/%s/%s/%s.json", fluentIconCdnRoot, fluentIconCdnPath, unavailableIconName, unavailableIconName);
     }
 
-    private static final String FLUENT_ICON_URL_PREFIX = "icon:";
+    static final String FLUENT_ICON_URL_PREFIX = "icon:";
 
     public static String getOpenUrlAnnouncement(Context context, String urlTitle) {
         return context.getResources().getString(R.string.open_url_announcement, urlTitle);

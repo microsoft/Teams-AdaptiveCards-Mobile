@@ -162,12 +162,14 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
         String svgPath,
         HostConfig hostConfig,
         Button button) {
+
         IconUtils.INSTANCE.getIcon(
             context,
             iconUrl,
             svgPath,
+            "#F50912",
             false,
-            hostConfig,
+            hostConfig.GetActions().getIconSize(),
             drawable -> {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override

@@ -26,7 +26,6 @@ object FluentIconUtils {
         iconColor: String,
         targetIconSize: Long,
         isFilledStyle: Boolean,
-        iconSize: Long,
         isRTL: Boolean,
         callback: (drawable: Drawable?) -> Void
     ) {
