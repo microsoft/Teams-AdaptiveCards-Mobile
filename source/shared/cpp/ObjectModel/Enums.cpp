@@ -257,6 +257,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::PageAnimation,"pageAnimation"},
             {AdaptiveCardSchemaKey::PageControl,"pageControl"},
             {AdaptiveCardSchemaKey::SelectedTintColor,"selectedTintColor"},
+            {AdaptiveCardSchemaKey::UnselectedTintColor,"unselectedTintColor"},
             {AdaptiveCardSchemaKey::TextColor, "textColor"},
             {AdaptiveCardSchemaKey::StrokeColor, "strokeColor"},
             {AdaptiveCardSchemaKey::Shape, "shape"},
