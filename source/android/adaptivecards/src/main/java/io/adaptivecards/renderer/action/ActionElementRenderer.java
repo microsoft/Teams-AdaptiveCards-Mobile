@@ -143,8 +143,8 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
                 iconPlacement = IconPlacement.LeftOfTitle;
             }
 
-//            Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
-            loadIconOnButton(mContext, iconUrl, baseActionElement.GetSVGPath(), hostConfig, button);
+            Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
+//            loadIconOnButton(mContext, iconUrl, baseActionElement.GetSVGPath(), hostConfig, button);
         }
 
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {

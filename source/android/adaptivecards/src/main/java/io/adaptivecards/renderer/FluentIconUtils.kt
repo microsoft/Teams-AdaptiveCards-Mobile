@@ -31,7 +31,7 @@ object FluentIconUtils {
         callback: (drawable: Drawable?) -> Void
     ) {
         val requestResult = fetchIconInfo(svgURL)
-        val iconResponse = processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle, iconSize)
+        val iconResponse = processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle)
         iconResponse.drawable?.let {
             if (isRTL) {
                 val flippedDrawable = flipDrawableHorizontally(it, context)
@@ -79,8 +79,7 @@ object FluentIconUtils {
         context: Context?,
         iconColor: String,
         targetIconSize: Long,
-        isFilledStyle: Boolean,
-        iconSize: Long
+        isFilledStyle: Boolean
     ) :IconResponse {
         if (context != null && result?.isSuccessful == true && result.result.isNotEmpty()) {
             val response = result.result
@@ -93,7 +92,7 @@ object FluentIconUtils {
                 val availableIconSizeClosestToGivenSize = Util.getSizeClosestToGivenSize(availableFluentIconSizes, targetIconSize)
                 val svgPath = styleJsonObject.getJSONArray(availableIconSizeClosestToGivenSize.toString())[0] as String
                 val svgPathString = getSvgString(svgPath, availableIconSizeClosestToGivenSize, targetIconSize)
-                val drawable = getDrawableFromSVG(context, svgPathString, iconColor, iconSize)
+                val drawable = getDrawableFromSVG(context, svgPathString, iconColor, targetIconSize)
                 return IconResponse(drawable, flipInRtl)
             } catch (_: Exception) {
             }

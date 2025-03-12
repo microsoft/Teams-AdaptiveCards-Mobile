@@ -754,22 +754,17 @@ public final class Util {
             imageLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl);
         }
         else {
-            // intentionally kept this 24 so that it always loads
-            // irrespective of size given in host config.
-            // it is possible that host config has some size which is not available in CDN.
-            long fluentIconSize = 24;
             int color = ((Button) view).getCurrentTextColor();
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
             boolean isFilledStyle = iconUrl.contains("filled");
             ActionElementRendererFluentIconImageLoaderAsync fluentIconLoaderAsync = new ActionElementRendererFluentIconImageLoaderAsync(
                 renderedCard,
-                fluentIconSize,
+                hostConfig.GetActions().getIconSize(),
                 isFilledStyle,
                 view,
                 hexColor,
                 iconPlacement,
-                hostConfig.GetSpacing().getDefaultSpacing(),
-                hostConfig.GetActions().getIconSize()
+                hostConfig.GetSpacing().getDefaultSpacing()
             );
             fluentIconLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, svgInfoURL);
         }

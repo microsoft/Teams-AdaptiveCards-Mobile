@@ -17,9 +17,8 @@ class ActionElementRendererFluentIconImageLoaderAsync(
     view: View,
     iconColor: String,
     val iconPlacement: IconPlacement,
-    val padding: Long,
-    iconSizeFromConfig: Long
-): FluentIconImageLoaderAsync(renderedCard, targetIconSize, iconColor, iconSizeFromConfig, isFilledStyle, view) {
+    val padding: Long
+): FluentIconImageLoaderAsync(renderedCard, targetIconSize, iconColor, isFilledStyle, view) {
     override fun renderFluentIcon(drawable: Drawable?, flipInRtl: Boolean) {
         val view = viewReference.get()
         if (view != null && view is Button) {

@@ -16,7 +16,6 @@ open class FluentIconImageLoaderAsync(
     val renderedCard: RenderedAdaptiveCard,
     private val targetIconSize: Long,
     private val iconColor: String,
-    private val iconSize: Long,
     private var isFilledStyle: Boolean,
     view: View
 ) : AsyncTask<String, Void, HttpRequestResult<String>>() {
@@ -37,8 +36,7 @@ open class FluentIconImageLoaderAsync(
                 context,
                 iconColor,
                 targetIconSize,
-                isFilledStyle,
-                iconSize
+                isFilledStyle
         )
         renderFluentIcon(response.drawable, response.flipInRtl)
     }
