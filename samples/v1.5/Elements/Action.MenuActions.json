@@ -1,0 +1,94 @@
+{
+	"type": "AdaptiveCard",
+	"version": "1.5",
+	"body": [
+		{
+			"type": "TextBlock",
+			"weight": "bolder",
+			"size": "large",
+			"text": "Please review your order"
+		},
+		{
+			"type": "FactSet",
+			"facts": [
+				{
+					"title": "Item:",
+					"value": "Zombie Halloween costume"
+				},
+				{
+					"title": "Quantity:",
+					"value": "1"
+				},
+				{
+					"title": "Price:",
+					"value": "$14.99"
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Execute",
+					"title": "0 Execute",
+					"mode": "secondary",
+					"menuActions": [
+						{
+							"type": "Action.Execute",
+							"title": "0-1 Execute",
+							"menuActions": [
+								{
+									"type": "Action.Execute",
+									"title": "0-1-2 Execute",
+									"menuActions": [
+										{
+											"type": "Action.Execute",
+											"title": "0-1-3 Execute"
+										}
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "0-1-2 Submit"
+								},
+								{
+									"type": "Action.OpenUrl",
+									"title": "0-1-2 Open URL",
+									"url": "https://microsoft.com/"
+								}
+							]
+						},
+						{
+							"type": "Action.Submit",
+							"title": "0-1 Submit"
+						},
+						{
+							"type": "Action.OpenUrl",
+							"title": "0-1 Open URL",
+							"url": "https://adaptivecards.io/"
+						}
+					]
+				},
+				{
+					"type": "Action.OpenUrl",
+					"title": "0 OpenUrl",
+					"iconUrl": "https://adaptivecards.io/content/cats/2.png",
+					"url": "https://adaptivecards.io/"
+				},
+				{
+					"type": "Action.Submit",
+					"title": "0 Submit",
+					"iconUrl": "icon:AccessTime",
+					"menuActions": []
+				}
+			]
+		}
+	],
+	"actions": [
+		{
+			"type": "Action.Submit",
+			"title": "Confirm",
+			"iconUrl": "icon:AccessTime"
+		}
+	]
+}

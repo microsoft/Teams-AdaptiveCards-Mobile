@@ -127,6 +127,7 @@ class BadgeView(
             renderedCard,
             iconSize,
             foregroundColor,
+            iconSize,
             isFilled,
             this
         )
