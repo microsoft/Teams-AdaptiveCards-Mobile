@@ -32,6 +32,7 @@
 					"type": "Action.Execute",
 					"title": "0 Execute",
 					"mode": "secondary",
+					"iconUrl": "icon:ChevronDown,Filled",
 					"menuActions": [
 						{
 							"type": "Action.Execute",
