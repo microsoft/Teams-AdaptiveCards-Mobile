@@ -165,6 +165,12 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
         }
 
+        if (ActionElementUtil.isSplitButtonAction(baseActionElement)) {
+            // Todo swig dependency, pass iconUrl in GetSVGPath
+            String splitButtonSvgURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
+            Util.loadIcon(context, button, ActionElementUtil.SPLIT_BUTTON_ICON_URL, splitButtonSvgURL, hostConfig, renderedCard, IconPlacement.RightOfTitle);
+        }
+
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
             button.setContentDescription(Util.getOpenUrlAnnouncement(context, baseActionElement.GetTitle()));
         }

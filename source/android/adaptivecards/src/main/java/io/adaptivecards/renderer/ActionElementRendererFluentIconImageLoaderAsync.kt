@@ -38,7 +38,11 @@ class ActionElementRendererFluentIconImageLoaderAsync(
                 if (iconPlacement == IconPlacement.AboveTitle) {
                     drawables[1] = flippedDrawable
                 } else {
-                    drawables[0] = flippedDrawable
+                    if (iconPlacement == IconPlacement.RightOfTitle) {
+                        drawables[2] = flippedDrawable
+                    } else {
+                        drawables[0] = flippedDrawable
+                    }
                     view.compoundDrawablePadding = Util.dpToPixels(view.context, padding.toFloat())
                 }
 

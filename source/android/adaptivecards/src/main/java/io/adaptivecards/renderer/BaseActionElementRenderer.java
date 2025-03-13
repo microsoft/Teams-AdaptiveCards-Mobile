@@ -30,6 +30,7 @@ import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityTarget;
 import io.adaptivecards.objectmodel.ToggleVisibilityTargetVector;
+import io.adaptivecards.renderer.action.ActionElementUtil;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 
 public abstract class BaseActionElementRenderer implements IBaseActionElementRenderer
@@ -339,7 +340,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private boolean isOverflowMenuScenarioAllowed(@NonNull BaseActionElement baseActionElement) {
-            return !m_disableOverFlowMenuScenario && baseActionElement.GetMenuActions() != null && !baseActionElement.GetMenuActions().isEmpty();
+            return !m_disableOverFlowMenuScenario && ActionElementUtil.isSplitButtonAction(baseActionElement);
         }
 
         /***
