@@ -13,7 +13,7 @@ namespace AdaptiveCards
 class GridArea
 {
 public:
-    GridArea() :m_columnSpan(1), m_rowSpan(1), m_row(1), m_column(1)
+    GridArea() :m_row(1), m_column(1), m_rowSpan(1), m_columnSpan(1)
     {
     }
     

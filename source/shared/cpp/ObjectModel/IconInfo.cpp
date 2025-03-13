@@ -14,7 +14,7 @@
 
 using namespace AdaptiveCards;
 
-IconInfo::IconInfo():m_iconStyle(IconStyle::Regular), m_iconSize(IconSize::Standard), m_foregroundColor(ForegroundColor::Default)
+IconInfo::IconInfo():m_foregroundColor(ForegroundColor::Default), m_iconStyle(IconStyle::Regular), m_iconSize(IconSize::Standard)
 {
     PopulateKnownPropertiesSet();
 }

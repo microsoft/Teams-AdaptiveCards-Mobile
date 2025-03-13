@@ -101,11 +101,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         [self updateAccessibilityProperties];
         _validator = [[ACOChoiceSetFilteredStyleValidator alloc] init:acoElem dataSource:_filteredDataSource];
 
-        if (@available(iOS 11.0, *)) {
-            self.spacingTop = self.window.safeAreaInsets.top + 8.0f;
-        } else {
-            self.spacingTop = self.window.layoutMargins.top + 8.0f;
-        }
+        self.spacingTop = self.window.safeAreaInsets.top + 8.0f;
         self.spacingBottom = 8.0f;
 
         // configure UITextField
@@ -392,7 +388,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     }
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     return [_validator isValid:self.text];
 }
@@ -509,7 +505,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 
 - (NSString *)getItemAt:(NSInteger)index
 {
-    return (index < 0 or index >= self.count) ? @"" : _filteredList[index];
+    return (index < 0 or (NSUInteger)index >= self.count) ? @"" : _filteredList[index];
 }
 
 - (void)updateFilteredListForStaticTypeahead:(NSString *)key

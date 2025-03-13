@@ -128,12 +128,12 @@
         self.label.attributedText = attributedLabel;
         std::string errorMessage = inputBlck->GetErrorMessage();
         if (!errorMessage.empty()) {
-            AdaptiveCards::ErrorMessageConfig *pLabelConfig = &inputConfig.errorMessage;
-            RichTextElementProperties textElementProperties;
-            textElementProperties.SetTextSize(pLabelConfig->size);
-            textElementProperties.SetTextWeight(pLabelConfig->weight);
-            textElementProperties.SetTextColor(ForegroundColor::Attention);
-            self.errorMessage.attributedText = initAttributedText(acoConfig, errorMessage, textElementProperties, viewGroup.style);
+            AdaptiveCards::ErrorMessageConfig *pc = &inputConfig.errorMessage;
+            RichTextElementProperties tp;
+            tp.SetTextSize(pc->size);
+            tp.SetTextWeight(pc->weight);
+            tp.SetTextColor(ForegroundColor::Attention);
+            self.errorMessage.attributedText = initAttributedText(acoConfig, errorMessage, tp, viewGroup.style);
             self.errorMessage.isAccessibilityElement = NO;
             self.hasErrorMessage = YES;
         }
@@ -235,44 +235,6 @@
     }
 }
 
-- (BOOL)validate:(NSError **)error
-{
-    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
-    UIView *inputView = [self getInputView];
-    if (inputView) {
-        [inputView resignFirstResponder];
-    }
-    if (inputHandler) {
-        NSError *error = nil;
-        if (NO == [inputHandler validate:&error]) {
-            if (self.hasErrorMessage) {
-                self.hasVisibilityChanged = self.errorMessage.hidden == YES;
-                self.errorMessage.hidden = NO;
-                self.errorMessage.isAccessibilityElement = NO;
-                self.inputAccessibilityItem.accessibilityLabel = [NSString stringWithFormat:@"%@, %@,", self.labelText, self.errorMessage.text];
-                self.inputAccessibilityItem.accessibilityIdentifier = self.id;
-            }
-        } else {
-            if (self.hasErrorMessage) {
-                self.hasVisibilityChanged = self.errorMessage.hidden == NO;
-                self.errorMessage.hidden = YES;
-                self.inputAccessibilityItem.accessibilityLabel = self.labelText;
-            }
-
-            self.stack.arrangedSubviews[1].layer.borderColor = self.validationSuccessBorderColor;
-            self.stack.arrangedSubviews[1].layer.cornerRadius = self.validationSuccessBorderRadius;
-            self.stack.arrangedSubviews[1].layer.borderWidth = self.validationSuccessBorderWidth;
-
-            return YES;
-        }
-    }
-
-    self.stack.arrangedSubviews[1].layer.borderWidth = self.validationFailBorderWidth;
-    self.stack.arrangedSubviews[1].layer.cornerRadius = self.validationFailBorderRadius;
-    self.stack.arrangedSubviews[1].layer.borderColor = self.validationFailBorderColor.CGColor;
-    return NO;
-}
-
 - (NSObject<ACRIBaseInputHandler> *_Nullable)getInputHandler
 {
     NSObject<ACRIBaseInputHandler> *inputHandler = nil;
@@ -288,37 +250,12 @@
     return inputHandler;
 }
 
-- (void)addObserverWithCompletion:(CompletionHandler)completion
-{
-    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
-    [inputHandler addObserverWithCompletion:completion];
-}
-
 - (UIView *)getInputView
 {
     if ((_stack.arrangedSubviews.count) == 3) {
         return self.stack.arrangedSubviews[1];
     }
     return nil;
-}
-
-- (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *)view
-{
-    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
-    UIView *viewToFocus = [self getInputView];
-    if (!inputHandler || !viewToFocus) {
-        return;
-    }
-
-    [inputHandler setFocus:shouldBecomeFirstResponder view:self.inputAccessibilityItem];
-}
-
-- (void)getInput:(NSMutableDictionary *)dictionary
-{
-    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
-    if (inputHandler) {
-        [inputHandler getInput:dictionary];
-    }
 }
 
 + (void)commonSetFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *)view
@@ -356,6 +293,76 @@
     }
 
     return CGSizeMake(width, height);
+}
+
+#pragma mark - ACRIBaseInputHandler
+- (BOOL)validate:(NSError * __autoreleasing *)error
+{
+    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
+    UIView *inputView = [self getInputView];
+    if (inputView) {
+        [inputView resignFirstResponder];
+    }
+    if (inputHandler) {
+        NSError *e = nil;
+        if (NO == [inputHandler validate:&e]) {
+            if (self.hasErrorMessage) {
+                self.hasVisibilityChanged = self.errorMessage.hidden == YES;
+                self.errorMessage.hidden = NO;
+                self.errorMessage.isAccessibilityElement = NO;
+                self.inputAccessibilityItem.accessibilityLabel = [NSString stringWithFormat:@"%@, %@,", self.labelText, self.errorMessage.text];
+                self.inputAccessibilityItem.accessibilityIdentifier = self.id;
+            }
+        } else {
+            if (self.hasErrorMessage) {
+                self.hasVisibilityChanged = self.errorMessage.hidden == NO;
+                self.errorMessage.hidden = YES;
+                self.inputAccessibilityItem.accessibilityLabel = self.labelText;
+            }
+
+            self.stack.arrangedSubviews[1].layer.borderColor = self.validationSuccessBorderColor;
+            self.stack.arrangedSubviews[1].layer.cornerRadius = self.validationSuccessBorderRadius;
+            self.stack.arrangedSubviews[1].layer.borderWidth = self.validationSuccessBorderWidth;
+
+            return YES;
+        }
+    }
+
+    self.stack.arrangedSubviews[1].layer.borderWidth = self.validationFailBorderWidth;
+    self.stack.arrangedSubviews[1].layer.cornerRadius = self.validationFailBorderRadius;
+    self.stack.arrangedSubviews[1].layer.borderColor = self.validationFailBorderColor.CGColor;
+    return NO;
+}
+
+- (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *)view
+{
+    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
+    UIView *viewToFocus = [self getInputView];
+    if (!inputHandler || !viewToFocus) {
+        return;
+    }
+
+    [inputHandler setFocus:shouldBecomeFirstResponder view:self.inputAccessibilityItem];
+}
+
+- (void)getInput:(NSMutableDictionary *)dictionary
+{
+    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
+    if (inputHandler) {
+        [inputHandler getInput:dictionary];
+    }
+}
+
+- (void)addObserverWithCompletion:(CompletionHandler)completion
+{
+    NSObject<ACRIBaseInputHandler> *inputHandler = [self getInputHandler];
+    [inputHandler addObserverWithCompletion:completion];
+}
+
+- (void)resetInput
+{
+    [[self getInputHandler] resetInput];
+    [self validate:nil];
 }
 
 @synthesize hasValidationProperties;

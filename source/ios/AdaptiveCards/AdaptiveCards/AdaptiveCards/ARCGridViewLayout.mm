@@ -204,11 +204,11 @@ using namespace AdaptiveCards;
     [self addSubview:view];
     view.translatesAutoresizingMaskIntoConstraints = NO;
     // Adjust row and column indices to ensure they fall within bounds
-    NSInteger adjustedRow = MIN(MAX(row - 1, 0), _rows.count - 1);
-    NSInteger adjustedColumn = MIN(MAX(column - 1, 0), _columns[adjustedRow].count - 1);
+    NSInteger adjustedRow = MIN(MAX(row - 1, 0), (NSInteger)_rows.count - 1);
+    NSInteger adjustedColumn = MIN(MAX(column - 1, 0), (NSInteger)_columns[adjustedRow].count - 1);
     
-    NSInteger adjustedRowSpan = MIN(MAX(rowSpan - 1, 0), _rows.count - adjustedRow - 1);
-    NSInteger adjustedColumnSpan = MIN(MAX(columnSpan - 1, 0), _columns[adjustedRow].count - adjustedColumn - 1);
+    NSInteger adjustedRowSpan = MIN(MAX(rowSpan - 1, 0), (NSInteger)_rows.count - adjustedRow - 1);
+    NSInteger adjustedColumnSpan = MIN(MAX(columnSpan - 1, 0), (NSInteger)_columns[adjustedRow].count - adjustedColumn - 1);
     
     [self createConstraintsForView:view
                                row:adjustedRow
@@ -220,10 +220,10 @@ using namespace AdaptiveCards;
 - (void)createConstraintsForView:(UIView *)view row:(NSInteger)row column:(NSInteger)column rowSpan:(NSInteger)rowSpan columnSpan:(NSInteger)columnSpan
 {
     UIView *startColumnView = _columns[row][column];
-    UIView *endColumnView = (column + columnSpan < _columns[row].count) ? _columns[row][column + columnSpan] : self;
+    UIView *endColumnView = (column + columnSpan < (NSInteger)_columns[row].count) ? _columns[row][column + columnSpan] : self;
     
     UIView *startRowView = _rows[row];
-    UIView *endRowView = (row + rowSpan < _rows.count) ? _rows[row + rowSpan] : self;
+    UIView *endRowView = (row + rowSpan < (NSInteger)_rows.count) ? _rows[row + rowSpan] : self;
     
     [NSLayoutConstraint activateConstraints:@[
         [view.leadingAnchor constraintEqualToAnchor:startColumnView.leadingAnchor],

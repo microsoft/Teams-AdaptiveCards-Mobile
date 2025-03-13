@@ -207,7 +207,7 @@ template <typename T>
 std::shared_ptr<T> ParseUtil::GetElementOfType(
     ParseContext& context,
     const Json::Value& json,
-    AdaptiveCardSchemaKey key,
+    __unused AdaptiveCardSchemaKey key,
     const std::function<std::shared_ptr<T>(ParseContext& context, const Json::Value&)>& deserializer)
 {
     auto el = deserializer(context, json);

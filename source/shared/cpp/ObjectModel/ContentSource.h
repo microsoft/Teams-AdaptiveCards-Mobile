@@ -10,6 +10,7 @@ namespace AdaptiveCards
 class ContentSource
 {
 public:
+    virtual ~ContentSource() = default; // Virtual destructor
     virtual Json::Value SerializeToJsonValue() const;
 
     template <typename T>

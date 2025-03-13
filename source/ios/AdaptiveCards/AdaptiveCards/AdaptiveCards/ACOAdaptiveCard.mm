@@ -76,7 +76,7 @@ using namespace AdaptiveCards;
     [regex enumerateMatchesInString:payload
                             options:0
                               range:NSMakeRange(0, payload.length)
-                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+                         usingBlock:^(NSTextCheckingResult *match, __unused NSMatchingFlags flags, __unused BOOL *stop) {
         if (match.numberOfRanges == 4) { // Ensure we have all 4 capturing groups
             // Adjust ranges by offset to account for previous replacements
             NSRange fullMatchRange = NSMakeRange(match.range.location + offset, match.range.length);
@@ -107,7 +107,7 @@ using namespace AdaptiveCards;
     return [mutablePayload copy];
 }
 
-+ (BOOL)isValidJson:(NSString *)jsonString error:(NSError **)error {
++ (BOOL)isValidJson:(NSString *)jsonString error:(NSError *__autoreleasing *)error {
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     if (!jsonData) {
         return NO;
@@ -153,10 +153,8 @@ using namespace AdaptiveCards;
             // Converts AdaptiveCardParseException to NSError
             ErrorStatusCode errorStatusCode = e.GetStatusCode();
             NSInteger errorCode = (long)errorStatusCode;
-            NSBundle *adaptiveCardsBundle = [[ACOBundle getInstance] getBundle];
-            NSString *localizedFormat = NSLocalizedStringFromTableInBundle(@"AdaptiveCards.Parsing", nil, adaptiveCardsBundle, "Parsing Error Messages");
             NSString *objectModelErrorCodeInString = [NSString stringWithCString:ErrorStatusCodeToString(errorStatusCode).c_str() encoding:NSUTF8StringEncoding];
-            NSDictionary<NSErrorUserInfoKey, id> *userInfo = @{NSLocalizedDescriptionKey : [NSString localizedStringWithFormat:localizedFormat, objectModelErrorCodeInString]};
+            NSDictionary<NSErrorUserInfoKey, id> *userInfo = @{NSLocalizedDescriptionKey : [NSString localizedStringWithFormat:@"Parse Error: %@", objectModelErrorCodeInString]};
             NSError *parseError = [NSError errorWithDomain:ACRParseErrorDomain
                                                       code:errorCode
                                                   userInfo:userInfo];

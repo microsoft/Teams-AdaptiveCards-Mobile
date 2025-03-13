@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.ViewGroup;
@@ -227,27 +226,10 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             throw new IllegalArgumentException("Action Handler is null.");
         }
 
-        printElement("root", baseActionElement);
-
-        for (BaseActionElement element01 : baseActionElement.GetMenuActions()) {
-            printElement("Level 1", element01);
-            for (BaseActionElement element02 : element01.GetMenuActions()) {
-                printElement("Level 2", element02);
-                for (BaseActionElement element03 : element02.GetMenuActions()) {
-                    printElement("Level 3", element03);
-                }
-            }
-        }
-
         Button button = renderButton(context, viewGroup, baseActionElement, hostConfig, renderedCard, renderArgs);
         button.setOnClickListener(new BaseActionElementRenderer.ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
 
         return button;
-    }
-
-    private void printElement(String prefix, BaseActionElement element) {
-        Log.d("ACTesting", prefix + " baseActionElement: " + element.GetTitle() +
-            " type:" + element.GetElementType().name() + " mode:" + element.GetMode().name());
     }
 
     private static ActionElementRenderer s_instance = null;

@@ -338,8 +338,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
-        private boolean isOverflowMenuScenarioForAction(@NonNull BaseActionElement baseActionElement) {
-            return baseActionElement.GetMenuActions() != null && !baseActionElement.GetMenuActions().isEmpty();
+        private boolean isOverflowMenuScenarioAllowed(@NonNull BaseActionElement baseActionElement) {
+            return !m_disableOverFlowMenuScenario && baseActionElement.GetMenuActions() != null && !baseActionElement.GetMenuActions().isEmpty();
         }
 
         /***
@@ -350,14 +350,22 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
          * @return Boolean - true if scenario is handled, false if not.
          * Default return type is false.
          */
-        protected boolean handleOverflowMenuScenarioForAction(@NonNull BaseActionElement baseActionElement) {
+        protected boolean handleOverflowMenuScenario(@NonNull BaseActionElement baseActionElement) {
             return false;
+        }
+
+        /**
+         * Disable Overflow Menu Scenario, required to handle cyclic condition
+         * when an action element with menuActions is clicked from within overflow menu.
+         */
+        protected void setDisableOverFlowMenuScenario(boolean disableOverFlowMenuScenario) {
+            m_disableOverFlowMenuScenario = disableOverFlowMenuScenario;
         }
 
         @Override
         public void onClick(View view)
         {
-            if (isOverflowMenuScenarioForAction(m_action) && handleOverflowMenuScenarioForAction(m_action)) {
+            if (isOverflowMenuScenarioAllowed(m_action) && handleOverflowMenuScenario(m_action)) {
                 return;
             }
 
@@ -415,5 +423,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         // Information for handling ToggleVisibility actions
         private HashMap<String, View> m_viewDictionary = null;
         private ToggleVisibilityAction m_toggleVisibilityAction = null;
+
+        // Information for handling OverflowMenu scenario for actions
+        private boolean m_disableOverFlowMenuScenario = false;
     }
 }

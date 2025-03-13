@@ -72,8 +72,8 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
         completion(img);
     } else if (key.length) {
         NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)_action.get()];
-        NSString *key = [number stringValue];
-        UIImageView *view = [_rootView getImageView:key];
+        NSString *k = [number stringValue];
+        UIImageView *view = [_rootView getImageView:k];
         if (view.image) {
             completion(view.image);
         } else {
@@ -145,7 +145,7 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
             [_menuItems addObject:menuItem];
             UIAlertAction *menuAction = [UIAlertAction actionWithTitle:title
                                                                  style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction *_Nonnull action) {
+                                                               handler:^(__unused UIAlertAction *_Nonnull alertAction) {
                                                                    [target doSelectAction];
                                                                }];
 

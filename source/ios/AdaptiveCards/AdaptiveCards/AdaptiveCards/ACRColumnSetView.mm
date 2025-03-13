@@ -61,7 +61,7 @@
 - (void)updateIntrinsicContentSize
 {
     self.combinedContentSize = CGSizeZero;
-    [super updateIntrinsicContentSize:^(UIView *view, NSUInteger idx, BOOL *stop) {
+    [super updateIntrinsicContentSize:^(UIView *view, __unused NSUInteger idx, __unused BOOL *stop) {
         CGSize size = [view intrinsicContentSize];
         if (size.width >= 0 && size.height >= 0) {
             CGSize combinedSize = CGSizeMake(self.combinedContentSize.width + size.width, MAX(self.combinedContentSize.height, size.height));
