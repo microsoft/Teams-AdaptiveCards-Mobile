@@ -13,14 +13,9 @@ public abstract class InnerImageLoaderAsync extends GenericImageLoaderAsync
 {
     protected View m_view; // button and imageview inherit from this
 
-    public InnerImageLoaderAsync(RenderedAdaptiveCard renderedCard, View containerView, String imageBaseUrl)
-    {
-        this(renderedCard, containerView, imageBaseUrl, -1);
-    }
-
     public InnerImageLoaderAsync(RenderedAdaptiveCard renderedCard, View containerView, String imageBaseUrl, int maxWidth)
     {
-        super(renderedCard, imageBaseUrl, maxWidth);
+        super(renderedCard, imageBaseUrl);
 
         m_view = containerView;
     }

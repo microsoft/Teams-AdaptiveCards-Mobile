@@ -25,7 +25,7 @@ public class BackgroundImageLoaderAsync extends GenericImageLoaderAsync
 
     public BackgroundImageLoaderAsync(RenderedAdaptiveCard renderedCard, Context context, ViewGroup layout, String imageBaseUrl, int maxWidth, BackgroundImage backgroundImageProperties)
     {
-        super(renderedCard, imageBaseUrl, maxWidth);
+        super(renderedCard, imageBaseUrl);
 
         m_context = context;
         m_layout = layout;
