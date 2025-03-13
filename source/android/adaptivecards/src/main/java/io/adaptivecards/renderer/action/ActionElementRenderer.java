@@ -213,14 +213,14 @@ public class ActionElementRenderer extends BaseActionElementRenderer
 
     @Override
     public Button render(
-        RenderedAdaptiveCard renderedCard,
-        Context context,
-        FragmentManager fragmentManager,
-        ViewGroup viewGroup,
-        BaseActionElement baseActionElement,
-        ICardActionHandler cardActionHandler,
-        HostConfig hostConfig,
-        RenderArgs renderArgs) {
+            RenderedAdaptiveCard renderedCard,
+            Context context,
+            FragmentManager fragmentManager,
+            ViewGroup viewGroup,
+            BaseActionElement baseActionElement,
+            ICardActionHandler cardActionHandler,
+            HostConfig hostConfig,
+            RenderArgs renderArgs) {
         if (cardActionHandler == null)
         {
             throw new IllegalArgumentException("Action Handler is null.");
