@@ -6,8 +6,10 @@ import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.view.View
 import android.widget.ImageView
+import io.adaptivecards.renderer.http.HttpRequestHelper
 import io.adaptivecards.renderer.http.HttpRequestResult
 import java.lang.ref.WeakReference
+import java.nio.charset.StandardCharsets
 
 /**
  * Responsible for rendering the Fluent Icon element
@@ -25,8 +27,20 @@ open class FluentIconImageLoaderAsync(
         return if (args.isEmpty()) {
             null
         } else {
-            FluentIconUtils.fetchIconInfo(args[0])
+            val response: HttpRequestResult<String>? = FluentIconUtils.fetchIconInfo(args[0])
+            response?.let {
+                return response
+            } ?: fetchUnavailableIconInfo()
         }
+    }
+
+    /**
+     * fetches the info for the unavailable filled style "Square" icon used as a fallback
+     */
+    private fun fetchUnavailableIconInfo(): HttpRequestResult<String>? {
+        isFilledStyle = true
+        val unavailableIconURL = Util.getUnavailableIconSvgInfoUrl()
+        return FluentIconUtils.fetchIconInfo(unavailableIconURL)
     }
 
     override fun onPostExecute(result: HttpRequestResult<String>?) {

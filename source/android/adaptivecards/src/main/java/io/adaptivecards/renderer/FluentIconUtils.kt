@@ -51,21 +51,6 @@ object FluentIconUtils {
             val responseBytes = HttpRequestHelper.get(svgURL) ?: throw Exception("Failed to fetch icon info")
             HttpRequestResult<String>(String (responseBytes, StandardCharsets.UTF_8))
         } catch (e: Exception) {
-            fetchUnavailableIconInfo()
-        }
-    }
-
-    /**
-     * fetches the info for the unavailable filled style "Square" icon used as a fallback
-     */
-    private fun fetchUnavailableIconInfo(): HttpRequestResult<String>? {
-        // Todo
-        // isFilledStyle = true
-        val unavailableIconURL = Util.getUnavailableIconSvgInfoUrl()
-        return try {
-            val responseBytes = HttpRequestHelper.get(unavailableIconURL)
-            HttpRequestResult(String (responseBytes, StandardCharsets.UTF_8))
-        } catch (e: Exception) {
             null
         }
     }
