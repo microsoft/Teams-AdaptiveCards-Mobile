@@ -197,8 +197,29 @@
         [_iconView.widthAnchor constraintEqualToConstant:16].active = YES;
         [_iconView.heightAnchor constraintEqualToConstant:16].active = YES;
 
-        [_iconView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor].active = YES;
+        [_iconView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor constant: 6].active = YES;
         [_iconView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
+        
+        int npadding = 0;
+        if (self.doesItHaveAnImageView) {
+            iconPadding += (self.imageView.frame.size.width + iconPadding);
+            npadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+        }
+        CGFloat widthOffset = (imageSize.width + iconPadding);
+
+        [self setContentEdgeInsets:UIEdgeInsetsMake(self.contentEdgeInsets.top, self.contentEdgeInsets.left + widthOffset / 2, self.contentEdgeInsets.bottom, self.contentEdgeInsets.right + widthOffset / 2)];
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, npadding, 0, -(widthOffset + npadding))];
+
+        [NSLayoutConstraint constraintWithItem:_iconView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0].active = YES;
+        CGFloat offset = -(self.contentEdgeInsets.left + self.contentEdgeInsets.right);
+
+        self.titleWidthConstraint = [self.titleLabel.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor constant:offset];
+        self.titleWidthConstraint.active = YES;
+
+        [self.titleLabel.centerXAnchor constraintEqualToAnchor:self.centerXAnchor constant:(widthOffset / 2)].active = YES;
+
+        self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
+        self.heightConstraint.active = YES;
     }
 }
 
@@ -281,13 +302,12 @@
     if (!menuActions.empty())
     {
         button.iconPlacement = ACRRightOfTitle;
-        UIImageView *iconView = [[ACRUIImageView alloc] init];
-        UIImage *image = [UIImage systemImageNamed:@"chevron.down"];
-        iconView.image = image;
-        iconView.tintColor = [config getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:(ForegroundColor::Accent)subtleOption:false];
-        [button addSubview:iconView];
-        button.iconView = iconView;
-        [button setImageView:image withConfig:config];
+        NSString *chevronDownIcon = @"ChevronDown";
+        NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];
+        UIImageView *view = [[ACRSVGImageView alloc] init:url rtl:rootView.context.rtl isFilled:true size:CGSizeMake(12, 12) tintColor:button.currentTitleColor];
+        button.iconView = view;
+        [button addSubview:view];
+        [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];
     }
     
     if (button.isEnabled == NO) {
