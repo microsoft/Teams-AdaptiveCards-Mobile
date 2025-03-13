@@ -144,7 +144,6 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
             }
 
             Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
-//            loadIconOnButton(mContext, iconUrl, baseActionElement.GetSVGPath(), hostConfig, button);
         }
 
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
@@ -155,39 +154,6 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
 
         return button;
     }
-
-    private void loadIconOnButton(
-        Context context,
-        String iconUrl,
-        String svgPath,
-        HostConfig hostConfig,
-        Button button) {
-
-        IconUtils.INSTANCE.getIcon(
-            context,
-            iconUrl,
-            svgPath,
-            "#F50912",
-            false,
-            hostConfig.GetActions().getIconSize(),
-            drawable -> {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        button.setCompoundDrawablePadding(4);
-                        button.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                            drawable,
-                            null,
-                            null,
-                            null
-                        );
-                    }
-                });
-                return null;
-            }
-        );
-    }
-
 
     /**
      * Set Enable state of the button in ActionElement for ConditionallyEnabled property
