@@ -22,7 +22,7 @@ object IconUtils {
         iconHexColor: String?,
         isRTL: Boolean,
         iconSize: Long,
-        callback: (drawable: Drawable?) -> Void
+        callback: (drawable: Drawable?) -> Unit
     ) {
         if (!iconUrl.startsWith(Util.FLUENT_ICON_URL_PREFIX)) {
             val getImage = GetImageAsync(

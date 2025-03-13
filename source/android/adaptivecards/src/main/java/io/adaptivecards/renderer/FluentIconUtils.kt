@@ -27,7 +27,7 @@ object FluentIconUtils {
         targetIconSize: Long,
         isFilledStyle: Boolean,
         isRTL: Boolean,
-        callback: (drawable: Drawable?) -> Void
+        callback: (drawable: Drawable?) -> Unit
     ) {
         val requestResult = fetchIconInfo(svgURL)
         val iconResponse = processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle)

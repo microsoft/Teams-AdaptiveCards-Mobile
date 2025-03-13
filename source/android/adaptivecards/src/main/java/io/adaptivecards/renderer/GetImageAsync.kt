@@ -12,11 +12,11 @@ class GetImageAsync (
     context: Context,
     maxWidth: Int = -1,
     iconSize: Long,
-    callback: (drawable: Drawable?) -> Void
+    callback: (drawable: Drawable?) -> Unit
 ) : GenericImageLoaderAsync(null, imageBaseUrl, maxWidth) {
     protected var context: Context
     protected var iconSize: Long
-    protected var callback: (drawable: Drawable?) -> Void
+    protected var callback: (drawable: Drawable?) -> Unit
 
     init {
         this.context = context
