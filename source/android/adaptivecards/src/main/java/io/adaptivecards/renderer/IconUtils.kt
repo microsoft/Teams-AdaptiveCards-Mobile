@@ -34,19 +34,23 @@ object IconUtils {
             )
             getImage.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl)
         } else {
-            val isFilledStyle = iconUrl.contains("filled")
-            val svgInfoURL = Util.getSvgInfoUrl(svgPath)
-            AsyncTask.execute {
-                FluentIconUtils.getFluentIcon(
-                    context,
-                    svgInfoURL,
-                    iconHexColor ?: "#FFFFFF",
-                    iconSize,
-                    isFilledStyle,
-                    isRTL
-                ) { drawable: Drawable? ->
-                    callback(drawable)
+            svgPath?.let {
+                val isFilledStyle = iconUrl.contains("filled")
+                val svgInfoURL = Util.getSvgInfoUrl(it)
+                AsyncTask.execute {
+                    FluentIconUtils.getFluentIcon(
+                        context,
+                        svgInfoURL,
+                        iconHexColor ?: "#FFFFFF",
+                        iconSize,
+                        isFilledStyle,
+                        isRTL
+                    ) { drawable: Drawable? ->
+                        callback(drawable)
+                    }
                 }
+            } ?: run {
+                callback(null)
             }
         }
     }
