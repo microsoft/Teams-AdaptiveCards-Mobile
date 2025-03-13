@@ -38,7 +38,7 @@ object FluentIconUtils {
 
     /**
      * fetches the icon info from the CDN
-     * if the request fails or response is null, fetches the info for the unavailable "Square" icon as a fallback
+     * if the request fails or response is null, returns null
      * sample url: https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/AlbumAdd/AlbumAdd.json
      **/
     internal fun fetchIconInfo(svgURL: String): HttpRequestResult<String>? {
