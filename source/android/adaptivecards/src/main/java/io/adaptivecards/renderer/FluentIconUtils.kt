@@ -32,12 +32,7 @@ object FluentIconUtils {
         val requestResult = fetchIconInfo(svgURL)
         val iconResponse = processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle)
         iconResponse.drawable?.let {
-            if (isRTL) {
-                val flippedDrawable = flipDrawableHorizontally(it, context)
-                callback(flippedDrawable)
-            } else {
-                callback(it)
-            }
+            callback(if (isRTL) flipDrawableHorizontally(it, context) else it)
         }
     }
 
