@@ -236,6 +236,14 @@
 										"value": "v1.5/Scenarios/Carousel.json"
 									},
 									{
+										"title": "Carousel 1",
+										"value": "v1.6/Elements/Carousel.1.json"
+									},
+									{
+										"title": "Carousel 2",
+										"value": "v1.6/Elements/Carousel.2.json"
+									},
+									{
 										"title": "Carousel.Slide",
 										"value": "v1.6/Elements/Carousel.sample.json"
 									},

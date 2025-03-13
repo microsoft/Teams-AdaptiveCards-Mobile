@@ -1,0 +1,70 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "Carousel",
+      "bleed": true,
+      "pages": [
+        {
+          "type": "CarouselPage",
+          "items": [
+            {
+              "type": "Container",
+              "bleed": true,
+              "minHeight": "300px",
+              "backgroundImage": {
+                "url": "https://wallup.net/wp-content/uploads/2015/12/235412-nature-landscape-reflection-lake-fall-forest-mist-sunrise-mountain-trees-Canada-clear_sky-sunlight.jpg"
+              }
+            },
+            {
+              "type": "TextBlock",
+              "text": "What a beautiful lake!",
+              "wrap": true,
+              "size": "Large"
+            }
+          ]
+        },
+        {
+          "type": "CarouselPage",
+          "items": [
+            {
+              "type": "Container",
+              "bleed": true,
+              "minHeight": "300px",
+              "backgroundImage": {
+                "url": "https://i.pinimg.com/originals/55/b8/d2/55b8d2f31b3141c6d30dbfb601472832.jpg"
+              }
+            },
+            {
+              "type": "TextBlock",
+              "text": "An arid desert!",
+              "wrap": true,
+              "size": "Large"
+            }
+          ]
+        },
+        {
+          "type": "CarouselPage",
+          "items": [
+            {
+              "type": "Container",
+              "bleed": true,
+              "minHeight": "300px",
+              "backgroundImage": {
+                "url": "https://i.pinimg.com/originals/22/73/ce/2273cea76ec094cfcc59d1b5221fd1ee.jpg"
+              }
+            },
+            {
+              "type": "TextBlock",
+              "text": "Ah, the mountain!",
+              "wrap": true,
+              "size": "Large"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
