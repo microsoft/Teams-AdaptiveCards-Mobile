@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.widget.Button
 import io.adaptivecards.renderer.http.HttpRequestResult
+import java.lang.ref.WeakReference
 
 class GetImageAsync (
     imageBaseUrl: String?,
@@ -14,18 +14,19 @@ class GetImageAsync (
     iconSize: Long,
     callback: (drawable: Drawable?) -> Unit
 ) : GenericImageLoaderAsync(null, imageBaseUrl, maxWidth) {
-    protected var context: Context
-    protected var iconSize: Long
-    protected var callback: (drawable: Drawable?) -> Unit
+    private val context: WeakReference<Context>
+    private val iconSize: Long
+    private val callback: (drawable: Drawable?) -> Unit
 
     init {
-        this.context = context
+        this.context = WeakReference(context)
         this.iconSize = iconSize
         this.callback = callback
     }
 
     override fun doInBackground(vararg args: String): HttpRequestResult<Bitmap>? {
-        if (args.size == 0) {
+        val context = context.get()
+        if (args.isEmpty() || context == null) {
             return null
         }
         return loadImage(args[0], context)
@@ -36,8 +37,12 @@ class GetImageAsync (
         callback(drawableIcon)
     }
 
-    override fun styleBitmap(bitmap: Bitmap?): Bitmap {
-        val imageHeight = Util.dpToPixels(context, iconSize.toFloat()).toFloat()
-        return Util.scaleBitmapToHeight(imageHeight, bitmap)
+    override fun styleBitmap(bitmap: Bitmap?): Bitmap? {
+        val context = context.get()
+        if (context != null) {
+            val imageHeight = Util.dpToPixels(context, iconSize.toFloat()).toFloat()
+            return Util.scaleBitmapToHeight(imageHeight, bitmap)
+        }
+        return bitmap
     }
 }

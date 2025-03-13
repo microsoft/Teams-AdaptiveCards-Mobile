@@ -33,11 +33,6 @@ public abstract class GenericImageLoaderAsync extends AsyncTask<String, Void, Ht
     int m_maxWidth;
     IOnlineImageLoader m_onlineImageLoader = null;
 
-    GenericImageLoaderAsync(RenderedAdaptiveCard renderedCard, String imageBaseUrl)
-    {
-        this(renderedCard, imageBaseUrl, -1);
-    }
-
     GenericImageLoaderAsync(@Nullable RenderedAdaptiveCard renderedCard, String imageBaseUrl, int maxWidth)
     {
         m_renderedCard = renderedCard;
