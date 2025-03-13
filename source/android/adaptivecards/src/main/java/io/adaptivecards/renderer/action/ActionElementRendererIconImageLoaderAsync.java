@@ -25,7 +25,7 @@ public class ActionElementRendererIconImageLoaderAsync extends InnerImageLoaderA
 
     public ActionElementRendererIconImageLoaderAsync(RenderedAdaptiveCard renderedCard, View containerView, String imageBaseUrl, IconPlacement iconPlacement, long iconSize, long padding, Context context)
     {
-        super(renderedCard, containerView, imageBaseUrl, containerView.getResources().getDisplayMetrics().widthPixels);
+        super(renderedCard, containerView, imageBaseUrl);
         m_iconPlacement = iconPlacement;
         m_iconSize = iconSize;
         m_padding = padding;
