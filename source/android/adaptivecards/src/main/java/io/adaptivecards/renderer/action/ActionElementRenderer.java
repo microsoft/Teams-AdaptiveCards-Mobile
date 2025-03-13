@@ -7,9 +7,6 @@ import static io.adaptivecards.renderer.inputhandler.InputUtils.isAnyInputValid;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
@@ -32,8 +29,6 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.renderer.BaseActionElementRenderer;
-import io.adaptivecards.renderer.FluentIconUtils;
-import io.adaptivecards.renderer.IconUtils;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
@@ -43,43 +38,59 @@ import io.adaptivecards.renderer.inputhandler.IInputHandler;
 import java.util.List;
 
 
-public class ActionElementRenderer extends BaseActionElementRenderer {
-    protected ActionElementRenderer() {
+public class ActionElementRenderer extends BaseActionElementRenderer
+{
+    protected ActionElementRenderer()
+    {
     }
 
-    public static ActionElementRenderer getInstance() {
-        if (s_instance == null) {
+    public static ActionElementRenderer getInstance()
+    {
+        if (s_instance == null)
+        {
             s_instance = new ActionElementRenderer();
         }
 
         return s_instance;
     }
 
-    private static Button createButtonWithTheme(Context context, int theme) {
+    private static Button createButtonWithTheme(Context context, int theme)
+    {
         Context themedContext = new ContextThemeWrapper(context, theme);
         return new Button(themedContext);
     }
 
-    protected static Button getButtonForStyle(Context context, String style, HostConfig hostConfig) {
+    protected static Button getButtonForStyle(Context context, String style, HostConfig hostConfig)
+    {
         boolean isPositiveStyle = style.equalsIgnoreCase("Positive");
         boolean isDestructiveStyle = style.equalsIgnoreCase("Destructive");
 
-        if (isPositiveStyle || isDestructiveStyle) {
+        if(isPositiveStyle || isDestructiveStyle)
+        {
             Resources.Theme theme = context.getTheme();
             TypedValue buttonStyle = new TypedValue();
 
-            if (isPositiveStyle) {
-                if (theme.resolveAttribute(R.attr.adaptiveActionPositive, buttonStyle, true)) {
+            if(isPositiveStyle)
+            {
+                if(theme.resolveAttribute(R.attr.adaptiveActionPositive, buttonStyle, true))
+                {
                     return createButtonWithTheme(context, buttonStyle.data);
-                } else {
+                }
+                else
+                {
                     Button button = new Button(context);
                     button.getBackground().setColorFilter(getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Accent, false)), PorterDuff.Mode.MULTIPLY);
                     return button;
                 }
-            } else {
-                if (theme.resolveAttribute(R.attr.adaptiveActionDestructive, buttonStyle, true)) {
+            }
+            else
+            {
+                if(theme.resolveAttribute(R.attr.adaptiveActionDestructive, buttonStyle, true))
+                {
                     return createButtonWithTheme(context, buttonStyle.data);
-                } else {
+                }
+                else
+                {
                     Button button = new Button(context);
                     button.getBackground().setColorFilter(getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)), PorterDuff.Mode.MULTIPLY);
                     return button;
@@ -96,7 +107,8 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
         BaseActionElement baseActionElement,
         HostConfig hostConfig,
         RenderedAdaptiveCard renderedCard,
-        RenderArgs renderArgs) {
+        RenderArgs renderArgs)
+    {
         TypedValue buttonStyle = new TypedValue();
         if (baseActionElement.GetElementType() == ActionType.ShowCard && context.getTheme().resolveAttribute(R.attr.adaptiveShowCardAction, buttonStyle, true)) {
             context = new ContextThemeWrapper(context, buttonStyle.data);
@@ -104,28 +116,34 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
 
         Button button = getButtonForStyle(context, baseActionElement.GetStyle(), hostConfig);
 
-        if (Util.isOfType(baseActionElement, ExecuteAction.class) || Util.isOfType(baseActionElement, SubmitAction.class)) {
+        if (Util.isOfType(baseActionElement, ExecuteAction.class) || Util.isOfType(baseActionElement, SubmitAction.class))
+        {
             long actionId = Util.getViewId(button);
             renderedCard.setCardForSubmitAction(actionId, renderArgs.getContainerCardId());
         }
         setButtonEnabledState(baseActionElement, button, renderedCard);
 
         button.setText(baseActionElement.GetTitle());
-        if (!TextUtils.isEmpty(baseActionElement.GetTooltip())) {
+        if (!TextUtils.isEmpty(baseActionElement.GetTooltip()))
+        {
             TooltipCompat.setTooltipText(button, baseActionElement.GetTooltip());
         }
         ActionAlignment alignment = hostConfig.GetActions().getActionAlignment();
         ActionsOrientation orientation = hostConfig.GetActions().getActionsOrientation();
         LinearLayout.LayoutParams layoutParams;
-        if (orientation == ActionsOrientation.Horizontal) {
+        if (orientation == ActionsOrientation.Horizontal)
+        {
             layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
             long spacing = hostConfig.GetActions().getButtonSpacing();
             layoutParams.rightMargin = Util.dpToPixels(context, spacing);
-        } else {
+        }
+        else
+        {
             layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         }
 
-        if (alignment == ActionAlignment.Stretch) {
+        if (alignment == ActionAlignment.Stretch)
+        {
             layoutParams.weight = 1f;
         }
 
@@ -133,13 +151,14 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
         int minHeight = context.getResources().getDimensionPixelSize(R.dimen.action_min_height);
         button.post(() -> Util.expandClickArea(button, minHeight));
 
-        final Context mContext = context;
         String iconUrl = baseActionElement.GetIconUrl();
         String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
 
-        if (!iconUrl.isEmpty()) {
+        if (!iconUrl.isEmpty())
+        {
             IconPlacement iconPlacement = hostConfig.GetActions().getIconPlacement();
-            if (!renderArgs.getAllowAboveTitleIconPlacement()) {
+            if (!renderArgs.getAllowAboveTitleIconPlacement())
+            {
                 iconPlacement = IconPlacement.LeftOfTitle;
             }
 
@@ -161,10 +180,10 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
      * Else if ConditionallyEnabled is true then disable the button if all of the required inputs
      * are invalid.
      * In any other case enable the button by default
-     *
      * @param baseActionElement
      * @param button
-     * @param adaptiveCard      protected so that it cab be called from TeamsActionElementRenderer as it doesn't call super.
+     * @param adaptiveCard
+     * protected so that it cab be called from TeamsActionElementRenderer as it doesn't call super.
      */
     protected void setButtonEnabledState(BaseActionElement baseActionElement, Button button, RenderedAdaptiveCard adaptiveCard) {
         if (!baseActionElement.GetIsEnabled()) {
@@ -202,7 +221,8 @@ public class ActionElementRenderer extends BaseActionElementRenderer {
         ICardActionHandler cardActionHandler,
         HostConfig hostConfig,
         RenderArgs renderArgs) {
-        if (cardActionHandler == null) {
+        if (cardActionHandler == null)
+        {
             throw new IllegalArgumentException("Action Handler is null.");
         }
 

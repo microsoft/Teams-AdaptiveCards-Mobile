@@ -47,6 +47,7 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
         val svgURL = Util.getSvgInfoUrl(icon.GetSVGPath())
         val foregroundColor = hostConfig.GetForegroundColor(ContainerStyle.Default, icon.forgroundColor, false)
         val isFilledStyle = icon.iconStyle == IconStyle.Filled
+
         val fluentIconImageLoaderAsync = FluentIconImageLoaderAsync(
             renderedCard,
             Util.getFluentIconSize(icon.iconSize),
