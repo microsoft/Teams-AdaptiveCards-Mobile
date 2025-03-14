@@ -1,4 +1,4 @@
-package com.example.ac_sdk.objectmodel.utils
+package com.example.ac_sdk.objectmodel.serializer
 
 import com.example.ac_sdk.objectmodel.elements.models.Inline
 import com.example.ac_sdk.objectmodel.elements.models.PlainTextInline
@@ -14,7 +14,6 @@ import kotlinx.serialization.json.JsonContentPolymorphicSerializer
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
 // Custom serializer to handle polymorphic inlines

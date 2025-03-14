@@ -1,8 +1,8 @@
 package com.example.ac_sdk.objectmodel.elements
 
-import com.example.ac_sdk.objectmodel.parser.ParseWarning
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.Util
+import com.example.ac_sdk.objectmodel.serializer.WidthSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -55,6 +55,7 @@ sealed class CollectionElement {
 
     @Serializable
     data class Column(
+        @Serializable(with = WidthSerializer::class)
         var width: String = "auto",
         var pixelWidth: Int = 0,
         var items: List<BaseCardElement> = emptyList(),
@@ -62,10 +63,14 @@ sealed class CollectionElement {
         var layouts: List<Layout> = emptyList()
     ) : StyledCollectionElement() {
 
+        init {
+            setFlexibleWidth(width)
+            setExplicitPixelWidth(pixelWidth)
+        }
         // In Kotlin, you can add helper methods if needed (e.g. a setter that sets pixelWidth based on width)
-        fun setWidth(value: String, warnings: MutableList<ParseWarning>? = null) {
+        private fun setFlexibleWidth(value: String) {
             width = value.lowercase()
-            pixelWidth = Util.parseSizeForPixelSize(width, warnings) ?: 0
+            pixelWidth = Util.parseSizeForPixelSize(width, null) ?: 0
         }
 
         fun setExplicitPixelWidth(value: Int) {

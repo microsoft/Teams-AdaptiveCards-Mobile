@@ -6,12 +6,12 @@ import kotlinx.serialization.Serializable
 data class SemanticVersion(
     val major: Int = 0,
     val minor: Int = 0,
-    val patch: Int = 0,
+    val build: Int = 0,
     val revision: Int = 0
 ) {
 
     override fun toString(): String {
-        return "$major.$minor.$patch.$revision"
+        return "$major.$minor.$build.$revision"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -20,14 +20,14 @@ data class SemanticVersion(
 
         return major == other.major &&
                 minor == other.minor &&
-                patch == other.patch &&
+                build == other.build &&
                 revision == other.revision
     }
 
     override fun hashCode(): Int {
         var result = major
         result = 31 * result + minor
-        result = 31 * result + patch
+        result = 31 * result + build
         result = 31 * result + revision
         return result
     }
@@ -36,7 +36,7 @@ data class SemanticVersion(
         return when {
             major != other.major -> major.compareTo(other.major)
             minor != other.minor -> minor.compareTo(other.minor)
-            patch != other.patch -> patch.compareTo(other.patch)
+            build != other.build -> build.compareTo(other.build)
             else -> revision.compareTo(other.revision)
         }
     }

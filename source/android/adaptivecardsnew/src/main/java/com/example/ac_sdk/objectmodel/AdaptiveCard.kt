@@ -5,7 +5,7 @@ import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import com.example.ac_sdk.objectmodel.elements.BaseElement
 import com.example.ac_sdk.objectmodel.elements.Layout
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
-import com.example.ac_sdk.objectmodel.utils.BackgroundImageSerializer
+import com.example.ac_sdk.objectmodel.serializer.BackgroundImageSerializer
 import com.example.ac_sdk.objectmodel.utils.ContainerStyle
 import com.example.ac_sdk.objectmodel.utils.HeightType
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
@@ -28,7 +28,7 @@ data class AdaptiveCard(
     val fallback: BaseElement? = null,
     var speak: String = "",
     var minHeight: String? = 0.toString(),
-    val height: HeightType? = HeightType.AUTO,
+    val height: HeightType? = HeightType.Auto,
     val verticalAlignment: VerticalAlignment? = VerticalAlignment.TOP,
     val style: ContainerStyle? = ContainerStyle.NONE,
     val backgroundImage: BackgroundImage? = null,

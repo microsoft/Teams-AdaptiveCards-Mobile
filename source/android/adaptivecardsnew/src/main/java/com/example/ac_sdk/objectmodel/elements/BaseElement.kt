@@ -1,5 +1,8 @@
 package com.example.ac_sdk.objectmodel.elements
 
+import com.example.ac_sdk.objectmodel.serializer.FallbackSerializer
+import com.example.ac_sdk.objectmodel.serializer.SemanticVersionMapSerializer
+import com.example.ac_sdk.objectmodel.serializer.SemanticVersionSerializer
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.FallbackType
 import com.example.ac_sdk.objectmodel.utils.InternalId
@@ -14,10 +17,15 @@ sealed class BaseElement(
     var id: String? = null,
     var typeString: String? = null,
     var additionalProperties: JsonElement? = null,
+
+    @Serializable(with = SemanticVersionMapSerializer::class)
     var requires: Map<String, SemanticVersion>? = null,
+
+    @Serializable(with = FallbackSerializer::class)
     var fallback: BaseElement? = null,
+
     @Transient var internalId: InternalId? = InternalId.next(),
-    var fallbackType: FallbackType? = FallbackType.NONE,
+    //var fallbackType: FallbackType? = FallbackType.NONE,
     var canFallbackToAncestor: Boolean? = null
 ) {
 
@@ -39,3 +47,6 @@ sealed class BaseElement(
     }
 
 }
+
+@Serializable
+data object DropElement : BaseElement()

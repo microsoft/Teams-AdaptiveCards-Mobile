@@ -2,7 +2,7 @@ package com.example.ac_sdk.objectmodel.elements.models
 
 import com.example.ac_sdk.objectmodel.elements.BaseActionElement
 import com.example.ac_sdk.objectmodel.utils.ForegroundColor
-import com.example.ac_sdk.objectmodel.utils.InlineSerializer
+import com.example.ac_sdk.objectmodel.serializer.InlineSerializer
 import com.example.ac_sdk.objectmodel.utils.TextSize
 import com.example.ac_sdk.objectmodel.utils.TextWeight
 import kotlinx.serialization.Serializable

@@ -1,12 +1,11 @@
 package com.example.ac_sdk.objectmodel.elements
 
+import com.example.ac_sdk.objectmodel.serializer.HeightTypeSerializer
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.HeightType
 import com.example.ac_sdk.objectmodel.utils.HostWidth
 import com.example.ac_sdk.objectmodel.utils.Spacing
 import com.example.ac_sdk.objectmodel.utils.TargetWidthType
-import kotlinx.serialization.Polymorphic
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -15,6 +14,7 @@ import kotlinx.serialization.json.JsonObject
 sealed class BaseCardElement: BaseElement() {
     var spacing: Spacing? = null
     var separator: Boolean? = null
+    @Serializable(with = HeightTypeSerializer::class)
     var height: HeightType? = null
     var targetWidth: TargetWidthType? = null
     var isVisible: Boolean? = null

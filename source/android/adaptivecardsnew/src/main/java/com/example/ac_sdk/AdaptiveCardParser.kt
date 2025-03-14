@@ -29,11 +29,15 @@ class AdaptiveCardParser {
 
     companion object {
 
-        fun deserializeFromString(jsonText: String, rendererVersion: String, context: ParseContext): ParseResult {
+        fun deserializeFromString(
+            jsonText: String,
+            rendererVersion: String,
+            context: ParseContext
+        ): ParseResult {
             val json = Json.parseToJsonElement(jsonText)
             return deserialize(json.jsonObject, rendererVersion, context).also {
-               // val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
-                //Log.d("checkPoint", adaptiveCardJson)
+                val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
+                Log.d("checkPoint", adaptiveCardJson)
             }
         }
 
@@ -225,7 +229,7 @@ class AdaptiveCardParser {
                 speak = speak,
                 language = language,
                 verticalAlignment = VerticalAlignment.TOP,
-                height = HeightType.AUTO,
+                height = HeightType.Auto,
                 minHeight = "0"
             )
             fallbackCard.body.add(

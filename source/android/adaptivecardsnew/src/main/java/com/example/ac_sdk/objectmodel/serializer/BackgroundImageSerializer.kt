@@ -1,6 +1,9 @@
-package com.example.ac_sdk.objectmodel.utils
+package com.example.ac_sdk.objectmodel.serializer
 
 import com.example.ac_sdk.objectmodel.BackgroundImage
+import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
+import com.example.ac_sdk.objectmodel.utils.ImageFillMode
+import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor

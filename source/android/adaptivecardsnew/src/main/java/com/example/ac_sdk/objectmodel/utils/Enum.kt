@@ -268,6 +268,8 @@ enum class Spacing {
     NONE,
     @SerialName("small")
     SMALL,
+    @SerialName("extraSmall")
+    EXTRA_SMALL,
     @SerialName("medium")
     MEDIUM,
     @SerialName("large")
@@ -279,11 +281,26 @@ enum class Spacing {
 }
 
 @Serializable
-enum class HeightType {
+sealed class HeightType {
+    @Serializable
     @SerialName("Auto")
-    AUTO,
+    data object Auto : HeightType()
+
+    @Serializable
     @SerialName("Stretch")
-    STRETCH
+    data object Stretch : HeightType()
+
+    @Serializable
+    data class Custom(val value: String) : HeightType()
+
+    companion object {
+        fun fromString(str: String): HeightType =
+            when (str.lowercase()) {
+                "auto" -> Auto
+                "stretch" -> Stretch
+                else -> Custom(str)
+            }
+    }
 }
 
 @Serializable

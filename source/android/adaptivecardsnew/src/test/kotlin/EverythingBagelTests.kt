@@ -498,7 +498,7 @@ class EverythingBagelTests {
         card.refresh?.let { validateRefresh(it) } ?: fail("Missing refresh")
         card.authentication?.let { validateAuthentication(it) } ?: fail("Missing authentication")
         assertEquals("fallbackText", card.fallbackText)
-        assertEquals(HeightType.AUTO, card.height)
+        assertEquals(HeightType.Auto, card.height)
         assertEquals("", card.language)
         assertNull(card.selectAction)
         assertEquals("speak", card.speak)
