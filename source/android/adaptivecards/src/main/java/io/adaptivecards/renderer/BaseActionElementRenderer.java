@@ -340,8 +340,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private boolean isOverflowMenuScenarioAllowed(@NonNull BaseActionElement baseActionElement) {
-            //return !m_disableOverFlowMenuScenario && baseActionElement.GetIsSplitAction();
-            return !m_disableOverFlowMenuScenario && baseActionElement.GetMenuActions() != null && !baseActionElement.GetMenuActions().isEmpty();
+            return !m_disableOverFlowMenuScenario && baseActionElement.GetIsSplitAction();
         }
 
         /***
