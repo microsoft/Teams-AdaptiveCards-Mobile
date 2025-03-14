@@ -40,8 +40,13 @@ const std::string& BaseActionElement::GetIconUrl() const
 
 std::string BaseActionElement::GetSVGPath() const
 {
+    return GetSVGPath(m_iconUrl);
+}
+
+std::string BaseActionElement::GetSVGPath(const std::string& iconUrl) const
+{
     std::regex regex{R"([,:]+)"}; // split on ':' and ','
-    std::sregex_token_iterator it{m_iconUrl.begin(), m_iconUrl.end(), regex, -1};
+    std::sregex_token_iterator it{iconUrl.begin(), iconUrl.end(), regex, -1};
     std::vector<std::string> config{it, {}};
     std::string iconStyle = IconStyleToString(IconStyle::Regular);
     std::string iconName = "";
@@ -204,11 +209,6 @@ const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& BaseAction
     return m_menuActions;
 }
 
-std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& BaseActionElement::GetMenuActions()
-{
-    return m_menuActions;
-}
-
 void BaseActionElement::ParseJsonObject(AdaptiveCards::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& baseElement)
 {
     baseElement = ParseUtil::GetActionFromJsonValue(context, json);
@@ -234,30 +234,46 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title));
     element->SetIconUrl(ParseUtil::GetString(json, AdaptiveCardSchemaKey::IconUrl));
     element->SetStyle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Style, defaultStyle, false));
+    element->SetMode(ParseUtil::GetEnumValue<Mode>(json, AdaptiveCardSchemaKey::Mode, Mode::Primary, ModeFromString));
     element->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip));
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
     element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
 
-    //Parse Menu Actions
-    auto menuActions = ParseUtil::GetElementCollection<BaseActionElement>(
-            true,
-            context,
-            json,
-            AdaptiveCardSchemaKey::MenuActions,
-            false);
+    if (element->isSplitActionSupported()) {
+        //Parse Menu Actions
+        auto menuActions = ParseUtil::GetElementCollection<BaseActionElement>(
+                true,
+                context,
+                json,
+                AdaptiveCardSchemaKey::MenuActions,
+                false);
+        element->m_menuActions = std::move(menuActions);
 
-    // Set the mode, override mode to primary if menuActions are present
-    element->SetMode(menuActions.empty() ?
-                    ParseUtil::GetEnumValue<Mode>(json, AdaptiveCardSchemaKey::Mode, Mode::Primary, ModeFromString) :
-                    Mode::Primary);
-    element->m_menuActions = std::move(menuActions);
+        if (!element->m_menuActions.empty()) {
+            // Set the mode, override mode to primary if menuActions are present
+            element->SetMode(Mode::Primary);
 
-    // Avoid nesting of menuActions within menuActions by setting such instances to empty
-    if (!element->m_menuActions.empty()) {
-        for (const auto& menuAction: element->m_menuActions) {
-            if (!menuAction->m_menuActions.empty()) {
-                menuAction->m_menuActions.clear();
+            // Avoid nesting of menuActions within menuActions by setting such instances to empty
+            for (const auto& menuAction: element->m_menuActions) {
+                if (!menuAction->m_menuActions.empty()) {
+                    menuAction->m_menuActions.clear();
+                }
             }
         }
     }
+}
+
+bool BaseActionElement::GetIsSplitAction() const
+{
+    return !m_menuActions.empty();
+}
+
+bool BaseActionElement::isSplitActionSupported() const
+{
+    auto actionType = GetElementType();
+    return actionType != ActionType::ShowCard
+        && actionType != ActionType::Unsupported
+        && actionType != ActionType::UnknownAction
+        && actionType != ActionType::Overflow
+        && actionType != ActionType::Custom;
 }
