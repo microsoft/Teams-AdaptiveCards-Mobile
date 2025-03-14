@@ -232,16 +232,16 @@
 										"value": "v1.5/Scenarios/badge.json"
 									},
 									{
+										"title": "Actions Split Button",
+										"value": "v1.5/Elements/Action.MenuActions.json"
+									},
+									{
 										"title": "Carousel",
 										"value": "v1.5/Scenarios/Carousel.json"
 									},
 									{
 										"title": "Carousel.Slide",
 										"value": "v1.6/Elements/Carousel.sample.json"
-									},
-									{
-										"title": "Action",
-										"value": "v1.5/Elements/Action.MenuActions.json"
 									},
 									{
 										"title": "Carousel.CrossFade",
