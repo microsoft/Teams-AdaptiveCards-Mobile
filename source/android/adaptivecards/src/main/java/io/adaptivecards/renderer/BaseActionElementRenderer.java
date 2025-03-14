@@ -351,7 +351,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
          * @return Boolean - true if scenario is handled, false if not.
          * Default return type is false.
          */
-        protected boolean handleOverflowMenuScenario(@NonNull BaseActionElement baseActionElement) {
+        protected boolean handleOverflowMenuScenario(@NonNull View view, @NonNull BaseActionElement baseActionElement) {
             return false;
         }
 
@@ -366,7 +366,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         @Override
         public void onClick(View view)
         {
-            if (isOverflowMenuScenarioAllowed(m_action) && handleOverflowMenuScenario(m_action)) {
+            if (isOverflowMenuScenarioAllowed(m_action) && handleOverflowMenuScenario(view, m_action)) {
                 return;
             }
 
