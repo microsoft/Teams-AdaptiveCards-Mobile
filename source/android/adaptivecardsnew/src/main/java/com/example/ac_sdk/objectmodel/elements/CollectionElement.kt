@@ -73,7 +73,7 @@ sealed class CollectionElement {
             pixelWidth = Util.parseSizeForPixelSize(width, null) ?: 0
         }
 
-        fun setExplicitPixelWidth(value: Int) {
+        private fun setExplicitPixelWidth(value: Int) {
             pixelWidth = value
             width = "${value}px"
         }
@@ -116,5 +116,6 @@ data class Table(
 
 @Serializable
 data class TableColumnDefinition(
+    @Serializable(with = WidthSerializer::class)
     val width: String? = null
 )

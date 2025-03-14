@@ -1,6 +1,7 @@
 package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.AdaptiveCard
+import com.example.ac_sdk.objectmodel.serializer.TargetElementSerializer
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.AssociatedInputs
 import kotlinx.serialization.*
@@ -74,6 +75,7 @@ sealed class ActionElement {
     @Serializable
     @SerialName("Action.ToggleVisibility")
     data class ActionToggleVisibility(
+        @Serializable(with = TargetElementSerializer::class)
         val targetElements: List<TargetElement>
     ) : BaseActionElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
