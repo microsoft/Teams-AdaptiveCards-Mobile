@@ -37,7 +37,7 @@ public class ShowCardOverrideRenderer extends BaseActionElementRenderer
         button.getBackground().setColorFilter(m_activity.getResources().getColor(R.color.yellowActionColor), PorterDuff.Mode.SRC_ATOP);
         button.setText(baseActionElement.GetTitle() +"(ShowCard)");
         button.setAllCaps(false);
-        button.setOnClickListener(new BaseActionElementRenderer.ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
+        button.setOnClickListener(BaseActionElementRenderer.ActionOnClickListener.newInstance(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
         viewGroup.addView(button);
         return button;
     }
