@@ -165,10 +165,9 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
         }
 
-        if (ActionElementUtil.isSplitButtonAction(baseActionElement)) {
-            // Todo swig dependency, pass iconUrl in GetSVGPath
-            String splitButtonSvgURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
-            Util.loadIcon(context, button, ActionElementUtil.SPLIT_BUTTON_ICON_URL, splitButtonSvgURL, hostConfig, renderedCard, IconPlacement.RightOfTitle);
+        if (baseActionElement.GetIsSplitAction()) {
+            String splitButtonSvgURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath(SPLIT_BUTTON_ICON_URL));
+            Util.loadIcon(context, button, SPLIT_BUTTON_ICON_URL, splitButtonSvgURL, hostConfig, renderedCard, IconPlacement.RightOfTitle);
         }
 
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
@@ -233,10 +232,11 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         }
 
         Button button = renderButton(context, viewGroup, baseActionElement, hostConfig, renderedCard, renderArgs);
-        button.setOnClickListener(new BaseActionElementRenderer.ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
+        button.setOnClickListener(BaseActionElementRenderer.ActionOnClickListener.newInstance(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
 
         return button;
     }
 
     private static ActionElementRenderer s_instance = null;
+    private static final String SPLIT_BUTTON_ICON_URL = "icon:ChevronDown,Filled";
 }
