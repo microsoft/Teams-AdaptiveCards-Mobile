@@ -262,6 +262,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Shape, "shape"},
             {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"},
+            {AdaptiveCardSchemaKey::MenuActions, "menuActions"},
             {AdaptiveCardSchemaKey::Content, "content"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {

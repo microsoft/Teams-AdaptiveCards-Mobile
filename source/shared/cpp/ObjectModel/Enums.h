@@ -264,6 +264,7 @@ enum class AdaptiveCardSchemaKey
     PageControl,
     SelectedTintColor,
     ExtraSmall,
+    MenuActions,
     Content
 };
 
