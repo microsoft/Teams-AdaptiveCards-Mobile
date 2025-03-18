@@ -268,6 +268,7 @@ public class CardRendererRegistration
         m_featureFlagResolver = featureFlagResolver;
     }
 
+    @Nullable
     public IFeatureFlagResolver getFeatureFlagResolver()
     {
         return m_featureFlagResolver;

@@ -261,7 +261,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::StrokeColor, "strokeColor"},
             {AdaptiveCardSchemaKey::Shape, "shape"},
             {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
-            {AdaptiveCardSchemaKey::Wrap, "wrap"}});
+            {AdaptiveCardSchemaKey::Wrap, "wrap"},
+            {AdaptiveCardSchemaKey::MenuActions, "menuActions"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},

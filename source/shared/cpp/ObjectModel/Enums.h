@@ -263,7 +263,8 @@ enum class AdaptiveCardSchemaKey
     PageAnimation,
     PageControl,
     SelectedTintColor,
-    ExtraSmall
+    ExtraSmall,
+    MenuActions
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
