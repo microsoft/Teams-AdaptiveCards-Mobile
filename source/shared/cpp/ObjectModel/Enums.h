@@ -265,7 +265,10 @@ enum class AdaptiveCardSchemaKey
     SelectedTintColor,
     ExtraSmall,
     MenuActions,
-    Content
+    Content,
+    DisplayArrow,
+    MaxPopoverWidth,
+    Position
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);

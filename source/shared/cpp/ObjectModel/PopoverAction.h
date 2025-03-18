@@ -8,8 +8,12 @@
 
 namespace AdaptiveCards
 {
-    class PopoverAction : public BaseActionElement
-    {
+    static const std::string DEFAULT_POSITION = "Above";
+    static const bool DEFAULT_DISPLAY_ARROW = true;
+
+    class PopoverAction : public BaseActionElement {
+
+        friend class PopoverActionActionParser;
 
     public:
         PopoverAction();
@@ -21,12 +25,17 @@ namespace AdaptiveCards
 
         Json::Value SerializeToJsonValue() const override;
 
+        const bool GetDisplayArrow() const;
+        const std::string GetMaxPopoverWidth() const;
+        const std::string GetPosition() const;
         const std::shared_ptr<AdaptiveCards::BaseCardElement> GetContent() const;
-        const void SetContent(const std::shared_ptr<AdaptiveCards::BaseCardElement>);
 
     private:
         void PopulateKnownPropertiesSet();
         std::shared_ptr<BaseCardElement> m_content;
+        bool m_displayArrow;
+        std::string m_position;
+        std::string m_maxPopoverWidth;
     };
 
     class PopoverActionActionParser : public ActionElementParser

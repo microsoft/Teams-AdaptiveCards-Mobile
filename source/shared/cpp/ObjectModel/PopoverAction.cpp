@@ -8,52 +8,53 @@
 
 using namespace AdaptiveCards;
 
-PopoverAction::PopoverAction() : BaseActionElement(ActionType::Popover)
-{
+PopoverAction::PopoverAction() : BaseActionElement(ActionType::Popover) {
     PopulateKnownPropertiesSet();
 }
 
-Json::Value PopoverAction::SerializeToJsonValue() const
-{
+Json::Value PopoverAction::SerializeToJsonValue() const {
     Json::Value root = BaseActionElement::SerializeToJsonValue();
-
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content)] = GetContent()->SerializeToJsonValue();
-
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::DisplayArrow)] = GetDisplayArrow();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxPopoverWidth)] = GetMaxPopoverWidth();
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Position)] = GetPosition();
     return root;
 }
 
-void PopoverAction::PopulateKnownPropertiesSet()
-{
+void PopoverAction::PopulateKnownPropertiesSet() {
     m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content)});
+    m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::DisplayArrow)});
+    m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MaxPopoverWidth)});
+    m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Position)});
 }
 
-std::shared_ptr<BaseCardElement> PopoverAction::GetContent() const
-{
+const bool PopoverAction::GetDisplayArrow() const {
+    return m_displayArrow;
+}
+
+const std::string PopoverAction::GetMaxPopoverWidth() const {
+    return m_maxPopoverWidth;
+}
+
+const std::string PopoverAction::GetPosition() const {
+    return m_position;
+}
+
+const std::shared_ptr<BaseCardElement> PopoverAction::GetContent() const {
     return m_content;
 }
 
-void PopoverAction::SetContent(const std::shared_ptr<BaseCardElement> content)
-{
-    m_content = content;
-}
-
-std::shared_ptr<BaseActionElement> PopoverActionActionParser::DeserializeFromString(ParseContext& context, const std::string& jsonString)
-{
-    return PopoverActionActionParser::Deserialize(context, ParseUtil::GetJsonValueFromString(jsonString));
-}
-
-std::shared_ptr<BaseActionElement> PopoverActionActionParser::Deserialize(ParseContext& context, const Json::Value& json)
-{
+std::shared_ptr<BaseActionElement> PopoverActionActionParser::Deserialize(ParseContext& context, const Json::Value& json) {
     std::shared_ptr<PopoverAction> popoverAction = BaseActionElement::Deserialize<PopoverAction>(context, json);
 
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content);
-
-    auto parseResult = AdaptiveCard::Deserialize(json.get(propertyName, Json::Value()), "", context);
-
-    auto showCardWarnings = parseResult->GetWarnings();
-    context.warnings.insert(context.warnings.end(), showCardWarnings.begin(), showCardWarnings.end());
-
-    //popoverAction->SetContent(parseResult->GetAdaptiveCard());
-
+    popoverAction->m_content = BaseCardElement::Deserialize<BaseCardElement>(context, json.get(propertyName, Json::Value()));
+    popoverAction->m_displayArrow = ParseUtil::GetBool(json, AdaptiveCardSchemaKey::DisplayArrow,DEFAULT_DISPLAY_ARROW);
+    popoverAction->m_maxPopoverWidth = ParseUtil::GetString(json, AdaptiveCardSchemaKey::MaxPopoverWidth,"", false);
+    popoverAction->m_position = ParseUtil::GetString(json, AdaptiveCardSchemaKey::MaxPopoverWidth, DEFAULT_POSITION, false);
     return popoverAction;
+}
+
+std::shared_ptr<BaseActionElement> PopoverActionActionParser::DeserializeFromString(ParseContext& context, const std::string& jsonString) {
+    return PopoverActionActionParser::Deserialize(context, ParseUtil::GetJsonValueFromString(jsonString));
 }
