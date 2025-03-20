@@ -30,7 +30,7 @@ object FluentIconUtils {
         callback: (drawable: Drawable?) -> Unit
     ) {
         val requestResult = fetchIconInfo(svgURL)
-        val iconResponse = processResponseAndRenderFluentIcon(requestResult, context, iconColor, targetIconSize, isFilledStyle)
+        val iconResponse = processResponseAndGetIconDrawable(requestResult, context, iconColor, targetIconSize, isFilledStyle)
         iconResponse.drawable?.let {
             callback(if (isRTL) flipDrawableHorizontally(it, context) else it)
         }
@@ -51,9 +51,9 @@ object FluentIconUtils {
     }
 
     /**
-     * processes the response from the CDN and renders the fluent icon
+     * processes the response from the CDN and returns icon drawable
      **/
-    internal fun processResponseAndRenderFluentIcon(
+    internal fun processResponseAndGetIconDrawable(
         result: HttpRequestResult<String>?,
         context: Context?,
         iconColor: String,
