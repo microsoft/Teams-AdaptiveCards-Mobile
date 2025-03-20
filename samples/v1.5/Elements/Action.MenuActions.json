@@ -257,7 +257,12 @@
 							"conditionallyEnabled": false
 						}
 					]
-				},
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
 				{
 					"type": "Action.Submit",
 					"title": "Submit",
@@ -354,6 +359,84 @@
 							"targetElements": [
 								"defaultInputId",
 								"myZone"
+							]
+						},
+						{
+							"type": "Action.Submit",
+							"title": "Submit",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Submit",
+							"style": "positive",
+							"associatedInputs": "auto",
+							"conditionallyEnabled": true
+						},
+						{
+							"type": "Action.Execute",
+							"title": "Execute",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Execute",
+							"style": "positive",
+							"associatedInputs": "auto",
+							"conditionallyEnabled": false
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.ShowCard",
+					"title": "ShowCard",
+					"style": "positive",
+					"iconUrl": "icon:Open,Filled",
+					"tooltip": "Tooltip for ShowCard",
+					"card": {
+						"type": "AdaptiveCard",
+						"body": [
+							{
+								"type": "TextBlock",
+								"text": "This is a show card"
+							},
+							{
+								"type": "Input.Text",
+								"id": "defaultInputIdShow",
+								"placeholder": "enter comment",
+								"maxLength": 500
+							}
+						]
+					},
+					"menuActions": [
+						{
+							"type": "Action.OpenUrl",
+							"title": "OpenUrl",
+							"iconUrl": "icon:Open,Filled",
+							"tooltip": "Tooltip for OpenUrl",
+							"style": "positive",
+							"url": "https://www.microsoft.com"
+						},
+						{
+							"type": "Action.ResetInputs",
+							"title": "ResetInputs",
+							"iconUrl": "icon:ArrowReset,Filled",
+							"tooltip": "Tooltip for ResetInputs",
+							"style": "positive",
+							"targetInputIds": [
+								"defaultInputId",
+								"myZone"
+							]
+						},
+						{
+							"type": "Action.ToggleVisibility",
+							"title": "ToggleVisibility",
+							"iconUrl": "icon:ToggleLeft,Filled",
+							"tooltip": "Tooltip for ToggleVisibility",
+							"style": "positive",
+							"targetElements": [
+								"defaultInputId",
+								"myZone",
+								"defaultInputIdShow"
 							]
 						},
 						{
