@@ -65,7 +65,7 @@ object FluentIconUtils {
             try {
                 val responseJsonObject = JSONObject(response)
                 val style = if (isFilledStyle) FILLED_STYLE else REGULAR_STYLE
-                val flipInRtl = responseJsonObject.optBoolean(FLIP_IN_RTL_PROPERTY, true)
+                val flipInRtl = responseJsonObject.optBoolean(FLIP_IN_RTL_PROPERTY, false)
                 val styleJsonObject = responseJsonObject.getJSONObject(style)
                 val availableFluentIconSizes = styleJsonObject.keys().asSequence().map { it.toLong() }.toList()
                 val availableIconSizeClosestToGivenSize = Util.getSizeClosestToGivenSize(availableFluentIconSizes, targetIconSize)
