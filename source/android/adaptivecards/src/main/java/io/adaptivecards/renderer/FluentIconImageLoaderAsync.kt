@@ -45,7 +45,7 @@ open class FluentIconImageLoaderAsync(
 
     override fun onPostExecute(result: HttpRequestResult<String>?) {
         val context = viewReference.get()?.context
-        val response = FluentIconUtils.processResponseAndRenderFluentIcon(
+        val response = FluentIconUtils.processResponseAndGetIconDrawable(
                 result,
                 context,
                 iconColor,
