@@ -32,7 +32,7 @@ object FluentIconUtils {
         val requestResult = fetchIconInfo(svgURL)
         val iconResponse = processResponseAndGetIconDrawable(requestResult, context, iconColor, targetIconSize, isFilledStyle)
         iconResponse.drawable?.let {
-            callback(if (isRTL) flipDrawableHorizontally(it, context) else it)
+            callback(if (isRTL && iconResponse.flipInRtl) flipDrawableHorizontally(it, context) else it)
         }
     }
 
@@ -65,7 +65,7 @@ object FluentIconUtils {
             try {
                 val responseJsonObject = JSONObject(response)
                 val style = if (isFilledStyle) FILLED_STYLE else REGULAR_STYLE
-                val flipInRtl = responseJsonObject.optBoolean(FLIP_IN_RTL_PROPERTY, false)
+                val flipInRtl = responseJsonObject.optBoolean(FLIP_IN_RTL_PROPERTY, true)
                 val styleJsonObject = responseJsonObject.getJSONObject(style)
                 val availableFluentIconSizes = styleJsonObject.keys().asSequence().map { it.toLong() }.toList()
                 val availableIconSizeClosestToGivenSize = Util.getSizeClosestToGivenSize(availableFluentIconSizes, targetIconSize)
