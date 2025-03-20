@@ -53,7 +53,7 @@ class ActionElementRendererFluentIconImageLoaderAsync(
      * flips the drawable horizontally if the card is RTL and the flipInRtl property is true for the rendered svg
      **/
     private fun flipDrawableHorizontally(drawable: Drawable, view: View, flipInRtl: Boolean): Drawable {
-        return if (renderedCard.adaptiveCard.GetRtl() == flipInRtl) {
+        return if (FluentIconUtils.shouldFlipIcon(renderedCard.adaptiveCard.GetRtl(), flipInRtl)) {
             FluentIconUtils.flipDrawableHorizontally(drawable, view.context)
         } else {
             drawable

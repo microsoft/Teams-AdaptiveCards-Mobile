@@ -32,7 +32,7 @@ object FluentIconUtils {
         val requestResult = fetchIconInfo(svgURL)
         val iconResponse = processResponseAndGetIconDrawable(requestResult, context, iconColor, targetIconSize, isFilledStyle)
         iconResponse.drawable?.let {
-            callback(if (isRTL && iconResponse.flipInRtl) flipDrawableHorizontally(it, context) else it)
+            callback(if (shouldFlipIcon(isRTL, iconResponse.flipInRtl)) flipDrawableHorizontally(it, context) else it)
         }
     }
 
@@ -125,6 +125,15 @@ object FluentIconUtils {
         val flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 
         return BitmapDrawable(context.resources, flippedBitmap)
+    }
+
+    /**
+     * checks if the icon should be flipped in RTL
+     * @param isRtl true if the layout is RTL
+     * @param flipInRtl true if the icon can be flipped in RTL
+     **/
+    fun shouldFlipIcon(isRtl: Boolean?, flipInRtl: Boolean): Boolean {
+        return ((isRtl ?: false) && flipInRtl)
     }
 
     data class IconResponse(val drawable: Drawable?, val flipInRtl: Boolean)

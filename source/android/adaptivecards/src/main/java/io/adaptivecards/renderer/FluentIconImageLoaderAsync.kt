@@ -64,7 +64,7 @@ open class FluentIconImageLoaderAsync(
         val view = viewReference.get()
         if (view != null && view is ImageView) {
             view.setImageDrawable(drawable)
-            if (renderedCard.adaptiveCard.GetRtl() == flipInRtl) {
+            if (FluentIconUtils.shouldFlipIcon(renderedCard.adaptiveCard.GetRtl(), flipInRtl)) {
                 view.scaleX = -1f
             }
         }
