@@ -75,7 +75,7 @@ public:
         return actionType == ActionType::Execute
                || actionType == ActionType::OpenUrl
                //|| actionType == ActionType::ResetInputs // Todo add ResetInputs once implemented
-               || actionType == ActionType::ShowCard
+               //|| actionType == ActionType::ShowCard //Todo uncomment once ShowCard is supported
                || actionType == ActionType::Submit
                || actionType == ActionType::ToggleVisibility;
     }
