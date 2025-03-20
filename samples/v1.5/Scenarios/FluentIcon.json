@@ -1,7 +1,6 @@
 {
 	"type": "AdaptiveCard",
 	"version": "1.5",
-	"rtl": true,
 	"body": [
 		{
 			"type": "TextBlock",

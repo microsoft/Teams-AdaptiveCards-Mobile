@@ -10,6 +10,19 @@
 			"size": "Large"
 		},
 		{
+			"type": "Icon",
+			"name": "Airplane",
+			"selectAction": {
+				"type": "Action.ToggleVisibility",
+				"targetElements": [
+					"reimbursement",
+					"chevronUp",
+					"chevronDown"
+				]
+			},
+			"id": "chevronDown"
+		},
+		{
 			"type": "ColumnSet",
 			"columns": [
 				{
@@ -431,21 +444,23 @@
 	"actions": [
 		{
 			"type": "Action.OpenUrl",
-			"title": "Regular icon",
+			"title": "RTL supported",
 			"url": "https://www.microsoft.com",
 			"iconUrl": "icon:ArrowExport"
 		},
 		{
 			"type": "Action.OpenUrl",
-			"title": "Filled icon",
+			"title": "RTL supported",
 			"url": "https://www.microsoft.com",
 			"iconUrl": "icon:Calendar,filled"
 		},
 		{
 			"type": "Action.OpenUrl",
-			"title": "Invalid icon doesn't render",
+			"title": "No RTL",
 			"url": "https://www.microsoft.com",
-			"iconUrl": "icon:Invalid"
+			"iconUrl": "icon:AccessTime,filled",
+			"style": "destructive",
+			"rtl": true
 		}
 	]
 }
