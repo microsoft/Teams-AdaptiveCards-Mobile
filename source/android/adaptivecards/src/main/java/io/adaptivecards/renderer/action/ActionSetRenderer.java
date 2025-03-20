@@ -64,6 +64,7 @@ public class ActionSetRenderer extends BaseCardElementRenderer
 
         ContainerStyle style = renderArgs.getContainerStyle();
         String color = hostConfig.GetBackgroundColor(style);
+        actionsLayout.setBackgroundColor(Color.parseColor(color));
 
         rootLayout.addView(actionsLayout);
 
