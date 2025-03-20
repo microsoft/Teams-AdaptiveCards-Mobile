@@ -71,34 +71,9 @@ public:
 
     static void ParseJsonObject(AdaptiveCards::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element);
 
-    static const bool IsSplitActionSupported(const ActionType actionType) {
-        return actionType != ActionType::Unsupported
-               && actionType != ActionType::UnknownAction
-               && actionType != ActionType::ShowCard
-               && actionType != ActionType::Popover
-               && actionType != ActionType::Overflow
-               && actionType != ActionType::Custom;
-    }
-
-    /**
-     * Determines if the given action type is a valid menu action.
-     * @param actionType The type of action to be validated.
-     * @return `true` if the action type is valid, `false` otherwise.
-
-     * @note The `ActionType::ResetInputs` is planned for future implementation and is
-     * currently commented out in the code.
-     */
-    static const bool IsValidMenuAction(const ActionType actionType) {
-        return actionType == ActionType::Execute
-               || actionType == ActionType::OpenUrl
-               // Todo add ResetInputs once implemented
-               //|| actionType == ActionType::ResetInputs
-               || actionType == ActionType::Submit
-               || actionType == ActionType::ToggleVisibility;
-    }
-
 private:
     void PopulateKnownPropertiesSet();
+    bool isSplitActionSupported() const;
     static void DeserializeBaseProperties(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseActionElement>& element);
 
     static constexpr const char* const defaultStyle = "default";
