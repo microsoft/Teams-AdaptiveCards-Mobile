@@ -89,14 +89,25 @@ object FluentIconUtils {
         val bitmap = Bitmap.createBitmap(picture.width, picture.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         picture.draw(canvas)
-        val drawable = BitmapDrawable(context.resources, bitmap)
-        val color = try {
-            Color.parseColor(iconColor)
-        } catch (e: IllegalArgumentException) {
-            Color.BLACK
+        val drawable = BitmapDrawable(context.resources, bitmap).apply {
+            applyIconColor(iconColor)
         }
-        drawable.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
         return drawable
+    }
+
+    @JvmStatic
+    fun getHexColor(currentTextColor: Int) : String {
+        return String.format("#%06X", 0xFFFFFF and currentTextColor)
+    }
+
+    @JvmStatic
+    fun Drawable.applyIconColor(hexIconColor: String, defaultHexIconColor : Int = Color.BLACK) {
+        val color = try {
+            Color.parseColor(hexIconColor)
+        } catch (e: IllegalArgumentException) {
+            defaultHexIconColor
+        }
+        this.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
     }
 
     /**

@@ -642,7 +642,8 @@ inline ContainerBleedDirection& operator&=(ContainerBleedDirection& a, Container
 enum class IconPlacement
 {
     AboveTitle = 0,
-    LeftOfTitle
+    LeftOfTitle,
+    RightOfTitle
 };
 DECLARE_ADAPTIVECARD_ENUM(IconPlacement);
 
