@@ -24,14 +24,14 @@ public class CustomActionListener extends BaseActionElementRenderer.ActionOnClic
                                 HostConfig hostConfig,
                                 RenderArgs renderArgs)
     {
-        super(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
+        super(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, null);
     }
 
     public CustomActionListener(RenderedAdaptiveCard renderedCard,
                                 BaseActionElement baseActionElement,
                                 ICardActionHandler cardActionHandler)
     {
-        super(renderedCard, baseActionElement, cardActionHandler);
+        super(renderedCard, baseActionElement, cardActionHandler, null);
     }
 
     @Override

@@ -232,6 +232,10 @@
 										"value": "v1.5/Scenarios/badge.json"
 									},
 									{
+										"title": "Actions Split Button",
+										"value": "v1.5/Elements/Action.MenuActions.json"
+									},
+									{
 										"title": "Carousel",
 										"value": "v1.5/Scenarios/Carousel.json"
 									},
