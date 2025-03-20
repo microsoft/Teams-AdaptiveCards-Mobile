@@ -1,13 +1,9 @@
 package io.adaptivecards.adaptivecardssample.CustomObjects.Media;
 
 import android.graphics.Bitmap;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import android.graphics.BitmapFactory;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 import io.adaptivecards.renderer.GenericImageLoaderAsync;
@@ -36,10 +32,5 @@ public class CustomImageLoaderForButtons implements IResourceResolver
 
         return new HttpRequestResult<>(bitmap);
     }
-
-    @Override
-    public HttpRequestResult<Bitmap> resolveImageResource(String s, GenericImageLoaderAsync genericImageLoaderAsync, int i) throws IOException, URISyntaxException
-    {
-        return resolveImageResource(s, genericImageLoaderAsync);
-    }
 }
+

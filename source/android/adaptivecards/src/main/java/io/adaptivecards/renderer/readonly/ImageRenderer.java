@@ -60,6 +60,7 @@ public class ImageRenderer extends BaseCardElementRenderer
 
     private class ImageRendererImageLoaderAsync extends InnerImageLoaderAsync
     {
+
         ImageRendererImageLoaderAsync(
             RenderedAdaptiveCard renderedCard,
             ImageView imageView,
@@ -67,18 +68,7 @@ public class ImageRenderer extends BaseCardElementRenderer
             ImageStyle imageStyle,
             int backgroundColor)
         {
-            this(renderedCard, imageView, imageBaseUrl, imageStyle, backgroundColor, -1);
-        }
-
-        ImageRendererImageLoaderAsync(
-            RenderedAdaptiveCard renderedCard,
-            ImageView imageView,
-            String imageBaseUrl,
-            ImageStyle imageStyle,
-            int backgroundColor,
-            int maxWidth)
-        {
-            super(renderedCard, imageView, imageBaseUrl, maxWidth);
+            super(renderedCard, imageView, imageBaseUrl);
             m_imageStyle = imageStyle;
             m_backgroundColor = backgroundColor;
         }
@@ -338,14 +328,12 @@ public class ImageRenderer extends BaseCardElementRenderer
             imageView.setBackgroundColor(backgroundColor);
         }
 
-        int imageSizeLimit = getImageSizePixels(context, image.GetImageSize(), hostConfig.GetImageSizes());
         ImageRendererImageLoaderAsync imageLoaderAsync = new ImageRendererImageLoaderAsync(
             renderedCard,
             imageView,
             hostConfig.GetImageBaseUrl(),
             image.GetImageStyle(),
-            backgroundColor,
-            imageSizeLimit);
+            backgroundColor);
 
         IOnlineImageLoader onlineImageLoader = CardRendererRegistration.getInstance().getOnlineImageLoader();
         if (onlineImageLoader != null)

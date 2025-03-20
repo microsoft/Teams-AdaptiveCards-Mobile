@@ -50,11 +50,5 @@ public class LocalResourcesLoader implements IResourceResolver
         return new HttpRequestResult<>(bitmap);
     }
 
-    @Override
-    public HttpRequestResult<Bitmap> resolveImageResource(String url, GenericImageLoaderAsync loader, int maxWidth) throws IOException, URISyntaxException
-    {
-        return resolveImageResource(url, loader);
-    }
-
-    private Activity m_activity;
+    private final Activity m_activity;
 }

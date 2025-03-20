@@ -354,7 +354,6 @@ public class ContainerRenderer extends BaseCardElementRenderer
                     context,
                     containerView,
                     hostConfig.GetImageBaseUrl(),
-                    context.getResources().getDisplayMetrics().widthPixels,
                     backgroundImage);
 
                 IOnlineImageLoader onlineImageLoader = CardRendererRegistration.getInstance().getOnlineImageLoader();

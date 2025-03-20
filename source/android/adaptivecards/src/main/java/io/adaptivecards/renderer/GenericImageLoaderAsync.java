@@ -28,19 +28,12 @@ public abstract class GenericImageLoaderAsync extends AsyncTask<String, Void, Ht
 {
     RenderedAdaptiveCard m_renderedCard;
     String m_imageBaseUrl;
-    int m_maxWidth;
     IOnlineImageLoader m_onlineImageLoader = null;
 
     GenericImageLoaderAsync(RenderedAdaptiveCard renderedCard, String imageBaseUrl)
     {
-        this(renderedCard, imageBaseUrl, -1);
-    }
-
-    GenericImageLoaderAsync(RenderedAdaptiveCard renderedCard, String imageBaseUrl, int maxWidth)
-    {
         m_renderedCard = renderedCard;
         m_imageBaseUrl = imageBaseUrl;
-        m_maxWidth = maxWidth;
     }
 
     protected String getUriScheme(String path) throws URISyntaxException
@@ -80,14 +73,7 @@ public abstract class GenericImageLoaderAsync extends AsyncTask<String, Void, Ht
 
             if (resourceResolver != null)
             {
-                if (m_maxWidth != -1)
-                {
-                    return resourceResolver.resolveImageResource(path, this, m_maxWidth);
-                }
-                else
-                {
-                    return resourceResolver.resolveImageResource(path, this);
-                }
+                return resourceResolver.resolveImageResource(path, this);
             }
             else if (path.startsWith("content:"))
             {
