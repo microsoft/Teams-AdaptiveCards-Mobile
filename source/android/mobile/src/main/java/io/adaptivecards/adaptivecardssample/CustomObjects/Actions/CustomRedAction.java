@@ -109,7 +109,7 @@ public class CustomRedAction extends BaseActionElement
             backwardActionButton.getBackground().setColorFilter(m_activity.getResources().getColor(R.color.redActionColor), PorterDuff.Mode.SRC_ATOP);
             backwardActionButton.setText(customAction.getBackwardString());
             backwardActionButton.setAllCaps(false);
-            backwardActionButton.setOnClickListener(new BaseActionElementRenderer.ActionOnClickListener(renderedCard, baseActionElement, cardActionHandler));
+            backwardActionButton.setOnClickListener(BaseActionElementRenderer.ActionOnClickListener.newInstance(renderedCard, baseActionElement, cardActionHandler));
 
             viewGroup.addView(backwardActionButton);
 
