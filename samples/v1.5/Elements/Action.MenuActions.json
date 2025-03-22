@@ -16,6 +16,7 @@
 				{
 					"type": "Input.Text",
 					"id": "defaultInputId",
+					"isRequired": true,
 					"placeholder": "enter comment",
 					"maxLength": 500
 				},
