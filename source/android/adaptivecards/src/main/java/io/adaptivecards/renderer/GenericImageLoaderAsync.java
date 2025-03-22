@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 
+import androidx.annotation.Nullable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -31,12 +33,7 @@ public abstract class GenericImageLoaderAsync extends AsyncTask<String, Void, Ht
     int m_maxWidth;
     IOnlineImageLoader m_onlineImageLoader = null;
 
-    GenericImageLoaderAsync(RenderedAdaptiveCard renderedCard, String imageBaseUrl)
-    {
-        this(renderedCard, imageBaseUrl, -1);
-    }
-
-    GenericImageLoaderAsync(RenderedAdaptiveCard renderedCard, String imageBaseUrl, int maxWidth)
+    GenericImageLoaderAsync(@Nullable RenderedAdaptiveCard renderedCard, String imageBaseUrl, int maxWidth)
     {
         m_renderedCard = renderedCard;
         m_imageBaseUrl = imageBaseUrl;
@@ -250,7 +247,9 @@ public abstract class GenericImageLoaderAsync extends AsyncTask<String, Void, Ht
         }
         else
         {
-            m_renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.UNABLE_TO_LOAD_IMAGE, result.getException().getMessage()));
+            if (m_renderedCard != null) {
+                m_renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.UNABLE_TO_LOAD_IMAGE, result.getException().getMessage()));
+            }
         }
     }
 
