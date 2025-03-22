@@ -828,6 +828,7 @@ namespace Swig {
 #include "../../../shared/cpp/ObjectModel/MediaSource.h"
 #include "../../../shared/cpp/ObjectModel/Media.h"
 #include "../../../shared/cpp/ObjectModel/ToggleVisibilityAction.h"
+#include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 #include "../../../shared/cpp/ObjectModel/ToggleVisibilityTarget.h"
 #include "../../../shared/cpp/ObjectModel/UnknownElement.h"
 #include "../../../shared/cpp/ObjectModel/UnknownAction.h"
