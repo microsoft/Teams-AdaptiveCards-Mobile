@@ -29,6 +29,7 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.renderer.BaseActionElementRenderer;
+import io.adaptivecards.renderer.FluentIconUtils;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
@@ -215,7 +216,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             inputHandler.addInputWatcher((id, val) -> {
                 boolean isEnabled = isAnyInputValid(inputHandlers);
                 button.setEnabled(isEnabled);
-                ActionElementUtil.applyIconColor(button, button.getCurrentTextColor());
+                FluentIconUtils.applyIconColor(button, button.getCurrentTextColor());
             });
         }
     }
