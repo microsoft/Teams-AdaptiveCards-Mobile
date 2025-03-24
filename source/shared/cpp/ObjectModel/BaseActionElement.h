@@ -31,6 +31,7 @@ public:
 
     const std::string& GetIconUrl() const;
     std::string GetSVGPath() const;
+    std::string GetSVGPath(const std::string& iconUrl) const;
 
     void SetIconUrl(std::string&& value);
     void SetIconUrl(const std::string& value);
@@ -59,7 +60,7 @@ public:
     void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceUris) override;
     Json::Value SerializeToJsonValue() const override;
 
-    std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& GetMenuActions();
+    bool GetIsSplitAction() const;
     const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& GetMenuActions() const;
 
     template <typename T>
@@ -72,6 +73,7 @@ public:
 
 private:
     void PopulateKnownPropertiesSet();
+    bool isSplitActionSupported() const;
     static void DeserializeBaseProperties(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseActionElement>& element);
 
     static constexpr const char* const defaultStyle = "default";

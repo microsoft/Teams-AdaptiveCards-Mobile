@@ -96,7 +96,11 @@ public class BaseActionElement extends BaseElement {
   }
 
   public String GetSVGPath() {
-    return AdaptiveCardObjectModelJNI.BaseActionElement_GetSVGPath(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.BaseActionElement_GetSVGPath__SWIG_0(swigCPtr, this);
+  }
+
+  public String GetSVGPath(String iconUrl) {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_GetSVGPath__SWIG_1(swigCPtr, this, iconUrl);
   }
 
   public void SetIconUrl(SWIGTYPE_p_std__string value) {
@@ -167,8 +171,12 @@ public class BaseActionElement extends BaseElement {
     return new JsonValue((getClass() == BaseActionElement.class) ? AdaptiveCardObjectModelJNI.BaseActionElement_SerializeToJsonValue(swigCPtr, this) : AdaptiveCardObjectModelJNI.BaseActionElement_SerializeToJsonValueSwigExplicitBaseActionElement(swigCPtr, this), true);
   }
 
+  public boolean GetIsSplitAction() {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_GetIsSplitAction(swigCPtr, this);
+  }
+
   public BaseActionElementVector GetMenuActions() {
-    return new BaseActionElementVector(AdaptiveCardObjectModelJNI.BaseActionElement_GetMenuActions__SWIG_0(swigCPtr, this), false);
+    return new BaseActionElementVector(AdaptiveCardObjectModelJNI.BaseActionElement_GetMenuActions(swigCPtr, this), false);
   }
 
   public static BaseActionElement DeserializeBasePropertiesFromString(ParseContext context, String jsonString) {
