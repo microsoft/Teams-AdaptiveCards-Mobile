@@ -12,4 +12,6 @@ Take a look at the [Sample Browser](http://adaptivecards.io/samples/) for a quic
 
 ## Schema Explorer
 
+### Test CI
+
 If you'd like to browse the current schema please our [Schema Explorer](http://adaptivecards.io/explorer/)
