@@ -151,8 +151,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         int minHeight = context.getResources().getDimensionPixelSize(R.dimen.action_min_height);
         button.post(() -> Util.expandClickArea(button, minHeight));
 
-        String iconUrl = baseActionElement.GetIconUrl();
-        //String iconUrl = baseActionElement.GetIconUrl(renderArgs.getTheme());
+        String iconUrl = baseActionElement.GetIconUrl(renderArgs.getTheme());
         String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
 
         if (!iconUrl.isEmpty())

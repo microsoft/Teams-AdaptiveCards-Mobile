@@ -4,6 +4,7 @@ package io.adaptivecards.renderer
 
 import android.content.Context
 import android.content.res.Configuration
+import io.adaptivecards.objectmodel.Theme
 
 object Utils {
 
@@ -11,10 +12,10 @@ object Utils {
      * Gets the current app theme as either Dark or Light.
      * @return `Theme.Dark` if using dark theme, `Theme.Light` otherwise.
      */
-//    @JvmStatic
-//    private fun Context.getTheme() : Theme {
-//        return if (isDarkTheme()) Theme.Dark else Theme.Light
-//    }
+    @JvmStatic
+    fun Context.getTheme() : Theme {
+        return if (isDarkTheme()) Theme.Dark else Theme.Light
+    }
 
     /**
      * Checks if the app is in dark mode.

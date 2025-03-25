@@ -167,7 +167,7 @@ public class AdaptiveCardRenderer
             style = adaptiveCard.GetStyle();
         }
 
-        RenderArgs renderArgs = new RenderArgs();
+        RenderArgs renderArgs = new RenderArgs(Utils.getTheme(context));
         renderArgs.setContainerStyle(style);
         renderArgs.setAncestorHasSelectAction(adaptiveCard.GetSelectAction() != null);
 
