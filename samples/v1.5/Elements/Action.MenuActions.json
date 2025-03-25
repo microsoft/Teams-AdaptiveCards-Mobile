@@ -16,6 +16,7 @@
 				{
 					"type": "Input.Text",
 					"id": "defaultInputId",
+					"isRequired": true,
 					"placeholder": "enter comment",
 					"maxLength": 500
 				},
@@ -464,7 +465,7 @@
 					"iconUrl": "icon:Send,Filled",
 					"tooltip": "Tooltip for Submit",
 					"associatedInputs": "auto",
-					"conditionallyEnabled": true,
+					"conditionallyEnabled": false,
 					"menuActions": []
 				},
 				{
@@ -473,7 +474,7 @@
 					"iconUrl": "icon:Send,Filled",
 					"tooltip": "Tooltip for Execute",
 					"associatedInputs": "auto",
-					"conditionallyEnabled": false,
+					"conditionallyEnabled": true,
 					"menuActions": []
 				}
 			]
