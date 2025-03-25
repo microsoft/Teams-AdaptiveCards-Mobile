@@ -264,7 +264,10 @@ enum class AdaptiveCardSchemaKey
     PageControl,
     SelectedTintColor,
     ExtraSmall,
-    MenuActions
+    MenuActions,
+    ThemedIconUrls,
+    ThemedUrls,
+    Theme
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -547,6 +550,13 @@ enum class Mode
 };
 DECLARE_ADAPTIVECARD_ENUM(Mode);
 
+enum class Theme
+{
+    Light,
+    Dark
+};
+DECLARE_ADAPTIVECARD_ENUM(Theme)
+
 enum class ErrorStatusCode
 {
     InvalidJson = 0,
@@ -642,7 +652,8 @@ inline ContainerBleedDirection& operator&=(ContainerBleedDirection& a, Container
 enum class IconPlacement
 {
     AboveTitle = 0,
-    LeftOfTitle
+    LeftOfTitle,
+    RightOfTitle
 };
 DECLARE_ADAPTIVECARD_ENUM(IconPlacement);
 

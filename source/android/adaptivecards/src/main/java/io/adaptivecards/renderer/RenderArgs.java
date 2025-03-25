@@ -2,24 +2,26 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer;
 
+import androidx.annotation.NonNull;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
+import io.adaptivecards.objectmodel.Theme;
 
 /**
  * Used to inform child elements of their rendering context. Renderers should apply all supplied
  * arguments relevant to their element, unless overridden by a declared property on that element.
- *
  * Renderers with any children must use the copy constructor to pass arguments on. If any arguments
  * were overridden by a declared property, the new value(s) must be set on the copied instance
  * before passing arguments on.
  */
-public class RenderArgs
-{
+public class RenderArgs {
 
-    public RenderArgs(){}
+    public RenderArgs(Theme theme) {
+        mTheme = theme;
+    }
 
-    public RenderArgs(RenderArgs renderArgs)
-    {
+    public RenderArgs(RenderArgs renderArgs) {
+        this(renderArgs.getTheme());
         setAncestorHasFallback(renderArgs.getAncestorHasFallback());
         setContainerStyle(renderArgs.getContainerStyle());
         setContainerCardId(renderArgs.getContainerCardId());
@@ -132,6 +134,11 @@ public class RenderArgs
         m_ancestorHasSelectAction = ancestorHasSelectAction;
     }
 
+    @NonNull
+    public Theme getTheme() {
+        return mTheme;
+    }
+
     private boolean m_ancestorHasFallback;
     private ContainerStyle m_containerStyle = ContainerStyle.Default;
     private boolean m_isColumnHeader;
@@ -140,4 +147,5 @@ public class RenderArgs
     private long m_containerCardId;
     private boolean m_isRootLevelActions;
     private boolean m_ancestorHasSelectAction = false;
+    private final Theme mTheme;
 }

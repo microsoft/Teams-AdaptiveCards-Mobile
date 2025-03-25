@@ -364,6 +364,9 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             {
                 hostConfig = HostConfig.DeserializeFromString(hostConfigText);
             }
+            ActionsConfig actionsConfig = hostConfig.GetActions();
+            actionsConfig.setIconPlacement(IconPlacement.LeftOfTitle);
+            hostConfig.SetActions(actionsConfig);
 
             ParseContext context = createParseContextForCustomElements();
             ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
