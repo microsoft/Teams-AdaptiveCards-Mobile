@@ -264,7 +264,10 @@ enum class AdaptiveCardSchemaKey
     PageControl,
     SelectedTintColor,
     ExtraSmall,
-    MenuActions
+    MenuActions,
+    ThemedIconUrls,
+    ThemedUrls,
+    Theme
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -546,6 +549,13 @@ enum class Mode
     Secondary
 };
 DECLARE_ADAPTIVECARD_ENUM(Mode);
+
+enum class Theme
+{
+    Light,
+    Dark
+};
+DECLARE_ADAPTIVECARD_ENUM(Theme)
 
 enum class ErrorStatusCode
 {
