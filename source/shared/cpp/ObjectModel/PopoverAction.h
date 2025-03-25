@@ -13,7 +13,7 @@ namespace AdaptiveCards
 
     class PopoverAction : public BaseActionElement {
 
-        friend class PopoverActionActionParser;
+        friend class PopoverActionParser;
 
     public:
         PopoverAction();
@@ -38,16 +38,16 @@ namespace AdaptiveCards
         std::string m_maxPopoverWidth;
     };
 
-    class PopoverActionActionParser : public ActionElementParser
+    class PopoverActionParser : public ActionElementParser
     {
 
     public:
-        PopoverActionActionParser() = default;
-        PopoverActionActionParser(const PopoverActionActionParser&) = default;
-        PopoverActionActionParser(PopoverActionActionParser&&) = default;
-        PopoverActionActionParser& operator=(const PopoverActionActionParser&) = default;
-        PopoverActionActionParser& operator=(PopoverActionActionParser&&) = default;
-        virtual ~PopoverActionActionParser() = default;
+        PopoverActionParser() = default;
+        PopoverActionParser(const PopoverActionParser&) = default;
+        PopoverActionParser(PopoverActionParser&&) = default;
+        PopoverActionParser& operator=(const PopoverActionParser&) = default;
+        PopoverActionParser& operator=(PopoverActionParser&&) = default;
+        virtual ~PopoverActionParser() = default;
 
         std::shared_ptr<BaseActionElement> Deserialize(ParseContext& context, const Json::Value& value) override;
         std::shared_ptr<BaseActionElement> DeserializeFromString(ParseContext& context, const std::string& jsonString) override;

@@ -51,7 +51,7 @@ ActionParserRegistration::ActionParserRegistration()
     m_cardElementParsers.insert(
         {{ActionTypeToString(ActionType::Execute), std::make_shared<ExecuteActionParser>()},
          {ActionTypeToString(ActionType::OpenUrl), std::make_shared<OpenUrlActionParser>()},
-         {ActionTypeToString(ActionType::Popover), std::make_shared<PopoverActionActionParser>()},
+         {ActionTypeToString(ActionType::Popover), std::make_shared<PopoverActionParser>()},
          {ActionTypeToString(ActionType::ShowCard), std::make_shared<ShowCardActionParser>()},
          {ActionTypeToString(ActionType::Submit), std::make_shared<SubmitActionParser>()},
          {ActionTypeToString(ActionType::ToggleVisibility), std::make_shared<ToggleVisibilityActionParser>()},

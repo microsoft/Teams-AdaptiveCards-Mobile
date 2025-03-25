@@ -44,7 +44,7 @@ const std::shared_ptr<BaseCardElement> PopoverAction::GetContent() const {
     return m_content;
 }
 
-std::shared_ptr<BaseActionElement> PopoverActionActionParser::Deserialize(ParseContext& context, const Json::Value& json) {
+std::shared_ptr<BaseActionElement> PopoverActionParser::Deserialize(ParseContext& context, const Json::Value& json) {
     std::shared_ptr<PopoverAction> popoverAction = BaseActionElement::Deserialize<PopoverAction>(context, json);
 
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content);
@@ -55,6 +55,6 @@ std::shared_ptr<BaseActionElement> PopoverActionActionParser::Deserialize(ParseC
     return popoverAction;
 }
 
-std::shared_ptr<BaseActionElement> PopoverActionActionParser::DeserializeFromString(ParseContext& context, const std::string& jsonString) {
-    return PopoverActionActionParser::Deserialize(context, ParseUtil::GetJsonValueFromString(jsonString));
+std::shared_ptr<BaseActionElement> PopoverActionParser::DeserializeFromString(ParseContext& context, const std::string& jsonString) {
+    return PopoverActionParser::Deserialize(context, ParseUtil::GetJsonValueFromString(jsonString));
 }
