@@ -100,9 +100,6 @@ final class ACContainerTests: XCTestCase {
             let parseResult = try SwiftAdaptiveCard.deserializeFromString(json, version: "1.0")
             let adaptiveCard = parseResult.adaptiveCard
             
-            // Schema may not be directly accessible in the new model
-            // XCTAssertEqual(adaptiveCard.schema, "http://adaptivecards.io/schemas/adaptive-card.json")
-            
             XCTAssertEqual(adaptiveCard.version, "1.0")
             
             // Check background image
@@ -134,8 +131,6 @@ final class ACContainerTests: XCTestCase {
             XCTAssertEqual(container.style, .default) // Assuming enum name is simplified in new model
             XCTAssertEqual(container.id, "Container_id")
             XCTAssertEqual(container.spacing, .medium) // Assuming enum name is simplified in new model
-            // This is a wrong assertion, separator invalid.
-//            XCTAssertFalse((container.separator != nil))
             XCTAssertEqual(container.rtl, true)
             XCTAssertEqual(container.items.count, 1)
             
@@ -204,9 +199,6 @@ final class ACContainerTests: XCTestCase {
             
             XCTAssertEqual(textBlock2.text, "Column3_TextBlock_text")
             XCTAssertEqual(textBlock2.id, "Column3_TextBlock_id")
-            // This is a wrong assertion, display is not supported
-//            XCTAssertEqual(textBlock2.fontType, .display) // Assuming new model has this property
-            
         } catch {
             XCTFail("Failed to deserialize AdaptiveCard: \(error)")
         }

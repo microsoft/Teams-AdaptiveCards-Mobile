@@ -47,9 +47,6 @@ final class ACCardActionTests: XCTestCase {
             let parseResult = try SwiftAdaptiveCard.deserializeFromString(json, version: "1.5")
             let card = parseResult.adaptiveCard
             
-            // Since schema might not be directly accessible in the new model, I'm leaving this commented
-            // XCTAssertEqual(card.schema, "http://adaptivecards.io/schemas/adaptive-card.json")
-            
             XCTAssertEqual(card.version, "1.5")
             XCTAssertEqual(card.body.count, 2)
             
@@ -61,22 +58,6 @@ final class ACCardActionTests: XCTestCase {
             
             XCTAssertEqual(inputText1.id, "iconInlineActionId")
             XCTAssertEqual(inputText1.label, "Text input with an inline action")
-            
-            // The commented sections in the original test suggest these might be expected to fail
-            // or are not yet implemented. I'll include them but keep them commented as in the original
-            // Uncomment these if you want to test inline actions
-            /*
-            XCTAssertNotNil(inputText1.inlineAction)
-            
-            guard let inlineAction1 = inputText1.inlineAction as? SwiftSubmitAction else {
-                XCTFail("Expected inline action to be a SwiftSubmitAction")
-                return
-            }
-            
-            XCTAssertEqual(inlineAction1.iconUrl, "https://adaptivecards.io/content/send.png")
-            XCTAssertEqual(inlineAction1.tooltip, "Send")
-            */
-            
             // Test second input element
             guard let inputText2 = card.body[1] as? SwiftTextInput else {
                 XCTFail("Expected second body element to be an InputText")
@@ -85,21 +66,6 @@ final class ACCardActionTests: XCTestCase {
             
             XCTAssertEqual(inputText2.id, "textInlineActionId")
             XCTAssertEqual(inputText2.label, "Text input with an inline action with no icon")
-            
-            // Commented out as in the original test
-            /*
-            XCTAssertNotNil(inputText2.inlineAction)
-            
-            guard let inlineAction2 = inputText2.inlineAction as? SwiftOpenUrlAction else {
-                XCTFail("Expected inline action to be a SwiftOpenUrlAction")
-                return
-            }
-            
-            XCTAssertEqual(inlineAction2.title, "Reply")
-            XCTAssertEqual(inlineAction2.tooltip, "Reply to this message")
-            XCTAssertEqual(inlineAction2.url, "https://adaptivecards.io")
-            */
-            
         } catch {
             XCTFail("Failed to deserialize AdaptiveCard: \(error)")
         }

@@ -65,10 +65,6 @@ final class ACInputTests: XCTestCase {
             let parseResult = try SwiftAdaptiveCard.deserializeFromString(json, version: "1.0")
             let card = parseResult.adaptiveCard
             
-            // Test schema and version
-            // Note: In new model, schema might be stored differently or not at all
-            // If not available directly, we can skip this assertion
-            // XCTAssertEqual(card.schema, "http://adaptivecards.io/schemas/adaptive-card.json")
             XCTAssertEqual(card.version, "1.0")
             
             XCTAssertEqual(card.body.count, 6)
