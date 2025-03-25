@@ -448,6 +448,44 @@
 					]
 				}
 			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Execute",
+					"title": "7 Ignore Empty",
+					"iconUrl": "https://yt3.ggpht.com/a/AATXAJzXc6NxfXzlwiAwWQx_7JNZA3I35bovXHiQbQ=s900-c-k-c0xffffffff-no-rj-mo",
+					"themedIconUrls": [
+						{
+							"theme": "Dark",
+							"url": "    "
+						},
+						{
+							"theme": "Light",
+							"url": "   "
+						},
+						{
+							"theme": "Dark",
+							"url": "icon:Calendar,filled"
+						},
+						{
+							"theme": "Light",
+							"url": "icon:Send,filled"
+						}
+					],
+					"menuActions": [
+						{
+							"type": "Action.Execute",
+							"title": "Menu execute 1"
+						},
+						{
+							"type": "Action.Execute",
+							"title": "Menu execute 2"
+						}
+					]
+				}
+			]
 		}
 	]
 }
