@@ -1,3 +1,10 @@
+//
+//  SwiftActionElementParser.swift
+//  SwiftAdaptiveCards
+//
+//  Created by Hugo Gonzalez on 3/07/25.
+//
+
 import Foundation
 
 protocol SwiftActionElementParser {

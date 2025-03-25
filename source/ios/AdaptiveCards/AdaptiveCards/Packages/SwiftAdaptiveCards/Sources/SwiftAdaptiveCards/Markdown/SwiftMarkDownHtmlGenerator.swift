@@ -1,3 +1,10 @@
+//
+//  SwiftMarkDownHTMLGenerator.swift
+//  SwiftAdaptiveCards
+//
+//  Created by Rahul Pinjani on 9/19/24.
+//
+
 import Foundation
 
 // MARK: - Types and Enums

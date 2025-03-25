@@ -1,3 +1,10 @@
+//
+//  SwiftUtil.swift
+//  SwiftAdaptiveCards
+//
+//  Created by Hugo Gonzalez on 3/07/25.
+//
+
 import Foundation
 
 /// Validates a given hex color string and ensures it is in the correct format.

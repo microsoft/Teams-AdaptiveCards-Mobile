@@ -1,6 +1,6 @@
 //
 //  ACRatingsTest.swift
-//  ACSwiftRewrite
+//  SwiftAdaptiveCardsTests
 //
 //  Created by Rahul Pinjani on 1/23/25.
 //

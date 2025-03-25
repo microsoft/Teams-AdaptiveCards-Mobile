@@ -1,3 +1,10 @@
+//
+//  Base64Test.swift
+//  SwiftAdaptiveCardsTests
+//
+//  Created by Hugo Gonzalez on 3/07/25.
+//
+
 import XCTest
 @testable import SwiftAdaptiveCards // Adjust to your module name
 

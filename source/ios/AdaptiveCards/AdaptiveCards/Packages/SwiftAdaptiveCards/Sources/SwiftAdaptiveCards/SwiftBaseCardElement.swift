@@ -1,3 +1,10 @@
+//
+//  SwiftBaseCardElement.swift
+//  SwiftAdaptiveCards
+//
+//  Created by Rahul Pinjani on 9/18/24.
+//
+
 import Foundation
 
 /// A protocol that represents an adaptive card element.

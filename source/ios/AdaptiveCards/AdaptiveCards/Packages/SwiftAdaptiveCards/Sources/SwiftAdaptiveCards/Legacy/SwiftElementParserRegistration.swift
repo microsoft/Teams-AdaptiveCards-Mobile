@@ -1,3 +1,10 @@
+//
+//  SwiftElementParserRegistration.swift
+//  SwiftAdaptiveCards
+//
+//  Created by Hugo Gonzalez on 3/07/25.
+//
+
 import Foundation
 
 /// Protocol for parsing Adaptive Card elements.

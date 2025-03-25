@@ -1,3 +1,10 @@
+//
+//  SwiftLegacyACSupportPending.swift
+//  SwiftAdaptiveCards
+//
+//  Created by Hugo Gonzalez on 3/07/25.
+//
+
 import Foundation
 
 // Pending Legacy serialization rule standardization conformance.

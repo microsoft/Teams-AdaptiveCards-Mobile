@@ -1,3 +1,10 @@
+//
+//  SwiftDateTimePreparser.swift
+//  SwiftAdaptiveCards
+//
+//  Created by Hugo Gonzalez on 3/07/25.
+//
+
 import Foundation
 
 public class SwiftDateTimePreparser {

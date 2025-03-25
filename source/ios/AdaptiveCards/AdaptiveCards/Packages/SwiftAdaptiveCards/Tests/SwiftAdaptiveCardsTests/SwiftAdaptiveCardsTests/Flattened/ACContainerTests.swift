@@ -1,6 +1,6 @@
 //
 //  ACContainerTests.swift
-//  ACSwiftRewriteTests
+//  SwiftAdaptiveCardsTests
 //
 //  Created by Rahul Pinjani on 9/18/24.
 //

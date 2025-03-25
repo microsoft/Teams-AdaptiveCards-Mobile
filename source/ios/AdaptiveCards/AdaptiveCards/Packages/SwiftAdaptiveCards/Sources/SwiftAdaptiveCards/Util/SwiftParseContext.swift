@@ -1,3 +1,10 @@
+//
+//  SwiftParseContext.swift
+//  SwiftAdaptiveCards
+//
+//  Created by Hugo Gonzalez on 3/07/25.
+//
+
 import Foundation
 
 /// Represents the context during parsing of an Adaptive Card, tracking hierarchy and element state.

@@ -1,9 +1,9 @@
-////
-////  ACAdaptiveCardParserTests.swift
-////  ACSwiftRewriteTests
-////
-////  Created by Rahul Pinjani on 9/18/24.
-////
+//
+//  ACAdaptiveCardParserTests.swift
+//  SwiftAdaptiveCardsTests
+//
+//  Created by Rahul Pinjani on 9/18/24.
+//
 
 import Foundation
 import XCTest
