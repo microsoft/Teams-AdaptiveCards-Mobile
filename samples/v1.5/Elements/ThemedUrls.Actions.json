@@ -289,6 +289,34 @@
 							]
 						}
 					]
+				},
+				{
+					"type": "ActionSet",
+					"actions": [
+						{
+							"type": "Action.Execute",
+							"title": "8 Icons Urls without menuActions",
+							"iconUrl": "https://yt3.ggpht.com/a/AATXAJzXc6NxfXzlwiAwWQx_7JNZA3I35bovXHiQbQ=s900-c-k-c0xffffffff-no-rj-mo",
+							"themedIconUrls": [
+								{
+									"theme": "Dark",
+									"url": "https://adaptivecards.io/content/cats/1.png"
+								},
+								{
+									"theme": "Light",
+									"url": "https://adaptivecards.io/content/Closed%20bug%2092x92.png"
+								},
+								{
+									"theme": "Dark",
+									"url": "icon:Calendar,filled"
+								},
+								{
+									"theme": "Light",
+									"url": "icon:Send,filled"
+								}
+							]
+						}
+					]
 				}
 			]
 		}
