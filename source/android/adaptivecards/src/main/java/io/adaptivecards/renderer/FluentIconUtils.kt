@@ -3,13 +3,12 @@ package io.adaptivecards.renderer
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.widget.Button
 import androidx.annotation.WorkerThread
 import com.caverock.androidsvg.SVG
+import io.adaptivecards.renderer.IconUtils.applyIconColor
 import io.adaptivecards.renderer.http.HttpRequestHelper
 import io.adaptivecards.renderer.http.HttpRequestResult
 import org.json.JSONObject
@@ -94,32 +93,6 @@ object FluentIconUtils {
             applyIconColor(iconColor)
         }
         return drawable
-    }
-
-    @JvmStatic
-    fun Button.applyIconColor(iconColor : Int? = null) {
-        val color = iconColor ?: currentTextColor
-        getHexColor(color).apply {
-            compoundDrawables[0]?.applyIconColor(this)
-            compoundDrawables[1]?.applyIconColor(this)
-            compoundDrawables[2]?.applyIconColor(this)
-            compoundDrawables[3]?.applyIconColor(this)
-        }
-    }
-
-    @JvmStatic
-    fun getHexColor(currentTextColor: Int) : String {
-        return String.format("#%06X", 0xFFFFFF and currentTextColor)
-    }
-
-    @JvmStatic
-    private fun Drawable.applyIconColor(hexIconColor: String, defaultHexIconColor : Int = Color.BLACK) {
-        val color = try {
-            Color.parseColor(hexIconColor)
-        } catch (e: IllegalArgumentException) {
-            defaultHexIconColor
-        }
-        this.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
     }
 
     /**

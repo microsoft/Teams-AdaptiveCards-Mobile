@@ -755,7 +755,7 @@ public final class Util {
         }
         else {
             int color = ((Button) view).getCurrentTextColor();
-            String hexColor = FluentIconUtils.getHexColor(color);
+            String hexColor = IconUtils.getHexColor(color);
             boolean isFilledStyle = iconUrl.contains("filled");
             ActionElementRendererFluentIconImageLoaderAsync fluentIconLoaderAsync = new ActionElementRendererFluentIconImageLoaderAsync(
                 renderedCard,
