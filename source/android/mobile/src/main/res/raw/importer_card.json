@@ -258,6 +258,10 @@
 									{
 										"title": "Spacing Sample",
 										"value": "v1.5/Scenarios/spacing_sample.json"
+									},
+									{
+										"title": "ThemedUrls",
+										"value": "v1.5/Elements/ThemedUrls.json"
 									}
 								],
                                 "placeholder": "(choose sample)",
