@@ -7,6 +7,7 @@
 #include "RemoteResourceInformation.h"
 #include "BaseElement.h"
 #include "Enums.h"
+#include "ThemedUrl.h"
 
 void HandleUnknownProperties(const Json::Value& json, const std::unordered_set<std::string>& knownProperties, Json::Value& unknownProperties);
 
@@ -29,6 +30,7 @@ public:
     virtual void SetTitle(std::string&& value);
     virtual void SetTitle(const std::string& value);
 
+    const std::string& GetIconUrl(const Theme theme) const;
     const std::string& GetIconUrl() const;
     std::string GetSVGPath() const;
     std::string GetSVGPath(const std::string& iconUrl) const;
@@ -89,6 +91,7 @@ private:
     Mode m_mode;
     ActionRole m_role;
     std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> m_menuActions;
+    std::vector<std::shared_ptr<AdaptiveCards::ThemedUrl>> m_themedIconUrls;
 };
 
 template <typename T>
