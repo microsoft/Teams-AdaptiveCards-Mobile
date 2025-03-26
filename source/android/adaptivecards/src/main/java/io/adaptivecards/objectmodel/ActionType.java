@@ -17,7 +17,8 @@ public enum ActionType {
   ToggleVisibility,
   Custom,
   UnknownAction,
-  Overflow;
+  Overflow,
+  Popover;
 
   public final int swigValue() {
     return swigValue;
