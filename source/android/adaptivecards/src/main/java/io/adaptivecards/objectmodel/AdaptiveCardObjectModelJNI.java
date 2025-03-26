@@ -769,7 +769,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long new_BackgroundImage__SWIG_0();
   public final static native long new_BackgroundImage__SWIG_1(String jarg1);
   public final static native long new_BackgroundImage__SWIG_2(String jarg1, int jarg2, int jarg3, int jarg4);
-  public final static native String BackgroundImage_GetUrl(long jarg1, BackgroundImage jarg1_);
+  public final static native String BackgroundImage_GetUrl__SWIG_0(long jarg1, BackgroundImage jarg1_, int jarg2);
+  public final static native String BackgroundImage_GetUrl__SWIG_1(long jarg1, BackgroundImage jarg1_);
   public final static native void BackgroundImage_SetUrl(long jarg1, BackgroundImage jarg1_, String jarg2);
   public final static native int BackgroundImage_GetFillMode(long jarg1, BackgroundImage jarg1_);
   public final static native void BackgroundImage_SetFillMode(long jarg1, BackgroundImage jarg1_, int jarg2);
@@ -935,7 +936,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long new_Image__SWIG_1(long jarg1, Image jarg1_);
   public final static native void delete_Image(long jarg1);
   public final static native long Image_SerializeToJsonValue(long jarg1, Image jarg1_);
-  public final static native String Image_GetUrl(long jarg1, Image jarg1_);
+  public final static native String Image_GetUrl__SWIG_0(long jarg1, Image jarg1_, int jarg2);
+  public final static native String Image_GetUrl__SWIG_1(long jarg1, Image jarg1_);
   public final static native void Image_SetUrl(long jarg1, Image jarg1_, String jarg2);
   public final static native String Image_GetBackgroundColor(long jarg1, Image jarg1_);
   public final static native void Image_SetBackgroundColor(long jarg1, Image jarg1_, String jarg2);

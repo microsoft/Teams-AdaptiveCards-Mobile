@@ -16461,7 +16461,27 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BackgroundImage_1GetUrl(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BackgroundImage_1GetUrl_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jstring jresult = 0 ;
+  AdaptiveCards::BackgroundImage *arg1 = (AdaptiveCards::BackgroundImage *) 0 ;
+  AdaptiveCards::Theme arg2 ;
+  std::shared_ptr< AdaptiveCards::BackgroundImage const > *smartarg1 = 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::BackgroundImage > **)&jarg1;
+  arg1 = (AdaptiveCards::BackgroundImage *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = (AdaptiveCards::Theme)jarg2; 
+  result = (std::string *) &((AdaptiveCards::BackgroundImage const *)arg1)->GetUrl(arg2);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BackgroundImage_1GetUrl_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   AdaptiveCards::BackgroundImage *arg1 = (AdaptiveCards::BackgroundImage *) 0 ;
   std::shared_ptr< AdaptiveCards::BackgroundImage const > *smartarg1 = 0 ;
@@ -19704,7 +19724,27 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Image_1GetUrl(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Image_1GetUrl_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jstring jresult = 0 ;
+  AdaptiveCards::Image *arg1 = (AdaptiveCards::Image *) 0 ;
+  AdaptiveCards::Theme arg2 ;
+  std::shared_ptr< AdaptiveCards::Image const > *smartarg1 = 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::Image > **)&jarg1;
+  arg1 = (AdaptiveCards::Image *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = (AdaptiveCards::Theme)jarg2; 
+  result = (std::string *) &((AdaptiveCards::Image const *)arg1)->GetUrl(arg2);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Image_1GetUrl_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   AdaptiveCards::Image *arg1 = (AdaptiveCards::Image *) 0 ;
   std::shared_ptr< AdaptiveCards::Image const > *smartarg1 = 0 ;
