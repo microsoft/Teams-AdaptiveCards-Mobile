@@ -480,6 +480,41 @@
 			]
 		},
 		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.OpenUrl",
+					"title": "OpenUrl",
+					"iconUrl": "icon:Open,Filled",
+					"tooltip": "Tooltip for OpenUrl",
+					"style": "positive",
+					"url": "https://www.microsoft.com"
+				},
+				{
+					"type": "Action.ResetInputs",
+					"title": "ResetInputs",
+					"iconUrl": "icon:ArrowReset,Filled",
+					"tooltip": "Tooltip for ResetInputs",
+					"style": "positive",
+					"targetInputIds": [
+						"defaultInputId",
+						"myZone"
+					]
+				},
+				{
+					"type": "Action.ToggleVisibility",
+					"title": "ToggleVisibility",
+					"iconUrl": "icon:ToggleLeft,Filled",
+					"tooltip": "Tooltip for ToggleVisibility",
+					"style": "positive",
+					"targetElements": [
+						"defaultInputId",
+						"myZone"
+					]
+				}
+			]
+		},
+		{
 			"type": "TextBlock",
 			"text": "Actions",
 			"wrap": true,
