@@ -3,12 +3,12 @@ package io.adaptivecards.renderer
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.annotation.WorkerThread
 import com.caverock.androidsvg.SVG
+import io.adaptivecards.renderer.IconUtils.applyIconColor
 import io.adaptivecards.renderer.http.HttpRequestHelper
 import io.adaptivecards.renderer.http.HttpRequestResult
 import org.json.JSONObject
@@ -89,13 +89,9 @@ object FluentIconUtils {
         val bitmap = Bitmap.createBitmap(picture.width, picture.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         picture.draw(canvas)
-        val drawable = BitmapDrawable(context.resources, bitmap)
-        val color = try {
-            Color.parseColor(iconColor)
-        } catch (e: IllegalArgumentException) {
-            Color.BLACK
+        val drawable = BitmapDrawable(context.resources, bitmap).apply {
+            applyIconColor(iconColor)
         }
-        drawable.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
         return drawable
     }
 
