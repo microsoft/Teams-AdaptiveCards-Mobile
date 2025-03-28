@@ -46,6 +46,10 @@ resources:
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
+    sdl:
+      codeSignValidation:
+        enabled: true
+        break: true
     pool:
       name: Azure-Pipelines-1ESPT-ExDShared
       image: windows-2022
