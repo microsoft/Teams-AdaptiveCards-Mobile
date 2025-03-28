@@ -152,6 +152,18 @@ using namespace AdaptiveCards;
     return YES;
 }
 
+- (NSArray *)menuActions
+{
+    NSMutableArray *menuActions = [NSMutableArray array];
+    const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> m_menuActions = _elem->GetMenuActions();
+    
+    for (auto &action : m_menuActions) {
+        ACOBaseActionElement *acoElem = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:action];
+        [menuActions addObject:acoElem];
+    }
+    return menuActions;
+}
+
 - (BOOL)meetsRequirements:(ACOFeatureRegistration *)featureReg
 {
     if (_elem) {
