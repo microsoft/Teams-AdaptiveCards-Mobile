@@ -23,6 +23,7 @@
 - (NSString *)url;
 - (NSString *)data;
 - (NSString *)verb;
+- (NSArray *)menuActions;
 - (NSData *)additionalProperty;
 - (BOOL)isEnabled;
 - (BOOL)meetsRequirements:(ACOFeatureRegistration *)featureReg;

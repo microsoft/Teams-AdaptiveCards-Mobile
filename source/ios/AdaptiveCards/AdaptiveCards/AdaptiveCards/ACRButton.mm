@@ -161,12 +161,12 @@
     [button applySentimentStyling];
 
     std::shared_ptr<AdaptiveCards::BaseActionElement> action = [acoAction element];
-    std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> menuActions = action->GetMenuActions();
+    NSArray *menuActions = acoAction.menuActions;
     NSDictionary *imageViewMap = [rootView getImageMap];
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
     UIImage *image = imageViewMap[key];
-    button.iconPlacement = [ACRButton getIconPlacmentAtCurrentContext:rootView url:key];
+    button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key doesHaveMenuActions:menuActions && menuActions.count > 0];
 
     if (image) {
         [button setImageView:image withConfig:config];
@@ -198,15 +198,20 @@
         }
     }
     
-    if (!menuActions.empty())
+    if (menuActions && menuActions.count > 0)
     {
-        button.iconPlacement = ACRRightOfTitle;
         NSString *chevronDownIcon = @"ChevronDown";
         NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];
-        UIImageView *view = [[ACRSVGImageView alloc] init:url rtl:rootView.context.rtl isFilled:true size:CGSizeMake(12, 12) tintColor:button.currentTitleColor];
-        button.iconView = view;
+        UIImageView *view = [[ACRSVGImageView alloc] init:url rtl:rootView.context.rtl isFilled:true size:CGSizeMake(16, 16) tintColor:button.currentTitleColor];
         [button addSubview:view];
-        [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];
+        view.translatesAutoresizingMaskIntoConstraints = NO;
+        [NSLayoutConstraint activateConstraints:@[
+            [view.trailingAnchor constraintEqualToAnchor:button.trailingAnchor constant:-8],
+            [view.centerYAnchor constraintEqualToAnchor:button.centerYAnchor],
+
+            [view.widthAnchor constraintEqualToConstant:16],
+            [view.heightAnchor constraintEqualToConstant:16]
+        ]];
     }
     
     if (button.isEnabled == NO) {
@@ -266,8 +271,8 @@
     if ([rootView.context.hostConfig getIconPlacement] == ACRAboveTitle and rootView.context.allHasActionIcons) {
         return ACRAboveTitle;
     }
-
-    return doesContainMenuActions ? ACRRightOfTitle : ACRLeftOfTitle;
+    
+    return ACRLeftOfTitle;
 }
 
 @end
