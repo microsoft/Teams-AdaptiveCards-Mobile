@@ -166,7 +166,7 @@
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
     UIImage *image = imageViewMap[key];
-    button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key doesHaveMenuActions:menuActions && menuActions.count > 0];
+    button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key];
 
     if (image) {
         [button setImageView:image withConfig:config];
@@ -208,7 +208,6 @@
         [NSLayoutConstraint activateConstraints:@[
             [view.trailingAnchor constraintEqualToAnchor:button.trailingAnchor constant:-8],
             [view.centerYAnchor constraintEqualToAnchor:button.centerYAnchor],
-
             [view.widthAnchor constraintEqualToConstant:16],
             [view.heightAnchor constraintEqualToConstant:16]
         ]];
@@ -262,7 +261,7 @@
     return (self.actionType == ACRShowCard && self.imageView && self.imageView.frame.size.width);
 }
 
-+ (ACRIconPlacement)getIconPlacementAtCurrentContext:(ACRView *)rootView url:(NSString *)key doesHaveMenuActions:(BOOL)doesContainMenuActions
++ (ACRIconPlacement)getIconPlacementAtCurrentContext:(ACRView *)rootView url:(NSString *)key
 {
     if (!key or key.length == 0) {
         return ACRNoTitle;
@@ -271,7 +270,7 @@
     if ([rootView.context.hostConfig getIconPlacement] == ACRAboveTitle and rootView.context.allHasActionIcons) {
         return ACRAboveTitle;
     }
-    
+
     return ACRLeftOfTitle;
 }
 
