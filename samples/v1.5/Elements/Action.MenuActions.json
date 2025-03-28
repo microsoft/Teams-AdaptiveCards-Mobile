@@ -325,7 +325,7 @@
 					"iconUrl": "icon:Send,Filled",
 					"tooltip": "Tooltip for Execute",
 					"associatedInputs": "auto",
-					"conditionallyEnabled": false,
+					"conditionallyEnabled": true,
 					"menuActions": [
 						{
 							"type": "Action.OpenUrl",
@@ -474,7 +474,7 @@
 					"iconUrl": "icon:Send,Filled",
 					"tooltip": "Tooltip for Execute",
 					"associatedInputs": "auto",
-					"conditionallyEnabled": false,
+					"conditionallyEnabled": true,
 					"menuActions": []
 				}
 			]
