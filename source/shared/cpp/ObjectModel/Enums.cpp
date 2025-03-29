@@ -262,7 +262,11 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Shape, "shape"},
             {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"},
-            {AdaptiveCardSchemaKey::MenuActions, "menuActions"}});
+            {AdaptiveCardSchemaKey::MenuActions, "menuActions"},
+            {AdaptiveCardSchemaKey::Content, "content"},
+            {AdaptiveCardSchemaKey::DisplayArrow, "displayArrow"},
+            {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
+            {AdaptiveCardSchemaKey::Position, "position"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -305,7 +309,8 @@ namespace AdaptiveCards
             {ActionType::ToggleVisibility, "Action.ToggleVisibility"},
             {ActionType::Custom, "Custom"},
             {ActionType::UnknownAction, "UnknownAction"},
-            {ActionType::Overflow, "Overflow"}});
+            {ActionType::Overflow, "Overflow"},
+            {ActionType::Popover, "Action.Popover"}});
 
     DEFINE_ADAPTIVECARD_ENUM(HeightType, {
             {HeightType::Auto, "Auto"},

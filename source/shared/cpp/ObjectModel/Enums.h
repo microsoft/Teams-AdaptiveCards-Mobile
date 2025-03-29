@@ -264,7 +264,11 @@ enum class AdaptiveCardSchemaKey
     PageControl,
     SelectedTintColor,
     ExtraSmall,
-    MenuActions
+    MenuActions,
+    Content,
+    DisplayArrow,
+    MaxPopoverWidth,
+    Position
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -456,7 +460,8 @@ enum class ActionType
     ToggleVisibility,
     Custom,
     UnknownAction,
-    Overflow
+    Overflow,
+    Popover
 };
 DECLARE_ADAPTIVECARD_ENUM(ActionType);
 

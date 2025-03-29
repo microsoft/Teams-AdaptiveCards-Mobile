@@ -553,4 +553,12 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return AdaptiveCardObjectModelJNI.ToLowercase(value);
   }
 
+  public static String getDEFAULT_POSITION() {
+    return AdaptiveCardObjectModelJNI.DEFAULT_POSITION_get();
+  }
+
+  public static boolean getDEFAULT_DISPLAY_ARROW() {
+    return AdaptiveCardObjectModelJNI.DEFAULT_DISPLAY_ARROW_get();
+  }
+
 }
