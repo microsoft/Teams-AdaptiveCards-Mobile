@@ -139,6 +139,28 @@ public final class Util {
         return Bitmap.createScaledBitmap(bitmap, (int)width, (int)height, false);
     }
 
+    /**
+     * Generate new Bitmap scaled to given size from given Bitmap, preserving aspect ratio.
+     * Note: This is computationally expensive.
+     * @param size Bigger dimension size in pixels
+     * @param bitmap Bitmap to scale
+     */
+    public static Bitmap scaleBitmapToSize(float size, Bitmap bitmap)
+    {
+        Drawable d = new BitmapDrawable(null, bitmap);
+        if (d.getIntrinsicWidth() > d.getIntrinsicHeight()) {
+            // width = size, height calculated according to aspect ratio
+            float scaleRatio = size / d.getIntrinsicWidth();
+            float height = scaleRatio * d.getIntrinsicHeight();
+            return Bitmap.createScaledBitmap(bitmap, (int)size, (int)height, false);
+        } else {
+            // height = size, width calculated according to aspect ratio
+            float scaleRatio = size / d.getIntrinsicHeight();
+            float width = scaleRatio * d.getIntrinsicWidth();
+            return Bitmap.createScaledBitmap(bitmap, (int)width, (int)size, false);
+        }
+    }
+
     public static HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthConfig hostWidthConfig) {
 
         if (hostCardContainer <= 0 || hostWidthConfig == null
