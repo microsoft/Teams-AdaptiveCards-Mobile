@@ -5,6 +5,14 @@
 
 name: $(Year:yy).$(Month).$(DayOfMonth).$(rev:r)
 
+trigger:
+  batch: false
+  branches:
+    include:
+    - main
+    - feature/*
+    - release/*
+
 pr:
   branches:
     include:

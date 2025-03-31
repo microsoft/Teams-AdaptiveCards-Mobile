@@ -46,6 +46,10 @@ resources:
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
+    sdl:
+      codeSignValidation:
+        enabled: true
+        break: true
     pool:
       name: Azure-Pipelines-1ESPT-ExDShared
       image: windows-2022
@@ -128,10 +132,16 @@ extends:
                   echo "Copied pom to $dest for signing"
                 }
 
-          - task: EsrpCodeSigning@4
+          - task: EsrpCodeSigning@5
             displayName: 'ESRP CodeSign (Detached PGP)'
             inputs:
-              ConnectedServiceName: 'Teams ESRP CodeSign v3'
+              ConnectedServiceName: 'TeamsESRP-CP-464385-Pgp'
+              AppRegistrationTenantId: cdc5aeea-15c5-4db6-b079-fcadd2505dc2
+              AppRegistrationClientId: d91c83b4-bfc6-40d3-a591-e5b0598a2796
+              AuthSignCertName: d91c83b4-bfc6-40d3-a591-e5b0598a2796
+              AuthAKVName: esrp-teams
+              EsrpClientId: d91c83b4-bfc6-40d3-a591-e5b0598a2796
+              UseMSIAuthentication: true
               FolderPath: $(build.artifactstagingdirectory)
               Pattern: '*.asc'
               signConfigType: inlineSignParams
