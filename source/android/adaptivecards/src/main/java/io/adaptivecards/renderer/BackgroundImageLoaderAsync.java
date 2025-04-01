@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import io.adaptivecards.objectmodel.BackgroundImage;
@@ -23,7 +24,7 @@ public class BackgroundImageLoaderAsync extends GenericImageLoaderAsync
     private ViewGroup m_layout;
     private BackgroundImage m_backgroundImageProperties;
 
-    public BackgroundImageLoaderAsync(RenderedAdaptiveCard renderedCard, Context context, ViewGroup layout, String imageBaseUrl, int maxWidth, BackgroundImage backgroundImageProperties)
+    public BackgroundImageLoaderAsync(@NonNull RenderedAdaptiveCard renderedCard, Context context, ViewGroup layout, String imageBaseUrl, int maxWidth, BackgroundImage backgroundImageProperties)
     {
         super(renderedCard, imageBaseUrl, maxWidth);
 

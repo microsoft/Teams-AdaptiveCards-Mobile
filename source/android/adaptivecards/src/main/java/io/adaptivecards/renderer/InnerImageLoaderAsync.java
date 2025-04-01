@@ -5,6 +5,7 @@ package io.adaptivecards.renderer;
 import android.graphics.Bitmap;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import io.adaptivecards.renderer.http.HttpRequestResult;
@@ -13,12 +14,7 @@ public abstract class InnerImageLoaderAsync extends GenericImageLoaderAsync
 {
     protected View m_view; // button and imageview inherit from this
 
-    public InnerImageLoaderAsync(RenderedAdaptiveCard renderedCard, View containerView, String imageBaseUrl)
-    {
-        this(renderedCard, containerView, imageBaseUrl, -1);
-    }
-
-    public InnerImageLoaderAsync(RenderedAdaptiveCard renderedCard, View containerView, String imageBaseUrl, int maxWidth)
+    public InnerImageLoaderAsync(@NonNull RenderedAdaptiveCard renderedCard, View containerView, String imageBaseUrl, int maxWidth)
     {
         super(renderedCard, imageBaseUrl, maxWidth);
 

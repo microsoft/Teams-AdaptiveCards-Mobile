@@ -60,6 +60,10 @@
 										"value": "v1.5/Scenarios/FluentIcon.json"
 									},
 									{
+										"title": "FluentIcon.RTL",
+										"value": "v1.5/Scenarios/FluentIcon.RTL.json"
+									},
+									{
 										"title": "RatingInput",
 										"value": "v1.5/Scenarios/RatingInput.json"
 									},
