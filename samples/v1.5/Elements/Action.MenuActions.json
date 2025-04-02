@@ -16,6 +16,7 @@
 				{
 					"type": "Input.Text",
 					"id": "defaultInputId",
+					"isRequired": true,
 					"placeholder": "enter comment",
 					"maxLength": 500
 				},
@@ -324,7 +325,7 @@
 					"iconUrl": "icon:Send,Filled",
 					"tooltip": "Tooltip for Execute",
 					"associatedInputs": "auto",
-					"conditionallyEnabled": false,
+					"conditionallyEnabled": true,
 					"menuActions": [
 						{
 							"type": "Action.OpenUrl",
@@ -473,8 +474,43 @@
 					"iconUrl": "icon:Send,Filled",
 					"tooltip": "Tooltip for Execute",
 					"associatedInputs": "auto",
-					"conditionallyEnabled": false,
+					"conditionallyEnabled": true,
 					"menuActions": []
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.OpenUrl",
+					"title": "OpenUrl",
+					"iconUrl": "icon:Open,Filled",
+					"tooltip": "Tooltip for OpenUrl",
+					"style": "positive",
+					"url": "https://www.microsoft.com"
+				},
+				{
+					"type": "Action.ResetInputs",
+					"title": "ResetInputs",
+					"iconUrl": "icon:ArrowReset,Filled",
+					"tooltip": "Tooltip for ResetInputs",
+					"style": "positive",
+					"targetInputIds": [
+						"defaultInputId",
+						"myZone"
+					]
+				},
+				{
+					"type": "Action.ToggleVisibility",
+					"title": "ToggleVisibility",
+					"iconUrl": "icon:ToggleLeft,Filled",
+					"tooltip": "Tooltip for ToggleVisibility",
+					"style": "positive",
+					"targetElements": [
+						"defaultInputId",
+						"myZone"
+					]
 				}
 			]
 		},

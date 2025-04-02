@@ -40,8 +40,8 @@ class GetImageAsync (
     override fun styleBitmap(bitmap: Bitmap?): Bitmap? {
         val context = context.get()
         if (context != null) {
-            val imageHeight = Util.dpToPixels(context, iconSize.toFloat()).toFloat()
-            return Util.scaleBitmapToHeight(imageHeight, bitmap)
+            val imageSizeInPixel = Util.dpToPixels(context, iconSize.toFloat()).toFloat()
+            return Util.scaleBitmapToSize(imageSizeInPixel, bitmap)
         }
         return bitmap
     }
