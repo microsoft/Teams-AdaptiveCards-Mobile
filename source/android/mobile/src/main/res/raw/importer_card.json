@@ -260,6 +260,10 @@
 										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
 									},
 									{
+										"title": "Progress Ring",
+										"value": "v1.5/Elements/ProgressRing.json"
+									},
+									{
 										"title": "Spacing Sample",
 										"value": "v1.5/Scenarios/spacing_sample.json"
 									}
