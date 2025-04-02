@@ -145,9 +145,7 @@ public class TestUtil
 
     public static BackgroundImage createMockBackgroundImage()
     {
-        BackgroundImage backgroundImage = new BackgroundImage();
-        backgroundImage.SetUrl("http://");
-        return backgroundImage;
+        return new BackgroundImage("http://");
     }
 
     public static FactSet createMockFactSet()
