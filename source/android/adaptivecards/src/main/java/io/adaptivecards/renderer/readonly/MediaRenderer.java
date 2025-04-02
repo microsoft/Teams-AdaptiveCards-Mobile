@@ -171,8 +171,7 @@ public class MediaRenderer extends BaseCardElementRenderer
     {
         ImageView posterView = null;
 
-        Image poster = new Image();
-        poster.SetUrl(!media.GetPoster().isEmpty() ? media.GetPoster() : hostConfig.GetMedia().getDefaultPoster());
+        Image poster = new Image(!media.GetPoster().isEmpty() ? media.GetPoster() : hostConfig.GetMedia().getDefaultPoster());
         poster.SetAltText(media.GetAltText());
 
         if (!poster.GetUrl(renderArgs.getTheme()).isEmpty()) {
@@ -205,8 +204,7 @@ public class MediaRenderer extends BaseCardElementRenderer
 
         if (!playButtonUrl.isEmpty())
         {
-            Image playButton = new Image();
-            playButton.SetUrl(playButtonUrl);
+            Image playButton = new Image(playButtonUrl);
             playButton.SetImageSize(ImageSize.Small);
 
             playButtonView = ImageRenderer.getInstance().render(renderedCard, context, fragmentManager, viewGroup, playButton, cardActionHandler, hostConfig, renderArgs);
