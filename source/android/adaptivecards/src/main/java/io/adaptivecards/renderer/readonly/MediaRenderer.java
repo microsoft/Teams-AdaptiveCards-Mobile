@@ -172,14 +172,7 @@ public class MediaRenderer extends BaseCardElementRenderer
         ImageView posterView = null;
 
         Image poster = new Image();
-        if (!media.GetPoster().isEmpty())
-        {
-            poster.SetUrl(media.GetPoster());
-        }
-        else
-        {
-            poster.SetUrl(hostConfig.GetMedia().getDefaultPoster());
-        }
+        poster.SetUrl(!media.GetPoster().isEmpty() ? media.GetPoster() : hostConfig.GetMedia().getDefaultPoster());
         poster.SetAltText(media.GetAltText());
 
         if (!poster.GetUrl(renderArgs.getTheme()).isEmpty()) {
