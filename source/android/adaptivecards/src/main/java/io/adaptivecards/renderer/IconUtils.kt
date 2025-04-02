@@ -1,9 +1,10 @@
 package io.adaptivecards.renderer
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
-import io.adaptivecards.objectmodel.HostConfig
+import android.widget.Button
 
 object IconUtils {
     /**
@@ -53,5 +54,31 @@ object IconUtils {
                 callback(null)
             }
         }
+    }
+
+    @JvmStatic
+    fun Button.applyIconColor(iconColor : Int? = null) {
+        val color = iconColor ?: currentTextColor
+        getHexColor(color).apply {
+            compoundDrawables[0]?.applyIconColor(this)
+            compoundDrawables[1]?.applyIconColor(this)
+            compoundDrawables[2]?.applyIconColor(this)
+            compoundDrawables[3]?.applyIconColor(this)
+        }
+    }
+
+    @JvmStatic
+    fun Drawable.applyIconColor(hexIconColor: String, defaultHexIconColor : Int = Color.BLACK) {
+        val color = try {
+            Color.parseColor(hexIconColor)
+        } catch (e: IllegalArgumentException) {
+            defaultHexIconColor
+        }
+        this.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
+    }
+
+    @JvmStatic
+    fun getHexColor(currentTextColor: Int) : String {
+        return String.format("#%06X", 0xFFFFFF and currentTextColor)
     }
 }
