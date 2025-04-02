@@ -11,6 +11,9 @@ namespace AdaptiveCards
 {
 class Image : public BaseCardElement
 {
+
+    friend class ImageParser;
+
 public:
     Image();
     Image(const Image&) = default;
@@ -19,8 +22,19 @@ public:
     Image& operator=(Image&&) = default;
     ~Image() = default;
 
+    Image(std::string const& url) : BaseCardElement(CardElementType::Image),
+        m_url(url),
+        m_imageStyle(ImageStyle::Default),
+        m_imageSize(ImageSize::None),
+        m_pixelWidth(0),
+        m_pixelHeight(0),
+        m_hAlignment(std::nullopt) {
+        PopulateKnownPropertiesSet();
+    }
+
     Json::Value SerializeToJsonValue() const override;
 
+    const std::string& GetUrl(const Theme theme) const;
     std::string GetUrl() const;
     void SetUrl(const std::string& value);
 
@@ -62,6 +76,7 @@ private:
     std::string m_altText;
     std::optional<HorizontalAlignment> m_hAlignment;
     std::shared_ptr<BaseActionElement> m_selectAction;
+    std::vector<std::shared_ptr<AdaptiveCards::ThemedUrl>> m_themedUrls;
 };
 
 class ImageParser : public BaseCardElementParser
