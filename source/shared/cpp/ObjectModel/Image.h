@@ -22,13 +22,14 @@ public:
     Image& operator=(Image&&) = default;
     ~Image() = default;
 
-    Image(std::string const& url) :
+    Image(std::string const& url) : BaseCardElement(CardElementType::Image),
         m_url(url),
         m_imageStyle(ImageStyle::Default),
         m_imageSize(ImageSize::None),
         m_pixelWidth(0),
         m_pixelHeight(0),
         m_hAlignment(std::nullopt) {
+        PopulateKnownPropertiesSet();
     }
 
     Json::Value SerializeToJsonValue() const override;
