@@ -22,7 +22,13 @@ public:
     Image& operator=(Image&&) = default;
     ~Image() = default;
 
-    Image(std::string const& url) : m_url(url) {
+    Image(std::string const& url) :
+        m_url(url),
+        m_imageStyle(ImageStyle::Default),
+        m_imageSize(ImageSize::None),
+        m_pixelWidth(0),
+        m_pixelHeight(0),
+        m_hAlignment(std::nullopt) {
     }
 
     Json::Value SerializeToJsonValue() const override;
