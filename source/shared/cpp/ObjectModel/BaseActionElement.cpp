@@ -246,7 +246,7 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedIconUrls, ThemedUrl::Deserialize, false);
     element->m_themedIconUrls = std::move(themedUrls);
 
-    if (element->isSplitActionSupported()) {
+    if (IsSplitActionSupported(element->GetElementType())) {
         //Parse Menu Actions
         auto menuActions = ParseUtil::GetElementCollection<BaseActionElement>(
                 true,
@@ -254,7 +254,16 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
                 json,
                 AdaptiveCardSchemaKey::MenuActions,
                 false);
-        element->m_menuActions = std::move(menuActions);
+
+        // Filter the collection to include only allowed items into menuActions
+        std::vector<std::shared_ptr<BaseActionElement>> filteredMenuActions;
+        for (const auto& action : menuActions)
+        {
+            if (IsValidMenuAction(action->GetElementType())) {
+                filteredMenuActions.push_back(action);
+            }
+        }
+        element->m_menuActions = std::move(filteredMenuActions);
 
         if (!element->m_menuActions.empty()) {
             // Set the mode, override mode to primary if menuActions are present
@@ -273,14 +282,4 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
 bool BaseActionElement::GetIsSplitAction() const
 {
     return !m_menuActions.empty();
-}
-
-bool BaseActionElement::isSplitActionSupported() const
-{
-    auto actionType = GetElementType();
-    return actionType != ActionType::ShowCard
-        && actionType != ActionType::Unsupported
-        && actionType != ActionType::UnknownAction
-        && actionType != ActionType::Overflow
-        && actionType != ActionType::Custom;
 }

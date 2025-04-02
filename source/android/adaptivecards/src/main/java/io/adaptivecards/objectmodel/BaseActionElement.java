@@ -197,6 +197,14 @@ public class BaseActionElement extends BaseElement {
     AdaptiveCardObjectModelJNI.BaseActionElement_ParseJsonObject(ParseContext.getCPtr(context), context, JsonValue.getCPtr(json), json, BaseElement.getCPtr(element), element);
   }
 
+  public static boolean IsSplitActionSupported(ActionType actionType) {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_IsSplitActionSupported(actionType.swigValue());
+  }
+
+  public static boolean IsValidMenuAction(ActionType actionType) {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_IsValidMenuAction(actionType.swigValue());
+  }
+
   public java.lang.Object swigOriginalObject() {
     return AdaptiveCardObjectModelJNI.BaseActionElement_swigOriginalObject(swigCPtr, this);
   }
