@@ -3,8 +3,6 @@
 package io.adaptivecards.renderer.action;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
