@@ -262,7 +262,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Shape, "shape"},
             {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"},
-            {AdaptiveCardSchemaKey::MenuActions, "menuActions"}});
+            {AdaptiveCardSchemaKey::MenuActions, "menuActions"},
+            {AdaptiveCardSchemaKey::LabelPosition, "labelPosition"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -553,4 +554,15 @@ namespace AdaptiveCards
         {BadgeAppearance::Filled, "Filled"},
         {BadgeAppearance::Tint, "Tint"}});
 
+    DEFINE_ADAPTIVECARD_ENUM(ProgressSize, {
+        {ProgressSize::Tiny, "Tiny"},
+        {ProgressSize::Small, "Small"},
+        {ProgressSize::Medium, "Medium"},
+        {ProgressSize::Large, "Large"}})
+
+    DEFINE_ADAPTIVECARD_ENUM(LabelPosition, {
+        {LabelPosition::Above, "Above"},
+        {LabelPosition::Below, "Below"},
+        {LabelPosition::Before, "Before"},
+        {LabelPosition::After, "After"}})
 }
