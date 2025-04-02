@@ -1,11 +1,11 @@
 {
 	"type": "AdaptiveCard",
 	"version": "1.5",
-	"rtl": false,
+	"rtl": true,
 	"body": [
 		{
 			"type": "TextBlock",
-			"text": "New Icon element",
+			"text": "RTL is supported (Toggle rtl property at root AdaptiveCard)",
 			"wrap": true,
 			"size": "Large"
 		},
@@ -202,7 +202,7 @@
 		},
 		{
 			"type": "TextBlock",
-			"text": "Standard font colors are supported",
+			"text": "RTL is supported for colored fonts",
 			"wrap": true,
 			"size": "Large"
 		},
@@ -341,6 +341,81 @@
 		},
 		{
 			"type": "TextBlock",
+			"text": "RTL is supported",
+			"wrap": true,
+			"size": "Large"
+		},
+		{
+			"type": "ColumnSet",
+			"columns": [
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "ArrowExport",
+							"size": "xSmall",
+							"style": "Filled"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "ArrowExport",
+							"size": "Small",
+							"style": "Filled",
+							"color": "accent"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "ArrowExport",
+							"size": "Standard",
+							"style": "Filled",
+							"color": "good"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "ArrowExport",
+							"size": "Medium",
+							"style": "Filled",
+							"color": "warning"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Icon",
+							"name": "ArrowExport",
+							"size": "Large",
+							"style": "Filled",
+							"color": "attention"
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "TextBlock",
 			"text": "Clickable icons",
 			"wrap": true,
 			"size": "Large",
@@ -349,7 +424,7 @@
 		},
 		{
 			"type": "Icon",
-			"name": "Emoji",
+			"name": "Calendar",
 			"selectAction": {
 				"type": "Action.OpenUrl",
 				"url": "https://www.microsoft.com",
@@ -369,23 +444,23 @@
 	"actions": [
 		{
 			"type": "Action.OpenUrl",
-			"title": "Regular icon",
+			"title": "RTL supported",
 			"url": "https://www.microsoft.com",
-			"iconUrl": "icon:AccessTime"
+			"iconUrl": "icon:ArrowExport"
 		},
 		{
 			"type": "Action.OpenUrl",
-			"title": "Filled icon",
+			"title": "RTL supported",
+			"url": "https://www.microsoft.com",
+			"iconUrl": "icon:Calendar,filled"
+		},
+		{
+			"type": "Action.OpenUrl",
+			"title": "No RTL",
 			"url": "https://www.microsoft.com",
 			"iconUrl": "icon:AccessTime,filled",
 			"style": "destructive",
 			"rtl": true
-		},
-		{
-			"type": "Action.OpenUrl",
-			"title": "Invalid icon doesn't render",
-			"url": "https://www.microsoft.com",
-			"iconUrl": "icon:Invalid"
 		}
 	]
 }

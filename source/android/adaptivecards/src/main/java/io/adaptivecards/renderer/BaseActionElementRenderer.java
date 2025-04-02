@@ -106,8 +106,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             ICardActionHandler cardActionHandler,
             HostConfig hostConfig,
             RenderArgs renderArgs,
-            @Nullable View adaptiveCardView) {
-            return new ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, adaptiveCardView);
+            @Nullable View splitActionView) {
+            return new ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, splitActionView);
         }
 
         /**
@@ -128,9 +128,9 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                                      ICardActionHandler cardActionHandler,
                                      HostConfig hostConfig,
                                      RenderArgs renderArgs,
-                                     @Nullable View adaptiveCardView)
+                                     @Nullable View splitActionView)
         {
-            this(renderedCard, baseActionElement, cardActionHandler, adaptiveCardView);
+            this(renderedCard, baseActionElement, cardActionHandler, splitActionView);
             m_isInlineShowCardAction = (baseActionElement.GetElementType() == ActionType.ShowCard) && (hostConfig.GetActions().getShowCard().getActionMode() == ActionMode.Inline);
 
             // As SelectAction doesn't support ShowCard actions, then this line won't be executed
@@ -150,12 +150,12 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             RenderedAdaptiveCard renderedCard,
             BaseActionElement baseActionElement,
             ICardActionHandler cardActionHandler,
-            @Nullable View adaptiveCardView)
+            @Nullable View splitActionView)
         {
             m_action = baseActionElement;
             m_renderedAdaptiveCard = renderedCard;
             m_cardActionHandler = cardActionHandler;
-            m_adaptiveCardView = adaptiveCardView;
+            m_splitActionView = splitActionView;
 
             // In case of the action being a ToggleVisibility action, store the action as ToggleVisibility action so no recasting must be made
             if (m_action.GetElementType() == ActionType.ToggleVisibility)
@@ -376,7 +376,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private boolean isOverflowMenuScenarioAllowed(@NonNull BaseActionElement baseActionElement) {
-            return m_adaptiveCardView == null && baseActionElement.GetIsSplitAction();
+            return m_splitActionView == null && baseActionElement.GetIsSplitAction();
         }
 
         /***
@@ -398,8 +398,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 return;
             }
 
-            if (m_adaptiveCardView != null) {
-                view = m_adaptiveCardView;
+            if (m_splitActionView != null) {
+                view = m_splitActionView;
             }
 
             m_renderedAdaptiveCard.clearValidatedInputs();
@@ -457,7 +457,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         private HashMap<String, View> m_viewDictionary = null;
         private ToggleVisibilityAction m_toggleVisibilityAction = null;
 
-        // Information for handling OverflowMenu scenario for actions
-        private final @Nullable View m_adaptiveCardView;
+        // Information for handling SplitAction scenario for actions
+        private final @Nullable View m_splitActionView;
     }
 }

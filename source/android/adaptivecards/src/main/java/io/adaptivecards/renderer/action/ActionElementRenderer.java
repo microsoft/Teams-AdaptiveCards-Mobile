@@ -29,6 +29,7 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.renderer.BaseActionElementRenderer;
+import io.adaptivecards.renderer.IconUtils;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
@@ -212,7 +213,11 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         List<IInputHandler> inputHandlers = adaptiveCard.getInputsToValidate(Util.getViewId(button));
         button.setEnabled(isAnyInputValid(inputHandlers));
         for (IInputHandler inputHandler : inputHandlers) {
-            inputHandler.addInputWatcher((id, val) -> button.setEnabled(isAnyInputValid(inputHandlers)));
+            inputHandler.addInputWatcher((id, val) -> {
+                boolean isEnabled = isAnyInputValid(inputHandlers);
+                button.setEnabled(isEnabled);
+                IconUtils.applyIconColor(button, button.getCurrentTextColor());
+            });
         }
     }
 
