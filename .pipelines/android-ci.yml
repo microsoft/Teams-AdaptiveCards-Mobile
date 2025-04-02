@@ -1,9 +1,19 @@
 name: $(Year:yy).$(Month).$(DayOfMonth).$(rev:r)
 
+trigger:
+  batch: false
+  branches:
+    include:
+    - main
+    - refs/heads/main
+    - feature/*
+    - release/*
+
 pr:
   branches:
     include:
     - main
+    - refs/heads/main
     - feature/*
     - release/*
 

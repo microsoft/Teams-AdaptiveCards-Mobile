@@ -139,6 +139,28 @@ public final class Util {
         return Bitmap.createScaledBitmap(bitmap, (int)width, (int)height, false);
     }
 
+    /**
+     * Generate new Bitmap scaled to given size from given Bitmap, preserving aspect ratio.
+     * Note: This is computationally expensive.
+     * @param size Bigger dimension size in pixels
+     * @param bitmap Bitmap to scale
+     */
+    public static Bitmap scaleBitmapToSize(float size, Bitmap bitmap)
+    {
+        Drawable d = new BitmapDrawable(null, bitmap);
+        if (d.getIntrinsicWidth() > d.getIntrinsicHeight()) {
+            // width = size, height calculated according to aspect ratio
+            float scaleRatio = size / d.getIntrinsicWidth();
+            float height = scaleRatio * d.getIntrinsicHeight();
+            return Bitmap.createScaledBitmap(bitmap, (int)size, (int)height, false);
+        } else {
+            // height = size, width calculated according to aspect ratio
+            float scaleRatio = size / d.getIntrinsicHeight();
+            float width = scaleRatio * d.getIntrinsicWidth();
+            return Bitmap.createScaledBitmap(bitmap, (int)width, (int)size, false);
+        }
+    }
+
     public static HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthConfig hostWidthConfig) {
 
         if (hostCardContainer <= 0 || hostWidthConfig == null
@@ -754,22 +776,17 @@ public final class Util {
             imageLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, iconUrl);
         }
         else {
-            // intentionally kept this 24 so that it always loads
-            // irrespective of size given in host config.
-            // it is possible that host config has some size which is not available in CDN.
-            long fluentIconSize = 24;
             int color = ((Button) view).getCurrentTextColor();
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
             boolean isFilledStyle = iconUrl.contains("filled");
             ActionElementRendererFluentIconImageLoaderAsync fluentIconLoaderAsync = new ActionElementRendererFluentIconImageLoaderAsync(
                 renderedCard,
-                fluentIconSize,
+                hostConfig.GetActions().getIconSize(),
                 isFilledStyle,
                 view,
                 hexColor,
                 iconPlacement,
-                hostConfig.GetSpacing().getDefaultSpacing(),
-                hostConfig.GetActions().getIconSize()
+                hostConfig.GetSpacing().getDefaultSpacing()
             );
             fluentIconLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, svgInfoURL);
         }
@@ -845,7 +862,7 @@ public final class Util {
         return String.format("%s/%s/%s/%s.json", fluentIconCdnRoot, fluentIconCdnPath, unavailableIconName, unavailableIconName);
     }
 
-    private static final String FLUENT_ICON_URL_PREFIX = "icon:";
+    static final String FLUENT_ICON_URL_PREFIX = "icon:";
 
     public static String getOpenUrlAnnouncement(Context context, String urlTitle) {
         return context.getResources().getString(R.string.open_url_announcement, urlTitle);

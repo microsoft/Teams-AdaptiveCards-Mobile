@@ -746,6 +746,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long BaseActionElement_DeserializeBasePropertiesFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native long BaseActionElement_DeserializeBaseProperties(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native void BaseActionElement_ParseJsonObject(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_, long jarg3, BaseElement jarg3_);
+  public final static native boolean BaseActionElement_IsSplitActionSupported(int jarg1);
+  public final static native boolean BaseActionElement_IsValidMenuAction(int jarg1);
   public final static native java.lang.Object BaseActionElement_swigOriginalObject(long jarg1, BaseActionElement jarg1_);
   public final static native long BaseActionElement_dynamic_cast(long jarg1, BaseElement jarg1_);
   public final static native void BaseActionElement_director_connect(BaseActionElement obj, long cptr, boolean mem_own, boolean weak_global);
