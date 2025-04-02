@@ -22,6 +22,9 @@ public:
     Image& operator=(Image&&) = default;
     ~Image() = default;
 
+    Image(std::string const& url) : m_url(url) {
+    }
+
     Json::Value SerializeToJsonValue() const override;
 
     const std::string& GetUrl(const Theme theme) const;
