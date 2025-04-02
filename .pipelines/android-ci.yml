@@ -1,3 +1,4 @@
+# Adaptive Cards Android PullRequest Pipeline https://dev.azure.com/DomoreexpGithub/Github_Pipelines/_build?definitionId=31
 name: $(Year:yy).$(Month).$(DayOfMonth).$(rev:r)
 
 trigger:
