@@ -34,6 +34,7 @@ import io.adaptivecards.renderer.AdaptiveCardRenderer;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
 import io.adaptivecards.renderer.Util;
+import io.adaptivecards.renderer.Utils;
 import io.adaptivecards.renderer.actionhandler.AfterTextChangedListener;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
@@ -331,8 +332,9 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         CardRendererRegistration.getInstance().registerFeatureFlagResolver(new FeatureFlagResolver());
     }
 
-    private void registerCustomFeatures()
-    {
+    private void registerCustomFeatures(@NonNull Context context) {
+        // Register Theme
+        CardRendererRegistration.getInstance().setTheme(Utils.getTheme(context));
         registerCustomImageLoaders();
         registerCustomMediaLoaders();
         registerFeatureRegistration();
@@ -374,7 +376,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             layout.removeAllViews();
 
             registerFeatureFlagResolver();
-            registerCustomFeatures();
+            registerCustomFeatures(layout.getContext());
             if (mLayoutWidth != 0) {
                 CardRendererRegistration.getInstance().registerHostCardContainer(mLayoutWidth);
             }
