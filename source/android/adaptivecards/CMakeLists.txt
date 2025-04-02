@@ -100,6 +100,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/ToggleInput.cpp
              ../../shared/cpp/ObjectModel/ToggleVisibilityAction.cpp
              ../../shared/cpp/ObjectModel/ToggleVisibilityTarget.cpp
+             ../../shared/cpp/ObjectModel/PopoverAction.cpp
              ../../shared/cpp/ObjectModel/TokenExchangeResource.cpp
              ../../shared/cpp/ObjectModel/UnknownAction.cpp
              ../../shared/cpp/ObjectModel/UnknownElement.cpp

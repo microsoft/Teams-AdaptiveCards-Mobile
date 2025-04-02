@@ -168,6 +168,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/Media.h"
 #include "../../../shared/cpp/ObjectModel/ToggleVisibilityAction.h"
 #include "../../../shared/cpp/ObjectModel/ToggleVisibilityTarget.h"
+#include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 #include "../../../shared/cpp/ObjectModel/UnknownElement.h"
 #include "../../../shared/cpp/ObjectModel/UnknownAction.h"
 #include "../../../shared/cpp/ObjectModel/TextElementProperties.h"
@@ -273,6 +274,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ToggleVisibilityTarget)
 %shared_ptr(AdaptiveCards::ToggleVisibilityAction)
 %shared_ptr(AdaptiveCards::ToggleVisibilityActionParser)
+%shared_ptr(AdaptiveCards::PopoverAction)
+%shared_ptr(AdaptiveCards::PopoverActionParser)
 %shared_ptr(AdaptiveCards::ActionSet)
 %shared_ptr(AdaptiveCards::ActionSetParser)
 %shared_ptr(AdaptiveCards::UnknownElement)
@@ -989,6 +992,21 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::PopoverAction::dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::PopoverAction {
+        static AdaptiveCards::PopoverAction *dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement) {
+            return dynamic_cast<AdaptiveCards::PopoverAction *>(baseActionElement);
+        }
+};
+
 %exception AdaptiveCards::ValueChangedAction::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {
@@ -1166,6 +1184,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/Media.h"
 %include "../../../shared/cpp/ObjectModel/ToggleVisibilityTarget.h"
 %include "../../../shared/cpp/ObjectModel/ToggleVisibilityAction.h"
+%include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 %include "../../../shared/cpp/ObjectModel/ActionSet.h"
 %include "../../../shared/cpp/ObjectModel/UnknownElement.h"
 %include "../../../shared/cpp/ObjectModel/UnknownAction.h"
