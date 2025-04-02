@@ -56,14 +56,6 @@ public class BackgroundImage {
     return AdaptiveCardObjectModelJNI.BackgroundImage_GetUrl__SWIG_0(swigCPtr, this, theme.swigValue());
   }
 
-  public String GetUrl() {
-    return AdaptiveCardObjectModelJNI.BackgroundImage_GetUrl__SWIG_1(swigCPtr, this);
-  }
-
-  public void SetUrl(String value) {
-    AdaptiveCardObjectModelJNI.BackgroundImage_SetUrl(swigCPtr, this, value);
-  }
-
   public ImageFillMode GetFillMode() {
     return ImageFillMode.swigToEnum(AdaptiveCardObjectModelJNI.BackgroundImage_GetFillMode(swigCPtr, this));
   }
