@@ -55,8 +55,12 @@ public class Image extends BaseCardElement {
     return new JsonValue(AdaptiveCardObjectModelJNI.Image_SerializeToJsonValue(swigCPtr, this), true);
   }
 
+  public String GetUrl(Theme theme) {
+    return AdaptiveCardObjectModelJNI.Image_GetUrl__SWIG_0(swigCPtr, this, theme.swigValue());
+  }
+
   public String GetUrl() {
-    return AdaptiveCardObjectModelJNI.Image_GetUrl(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.Image_GetUrl__SWIG_1(swigCPtr, this);
   }
 
   public void SetUrl(String value) {
