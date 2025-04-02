@@ -110,9 +110,7 @@ public class TestUtil
 
     public static Image createMockImage()
     {
-        Image image = new Image();
-        image.SetUrl("http://");
-        return image;
+        return new Image("http://");
     }
 
     public static Column createMockColumn()
