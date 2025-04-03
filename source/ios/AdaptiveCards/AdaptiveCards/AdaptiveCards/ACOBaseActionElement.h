@@ -24,6 +24,7 @@
 - (NSString *)data;
 - (NSString *)verb;
 - (NSArray *)menuActions;
+- (NSString *)iconUrl;
 - (NSData *)additionalProperty;
 - (BOOL)isEnabled;
 - (BOOL)meetsRequirements:(ACOFeatureRegistration *)featureReg;

@@ -161,7 +161,7 @@
     [button applySentimentStyling];
 
     std::shared_ptr<AdaptiveCards::BaseActionElement> action = [acoAction element];
-    NSArray *menuActions = acoAction.menuActions;
+    BOOL isSplitButton = action->GetIsSplitAction();
     NSDictionary *imageViewMap = [rootView getImageMap];
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
@@ -198,7 +198,7 @@
         }
     }
     
-    if (menuActions && menuActions.count > 0)
+    if (isSplitButton)
     {
         NSString *chevronDownIcon = @"ChevronDown";
         NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];

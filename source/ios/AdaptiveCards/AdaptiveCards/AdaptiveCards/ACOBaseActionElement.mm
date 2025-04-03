@@ -164,6 +164,14 @@ using namespace AdaptiveCards;
     return menuActions;
 }
 
+- (NSString *)iconUrl
+{
+    if (_elem) {
+        return [NSString stringWithCString:_elem->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    }
+    return nil;
+}
+
 - (BOOL)meetsRequirements:(ACOFeatureRegistration *)featureReg
 {
     if (_elem) {

@@ -83,4 +83,12 @@
 - (BOOL)onDisplayOverflowActionMenu:(NSArray<ACROverflowMenuItem *> *)menuItems
                     alertController:(UIAlertController *)alert
                      additionalData:(NSDictionary *)additionalData;
+
+#pragma mark - callbacks for split button actions
+/**
+ Shows bottom sheet with all possible buttons.
+ Client needs to implement this and handle showing the bottom sheet with split button options
+ */
+- (void) showBottomSheetForSplitButton:(NSArray<ACOBaseActionElement *>*)menuActions;
+
 @end
