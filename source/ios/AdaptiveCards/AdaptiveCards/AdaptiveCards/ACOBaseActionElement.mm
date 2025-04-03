@@ -164,7 +164,7 @@ using namespace AdaptiveCards;
     return menuActions;
 }
 
-- (NSString *)iconUrl
+- (NSString *)elementIconUrl
 {
     if (_elem) {
         return [NSString stringWithCString:_elem->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
