@@ -264,7 +264,8 @@ enum class AdaptiveCardSchemaKey
     PageControl,
     SelectedTintColor,
     ExtraSmall,
-    MenuActions
+    MenuActions,
+    LabelPosition
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -302,6 +303,7 @@ enum class CardElementType
     Carousel,
     CarouselPage,
     Badge,
+    ProgressRing,
     Unknown
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);
@@ -748,6 +750,22 @@ enum class Shape
     Circular
 };
 DECLARE_ADAPTIVECARD_ENUM(Shape);
+
+enum class LabelPosition {
+    Above,
+    Below,
+    Before,
+    After
+};
+DECLARE_ADAPTIVECARD_ENUM(LabelPosition)
+
+enum class ProgressSize {
+    Tiny,
+    Small,
+    Medium,
+    Large
+};
+DECLARE_ADAPTIVECARD_ENUM(ProgressSize)
 
 enum class BadgeStyle
 {
