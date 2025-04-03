@@ -135,7 +135,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
                 throw e;
             }
         }
-        ContainerRenderer.setBackgroundImage(renderedCard, context, container.GetBackgroundImage(), hostConfig, containerView);
+        ContainerRenderer.setBackgroundImage(renderedCard, context, container.GetBackgroundImage(), hostConfig, renderArgs, containerView);
         setSelectAction(renderedCard, container.GetSelectAction(), containerView, cardActionHandler, renderArgs);
         viewGroup.addView(containerView);
         return containerView;
@@ -341,11 +341,12 @@ public class ContainerRenderer extends BaseCardElementRenderer
                                           Context context,
                                           BackgroundImage backgroundImage,
                                           HostConfig hostConfig,
+                                          RenderArgs renderArgs,
                                           ViewGroup containerView)
     {
         if (backgroundImage != null)
         {
-            String backgroundImageUrl = backgroundImage.GetUrl();
+            String backgroundImageUrl = backgroundImage.GetUrl(renderArgs.getTheme());
 
             if (!backgroundImageUrl.isEmpty())
             {
