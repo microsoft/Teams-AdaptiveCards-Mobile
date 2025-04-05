@@ -1,3 +1,4 @@
+
 //
 //  ACRButton
 //  ACRButton.mm
@@ -160,11 +161,12 @@
     [button applySentimentStyling];
 
     std::shared_ptr<AdaptiveCards::BaseActionElement> action = [acoAction element];
+    BOOL isSplitButton = action->GetIsSplitAction();
     NSDictionary *imageViewMap = [rootView getImageMap];
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
     UIImage *image = imageViewMap[key];
-    button.iconPlacement = [ACRButton getIconPlacmentAtCurrentContext:rootView url:key];
+    button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key];
 
     if (image) {
         [button setImageView:image withConfig:config];
@@ -195,7 +197,22 @@
             }
         }
     }
-
+    
+    if (isSplitButton)
+    {
+        NSString *chevronDownIcon = @"ChevronDown";
+        NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];
+        UIImageView *view = [[ACRSVGImageView alloc] init:url rtl:rootView.context.rtl isFilled:true size:CGSizeMake(16, 16) tintColor:button.currentTitleColor];
+        [button addSubview:view];
+        view.translatesAutoresizingMaskIntoConstraints = NO;
+        [NSLayoutConstraint activateConstraints:@[
+            [view.trailingAnchor constraintEqualToAnchor:button.trailingAnchor constant:-8],
+            [view.centerYAnchor constraintEqualToAnchor:button.centerYAnchor],
+            [view.widthAnchor constraintEqualToConstant:16],
+            [view.heightAnchor constraintEqualToConstant:16]
+        ]];
+    }
+    
     if (button.isEnabled == NO) {
         UIButtonConfiguration *buttonConfiguration = button.configuration;
         buttonConfiguration.baseBackgroundColor = [buttonConfiguration.baseBackgroundColor colorWithAlphaComponent:0.5];
@@ -244,7 +261,7 @@
     return (self.actionType == ACRShowCard && self.imageView && self.imageView.frame.size.width);
 }
 
-+ (ACRIconPlacement)getIconPlacmentAtCurrentContext:(ACRView *)rootView url:(NSString *)key
++ (ACRIconPlacement)getIconPlacementAtCurrentContext:(ACRView *)rootView url:(NSString *)key
 {
     if (!key or key.length == 0) {
         return ACRNoTitle;

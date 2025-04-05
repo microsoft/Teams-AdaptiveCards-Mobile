@@ -1,0 +1,88 @@
+{
+	"type":"AdaptiveCard",
+	"$schema":"https://adaptivecards.io/schemas/adaptive-card.json",
+	"version":"1.6",
+	"body":[
+		{
+			"type":"TextBlock",
+			"text":"Split buttons are a combination of a primary button and an overflow button",
+			"wrap":true
+		},
+		{
+			"type":"ActionSet",
+			"actions":[
+				{
+					"type":"Action.Execute",
+					"title":"Primary action",
+					"menuActions":[
+						{
+							"type":"Action.Execute",
+							"title":"Execute"
+						},
+						{
+							"type":"Action.Submit",
+							"title":"Submit"
+						},
+						{
+							"type":"Action.Execute",
+							"title":"Open URL"
+						},
+						{
+							"type":"Action.Execute",
+							"title":"Reset Inputs"
+						}
+					]
+				},
+				{
+					"type":"Action.Execute",
+					"title":"Positive style",
+					"style":"positive",
+					"menuActions":[
+						{
+							"type":"Action.Execute",
+							"title":"Execute"
+						}
+					]
+				},
+				{
+					"type":"Action.Execute",
+					"title":"Destructive style",
+					"style":"destructive",
+					"menuActions":[
+						{
+							"type":"Action.Execute",
+							"title":"Execute"
+						}
+					]
+				}
+			]
+		}
+	],
+	"actions":[
+		{
+			"type":"Action.Submit",
+			"title":"Secondary mode action",
+			"mode":"secondary",
+			"menuActions":[
+				{
+					"type":"Action.Execute",
+					"title":"Execute"
+				}
+			]
+		},
+		{
+			"type":"Action.Submit",
+			"title":"A very long title for some reason",
+			"menuActions":[
+				{
+					"type":"Action.Execute",
+					"title":"A descriptive execute action"
+				},
+				{
+					"type":"Action.Execute",
+					"title":"An unnecessary long description for submit action"
+				}
+			]
+		}
+	]
+}
