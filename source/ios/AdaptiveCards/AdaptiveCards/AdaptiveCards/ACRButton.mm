@@ -204,12 +204,20 @@
         NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];
         UIImageView *view = [[ACRSVGImageView alloc] init:url rtl:rootView.context.rtl isFilled:true size:CGSizeMake(16, 16) tintColor:button.currentTitleColor];
         [button addSubview:view];
+        NSString *title = [button titleForState:UIControlStateNormal];
+        UIFont *font = button.titleLabel.font;
+        CGSize titleSize = [title sizeWithAttributes:@{NSFontAttributeName: font}];
+        CGFloat totalWidth = titleSize.width + 16;
         view.translatesAutoresizingMaskIntoConstraints = NO;
+        view.contentMode = UIViewContentModeScaleAspectFit;
+        [view.widthAnchor constraintEqualToConstant:16].active = YES;
+        [view.heightAnchor constraintEqualToConstant:16].active = YES;
         [NSLayoutConstraint activateConstraints:@[
             [view.trailingAnchor constraintEqualToAnchor:button.trailingAnchor constant:-8],
             [view.centerYAnchor constraintEqualToAnchor:button.centerYAnchor],
             [view.widthAnchor constraintEqualToConstant:16],
-            [view.heightAnchor constraintEqualToConstant:16]
+            [view.heightAnchor constraintEqualToConstant:16],
+            [button.widthAnchor constraintEqualToConstant:totalWidth]
         ]];
     }
     
