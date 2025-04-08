@@ -59,21 +59,30 @@ void Carousel::setPageAnimation(PageAnimation value)
     m_pageAnimation = value;
 }
 
-std::shared_ptr<BaseCardElement> CarouselParser::DeserializeFromString(ParseContext& context, const std::string& jsonString)
+std::shared_ptr<BaseCardElement> CarouselParser::DeserializeFromString(ParseContext &context, const std::string &jsonString)
 {
-    return CarouselParser::Deserialize(context, ParseUtil::GetJsonValueFromString(jsonString));
+    // Convert the string into a JSON value and delegate.
+    Json::Value json = ParseUtil::GetJsonValueFromString(jsonString);
+    return Deserialize(context, json);
 }
 
-std::shared_ptr<BaseCardElement> CarouselParser::Deserialize(ParseContext& context, const Json::Value& json)
+std::shared_ptr<BaseCardElement> CarouselParser::Deserialize(ParseContext &context, const Json::Value &json)
 {
+    // Verify the type is Carousel and then delegate.
     ParseUtil::ExpectTypeString(json, CardElementType::Carousel);
-    return CarouselParser::DeserializeWithoutCheckingType(context, json);
+    return DeserializeWithoutCheckingType(context, json);
 }
 
-std::shared_ptr<BaseCardElement> CarouselParser::DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& json)
+std::shared_ptr<BaseCardElement> CarouselParser::DeserializeWithoutCheckingType(ParseContext &context, const Json::Value &json)
 {
-    std::shared_ptr<Carousel> carousel = StyledCollectionElement::Deserialize<Carousel>(context, json);
-    carousel->setPageAnimation(ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::PageAnimation,PageAnimation::Slide,PageAnimationFromString));
+    // Deserialize a Carousel instance using the helper method from StyledCollectionElement.
+    auto carousel = StyledCollectionElement::Deserialize<Carousel>(context, json);
+    
+    // Set the page animation (defaulting to Slide if not present).
+    carousel->setPageAnimation(
+        ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::PageAnimation, PageAnimation::Slide, PageAnimationFromString)
+    );
+    
     return carousel;
 }
 
