@@ -105,7 +105,7 @@ namespace
     #pragma warning(pop)
     }
 
-    constexpr unsigned int StringToUnsignedInt(const std::string& str)
+    unsigned int StringToUnsignedInt(const std::string& str)
     {
     #pragma warning(push)
     #pragma warning(disable : 26472)

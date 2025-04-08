@@ -25,7 +25,7 @@
 #include "RatingInput.h"
 #include "RatingLabel.h"
 #include "Badge.h"
-#import "Carousel.h"
+#include "Carousel.h"
 
 namespace AdaptiveCards
 {
