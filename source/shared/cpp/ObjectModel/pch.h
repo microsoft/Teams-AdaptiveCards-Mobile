@@ -39,6 +39,14 @@
 #pragma warning(default : CPPCORECHECK_UNIQUE_POINTER_WARNINGS)
 #endif
 
+#ifndef __unused
+#ifdef _MSC_VER
+  #define __unused
+#else
+  #define __unused __attribute__((unused))
+#endif
+#endif
+
 #include "Enums.h"
 #include "json/json.h"
 
