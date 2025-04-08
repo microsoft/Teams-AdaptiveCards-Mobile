@@ -553,12 +553,12 @@ CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, 
     return result;
 }
 
-PageControlConfig PageControlConfig::Deserialize(const Json::Value &json, __unused const PageControlConfig &defaultValue)
+PageControlConfig PageControlConfig::Deserialize(const Json::Value &json, __unused const PageControlConfig &)
 {
     PageControlConfig result;
-    result.selectedTintColor =  ParseUtil::GetString(json, AdaptiveCardSchemaKey::SelectedTintColor, result.selectedTintColor);
+    result.selectedTintColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::SelectedTintColor, result.selectedTintColor);
     return result;
-};
+}
 
 BadgeConfig BadgeConfig::Deserialize(const Json::Value &json, const BadgeConfig &defaultValue)
 {
