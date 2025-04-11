@@ -88,7 +88,7 @@ namespace ParseUtil
         ParseContext& context, const Json::Value& json, AdaptiveCardSchemaKey key, DeserializeFn<T>& deserializer, bool isRequired = false);
 
     template <typename T>
-    std::shared_ptr<T> GetElementOfType(ParseContext& context, const Json::Value& json, AdaptiveCardSchemaKey key, DeserializeFn<T>& deserializer);
+    std::shared_ptr<T> GetElementOfType(ParseContext& context, const Json::Value& json, DeserializeFn<T>& deserializer);
 
     template <typename T>
     std::vector<std::shared_ptr<T>> GetElementCollection(
@@ -207,7 +207,6 @@ template <typename T>
 std::shared_ptr<T> ParseUtil::GetElementOfType(
     ParseContext& context,
     const Json::Value& json,
-    __unused AdaptiveCardSchemaKey key,
     const std::function<std::shared_ptr<T>(ParseContext& context, const Json::Value&)>& deserializer)
 {
     auto el = deserializer(context, json);
