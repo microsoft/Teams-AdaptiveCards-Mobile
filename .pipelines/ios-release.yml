@@ -47,17 +47,3 @@ steps:
   displayName: dotnet build
   inputs:
     projects: source/ios/tools/IOSFeed/IOSFeed.csproj
-
-- task: DotNetCoreCLI@2
-  displayName: Push To Azure
-  inputs:
-    command: run
-    projects: source/ios/tools/IOSFeed/IOSFeed.csproj
-
-- task: Bash@3
-  displayName: Push To cocoapods
-  inputs:
-    targetType: inline
-    script: "cat ./source/ios/AdaptiveCards.podspec\nif type brew >/dev/null 2>&1;\nthen \n   brew upgrade cocoapods >/dev/null 2>&1; \n   brew install cocoapods >/dev/null 2>&1; \nfi\n\npod trunk push  ./source/ios/AdaptiveCards.podspec\n"
-  env:
-    COCOAPODS_TRUNK_TOKEN: $(cocoapod-trunk-token)
