@@ -132,7 +132,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                                      RenderArgs renderArgs,
                                      boolean isMenuAction)
         {
-            // comment added
+            // comment added to avoid the warning
             this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
             m_isInlineShowCardAction = (baseActionElement.GetElementType() == ActionType.ShowCard) && (hostConfig.GetActions().getShowCard().getActionMode() == ActionMode.Inline);
 
