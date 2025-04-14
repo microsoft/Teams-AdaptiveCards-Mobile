@@ -30,6 +30,7 @@ import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityTarget;
 import io.adaptivecards.objectmodel.ToggleVisibilityTargetVector;
+import io.adaptivecards.renderer.action.ActionElementUtils;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 
 public abstract class BaseActionElementRenderer implements IBaseActionElementRenderer
@@ -381,7 +382,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
 
         // Identifies if this action is primary action(not menu action) and contains menu actions in it
         private boolean areMenuActionsPresent(@NonNull BaseActionElement baseActionElement) {
-            return !m_isMenuAction && baseActionElement.GetIsSplitAction();
+            return !m_isMenuAction && ActionElementUtils.isSplitAction(baseActionElement);
         }
 
         /***
