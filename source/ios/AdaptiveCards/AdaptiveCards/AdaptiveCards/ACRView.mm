@@ -42,6 +42,7 @@
 #import "UtiliOS.h"
 #import "CarouselPage.h"
 #import "Carousel.h"
+#import "ThemedUrl.h"
 #import <AVFoundation/AVFoundation.h>
 
 using namespace AdaptiveCards;
@@ -121,6 +122,39 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         [self applyPadding:padding priority:1000];
 
         self.acrActionDelegate = acrActionDelegate;
+        [self render];
+    }
+    // call to check if all resources are loaded
+    [self callDidLoadElementsIfNeeded];
+    return self;
+}
+
+- (instancetype)init:(ACOAdaptiveCard *)card
+          hostconfig:(ACOHostConfig *)config
+               theme:(ACRTheme)theme
+     widthConstraint:(float)width
+            delegate:(id<ACRActionDelegate>)acrActionDelegate
+{
+    self = [self initWithFrame:CGRectMake(0, 0, width, 0)];
+    if (self) {
+        self.accessibilityLabel = @"ACR Root View";
+        _adaptiveCard = card;
+        _warnings = [[NSMutableArray<ACOWarning *> alloc] init];
+        // override default host config if user host config is provided
+        if (config) {
+            _hostConfig = config;
+            _context.hostConfig = config;
+        }
+        _actionsTargetBuilderDirector = [[ACRTargetBuilderDirector alloc] init:self capability:ACRAction adaptiveHostConfig:_hostConfig];
+        _selectActionsTargetBuilderDirector = [[ACRTargetBuilderDirector alloc] init:self capability:ACRSelectAction adaptiveHostConfig:_hostConfig];
+        _quickReplyTargetBuilderDirector = [[ACRTargetBuilderDirector alloc] init:self capability:ACRQuickReply adaptiveHostConfig:_hostConfig];
+        unsigned int padding = [_hostConfig getHostConfig]->GetSpacing().paddingSpacing;
+        [self removeConstraints:self.constraints];
+
+        [self applyPadding:padding priority:1000];
+
+        self.acrActionDelegate = acrActionDelegate;
+        self.theme = theme;
         [self render];
     }
     // call to check if all resources are loaded
@@ -353,7 +387,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case CardElementType::TextInput: {
             std::shared_ptr<TextInput> textInput = std::static_pointer_cast<TextInput>(elem);
             std::shared_ptr<BaseActionElement> action = textInput->GetInlineAction();
-            if (action != nullptr && !action->GetIconUrl().empty()) {
+            if (action != nullptr && !action->GetIconUrl(Theme(_theme)).empty()) {
                 ObserverActionBlockForBaseAction observerAction =
                     ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
@@ -509,7 +543,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 {
     [hostConfig setIconPlacement:hash placement:YES];
     for (auto &action : actions) {
-        if (!action->GetIconUrl().empty()) {
+        if (!action->GetIconUrl(Theme(_theme)).empty()) {
             ObserverActionBlockForBaseAction observerAction =
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
@@ -772,7 +806,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     NSString *nSUrlStr = nil;
 
     number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)elem.get()];
-    nSUrlStr = [NSString stringWithCString:elem->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    nSUrlStr = [NSString stringWithCString:elem->GetIconUrl(Theme(_theme)).c_str() encoding:[NSString defaultCStringEncoding]];
     if (!key) {
         key = [number stringValue];
     }
@@ -873,6 +907,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 - (void)setParent:(ACRColumnView *)parent child:(ACRColumnView *)child
 {
     [_inputHandlerLookupTable setObject:parent forKey:child];
+}
+
+- (void)setTheme:(ACRTheme)theme
+{
+    _theme = theme;
 }
 
 - (void)pushCurrentShowcard:(ACRColumnView *)showcard

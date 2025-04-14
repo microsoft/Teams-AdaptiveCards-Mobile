@@ -21,10 +21,17 @@
 @property (weak) id<ACRMediaDelegate> mediaDelegate;
 @property NSArray<ACOWarning *> *warnings;
 @property (readonly) ACORenderContext *context;
+@property (readwrite)ACRTheme theme;
 
 - (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config widthConstraint:(float)width;
 - (instancetype)init:(ACOAdaptiveCard *)card
           hostconfig:(ACOHostConfig *)config
+     widthConstraint:(float)width
+            delegate:(id<ACRActionDelegate>)acrActionDelegate;
+
+- (instancetype)init:(ACOAdaptiveCard *)card
+          hostconfig:(ACOHostConfig *)config
+               theme:(ACRTheme)theme
      widthConstraint:(float)width
             delegate:(id<ACRActionDelegate>)acrActionDelegate;
 

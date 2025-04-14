@@ -62,6 +62,7 @@
     [_rootView pushCurrentShowcard:adcView];
 
     [_rootView setParent:parentRenderedCard child:adcView];
+    
 
     [ACRRenderer renderWithAdaptiveCards:_adaptiveCard
                                   inputs:adcView.inputHandlers

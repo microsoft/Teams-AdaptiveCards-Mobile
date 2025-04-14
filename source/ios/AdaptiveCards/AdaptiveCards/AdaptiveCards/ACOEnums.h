@@ -68,6 +68,11 @@ typedef NS_ENUM(NSInteger, ACRContainerStyle) {
     ACRAccent
 };
 
+typedef NS_ENUM(NSInteger, ACRTheme) {
+    ACRLight = 1,
+    ACRDark
+};
+
 typedef NS_ENUM(NSInteger, ACRBleedDirection) {
     ACRBleedRestricted = 0x0000,
     ACRBleedToLeadingEdge = 0x0001,

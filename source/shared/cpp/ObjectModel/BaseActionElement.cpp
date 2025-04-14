@@ -37,16 +37,6 @@ const std::string& BaseActionElement::GetIconUrl(const Theme theme) const {
     return ThemedUrl::GetThemedUrl(theme, m_themedIconUrls, m_iconUrl);
 }
 
-const std::string& BaseActionElement::GetIconUrl() const
-{
-    return m_iconUrl;
-}
-
-std::string BaseActionElement::GetSVGPath() const
-{
-    return GetSVGPath(m_iconUrl);
-}
-
 std::string BaseActionElement::GetSVGPath(const std::string& iconUrl) const
 {
     std::regex regex{R"([,:]+)"}; // split on ':' and ','
