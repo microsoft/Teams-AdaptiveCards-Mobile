@@ -27,6 +27,8 @@
 		0D45F5A7261731E400EF03C5 /* ACRActionOverflowRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D45F5A6261731E400EF03C5 /* ACRActionOverflowRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */; };
 		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
+		242FB50C2DA64F0F00D38E53 /* ThemedUrl.h in Headers */ = {isa = PBXBuildFile; fileRef = 242FB50A2DA64F0F00D38E53 /* ThemedUrl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		242FB50D2DA64F0F00D38E53 /* ThemedUrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 242FB50B2DA64F0F00D38E53 /* ThemedUrl.cpp */; };
 		300ECB63219A12D100371DC5 /* AdaptiveBase64Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300ECB61219A12D100371DC5 /* AdaptiveBase64Util.cpp */; };
 		300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */; };
@@ -275,8 +277,6 @@
 		6BFF99FC26003EBA0028069F /* ACOAuthCardButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BFF99F926003EBA0028069F /* ACOAuthCardButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BFF9A0326004C580028069F /* ACOAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BFF9A0026004C580028069F /* ACOAuthentication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BFF9A0526004C580028069F /* ACOAuthentication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BFF9A0226004C580028069F /* ACOAuthentication.mm */; };
-		7716A91C2D92D971007746F2 /* ThemedUrl.h in Headers */ = {isa = PBXBuildFile; fileRef = 7716A91B2D92D971007746F2 /* ThemedUrl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7716A91E2D92D9A7007746F2 /* ThemedUrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7716A91D2D92D9A7007746F2 /* ThemedUrl.cpp */; };
 		7751C0732CAC0EEB00C876DD /* ACRPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 7751C0722CAC0EEB00C876DD /* ACRPageControl.h */; };
 		7751C0772CAC0F0B00C876DD /* ACRCarouselView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7751C0742CAC0F0B00C876DD /* ACRCarouselView.h */; };
 		7751C0782CAC0F0B00C876DD /* ACRCarouselViewRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7751C0752CAC0F0B00C876DD /* ACRCarouselViewRenderer.h */; };
@@ -552,6 +552,8 @@
 		0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRLayoutHelper.mm; sourceTree = "<group>"; };
 		0E46B8FBE57A09301765F779 /* Pods-Fluent-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCardsTests/Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
+		242FB50A2DA64F0F00D38E53 /* ThemedUrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThemedUrl.h; path = "/Users/harikap/Documents/Teams-AdaptiveCards-Mobile/source/shared/cpp/ObjectModel/ThemedUrl.h"; sourceTree = "<absolute>"; };
+		242FB50B2DA64F0F00D38E53 /* ThemedUrl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ThemedUrl.cpp; path = "/Users/harikap/Documents/Teams-AdaptiveCards-Mobile/source/shared/cpp/ObjectModel/ThemedUrl.cpp"; sourceTree = "<absolute>"; };
 		255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		270B2D4F8E11C644BA95F36D /* Pods-Fluent-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCardsTests/Pods-Fluent-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		27CC4CEB2C16B73E2987EB85 /* Pods-Fluent-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCards/Pods-Fluent-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
@@ -814,8 +816,6 @@
 		6BFF9A0226004C580028069F /* ACOAuthentication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOAuthentication.mm; sourceTree = "<group>"; };
 		709889F4E83C1064F49E7DDC /* Pods-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests/Pods-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		75D7DB0E51EC8A155E83E2D0 /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		7716A91B2D92D971007746F2 /* ThemedUrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThemedUrl.h; path = "/Users/abhishekgupta/Desktop/Teams-AdaptiveCards-Mobile/source/shared/cpp/ObjectModel/ThemedUrl.h"; sourceTree = "<absolute>"; };
-		7716A91D2D92D9A7007746F2 /* ThemedUrl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ThemedUrl.cpp; path = "/Users/abhishekgupta/Desktop/Teams-AdaptiveCards-Mobile/source/shared/cpp/ObjectModel/ThemedUrl.cpp"; sourceTree = "<absolute>"; };
 		7749A56FE5104914C2BA9D02 /* Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		7751C0722CAC0EEB00C876DD /* ACRPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRPageControl.h; path = PrivateHeaders/ACRPageControl.h; sourceTree = "<group>"; };
 		7751C0742CAC0F0B00C876DD /* ACRCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRCarouselView.h; path = PrivateHeaders/ACRCarouselView.h; sourceTree = "<group>"; };
@@ -1458,6 +1458,8 @@
 		F423C0D71EE1FF2F00905679 /* SharedLib */ = {
 			isa = PBXGroup;
 			children = (
+				242FB50A2DA64F0F00D38E53 /* ThemedUrl.h */,
+				242FB50B2DA64F0F00D38E53 /* ThemedUrl.cpp */,
 				46731C0A2CBD198F0092B7A9 /* Badge.cpp */,
 				46731C0B2CBD198F0092B7A9 /* Badge.h */,
 				CFB972002941C079008E3795 /* ChoicesData.cpp */,
@@ -1487,9 +1489,7 @@
 				7EF8879B21F14CDD00BAFF02 /* BackgroundImage.h */,
 				F44872BF1EE2261F00FCAFAE /* BaseActionElement.cpp */,
 				F974C5382800B8EA00C1B3C7 /* ContentSource.cpp */,
-				7716A91D2D92D9A7007746F2 /* ThemedUrl.cpp */,
 				F974C5392800B8EA00C1B3C7 /* ContentSource.h */,
-				7716A91B2D92D971007746F2 /* ThemedUrl.h */,
 				F44872C01EE2261F00FCAFAE /* BaseActionElement.h */,
 				F44872C11EE2261F00FCAFAE /* BaseCardElement.cpp */,
 				F44872C21EE2261F00FCAFAE /* BaseCardElement.h */,
@@ -1843,6 +1843,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				242FB50C2DA64F0F00D38E53 /* ThemedUrl.h in Headers */,
 				CFF954DD2981B2A700F321C3 /* ACRTypeaheadSearchParameters.h in Headers */,
 				6B27CD6624BD52D600C0F90F /* ACRInputLabelView.h in Headers */,
 				6BBE841923CD184D00ECA586 /* ACREnums.h in Headers */,
@@ -2004,7 +2005,6 @@
 				6B1147D11F32E53A008846EC /* ACRActionDelegate.h in Headers */,
 				6BFF99C725FFF53E0028069F /* Authentication.h in Headers */,
 				6BFF99C325FFF53E0028069F /* AuthCardButton.h in Headers */,
-				7716A91C2D92D971007746F2 /* ThemedUrl.h in Headers */,
 				6BFF99C425FFF53E0028069F /* ExecuteAction.h in Headers */,
 				6BFF99C625FFF53E0028069F /* TokenExchangeResource.h in Headers */,
 				6BFF99CA25FFF53E0028069F /* Refresh.h in Headers */,
@@ -2425,7 +2425,7 @@
 				F4F44B7C20478C5C00A2F24C /* DateTimePreparsedToken.cpp in Sources */,
 				46731C0C2CBD198F0092B7A9 /* Badge.cpp in Sources */,
 				0D45F59B2617319D00EF03C5 /* ACRActionOverflowRenderer.mm in Sources */,
-				7716A91E2D92D9A7007746F2 /* ThemedUrl.cpp in Sources */,
+				242FB50D2DA64F0F00D38E53 /* ThemedUrl.cpp in Sources */,
 				6BF430782190DDCA0068E432 /* ACRQuickReplyView.mm in Sources */,
 				F44873211EE2261F00FCAFAE /* SubmitAction.cpp in Sources */,
 				F44872FF1EE2261F00FCAFAE /* ChoiceSetInput.cpp in Sources */,
