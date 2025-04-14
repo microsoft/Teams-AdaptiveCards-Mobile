@@ -7,8 +7,6 @@ pool:
   name: Azure Pipelines
   vmImage: internal-macos-10.15
 
-variables:
-- group: AdaptiveCards-KVLink
 
 steps:
 - task: Xcode@5
