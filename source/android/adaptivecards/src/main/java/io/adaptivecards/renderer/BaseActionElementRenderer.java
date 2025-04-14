@@ -396,10 +396,31 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             return false;
         }
 
+        // Identifies if this action is show card action
+        private boolean isShowCardAction(@NonNull BaseActionElement baseActionElement) {
+            return baseActionElement.GetElementType() == ActionType.ShowCard;
+        }
+
+        /***
+         * Handle show card scenario for the given action element.
+         * By default this is a no-op. Subclasses can override this method
+         * to define the required behavior.
+         *
+         * @return Boolean - true if scenario is handled, false if not.
+         * Default return type is false.
+         */
+        protected boolean handleShowCardScenario(@NonNull View view, @NonNull BaseActionElement baseActionElement) {
+            return false;
+        }
+
         @Override
         public void onClick(View view)
         {
             if (areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
+                return;
+            }
+
+            if (isShowCardAction(m_action) && handleShowCardScenario(view, m_action)) {
                 return;
             }
 
