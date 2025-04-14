@@ -45,7 +45,24 @@ using namespace AdaptiveCards;
     ACRRenderResult *result = [[ACRRenderResult alloc] init];
     // Initializes ACRView instance with HostConfig and AdaptiveCard
     // ACRViewController does not render adaptiveCard until viewDidLoad calls render
-    ACRTheme theme = ACRTheme(UIScreen.mainScreen.traitCollection.userInterfaceStyle);
+    ACRView *view = [[ACRView alloc] init:card hostconfig:config widthConstraint:width delegate:acrActionDelegate];
+    result.view = view;
+    result.warnings = view.warnings;
+    result.succeeded = YES;
+    return result;
+}
+
+// This interface is exposed to outside, and returns ACRRenderResult object
+// This object contains a viewController instance which defer rendering adaptiveCard until viewDidLoad is called.
++ (ACRRenderResult *)render:(ACOAdaptiveCard *)card
+                     config:(ACOHostConfig *)config
+            widthConstraint:(float)width
+                   delegate:(id<ACRActionDelegate>)acrActionDelegate
+                      theme:(ACRTheme)theme
+{
+    ACRRenderResult *result = [[ACRRenderResult alloc] init];
+    // Initializes ACRView instance with HostConfig and AdaptiveCard
+    // ACRViewController does not render adaptiveCard until viewDidLoad calls render
     ACRView *view = [[ACRView alloc] init:card hostconfig:config theme:theme widthConstraint:width delegate:acrActionDelegate];
     result.view = view;
     result.warnings = view.warnings;
@@ -126,7 +143,7 @@ using namespace AdaptiveCards;
         [verticalView configureForSelectAction:acoSelectAction rootView:rootView];
     }
 
-    if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+    if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(Theme(rootView.theme)).empty())) {
         ObserverActionBlock observerAction =
             ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *root) {
                 UIImageView *view = [imageResourceResolver resolveImageViewResource:url];

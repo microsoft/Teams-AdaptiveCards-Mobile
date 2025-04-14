@@ -428,7 +428,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             std::shared_ptr<Container> container = std::static_pointer_cast<Container>(elem);
 
             auto backgroundImageProperties = container->GetBackgroundImage();
-            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(Theme(_theme)).empty())) {
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, container);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
@@ -441,7 +441,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             std::shared_ptr<Carousel> carousel = std::static_pointer_cast<Carousel>(elem);
 
             auto backgroundImageProperties = carousel->GetBackgroundImage();
-            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(Theme(_theme)).empty())) {
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carousel);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
@@ -466,7 +466,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             std::shared_ptr<Column> column = std::static_pointer_cast<Column>(elem);
             // Handle background image (if necessary)
             auto backgroundImageProperties = column->GetBackgroundImage();
-            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(Theme(_theme)).empty())) {
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, column);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
@@ -487,7 +487,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case CardElementType::CarouselPage: {
             std::shared_ptr<CarouselPage> carouselPage = std::static_pointer_cast<CarouselPage>(elem);
             auto backgroundImageProperties = carouselPage->GetBackgroundImage();
-            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(Theme(_theme)).empty())) {
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carouselPage);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
@@ -737,7 +737,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 - (void)loadBackgroundImageAccordingToResourceResolverIF:(std::shared_ptr<BackgroundImage> const &)backgroundImage key:(NSString *)key observerAction:(ObserverActionBlock)observerAction
 {
     NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)(backgroundImage.get())];
-    NSString *nSUrlStr = [NSString stringWithCString:backgroundImage->GetUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString *nSUrlStr = [NSString stringWithCString:backgroundImage->GetUrl(Theme(_theme)).c_str() encoding:[NSString defaultCStringEncoding]];
 
     if (!key) {
         key = [number stringValue];
@@ -774,7 +774,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     } else {
         std::shared_ptr<Image> imgElem = std::static_pointer_cast<Image>(elem);
         number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)imgElem.get()];
-        nSUrlStr = [NSString stringWithCString:imgElem->GetUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+        nSUrlStr = [NSString stringWithCString:imgElem->GetUrl(Theme(_theme)).c_str() encoding:[NSString defaultCStringEncoding]];
     }
 
     if (!key) {
