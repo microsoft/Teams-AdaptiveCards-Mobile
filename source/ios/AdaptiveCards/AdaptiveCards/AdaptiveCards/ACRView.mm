@@ -909,11 +909,6 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     [_inputHandlerLookupTable setObject:parent forKey:child];
 }
 
-- (void)setTheme:(ACRTheme)theme
-{
-    _theme = theme;
-}
-
 - (void)pushCurrentShowcard:(ACRColumnView *)showcard
 {
     if (showcard) {
