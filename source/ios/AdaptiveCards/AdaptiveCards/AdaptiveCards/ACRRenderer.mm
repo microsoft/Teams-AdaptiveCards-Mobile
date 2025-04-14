@@ -143,7 +143,7 @@ using namespace AdaptiveCards;
         [verticalView configureForSelectAction:acoSelectAction rootView:rootView];
     }
 
-    if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(Theme(rootView.theme)).empty())) {
+    if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(ThemeType(rootView.theme)).empty())) {
         ObserverActionBlock observerAction =
             ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *root) {
                 UIImageView *view = [imageResourceResolver resolveImageViewResource:url];

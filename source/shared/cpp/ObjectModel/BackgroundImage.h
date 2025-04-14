@@ -23,7 +23,7 @@ public:
     {
     }
 
-    const std::string& GetUrl(const Theme theme) const;
+    const std::string& GetUrl(const ThemeType theme) const;
     std::string GetUrl() const;
     void SetUrl(const std::string& value);
     ImageFillMode GetFillMode() const;

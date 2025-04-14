@@ -33,7 +33,7 @@ void BaseActionElement::SetTitle(const std::string& value)
     m_title = value;
 }
 
-const std::string& BaseActionElement::GetIconUrl(const Theme theme) const {
+const std::string& BaseActionElement::GetIconUrl(const ThemeType theme) const {
     return ThemedUrl::GetThemedUrl(theme, m_themedIconUrls, m_iconUrl);
 }
 

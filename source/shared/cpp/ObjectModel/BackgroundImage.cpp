@@ -7,7 +7,7 @@
 
 using namespace AdaptiveCards;
 
-const std::string& BackgroundImage::GetUrl(const Theme theme) const {
+const std::string& BackgroundImage::GetUrl(const ThemeType theme) const {
     return ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
 }
 

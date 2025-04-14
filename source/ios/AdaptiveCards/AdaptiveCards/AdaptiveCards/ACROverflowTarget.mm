@@ -39,7 +39,7 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
 
 - (NSString *)iconUrl
 {
-    return [NSString stringWithUTF8String:_action->GetIconUrl(Theme(_rootView.theme)).c_str()];
+    return [NSString stringWithUTF8String:_action->GetIconUrl(ThemeType(_rootView.theme)).c_str()];
 }
 
 - (NSObject<ACRSelectActionDelegate> *)target
@@ -62,7 +62,7 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
 
 - (void)loadIconImage:(void (^)(UIImage *))completion
 {
-    auto &iconUrl = _action->GetIconUrl(Theme(_rootView.theme));
+    auto &iconUrl = _action->GetIconUrl(ThemeType(_rootView.theme));
     NSDictionary *imageViewMap = [_rootView getImageMap];
     NSString *key = [NSString stringWithCString:iconUrl.c_str()
                                        encoding:[NSString defaultCStringEncoding]];
@@ -149,7 +149,7 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
                                                                    [target doSelectAction];
                                                                }];
 
-            auto &iconUrl = action.element->GetIconUrl(Theme(_rootView.theme));
+            auto &iconUrl = action.element->GetIconUrl(ThemeType(_rootView.theme));
             if (!iconUrl.empty()) {
                 [menuItem loadIconImageWithSize:CGSizeMake(40, 40)
                                    onIconLoaded:^(UIImage *image) {

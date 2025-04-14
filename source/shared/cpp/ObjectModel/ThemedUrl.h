@@ -26,10 +26,10 @@ namespace AdaptiveCards
         Json::Value SerializeToJsonValue() const;
         static std::shared_ptr<ThemedUrl> Deserialize(ParseContext&, const Json::Value& json);
 
-        const Theme GetTheme() const;
+        const ThemeType GetTheme() const;
         const std::string& GetUrl() const;
 
-        static const std::string& GetThemedUrl(const Theme theme, std::vector<std::shared_ptr<AdaptiveCards::ThemedUrl>> themedUrls, const std::string& defaultIconUrl) {
+        static const std::string& GetThemedUrl(const ThemeType theme, std::vector<std::shared_ptr<AdaptiveCards::ThemedUrl>> themedUrls, const std::string& defaultIconUrl) {
             if (!themedUrls.empty()) {
                 for (const auto &themedUrl: themedUrls) {
                     if (themedUrl->GetTheme() == theme && !themedUrl->GetUrl().empty()) {
@@ -44,7 +44,7 @@ namespace AdaptiveCards
         void PopulateKnownPropertiesSet();
 
         std::unordered_set<std::string> m_knownProperties;
-        Theme m_theme;
+        ThemeType m_theme;
         std::string m_url;
     };
 } // namespace AdaptiveCards
