@@ -4,7 +4,7 @@ pr: none
 trigger: none
 
 pool:
-    name: Teams-UBT-Android-P
+    name: Teams-UBT-Android-DomoreexpGithub-P
 
 parameters:
 - name: base_version
@@ -47,7 +47,7 @@ extends:
         enabled: true
         break: true
     pool:
-      name: Teams-UBT-Android-P
+      name: Teams-UBT-Android-DomoreexpGithub-P
     stages:
       - stage: Staging
         jobs:
