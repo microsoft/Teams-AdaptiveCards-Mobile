@@ -772,26 +772,8 @@ void OrderedListParser::Match(std::stringstream& stream)
             stream.get(streamChar);
             number_string += streamChar;
         } while (MarkDownBlockParser::IsDigit(stream.peek()));
-
-        if (IsDot(stream.peek()))
-        {
-            // ordered list syntax check complete
-            stream.get();
-            if (CompleteListParsing(stream))
-            {
-                CaptureOrderedListToken(number_string);
-            }
-            else
-            {
-                number_string += '.';
-                m_parsedResult.AddNewTokenToParsedResult(number_string);
-            }
-        }
-        else
-        {
-            // if incorrect syntax, capture as a new token.
-            m_parsedResult.AddNewTokenToParsedResult(number_string);
-        }
+        
+        m_parsedResult.AddNewTokenToParsedResult(number_string);
     }
 }
 
