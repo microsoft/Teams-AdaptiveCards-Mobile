@@ -47,10 +47,7 @@ extends:
         enabled: true
         break: true
     pool:
-      name: Azure-Pipelines-1ESPT-ExDShared
-      image: windows-2022
-      os: windows
-      demands: java
+      name: Teams-UBT-Android-P
     stages:
       - stage: Staging
         jobs:
