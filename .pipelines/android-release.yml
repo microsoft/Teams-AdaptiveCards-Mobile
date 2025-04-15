@@ -4,10 +4,7 @@ pr: none
 trigger: none
 
 pool:
-    name: Azure-Pipelines-1ESPT-ExDShared
-    image: windows-2022
-    os: windows
-    demands: java
+    name: Teams-UBT-Android-P
 
 parameters:
 - name: base_version
