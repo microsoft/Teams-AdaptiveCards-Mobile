@@ -92,7 +92,7 @@ extends:
           - task: Gradle@2
             displayName: build
             inputs:
-              gradleWrapperFile: source/android/gradlew.bat
+              gradleWrapperFile: source/android/gradlew
               workingDirectory: source/android
               tasks: 'adaptivecards:build'
               publishJUnitResults: false
@@ -101,7 +101,7 @@ extends:
           - task: Gradle@2
             displayName: 'Gradle Unsigned Publication'
             inputs:
-              gradleWrapperFile: source/android/gradlew.bat
+              gradleWrapperFile: source/android/gradlew
               workingDirectory: source/android
               tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
               publishJUnitResults: false
