@@ -10,8 +10,7 @@ package io.adaptivecards.objectmodel;
 
 public enum IconPlacement {
   AboveTitle(0),
-  LeftOfTitle,
-  RightOfTitle;
+  LeftOfTitle;
 
   public final int swigValue() {
     return swigValue;

@@ -505,6 +505,30 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return Shape.swigToEnum(AdaptiveCardObjectModelJNI.ShapeFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__LabelPosition_t getLabelPositionEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__LabelPosition_t(AdaptiveCardObjectModelJNI.getLabelPositionEnum(), false);
+  }
+
+  public static String LabelPositionToString(LabelPosition t) {
+    return AdaptiveCardObjectModelJNI.LabelPositionToString(t.swigValue());
+  }
+
+  public static LabelPosition LabelPositionFromString(String t) {
+    return LabelPosition.swigToEnum(AdaptiveCardObjectModelJNI.LabelPositionFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ProgressSize_t getProgressSizeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ProgressSize_t(AdaptiveCardObjectModelJNI.getProgressSizeEnum(), false);
+  }
+
+  public static String ProgressSizeToString(ProgressSize t) {
+    return AdaptiveCardObjectModelJNI.ProgressSizeToString(t.swigValue());
+  }
+
+  public static ProgressSize ProgressSizeFromString(String t) {
+    return ProgressSize.swigToEnum(AdaptiveCardObjectModelJNI.ProgressSizeFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__BadgeStyle_t getBadgeStyleEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__BadgeStyle_t(AdaptiveCardObjectModelJNI.getBadgeStyleEnum(), false);
   }
