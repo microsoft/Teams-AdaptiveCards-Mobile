@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -334,7 +333,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
 
     private void registerCustomFeatures(@NonNull Context context) {
         // Register Theme
-        CardRendererRegistration.getInstance().setTheme(Utils.getTheme(context));
+        CardRendererRegistration.getInstance().setThemeForThemedUrl(Utils.getTheme(context));
         registerCustomImageLoaders();
         registerCustomMediaLoaders();
         registerFeatureRegistration();

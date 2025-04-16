@@ -41,7 +41,6 @@ import io.adaptivecards.objectmodel.LayoutContainerType;
 import io.adaptivecards.objectmodel.Mode;
 import io.adaptivecards.objectmodel.TargetWidthType;
 import io.adaptivecards.objectmodel.Theme;
-import io.adaptivecards.objectmodel.Theme;
 import io.adaptivecards.renderer.ActionLayoutRenderer;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.AdaptiveWarning;
@@ -323,7 +322,7 @@ public class CardRendererRegistration
         return mTheme;
     }
 
-    public void setTheme(@NonNull Theme theme) {
+    public void setThemeForThemedUrl(@NonNull Theme theme) {
         mTheme = theme;
     }
 
@@ -769,5 +768,5 @@ public class CardRendererRegistration
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
     private boolean mIsSplitActionEnabled = false;
-    private Theme mTheme = Theme.Light;
+    private Theme mTheme = Theme.None;
 }
