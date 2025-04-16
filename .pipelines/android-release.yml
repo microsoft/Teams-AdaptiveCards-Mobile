@@ -50,11 +50,6 @@ extends:
     pool:
       name: Teams-UBT-Android-DomoreexpGithub-P
       os: linux
-    esptsdl:
-      sourceAnalysisPool:
-        name: Azure-Pipelines-1ESPT-ExDShared
-        image: windows-2022
-        os: windows
     stages:
       - stage: Staging
         jobs:
