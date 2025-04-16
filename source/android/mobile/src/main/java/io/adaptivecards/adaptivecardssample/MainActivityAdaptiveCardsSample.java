@@ -371,6 +371,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             layout.removeAllViews();
 
             registerFeatureFlagResolver();
+            CardRendererRegistration.getInstance().setIsSplitActionEnabled(true);
             registerCustomFeatures();
             if (mLayoutWidth != 0) {
                 CardRendererRegistration.getInstance().registerHostCardContainer(mLayoutWidth);

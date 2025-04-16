@@ -734,6 +734,14 @@ public class CardRendererRegistration
         return null;
     }
 
+    public boolean isIsSplitActionEnabled() {
+        return mIsSplitActionEnabled;
+    }
+
+    public void setIsSplitActionEnabled(boolean isSplitActionEnabled) {
+        mIsSplitActionEnabled = isSplitActionEnabled;
+    }
+
     private static CardRendererRegistration s_instance = null;
     private IInputWatcher m_InputWatcher = null;
     private HashMap<String, IBaseCardElementRenderer> m_typeToRendererMap = new HashMap<String, IBaseCardElementRenderer>();
@@ -748,4 +756,5 @@ public class CardRendererRegistration
     private IFeatureFlagResolver m_featureFlagResolver;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
+    private boolean mIsSplitActionEnabled = false;
 }
