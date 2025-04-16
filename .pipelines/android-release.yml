@@ -5,6 +5,7 @@ trigger: none
 
 pool:
     name: Teams-UBT-Android-DomoreexpGithub-P
+    os: linux
 
 parameters:
 - name: base_version
@@ -48,6 +49,7 @@ extends:
         break: true
     pool:
       name: Teams-UBT-Android-DomoreexpGithub-P
+      os: linux
     stages:
       - stage: Staging
         jobs:
