@@ -186,31 +186,26 @@ extends:
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
 
-          - task: Powershell@2
+          - bash: |
+              find "$(build.sourcesdirectory)" -type f \( -name "*.aar" -o -name "*.pom" -o -name "*.aar.asc" -o -name "*.pom.asc" \) | while read artifact; do
+                echo "Copying artifact $(basename "$artifact")"
+                cp "$artifact" "$(build.artifactstagingdirectory)/$(basename "$artifact")"
+              done
             displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-            inputs:
-              targetType: inline
-              script: |
-                ls $(build.sourcesdirectory) -File -Recur | ?{
-                  $_.FullName -Match ".*\\signedArtifact\\.*(.aar|.pom|.aar.asc|.pom.asc)$"
-                } | %{
-                echo "Copying artifact $_.Name"
-                cp $_.FullName (Join-Path $(build.artifactstagingdirectory) $_.Name)
-                }
 
-          - task: Gradle@2
-            displayName: 'Gradle Signed Publish to OSSRH Staging'
-            inputs:
-              gradleWrapperFile: source/android/gradlew.bat
-              workingDirectory: source/android
-              tasks: 'adaptivecards:publishSignedReleasePublicationToSonatypeStagingRepository'
-              publishJUnitResults: false
-              jdkVersionOption: 1.11
-            env:
-              AC_SONATYPE_USERNAME: $(SonatypeNexusUsername)
-              AC_SONATYPE_CREDENTIAL: $(SonatypeNexusOSSRH)
-              AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
-              AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
+          # - task: Gradle@2
+          #   displayName: 'Gradle Signed Publish to OSSRH Staging'
+          #   inputs:
+          #     gradleWrapperFile: source/android/gradlew.bat
+          #     workingDirectory: source/android
+          #     tasks: 'adaptivecards:publishSignedReleasePublicationToSonatypeStagingRepository'
+          #     publishJUnitResults: false
+          #     jdkVersionOption: 1.11
+          #   env:
+          #     AC_SONATYPE_USERNAME: $(SonatypeNexusUsername)
+          #     AC_SONATYPE_CREDENTIAL: $(SonatypeNexusOSSRH)
+          #     AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
+          #     AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
 
           - task: 1ES.PublishPipelineArtifact@1
             displayName: 'Publish Artifact: drop'
