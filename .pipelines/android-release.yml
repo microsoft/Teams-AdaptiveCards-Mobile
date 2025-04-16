@@ -125,7 +125,7 @@ extends:
                     cp "$file" "$dest"
                     echo "Copied pom to $dest for signing"
                 done
-            displayName: 'Prepare Files for Signing'
+            displayName: 'prepareSigningTask'
           # - task: Powershell@2
           #   name: prepareSigningTask
           #   displayName: 'Copy Files For Signing'
