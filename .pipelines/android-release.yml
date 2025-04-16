@@ -116,6 +116,7 @@ extends:
                     dest="$(build.artifactstagingdirectory)/$(basename "$file").asc"
                     echo "##vso[task.setvariable variable=aarSignaturePath;isOutput=true;]$dest"
                     cp "$file" "$dest"
+                    echo "Dest path - #dest"
                     echo "Copied aar to $dest for signing"
                 done
             
@@ -123,6 +124,7 @@ extends:
                     dest="$(build.artifactstagingdirectory)/$(basename "$file").asc"
                     echo "##vso[task.setvariable variable=pomSignaturePath;isOutput=true;]$dest"
                     cp "$file" "$dest"
+                    echo "Dest path - #dest"
                     echo "Copied pom to $dest for signing"
                 done
             displayName: 'prepareSigningTask'
