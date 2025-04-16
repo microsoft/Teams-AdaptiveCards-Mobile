@@ -223,7 +223,7 @@
 					"type": "Container",
 					"minHeight": "150px",
 					"backgroundImage": {
-						"url": "",
+						"url": " ",
 						"themedUrls": [
 							{
 								"theme": "Dark",
@@ -262,11 +262,11 @@
 					"type": "Container",
 					"minHeight": "150px",
 					"backgroundImage": {
-						"url": "",
+						"url": " ",
 						"themedUrls": [
 							{
 								"theme": "Light",
-								"url": ""
+								"url": " "
 							},
 							{
 								"theme": "Dark",

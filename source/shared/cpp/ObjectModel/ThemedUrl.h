@@ -30,7 +30,7 @@ namespace AdaptiveCards
         const std::string& GetUrl() const;
 
         static const std::string& GetThemedUrl(const Theme theme, std::vector<std::shared_ptr<AdaptiveCards::ThemedUrl>> themedUrls, const std::string& defaultIconUrl) {
-            if (!themedUrls.empty()) {
+            if (!themedUrls.empty() && theme != Theme::None) {
                 for (const auto &themedUrl: themedUrls) {
                     if (themedUrl->GetTheme() == theme && !themedUrl->GetUrl().empty()) {
                         return themedUrl->GetUrl();
