@@ -88,6 +88,11 @@ extends:
             inputs:
               command: custom
               custom: '--list-sdks '
+          
+          - bash: |
+                sudo chmod -R a+rwx /mnt
+            displayName: get access to /mnt
+
 
           - task: Gradle@2
             displayName: build
