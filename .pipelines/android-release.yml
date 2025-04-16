@@ -185,8 +185,8 @@ extends:
               publishJUnitResults: false
               jdkVersionOption: 1.11
             env:
-              AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
-              AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
+              AC_AAR_SIGNATURE_PATH: "/mnt/vss/_work/1/a/adaptivecards-android-3.6.2-beta.1.aar.asc"
+              AC_POM_SIGNATURE_PATH: "/mnt/vss/_work/1/a/adaptivecards-android-3.6.2-beta.1.pom.asc"
 
           - bash: |
               find "$(build.sourcesdirectory)" -type f \( -name "*.aar" -o -name "*.pom" -o -name "*.aar.asc" -o -name "*.pom.asc" \) | while read artifact; do
