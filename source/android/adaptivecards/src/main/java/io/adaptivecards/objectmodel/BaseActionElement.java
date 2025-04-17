@@ -91,7 +91,7 @@ public class BaseActionElement extends BaseElement {
     if (getClass() == BaseActionElement.class) AdaptiveCardObjectModelJNI.BaseActionElement_SetTitle__SWIG_1(swigCPtr, this, value); else AdaptiveCardObjectModelJNI.BaseActionElement_SetTitleSwigExplicitBaseActionElement__SWIG_1(swigCPtr, this, value);
   }
 
-  public String GetIconUrl(Theme theme) {
+  public String GetIconUrl(ACTheme theme) {
     return AdaptiveCardObjectModelJNI.BaseActionElement_GetIconUrl__SWIG_0(swigCPtr, this, theme.swigValue());
   }
 

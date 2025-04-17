@@ -8,7 +8,7 @@
 
 package io.adaptivecards.objectmodel;
 
-public enum Theme {
+public enum ACTheme {
   None,
   Light,
   Dark;
@@ -17,29 +17,29 @@ public enum Theme {
     return swigValue;
   }
 
-  public static Theme swigToEnum(int swigValue) {
-    Theme[] swigValues = Theme.class.getEnumConstants();
+  public static ACTheme swigToEnum(int swigValue) {
+    ACTheme[] swigValues = ACTheme.class.getEnumConstants();
     if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
       return swigValues[swigValue];
-    for (Theme swigEnum : swigValues)
+    for (ACTheme swigEnum : swigValues)
       if (swigEnum.swigValue == swigValue)
         return swigEnum;
-    throw new IllegalArgumentException("No enum " + Theme.class + " with value " + swigValue);
+    throw new IllegalArgumentException("No enum " + ACTheme.class + " with value " + swigValue);
   }
 
   @SuppressWarnings("unused")
-  private Theme() {
+  private ACTheme() {
     this.swigValue = SwigNext.next++;
   }
 
   @SuppressWarnings("unused")
-  private Theme(int swigValue) {
+  private ACTheme(int swigValue) {
     this.swigValue = swigValue;
     SwigNext.next = swigValue+1;
   }
 
   @SuppressWarnings("unused")
-  private Theme(Theme swigEnum) {
+  private ACTheme(ACTheme swigEnum) {
     this.swigValue = swigEnum.swigValue;
     SwigNext.next = this.swigValue+1;
   }

@@ -57,15 +57,15 @@ public class ThemedUrl {
     return (cPtr == 0) ? null : new ThemedUrl(cPtr, true);
   }
 
-  public Theme GetTheme() {
-    return Theme.swigToEnum(AdaptiveCardObjectModelJNI.ThemedUrl_GetTheme(swigCPtr, this));
+  public ACTheme GetTheme() {
+    return ACTheme.swigToEnum(AdaptiveCardObjectModelJNI.ThemedUrl_GetTheme(swigCPtr, this));
   }
 
   public String GetUrl() {
     return AdaptiveCardObjectModelJNI.ThemedUrl_GetUrl(swigCPtr, this);
   }
 
-  public static String GetThemedUrl(Theme theme, SWIGTYPE_p_std__vectorT_std__shared_ptrT_AdaptiveCards__ThemedUrl_t_t themedUrls, String defaultIconUrl) {
+  public static String GetThemedUrl(ACTheme theme, SWIGTYPE_p_std__vectorT_std__shared_ptrT_AdaptiveCards__ThemedUrl_t_t themedUrls, String defaultIconUrl) {
     return AdaptiveCardObjectModelJNI.ThemedUrl_GetThemedUrl(theme.swigValue(), SWIGTYPE_p_std__vectorT_std__shared_ptrT_AdaptiveCards__ThemedUrl_t_t.getCPtr(themedUrls), defaultIconUrl);
   }
 

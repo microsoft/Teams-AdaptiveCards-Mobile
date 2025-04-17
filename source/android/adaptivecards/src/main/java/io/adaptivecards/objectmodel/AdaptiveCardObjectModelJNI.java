@@ -517,9 +517,9 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getModeEnum();
   public final static native String ModeToString(int jarg1);
   public final static native int ModeFromString(String jarg1);
-  public final static native long getThemeEnum();
-  public final static native String ThemeToString(int jarg1);
-  public final static native int ThemeFromString(String jarg1);
+  public final static native long getACThemeEnum();
+  public final static native String ACThemeToString(int jarg1);
+  public final static native int ACThemeFromString(String jarg1);
   public final static native long getErrorStatusCodeEnum();
   public final static native String ErrorStatusCodeToString(int jarg1);
   public final static native int ErrorStatusCodeFromString(String jarg1);
