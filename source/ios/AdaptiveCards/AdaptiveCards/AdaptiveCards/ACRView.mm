@@ -42,7 +42,6 @@
 #import "UtiliOS.h"
 #import "CarouselPage.h"
 #import "Carousel.h"
-#import "ThemedUrl.h"
 #import <AVFoundation/AVFoundation.h>
 
 using namespace AdaptiveCards;
