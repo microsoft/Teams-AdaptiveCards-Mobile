@@ -9,6 +9,7 @@
 package io.adaptivecards.objectmodel;
 
 public enum Theme {
+  None,
   Light,
   Dark;
 

@@ -322,7 +322,7 @@ public class CardRendererRegistration
         return mTheme;
     }
 
-    public void setTheme(@NonNull Theme theme) {
+    public void setThemeForThemedUrl(@NonNull Theme theme) {
         mTheme = theme;
     }
 
@@ -745,6 +745,14 @@ public class CardRendererRegistration
         return null;
     }
 
+    public boolean isIsSplitActionEnabled() {
+        return mIsSplitActionEnabled;
+    }
+
+    public void setIsSplitActionEnabled(boolean isSplitActionEnabled) {
+        mIsSplitActionEnabled = isSplitActionEnabled;
+    }
+
     private static CardRendererRegistration s_instance = null;
     private IInputWatcher m_InputWatcher = null;
     private HashMap<String, IBaseCardElementRenderer> m_typeToRendererMap = new HashMap<String, IBaseCardElementRenderer>();
@@ -759,5 +767,6 @@ public class CardRendererRegistration
     private IFeatureFlagResolver m_featureFlagResolver;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
-    private Theme mTheme = Theme.Light;
+    private boolean mIsSplitActionEnabled = false;
+    private Theme mTheme = Theme.None;
 }

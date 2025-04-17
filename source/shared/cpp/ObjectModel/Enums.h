@@ -552,7 +552,8 @@ DECLARE_ADAPTIVECARD_ENUM(Mode);
 
 enum class ACTheme
 {
-    Light = 1,
+    Nonw = 0,
+    Light = 1
     Dark
 };
 DECLARE_ADAPTIVECARD_ENUM(ACTheme)

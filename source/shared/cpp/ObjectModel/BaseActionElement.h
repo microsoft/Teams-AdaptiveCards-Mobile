@@ -30,6 +30,7 @@ public:
     virtual void SetTitle(std::string&& value);
     virtual void SetTitle(const std::string& value);
 
+    const std::string& GetIconUrl(const Theme theme) const;
     const std::string& GetIconUrl() const;
     std::string GetSVGPath() const;
     
@@ -78,7 +79,7 @@ public:
         return actionType == ActionType::Execute
                || actionType == ActionType::OpenUrl
                //|| actionType == ActionType::ResetInputs // Todo add ResetInputs once implemented
-               //|| actionType == ActionType::ShowCard //Todo uncomment once ShowCard is supported
+               || actionType == ActionType::ShowCard
                || actionType == ActionType::Submit
                || actionType == ActionType::ToggleVisibility;
     }
