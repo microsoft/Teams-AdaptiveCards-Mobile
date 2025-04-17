@@ -183,9 +183,9 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
 #include "../../../shared/cpp/ObjectModel/CompoundButton.h"
 #include "../../../shared/cpp/ObjectModel/IconInfo.h"
-#include "../../../shared/cpp/ObjectModel/ProgressRing.h"
 #include "../../../shared/cpp/ObjectModel/Badge.h"
 #include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
+#include "../../../shared/cpp/ObjectModel/ProgressRing.h"
 %}
 
 
@@ -296,11 +296,11 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::TableRow)
 %shared_ptr(AdaptiveCards::Table)
 %shared_ptr(AdaptiveCards::ValueChangedAction)
-%shared_ptr(AdaptiveCards::ProgressRing)
-%shared_ptr(AdaptiveCards::ProgressRingParser)
 %shared_ptr(AdaptiveCards::Badge)
 %shared_ptr(AdaptiveCards::BadgeParser)
 %shared_ptr(AdaptiveCards::ThemedUrl)
+%shared_ptr(AdaptiveCards::ProgressRing)
+%shared_ptr(AdaptiveCards::ProgressRingParser)
 
 
 %apply unsigned int& INOUT { unsigned int& };
@@ -1197,6 +1197,6 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
 %include "../../../shared/cpp/ObjectModel/CompoundButton.h"
 %include "../../../shared/cpp/ObjectModel/IconInfo.h"
-%include "../../../shared/cpp/ObjectModel/ProgressRing.h"
 %include "../../../shared/cpp/ObjectModel/Badge.h"
 %include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
+%include "../../../shared/cpp/ObjectModel/ProgressRing.h"
