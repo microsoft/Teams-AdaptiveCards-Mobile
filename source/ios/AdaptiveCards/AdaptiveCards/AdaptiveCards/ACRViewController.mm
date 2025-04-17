@@ -44,7 +44,8 @@ using namespace AdaptiveCards;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view = [[ACRView alloc] init:_adaptiveCard hostconfig:_hostConfig widthConstraint:_guideFrame.size.width];
+    ACRTheme theme = ACRTheme(UIScreen.mainScreen.traitCollection.userInterfaceStyle);
+    self.view = [[ACRView alloc] init:_adaptiveCard hostconfig:_hostConfig widthConstraint:_guideFrame.size.width theme:theme];
     ((ACRView *)self.view).acrActionDelegate = _delegate;
 }
 

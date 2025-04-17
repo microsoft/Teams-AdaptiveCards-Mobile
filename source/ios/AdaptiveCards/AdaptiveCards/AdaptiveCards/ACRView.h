@@ -23,7 +23,7 @@
 @property (readonly) ACORenderContext *context;
 @property (readwrite)ACRTheme theme;
 
-- (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config widthConstraint:(float)width;
+- (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config widthConstraint:(float)width theme:(ACRTheme)theme;
 
 - (instancetype)init:(ACOAdaptiveCard *)card
           hostconfig:(ACOHostConfig *)config
