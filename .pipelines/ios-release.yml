@@ -4,9 +4,7 @@ pr: none
 trigger: none
 
 pool:
-  name: Azure Pipelines
-  vmImage: internal-macos-11
-  os: macOS
+  vmImage: 'macos-latest'
 
 
 steps:
