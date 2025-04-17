@@ -473,7 +473,7 @@
 							},
 							{
 								"type": "Input.Text",
-								"id": "defaultInputIdShow",
+								"id": "defaultInputIdShow2",
 								"placeholder": "enter comment",
 								"maxLength": 500
 							}
