@@ -131,7 +131,8 @@
     ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card
                                                  config:nil
                                         widthConstraint:300
-                                               delegate:nil];
+                                               delegate:nil
+                                                  theme:ACRThemeLight];
     XCTAssertTrue(renderResult.succeeded);
     NSObject<ACRSelectActionDelegate> *target;
 
@@ -206,7 +207,8 @@
                     renderResult = [ACRRenderer render:cardParseResult.card
                                                 config:nil
                                        widthConstraint:300
-                                              delegate:nil];
+                                              delegate:nil
+                                                 theme:ACRThemeLight];
                     [self assertRendering:renderResult fileName:fileName];
                 }
                 @catch (NSException *exception) {
@@ -809,7 +811,8 @@
     [ACRRenderer render:iOSCard
                  config:nil
         widthConstraint:300
-               delegate:nil];
+               delegate:nil
+                  theme:ACRThemeLight];
 }
 
 // Test that overriden default renders can be chosen to use resource resolvers
