@@ -460,6 +460,32 @@
 			"type": "ActionSet",
 			"actions": [
 				{
+					"type": "Action.ShowCard",
+					"title": "ShowCard",
+					"iconUrl": "icon:Open,Filled",
+					"tooltip": "Tooltip for ShowCard",
+					"card": {
+						"type": "AdaptiveCard",
+						"body": [
+							{
+								"type": "TextBlock",
+								"text": "This is a show card"
+							},
+							{
+								"type": "Input.Text",
+								"id": "defaultInputIdShow",
+								"placeholder": "enter comment",
+								"maxLength": 500
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
 					"type": "Action.Submit",
 					"title": "Submit",
 					"iconUrl": "icon:Send,Filled",
