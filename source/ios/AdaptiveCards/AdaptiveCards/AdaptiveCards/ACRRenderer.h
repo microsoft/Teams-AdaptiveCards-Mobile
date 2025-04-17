@@ -20,7 +20,7 @@
 @interface ACRRenderer : NSObject
 
 - (instancetype)init;
-+ (ACRRenderResult *)render:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config widthConstraint:(float)width;
++ (ACRRenderResult *)render:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config widthConstraint:(float)width theme:(ACRTheme)theme;
 
 + (ACRRenderResult *)render:(ACOAdaptiveCard *)card
                      config:(ACOHostConfig *)config

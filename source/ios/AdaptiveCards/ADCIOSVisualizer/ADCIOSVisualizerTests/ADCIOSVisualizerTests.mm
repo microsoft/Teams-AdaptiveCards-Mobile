@@ -268,7 +268,7 @@
     NSString *payload = [NSString stringWithContentsOfFile:[_mainBundle pathForResource:@"Feedback" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:payload];
     XCTAssertTrue(cardParseResult && cardParseResult.isValid);
-    ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card config:nil widthConstraint:335];
+    ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card config:nil widthConstraint:335 theme:ACRThemeLight];
     XCTAssertNotNil([renderResult.view getActionsTargetBuilderDirector]);
 }
 
@@ -277,7 +277,7 @@
     NSString *payload = [NSString stringWithContentsOfFile:[_mainBundle pathForResource:@"Feedback" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:payload];
     XCTAssertTrue(cardParseResult && cardParseResult.isValid);
-    ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card config:_defaultHostConfig widthConstraint:335];
+    ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card config:_defaultHostConfig widthConstraint:335 theme:ACRThemeLight];
     NSString *hashkey = @"FeedbackText";
     ACRInputLabelView *acrInputLabelView = (ACRInputLabelView *)[renderResult.view viewWithTag:hashkey.hash];
 
@@ -291,7 +291,7 @@
     NSString *payload = [NSString stringWithContentsOfFile:[_mainBundle pathForResource:@"ActionSet.Inputs.Tests" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:payload];
     XCTAssertTrue(cardParseResult && cardParseResult.isValid);
-    ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card config:_defaultHostConfig widthConstraint:335];
+    ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card config:_defaultHostConfig widthConstraint:335 theme:ACRThemeLight];
     XCTAssertTrue(renderResult && renderResult.succeeded);
     ACOAdaptiveCard *renderedCard = [renderResult.view card];
     NSData *json = [renderedCard inputs];
@@ -327,7 +327,7 @@
 
     NSArray<ACOAdaptiveCard *> *cards = [self prepCards:payloadNames];
     for (ACOAdaptiveCard *card in cards) {
-        ACRRenderResult *renderResult = [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+        ACRRenderResult *renderResult = [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         XCTAssertNotNil(renderResult.view);
     }
 }
@@ -337,7 +337,7 @@
     NSString *payload = [NSString stringWithContentsOfFile:[_mainBundle pathForResource:@"Feedback" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:payload];
     XCTAssertTrue(cardParseResult && cardParseResult.isValid);
-    ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card config:_defaultHostConfig widthConstraint:335];
+    ACRRenderResult *renderResult = [ACRRenderer render:cardParseResult.card config:_defaultHostConfig widthConstraint:335 theme:ACRThemeLight];
 
     ACRView *testView = renderResult.view;
     std::shared_ptr<AdaptiveCards::TextBlock> textblock = std::make_shared<AdaptiveCards::TextBlock>();
@@ -379,7 +379,7 @@
     NSString *expectedString = [[NSString alloc] initWithData:expectedData encoding:NSUTF8StringEncoding];
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:payload];
     XCTAssertTrue(cardParseResult.isValid);
-    [ACRRenderer render:cardParseResult.card config:_defaultHostConfig widthConstraint:100.0];
+    [ACRRenderer render:cardParseResult.card config:_defaultHostConfig widthConstraint:100.0 theme:ACRThemeLight];
     // manually call input gather function
     NSData *output = [cardParseResult.card inputs];
     NSString *str = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
@@ -395,12 +395,12 @@
     adaptiveConfig->SetActions(actionConfig);
     NSArray<NSString *> *payloadNames = @[ @"Action.ShowCard.Style" ];
     NSArray<ACOAdaptiveCard *> *cards = [self prepCards:payloadNames];
-    ACRRenderResult *result = [ACRRenderer render:cards[0] config:config widthConstraint:320.0];
+    ACRRenderResult *result = [ACRRenderer render:cards[0] config:config widthConstraint:320.0 theme:ACRThemeLight];
     XCTAssertTrue(result.warnings.count == 1);
     XCTAssertTrue([result.warnings[0].message isEqualToString:@"Some actions were not rendered due to exceeding the maximum number of actions allowed"]);
     actionConfig.maxActions = 3;
     adaptiveConfig->SetActions(actionConfig);
-    result = [ACRRenderer render:cards[0] config:config widthConstraint:320.0];
+    result = [ACRRenderer render:cards[0] config:config widthConstraint:320.0 theme:ACRThemeLight];
     XCTAssertTrue(result.warnings.count == 0);
 }
 
@@ -419,7 +419,7 @@
                              cardElementType:[ACRTextBlockRenderer elemType]];
 
     @try {
-        ACRRenderResult *result = [ACRRenderer render:cards[0] config:nil widthConstraint:320.0];
+        ACRRenderResult *result = [ACRRenderer render:cards[0] config:nil widthConstraint:320.0 theme:ACRThemeLight];
         XCTAssertTrue(result.succeeded);
     }
     @catch (NSException *exception) {
@@ -435,7 +435,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -448,7 +448,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -461,7 +461,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -474,7 +474,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -487,7 +487,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -500,7 +500,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -513,7 +513,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -526,7 +526,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -539,7 +539,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -552,7 +552,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -565,7 +565,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -578,7 +578,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -591,7 +591,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -604,7 +604,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -617,7 +617,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -630,7 +630,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -643,7 +643,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -656,7 +656,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
@@ -669,7 +669,7 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
         for (ACOAdaptiveCard *card in cards) {
-            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0];
+            [ACRRenderer render:card config:self->_defaultHostConfig widthConstraint:320.0 theme:ACRThemeLight];
         }
     }];
 }
