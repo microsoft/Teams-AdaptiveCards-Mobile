@@ -40,20 +40,6 @@ using namespace AdaptiveCards;
 
 // This interface is exposed to outside, and returns ACRRenderResult object
 // This object contains a viewController instance which defer rendering adaptiveCard until viewDidLoad is called.
-+ (ACRRenderResult *)render:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config widthConstraint:(float)width delegate:(id<ACRActionDelegate>)acrActionDelegate
-{
-    ACRRenderResult *result = [[ACRRenderResult alloc] init];
-    // Initializes ACRView instance with HostConfig and AdaptiveCard
-    // ACRViewController does not render adaptiveCard until viewDidLoad calls render
-    ACRView *view = [[ACRView alloc] init:card hostconfig:config widthConstraint:width delegate:acrActionDelegate];
-    result.view = view;
-    result.warnings = view.warnings;
-    result.succeeded = YES;
-    return result;
-}
-
-// This interface is exposed to outside, and returns ACRRenderResult object
-// This object contains a viewController instance which defer rendering adaptiveCard until viewDidLoad is called.
 + (ACRRenderResult *)render:(ACOAdaptiveCard *)card
                      config:(ACOHostConfig *)config
             widthConstraint:(float)width
@@ -92,7 +78,8 @@ using namespace AdaptiveCards;
 // This object contains a viewController instance which defer rendering adaptiveCard until viewDidLoad is called.
 + (ACRRenderResult *)render:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config widthConstraint:(float)width
 {
-    return [ACRRenderer render:card config:config widthConstraint:width delegate:nil];
+    ACRTheme theme = ACRTheme(UIScreen.mainScreen.traitCollection.userInterfaceStyle);
+    return [ACRRenderer render:card config:config widthConstraint:width delegate:nil theme:theme];
 }
 
 // This interface is exposed to outside, and returns ACRRenderResult object

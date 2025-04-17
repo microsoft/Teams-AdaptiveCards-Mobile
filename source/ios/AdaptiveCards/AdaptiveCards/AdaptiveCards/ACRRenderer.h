@@ -21,11 +21,13 @@
 
 - (instancetype)init;
 + (ACRRenderResult *)render:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config widthConstraint:(float)width;
+
 + (ACRRenderResult *)render:(ACOAdaptiveCard *)card
                      config:(ACOHostConfig *)config
             widthConstraint:(float)width
                    delegate:(id<ACRActionDelegate>)acrActionDelegate
                       theme:(ACRTheme)theme;
+
 + (ACRRenderResult *)renderAsViewController:(ACOAdaptiveCard *)card
                                      config:(ACOHostConfig *)config
                                       frame:(CGRect)frame

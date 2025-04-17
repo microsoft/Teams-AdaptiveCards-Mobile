@@ -164,8 +164,6 @@
     BOOL isSplitButton = action->GetIsSplitAction();
     NSDictionary *imageViewMap = [rootView getImageMap];
     ACTheme theme = ACTheme(rootView.theme);
-    NSLog(@"rootView theme is %ld", static_cast<long>(rootView.theme));
-    NSLog(@"theme is %d", theme);
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl(theme).c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
     UIImage *image = imageViewMap[key];
