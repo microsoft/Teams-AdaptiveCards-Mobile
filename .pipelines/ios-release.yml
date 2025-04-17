@@ -5,7 +5,7 @@ trigger: none
 
 pool:
   name: Azure Pipelines
-  vmImage: internal-macos-10.15
+  vmImage: internal-macos-11
 
 
 steps:
