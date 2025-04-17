@@ -20,7 +20,7 @@ parameters:
   default: beta.1
 
 variables:
-- group: AdaptiveCards-KVLink
+# - group: AdaptiveCards-KVLink
 - name: AC_FULL_VERSION_SPECIFIED
   value: true
 - name: AC_VERSION_STRING
