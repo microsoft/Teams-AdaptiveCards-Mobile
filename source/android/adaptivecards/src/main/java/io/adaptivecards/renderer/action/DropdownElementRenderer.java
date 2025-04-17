@@ -65,7 +65,7 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
         }
 
         //Remove button so it does not get added to the default viewGroup. Also, do not download icon.
-        String iconUrl = baseActionElement.GetIconUrl(renderArgs.getTheme());
+        String iconUrl = baseActionElement.GetIconUrl(renderedCard.getTheme());
         baseActionElement.SetIconUrl("");
         Button button = actionRenderer.render(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
         viewGroup.removeView(button);

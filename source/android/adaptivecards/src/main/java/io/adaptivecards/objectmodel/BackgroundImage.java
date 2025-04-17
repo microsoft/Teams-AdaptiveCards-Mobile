@@ -52,7 +52,7 @@ public class BackgroundImage {
     this(AdaptiveCardObjectModelJNI.new_BackgroundImage__SWIG_2(url, fillMode.swigValue(), hAlignment.swigValue(), vAlignment.swigValue()), true);
   }
 
-  public String GetUrl(Theme theme) {
+  public String GetUrl(ACTheme theme) {
     return AdaptiveCardObjectModelJNI.BackgroundImage_GetUrl__SWIG_0(swigCPtr, this, theme.swigValue());
   }
 

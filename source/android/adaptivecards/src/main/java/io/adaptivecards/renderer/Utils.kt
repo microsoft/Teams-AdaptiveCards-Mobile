@@ -4,7 +4,7 @@ package io.adaptivecards.renderer
 
 import android.content.Context
 import android.content.res.Configuration
-import io.adaptivecards.objectmodel.Theme
+import io.adaptivecards.objectmodel.ACTheme
 
 object Utils {
 
@@ -13,8 +13,8 @@ object Utils {
      * @return `Theme.Dark` if using dark theme, `Theme.Light` otherwise.
      */
     @JvmStatic
-    fun Context.getTheme() : Theme {
-        return if (isDarkTheme()) Theme.Dark else Theme.Light
+    fun Context.getTheme() : ACTheme {
+        return if (isDarkTheme()) ACTheme.Dark else ACTheme.Light
     }
 
     /**
