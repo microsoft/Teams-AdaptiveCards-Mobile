@@ -266,6 +266,18 @@
 									{
 										"title": "Spacing Sample",
 										"value": "v1.5/Scenarios/spacing_sample.json"
+									},
+									{
+										"title": "ThemedUrls Actions",
+										"value": "v1.5/Elements/ThemedUrls.Actions.json"
+									},
+									{
+										"title": "ThemedUrls BackgroundImage",
+										"value": "v1.5/Elements/ThemedUrls.BackgroundImage.json"
+									},
+									{
+										"title": "ThemedUrls Image",
+										"value": "v1.5/Elements/ThemedUrls.Image.json"
 									}
 								],
                                 "placeholder": "(choose sample)",

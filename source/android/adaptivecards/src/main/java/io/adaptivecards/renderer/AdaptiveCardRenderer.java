@@ -167,7 +167,7 @@ public class AdaptiveCardRenderer
             style = adaptiveCard.GetStyle();
         }
 
-        RenderArgs renderArgs = new RenderArgs();
+        RenderArgs renderArgs = new RenderArgs(CardRendererRegistration.getInstance().getTheme());
         renderArgs.setContainerStyle(style);
         renderArgs.setAncestorHasSelectAction(adaptiveCard.GetSelectAction() != null);
 
@@ -241,7 +241,7 @@ public class AdaptiveCardRenderer
             renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.INTERACTIVITY_DISALLOWED, "Interactivity is not allowed. Actions not rendered."));
         }
 
-        ContainerRenderer.setBackgroundImage(renderedCard, context, adaptiveCard.GetBackgroundImage(), hostConfig, cardLayout);
+        ContainerRenderer.setBackgroundImage(renderedCard, context, adaptiveCard.GetBackgroundImage(), hostConfig, renderArgs, cardLayout);
         ContainerRenderer.setSelectAction(renderedCard, renderedCard.getAdaptiveCard().GetSelectAction(), rootLayout, cardActionHandler, renderArgs);
 
         return rootLayout;

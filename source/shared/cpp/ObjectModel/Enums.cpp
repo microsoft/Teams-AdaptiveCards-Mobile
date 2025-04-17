@@ -263,7 +263,10 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"},
             {AdaptiveCardSchemaKey::MenuActions, "menuActions"},
-            {AdaptiveCardSchemaKey::LabelPosition, "labelPosition"}});
+            {AdaptiveCardSchemaKey::ThemedIconUrls, "themedIconUrls"},
+            {AdaptiveCardSchemaKey::ThemedUrls, "themedUrls"},
+            {AdaptiveCardSchemaKey::Theme, "theme"},
+        {AdaptiveCardSchemaKey::LabelPosition, "labelPosition"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -499,6 +502,10 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(Mode, {
             {Mode::Primary, "primary"},
             {Mode::Secondary, "secondary"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(Theme, {
+            {Theme::Light, "Light"},
+            {Theme::Dark, "Dark"}})
 
     DEFINE_ADAPTIVECARD_ENUM(ErrorStatusCode, {
             {ErrorStatusCode::InvalidJson, "InvalidJson"},
