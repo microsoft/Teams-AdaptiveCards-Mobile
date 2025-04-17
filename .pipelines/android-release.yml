@@ -4,8 +4,7 @@ pr: none
 trigger: none
 
 pool:
-    name: Teams-UBT-Android-DomoreexpGithub-P
-    os: linux
+    name: 1ES-Teams-Windows-2022-Compliant-Daily
 
 parameters:
 - name: base_version
@@ -21,6 +20,7 @@ parameters:
   default: beta.1
 
 variables:
+- group: AdaptiveCards-KVLink
 - name: AC_FULL_VERSION_SPECIFIED
   value: true
 - name: AC_VERSION_STRING
@@ -44,16 +44,14 @@ extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
     sdl:
-      sourceAnalysisPool:
-        name: Azure-Pipelines-1ESPT-ExDShared
-        image: windows-2022
-        os: windows
       codeSignValidation:
         enabled: true
         break: true
     pool:
-      name: Teams-UBT-Android-DomoreexpGithub-P
-      os: linux
+      name: Azure-Pipelines-1ESPT-ExDShared
+      image: windows-2022
+      os: windows
+      demands: java
     stages:
       - stage: Staging
         jobs:
@@ -88,16 +86,11 @@ extends:
             inputs:
               command: custom
               custom: '--list-sdks '
-          
-          - bash: |
-                sudo chmod -R a+rwx /mnt
-            displayName: get access to /mnt
-
 
           - task: Gradle@2
             displayName: build
             inputs:
-              gradleWrapperFile: source/android/gradlew
+              gradleWrapperFile: source/android/gradlew.bat
               workingDirectory: source/android
               tasks: 'adaptivecards:build'
               publishJUnitResults: false
@@ -106,51 +99,35 @@ extends:
           - task: Gradle@2
             displayName: 'Gradle Unsigned Publication'
             inputs:
-              gradleWrapperFile: source/android/gradlew
+              gradleWrapperFile: source/android/gradlew.bat
               workingDirectory: source/android
               tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
               publishJUnitResults: false
               jdkVersionOption: 1.11
-          - bash: |
-                find $(build.sourcesdirectory) -type f -regex ".*\/io\/adaptivecards\/.*\.aar$" | while read -r file; do
-                    dest="$(build.artifactstagingdirectory)/$(basename "$file").asc"
-                    echo "##vso[task.setvariable variable=aarSignaturePath;isOutput=true;]$dest"
-                    cp "$file" "$dest"
-                    echo "Dest path - #dest"
-                    echo "Copied aar to $dest for signing"
-                done
-            
-                find $(build.sourcesdirectory) -type f -regex ".*\/io\/adaptivecards\/.*\.pom$" | while read -r file; do
-                    dest="$(build.artifactstagingdirectory)/$(basename "$file").asc"
-                    echo "##vso[task.setvariable variable=pomSignaturePath;isOutput=true;]$dest"
-                    cp "$file" "$dest"
-                    echo "Dest path - #dest"
-                    echo "Copied pom to $dest for signing"
-                done
-            displayName: 'prepareSigningTask'
-          # - task: Powershell@2
-          #   name: prepareSigningTask
-          #   displayName: 'Copy Files For Signing'
-          #   inputs:
-          #     targetType: inline
-          #     script: |
-          #       ls $(build.sourcesdirectory) -File -Recur | ?{
-          #         $_.FullName -Match ".*\\io\\adaptivecards\\.*(.aar)$"
-          #       } | %{
-          #         $dest = (Join-Path $(build.artifactstagingdirectory) ($_.Name + ".asc"))
-          #         echo "##vso[task.setvariable variable=aarSignaturePath;isOutput=true;]$dest"
-          #         cp $_.FullName $dest
-          #         echo "Copied aar to $dest for signing"
-          #       }
 
-          #       ls $(build.sourcesdirectory) -File -Recur | ?{
-          #         $_.FullName -Match ".*\\io\\adaptivecards\\.*(.pom)$"
-          #       } | %{
-          #         $dest = (Join-Path $(build.artifactstagingdirectory) ($_.Name + ".asc"))
-          #         echo "##vso[task.setvariable variable=pomSignaturePath;isOutput=true;]$dest"
-          #         cp $_.FullName $dest
-          #         echo "Copied pom to $dest for signing"
-          #       }
+          - task: Powershell@2
+            name: prepareSigningTask
+            displayName: 'Copy Files For Signing'
+            inputs:
+              targetType: inline
+              script: |
+                ls $(build.sourcesdirectory) -File -Recur | ?{
+                  $_.FullName -Match ".*\\io\\adaptivecards\\.*(.aar)$"
+                } | %{
+                  $dest = (Join-Path $(build.artifactstagingdirectory) ($_.Name + ".asc"))
+                  echo "##vso[task.setvariable variable=aarSignaturePath;isOutput=true;]$dest"
+                  cp $_.FullName $dest
+                  echo "Copied aar to $dest for signing"
+                }
+
+                ls $(build.sourcesdirectory) -File -Recur | ?{
+                  $_.FullName -Match ".*\\io\\adaptivecards\\.*(.pom)$"
+                } | %{
+                  $dest = (Join-Path $(build.artifactstagingdirectory) ($_.Name + ".asc"))
+                  echo "##vso[task.setvariable variable=pomSignaturePath;isOutput=true;]$dest"
+                  cp $_.FullName $dest
+                  echo "Copied pom to $dest for signing"
+                }
 
           - task: EsrpCodeSigning@5
             displayName: 'ESRP CodeSign (Detached PGP)'
@@ -179,21 +156,26 @@ extends:
           - task: Gradle@2
             displayName: 'Gradle Signed Publish to Local Directory'
             inputs:
-              gradleWrapperFile: source/android/gradlew
+              gradleWrapperFile: source/android/gradlew.bat
               workingDirectory: source/android
               tasks: 'adaptivecards:publishSignedReleasePublicationToSignedArtifactRepository'
               publishJUnitResults: false
               jdkVersionOption: 1.11
             env:
-              AC_AAR_SIGNATURE_PATH: "/mnt/vss/_work/1/a/adaptivecards-android-3.6.2-beta.1.aar.asc"
-              AC_POM_SIGNATURE_PATH: "/mnt/vss/_work/1/a/adaptivecards-android-3.6.2-beta.1.pom.asc"
+              AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
+              AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
 
-          - bash: |
-              find "$(build.sourcesdirectory)" -type f \( -name "*.aar" -o -name "*.pom" -o -name "*.aar.asc" -o -name "*.pom.asc" \) | while read artifact; do
-                echo "Copying artifact $(basename "$artifact")"
-                cp "$artifact" "$(build.artifactstagingdirectory)/$(basename "$artifact")"
-              done
+          - task: Powershell@2
             displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+            inputs:
+              targetType: inline
+              script: |
+                ls $(build.sourcesdirectory) -File -Recur | ?{
+                  $_.FullName -Match ".*\\signedArtifact\\.*(.aar|.pom|.aar.asc|.pom.asc)$"
+                } | %{
+                echo "Copying artifact $_.Name"
+                cp $_.FullName (Join-Path $(build.artifactstagingdirectory) $_.Name)
+                }
 
           # - task: Gradle@2
           #   displayName: 'Gradle Signed Publish to OSSRH Staging'
@@ -214,3 +196,64 @@ extends:
             inputs:
               path: '$(build.artifactstagingdirectory)'
               artifact: drop
+
+      # - stage: NexusValidation
+      #   jobs:
+      #   - job: NexusValidation
+      #     steps:
+      #     - task: Gradle@2
+      #       displayName: 'Validate Staging Artifact'
+      #       inputs:
+      #         gradleWrapperFile: source/android/gradlew.bat
+      #         workingDirectory: source/android
+      #         tasks: 'adaptivecards:closeRepository'
+      #         publishJUnitResults: false
+      #         jdkVersionOption: 1.11
+      #       env:
+      #         AC_SONATYPE_USERNAME: $(SonatypeNexusUsername)
+      #         AC_SONATYPE_CREDENTIAL: $(SonatypeNexusOSSRH)
+              
+      # - stage: PublishToMavenCentral
+      #   jobs:
+      #   - job: ManualApproval
+      #     pool: server
+      #     steps:
+      #     - task: ManualValidation@0
+      #       inputs:
+      #         instructions: 'Please verify artifact integrity at http://oss.sonatype.org/'
+    
+        # - job: ReleaseValidatedArtifact
+        #   dependsOn: ManualApproval
+        #   steps:
+        #   - checkout: self
+        #     persistCredentials: true
+
+          # - task: Gradle@2
+          #   displayName: 'Release Validated Artifact to Maven Central'
+          #   inputs:
+          #     gradleWrapperFile: source/android/gradlew.bat
+          #     workingDirectory: source/android
+          #     tasks: 'adaptivecards:releaseRepository'
+          #     publishJUnitResults: false
+          #     jdkVersionOption: 1.11
+          #   env:
+          #     AC_SONATYPE_USERNAME: $(SonatypeNexusUsername)
+          #     AC_SONATYPE_CREDENTIAL: $(SonatypeNexusOSSRH)
+
+          # - bash: |
+          #     git config --global user.email "adaptivecardscore@microsoft.com"
+          #     git config --global user.name "adaptivecards"
+          #     git tag -a "android/adaptivecards-android@$AC_VERSION_STRING" -m "Released adaptivecards-android v$AC_VERSION_STRING"
+          #     git checkout main
+          #     sed --in-place 's/acVersion=.*/acVersion=${{ parameters.base_version }}/' gradle.properties
+          #     git checkout -b "adaptivecards/post-release-$AC_VERSION_STRING"
+          #     git add gradle.properties
+          #     git commit -m "[Android] Bump to v${{ parameters.base_version }}"
+          #     git push --tags --set-upstream origin "adaptivecards/post-release-$AC_VERSION_STRING"
+          #     curl -i -u $AC_GHUSER:$AC_GHPAT -d '{ "title": "[Android] Bump to v${{ parameters.base_version }}", "head": "adaptivecards/post-release-$AC_VERSION_STRING", "base": "main", "body": "Auto-generated post-release pull request" }' https://api.github.com/repos/Microsoft/AdaptiveCards-Mobile/pulls
+
+          #   workingDirectory: source/android/adaptivecards
+          #   displayName: 'Update version file'
+          #   env:
+          #     AC_GHUSER: $(ghuser)
+          #     AC_GHPAT: $(ghpat)
