@@ -571,6 +571,9 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getBadgeAppearanceEnum();
   public final static native String BadgeAppearanceToString(int jarg1);
   public final static native int BadgeAppearanceFromString(String jarg1);
+  public final static native long getProgressBarColorEnum();
+  public final static native String ProgressBarColorToString(int jarg1);
+  public final static native int ProgressBarColorFromString(String jarg1);
   public final static native long AdaptiveBase64Util_Decode(String jarg1);
   public final static native String AdaptiveBase64Util_Encode(long jarg1, CharVector jarg1_);
   public final static native String AdaptiveBase64Util_ExtractDataFromUri(String jarg1);
@@ -2268,12 +2271,27 @@ public class AdaptiveCardObjectModelJNI {
   public final static native int ThemedUrl_GetTheme(long jarg1, ThemedUrl jarg1_);
   public final static native String ThemedUrl_GetUrl(long jarg1, ThemedUrl jarg1_);
   public final static native String ThemedUrl_GetThemedUrl(int jarg1, long jarg2, String jarg3);
+  public final static native long new_ProgressBar__SWIG_0();
+  public final static native long new_ProgressBar__SWIG_1(long jarg1, ProgressBar jarg1_);
+  public final static native void delete_ProgressBar(long jarg1);
+  public final static native long new_ProgressBar__SWIG_3(int jarg1, float jarg2, float jarg3);
+  public final static native int ProgressBar_GetColor(long jarg1, ProgressBar jarg1_);
+  public final static native double ProgressBar_GetMax(long jarg1, ProgressBar jarg1_);
+  public final static native long ProgressBar_GetValue(long jarg1, ProgressBar jarg1_);
+  public final static native long ProgressBar_SerializeToJsonValue(long jarg1, ProgressBar jarg1_);
+  public final static native long ProgressBar_dynamic_cast(long jarg1, BaseCardElement jarg1_);
+  public final static native long new_ProgressBarParser__SWIG_0();
+  public final static native long new_ProgressBarParser__SWIG_1(long jarg1, ProgressBarParser jarg1_);
+  public final static native void delete_ProgressBarParser(long jarg1);
+  public final static native long ProgressBarParser_Deserialize(long jarg1, ProgressBarParser jarg1_, long jarg2, ParseContext jarg2_, long jarg3, JsonValue jarg3_);
+  public final static native long ProgressBarParser_DeserializeFromString(long jarg1, ProgressBarParser jarg1_, long jarg2, ParseContext jarg2_, String jarg3);
   public final static native long new_ProgressRing__SWIG_0();
   public final static native long new_ProgressRing__SWIG_1(long jarg1, ProgressRing jarg1_);
   public final static native void delete_ProgressRing(long jarg1);
   public final static native String ProgressRing_GetLabel(long jarg1, ProgressRing jarg1_);
   public final static native int ProgressRing_GetLabelPosition(long jarg1, ProgressRing jarg1_);
   public final static native int ProgressRing_GetSize(long jarg1, ProgressRing jarg1_);
+  public final static native long new_ProgressRing__SWIG_3(int jarg1, int jarg2, String jarg3);
   public final static native long ProgressRing_SerializeToJsonValue(long jarg1, ProgressRing jarg1_);
   public final static native long ProgressRing_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_ProgressRingParser__SWIG_0();
@@ -2359,6 +2377,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long CompoundButtonParser_SWIGSmartPtrUpcast(long jarg1);
   public final static native long Badge_SWIGSmartPtrUpcast(long jarg1);
   public final static native long BadgeParser_SWIGSmartPtrUpcast(long jarg1);
+  public final static native long ProgressBar_SWIGSmartPtrUpcast(long jarg1);
+  public final static native long ProgressBarParser_SWIGSmartPtrUpcast(long jarg1);
   public final static native long ProgressRing_SWIGSmartPtrUpcast(long jarg1);
   public final static native long ProgressRingParser_SWIGSmartPtrUpcast(long jarg1);
 

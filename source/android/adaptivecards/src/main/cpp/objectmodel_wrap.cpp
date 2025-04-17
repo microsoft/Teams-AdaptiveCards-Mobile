@@ -846,6 +846,7 @@ namespace Swig {
 #include "../../../shared/cpp/ObjectModel/IconInfo.h"
 #include "../../../shared/cpp/ObjectModel/Badge.h"
 #include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
+#include "../../../shared/cpp/ObjectModel/ProgressBar.h"
 #include "../../../shared/cpp/ObjectModel/ProgressRing.h"
 
 SWIGINTERN std::string Json_Value_getString(Json::Value *self){
@@ -2199,6 +2200,9 @@ SWIGINTERN AdaptiveCards::IconInfo *AdaptiveCards_IconInfo_dynamic_cast(Adaptive
         }
 SWIGINTERN AdaptiveCards::Badge *AdaptiveCards_Badge_dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement){
             return dynamic_cast<AdaptiveCards::Badge *>(baseCardElement);
+        }
+SWIGINTERN AdaptiveCards::ProgressBar *AdaptiveCards_ProgressBar_dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement){
+            return dynamic_cast<AdaptiveCards::ProgressBar *>(baseCardElement);
         }
 SWIGINTERN AdaptiveCards::ProgressRing *AdaptiveCards_ProgressRing_dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement){
             return dynamic_cast<AdaptiveCards::ProgressRing *>(baseCardElement);
@@ -12604,6 +12608,54 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   result = (AdaptiveCards::BadgeAppearance)AdaptiveCards::BadgeAppearanceFromString((std::string const &)*arg1);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_getProgressBarColorEnum(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::ProgressBarColor > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::ProgressBarColor > *) &AdaptiveCards::EnumHelpers::getProgressBarColorEnum();
+  *(AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::ProgressBarColor > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBarColorToString(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  jstring jresult = 0 ;
+  AdaptiveCards::ProgressBarColor arg1 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::ProgressBarColor)jarg1; 
+  result = (std::string *) &AdaptiveCards::ProgressBarColorToString(arg1);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBarColorFromString(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  AdaptiveCards::ProgressBarColor result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = (AdaptiveCards::ProgressBarColor)AdaptiveCards::ProgressBarColorFromString((std::string const &)*arg1);
   jresult = (jint)result; 
   return jresult;
 }
@@ -45185,6 +45237,293 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressBar_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBar *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::ProgressBar *)new AdaptiveCards::ProgressBar();
+  
+  *(std::shared_ptr<  AdaptiveCards::ProgressBar > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ProgressBar >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressBar_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBar *arg1 = 0 ;
+  AdaptiveCards::ProgressBar *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  arg1 = (AdaptiveCards::ProgressBar *)((*(std::shared_ptr< const AdaptiveCards::ProgressBar > **)&jarg1) ? (*(std::shared_ptr< const AdaptiveCards::ProgressBar > **)&jarg1)->get() : 0);
+  if (!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::ProgressBar const & reference is null");
+    return 0;
+  } 
+  result = (AdaptiveCards::ProgressBar *)new AdaptiveCards::ProgressBar((AdaptiveCards::ProgressBar const &)*arg1);
+  
+  *(std::shared_ptr<  AdaptiveCards::ProgressBar > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ProgressBar >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1ProgressBar(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBar > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::ProgressBar > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBar *)(smartarg1 ? smartarg1->get() : 0); 
+  (void)arg1; delete smartarg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressBar_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jint jarg1, jfloat jarg2, jfloat jarg3) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBarColor arg1 ;
+  float arg2 ;
+  float arg3 ;
+  AdaptiveCards::ProgressBar *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::ProgressBarColor)jarg1; 
+  arg2 = (float)jarg2; 
+  arg3 = (float)jarg3; 
+  result = (AdaptiveCards::ProgressBar *)new AdaptiveCards::ProgressBar(arg1,arg2,arg3);
+  
+  *(std::shared_ptr<  AdaptiveCards::ProgressBar > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ProgressBar >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetColor(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBar const > *smartarg1 = 0 ;
+  AdaptiveCards::ProgressBarColor result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::ProgressBar > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBar *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (AdaptiveCards::ProgressBarColor)((AdaptiveCards::ProgressBar const *)arg1)->GetColor();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetMax(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBar const > *smartarg1 = 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::ProgressBar > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBar *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (double)((AdaptiveCards::ProgressBar const *)arg1)->GetMax();
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBar const > *smartarg1 = 0 ;
+  std::optional< double > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::ProgressBar > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBar *)(smartarg1 ? smartarg1->get() : 0); 
+  result = ((AdaptiveCards::ProgressBar const *)arg1)->GetValue();
+  *(std::optional< double > **)&jresult = new std::optional< double >((const std::optional< double > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1SerializeToJsonValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBar const > *smartarg1 = 0 ;
+  Json::Value result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::ProgressBar > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBar *)(smartarg1 ? smartarg1->get() : 0); 
+  result = ((AdaptiveCards::ProgressBar const *)arg1)->SerializeToJsonValue();
+  *(Json::Value **)&jresult = new Json::Value((const Json::Value &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1dynamic_1cast(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::BaseCardElement *arg1 = (AdaptiveCards::BaseCardElement *) 0 ;
+  std::shared_ptr< AdaptiveCards::BaseCardElement > *smartarg1 = 0 ;
+  AdaptiveCards::ProgressBar *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::BaseCardElement > **)&jarg1;
+  arg1 = (AdaptiveCards::BaseCardElement *)(smartarg1 ? smartarg1->get() : 0); 
+  {
+    result = (AdaptiveCards::ProgressBar *)AdaptiveCards_ProgressBar_dynamic_cast(arg1);
+    if (!result) {
+      jclass excep = jenv->FindClass("java/lang/ClassCastException");
+      if (excep) {
+        jenv->ThrowNew(excep, "dynamic_cast exception");
+      }
+    }
+  }
+  
+  *(std::shared_ptr<  AdaptiveCards::ProgressBar > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ProgressBar >(result SWIG_NO_NULL_DELETER_0) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressBarParser_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBarParser *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::ProgressBarParser *)new AdaptiveCards::ProgressBarParser();
+  
+  *(std::shared_ptr<  AdaptiveCards::ProgressBarParser > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ProgressBarParser >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressBarParser_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBarParser *arg1 = 0 ;
+  AdaptiveCards::ProgressBarParser *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  arg1 = (AdaptiveCards::ProgressBarParser *)((*(std::shared_ptr< const AdaptiveCards::ProgressBarParser > **)&jarg1) ? (*(std::shared_ptr< const AdaptiveCards::ProgressBarParser > **)&jarg1)->get() : 0);
+  if (!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::ProgressBarParser const & reference is null");
+    return 0;
+  } 
+  result = (AdaptiveCards::ProgressBarParser *)new AdaptiveCards::ProgressBarParser((AdaptiveCards::ProgressBarParser const &)*arg1);
+  
+  *(std::shared_ptr<  AdaptiveCards::ProgressBarParser > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ProgressBarParser >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1ProgressBarParser(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  AdaptiveCards::ProgressBarParser *arg1 = (AdaptiveCards::ProgressBarParser *) 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBarParser > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::ProgressBarParser > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBarParser *)(smartarg1 ? smartarg1->get() : 0); 
+  (void)arg1; delete smartarg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBarParser_1Deserialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBarParser *arg1 = (AdaptiveCards::ProgressBarParser *) 0 ;
+  AdaptiveCards::ParseContext *arg2 = 0 ;
+  Json::Value *arg3 = 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBarParser > *smartarg1 = 0 ;
+  std::shared_ptr< AdaptiveCards::BaseCardElement > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  (void)jarg3_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::ProgressBarParser > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBarParser *)(smartarg1 ? smartarg1->get() : 0); 
+  
+  arg2 = (AdaptiveCards::ParseContext *)((*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2) ? (*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2)->get() : 0);
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::ParseContext & reference is null");
+    return 0;
+  } 
+  arg3 = *(Json::Value **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Json::Value const & reference is null");
+    return 0;
+  } 
+  result = (arg1)->Deserialize(*arg2,(Json::Value const &)*arg3);
+  *(std::shared_ptr< AdaptiveCards::BaseCardElement > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::BaseCardElement >(result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBarParser_1DeserializeFromString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressBarParser *arg1 = (AdaptiveCards::ProgressBarParser *) 0 ;
+  AdaptiveCards::ParseContext *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBarParser > *smartarg1 = 0 ;
+  std::shared_ptr< AdaptiveCards::BaseCardElement > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::ProgressBarParser > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBarParser *)(smartarg1 ? smartarg1->get() : 0); 
+  
+  arg2 = (AdaptiveCards::ParseContext *)((*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2) ? (*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2)->get() : 0);
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::ParseContext & reference is null");
+    return 0;
+  } 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  result = (arg1)->DeserializeFromString(*arg2,(std::string const &)*arg3);
+  *(std::shared_ptr< AdaptiveCards::BaseCardElement > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::BaseCardElement >(result) : 0; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressRing_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   AdaptiveCards::ProgressRing *result = 0 ;
@@ -45284,6 +45623,34 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   arg1 = (AdaptiveCards::ProgressRing *)(smartarg1 ? smartarg1->get() : 0); 
   result = (AdaptiveCards::ProgressSize)((AdaptiveCards::ProgressRing const *)arg1)->GetSize();
   jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressRing_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2, jstring jarg3) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressSize arg1 ;
+  AdaptiveCards::LabelPosition arg2 ;
+  std::string *arg3 = 0 ;
+  AdaptiveCards::ProgressRing *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::ProgressSize)jarg1; 
+  arg2 = (AdaptiveCards::LabelPosition)jarg2; 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  result = (AdaptiveCards::ProgressRing *)new AdaptiveCards::ProgressRing(arg1,arg2,(std::string const &)*arg3);
+  
+  *(std::shared_ptr<  AdaptiveCards::ProgressRing > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ProgressRing >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
   return jresult;
 }
 
@@ -46226,6 +46593,26 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
     (void)jenv;
     (void)jcls;
     argp1 = *(std::shared_ptr< AdaptiveCards::BadgeParser > **)&jarg1;
+    *(std::shared_ptr< AdaptiveCards::BaseCardElementParser > **)&baseptr = argp1 ? new std::shared_ptr< AdaptiveCards::BaseCardElementParser >(*argp1) : 0;
+    return baseptr;
+}
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1SWIGSmartPtrUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    std::shared_ptr< AdaptiveCards::ProgressBar > *argp1;
+    (void)jenv;
+    (void)jcls;
+    argp1 = *(std::shared_ptr< AdaptiveCards::ProgressBar > **)&jarg1;
+    *(std::shared_ptr< AdaptiveCards::BaseCardElement > **)&baseptr = argp1 ? new std::shared_ptr< AdaptiveCards::BaseCardElement >(*argp1) : 0;
+    return baseptr;
+}
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBarParser_1SWIGSmartPtrUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    std::shared_ptr< AdaptiveCards::ProgressBarParser > *argp1;
+    (void)jenv;
+    (void)jcls;
+    argp1 = *(std::shared_ptr< AdaptiveCards::ProgressBarParser > **)&jarg1;
     *(std::shared_ptr< AdaptiveCards::BaseCardElementParser > **)&baseptr = argp1 ? new std::shared_ptr< AdaptiveCards::BaseCardElementParser >(*argp1) : 0;
     return baseptr;
 }

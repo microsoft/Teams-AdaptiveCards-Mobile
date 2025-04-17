@@ -577,6 +577,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return BadgeAppearance.swigToEnum(AdaptiveCardObjectModelJNI.BadgeAppearanceFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ProgressBarColor_t getProgressBarColorEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ProgressBarColor_t(AdaptiveCardObjectModelJNI.getProgressBarColorEnum(), false);
+  }
+
+  public static String ProgressBarColorToString(ProgressBarColor t) {
+    return AdaptiveCardObjectModelJNI.ProgressBarColorToString(t.swigValue());
+  }
+
+  public static ProgressBarColor ProgressBarColorFromString(String t) {
+    return ProgressBarColor.swigToEnum(AdaptiveCardObjectModelJNI.ProgressBarColorFromString(t));
+  }
+
   public static void HandleUnknownProperties(JsonValue json, SWIGTYPE_p_std__unordered_setT_std__string_t knownProperties, JsonValue unknownProperties) {
     AdaptiveCardObjectModelJNI.HandleUnknownProperties(JsonValue.getCPtr(json), json, SWIGTYPE_p_std__unordered_setT_std__string_t.getCPtr(knownProperties), JsonValue.getCPtr(unknownProperties), unknownProperties);
   }
