@@ -77,32 +77,132 @@
 			]
 		},
 		{
-			"type": "ActionSet",
-			"actions": [
+			"type": "Container",
+			"style": "good",
+			"items": [
 				{
-					"type": "Action.OpenUrl",
-					"title": "OpenUrl",
-					"iconUrl": "icon:Open,Filled",
-					"tooltip": "Tooltip for OpenUrl",
-					"url": "https://www.microsoft.com",
-					"menuActions": [
+					"type": "TextBlock",
+					"text": "OpenUrl & ToggleVisibility",
+					"size": "Large"
+				},
+				{
+					"type": "ActionSet",
+					"actions": [
 						{
 							"type": "Action.OpenUrl",
 							"title": "OpenUrl",
 							"iconUrl": "icon:Open,Filled",
 							"tooltip": "Tooltip for OpenUrl",
-							"style": "positive",
-							"url": "https://www.microsoft.com"
+							"url": "https://www.microsoft.com",
+							"menuActions": [
+								{
+									"type": "Action.OpenUrl",
+									"title": "OpenUrl",
+									"iconUrl": "icon:Open,Filled",
+									"tooltip": "Tooltip for OpenUrl",
+									"style": "positive",
+									"url": "https://www.microsoft.com"
+								},
+								{
+									"type": "Action.ResetInputs",
+									"title": "ResetInputs",
+									"iconUrl": "icon:ArrowReset,Filled",
+									"tooltip": "Tooltip for ResetInputs",
+									"style": "positive",
+									"targetInputIds": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.ToggleVisibility",
+									"title": "ToggleVisibility",
+									"iconUrl": "icon:ToggleLeft,Filled",
+									"tooltip": "Tooltip for ToggleVisibility",
+									"style": "positive",
+									"targetElements": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Submit",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Submit",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": true
+								},
+								{
+									"type": "Action.Execute",
+									"title": "Execute",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Execute",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": false
+								}
+							]
 						},
 						{
 							"type": "Action.ResetInputs",
 							"title": "ResetInputs",
 							"iconUrl": "icon:ArrowReset,Filled",
 							"tooltip": "Tooltip for ResetInputs",
-							"style": "positive",
 							"targetInputIds": [
 								"defaultInputId",
 								"myZone"
+							],
+							"menuActions": [
+								{
+									"type": "Action.OpenUrl",
+									"title": "OpenUrl",
+									"iconUrl": "icon:Open,Filled",
+									"tooltip": "Tooltip for OpenUrl",
+									"style": "positive",
+									"url": "https://www.microsoft.com"
+								},
+								{
+									"type": "Action.ResetInputs",
+									"title": "ResetInputs",
+									"iconUrl": "icon:ArrowReset,Filled",
+									"tooltip": "Tooltip for ResetInputs",
+									"style": "positive",
+									"targetInputIds": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.ToggleVisibility",
+									"title": "ToggleVisibility",
+									"iconUrl": "icon:ToggleLeft,Filled",
+									"tooltip": "Tooltip for ToggleVisibility",
+									"style": "positive",
+									"targetElements": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Submit",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Submit",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": true
+								},
+								{
+									"type": "Action.Execute",
+									"title": "Execute",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Execute",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": false
+								}
 							]
 						},
 						{
@@ -110,42 +210,66 @@
 							"title": "ToggleVisibility",
 							"iconUrl": "icon:ToggleLeft,Filled",
 							"tooltip": "Tooltip for ToggleVisibility",
-							"style": "positive",
 							"targetElements": [
 								"defaultInputId",
 								"myZone"
+							],
+							"menuActions": [
+								{
+									"type": "Action.OpenUrl",
+									"title": "OpenUrl",
+									"iconUrl": "icon:Open,Filled",
+									"tooltip": "Tooltip for OpenUrl",
+									"style": "positive",
+									"url": "https://www.microsoft.com"
+								},
+								{
+									"type": "Action.ResetInputs",
+									"title": "ResetInputs",
+									"iconUrl": "icon:ArrowReset,Filled",
+									"tooltip": "Tooltip for ResetInputs",
+									"style": "positive",
+									"targetInputIds": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.ToggleVisibility",
+									"title": "ToggleVisibility",
+									"iconUrl": "icon:ToggleLeft,Filled",
+									"tooltip": "Tooltip for ToggleVisibility",
+									"style": "positive",
+									"targetElements": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Submit",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Submit",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": true
+								},
+								{
+									"type": "Action.Execute",
+									"title": "Execute",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Execute",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": false
+								}
 							]
-						},
-						{
-							"type": "Action.Submit",
-							"title": "Submit",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Submit",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": true
-						},
-						{
-							"type": "Action.Execute",
-							"title": "Execute",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Execute",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": false
 						}
 					]
 				},
 				{
-					"type": "Action.ResetInputs",
-					"title": "ResetInputs",
-					"iconUrl": "icon:ArrowReset,Filled",
-					"tooltip": "Tooltip for ResetInputs",
-					"targetInputIds": [
-						"defaultInputId",
-						"myZone"
-					],
-					"menuActions": [
+					"type": "ActionSet",
+					"actions": [
 						{
 							"type": "Action.OpenUrl",
 							"title": "OpenUrl",
@@ -175,367 +299,420 @@
 								"defaultInputId",
 								"myZone"
 							]
-						},
-						{
-							"type": "Action.Submit",
-							"title": "Submit",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Submit",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": true
-						},
-						{
-							"type": "Action.Execute",
-							"title": "Execute",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Execute",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": false
-						}
-					]
-				},
-				{
-					"type": "Action.ToggleVisibility",
-					"title": "ToggleVisibility",
-					"iconUrl": "icon:ToggleLeft,Filled",
-					"tooltip": "Tooltip for ToggleVisibility",
-					"targetElements": [
-						"defaultInputId",
-						"myZone"
-					],
-					"menuActions": [
-						{
-							"type": "Action.OpenUrl",
-							"title": "OpenUrl",
-							"iconUrl": "icon:Open,Filled",
-							"tooltip": "Tooltip for OpenUrl",
-							"style": "positive",
-							"url": "https://www.microsoft.com"
-						},
-						{
-							"type": "Action.ResetInputs",
-							"title": "ResetInputs",
-							"iconUrl": "icon:ArrowReset,Filled",
-							"tooltip": "Tooltip for ResetInputs",
-							"style": "positive",
-							"targetInputIds": [
-								"defaultInputId",
-								"myZone"
-							]
-						},
-						{
-							"type": "Action.ToggleVisibility",
-							"title": "ToggleVisibility",
-							"iconUrl": "icon:ToggleLeft,Filled",
-							"tooltip": "Tooltip for ToggleVisibility",
-							"style": "positive",
-							"targetElements": [
-								"defaultInputId",
-								"myZone"
-							]
-						},
-						{
-							"type": "Action.Submit",
-							"title": "Submit",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Submit",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": true
-						},
-						{
-							"type": "Action.Execute",
-							"title": "Execute",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Execute",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": false
 						}
 					]
 				}
 			]
 		},
 		{
-			"type": "ActionSet",
-			"actions": [
+			"type": "Container",
+			"style": "accent",
+			"items": [
 				{
-					"type": "Action.Submit",
-					"title": "Submit",
-					"iconUrl": "icon:Send,Filled",
-					"tooltip": "Tooltip for Submit",
-					"associatedInputs": "auto",
-					"conditionallyEnabled": true,
-					"menuActions": [
-						{
-							"type": "Action.OpenUrl",
-							"title": "OpenUrl",
-							"iconUrl": "icon:Open,Filled",
-							"tooltip": "Tooltip for OpenUrl",
-							"style": "positive",
-							"url": "https://www.microsoft.com"
-						},
-						{
-							"type": "Action.ResetInputs",
-							"title": "ResetInputs",
-							"iconUrl": "icon:ArrowReset,Filled",
-							"tooltip": "Tooltip for ResetInputs",
-							"style": "positive",
-							"targetInputIds": [
-								"defaultInputId",
-								"myZone"
-							]
-						},
-						{
-							"type": "Action.ToggleVisibility",
-							"title": "ToggleVisibility",
-							"iconUrl": "icon:ToggleLeft,Filled",
-							"tooltip": "Tooltip for ToggleVisibility",
-							"style": "positive",
-							"targetElements": [
-								"defaultInputId",
-								"myZone"
-							]
-						},
-						{
-							"type": "Action.Submit",
-							"title": "Submit",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Submit",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": true
-						},
-						{
-							"type": "Action.Execute",
-							"title": "Execute",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Execute",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": false
-						}
-					]
+					"type": "TextBlock",
+					"text": "ShowCard",
+					"size": "Large"
 				},
 				{
-					"type": "Action.Execute",
-					"title": "Execute",
-					"iconUrl": "icon:Send,Filled",
-					"tooltip": "Tooltip for Execute",
-					"associatedInputs": "auto",
-					"conditionallyEnabled": true,
-					"menuActions": [
+					"type": "ActionSet",
+					"actions": [
 						{
-							"type": "Action.OpenUrl",
-							"title": "OpenUrl",
+							"type": "Action.ShowCard",
+							"title": "ShowCard",
 							"iconUrl": "icon:Open,Filled",
-							"tooltip": "Tooltip for OpenUrl",
-							"style": "positive",
-							"url": "https://www.microsoft.com"
-						},
-						{
-							"type": "Action.ResetInputs",
-							"title": "ResetInputs",
-							"iconUrl": "icon:ArrowReset,Filled",
-							"tooltip": "Tooltip for ResetInputs",
-							"style": "positive",
-							"targetInputIds": [
-								"defaultInputId",
-								"myZone"
-							]
-						},
-						{
-							"type": "Action.ToggleVisibility",
-							"title": "ToggleVisibility",
-							"iconUrl": "icon:ToggleLeft,Filled",
-							"tooltip": "Tooltip for ToggleVisibility",
-							"style": "positive",
-							"targetElements": [
-								"defaultInputId",
-								"myZone"
-							]
-						},
-						{
-							"type": "Action.Submit",
-							"title": "Submit",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Submit",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": true
-						},
-						{
-							"type": "Action.Execute",
-							"title": "Execute",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Execute",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": false
-						}
-					]
-				}
-			]
-		},
-		{
-			"type": "ActionSet",
-			"actions": [
-				{
-					"type": "Action.ShowCard",
-					"title": "ShowCard",
-					"iconUrl": "icon:Open,Filled",
-					"tooltip": "Tooltip for ShowCard",
-					"card": {
-						"type": "AdaptiveCard",
-						"body": [
-							{
-								"type": "TextBlock",
-								"text": "This is a show card"
+							"tooltip": "Tooltip for ShowCard",
+							"card": {
+								"type": "AdaptiveCard",
+								"body": [
+									{
+										"type": "TextBlock",
+										"text": "This is a show card"
+									},
+									{
+										"type": "Input.Text",
+										"id": "defaultInputIdShow",
+										"placeholder": "enter comment",
+										"maxLength": 500
+									}
+								]
 							},
-							{
-								"type": "Input.Text",
-								"id": "defaultInputIdShow",
-								"placeholder": "enter comment",
-								"maxLength": 500
-							}
-						]
-					},
-					"menuActions": [
+							"menuActions": [
+								{
+									"type": "Action.OpenUrl",
+									"title": "OpenUrl",
+									"iconUrl": "icon:Open,Filled",
+									"tooltip": "Tooltip for OpenUrl",
+									"style": "positive",
+									"url": "https://www.microsoft.com"
+								},
+								{
+									"type": "Action.ResetInputs",
+									"title": "ResetInputs",
+									"iconUrl": "icon:ArrowReset,Filled",
+									"tooltip": "Tooltip for ResetInputs",
+									"style": "positive",
+									"targetInputIds": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.ToggleVisibility",
+									"title": "ToggleVisibility",
+									"iconUrl": "icon:ToggleLeft,Filled",
+									"tooltip": "Tooltip for ToggleVisibility",
+									"style": "positive",
+									"targetElements": [
+										"defaultInputId",
+										"myZone",
+										"defaultInputIdShow"
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Submit",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Submit",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": true
+								},
+								{
+									"type": "Action.Execute",
+									"title": "Execute",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Execute",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": false
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "ActionSet",
+					"actions": [
 						{
-							"type": "Action.OpenUrl",
-							"title": "OpenUrl",
+							"type": "Action.ShowCard",
+							"title": "ShowCard",
 							"iconUrl": "icon:Open,Filled",
-							"tooltip": "Tooltip for OpenUrl",
-							"style": "positive",
-							"url": "https://www.microsoft.com"
-						},
-						{
-							"type": "Action.ResetInputs",
-							"title": "ResetInputs",
-							"iconUrl": "icon:ArrowReset,Filled",
-							"tooltip": "Tooltip for ResetInputs",
-							"style": "positive",
-							"targetInputIds": [
-								"defaultInputId",
-								"myZone"
-							]
-						},
-						{
-							"type": "Action.ToggleVisibility",
-							"title": "ToggleVisibility",
-							"iconUrl": "icon:ToggleLeft,Filled",
-							"tooltip": "Tooltip for ToggleVisibility",
-							"style": "positive",
-							"targetElements": [
-								"defaultInputId",
-								"myZone",
-								"defaultInputIdShow"
-							]
-						},
-						{
-							"type": "Action.Submit",
-							"title": "Submit",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Submit",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": true
-						},
-						{
-							"type": "Action.Execute",
-							"title": "Execute",
-							"iconUrl": "icon:Send,Filled",
-							"tooltip": "Tooltip for Execute",
-							"style": "positive",
-							"associatedInputs": "auto",
-							"conditionallyEnabled": false
+							"tooltip": "Tooltip for ShowCard",
+							"card": {
+								"type": "AdaptiveCard",
+								"body": [
+									{
+										"type": "TextBlock",
+										"text": "This is a show card"
+									},
+									{
+										"type": "Input.Text",
+										"id": "defaultInputIdShow2",
+										"placeholder": "enter comment",
+										"maxLength": 500
+									}
+								]
+							}
 						}
 					]
 				}
 			]
 		},
 		{
-			"type": "ActionSet",
-			"actions": [
+			"type": "Container",
+			"style": "good",
+			"items": [
 				{
-					"type": "Action.ShowCard",
-					"title": "ShowCard",
-					"iconUrl": "icon:Open,Filled",
-					"tooltip": "Tooltip for ShowCard",
-					"card": {
-						"type": "AdaptiveCard",
-						"body": [
-							{
-								"type": "TextBlock",
-								"text": "This is a show card"
-							},
-							{
-								"type": "Input.Text",
-								"id": "defaultInputIdShow2",
-								"placeholder": "enter comment",
-								"maxLength": 500
-							}
-						]
-					}
-				}
-			]
-		},
-		{
-			"type": "ActionSet",
-			"actions": [
-				{
-					"type": "Action.Submit",
-					"title": "Submit",
-					"iconUrl": "icon:Send,Filled",
-					"tooltip": "Tooltip for Submit",
-					"associatedInputs": "auto",
-					"conditionallyEnabled": true,
-					"menuActions": []
+					"type": "TextBlock",
+					"text": "Submit & Execute",
+					"size": "Large"
 				},
 				{
-					"type": "Action.Execute",
-					"title": "Execute",
-					"iconUrl": "icon:Send,Filled",
-					"tooltip": "Tooltip for Execute",
-					"associatedInputs": "auto",
-					"conditionallyEnabled": true,
-					"menuActions": []
-				}
-			]
-		},
-		{
-			"type": "ActionSet",
-			"actions": [
-				{
-					"type": "Action.OpenUrl",
-					"title": "OpenUrl",
-					"iconUrl": "icon:Open,Filled",
-					"tooltip": "Tooltip for OpenUrl",
-					"style": "positive",
-					"url": "https://www.microsoft.com"
-				},
-				{
-					"type": "Action.ResetInputs",
-					"title": "ResetInputs",
-					"iconUrl": "icon:ArrowReset,Filled",
-					"tooltip": "Tooltip for ResetInputs",
-					"style": "positive",
-					"targetInputIds": [
-						"defaultInputId",
-						"myZone"
+					"type": "ActionSet",
+					"actions": [
+						{
+							"type": "Action.Submit",
+							"title": "Submit CAE:Auto",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Submit",
+							"associatedInputs": "auto",
+							"conditionallyEnabled": true,
+							"menuActions": [
+								{
+									"type": "Action.OpenUrl",
+									"title": "OpenUrl",
+									"iconUrl": "icon:Open,Filled",
+									"tooltip": "Tooltip for OpenUrl",
+									"style": "positive",
+									"url": "https://www.microsoft.com"
+								},
+								{
+									"type": "Action.ResetInputs",
+									"title": "ResetInputs",
+									"iconUrl": "icon:ArrowReset,Filled",
+									"tooltip": "Tooltip for ResetInputs",
+									"style": "positive",
+									"targetInputIds": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.ToggleVisibility",
+									"title": "ToggleVisibility",
+									"iconUrl": "icon:ToggleLeft,Filled",
+									"tooltip": "Tooltip for ToggleVisibility",
+									"style": "positive",
+									"targetElements": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Submit",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Submit",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": true
+								},
+								{
+									"type": "Action.Execute",
+									"title": "Execute",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Execute",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": false
+								}
+							]
+						},
+						{
+							"type": "Action.Execute",
+							"title": "Execute CAE:Auto",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Execute",
+							"associatedInputs": "auto",
+							"conditionallyEnabled": true,
+							"menuActions": [
+								{
+									"type": "Action.OpenUrl",
+									"title": "OpenUrl",
+									"iconUrl": "icon:Open,Filled",
+									"tooltip": "Tooltip for OpenUrl",
+									"style": "positive",
+									"url": "https://www.microsoft.com"
+								},
+								{
+									"type": "Action.ResetInputs",
+									"title": "ResetInputs",
+									"iconUrl": "icon:ArrowReset,Filled",
+									"tooltip": "Tooltip for ResetInputs",
+									"style": "positive",
+									"targetInputIds": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.ToggleVisibility",
+									"title": "ToggleVisibility",
+									"iconUrl": "icon:ToggleLeft,Filled",
+									"tooltip": "Tooltip for ToggleVisibility",
+									"style": "positive",
+									"targetElements": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Submit",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Submit",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": true
+								},
+								{
+									"type": "Action.Execute",
+									"title": "Execute",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Execute",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": false
+								}
+							]
+						}
 					]
 				},
 				{
-					"type": "Action.ToggleVisibility",
-					"title": "ToggleVisibility",
-					"iconUrl": "icon:ToggleLeft,Filled",
-					"tooltip": "Tooltip for ToggleVisibility",
-					"style": "positive",
-					"targetElements": [
-						"defaultInputId",
-						"myZone"
+					"type": "ActionSet",
+					"actions": [
+						{
+							"type": "Action.Submit",
+							"title": "Submit None",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Submit",
+							"associatedInputs": "none",
+							"conditionallyEnabled": false,
+							"menuActions": [
+								{
+									"type": "Action.OpenUrl",
+									"title": "OpenUrl",
+									"iconUrl": "icon:Open,Filled",
+									"tooltip": "Tooltip for OpenUrl",
+									"style": "positive",
+									"url": "https://www.microsoft.com"
+								},
+								{
+									"type": "Action.ResetInputs",
+									"title": "ResetInputs",
+									"iconUrl": "icon:ArrowReset,Filled",
+									"tooltip": "Tooltip for ResetInputs",
+									"style": "positive",
+									"targetInputIds": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.ToggleVisibility",
+									"title": "ToggleVisibility",
+									"iconUrl": "icon:ToggleLeft,Filled",
+									"tooltip": "Tooltip for ToggleVisibility",
+									"style": "positive",
+									"targetElements": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Submit",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Submit",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": true
+								},
+								{
+									"type": "Action.Execute",
+									"title": "Execute",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Execute",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": false
+								}
+							]
+						},
+						{
+							"type": "Action.Execute",
+							"title": "Execute None",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Execute",
+							"associatedInputs": "none",
+							"conditionallyEnabled": false,
+							"menuActions": [
+								{
+									"type": "Action.OpenUrl",
+									"title": "OpenUrl",
+									"iconUrl": "icon:Open,Filled",
+									"tooltip": "Tooltip for OpenUrl",
+									"style": "positive",
+									"url": "https://www.microsoft.com"
+								},
+								{
+									"type": "Action.ResetInputs",
+									"title": "ResetInputs",
+									"iconUrl": "icon:ArrowReset,Filled",
+									"tooltip": "Tooltip for ResetInputs",
+									"style": "positive",
+									"targetInputIds": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.ToggleVisibility",
+									"title": "ToggleVisibility",
+									"iconUrl": "icon:ToggleLeft,Filled",
+									"tooltip": "Tooltip for ToggleVisibility",
+									"style": "positive",
+									"targetElements": [
+										"defaultInputId",
+										"myZone"
+									]
+								},
+								{
+									"type": "Action.Submit",
+									"title": "Submit",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Submit",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": true
+								},
+								{
+									"type": "Action.Execute",
+									"title": "Execute",
+									"iconUrl": "icon:Send,Filled",
+									"tooltip": "Tooltip for Execute",
+									"style": "positive",
+									"associatedInputs": "auto",
+									"conditionallyEnabled": false
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "ActionSet",
+					"actions": [
+						{
+							"type": "Action.Submit",
+							"title": "Submit, CAE:Auto",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Submit",
+							"associatedInputs": "auto",
+							"conditionallyEnabled": true,
+							"menuActions": []
+						},
+						{
+							"type": "Action.Execute",
+							"title": "Execute CAE:Auto",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Execute",
+							"associatedInputs": "auto",
+							"conditionallyEnabled": true,
+							"menuActions": []
+						}
+					]
+				},
+				{
+					"type": "ActionSet",
+					"actions": [
+						{
+							"type": "Action.Submit",
+							"title": "Submit None",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Submit",
+							"associatedInputs": "none",
+							"conditionallyEnabled": false,
+							"menuActions": []
+						},
+						{
+							"type": "Action.Execute",
+							"title": "Execute None",
+							"iconUrl": "icon:Send,Filled",
+							"tooltip": "Tooltip for Execute",
+							"associatedInputs": "none",
+							"conditionallyEnabled": false,
+							"menuActions": []
+						}
 					]
 				}
 			]
