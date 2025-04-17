@@ -131,9 +131,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 - (instancetype)init:(ACOAdaptiveCard *)card
           hostconfig:(ACOHostConfig *)config
-               theme:(ACRTheme)theme
      widthConstraint:(float)width
             delegate:(id<ACRActionDelegate>)acrActionDelegate
+               theme:(ACRTheme)theme
 {
     self = [self initWithFrame:CGRectMake(0, 0, width, 0)];
     if (self) {

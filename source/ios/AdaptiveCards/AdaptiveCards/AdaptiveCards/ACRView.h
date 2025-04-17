@@ -24,16 +24,12 @@
 @property (readwrite)ACRTheme theme;
 
 - (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config widthConstraint:(float)width;
-- (instancetype)init:(ACOAdaptiveCard *)card
-          hostconfig:(ACOHostConfig *)config
-     widthConstraint:(float)width
-            delegate:(id<ACRActionDelegate>)acrActionDelegate;
 
 - (instancetype)init:(ACOAdaptiveCard *)card
           hostconfig:(ACOHostConfig *)config
-               theme:(ACRTheme)theme
      widthConstraint:(float)width
-            delegate:(id<ACRActionDelegate>)acrActionDelegate;
+            delegate:(id<ACRActionDelegate>)acrActionDelegate
+               theme:(ACRTheme)theme;
 
 - (NSMutableDictionary *)getImageMap;
 
