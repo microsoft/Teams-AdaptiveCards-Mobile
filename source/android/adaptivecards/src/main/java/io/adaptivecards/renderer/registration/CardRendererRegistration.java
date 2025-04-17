@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
@@ -39,6 +40,7 @@ import io.adaptivecards.objectmodel.Layout;
 import io.adaptivecards.objectmodel.LayoutContainerType;
 import io.adaptivecards.objectmodel.Mode;
 import io.adaptivecards.objectmodel.TargetWidthType;
+import io.adaptivecards.objectmodel.Theme;
 import io.adaptivecards.renderer.ActionLayoutRenderer;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.AdaptiveWarning;
@@ -313,6 +315,15 @@ public class CardRendererRegistration
     public BaseCardElement getRootFallbackCard()
     {
         return m_rootFallbackCard;
+    }
+
+    @NonNull
+    public Theme getTheme() {
+        return mTheme;
+    }
+
+    public void setThemeForThemedUrl(@NonNull Theme theme) {
+        mTheme = theme;
     }
 
     public View renderElements(RenderedAdaptiveCard renderedCard,
@@ -734,6 +745,14 @@ public class CardRendererRegistration
         return null;
     }
 
+    public boolean isIsSplitActionEnabled() {
+        return mIsSplitActionEnabled;
+    }
+
+    public void setIsSplitActionEnabled(boolean isSplitActionEnabled) {
+        mIsSplitActionEnabled = isSplitActionEnabled;
+    }
+
     private static CardRendererRegistration s_instance = null;
     private IInputWatcher m_InputWatcher = null;
     private HashMap<String, IBaseCardElementRenderer> m_typeToRendererMap = new HashMap<String, IBaseCardElementRenderer>();
@@ -748,4 +767,6 @@ public class CardRendererRegistration
     private IFeatureFlagResolver m_featureFlagResolver;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
+    private boolean mIsSplitActionEnabled = false;
+    private Theme mTheme = Theme.None;
 }

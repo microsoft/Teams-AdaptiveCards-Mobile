@@ -401,6 +401,21 @@ public class ImagePropertiesTest
             "{\"elementId\":\"id3\",\"isVisible\":false}],\"type\":\"Action.ToggleVisibility\"}\n", parsedImage.GetSelectAction().Serialize());
     }
 
+    @Test
+    public void ImageGetUrlTest() {
+        String url1 = "http://";
+        Image image1 = TestUtil.createMockImage();
+        image1.Serialize();
+        Assert.assertEquals(url1, image1.GetUrl(Theme.Light));
+        Assert.assertEquals(url1, image1.GetUrl(Theme.Dark));
+
+        String url2 = "https://microsoft.com";
+        Image image2 = new Image(url2);
+        image2.Serialize();
+        Assert.assertEquals(url2, image2.GetUrl(Theme.Light));
+        Assert.assertEquals(url2, image2.GetUrl(Theme.Dark));
+    }
+
     // This string is the result for an empty image or an image with all default values
     // The url property can't be left empty otherwise a exception is thrown
     public static final String s_defaultImage = "{\"type\":\"Image\",\"url\":\"http://\"}\n";

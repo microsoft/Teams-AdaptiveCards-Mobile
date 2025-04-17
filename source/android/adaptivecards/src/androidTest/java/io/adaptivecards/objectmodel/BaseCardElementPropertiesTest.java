@@ -84,7 +84,8 @@ public class BaseCardElementPropertiesTest
 
             BaseCardElement fallbackBaseCardElement = TestUtil.castToBaseCardElement(parsedTextBlock.GetFallbackContent());
             Image fallbackImage = TestUtil.castToImage(fallbackBaseCardElement);
-            Assert.assertEquals("http://", fallbackImage.GetUrl());
+            Assert.assertEquals("http://", fallbackImage.GetUrl(Theme.Light));
+            Assert.assertEquals("http://", fallbackImage.GetUrl(Theme.Dark));
         }
 
     }
