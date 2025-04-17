@@ -21,7 +21,7 @@ Json::Value ThemedUrl::SerializeToJsonValue() const
 {
     Json::Value root = Json::Value();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Theme)] = ThemeToString(m_theme);
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Theme)] = ACThemeToString(m_theme);
     if (!m_url.empty()) {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Url)] = m_url;
     }
