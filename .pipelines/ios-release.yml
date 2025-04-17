@@ -17,31 +17,31 @@ steps:
     sdk: iphoneos
     xcWorkspacePath: source/ios/AdaptiveCards/AdaptiveCards.xcworkspace
 
-- task: DownloadSecureFile@1
-  name: ConnectString
-  displayName: Download secure file
-  inputs:
-    secureFile: 8bf566e4-a21c-48b4-90e5-368f3adaef68
-    retryCount: 5
+# - task: DownloadSecureFile@1
+#   name: ConnectString
+#   displayName: Download secure file
+#   inputs:
+#     secureFile: 8bf566e4-a21c-48b4-90e5-368f3adaef68
+#     retryCount: 5
 
-- task: Bash@3
-  displayName: Bash Script
-  inputs:
-    targetType: inline
-    script: >-
-      # Use the environment variables input below to pass secret variables to this script
+# - task: Bash@3
+#   displayName: Bash Script
+#   inputs:
+#     targetType: inline
+#     script: >-
+#       # Use the environment variables input below to pass secret variables to this script
 
-      cp -f $(ConnectString.secureFilePath)  ./source/ios/tools/IOSFeed
+#       cp -f $(ConnectString.secureFilePath)  ./source/ios/tools/IOSFeed
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet custom
-  inputs:
-    command: custom
-    projects: source/ios/tools/IOSFeed/IOSFeed.csproj
-    custom: add
-    arguments: package Microsoft.Azure.Storage.Blob
+# - task: DotNetCoreCLI@2
+#   displayName: dotnet custom
+#   inputs:
+#     command: custom
+#     projects: source/ios/tools/IOSFeed/IOSFeed.csproj
+#     custom: add
+#     arguments: package Microsoft.Azure.Storage.Blob
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet build
-  inputs:
-    projects: source/ios/tools/IOSFeed/IOSFeed.csproj
+# - task: DotNetCoreCLI@2
+#   displayName: dotnet build
+#   inputs:
+#     projects: source/ios/tools/IOSFeed/IOSFeed.csproj
