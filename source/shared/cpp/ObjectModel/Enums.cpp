@@ -266,7 +266,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ThemedIconUrls, "themedIconUrls"},
             {AdaptiveCardSchemaKey::ThemedUrls, "themedUrls"},
             {AdaptiveCardSchemaKey::Theme, "theme"},
-        {AdaptiveCardSchemaKey::LabelPosition, "labelPosition"}});
+            {AdaptiveCardSchemaKey::LabelPosition, "labelPosition"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -298,6 +298,7 @@ namespace AdaptiveCards
             {CardElementType::CompoundButton,"CompoundButton"},
             {CardElementType::Carousel,"Carousel"},
             {CardElementType::CarouselPage,"CarouselPage"},
+            {CardElementType::ProgressRing,"ProgressRing"},
             {CardElementType::Unknown, "Unknown"}});
 
     DEFINE_ADAPTIVECARD_ENUM(ActionType, {

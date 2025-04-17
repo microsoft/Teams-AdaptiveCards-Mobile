@@ -26,6 +26,7 @@
 #include "RatingLabel.h"
 #include "Badge.h"
 #import "Carousel.h"
+#include "ProgressRing.h"
 
 namespace AdaptiveCards
 {
@@ -68,6 +69,7 @@ ElementParserRegistration::ElementParserRegistration()
                                CardElementTypeToString(CardElementType::ImageSet),
                                CardElementTypeToString(CardElementType::Media),
                                CardElementTypeToString(CardElementType::NumberInput),
+                               CardElementTypeToString(CardElementType::ProgressRing),
                                CardElementTypeToString(CardElementType::RatingInput),
                                CardElementTypeToString(CardElementType::RatingLabel),
                                CardElementTypeToString(CardElementType::RichTextBlock),
@@ -93,6 +95,7 @@ ElementParserRegistration::ElementParserRegistration()
          {CardElementTypeToString(CardElementType::ImageSet), std::make_shared<ImageSetParser>()},
          {CardElementTypeToString(CardElementType::Media), std::make_shared<MediaParser>()},
          {CardElementTypeToString(CardElementType::NumberInput), std::make_shared<NumberInputParser>()},
+         {CardElementTypeToString(CardElementType::ProgressRing), std::make_shared<ProgressRingParser>()},
          {CardElementTypeToString(CardElementType::RatingInput), std::make_shared<RatingInputParser>()},
          {CardElementTypeToString(CardElementType::RatingLabel), std::make_shared<RatingLabelParser>()},
          {CardElementTypeToString(CardElementType::RichTextBlock), std::make_shared<RichTextBlockParser>()},

@@ -87,6 +87,7 @@ import io.adaptivecards.renderer.readonly.FluentIconsRenderer;
 import io.adaptivecards.renderer.readonly.ImageRenderer;
 import io.adaptivecards.renderer.readonly.ImageSetRenderer;
 import io.adaptivecards.renderer.readonly.MediaRenderer;
+import io.adaptivecards.renderer.readonly.ProgressRingRenderer;
 import io.adaptivecards.renderer.readonly.RatingDisplayRenderer;
 import io.adaptivecards.renderer.readonly.RichTextBlockRenderer;
 import io.adaptivecards.renderer.readonly.TableRenderer;
@@ -115,6 +116,7 @@ public class CardRendererRegistration
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Badge), BadgeRenderer.INSTANCE);
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Carousel), CarouselRenderer.INSTANCE);
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.CarouselPage), CarouselPageRenderer.INSTANCE);
+        registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.ProgressRing), ProgressRingRenderer.INSTANCE);
 
         // Register Input Renderers
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.TextInput), TextInputRenderer.getInstance());
