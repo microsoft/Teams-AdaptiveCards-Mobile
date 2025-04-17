@@ -502,9 +502,9 @@ namespace AdaptiveCards
             {Mode::Primary, "primary"},
             {Mode::Secondary, "secondary"}});
 
-    DEFINE_ADAPTIVECARD_ENUM(Theme, {
-            {Theme::Light, "Light"},
-            {Theme::Dark, "Dark"}})
+    DEFINE_ADAPTIVECARD_ENUM(ACTheme, {
+            {ACTheme::Light, "Light"},
+            {ACTheme::Dark, "Dark"}})
 
     DEFINE_ADAPTIVECARD_ENUM(ErrorStatusCode, {
             {ErrorStatusCode::InvalidJson, "InvalidJson"},

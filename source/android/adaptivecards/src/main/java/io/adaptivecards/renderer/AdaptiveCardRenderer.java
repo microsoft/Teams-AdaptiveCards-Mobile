@@ -76,7 +76,7 @@ public class AdaptiveCardRenderer
         @Nullable IOverflowActionRenderer overflowActionRenderer,
         HostConfig hostConfig)
     {
-        RenderedAdaptiveCard result = new RenderedAdaptiveCard(adaptiveCard);
+        RenderedAdaptiveCard result = new RenderedAdaptiveCard(adaptiveCard, CardRendererRegistration.getInstance().getTheme());
         CardRendererRegistration.getInstance().registerOverflowActionRenderer(overflowActionRenderer);
         View cardView = internalRender(result, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, false, View.NO_ID);
         result.setView(cardView);
@@ -167,7 +167,7 @@ public class AdaptiveCardRenderer
             style = adaptiveCard.GetStyle();
         }
 
-        RenderArgs renderArgs = new RenderArgs(CardRendererRegistration.getInstance().getTheme());
+        RenderArgs renderArgs = new RenderArgs();
         renderArgs.setContainerStyle(style);
         renderArgs.setAncestorHasSelectAction(adaptiveCard.GetSelectAction() != null);
 

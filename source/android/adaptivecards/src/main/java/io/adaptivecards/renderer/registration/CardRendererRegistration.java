@@ -16,6 +16,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.HashMap;
 
+import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.AdaptiveCardObjectModel;
@@ -40,7 +41,6 @@ import io.adaptivecards.objectmodel.Layout;
 import io.adaptivecards.objectmodel.LayoutContainerType;
 import io.adaptivecards.objectmodel.Mode;
 import io.adaptivecards.objectmodel.TargetWidthType;
-import io.adaptivecards.objectmodel.Theme;
 import io.adaptivecards.renderer.ActionLayoutRenderer;
 import io.adaptivecards.renderer.AdaptiveFallbackException;
 import io.adaptivecards.renderer.AdaptiveWarning;
@@ -318,11 +318,11 @@ public class CardRendererRegistration
     }
 
     @NonNull
-    public Theme getTheme() {
+    public ACTheme getTheme() {
         return mTheme;
     }
 
-    public void setThemeForThemedUrl(@NonNull Theme theme) {
+    public void setThemeForThemedUrl(@NonNull ACTheme theme) {
         mTheme = theme;
     }
 
@@ -768,5 +768,5 @@ public class CardRendererRegistration
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
     private boolean mIsSplitActionEnabled = false;
-    private Theme mTheme = Theme.None;
+    private ACTheme mTheme = ACTheme.None;
 }

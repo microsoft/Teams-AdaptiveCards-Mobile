@@ -346,7 +346,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
     {
         if (backgroundImage != null)
         {
-            String backgroundImageUrl = backgroundImage.GetUrl(renderArgs.getTheme());
+            String backgroundImageUrl = backgroundImage.GetUrl(renderedCard.getTheme());
 
             if (!backgroundImageUrl.isEmpty())
             {

@@ -34,7 +34,7 @@ public:
 
     Json::Value SerializeToJsonValue() const override;
 
-    const std::string& GetUrl(const Theme theme) const;
+    const std::string& GetUrl(const ACTheme theme) const;
     std::string GetUrl() const;
     void SetUrl(const std::string& value);
 

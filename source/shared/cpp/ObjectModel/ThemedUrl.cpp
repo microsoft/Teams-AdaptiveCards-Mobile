@@ -13,7 +13,7 @@
 
 using namespace AdaptiveCards;
 
-ThemedUrl::ThemedUrl() : m_theme(Theme::Light) {
+ThemedUrl::ThemedUrl() : m_theme(ACTheme::Light) {
     PopulateKnownPropertiesSet();
 }
 
@@ -21,7 +21,7 @@ Json::Value ThemedUrl::SerializeToJsonValue() const
 {
     Json::Value root = Json::Value();
 
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Theme)] = ThemeToString(m_theme);
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Theme)] = ACThemeToString(m_theme);
     if (!m_url.empty()) {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Url)] = m_url;
     }
@@ -29,7 +29,7 @@ Json::Value ThemedUrl::SerializeToJsonValue() const
     return root;
 }
 
-const Theme ThemedUrl::GetTheme() const {
+const ACTheme ThemedUrl::GetTheme() const {
     return m_theme;
 }
 
@@ -44,7 +44,7 @@ std::shared_ptr<ThemedUrl> ThemedUrl::Deserialize(ParseContext&, const Json::Val
 
     std::shared_ptr<ThemedUrl> themedUrlObject = std::make_shared<ThemedUrl>();
     themedUrlObject->m_url = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Url, true);
-    themedUrlObject->m_theme = ParseUtil::GetEnumValue<Theme>(json, AdaptiveCardSchemaKey::Theme, Theme::Light, ThemeFromString);
+    themedUrlObject->m_theme = ParseUtil::GetEnumValue<ACTheme>(json, AdaptiveCardSchemaKey::Theme, ACTheme::Light, ACThemeFromString);
     return themedUrlObject;
 }
 

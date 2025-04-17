@@ -174,7 +174,7 @@ public class MediaRenderer extends BaseCardElementRenderer
         Image poster = new Image(!media.GetPoster().isEmpty() ? media.GetPoster() : hostConfig.GetMedia().getDefaultPoster());
         poster.SetAltText(media.GetAltText());
 
-        if (!poster.GetUrl(renderArgs.getTheme()).isEmpty()) {
+        if (!poster.GetUrl(renderedCard.getTheme()).isEmpty()) {
             // Draw poster in posterLayout
             poster.SetImageSize(ImageSize.Auto);
             posterView = ImageRenderer.getInstance().render(renderedCard, context, fragmentManager, viewGroup, poster, cardActionHandler, hostConfig, renderArgs);
