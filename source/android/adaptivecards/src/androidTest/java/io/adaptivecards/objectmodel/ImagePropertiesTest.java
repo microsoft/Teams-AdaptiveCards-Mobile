@@ -406,14 +406,14 @@ public class ImagePropertiesTest
         String url1 = "http://";
         Image image1 = TestUtil.createMockImage();
         image1.Serialize();
-        Assert.assertEquals(url1, image1.GetUrl(Theme.Light));
-        Assert.assertEquals(url1, image1.GetUrl(Theme.Dark));
+        Assert.assertEquals(url1, image1.GetUrl(ACTheme.Light));
+        Assert.assertEquals(url1, image1.GetUrl(ACTheme.Dark));
 
         String url2 = "https://microsoft.com";
         Image image2 = new Image(url2);
         image2.Serialize();
-        Assert.assertEquals(url2, image2.GetUrl(Theme.Light));
-        Assert.assertEquals(url2, image2.GetUrl(Theme.Dark));
+        Assert.assertEquals(url2, image2.GetUrl(ACTheme.Light));
+        Assert.assertEquals(url2, image2.GetUrl(ACTheme.Dark));
     }
 
     // This string is the result for an empty image or an image with all default values

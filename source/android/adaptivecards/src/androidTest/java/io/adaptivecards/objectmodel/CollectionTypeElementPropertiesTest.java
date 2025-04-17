@@ -76,20 +76,20 @@ public class CollectionTypeElementPropertiesTest
 
             ParseResult result = AdaptiveCard.DeserializeFromString(TestUtil.encloseElementJsonInCard(containerBackgroundImage), "1.0");
             Container parsedContainer = TestUtil.castToContainer(result.GetAdaptiveCard().GetBody().get(0));
-            Assert.assertEquals("http://", parsedContainer.GetBackgroundImage().GetUrl(Theme.Light));
-            Assert.assertEquals("http://", parsedContainer.GetBackgroundImage().GetUrl(Theme.Dark));
+            Assert.assertEquals("http://", parsedContainer.GetBackgroundImage().GetUrl(ACTheme.Light));
+            Assert.assertEquals("http://", parsedContainer.GetBackgroundImage().GetUrl(ACTheme.Dark));
         }
 
         {
             String url1 = "http://";
             BackgroundImage image1 = TestUtil.createMockBackgroundImage();
-            Assert.assertEquals(url1, image1.GetUrl(Theme.Light));
-            Assert.assertEquals(url1, image1.GetUrl(Theme.Dark));
+            Assert.assertEquals(url1, image1.GetUrl(ACTheme.Light));
+            Assert.assertEquals(url1, image1.GetUrl(ACTheme.Dark));
 
             String url2 = "https://microsoft.com";
             BackgroundImage image2 = new BackgroundImage(url2);
-            Assert.assertEquals(url2, image2.GetUrl(Theme.Light));
-            Assert.assertEquals(url2, image2.GetUrl(Theme.Dark));
+            Assert.assertEquals(url2, image2.GetUrl(ACTheme.Light));
+            Assert.assertEquals(url2, image2.GetUrl(ACTheme.Dark));
         }
     }
 
