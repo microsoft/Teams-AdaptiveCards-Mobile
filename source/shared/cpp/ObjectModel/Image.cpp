@@ -80,7 +80,7 @@ Json::Value Image::SerializeToJsonValue() const
     return root;
 }
 
-const std::string& Image::GetUrl(const Theme theme) const {
+const std::string& Image::GetUrl(const ACTheme theme) const {
     return ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
 }
 
