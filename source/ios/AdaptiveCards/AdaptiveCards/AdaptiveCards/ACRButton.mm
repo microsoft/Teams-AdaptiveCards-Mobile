@@ -161,7 +161,7 @@
 
     std::shared_ptr<AdaptiveCards::BaseActionElement> action = [acoAction element];
     NSDictionary *imageViewMap = [rootView getImageMap];
-    ThemeType theme = ThemeType(rootView.theme);
+    ACTheme theme = ACTheme(rootView.theme);
     NSLog(@"rootView theme is %ld", static_cast<long>(rootView.theme));
     NSLog(@"theme is %d", theme);
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl(theme).c_str() encoding:[NSString defaultCStringEncoding]];

@@ -103,11 +103,11 @@ void configRtl(UIView *view, ACORenderContext *context)
 void renderBackgroundImage(const std::shared_ptr<AdaptiveCards::BackgroundImage> backgroundImage,
                            ACRContentStackView *containerView, ACRView *rootView)
 {
-    if (rootView == nil || backgroundImage == nullptr || backgroundImage->GetUrl(ThemeType(rootView.theme)).empty()) {
+    if (rootView == nil || backgroundImage == nullptr || backgroundImage->GetUrl(ACTheme(rootView.theme)).empty()) {
         return;
     }
 
-    std::string imageUrl = backgroundImage->GetUrl(ThemeType(rootView.theme));
+    std::string imageUrl = backgroundImage->GetUrl(ACTheme(rootView.theme));
     NSString *key = [[NSNumber numberWithUnsignedLongLong:(unsigned long long)(backgroundImage.get())] stringValue];
     if ([key length]) {
         UIImageView *imgView = nil;

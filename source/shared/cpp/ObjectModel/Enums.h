@@ -550,12 +550,12 @@ enum class Mode
 };
 DECLARE_ADAPTIVECARD_ENUM(Mode);
 
-enum class ThemeType
+enum class ACTheme
 {
     Light = 1,
     Dark
 };
-DECLARE_ADAPTIVECARD_ENUM(ThemeType)
+DECLARE_ADAPTIVECARD_ENUM(ACTheme)
 
 enum class ErrorStatusCode
 {
