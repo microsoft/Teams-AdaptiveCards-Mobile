@@ -12,13 +12,13 @@ import java.util.Map;
 import java.util.Vector;
 
 import io.adaptivecards.objectmodel.AdaptiveCard;
-import io.adaptivecards.objectmodel.Theme;
+import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.renderer.inputhandler.BaseInputHandler;
 import io.adaptivecards.renderer.inputhandler.IInputHandler;
 
 public class RenderedAdaptiveCard {
 
-    private final Theme theme;
+    private final ACTheme theme;
     private View view;
     private Vector<AdaptiveWarning> warnings;
     private Vector<IInputHandler> handlers;
@@ -36,7 +36,7 @@ public class RenderedAdaptiveCard {
 
     private boolean lastValidationResult = false;
 
-    protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull Theme theme) {
+    protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull ACTheme theme) {
         this.warnings = new Vector<>();
         this.handlers = new Vector<>();
         this.adaptiveCard = adaptiveCard;
@@ -49,7 +49,7 @@ public class RenderedAdaptiveCard {
     }
 
     @NonNull
-    public Theme getTheme() {
+    public ACTheme getTheme() {
         return theme;
     }
 
