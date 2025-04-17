@@ -54,15 +54,15 @@ Json::Value ProgressRing::SerializeToJsonValue() const {
 std::shared_ptr<BaseCardElement> ProgressRingParser::Deserialize(ParseContext& context, const Json::Value& json) {
     ParseUtil::ExpectTypeString(json, CardElementType::ProgressRing);
 
-    std::shared_ptr<ProgressRing> progressRing = BaseCardElement::Deserialize<ProgressRing>(context, json);
-    progressRing->m_label = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Label, "",false);
-    progressRing->m_labelPosition = ParseUtil::GetEnumValue<LabelPosition>(json, AdaptiveCardSchemaKey::LabelPosition, LabelPosition::Above, LabelPositionFromString);
-    progressRing->m_size = ParseUtil::GetEnumValue<ProgressSize>(json, AdaptiveCardSchemaKey::Size, ProgressSize::Medium, ProgressSizeFromString);
+    std::shared_ptr<ProgressRing> element = BaseCardElement::Deserialize<ProgressRing>(context, json);
+    element->m_label = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Label, "",false);
+    element->m_labelPosition = ParseUtil::GetEnumValue<LabelPosition>(json, AdaptiveCardSchemaKey::LabelPosition, LabelPosition::Above, LabelPositionFromString);
+    element->m_size = ParseUtil::GetEnumValue<ProgressSize>(json, AdaptiveCardSchemaKey::Size, ProgressSize::Medium, ProgressSizeFromString);
 
 //    badge->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
 //            json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
 
-    return progressRing;
+    return element;
 }
 
 std::shared_ptr<BaseCardElement> ProgressRingParser::DeserializeFromString(ParseContext& context, const std::string& jsonString) {

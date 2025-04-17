@@ -298,6 +298,7 @@ namespace AdaptiveCards
             {CardElementType::CompoundButton,"CompoundButton"},
             {CardElementType::Carousel,"Carousel"},
             {CardElementType::CarouselPage,"CarouselPage"},
+            {CardElementType::ProgressBar,"ProgressBar"},
             {CardElementType::ProgressRing,"ProgressRing"},
             {CardElementType::Unknown, "Unknown"}});
 
@@ -561,6 +562,12 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(BadgeAppearance, {
         {BadgeAppearance::Filled, "Filled"},
         {BadgeAppearance::Tint, "Tint"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(ProgressBarColor, {
+        {ProgressBarColor::Accent, "Accent"},
+        {ProgressBarColor::Attention, "Attention"},
+        {ProgressBarColor::Good, "Good"},
+        {ProgressBarColor::Warning, "Warning"}});
 
     DEFINE_ADAPTIVECARD_ENUM(ProgressSize, {
         {ProgressSize::Tiny, "Tiny"},

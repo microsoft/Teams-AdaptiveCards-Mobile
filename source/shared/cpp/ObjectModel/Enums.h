@@ -306,6 +306,7 @@ enum class CardElementType
     Carousel,
     CarouselPage,
     Badge,
+    ProgressBar,
     ProgressRing,
     Unknown
 };
@@ -805,4 +806,13 @@ enum class BadgeAppearance
     Tint
 };
 DECLARE_ADAPTIVECARD_ENUM(BadgeAppearance);
-} // namespace AdaptiveCards
+
+enum class ProgressBarColor {
+    Accent,
+    Attention,
+    Good,
+    Warning
+};
+DECLARE_ADAPTIVECARD_ENUM(ProgressBarColor);
+}
+// namespace AdaptiveCards

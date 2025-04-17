@@ -63,6 +63,10 @@ public class ProgressRing extends BaseCardElement {
     return ProgressSize.swigToEnum(AdaptiveCardObjectModelJNI.ProgressRing_GetSize(swigCPtr, this));
   }
 
+  public ProgressRing(ProgressSize progressSize, LabelPosition labelPosition, String label) {
+    this(AdaptiveCardObjectModelJNI.new_ProgressRing__SWIG_3(progressSize.swigValue(), labelPosition.swigValue(), label), true);
+  }
+
   public JsonValue SerializeToJsonValue() {
     return new JsonValue(AdaptiveCardObjectModelJNI.ProgressRing_SerializeToJsonValue(swigCPtr, this), true);
   }

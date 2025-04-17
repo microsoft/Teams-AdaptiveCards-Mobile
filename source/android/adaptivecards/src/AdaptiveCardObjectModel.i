@@ -185,6 +185,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/IconInfo.h"
 #include "../../../shared/cpp/ObjectModel/Badge.h"
 #include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
+#include "../../../shared/cpp/ObjectModel/ProgressBar.h"
 #include "../../../shared/cpp/ObjectModel/ProgressRing.h"
 %}
 
@@ -299,6 +300,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::Badge)
 %shared_ptr(AdaptiveCards::BadgeParser)
 %shared_ptr(AdaptiveCards::ThemedUrl)
+%shared_ptr(AdaptiveCards::ProgressBar)
+%shared_ptr(AdaptiveCards::ProgressBarParser)
 %shared_ptr(AdaptiveCards::ProgressRing)
 %shared_ptr(AdaptiveCards::ProgressRingParser)
 
@@ -1100,6 +1103,21 @@ namespace Json {
         }
 };
 
+%exception AdaptiveCards::ProgressBar::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::ProgressBar {
+        static AdaptiveCards::ProgressBar *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::ProgressBar *>(baseCardElement);
+        }
+};
+
 %exception AdaptiveCards::ProgressRing::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {
@@ -1199,4 +1217,5 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/IconInfo.h"
 %include "../../../shared/cpp/ObjectModel/Badge.h"
 %include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
+%include "../../../shared/cpp/ObjectModel/ProgressBar.h"
 %include "../../../shared/cpp/ObjectModel/ProgressRing.h"

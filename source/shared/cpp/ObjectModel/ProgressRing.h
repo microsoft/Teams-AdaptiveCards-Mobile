@@ -25,6 +25,14 @@ class ProgressRing : public BaseCardElement {
         const LabelPosition GetLabelPosition() const;
         const ProgressSize GetSize() const;
 
+        ProgressRing(ProgressSize  progressSize, LabelPosition labelPosition, std::string const& label)
+            :BaseCardElement(CardElementType::ProgressRing),
+            m_labelPosition(labelPosition),
+            m_label(label),
+            m_size(progressSize) {
+            PopulateKnownPropertiesSet();
+        }
+
         Json::Value SerializeToJsonValue() const override;
 
     private:

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import io.adaptivecards.objectmodel.BaseCardElement
 import io.adaptivecards.objectmodel.HostConfig
-import io.adaptivecards.objectmodel.ProgressRing
+import io.adaptivecards.objectmodel.ProgressBar
 import io.adaptivecards.renderer.BaseCardElementRenderer
 import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
@@ -15,19 +15,19 @@ import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 
 /**
- * Renderer for ProgressRing Element
+ * Renderer for ProgressBar Element
  */
-object ProgressRingRenderer : BaseCardElementRenderer() {
+object ProgressBarRenderer : BaseCardElementRenderer() {
 
     override fun render(
         renderedCard: RenderedAdaptiveCard, context: Context, fragmentManager: FragmentManager, viewGroup: ViewGroup,
         baseCardElement: BaseCardElement, cardActionHandler: ICardActionHandler?, hostConfig: HostConfig,
         renderArgs: RenderArgs): View? {
-        val progressRing = Util.castTo(baseCardElement, ProgressRing::class.java)
-        val getSize = progressRing.GetSize()
-        val getLabelPosition = progressRing.GetLabelPosition()
-        val getLabel = progressRing.GetLabel()
-        Log.d("ProgressRingRenderer", "render: ${getSize} ${getLabelPosition} ${getLabel}")
+        val progressBar = Util.castTo(baseCardElement, ProgressBar::class.java)
+        val color = progressBar.GetColor()
+        val max = progressBar.GetMax()
+        val value = progressBar.GetValue()
+        Log.d("ProgressBarRenderer", "render: color $color max $max value $value")
         return null
     }
 }
