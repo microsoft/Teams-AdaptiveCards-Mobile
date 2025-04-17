@@ -31,6 +31,7 @@
 + (ACRRenderResult *)renderAsViewController:(ACOAdaptiveCard *)card
                                      config:(ACOHostConfig *)config
                                       frame:(CGRect)frame
-                                   delegate:(id<ACRActionDelegate>)acrActionDelegate;
+                                   delegate:(id<ACRActionDelegate>)acrActionDelegate
+                                      theme:(ACRTheme)theme;
 
 @end

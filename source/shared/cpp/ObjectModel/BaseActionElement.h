@@ -32,7 +32,6 @@ public:
 
     const std::string& GetIconUrl(const ACTheme theme) const;
     const std::string& GetIconUrl() const;
-    
     std::string GetSVGPath() const;
     std::string GetSVGPath(const std::string& iconUrl) const;
 
