@@ -69,8 +69,9 @@ typedef NS_ENUM(NSInteger, ACRContainerStyle) {
 };
 
 typedef NS_ENUM(NSInteger, ACRTheme) {
-    ACRLight = 1,
-    ACRDark
+    ACRThemeNone = 0,
+    ACRThemeLight,
+    ACRThemeDark
 };
 
 typedef NS_ENUM(NSInteger, ACRBleedDirection) {
