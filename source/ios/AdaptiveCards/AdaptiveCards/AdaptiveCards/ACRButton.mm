@@ -163,7 +163,8 @@
     std::shared_ptr<AdaptiveCards::BaseActionElement> action = [acoAction element];
     BOOL isSplitButton = action->GetIsSplitAction();
     NSDictionary *imageViewMap = [rootView getImageMap];
-    NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    ACTheme theme = ACTheme(rootView.theme);
+    NSString *iconURL = [NSString stringWithCString:action->GetIconUrl(theme).c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
     UIImage *image = imageViewMap[key];
     button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key];
@@ -182,7 +183,7 @@
             // it is possible that host config has some size which is not available in CDN.
             unsigned int imageHeight = 24;
             BOOL isFilled = [[iconURL lowercaseString] containsString:@"filled"];
-            NSString *getSVGURL = cdnURLForIcon(@(action->GetSVGPath().c_str()));
+            NSString *getSVGURL = cdnURLForIcon(@(action->GetSVGPath([iconURL UTF8String]).c_str()));
             [ACRSVGImageView requestIcon:getSVGURL
                                   filled:isFilled
                                     size:CGSizeMake(imageHeight, imageHeight)

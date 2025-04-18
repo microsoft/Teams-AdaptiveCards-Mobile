@@ -189,7 +189,7 @@
         }
         NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
         NSDictionary *imageViewMap = [rootView getImageMap];
-        NSString *key = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+        NSString *key = [NSString stringWithCString:action->GetIconUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
         UIImage *img = imageViewMap[key];
         button.iconPlacement = ACRNoTitle;
         button.accessibilityLabel = title;
