@@ -15,6 +15,7 @@ using namespace AdaptiveCards;
 @implementation ACRViewController {
     ACOAdaptiveCard *_adaptiveCard;
     ACOHostConfig *_hostConfig;
+    ACRTheme _theme;
     CGRect _guideFrame;
     __weak id<ACRActionDelegate> _delegate;
 }
@@ -25,12 +26,17 @@ using namespace AdaptiveCards;
     return self;
 }
 
-- (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config frame:(CGRect)frame delegate:(id<ACRActionDelegate>)acrActionDelegate
+- (instancetype)init:(ACOAdaptiveCard *)card
+          hostconfig:(ACOHostConfig *)config
+               frame:(CGRect)frame
+            delegate:(id<ACRActionDelegate>)acrActionDelegate
+               theme:(ACRTheme)theme
 {
     self = [self initWithNibName:nil bundle:nil];
     if (self) {
         _guideFrame = frame;
         _adaptiveCard = card;
+        _theme = theme;
         if (config) {
             _hostConfig = config;
         } else {
@@ -44,7 +50,7 @@ using namespace AdaptiveCards;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view = [[ACRView alloc] init:_adaptiveCard hostconfig:_hostConfig widthConstraint:_guideFrame.size.width];
+    self.view = [[ACRView alloc] init:_adaptiveCard hostconfig:_hostConfig widthConstraint:_guideFrame.size.width theme:_theme];
     ((ACRView *)self.view).acrActionDelegate = _delegate;
 }
 
