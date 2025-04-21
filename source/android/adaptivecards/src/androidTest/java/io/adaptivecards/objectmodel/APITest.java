@@ -93,14 +93,14 @@ public class APITest
                                     HostConfig hostConfig,
                                     RenderArgs renderArgs)
         {
-            super(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
+            super(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, false);
         }
 
         public CustomActionListener(RenderedAdaptiveCard renderedCard,
                                     BaseActionElement baseActionElement,
                                     ICardActionHandler cardActionHandler)
         {
-            super(renderedCard, baseActionElement, cardActionHandler);
+            super(renderedCard, baseActionElement, cardActionHandler, false);
         }
 
         @Override

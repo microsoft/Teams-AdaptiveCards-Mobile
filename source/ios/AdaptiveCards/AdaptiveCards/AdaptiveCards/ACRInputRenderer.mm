@@ -189,7 +189,7 @@
         }
         NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
         NSDictionary *imageViewMap = [rootView getImageMap];
-        NSString *key = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+        NSString *key = [NSString stringWithCString:action->GetIconUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
         UIImage *img = imageViewMap[key];
         button.iconPlacement = ACRNoTitle;
         button.accessibilityLabel = title;
@@ -197,13 +197,19 @@
         if (img) {
             UIImageView *iconView = [[ACRUIImageView alloc] init];
             iconView.image = img;
+            [button addSubview:iconView];
+            button.iconView = iconView;
             [button setImageView:img withConfig:acoConfig];
         } else if (key.length) {
             NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
             NSString *k = [number stringValue];
             UIImageView *view = [rootView getImageView:k];
+            button.iconView = view;
+            [button addSubview:view];
             if (view && view.image) {
                 [button setImageView:view.image withConfig:acoConfig];
+            } else {
+                [rootView setImageView:k view:button];
             }
             [NSLayoutConstraint constraintWithItem:button
                                          attribute:NSLayoutAttributeWidth

@@ -4,6 +4,7 @@
 
 #include "pch.h"
 #include "ParseContext.h"
+#include "ThemedUrl.h"
 
 namespace AdaptiveCards
 {
@@ -22,6 +23,7 @@ public:
     {
     }
 
+    const std::string& GetUrl(const ACTheme theme) const;
     std::string GetUrl() const;
     void SetUrl(const std::string& value);
     ImageFillMode GetFillMode() const;
@@ -43,5 +45,6 @@ private:
     ImageFillMode m_fillMode = ImageFillMode::Cover;
     HorizontalAlignment m_hAlignment = HorizontalAlignment::Left;
     VerticalAlignment m_vAlignment = VerticalAlignment::Top;
+    std::vector<std::shared_ptr<AdaptiveCards::ThemedUrl>> m_themedUrls;
 };
 } // namespace AdaptiveCards

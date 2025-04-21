@@ -110,9 +110,7 @@ public class TestUtil
 
     public static Image createMockImage()
     {
-        Image image = new Image();
-        image.SetUrl("http://");
-        return image;
+        return new Image("http://");
     }
 
     public static Column createMockColumn()
@@ -145,9 +143,7 @@ public class TestUtil
 
     public static BackgroundImage createMockBackgroundImage()
     {
-        BackgroundImage backgroundImage = new BackgroundImage();
-        backgroundImage.SetUrl("http://");
-        return backgroundImage;
+        return new BackgroundImage("http://");
     }
 
     public static FactSet createMockFactSet()

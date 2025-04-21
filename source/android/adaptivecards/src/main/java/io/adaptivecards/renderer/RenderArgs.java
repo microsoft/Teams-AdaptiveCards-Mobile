@@ -8,18 +8,17 @@ import io.adaptivecards.objectmodel.HorizontalAlignment;
 /**
  * Used to inform child elements of their rendering context. Renderers should apply all supplied
  * arguments relevant to their element, unless overridden by a declared property on that element.
- *
  * Renderers with any children must use the copy constructor to pass arguments on. If any arguments
  * were overridden by a declared property, the new value(s) must be set on the copied instance
  * before passing arguments on.
  */
-public class RenderArgs
-{
+public class RenderArgs {
 
-    public RenderArgs(){}
+    public RenderArgs() {
+    }
 
-    public RenderArgs(RenderArgs renderArgs)
-    {
+    public RenderArgs(RenderArgs renderArgs) {
+        this();
         setAncestorHasFallback(renderArgs.getAncestorHasFallback());
         setContainerStyle(renderArgs.getContainerStyle());
         setContainerCardId(renderArgs.getContainerCardId());

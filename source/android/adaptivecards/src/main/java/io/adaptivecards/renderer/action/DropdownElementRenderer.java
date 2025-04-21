@@ -3,8 +3,6 @@
 package io.adaptivecards.renderer.action;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -67,12 +65,12 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
         }
 
         //Remove button so it does not get added to the default viewGroup. Also, do not download icon.
-        String iconUrl = baseActionElement.GetIconUrl();
+        String iconUrl = baseActionElement.GetIconUrl(renderedCard.getTheme());
         baseActionElement.SetIconUrl("");
         Button button = actionRenderer.render(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
         viewGroup.removeView(button);
 
-        String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
+        String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath(iconUrl));
 
         Button dropDownItem = new Button(context, null, R.style.Widget_AppCompat_Light_ActionButton_Overflow);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

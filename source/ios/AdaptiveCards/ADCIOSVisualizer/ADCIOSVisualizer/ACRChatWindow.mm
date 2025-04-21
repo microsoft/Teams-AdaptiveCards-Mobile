@@ -139,18 +139,19 @@
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:jsonString];
 
     ACRRenderResult *renderResult = nil;
-
     if (cardParseResult.isValid) {
         renderResult = [ACRRenderer render:cardParseResult.card
                                     config:hostconfigParseResult.config
                            widthConstraint:adaptiveCardsWidth
-                                  delegate:self.adaptiveCardsDelegates];
+                                  delegate:self.adaptiveCardsDelegates
+                                     theme:ACRThemeNone];
         renderResult.view.mediaDelegate = self.adaptiveCardsMediaDelegates;
     } else {
         renderResult = [ACRRenderer render:errorCard.card
                                     config:hostconfigParseResult.config
                            widthConstraint:adaptiveCardsWidth
-                                  delegate:self.adaptiveCardsDelegates];
+                                  delegate:self.adaptiveCardsDelegates
+                                     theme:ACRThemeNone];
     }
     #if TARGET_OS_VISION
     renderResult.view.layer.cornerRadius = 12;

@@ -214,7 +214,7 @@
     for (int i = 0; i < cards.count; i++) {
         ACOAdaptiveCard *card = cards[i];
         _tearDownMessage = [NSString stringWithFormat:@"The number of padding is not correct when tested with %@", testFiles[i]];
-        ACRRenderResult *renderResult = [ACRRenderer render:card config:hostconfigParseResult.config widthConstraint:320.0];
+        ACRRenderResult *renderResult = [ACRRenderer render:card config:hostconfigParseResult.config widthConstraint:320.0 theme:ACRThemeLight];
         _tearDownMessage = [NSString stringWithFormat:@"rendering failed for %@ card", testFiles[i]];
         XCTAssertEqual(renderResult.succeeded, YES);
     }
@@ -364,7 +364,7 @@ NSArray<ACOBaseCardElement *> *buildTextBlocksWithHeightStretch(uint n)
     for (int i = 0; i < cards.count; i++) {
         ACOAdaptiveCard *card = cards[i];
         _tearDownMessage = [NSString stringWithFormat:@"The number of padding is not correct when tested with %@", testFiles[i]];
-        ACRRenderResult *renderResult = [ACRRenderer render:card config:hostconfigParseResult.config widthConstraint:320.0];
+        ACRRenderResult *renderResult = [ACRRenderer render:card config:hostconfigParseResult.config widthConstraint:320.0 theme:ACRThemeLight];
         _tearDownMessage = [NSString stringWithFormat:@"rendering failed for %@ card", testFiles[i]];
         XCTAssertEqual(renderResult.succeeded, YES);
     }

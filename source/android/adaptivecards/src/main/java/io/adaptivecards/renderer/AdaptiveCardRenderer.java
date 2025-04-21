@@ -76,7 +76,7 @@ public class AdaptiveCardRenderer
         @Nullable IOverflowActionRenderer overflowActionRenderer,
         HostConfig hostConfig)
     {
-        RenderedAdaptiveCard result = new RenderedAdaptiveCard(adaptiveCard);
+        RenderedAdaptiveCard result = new RenderedAdaptiveCard(adaptiveCard, CardRendererRegistration.getInstance().getTheme());
         CardRendererRegistration.getInstance().registerOverflowActionRenderer(overflowActionRenderer);
         View cardView = internalRender(result, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, false, View.NO_ID);
         result.setView(cardView);
@@ -241,7 +241,7 @@ public class AdaptiveCardRenderer
             renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.INTERACTIVITY_DISALLOWED, "Interactivity is not allowed. Actions not rendered."));
         }
 
-        ContainerRenderer.setBackgroundImage(renderedCard, context, adaptiveCard.GetBackgroundImage(), hostConfig, cardLayout);
+        ContainerRenderer.setBackgroundImage(renderedCard, context, adaptiveCard.GetBackgroundImage(), hostConfig, renderArgs, cardLayout);
         ContainerRenderer.setSelectAction(renderedCard, renderedCard.getAdaptiveCard().GetSelectAction(), rootLayout, cardActionHandler, renderArgs);
 
         return rootLayout;
