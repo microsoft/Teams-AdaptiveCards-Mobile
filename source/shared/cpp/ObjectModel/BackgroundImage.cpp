@@ -7,6 +7,10 @@
 
 using namespace AdaptiveCards;
 
+const std::string& BackgroundImage::GetUrl(const ACTheme theme) const {
+    return ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
+}
+
 std::string BackgroundImage::GetUrl() const
 {
     return m_url;
@@ -125,6 +129,10 @@ std::shared_ptr<BackgroundImage> BackgroundImage::Deserialize(const Json::Value&
 
     image->SetVerticalAlignment(ParseUtil::GetEnumValue<VerticalAlignment>(
         json, AdaptiveCardSchemaKey::VerticalAlignment, VerticalAlignment::Top, VerticalAlignmentFromString));
+
+    auto context = ParseContext();
+    auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedUrls, ThemedUrl::Deserialize, false);
+    image->m_themedUrls = std::move(themedUrls);
 
     return image;
 }

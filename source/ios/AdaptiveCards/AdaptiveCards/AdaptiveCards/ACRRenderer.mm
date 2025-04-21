@@ -40,12 +40,16 @@ using namespace AdaptiveCards;
 
 // This interface is exposed to outside, and returns ACRRenderResult object
 // This object contains a viewController instance which defer rendering adaptiveCard until viewDidLoad is called.
-+ (ACRRenderResult *)render:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config widthConstraint:(float)width delegate:(id<ACRActionDelegate>)acrActionDelegate
++ (ACRRenderResult *)render:(ACOAdaptiveCard *)card
+                     config:(ACOHostConfig *)config
+            widthConstraint:(float)width
+                   delegate:(id<ACRActionDelegate>)acrActionDelegate
+                      theme:(ACRTheme)theme
 {
     ACRRenderResult *result = [[ACRRenderResult alloc] init];
     // Initializes ACRView instance with HostConfig and AdaptiveCard
     // ACRViewController does not render adaptiveCard until viewDidLoad calls render
-    ACRView *view = [[ACRView alloc] init:card hostconfig:config widthConstraint:width delegate:acrActionDelegate];
+    ACRView *view = [[ACRView alloc] init:card hostconfig:config widthConstraint:width delegate:acrActionDelegate theme:theme];
     result.view = view;
     result.warnings = view.warnings;
     result.succeeded = YES;
@@ -54,19 +58,19 @@ using namespace AdaptiveCards;
 
 // This interface is exposed to outside, and returns ACRRenderResult object
 // This object contains a viewController instance which defer rendering adaptiveCard until viewDidLoad is called.
-+ (ACRRenderResult *)render:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config widthConstraint:(float)width
++ (ACRRenderResult *)render:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config widthConstraint:(float)width theme:(ACRTheme)theme
 {
-    return [ACRRenderer render:card config:config widthConstraint:width delegate:nil];
+    return [ACRRenderer render:card config:config widthConstraint:width delegate:nil theme:theme];
 }
 
 // This interface is exposed to outside, and returns ACRRenderResult object
 // This object contains a viewController instance which defer rendering adaptiveCard until viewDidLoad is called.
-+ (ACRRenderResult *)renderAsViewController:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config frame:(CGRect)frame delegate:(id<ACRActionDelegate>)acrActionDelegate
++ (ACRRenderResult *)renderAsViewController:(ACOAdaptiveCard *)card config:(ACOHostConfig *)config frame:(CGRect)frame delegate:(id<ACRActionDelegate>)acrActionDelegate theme:(ACRTheme)theme
 {
     ACRRenderResult *result = [[ACRRenderResult alloc] init];
     // Initializes ACRView instance with HostConfig and AdaptiveCard
     // ACRView does not render adaptiveCard until viewDidLoad calls render
-    ACRViewController *viewcontroller = [[ACRViewController alloc] init:card hostconfig:config frame:frame delegate:acrActionDelegate];
+    ACRViewController *viewcontroller = [[ACRViewController alloc] init:card hostconfig:config frame:frame delegate:acrActionDelegate theme:theme];
     result.viewcontroller = viewcontroller;
     result.warnings = ((ACRView *)viewcontroller.view).warnings;
     result.succeeded = YES;
@@ -107,7 +111,7 @@ using namespace AdaptiveCards;
         [verticalView configureForSelectAction:acoSelectAction rootView:rootView];
     }
 
-    if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+    if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(ACTheme(rootView.theme)).empty())) {
         ObserverActionBlock observerAction =
             ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *root) {
                 UIImageView *view = [imageResourceResolver resolveImageViewResource:url];

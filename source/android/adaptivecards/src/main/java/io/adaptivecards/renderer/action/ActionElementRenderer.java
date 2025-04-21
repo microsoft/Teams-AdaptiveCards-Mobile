@@ -152,8 +152,8 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         int minHeight = context.getResources().getDimensionPixelSize(R.dimen.action_min_height);
         button.post(() -> Util.expandClickArea(button, minHeight));
 
-        String iconUrl = baseActionElement.GetIconUrl();
-        String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
+        String iconUrl = baseActionElement.GetIconUrl(renderedCard.getTheme());
+        String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath(iconUrl));
 
         if (!iconUrl.isEmpty())
         {
@@ -166,7 +166,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
         }
 
-        if (baseActionElement.GetIsSplitAction()) {
+        if (ActionElementUtils.isSplitAction(baseActionElement)) {
             String splitButtonSvgURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath(SPLIT_BUTTON_ICON_URL));
             Util.loadIcon(context, button, SPLIT_BUTTON_ICON_URL, splitButtonSvgURL, hostConfig, renderedCard, IconPlacement.RightOfTitle);
         }
