@@ -132,7 +132,7 @@ bool compare(shared_ptr<BaseActionElement> const &a, shared_ptr<BaseActionElemen
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:[NSString stringWithUTF8String:card.Serialize().c_str()]];
     ACRRenderResult *renderResult;
     if (cardParseResult.isValid) {
-        renderResult = [ACRRenderer render:cardParseResult.card config:_hostConfig widthConstraint:self.frame.size.width delegate:self];
+        renderResult = [ACRRenderer render:cardParseResult.card config:_hostConfig widthConstraint:self.frame.size.width delegate:self theme:ACRThemeNone];
     }
 
     if (renderResult.succeeded) {

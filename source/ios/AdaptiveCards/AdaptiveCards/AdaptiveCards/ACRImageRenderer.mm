@@ -47,7 +47,7 @@
     // makes parts for building a key to UIImage, there are different interfaces for loading the images
     // we list all the parts that are needed in building the key.
     NSString *number = [[NSNumber numberWithUnsignedLongLong:(unsigned long long)(elem.get())] stringValue];
-    NSString *urlString = [NSString stringWithCString:imgElem->GetUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString *urlString = [NSString stringWithCString:imgElem->GetUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
     NSDictionary *pieces = @{
         @"number" : number,
         @"url" : urlString

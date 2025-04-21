@@ -4,10 +4,7 @@ pr: none
 trigger: none
 
 pool:
-    name: Azure-Pipelines-1ESPT-ExDShared
-    image: windows-2022
-    os: windows
-    demands: java
+    name: name: 1ES-Teams-Windows-2022-Compliant-Daily
 
 parameters:
 - name: base_version
@@ -51,10 +48,7 @@ extends:
         enabled: true
         break: true
     pool:
-      name: Azure-Pipelines-1ESPT-ExDShared
-      image: windows-2022
-      os: windows
-      demands: java
+      name: name: 1ES-Teams-Windows-2022-Compliant-Daily
     stages:
       - stage: Staging
         jobs:
