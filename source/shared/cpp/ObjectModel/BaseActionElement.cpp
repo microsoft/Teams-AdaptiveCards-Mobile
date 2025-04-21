@@ -33,6 +33,10 @@ void BaseActionElement::SetTitle(const std::string& value)
     m_title = value;
 }
 
+const std::string& BaseActionElement::GetIconUrl(const ACTheme theme) const {
+    return ThemedUrl::GetThemedUrl(theme, m_themedIconUrls, m_iconUrl);
+}
+
 const std::string& BaseActionElement::GetIconUrl() const
 {
     return m_iconUrl;
@@ -238,6 +242,9 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip));
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
     element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
+
+    auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedIconUrls, ThemedUrl::Deserialize, false);
+    element->m_themedIconUrls = std::move(themedUrls);
 
     if (IsSplitActionSupported(element->GetElementType())) {
         //Parse Menu Actions

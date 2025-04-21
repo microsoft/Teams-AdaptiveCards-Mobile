@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
@@ -15,6 +16,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.HashMap;
 
+import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.AdaptiveCardObjectModel;
@@ -313,6 +315,15 @@ public class CardRendererRegistration
     public BaseCardElement getRootFallbackCard()
     {
         return m_rootFallbackCard;
+    }
+
+    @NonNull
+    public ACTheme getTheme() {
+        return mTheme;
+    }
+
+    public void setThemeForThemedUrl(@NonNull ACTheme theme) {
+        mTheme = theme;
     }
 
     public View renderElements(RenderedAdaptiveCard renderedCard,
@@ -757,4 +768,5 @@ public class CardRendererRegistration
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
     private boolean mIsSplitActionEnabled = false;
+    private ACTheme mTheme = ACTheme.None;
 }

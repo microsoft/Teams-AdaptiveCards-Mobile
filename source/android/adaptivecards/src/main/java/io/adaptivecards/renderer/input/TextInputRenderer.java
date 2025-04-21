@@ -234,7 +234,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
                     Resources.Theme theme = context.getTheme();
                     TypedValue buttonStyle = new TypedValue();
 
-                    String url = action.GetIconUrl();
+                    String url = action.GetIconUrl(renderedCard.getTheme());
                     if (url != null && !url.isEmpty())
                     {
                         ImageButton inlineButton = null;
