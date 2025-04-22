@@ -62,7 +62,9 @@ std::shared_ptr<BaseCardElement> ProgressBarParser::Deserialize(ParseContext& co
     ParseUtil::ExpectTypeString(json, CardElementType::ProgressBar);
 
     std::shared_ptr<ProgressBar> element = BaseCardElement::Deserialize<ProgressBar>(context, json);
-    element->m_color = ParseUtil::GetEnumValue<ProgressBarColor>(json, AdaptiveCardSchemaKey::Color, DEFAULT_COLOR,ProgressBarColorFromString);
+    element->m_color = ParseUtil::GetEnumValue<ProgressBarColor>(json, AdaptiveCardSchemaKey::Color,
+                                                                 DEFAULT_COLOR,ProgressBarColorFromString,
+                                                                 false);
     element->m_max = ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, DEFAULT_MAX, false);
     auto value = ParseUtil::GetOptionalDouble(json, AdaptiveCardSchemaKey::Value);
     if (value.has_value() && value.value() > element->m_max) {
