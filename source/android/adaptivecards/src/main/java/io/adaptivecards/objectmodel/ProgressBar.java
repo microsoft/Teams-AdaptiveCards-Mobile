@@ -68,6 +68,10 @@ public class ProgressBar extends BaseCardElement {
     return optvalue.has_value() ? optvalue.value() : null;
   }
 
+  public HorizontalAlignment GetHorizontalAlignment() {
+    return HorizontalAlignment.swigToEnum(AdaptiveCardObjectModelJNI.ProgressBar_GetHorizontalAlignment(swigCPtr, this));
+  }
+
   public JsonValue SerializeToJsonValue() {
     return new JsonValue(AdaptiveCardObjectModelJNI.ProgressBar_SerializeToJsonValue(swigCPtr, this), true);
   }

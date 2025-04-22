@@ -24,7 +24,7 @@ class ProgressRing : public BaseCardElement {
         const std::string GetLabel() const;
         const LabelPosition GetLabelPosition() const;
         const ProgressSize GetSize() const;
-        const std::optional<HorizontalAlignment> GetHorizontalAlignment() const;
+        const HorizontalAlignment GetHorizontalAlignment() const;
 
         ProgressRing(ProgressSize  progressSize, LabelPosition labelPosition, std::string const& label, HorizontalAlignment horizontalAlignment)
             :BaseCardElement(CardElementType::ProgressRing),
@@ -43,7 +43,7 @@ class ProgressRing : public BaseCardElement {
         std::string m_label;
         LabelPosition m_labelPosition;
         ProgressSize m_size;
-        std::optional<HorizontalAlignment> m_horizontalAlignment;
+        HorizontalAlignment m_horizontalAlignment;
 };
 
 class ProgressRingParser : public BaseCardElementParser {

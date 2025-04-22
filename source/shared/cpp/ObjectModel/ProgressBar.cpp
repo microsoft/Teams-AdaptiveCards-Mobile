@@ -13,7 +13,7 @@
 using namespace AdaptiveCards;
 
 ProgressBar::ProgressBar() : BaseCardElement(CardElementType::ProgressBar)
-    ,m_color(ProgressBarColor::Accent), m_max(100.0), m_value(0.0) {
+    ,m_color(ProgressBarColor::Accent), m_max(100.0), m_value(0.0), m_horizontalAlignment(HorizontalAlignment::Left) {
     PopulateKnownPropertiesSet();
 }
 
@@ -21,7 +21,8 @@ void ProgressBar::PopulateKnownPropertiesSet(){
     m_knownProperties.insert({
         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Label),
         AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::LabelPosition),
-        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size)
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size),
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalAlignment)
     });
 }
 
@@ -37,19 +38,18 @@ std::optional<double> ProgressBar::GetValue() const {
     return m_value;
 }
 
+const HorizontalAlignment ProgressBar::GetHorizontalAlignment() const {
+    return m_horizontalAlignment;
+}
+
 Json::Value ProgressBar::SerializeToJsonValue() const {
     Json::Value root = BaseCardElement::SerializeToJsonValue();
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Color)] = ProgressBarColorToString(m_color);
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = m_max;
-
     if (m_value.has_value()) {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max)] = m_value.value();
     }
-//    if (m_hAlignment.has_value())
-//    {
-//        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalAlignment)] =
-//                HorizontalAlignmentToString(m_hAlignment.value_or(HorizontalAlignment::Left));
-//    }
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalAlignment)] = HorizontalAlignmentToString(m_horizontalAlignment);
     return root;
 }
 
@@ -60,15 +60,13 @@ std::shared_ptr<BaseCardElement> ProgressBarParser::Deserialize(ParseContext& co
     std::shared_ptr<ProgressBar> element = BaseCardElement::Deserialize<ProgressBar>(context, json);
     element->m_color = ParseUtil::GetEnumValue<ProgressBarColor>(json, AdaptiveCardSchemaKey::Color, ProgressBarColor::Accent,ProgressBarColorFromString);
     element->m_max = ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 100.0,false);
-
     auto value = ParseUtil::GetOptionalDouble(json, AdaptiveCardSchemaKey::Value);
     if (value.has_value() && value.value() > element->m_max) {
         value = element->m_max;
     }
     element->m_value = value;
-
-//    badge->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
-//            json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
+    element->m_horizontalAlignment = ParseUtil::GetEnumValue<HorizontalAlignment>(
+            json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString);
     return element;
 }
 

@@ -45360,6 +45360,24 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetHorizontalAlignment(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressBar const > *smartarg1 = 0 ;
+  AdaptiveCards::HorizontalAlignment result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::ProgressBar > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressBar *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (AdaptiveCards::HorizontalAlignment)((AdaptiveCards::ProgressBar const *)arg1)->GetHorizontalAlignment();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1SerializeToJsonValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
@@ -45627,11 +45645,11 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetHorizontalAlignment(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetHorizontalAlignment(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   AdaptiveCards::ProgressRing *arg1 = (AdaptiveCards::ProgressRing *) 0 ;
   std::shared_ptr< AdaptiveCards::ProgressRing const > *smartarg1 = 0 ;
-  std::optional< AdaptiveCards::HorizontalAlignment > result;
+  AdaptiveCards::HorizontalAlignment result;
   
   (void)jenv;
   (void)jcls;
@@ -45639,8 +45657,8 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::ProgressRing > **)&jarg1;
   arg1 = (AdaptiveCards::ProgressRing *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::ProgressRing const *)arg1)->GetHorizontalAlignment();
-  *(std::optional< AdaptiveCards::HorizontalAlignment > **)&jresult = new std::optional< AdaptiveCards::HorizontalAlignment >((const std::optional< AdaptiveCards::HorizontalAlignment > &)result); 
+  result = (AdaptiveCards::HorizontalAlignment)((AdaptiveCards::ProgressRing const *)arg1)->GetHorizontalAlignment();
+  jresult = (jint)result; 
   return jresult;
 }
 

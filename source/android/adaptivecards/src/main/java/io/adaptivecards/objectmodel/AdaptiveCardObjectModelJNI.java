@@ -2278,6 +2278,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native int ProgressBar_GetColor(long jarg1, ProgressBar jarg1_);
   public final static native double ProgressBar_GetMax(long jarg1, ProgressBar jarg1_);
   public final static native long ProgressBar_GetValue(long jarg1, ProgressBar jarg1_);
+  public final static native int ProgressBar_GetHorizontalAlignment(long jarg1, ProgressBar jarg1_);
   public final static native long ProgressBar_SerializeToJsonValue(long jarg1, ProgressBar jarg1_);
   public final static native long ProgressBar_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_ProgressBarParser__SWIG_0();
@@ -2291,7 +2292,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native String ProgressRing_GetLabel(long jarg1, ProgressRing jarg1_);
   public final static native int ProgressRing_GetLabelPosition(long jarg1, ProgressRing jarg1_);
   public final static native int ProgressRing_GetSize(long jarg1, ProgressRing jarg1_);
-  public final static native long ProgressRing_GetHorizontalAlignment(long jarg1, ProgressRing jarg1_);
+  public final static native int ProgressRing_GetHorizontalAlignment(long jarg1, ProgressRing jarg1_);
   public final static native long new_ProgressRing__SWIG_3(int jarg1, int jarg2, String jarg3, int jarg4);
   public final static native long ProgressRing_SerializeToJsonValue(long jarg1, ProgressRing jarg1_);
   public final static native long ProgressRing_dynamic_cast(long jarg1, BaseCardElement jarg1_);
