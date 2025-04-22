@@ -12,8 +12,12 @@
 
 using namespace AdaptiveCards;
 
+const static ProgressBarColor DEFAULT_COLOR = ProgressBarColor::Accent;
+constexpr static double DEFAULT_MAX = 100.0;
+const static HorizontalAlignment DEFAULT_HORIZONTAL_ALIGNMENT = HorizontalAlignment::Left;
+
 ProgressBar::ProgressBar() : BaseCardElement(CardElementType::ProgressBar)
-    ,m_color(ProgressBarColor::Accent), m_max(100.0), m_value(0.0), m_horizontalAlignment(HorizontalAlignment::Left) {
+    ,m_color(DEFAULT_COLOR), m_max(DEFAULT_MAX), m_value(0.0), m_horizontalAlignment(DEFAULT_HORIZONTAL_ALIGNMENT) {
     PopulateKnownPropertiesSet();
 }
 
@@ -58,15 +62,17 @@ std::shared_ptr<BaseCardElement> ProgressBarParser::Deserialize(ParseContext& co
     ParseUtil::ExpectTypeString(json, CardElementType::ProgressBar);
 
     std::shared_ptr<ProgressBar> element = BaseCardElement::Deserialize<ProgressBar>(context, json);
-    element->m_color = ParseUtil::GetEnumValue<ProgressBarColor>(json, AdaptiveCardSchemaKey::Color, ProgressBarColor::Accent,ProgressBarColorFromString);
-    element->m_max = ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 100.0,false);
+    element->m_color = ParseUtil::GetEnumValue<ProgressBarColor>(json, AdaptiveCardSchemaKey::Color, DEFAULT_COLOR,ProgressBarColorFromString);
+    element->m_max = ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, DEFAULT_MAX, false);
     auto value = ParseUtil::GetOptionalDouble(json, AdaptiveCardSchemaKey::Value);
     if (value.has_value() && value.value() > element->m_max) {
         value = element->m_max;
     }
     element->m_value = value;
     element->m_horizontalAlignment = ParseUtil::GetEnumValue<HorizontalAlignment>(
-            json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString);
+            json, AdaptiveCardSchemaKey::HorizontalAlignment,
+            DEFAULT_HORIZONTAL_ALIGNMENT, HorizontalAlignmentFromString,
+            false);
     return element;
 }
 

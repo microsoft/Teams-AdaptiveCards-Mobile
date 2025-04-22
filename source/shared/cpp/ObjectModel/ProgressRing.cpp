@@ -12,8 +12,13 @@
 
 using namespace AdaptiveCards;
 
+const static std::string DEFAULT_LABEL = "";
+const static LabelPosition DEFAULT_LABEL_POSITION = LabelPosition::Above;
+const static ProgressSize DEFAULT_SIZE = ProgressSize::Medium;
+const static HorizontalAlignment DEFAULT_HORIZONTAL_ALIGNMENT = HorizontalAlignment::Left;
+
 ProgressRing::ProgressRing() : BaseCardElement(CardElementType::ProgressRing)
-    ,m_label(""), m_labelPosition(LabelPosition::Above), m_size(ProgressSize::Medium), m_horizontalAlignment(HorizontalAlignment::Left) {
+    ,m_label(DEFAULT_LABEL), m_labelPosition(DEFAULT_LABEL_POSITION), m_size(DEFAULT_SIZE), m_horizontalAlignment(DEFAULT_HORIZONTAL_ALIGNMENT) {
     PopulateKnownPropertiesSet();
 }
 
@@ -55,11 +60,18 @@ std::shared_ptr<BaseCardElement> ProgressRingParser::Deserialize(ParseContext& c
     ParseUtil::ExpectTypeString(json, CardElementType::ProgressRing);
 
     std::shared_ptr<ProgressRing> element = BaseCardElement::Deserialize<ProgressRing>(context, json);
-    element->m_label = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Label, "",false);
-    element->m_labelPosition = ParseUtil::GetEnumValue<LabelPosition>(json, AdaptiveCardSchemaKey::LabelPosition, LabelPosition::Above, LabelPositionFromString);
-    element->m_size = ParseUtil::GetEnumValue<ProgressSize>(json, AdaptiveCardSchemaKey::Size, ProgressSize::Medium, ProgressSizeFromString);
+    element->m_label = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Label,
+                                            DEFAULT_LABEL, false);
+    element->m_labelPosition = ParseUtil::GetEnumValue<LabelPosition>(json, AdaptiveCardSchemaKey::LabelPosition,
+                                                                      DEFAULT_LABEL_POSITION, LabelPositionFromString,
+                                                                      false);
+    element->m_size = ParseUtil::GetEnumValue<ProgressSize>(json, AdaptiveCardSchemaKey::Size,
+                                                            DEFAULT_SIZE, ProgressSizeFromString,
+                                                            false);
     element->m_horizontalAlignment = ParseUtil::GetEnumValue<HorizontalAlignment>(
-            json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString);
+            json, AdaptiveCardSchemaKey::HorizontalAlignment,
+            DEFAULT_HORIZONTAL_ALIGNMENT, HorizontalAlignmentFromString,
+            false);
 
     return element;
 }
