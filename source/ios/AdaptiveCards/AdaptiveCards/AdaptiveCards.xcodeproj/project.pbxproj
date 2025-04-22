@@ -33,6 +33,10 @@
 		30D56DEF2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */; };
 		3714EB522DAFB30400EE15AA /* ThemedUrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3714EB512DAFB30400EE15AA /* ThemedUrl.cpp */; };
 		3714EB532DAFB30400EE15AA /* ThemedUrl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3714EB502DAFB30400EE15AA /* ThemedUrl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		37A8DF522DB79C8800F3A23F /* ProgressRing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A8DF512DB79C8800F3A23F /* ProgressRing.cpp */; };
+		37A8DF532DB79C8800F3A23F /* ProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A8DF4F2DB79C8800F3A23F /* ProgressBar.cpp */; };
+		37A8DF542DB79C8800F3A23F /* ProgressRing.h in Headers */ = {isa = PBXBuildFile; fileRef = 37A8DF502DB79C8800F3A23F /* ProgressRing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		37A8DF552DB79C8800F3A23F /* ProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 37A8DF4E2DB79C8800F3A23F /* ProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		46058FCF2C5CCBAA00966E76 /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FCE2C5CCBAA00966E76 /* Layout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		46058FD12C5CCBED00966E76 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46058FD02C5CCBED00966E76 /* Layout.cpp */; };
 		46058FD42C5CEEFE00966E76 /* FlowLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46058FD22C5CEEFE00966E76 /* FlowLayout.cpp */; };
@@ -561,6 +565,10 @@
 		30D56DEE2682AB9C00D6E418 /* AdaptiveCardsTextBlockTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsTextBlockTests.mm; sourceTree = "<group>"; };
 		3714EB502DAFB30400EE15AA /* ThemedUrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThemedUrl.h; path = ../../../../shared/cpp/ObjectModel/ThemedUrl.h; sourceTree = "<group>"; };
 		3714EB512DAFB30400EE15AA /* ThemedUrl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ThemedUrl.cpp; path = ../../../../shared/cpp/ObjectModel/ThemedUrl.cpp; sourceTree = "<group>"; };
+		37A8DF4E2DB79C8800F3A23F /* ProgressBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProgressBar.h; path = ../../../../shared/cpp/ObjectModel/ProgressBar.h; sourceTree = "<group>"; };
+		37A8DF4F2DB79C8800F3A23F /* ProgressBar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressBar.cpp; path = ../../../../shared/cpp/ObjectModel/ProgressBar.cpp; sourceTree = "<group>"; };
+		37A8DF502DB79C8800F3A23F /* ProgressRing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProgressRing.h; path = ../../../../shared/cpp/ObjectModel/ProgressRing.h; sourceTree = "<group>"; };
+		37A8DF512DB79C8800F3A23F /* ProgressRing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressRing.cpp; path = ../../../../shared/cpp/ObjectModel/ProgressRing.cpp; sourceTree = "<group>"; };
 		3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		46058FCE2C5CCBAA00966E76 /* Layout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Layout.h; path = ../../../../shared/cpp/ObjectModel/Layout.h; sourceTree = "<group>"; };
@@ -1458,6 +1466,10 @@
 		F423C0D71EE1FF2F00905679 /* SharedLib */ = {
 			isa = PBXGroup;
 			children = (
+				37A8DF4E2DB79C8800F3A23F /* ProgressBar.h */,
+				37A8DF4F2DB79C8800F3A23F /* ProgressBar.cpp */,
+				37A8DF502DB79C8800F3A23F /* ProgressRing.h */,
+				37A8DF512DB79C8800F3A23F /* ProgressRing.cpp */,
 				3714EB502DAFB30400EE15AA /* ThemedUrl.h */,
 				3714EB512DAFB30400EE15AA /* ThemedUrl.cpp */,
 				46731C0A2CBD198F0092B7A9 /* Badge.cpp */,
@@ -1849,6 +1861,8 @@
 				6BBE841F23CE60E300ECA586 /* ACRMediaRenderer.h in Headers */,
 				6B74403925BA71B60051F2A1 /* ACRImageProperties.h in Headers */,
 				6BBE841B23CD184D00ECA586 /* ACOWarning.h in Headers */,
+				37A8DF542DB79C8800F3A23F /* ProgressRing.h in Headers */,
+				37A8DF552DB79C8800F3A23F /* ProgressBar.h in Headers */,
 				46058FCF2C5CCBAA00966E76 /* Layout.h in Headers */,
 				6B2242B022334452000ACDA1 /* Inline.h in Headers */,
 				7EDC0F67213878E800077A13 /* SemanticVersion.h in Headers */,
@@ -2495,6 +2509,8 @@
 				4621E12E2BF35784004F03F3 /* RatingLabel.cpp in Sources */,
 				6B2242AF22334452000ACDA1 /* TextRun.cpp in Sources */,
 				6BFF99EE2600387A0028069F /* ACOTokenExchangeResource.mm in Sources */,
+				37A8DF522DB79C8800F3A23F /* ProgressRing.cpp in Sources */,
+				37A8DF532DB79C8800F3A23F /* ProgressBar.cpp in Sources */,
 				6B9AB31120DD82A2005C8E15 /* ACRTextView.mm in Sources */,
 				7773C2EA2CA5656100097C06 /* ACRPageControl.mm in Sources */,
 				6B92A7E42677DC8B00CAE3BF /* ACRChoiceSetCompactStyleView.mm in Sources */,
