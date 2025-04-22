@@ -45627,11 +45627,30 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressRing_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2, jstring jarg3) {
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetHorizontalAlignment(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ProgressRing *arg1 = (AdaptiveCards::ProgressRing *) 0 ;
+  std::shared_ptr< AdaptiveCards::ProgressRing const > *smartarg1 = 0 ;
+  std::optional< AdaptiveCards::HorizontalAlignment > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::ProgressRing > **)&jarg1;
+  arg1 = (AdaptiveCards::ProgressRing *)(smartarg1 ? smartarg1->get() : 0); 
+  result = ((AdaptiveCards::ProgressRing const *)arg1)->GetHorizontalAlignment();
+  *(std::optional< AdaptiveCards::HorizontalAlignment > **)&jresult = new std::optional< AdaptiveCards::HorizontalAlignment >((const std::optional< AdaptiveCards::HorizontalAlignment > &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ProgressRing_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2, jstring jarg3, jint jarg4) {
   jlong jresult = 0 ;
   AdaptiveCards::ProgressSize arg1 ;
   AdaptiveCards::LabelPosition arg2 ;
   std::string *arg3 = 0 ;
+  AdaptiveCards::HorizontalAlignment arg4 ;
   AdaptiveCards::ProgressRing *result = 0 ;
   
   (void)jenv;
@@ -45647,7 +45666,8 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   std::string arg3_str(arg3_pstr);
   arg3 = &arg3_str;
   jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
-  result = (AdaptiveCards::ProgressRing *)new AdaptiveCards::ProgressRing(arg1,arg2,(std::string const &)*arg3);
+  arg4 = (AdaptiveCards::HorizontalAlignment)jarg4; 
+  result = (AdaptiveCards::ProgressRing *)new AdaptiveCards::ProgressRing(arg1,arg2,(std::string const &)*arg3,arg4);
   
   *(std::shared_ptr<  AdaptiveCards::ProgressRing > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::ProgressRing >(result SWIG_NO_NULL_DELETER_1) : 0;
   

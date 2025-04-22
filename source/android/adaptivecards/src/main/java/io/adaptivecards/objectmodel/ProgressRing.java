@@ -63,8 +63,13 @@ public class ProgressRing extends BaseCardElement {
     return ProgressSize.swigToEnum(AdaptiveCardObjectModelJNI.ProgressRing_GetSize(swigCPtr, this));
   }
 
-  public ProgressRing(ProgressSize progressSize, LabelPosition labelPosition, String label) {
-    this(AdaptiveCardObjectModelJNI.new_ProgressRing__SWIG_3(progressSize.swigValue(), labelPosition.swigValue(), label), true);
+  public @androidx.annotation.Nullable HorizontalAlignment GetHorizontalAlignment() {
+    StdOptionalHorizontalAlignment optvalue = new StdOptionalHorizontalAlignment(AdaptiveCardObjectModelJNI.ProgressRing_GetHorizontalAlignment(swigCPtr, this), false);
+    return optvalue.has_value() ? optvalue.value() : null;
+  }
+
+  public ProgressRing(ProgressSize progressSize, LabelPosition labelPosition, String label, HorizontalAlignment horizontalAlignment) {
+    this(AdaptiveCardObjectModelJNI.new_ProgressRing__SWIG_3(progressSize.swigValue(), labelPosition.swigValue(), label, horizontalAlignment.swigValue()), true);
   }
 
   public JsonValue SerializeToJsonValue() {
