@@ -701,6 +701,8 @@
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::ToggleInput) == ACRToggleInput);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::RatingInput) == ACRRatingInput);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::RatingLabel) == ACRRatingLabel);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::ProgressBar) == ACRProgressBar);
+    XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::ProgressRing) == ACRProgressRing);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::Unknown) == ACRUnknown);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::CardElementType::RichTextBlock) == ACRRichTextBlock);
     XCTAssertTrue(static_cast<int>(AdaptiveCards::ActionType::ShowCard) == ACRShowCard);
