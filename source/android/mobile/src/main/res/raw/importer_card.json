@@ -240,6 +240,10 @@
 										"value": "v1.5/Elements/Action.MenuActions.json"
 									},
 									{
+										"title": "Actions Popover",
+										"value": "v1.5/Elements/Action.Popover.json"
+									},
+									{
 										"title": "Carousel",
 										"value": "v1.5/Scenarios/Carousel.json"
 									},

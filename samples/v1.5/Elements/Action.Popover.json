@@ -1,0 +1,33 @@
+{
+	"type": "AdaptiveCard",
+	"$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+	"version": "1.5",
+	"body": [],
+	"actions": [
+		{
+			"type": "Action.Popover",
+			"title": "Action.Popover 11",
+			"content": {
+				"type": "Container",
+				"items": [
+					{
+						"type": "TextBlock",
+						"text": "This is a popover"
+					},
+					{
+						"type": "TextBlock",
+						"text": "This is a popover"
+					},
+					{
+						"type": "TextBlock",
+						"text": "This is a popover"
+					},
+					{
+						"type": "TextBlock",
+						"text": "This is a popover"
+					}
+				]
+			}
+		}
+	]
+}
