@@ -8,6 +8,9 @@
 
 using namespace AdaptiveCards;
 
+static const std::string DEFAULT_POSITION = "Above";
+static const bool DEFAULT_DISPLAY_ARROW = true;
+
 PopoverAction::PopoverAction() : BaseActionElement(ActionType::Popover) {
     PopulateKnownPropertiesSet();
 }
@@ -45,14 +48,17 @@ const std::shared_ptr<BaseCardElement> PopoverAction::GetContent() const {
 }
 
 std::shared_ptr<BaseActionElement> PopoverActionParser::Deserialize(ParseContext& context, const Json::Value& json) {
-    std::shared_ptr<PopoverAction> popoverAction = BaseActionElement::Deserialize<PopoverAction>(context, json);
+    std::shared_ptr<PopoverAction> action = BaseActionElement::Deserialize<PopoverAction>(context, json);
 
-    const std::string& propertyName = AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content);
-    popoverAction->m_content = BaseCardElement::Deserialize<BaseCardElement>(context, json.get(propertyName, Json::Value()));
-    popoverAction->m_displayArrow = ParseUtil::GetBool(json, AdaptiveCardSchemaKey::DisplayArrow,DEFAULT_DISPLAY_ARROW);
-    popoverAction->m_maxPopoverWidth = ParseUtil::GetString(json, AdaptiveCardSchemaKey::MaxPopoverWidth,"", false);
-    popoverAction->m_position = ParseUtil::GetString(json, AdaptiveCardSchemaKey::MaxPopoverWidth, DEFAULT_POSITION, false);
-    return popoverAction;
+    auto content = ParseUtil::ExtractJsonValue(json, AdaptiveCardSchemaKey::Content, true);
+    std::shared_ptr<BaseElement> curElement;
+    ParseJsonObject<BaseCardElement>(context, content, curElement);
+    action->m_content = std::static_pointer_cast<BaseCardElement>(curElement);
+
+    action->m_displayArrow = ParseUtil::GetBool(json, AdaptiveCardSchemaKey::DisplayArrow,DEFAULT_DISPLAY_ARROW,false);
+    action->m_maxPopoverWidth = ParseUtil::GetString(json, AdaptiveCardSchemaKey::MaxPopoverWidth,"", false);
+    action->m_position = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Position, DEFAULT_POSITION, false);
+    return action;
 }
 
 std::shared_ptr<BaseActionElement> PopoverActionParser::DeserializeFromString(ParseContext& context, const std::string& jsonString) {

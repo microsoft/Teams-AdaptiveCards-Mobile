@@ -6,10 +6,7 @@
 #include "BaseActionElement.h"
 #include "ActionParserRegistration.h"
 
-namespace AdaptiveCards
-{
-    static const std::string DEFAULT_POSITION = "Above";
-    static const bool DEFAULT_DISPLAY_ARROW = true;
+namespace AdaptiveCards {
 
     class PopoverAction : public BaseActionElement {
 
@@ -38,8 +35,7 @@ namespace AdaptiveCards
         std::string m_maxPopoverWidth;
     };
 
-    class PopoverActionParser : public ActionElementParser
-    {
+    class PopoverActionParser : public ActionElementParser {
 
     public:
         PopoverActionParser() = default;
