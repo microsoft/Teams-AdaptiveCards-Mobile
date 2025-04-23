@@ -804,6 +804,7 @@ namespace Swig {
 #include "../../../shared/cpp/ObjectModel/TimeInput.h"
 #include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 #include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
+#include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 #include "../../../shared/cpp/ObjectModel/SemanticVersion.h"
 #include "../../../shared/cpp/ObjectModel/ShowCardAction.h"
 #include "../../../shared/cpp/ObjectModel/SubmitAction.h"
@@ -829,7 +830,6 @@ namespace Swig {
 #include "../../../shared/cpp/ObjectModel/Media.h"
 #include "../../../shared/cpp/ObjectModel/ToggleVisibilityAction.h"
 #include "../../../shared/cpp/ObjectModel/ToggleVisibilityTarget.h"
-#include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 #include "../../../shared/cpp/ObjectModel/UnknownElement.h"
 #include "../../../shared/cpp/ObjectModel/UnknownAction.h"
 #include "../../../shared/cpp/ObjectModel/TextElementProperties.h"
@@ -2158,6 +2158,9 @@ SWIGINTERN AdaptiveCards::ExecuteAction *AdaptiveCards_ExecuteAction_dynamic_cas
 SWIGINTERN AdaptiveCards::OpenUrlAction *AdaptiveCards_OpenUrlAction_dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement){
         return dynamic_cast<AdaptiveCards::OpenUrlAction *>(baseActionElement);
     }
+SWIGINTERN AdaptiveCards::PopoverAction *AdaptiveCards_PopoverAction_dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement){
+            return dynamic_cast<AdaptiveCards::PopoverAction *>(baseActionElement);
+        }
 SWIGINTERN AdaptiveCards::ShowCardAction *AdaptiveCards_ShowCardAction_dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement){
         return dynamic_cast<AdaptiveCards::ShowCardAction *>(baseActionElement);
     }
@@ -2179,9 +2182,6 @@ SWIGINTERN AdaptiveCards::Media *AdaptiveCards_Media_dynamic_cast(AdaptiveCards:
 SWIGINTERN AdaptiveCards::ToggleVisibilityAction *AdaptiveCards_ToggleVisibilityAction_dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement){
         return dynamic_cast<AdaptiveCards::ToggleVisibilityAction *>(baseActionElement);
     }
-SWIGINTERN AdaptiveCards::PopoverAction *AdaptiveCards_PopoverAction_dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement){
-            return dynamic_cast<AdaptiveCards::PopoverAction *>(baseActionElement);
-        }
 SWIGINTERN AdaptiveCards::ActionSet *AdaptiveCards_ActionSet_dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement){
         return dynamic_cast<AdaptiveCards::ActionSet *>(baseCardElement);
     }
@@ -28044,6 +28044,291 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverAction_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverAction *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::PopoverAction *)new AdaptiveCards::PopoverAction();
+  
+  *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverAction >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverAction_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverAction *arg1 = 0 ;
+  AdaptiveCards::PopoverAction *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  arg1 = (AdaptiveCards::PopoverAction *)((*(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1) ? (*(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1)->get() : 0);
+  if (!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::PopoverAction const & reference is null");
+    return 0;
+  } 
+  result = (AdaptiveCards::PopoverAction *)new AdaptiveCards::PopoverAction((AdaptiveCards::PopoverAction const &)*arg1);
+  
+  *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverAction >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1PopoverAction(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverAction > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
+  (void)arg1; delete smartarg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1SerializeToJsonValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
+  Json::Value result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = ((AdaptiveCards::PopoverAction const *)arg1)->SerializeToJsonValue();
+  *(Json::Value **)&jresult = new Json::Value((const Json::Value &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetDisplayArrow(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::PopoverAction const *)arg1)->GetDisplayArrow();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetMaxPopoverWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = ((AdaptiveCards::PopoverAction const *)arg1)->GetMaxPopoverWidth();
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetPosition(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = ((AdaptiveCards::PopoverAction const *)arg1)->GetPosition();
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetContent(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
+  std::shared_ptr< AdaptiveCards::BaseCardElement > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
+  result = ((AdaptiveCards::PopoverAction const *)arg1)->GetContent();
+  *(std::shared_ptr< AdaptiveCards::BaseCardElement > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::BaseCardElement >(result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1dynamic_1cast(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::BaseActionElement *arg1 = (AdaptiveCards::BaseActionElement *) 0 ;
+  std::shared_ptr< AdaptiveCards::BaseActionElement > *smartarg1 = 0 ;
+  AdaptiveCards::PopoverAction *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::BaseActionElement > **)&jarg1;
+  arg1 = (AdaptiveCards::BaseActionElement *)(smartarg1 ? smartarg1->get() : 0); 
+  {
+    result = (AdaptiveCards::PopoverAction *)AdaptiveCards_PopoverAction_dynamic_cast(arg1);
+    if (!result) {
+      jclass excep = jenv->FindClass("java/lang/ClassCastException");
+      if (excep) {
+        jenv->ThrowNew(excep, "dynamic_cast exception");
+      }
+    }
+  }
+  
+  *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverAction >(result SWIG_NO_NULL_DELETER_0) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverActionParser_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverActionParser *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::PopoverActionParser *)new AdaptiveCards::PopoverActionParser();
+  
+  *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverActionParser >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverActionParser_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverActionParser *arg1 = 0 ;
+  AdaptiveCards::PopoverActionParser *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  arg1 = (AdaptiveCards::PopoverActionParser *)((*(std::shared_ptr< const AdaptiveCards::PopoverActionParser > **)&jarg1) ? (*(std::shared_ptr< const AdaptiveCards::PopoverActionParser > **)&jarg1)->get() : 0);
+  if (!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::PopoverActionParser const & reference is null");
+    return 0;
+  } 
+  result = (AdaptiveCards::PopoverActionParser *)new AdaptiveCards::PopoverActionParser((AdaptiveCards::PopoverActionParser const &)*arg1);
+  
+  *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverActionParser >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1PopoverActionParser(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  AdaptiveCards::PopoverActionParser *arg1 = (AdaptiveCards::PopoverActionParser *) 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverActionParser > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverActionParser *)(smartarg1 ? smartarg1->get() : 0); 
+  (void)arg1; delete smartarg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverActionParser_1Deserialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverActionParser *arg1 = (AdaptiveCards::PopoverActionParser *) 0 ;
+  AdaptiveCards::ParseContext *arg2 = 0 ;
+  Json::Value *arg3 = 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverActionParser > *smartarg1 = 0 ;
+  std::shared_ptr< AdaptiveCards::BaseActionElement > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  (void)jarg3_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverActionParser *)(smartarg1 ? smartarg1->get() : 0); 
+  
+  arg2 = (AdaptiveCards::ParseContext *)((*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2) ? (*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2)->get() : 0);
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::ParseContext & reference is null");
+    return 0;
+  } 
+  arg3 = *(Json::Value **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Json::Value const & reference is null");
+    return 0;
+  } 
+  result = (arg1)->Deserialize(*arg2,(Json::Value const &)*arg3);
+  *(std::shared_ptr< AdaptiveCards::BaseActionElement > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::BaseActionElement >(result) : 0; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverActionParser_1DeserializeFromString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverActionParser *arg1 = (AdaptiveCards::PopoverActionParser *) 0 ;
+  AdaptiveCards::ParseContext *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  std::shared_ptr< AdaptiveCards::PopoverActionParser > *smartarg1 = 0 ;
+  std::shared_ptr< AdaptiveCards::BaseActionElement > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jarg1;
+  arg1 = (AdaptiveCards::PopoverActionParser *)(smartarg1 ? smartarg1->get() : 0); 
+  
+  arg2 = (AdaptiveCards::ParseContext *)((*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2) ? (*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2)->get() : 0);
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::ParseContext & reference is null");
+    return 0;
+  } 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  result = (arg1)->DeserializeFromString(*arg2,(std::string const &)*arg3);
+  *(std::shared_ptr< AdaptiveCards::BaseActionElement > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::BaseActionElement >(result) : 0; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ShowCardAction_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   AdaptiveCards::ShowCardAction *result = 0 ;
@@ -40887,315 +41172,6 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_DEFAULT_1POSITION_1get(JNIEnv *jenv, jclass jcls) {
-  jstring jresult = 0 ;
-  std::string *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (std::string *) &AdaptiveCards::DEFAULT_POSITION;
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_DEFAULT_1DISPLAY_1ARROW_1get(JNIEnv *jenv, jclass jcls) {
-  jboolean jresult = 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (bool)(bool)AdaptiveCards::DEFAULT_DISPLAY_ARROW;
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverAction_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  AdaptiveCards::PopoverAction *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (AdaptiveCards::PopoverAction *)new AdaptiveCards::PopoverAction();
-  
-  *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverAction >(result SWIG_NO_NULL_DELETER_1) : 0;
-  
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverAction_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  AdaptiveCards::PopoverAction *arg1 = 0 ;
-  AdaptiveCards::PopoverAction *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  
-  arg1 = (AdaptiveCards::PopoverAction *)((*(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1) ? (*(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1)->get() : 0);
-  if (!arg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::PopoverAction const & reference is null");
-    return 0;
-  } 
-  result = (AdaptiveCards::PopoverAction *)new AdaptiveCards::PopoverAction((AdaptiveCards::PopoverAction const &)*arg1);
-  
-  *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverAction >(result SWIG_NO_NULL_DELETER_1) : 0;
-  
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1PopoverAction(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverAction > *smartarg1 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  
-  smartarg1 = *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
-  (void)arg1; delete smartarg1;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1SerializeToJsonValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
-  Json::Value result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  
-  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::PopoverAction const *)arg1)->SerializeToJsonValue();
-  *(Json::Value **)&jresult = new Json::Value((const Json::Value &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetDisplayArrow(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  
-  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
-  result = (bool)((AdaptiveCards::PopoverAction const *)arg1)->GetDisplayArrow();
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetMaxPopoverWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
-  std::string result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  
-  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::PopoverAction const *)arg1)->GetMaxPopoverWidth();
-  jresult = jenv->NewStringUTF((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetPosition(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
-  std::string result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  
-  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::PopoverAction const *)arg1)->GetPosition();
-  jresult = jenv->NewStringUTF((&result)->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetContent(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
-  std::shared_ptr< AdaptiveCards::BaseCardElement > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  
-  smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::PopoverAction const *)arg1)->GetContent();
-  *(std::shared_ptr< AdaptiveCards::BaseCardElement > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::BaseCardElement >(result) : 0; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1dynamic_1cast(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  AdaptiveCards::BaseActionElement *arg1 = (AdaptiveCards::BaseActionElement *) 0 ;
-  std::shared_ptr< AdaptiveCards::BaseActionElement > *smartarg1 = 0 ;
-  AdaptiveCards::PopoverAction *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  
-  smartarg1 = *(std::shared_ptr<  AdaptiveCards::BaseActionElement > **)&jarg1;
-  arg1 = (AdaptiveCards::BaseActionElement *)(smartarg1 ? smartarg1->get() : 0); 
-  {
-    result = (AdaptiveCards::PopoverAction *)AdaptiveCards_PopoverAction_dynamic_cast(arg1);
-    if (!result) {
-      jclass excep = jenv->FindClass("java/lang/ClassCastException");
-      if (excep) {
-        jenv->ThrowNew(excep, "dynamic_cast exception");
-      }
-    }
-  }
-  
-  *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverAction >(result SWIG_NO_NULL_DELETER_0) : 0;
-  
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverActionParser_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  AdaptiveCards::PopoverActionParser *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (AdaptiveCards::PopoverActionParser *)new AdaptiveCards::PopoverActionParser();
-  
-  *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverActionParser >(result SWIG_NO_NULL_DELETER_1) : 0;
-  
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverActionParser_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  AdaptiveCards::PopoverActionParser *arg1 = 0 ;
-  AdaptiveCards::PopoverActionParser *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  
-  arg1 = (AdaptiveCards::PopoverActionParser *)((*(std::shared_ptr< const AdaptiveCards::PopoverActionParser > **)&jarg1) ? (*(std::shared_ptr< const AdaptiveCards::PopoverActionParser > **)&jarg1)->get() : 0);
-  if (!arg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::PopoverActionParser const & reference is null");
-    return 0;
-  } 
-  result = (AdaptiveCards::PopoverActionParser *)new AdaptiveCards::PopoverActionParser((AdaptiveCards::PopoverActionParser const &)*arg1);
-  
-  *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverActionParser >(result SWIG_NO_NULL_DELETER_1) : 0;
-  
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1PopoverActionParser(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  AdaptiveCards::PopoverActionParser *arg1 = (AdaptiveCards::PopoverActionParser *) 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverActionParser > *smartarg1 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  
-  smartarg1 = *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverActionParser *)(smartarg1 ? smartarg1->get() : 0); 
-  (void)arg1; delete smartarg1;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverActionParser_1Deserialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
-  jlong jresult = 0 ;
-  AdaptiveCards::PopoverActionParser *arg1 = (AdaptiveCards::PopoverActionParser *) 0 ;
-  AdaptiveCards::ParseContext *arg2 = 0 ;
-  Json::Value *arg3 = 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverActionParser > *smartarg1 = 0 ;
-  std::shared_ptr< AdaptiveCards::BaseActionElement > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  (void)jarg3_;
-  
-  smartarg1 = *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverActionParser *)(smartarg1 ? smartarg1->get() : 0); 
-  
-  arg2 = (AdaptiveCards::ParseContext *)((*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2) ? (*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2)->get() : 0);
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::ParseContext & reference is null");
-    return 0;
-  } 
-  arg3 = *(Json::Value **)&jarg3;
-  if (!arg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Json::Value const & reference is null");
-    return 0;
-  } 
-  result = (arg1)->Deserialize(*arg2,(Json::Value const &)*arg3);
-  *(std::shared_ptr< AdaptiveCards::BaseActionElement > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::BaseActionElement >(result) : 0; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverActionParser_1DeserializeFromString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3) {
-  jlong jresult = 0 ;
-  AdaptiveCards::PopoverActionParser *arg1 = (AdaptiveCards::PopoverActionParser *) 0 ;
-  AdaptiveCards::ParseContext *arg2 = 0 ;
-  std::string *arg3 = 0 ;
-  std::shared_ptr< AdaptiveCards::PopoverActionParser > *smartarg1 = 0 ;
-  std::shared_ptr< AdaptiveCards::BaseActionElement > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  
-  smartarg1 = *(std::shared_ptr<  AdaptiveCards::PopoverActionParser > **)&jarg1;
-  arg1 = (AdaptiveCards::PopoverActionParser *)(smartarg1 ? smartarg1->get() : 0); 
-  
-  arg2 = (AdaptiveCards::ParseContext *)((*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2) ? (*(std::shared_ptr<  AdaptiveCards::ParseContext > **)&jarg2)->get() : 0);
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::ParseContext & reference is null");
-    return 0;
-  } 
-  if(!jarg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
-    return 0;
-  }
-  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
-  if (!arg3_pstr) return 0;
-  std::string arg3_str(arg3_pstr);
-  arg3 = &arg3_str;
-  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
-  result = (arg1)->DeserializeFromString(*arg2,(std::string const &)*arg3);
-  *(std::shared_ptr< AdaptiveCards::BaseActionElement > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::BaseActionElement >(result) : 0; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1ActionSet_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   AdaptiveCards::ActionSet *result = 0 ;
@@ -45848,6 +45824,26 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
     return baseptr;
 }
 
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1SWIGSmartPtrUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    std::shared_ptr< AdaptiveCards::PopoverAction > *argp1;
+    (void)jenv;
+    (void)jcls;
+    argp1 = *(std::shared_ptr< AdaptiveCards::PopoverAction > **)&jarg1;
+    *(std::shared_ptr< AdaptiveCards::BaseActionElement > **)&baseptr = argp1 ? new std::shared_ptr< AdaptiveCards::BaseActionElement >(*argp1) : 0;
+    return baseptr;
+}
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverActionParser_1SWIGSmartPtrUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    std::shared_ptr< AdaptiveCards::PopoverActionParser > *argp1;
+    (void)jenv;
+    (void)jcls;
+    argp1 = *(std::shared_ptr< AdaptiveCards::PopoverActionParser > **)&jarg1;
+    *(std::shared_ptr< AdaptiveCards::ActionElementParser > **)&baseptr = argp1 ? new std::shared_ptr< AdaptiveCards::ActionElementParser >(*argp1) : 0;
+    return baseptr;
+}
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ShowCardAction_1SWIGSmartPtrUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
     jlong baseptr = 0;
     std::shared_ptr< AdaptiveCards::ShowCardAction > *argp1;
@@ -46032,26 +46028,6 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
     (void)jenv;
     (void)jcls;
     argp1 = *(std::shared_ptr< AdaptiveCards::ToggleVisibilityActionParser > **)&jarg1;
-    *(std::shared_ptr< AdaptiveCards::ActionElementParser > **)&baseptr = argp1 ? new std::shared_ptr< AdaptiveCards::ActionElementParser >(*argp1) : 0;
-    return baseptr;
-}
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1SWIGSmartPtrUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-    jlong baseptr = 0;
-    std::shared_ptr< AdaptiveCards::PopoverAction > *argp1;
-    (void)jenv;
-    (void)jcls;
-    argp1 = *(std::shared_ptr< AdaptiveCards::PopoverAction > **)&jarg1;
-    *(std::shared_ptr< AdaptiveCards::BaseActionElement > **)&baseptr = argp1 ? new std::shared_ptr< AdaptiveCards::BaseActionElement >(*argp1) : 0;
-    return baseptr;
-}
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverActionParser_1SWIGSmartPtrUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-    jlong baseptr = 0;
-    std::shared_ptr< AdaptiveCards::PopoverActionParser > *argp1;
-    (void)jenv;
-    (void)jcls;
-    argp1 = *(std::shared_ptr< AdaptiveCards::PopoverActionParser > **)&jarg1;
     *(std::shared_ptr< AdaptiveCards::ActionElementParser > **)&baseptr = argp1 ? new std::shared_ptr< AdaptiveCards::ActionElementParser >(*argp1) : 0;
     return baseptr;
 }
