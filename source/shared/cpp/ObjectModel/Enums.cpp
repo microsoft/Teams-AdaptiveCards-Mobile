@@ -307,13 +307,13 @@ namespace AdaptiveCards
             {ActionType::Unsupported, "Unsupported"},
             {ActionType::Execute, "Action.Execute"},
             {ActionType::OpenUrl, "Action.OpenUrl"},
+            {ActionType::Popover, "Action.Popover"},
             {ActionType::ShowCard, "Action.ShowCard"},
             {ActionType::Submit, "Action.Submit"},
             {ActionType::ToggleVisibility, "Action.ToggleVisibility"},
             {ActionType::Custom, "Custom"},
             {ActionType::UnknownAction, "UnknownAction"},
-            {ActionType::Overflow, "Overflow"},
-            {ActionType::Popover, "Action.Popover"}});
+            {ActionType::Overflow, "Overflow"}});
 
     DEFINE_ADAPTIVECARD_ENUM(HeightType, {
             {HeightType::Auto, "Auto"},

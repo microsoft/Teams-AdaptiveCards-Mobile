@@ -458,13 +458,13 @@ enum class ActionType
     Unsupported = 0,
     Execute,
     OpenUrl,
+    Popover,
     ShowCard,
     Submit,
     ToggleVisibility,
     Custom,
     UnknownAction,
-    Overflow,
-    Popover
+    Overflow
 };
 DECLARE_ADAPTIVECARD_ENUM(ActionType);
 
