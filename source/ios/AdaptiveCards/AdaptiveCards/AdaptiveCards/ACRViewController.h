@@ -21,5 +21,9 @@
 
 @interface ACRViewController : UIViewController
 
-- (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config frame:(CGRect)frame delegate:(id<ACRActionDelegate>)acrActionDelegate;
+- (instancetype)init:(ACOAdaptiveCard *)card
+          hostconfig:(ACOHostConfig *)config
+               frame:(CGRect)frame
+            delegate:(id<ACRActionDelegate>)acrActionDelegate
+               theme:(ACRTheme)theme;
 @end

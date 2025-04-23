@@ -107,6 +107,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/Util.cpp
              ../../shared/cpp/ObjectModel/ValueChangedAction.cpp
              ../../shared/cpp/ObjectModel/Badge.cpp
+             ../../shared/cpp/ObjectModel/ThemedUrl.cpp
              src/main/cpp/objectmodel_wrap.cpp
              )
 

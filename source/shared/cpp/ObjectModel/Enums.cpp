@@ -263,6 +263,9 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"},
             {AdaptiveCardSchemaKey::MenuActions, "menuActions"},
+            {AdaptiveCardSchemaKey::ThemedIconUrls, "themedIconUrls"},
+            {AdaptiveCardSchemaKey::ThemedUrls, "themedUrls"},
+            {AdaptiveCardSchemaKey::Theme, "theme"},
             {AdaptiveCardSchemaKey::Content, "content"},
             {AdaptiveCardSchemaKey::DisplayArrow, "displayArrow"},
             {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
@@ -503,6 +506,10 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(Mode, {
             {Mode::Primary, "primary"},
             {Mode::Secondary, "secondary"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(ACTheme, {
+            {ACTheme::Light, "Light"},
+            {ACTheme::Dark, "Dark"}})
 
     DEFINE_ADAPTIVECARD_ENUM(ErrorStatusCode, {
             {ErrorStatusCode::InvalidJson, "InvalidJson"},

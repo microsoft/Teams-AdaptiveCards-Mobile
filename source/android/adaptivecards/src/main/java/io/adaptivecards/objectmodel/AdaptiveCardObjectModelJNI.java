@@ -517,6 +517,9 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getModeEnum();
   public final static native String ModeToString(int jarg1);
   public final static native int ModeFromString(String jarg1);
+  public final static native long getACThemeEnum();
+  public final static native String ACThemeToString(int jarg1);
+  public final static native int ACThemeFromString(String jarg1);
   public final static native long getErrorStatusCodeEnum();
   public final static native String ErrorStatusCodeToString(int jarg1);
   public final static native int ErrorStatusCodeFromString(String jarg1);
@@ -713,7 +716,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void BaseActionElement_SetTitleSwigExplicitBaseActionElement__SWIG_0(long jarg1, BaseActionElement jarg1_, long jarg2);
   public final static native void BaseActionElement_SetTitle__SWIG_1(long jarg1, BaseActionElement jarg1_, String jarg2);
   public final static native void BaseActionElement_SetTitleSwigExplicitBaseActionElement__SWIG_1(long jarg1, BaseActionElement jarg1_, String jarg2);
-  public final static native String BaseActionElement_GetIconUrl(long jarg1, BaseActionElement jarg1_);
+  public final static native String BaseActionElement_GetIconUrl__SWIG_0(long jarg1, BaseActionElement jarg1_, int jarg2);
+  public final static native String BaseActionElement_GetIconUrl__SWIG_1(long jarg1, BaseActionElement jarg1_);
   public final static native String BaseActionElement_GetSVGPath__SWIG_0(long jarg1, BaseActionElement jarg1_);
   public final static native String BaseActionElement_GetSVGPath__SWIG_1(long jarg1, BaseActionElement jarg1_, String jarg2);
   public final static native void BaseActionElement_SetIconUrl__SWIG_0(long jarg1, BaseActionElement jarg1_, long jarg2);
@@ -742,6 +746,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long BaseActionElement_DeserializeBasePropertiesFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native long BaseActionElement_DeserializeBaseProperties(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native void BaseActionElement_ParseJsonObject(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_, long jarg3, BaseElement jarg3_);
+  public final static native boolean BaseActionElement_IsSplitActionSupported(int jarg1);
+  public final static native boolean BaseActionElement_IsValidMenuAction(int jarg1);
   public final static native java.lang.Object BaseActionElement_swigOriginalObject(long jarg1, BaseActionElement jarg1_);
   public final static native long BaseActionElement_dynamic_cast(long jarg1, BaseElement jarg1_);
   public final static native void BaseActionElement_director_connect(BaseActionElement obj, long cptr, boolean mem_own, boolean weak_global);
@@ -765,7 +771,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long new_BackgroundImage__SWIG_0();
   public final static native long new_BackgroundImage__SWIG_1(String jarg1);
   public final static native long new_BackgroundImage__SWIG_2(String jarg1, int jarg2, int jarg3, int jarg4);
-  public final static native String BackgroundImage_GetUrl(long jarg1, BackgroundImage jarg1_);
+  public final static native String BackgroundImage_GetUrl__SWIG_0(long jarg1, BackgroundImage jarg1_, int jarg2);
+  public final static native String BackgroundImage_GetUrl__SWIG_1(long jarg1, BackgroundImage jarg1_);
   public final static native void BackgroundImage_SetUrl(long jarg1, BackgroundImage jarg1_, String jarg2);
   public final static native int BackgroundImage_GetFillMode(long jarg1, BackgroundImage jarg1_);
   public final static native void BackgroundImage_SetFillMode(long jarg1, BackgroundImage jarg1_, int jarg2);
@@ -930,8 +937,10 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long new_Image__SWIG_0();
   public final static native long new_Image__SWIG_1(long jarg1, Image jarg1_);
   public final static native void delete_Image(long jarg1);
+  public final static native long new_Image__SWIG_3(String jarg1);
   public final static native long Image_SerializeToJsonValue(long jarg1, Image jarg1_);
-  public final static native String Image_GetUrl(long jarg1, Image jarg1_);
+  public final static native String Image_GetUrl__SWIG_0(long jarg1, Image jarg1_, int jarg2);
+  public final static native String Image_GetUrl__SWIG_1(long jarg1, Image jarg1_);
   public final static native void Image_SetUrl(long jarg1, Image jarg1_, String jarg2);
   public final static native String Image_GetBackgroundColor(long jarg1, Image jarg1_);
   public final static native void Image_SetBackgroundColor(long jarg1, Image jarg1_, String jarg2);
@@ -2261,6 +2270,14 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_BadgeParser(long jarg1);
   public final static native long BadgeParser_Deserialize(long jarg1, BadgeParser jarg1_, long jarg2, ParseContext jarg2_, long jarg3, JsonValue jarg3_);
   public final static native long BadgeParser_DeserializeFromString(long jarg1, BadgeParser jarg1_, long jarg2, ParseContext jarg2_, String jarg3);
+  public final static native long new_ThemedUrl__SWIG_0();
+  public final static native long new_ThemedUrl__SWIG_1(long jarg1, ThemedUrl jarg1_);
+  public final static native void delete_ThemedUrl(long jarg1);
+  public final static native long ThemedUrl_SerializeToJsonValue(long jarg1, ThemedUrl jarg1_);
+  public final static native long ThemedUrl_Deserialize(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
+  public final static native int ThemedUrl_GetTheme(long jarg1, ThemedUrl jarg1_);
+  public final static native String ThemedUrl_GetUrl(long jarg1, ThemedUrl jarg1_);
+  public final static native String ThemedUrl_GetThemedUrl(int jarg1, long jarg2, String jarg3);
   public final static native long ActionElementParserWrapper_SWIGSmartPtrUpcast(long jarg1);
   public final static native long BaseCardElementParserWrapper_SWIGSmartPtrUpcast(long jarg1);
   public final static native long BaseCardElement_SWIGSmartPtrUpcast(long jarg1);

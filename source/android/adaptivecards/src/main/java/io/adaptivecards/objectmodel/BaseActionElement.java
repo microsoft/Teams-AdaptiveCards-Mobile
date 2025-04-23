@@ -91,8 +91,12 @@ public class BaseActionElement extends BaseElement {
     if (getClass() == BaseActionElement.class) AdaptiveCardObjectModelJNI.BaseActionElement_SetTitle__SWIG_1(swigCPtr, this, value); else AdaptiveCardObjectModelJNI.BaseActionElement_SetTitleSwigExplicitBaseActionElement__SWIG_1(swigCPtr, this, value);
   }
 
+  public String GetIconUrl(ACTheme theme) {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_GetIconUrl__SWIG_0(swigCPtr, this, theme.swigValue());
+  }
+
   public String GetIconUrl() {
-    return AdaptiveCardObjectModelJNI.BaseActionElement_GetIconUrl(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.BaseActionElement_GetIconUrl__SWIG_1(swigCPtr, this);
   }
 
   public String GetSVGPath() {
@@ -191,6 +195,14 @@ public class BaseActionElement extends BaseElement {
 
   public static void ParseJsonObject(ParseContext context, JsonValue json, BaseElement element) {
     AdaptiveCardObjectModelJNI.BaseActionElement_ParseJsonObject(ParseContext.getCPtr(context), context, JsonValue.getCPtr(json), json, BaseElement.getCPtr(element), element);
+  }
+
+  public static boolean IsSplitActionSupported(ActionType actionType) {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_IsSplitActionSupported(actionType.swigValue());
+  }
+
+  public static boolean IsValidMenuAction(ActionType actionType) {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_IsValidMenuAction(actionType.swigValue());
   }
 
   public java.lang.Object swigOriginalObject() {

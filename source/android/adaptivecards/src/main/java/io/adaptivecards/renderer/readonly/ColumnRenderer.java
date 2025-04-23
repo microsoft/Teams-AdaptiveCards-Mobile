@@ -177,7 +177,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
             }
         }
 
-        ContainerRenderer.setBackgroundImage(renderedCard, context, column.GetBackgroundImage(), hostConfig, columnLayout);
+        ContainerRenderer.setBackgroundImage(renderedCard, context, column.GetBackgroundImage(), hostConfig, renderArgs, columnLayout);
 
         ContainerRenderer.applyVerticalContentAlignment(columnLayout, column.GetVerticalContentAlignment(), layoutToApply);
 

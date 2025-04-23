@@ -361,6 +361,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return Mode.swigToEnum(AdaptiveCardObjectModelJNI.ModeFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ACTheme_t getACThemeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ACTheme_t(AdaptiveCardObjectModelJNI.getACThemeEnum(), false);
+  }
+
+  public static String ACThemeToString(ACTheme t) {
+    return AdaptiveCardObjectModelJNI.ACThemeToString(t.swigValue());
+  }
+
+  public static ACTheme ACThemeFromString(String t) {
+    return ACTheme.swigToEnum(AdaptiveCardObjectModelJNI.ACThemeFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ErrorStatusCode_t getErrorStatusCodeEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ErrorStatusCode_t(AdaptiveCardObjectModelJNI.getErrorStatusCodeEnum(), false);
   }

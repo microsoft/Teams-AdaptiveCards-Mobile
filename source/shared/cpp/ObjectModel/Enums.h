@@ -265,6 +265,9 @@ enum class AdaptiveCardSchemaKey
     SelectedTintColor,
     ExtraSmall,
     MenuActions,
+    ThemedIconUrls,
+    ThemedUrls,
+    Theme,
     Content,
     DisplayArrow,
     MaxPopoverWidth,
@@ -552,6 +555,14 @@ enum class Mode
 };
 DECLARE_ADAPTIVECARD_ENUM(Mode);
 
+enum class ACTheme
+{
+    None = 0,
+    Light,
+    Dark
+};
+DECLARE_ADAPTIVECARD_ENUM(ACTheme)
+
 enum class ErrorStatusCode
 {
     InvalidJson = 0,
@@ -647,7 +658,8 @@ inline ContainerBleedDirection& operator&=(ContainerBleedDirection& a, Container
 enum class IconPlacement
 {
     AboveTitle = 0,
-    LeftOfTitle
+    LeftOfTitle,
+    RightOfTitle
 };
 DECLARE_ADAPTIVECARD_ENUM(IconPlacement);
 

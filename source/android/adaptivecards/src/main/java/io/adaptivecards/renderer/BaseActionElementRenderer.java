@@ -30,6 +30,7 @@ import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityTarget;
 import io.adaptivecards.objectmodel.ToggleVisibilityTargetVector;
+import io.adaptivecards.renderer.action.ActionElementUtils;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 
 public abstract class BaseActionElementRenderer implements IBaseActionElementRenderer
@@ -52,7 +53,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
 
         public SelectActionOnClickListener(RenderedAdaptiveCard renderedCard, BaseActionElement action, ICardActionHandler cardActionHandler)
         {
-            super(renderedCard, action, cardActionHandler, null);
+            super(renderedCard, action, cardActionHandler, false);
 
             if (m_action.GetElementType() == ActionType.ShowCard)
             {
@@ -82,7 +83,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             RenderedAdaptiveCard renderedCard,
             BaseActionElement baseActionElement,
             ICardActionHandler cardActionHandler) {
-            return new ActionOnClickListener(renderedCard,  baseActionElement, cardActionHandler, null);
+            return new ActionOnClickListener(renderedCard,  baseActionElement, cardActionHandler, false);
         }
 
         public static ActionOnClickListener newInstance(
@@ -94,7 +95,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             ICardActionHandler cardActionHandler,
             HostConfig hostConfig,
             RenderArgs renderArgs) {
-            return newInstance(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, null);
+            return newInstance(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, false);
         }
 
         public static ActionOnClickListener newInstance(
@@ -106,8 +107,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             ICardActionHandler cardActionHandler,
             HostConfig hostConfig,
             RenderArgs renderArgs,
-            @Nullable View adaptiveCardView) {
-            return new ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, adaptiveCardView);
+            boolean isMenuAction) {
+            return new ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, isMenuAction);
         }
 
         /**
@@ -119,6 +120,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
          * @param baseActionElement
          * @param cardActionHandler
          * @param hostConfig
+         * @param renderArgs
+         * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
          */
         protected ActionOnClickListener(RenderedAdaptiveCard renderedCard,
                                      Context context,
@@ -128,9 +131,10 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                                      ICardActionHandler cardActionHandler,
                                      HostConfig hostConfig,
                                      RenderArgs renderArgs,
-                                     @Nullable View adaptiveCardView)
+                                     boolean isMenuAction)
         {
-            this(renderedCard, baseActionElement, cardActionHandler, adaptiveCardView);
+            // comment added to avoid the warning
+            this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
             m_isInlineShowCardAction = (baseActionElement.GetElementType() == ActionType.ShowCard) && (hostConfig.GetActions().getShowCard().getActionMode() == ActionMode.Inline);
 
             // As SelectAction doesn't support ShowCard actions, then this line won't be executed
@@ -145,17 +149,18 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
          * @param renderedCard
          * @param baseActionElement
          * @param cardActionHandler
+         * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
          */
         protected ActionOnClickListener(
             RenderedAdaptiveCard renderedCard,
             BaseActionElement baseActionElement,
             ICardActionHandler cardActionHandler,
-            @Nullable View adaptiveCardView)
+            boolean isMenuAction)
         {
             m_action = baseActionElement;
             m_renderedAdaptiveCard = renderedCard;
             m_cardActionHandler = cardActionHandler;
-            m_adaptiveCardView = adaptiveCardView;
+            m_isMenuAction = isMenuAction;
 
             // In case of the action being a ToggleVisibility action, store the action as ToggleVisibility action so no recasting must be made
             if (m_action.GetElementType() == ActionType.ToggleVisibility)
@@ -375,31 +380,49 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
-        private boolean isOverflowMenuScenarioAllowed(@NonNull BaseActionElement baseActionElement) {
-            return m_adaptiveCardView == null && baseActionElement.GetIsSplitAction();
+        // Identifies if this action is primary action(not menu action) and contains menu actions in it
+        private boolean areMenuActionsPresent(@NonNull BaseActionElement baseActionElement) {
+            return !m_isMenuAction && ActionElementUtils.isSplitAction(baseActionElement);
         }
 
         /***
-         * Handle overflow menu scenario for the given action element.
+         * Handle menu actions scenario for the given action element.
          * By default this is a no-op. Subclasses can override this method
          * to define the required behavior.
          *
          * @return Boolean - true if scenario is handled, false if not.
          * Default return type is false.
          */
-        protected boolean handleOverflowMenuScenario(@NonNull View view, @NonNull BaseActionElement baseActionElement) {
+        protected boolean handleMenuActionsScenario(@NonNull View view, @NonNull BaseActionElement baseActionElement) {
+            return false;
+        }
+
+        // Identifies if this action is show card action
+        private boolean isShowCardAction(@NonNull BaseActionElement baseActionElement) {
+            return baseActionElement.GetElementType() == ActionType.ShowCard;
+        }
+
+        /***
+         * Handle show card scenario for the given action element.
+         * By default this is a no-op. Subclasses can override this method
+         * to define the required behavior.
+         *
+         * @return Boolean - true if scenario is handled, false if not.
+         * Default return type is false.
+         */
+        protected boolean handleShowCardScenario(@NonNull View view, @NonNull BaseActionElement baseActionElement) {
             return false;
         }
 
         @Override
         public void onClick(View view)
         {
-            if (isOverflowMenuScenarioAllowed(m_action) && handleOverflowMenuScenario(view, m_action)) {
+            if (areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
                 return;
             }
 
-            if (m_adaptiveCardView != null) {
-                view = m_adaptiveCardView;
+            if (isShowCardAction(m_action) && handleShowCardScenario(view, m_action)) {
+                return;
             }
 
             m_renderedAdaptiveCard.clearValidatedInputs();
@@ -457,7 +480,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         private HashMap<String, View> m_viewDictionary = null;
         private ToggleVisibilityAction m_toggleVisibilityAction = null;
 
-        // Information for handling OverflowMenu scenario for actions
-        private final @Nullable View m_adaptiveCardView;
+        // Information for handling SplitAction scenario for actions
+        private final boolean m_isMenuAction;
     }
 }
