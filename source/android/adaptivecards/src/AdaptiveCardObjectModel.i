@@ -143,6 +143,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/TimeInput.h"
 #include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 #include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
+#include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 #include "../../../shared/cpp/ObjectModel/SemanticVersion.h"
 #include "../../../shared/cpp/ObjectModel/ShowCardAction.h"
 #include "../../../shared/cpp/ObjectModel/SubmitAction.h"
@@ -168,7 +169,6 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/Media.h"
 #include "../../../shared/cpp/ObjectModel/ToggleVisibilityAction.h"
 #include "../../../shared/cpp/ObjectModel/ToggleVisibilityTarget.h"
-#include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 #include "../../../shared/cpp/ObjectModel/UnknownElement.h"
 #include "../../../shared/cpp/ObjectModel/UnknownAction.h"
 #include "../../../shared/cpp/ObjectModel/TextElementProperties.h"
@@ -262,6 +262,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ToggleInputParser)
 %shared_ptr(AdaptiveCards::ExecuteActionParser)
 %shared_ptr(AdaptiveCards::OpenUrlActionParser)
+%shared_ptr(AdaptiveCards::PopoverAction)
+%shared_ptr(AdaptiveCards::PopoverActionParser)
 %shared_ptr(AdaptiveCards::ShowCardActionParser)
 %shared_ptr(AdaptiveCards::SubmitActionParser)
 %shared_ptr(AdaptiveCards::ImageSetParser)
@@ -275,8 +277,6 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ToggleVisibilityTarget)
 %shared_ptr(AdaptiveCards::ToggleVisibilityAction)
 %shared_ptr(AdaptiveCards::ToggleVisibilityActionParser)
-%shared_ptr(AdaptiveCards::PopoverAction)
-%shared_ptr(AdaptiveCards::PopoverActionParser)
 %shared_ptr(AdaptiveCards::ActionSet)
 %shared_ptr(AdaptiveCards::ActionSetParser)
 %shared_ptr(AdaptiveCards::UnknownElement)
@@ -1164,6 +1164,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/Refresh.h"
 %include "../../../shared/cpp/ObjectModel/Authentication.h"
 %include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
+%include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 %include "../../../shared/cpp/ObjectModel/ShowCardAction.h"
 %include "../../../shared/cpp/ObjectModel/SubmitAction.h"
 %include "../../../shared/cpp/ObjectModel/ParseResult.h"
@@ -1186,7 +1187,6 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/Media.h"
 %include "../../../shared/cpp/ObjectModel/ToggleVisibilityTarget.h"
 %include "../../../shared/cpp/ObjectModel/ToggleVisibilityAction.h"
-%include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 %include "../../../shared/cpp/ObjectModel/ActionSet.h"
 %include "../../../shared/cpp/ObjectModel/UnknownElement.h"
 %include "../../../shared/cpp/ObjectModel/UnknownAction.h"
