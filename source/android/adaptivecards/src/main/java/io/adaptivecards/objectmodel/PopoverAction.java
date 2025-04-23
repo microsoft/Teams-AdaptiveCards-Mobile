@@ -51,6 +51,10 @@ public class PopoverAction extends BaseActionElement {
     this(AdaptiveCardObjectModelJNI.new_PopoverAction__SWIG_1(PopoverAction.getCPtr(arg0), arg0), true);
   }
 
+  public PopoverAction(BaseCardElement content, boolean displayArrow, String maxPopoverWidth) {
+    this(AdaptiveCardObjectModelJNI.new_PopoverAction__SWIG_3(BaseCardElement.getCPtr(content), content, displayArrow, maxPopoverWidth), true);
+  }
+
   public JsonValue SerializeToJsonValue() {
     return new JsonValue(AdaptiveCardObjectModelJNI.PopoverAction_SerializeToJsonValue(swigCPtr, this), true);
   }
@@ -63,8 +67,8 @@ public class PopoverAction extends BaseActionElement {
     return AdaptiveCardObjectModelJNI.PopoverAction_GetMaxPopoverWidth(swigCPtr, this);
   }
 
-  public String GetPosition() {
-    return AdaptiveCardObjectModelJNI.PopoverAction_GetPosition(swigCPtr, this);
+  public LabelPosition GetPosition() {
+    return LabelPosition.swigToEnum(AdaptiveCardObjectModelJNI.PopoverAction_GetPosition(swigCPtr, this));
   }
 
   public BaseCardElement GetContent() {

@@ -1360,10 +1360,11 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long new_PopoverAction__SWIG_0();
   public final static native long new_PopoverAction__SWIG_1(long jarg1, PopoverAction jarg1_);
   public final static native void delete_PopoverAction(long jarg1);
+  public final static native long new_PopoverAction__SWIG_3(long jarg1, BaseCardElement jarg1_, boolean jarg2, String jarg3);
   public final static native long PopoverAction_SerializeToJsonValue(long jarg1, PopoverAction jarg1_);
   public final static native boolean PopoverAction_GetDisplayArrow(long jarg1, PopoverAction jarg1_);
   public final static native String PopoverAction_GetMaxPopoverWidth(long jarg1, PopoverAction jarg1_);
-  public final static native String PopoverAction_GetPosition(long jarg1, PopoverAction jarg1_);
+  public final static native int PopoverAction_GetPosition(long jarg1, PopoverAction jarg1_);
   public final static native long PopoverAction_GetContent(long jarg1, PopoverAction jarg1_);
   public final static native long PopoverAction_dynamic_cast(long jarg1, BaseActionElement jarg1_);
   public final static native long new_PopoverActionParser__SWIG_0();

@@ -28245,6 +28245,36 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverAction_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2, jstring jarg3) {
+  jlong jresult = 0 ;
+  std::shared_ptr< AdaptiveCards::BaseCardElement > arg1 ;
+  bool arg2 ;
+  std::string arg3 ;
+  std::shared_ptr< AdaptiveCards::BaseCardElement > *argp1 ;
+  AdaptiveCards::PopoverAction *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  argp1 = *(std::shared_ptr< AdaptiveCards::BaseCardElement > **)&jarg1;
+  if (argp1) arg1 = *argp1; 
+  arg2 = jarg2 ? true : false; 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  } 
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  (&arg3)->assign(arg3_pstr);
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  result = (AdaptiveCards::PopoverAction *)new AdaptiveCards::PopoverAction(arg1,arg2,arg3);
+  
+  *(std::shared_ptr<  AdaptiveCards::PopoverAction > **)&jresult = result ? new std::shared_ptr<  AdaptiveCards::PopoverAction >(result SWIG_NO_NULL_DELETER_1) : 0;
+  
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1SerializeToJsonValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
@@ -28299,11 +28329,11 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetPosition(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverAction_1GetPosition(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   AdaptiveCards::PopoverAction *arg1 = (AdaptiveCards::PopoverAction *) 0 ;
   std::shared_ptr< AdaptiveCards::PopoverAction const > *smartarg1 = 0 ;
-  std::string result;
+  AdaptiveCards::LabelPosition result;
   
   (void)jenv;
   (void)jcls;
@@ -28311,8 +28341,8 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
   
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::PopoverAction > **)&jarg1;
   arg1 = (AdaptiveCards::PopoverAction *)(smartarg1 ? smartarg1->get() : 0); 
-  result = ((AdaptiveCards::PopoverAction const *)arg1)->GetPosition();
-  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  result = (AdaptiveCards::LabelPosition)((AdaptiveCards::PopoverAction const *)arg1)->GetPosition();
+  jresult = (jint)result; 
   return jresult;
 }
 
