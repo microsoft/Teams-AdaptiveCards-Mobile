@@ -269,6 +269,7 @@ public enum AdaptiveCardSchemaKey {
   ThemedIconUrls,
   ThemedUrls,
   Theme,
+  LabelPosition,
   Content,
   DisplayArrow,
   MaxPopoverWidth,

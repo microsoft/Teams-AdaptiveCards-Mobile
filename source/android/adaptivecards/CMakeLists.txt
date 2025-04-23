@@ -108,6 +108,8 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/ValueChangedAction.cpp
              ../../shared/cpp/ObjectModel/Badge.cpp
              ../../shared/cpp/ObjectModel/ThemedUrl.cpp
+             ../../shared/cpp/ObjectModel/ProgressBar.cpp
+             ../../shared/cpp/ObjectModel/ProgressRing.cpp
              src/main/cpp/objectmodel_wrap.cpp
              )
 

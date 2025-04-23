@@ -268,6 +268,7 @@ enum class AdaptiveCardSchemaKey
     ThemedIconUrls,
     ThemedUrls,
     Theme,
+    LabelPosition,
     Content,
     DisplayArrow,
     MaxPopoverWidth,
@@ -309,6 +310,8 @@ enum class CardElementType
     Carousel,
     CarouselPage,
     Badge,
+    ProgressBar,
+    ProgressRing,
     Unknown
 };
 DECLARE_ADAPTIVECARD_ENUM(CardElementType);
@@ -766,6 +769,22 @@ enum class Shape
 };
 DECLARE_ADAPTIVECARD_ENUM(Shape);
 
+enum class LabelPosition {
+    Above,
+    Below,
+    Before,
+    After
+};
+DECLARE_ADAPTIVECARD_ENUM(LabelPosition)
+
+enum class ProgressSize {
+    Tiny,
+    Small,
+    Medium,
+    Large
+};
+DECLARE_ADAPTIVECARD_ENUM(ProgressSize)
+
 enum class BadgeStyle
 {
     Default,
@@ -792,4 +811,13 @@ enum class BadgeAppearance
     Tint
 };
 DECLARE_ADAPTIVECARD_ENUM(BadgeAppearance);
-} // namespace AdaptiveCards
+
+enum class ProgressBarColor {
+    Accent,
+    Attention,
+    Good,
+    Warning
+};
+DECLARE_ADAPTIVECARD_ENUM(ProgressBarColor);
+}
+// namespace AdaptiveCards

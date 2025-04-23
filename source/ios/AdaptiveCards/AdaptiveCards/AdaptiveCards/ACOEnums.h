@@ -55,6 +55,8 @@ typedef NS_ENUM(NSInteger, ACRCardElementType) {
     ACRCarousel,
     ACRCarouselPage,
     ACRBadge,
+    ACRProgressBar,
+    ACRProgressRing,
     ACRUnknown
 };
 
