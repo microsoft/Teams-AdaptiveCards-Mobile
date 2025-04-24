@@ -446,7 +446,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             {
                 handleToggleVisibilityAction(view);
             } else if (m_action.GetElementType() == ActionType.Popover) {
-                handlePopoverAction((PopoverAction) m_action);
+                handlePopoverAction(Util.castTo(m_action, PopoverAction.class));
             }
             else
             {
