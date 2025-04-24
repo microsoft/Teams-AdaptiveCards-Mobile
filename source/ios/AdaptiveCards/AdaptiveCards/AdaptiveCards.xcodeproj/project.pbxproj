@@ -37,6 +37,8 @@
 		37A8DF532DB79C8800F3A23F /* ProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A8DF4F2DB79C8800F3A23F /* ProgressBar.cpp */; };
 		37A8DF542DB79C8800F3A23F /* ProgressRing.h in Headers */ = {isa = PBXBuildFile; fileRef = 37A8DF502DB79C8800F3A23F /* ProgressRing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37A8DF552DB79C8800F3A23F /* ProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 37A8DF4E2DB79C8800F3A23F /* ProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		37CC40ED2DBA1BD9004D5C66 /* PopoverAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CC40EC2DBA1BD9004D5C66 /* PopoverAction.cpp */; };
+		37CC40EE2DBA1BD9004D5C66 /* PopoverAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 37CC40EB2DBA1BD9004D5C66 /* PopoverAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		46058FCF2C5CCBAA00966E76 /* Layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 46058FCE2C5CCBAA00966E76 /* Layout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		46058FD12C5CCBED00966E76 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46058FD02C5CCBED00966E76 /* Layout.cpp */; };
 		46058FD42C5CEEFE00966E76 /* FlowLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46058FD22C5CEEFE00966E76 /* FlowLayout.cpp */; };
@@ -569,6 +571,8 @@
 		37A8DF4F2DB79C8800F3A23F /* ProgressBar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressBar.cpp; path = ../../../../shared/cpp/ObjectModel/ProgressBar.cpp; sourceTree = "<group>"; };
 		37A8DF502DB79C8800F3A23F /* ProgressRing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProgressRing.h; path = ../../../../shared/cpp/ObjectModel/ProgressRing.h; sourceTree = "<group>"; };
 		37A8DF512DB79C8800F3A23F /* ProgressRing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressRing.cpp; path = ../../../../shared/cpp/ObjectModel/ProgressRing.cpp; sourceTree = "<group>"; };
+		37CC40EB2DBA1BD9004D5C66 /* PopoverAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PopoverAction.h; path = ../../../../shared/cpp/ObjectModel/PopoverAction.h; sourceTree = "<group>"; };
+		37CC40EC2DBA1BD9004D5C66 /* PopoverAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PopoverAction.cpp; path = ../../../../shared/cpp/ObjectModel/PopoverAction.cpp; sourceTree = "<group>"; };
 		3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		46058FCE2C5CCBAA00966E76 /* Layout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Layout.h; path = ../../../../shared/cpp/ObjectModel/Layout.h; sourceTree = "<group>"; };
@@ -1466,6 +1470,8 @@
 		F423C0D71EE1FF2F00905679 /* SharedLib */ = {
 			isa = PBXGroup;
 			children = (
+				37CC40EB2DBA1BD9004D5C66 /* PopoverAction.h */,
+				37CC40EC2DBA1BD9004D5C66 /* PopoverAction.cpp */,
 				37A8DF4E2DB79C8800F3A23F /* ProgressBar.h */,
 				37A8DF4F2DB79C8800F3A23F /* ProgressBar.cpp */,
 				37A8DF502DB79C8800F3A23F /* ProgressRing.h */,
@@ -2051,6 +2057,7 @@
 				6B8C765326449B09009548FA /* Table.h in Headers */,
 				6BFCA141264F54B500195CA7 /* ACRTableView.h in Headers */,
 				CFF954D029819AC300F321C3 /* ACOTypeaheadDebouncer.h in Headers */,
+				37CC40EE2DBA1BD9004D5C66 /* PopoverAction.h in Headers */,
 				6BFF24142714EF2200183C59 /* UtiliOS.h in Headers */,
 				6BFF24082714E30B00183C59 /* ACRShowCardTarget.h in Headers */,
 				46CBB63C2C22BA33008FC5D5 /* CompoundButton.h in Headers */,
@@ -2435,6 +2442,7 @@
 				6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */,
 				B37FE7572CBEAAEC00537817 /* ACRBadgeRenderer.mm in Sources */,
 				B37FE7582CBEAAEC00537817 /* ACRBadgeView.mm in Sources */,
+				37CC40ED2DBA1BD9004D5C66 /* PopoverAction.cpp in Sources */,
 				F4F44B6E203FAF9300A2F24C /* ACRUILabel.mm in Sources */,
 				F4F44B7C20478C5C00A2F24C /* DateTimePreparsedToken.cpp in Sources */,
 				46731C0C2CBD198F0092B7A9 /* Badge.cpp in Sources */,
