@@ -107,6 +107,14 @@
           withConfig:(ACOHostConfig *)config
   widthToHeightRatio:(float)widthToHeightRatio
 {
+    [self setImageView:image withConfig:config widthToHeightRatio:widthToHeightRatio imageSize:CGSizeZero];
+}
+
+- (void)setImageView:(UIImage *)image
+          withConfig:(ACOHostConfig *)config
+  widthToHeightRatio:(float)widthToHeightRatio
+           imageSize:(CGSize)imgSize
+{
     float imageHeight = 0.0f;
     CGSize contentSize = [self.titleLabel intrinsicContentSize];
     
@@ -121,7 +129,7 @@
         widthToHeightRatio = image.size.width / image.size.height;
     }
     
-    CGSize imageSize = CGSizeMake(imageHeight * widthToHeightRatio, imageHeight);
+    CGSize imageSize = CGSizeEqualToSize(imgSize, CGSizeZero) ? CGSizeMake(imageHeight * widthToHeightRatio, imageHeight) : imgSize;
     _iconView.translatesAutoresizingMaskIntoConstraints = NO;
     
     // scale the image using UIImageView
@@ -168,7 +176,7 @@
         [self setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -imageHeight - iconPadding, 0)];
         CGFloat insetConstant = (imageSize.height + iconPadding) / 2;
         [self setContentEdgeInsets:UIEdgeInsetsMake(self.contentEdgeInsets.top + insetConstant, 0, self.contentEdgeInsets.bottom + insetConstant, 0)];
-    } else if (_iconPlacement != ACRNoTitle) {
+    } else if (_iconPlacement == ACRLeftOfTitle) {
         int npadding = 0;
         if (self.doesItHaveAnImageView) {
             iconPadding += (self.imageView.frame.size.width + iconPadding);
@@ -188,6 +196,48 @@
         
         [self.titleLabel.centerXAnchor constraintEqualToAnchor:self.centerXAnchor constant:(widthOffset / 2)].active = YES;
         
+        self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
+        self.heightConstraint.active = YES;
+    } else if (_iconPlacement == ACRRightOfTitle) {
+        int npadding = 0;
+        if (self.doesItHaveAnImageView) {
+            iconPadding += (self.imageView.frame.size.width + iconPadding);
+            npadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+        }
+
+        CGFloat widthOffset = (imageSize.width + iconPadding);
+
+        // Adjust content insets to accommodate icon on the right
+        [self setContentEdgeInsets:UIEdgeInsetsMake(
+            self.contentEdgeInsets.top,
+            self.contentEdgeInsets.left + widthOffset / 2,
+            self.contentEdgeInsets.bottom,
+            self.contentEdgeInsets.right + widthOffset / 2
+        )];
+
+        // Move the title slightly left, and account for spacing
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -iconPadding, 0, npadding + imageSize.width)];
+
+        [_iconView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor constant:iconPadding].active = YES;
+
+        [NSLayoutConstraint constraintWithItem:_iconView
+                                     attribute:NSLayoutAttributeCenterY
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeCenterY
+                                    multiplier:1.0
+                                      constant:0].active = YES;
+
+        CGFloat offset = -(self.contentEdgeInsets.left + self.contentEdgeInsets.right);
+
+        // Title should not exceed button width minus edge insets
+        self.titleWidthConstraint = [self.titleLabel.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor constant:offset];
+        self.titleWidthConstraint.active = YES;
+
+        // Shift title to left slightly to visually center the whole content (title + icon)
+        [self.titleLabel.centerXAnchor constraintEqualToAnchor:self.centerXAnchor constant:-(widthOffset / 2)].active = YES;
+
+        // Ensure button height is enough for title + insets
         self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
         self.heightConstraint.active = YES;
     }
@@ -226,7 +276,8 @@
     NSString *iconURL = [NSString stringWithCString:action->GetIconUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
     UIImage *img = imageViewMap[key];
-    button.iconPlacement = [ACRButton getIconPlacmentAtCurrentContext:rootView url:key];
+    button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key];
+    BOOL isSplitButton = action->GetIsSplitAction();
     
     if (img) {
         UIImageView *iconView = [[ACRUIImageView alloc] init];
@@ -266,6 +317,26 @@
     } else {
         button.heightConstraint = [button.heightAnchor constraintGreaterThanOrEqualToAnchor:button.titleLabel.heightAnchor constant:button.contentEdgeInsets.top + button.contentEdgeInsets.bottom];
         button.heightConstraint.active = YES;
+    }
+    
+    if (isSplitButton)
+    {
+        NSString *chevronDownIcon = @"ChevronDown";
+        NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];
+        CGSize iconSize = CGSizeMake(16, 16);
+        UIImageView *view = [[ACRSVGImageView alloc] init:url rtl:rootView.context.rtl isFilled:true size:iconSize tintColor:button.currentTitleColor];
+        view.translatesAutoresizingMaskIntoConstraints = NO;
+        [button addSubview:view];
+        if (button.iconView == nil)
+        {
+            button.iconPlacement = ACRRightOfTitle;
+            button.iconView = view;
+            [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f imageSize:iconSize];
+        }
+        else
+        {
+            [button setTrailingIcon:view WithConfig:config];
+        }
     }
     
     if (button.isEnabled == NO) {
@@ -308,7 +379,7 @@
     return (self.actionType == ACRShowCard && self.imageView && self.imageView.frame.size.width);
 }
 
-+ (ACRIconPlacement)getIconPlacmentAtCurrentContext:(ACRView *)rootView url:(NSString *)key
++ (ACRIconPlacement)getIconPlacementAtCurrentContext:(ACRView *)rootView url:(NSString *)key
 {
     if (!key or key.length == 0) {
         return ACRNoTitle;
@@ -319,6 +390,50 @@
     }
     
     return ACRLeftOfTitle;
+}
+
+- (void)setTrailingIcon:(UIImageView *)imageView WithConfig:(ACOHostConfig *)config
+{
+    int npadding = 0;
+    int iconPadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+    if (self.doesItHaveAnImageView) {
+        iconPadding += (self.imageView.frame.size.width + iconPadding);
+        npadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+    }
+
+    CGFloat rightIconWidth = imageView.image.size.width;
+    CGFloat rightOffset = rightIconWidth + iconPadding;
+
+    [self setContentEdgeInsets:UIEdgeInsetsMake(
+        self.contentEdgeInsets.top,
+        self.contentEdgeInsets.left + rightOffset / 2,
+        self.contentEdgeInsets.bottom,
+        self.contentEdgeInsets.right + rightOffset / 2
+    )];
+
+    // Shift title left to make space for the right icon
+    [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -iconPadding, 0, npadding + rightIconWidth)];
+
+    [imageView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor constant:iconPadding].active = YES;
+
+    [NSLayoutConstraint constraintWithItem:imageView
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeCenterY
+                                multiplier:1.0
+                                  constant:0].active = YES;
+
+    CGFloat offset = -(self.contentEdgeInsets.left + self.contentEdgeInsets.right);
+
+    self.titleWidthConstraint = [self.titleLabel.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor constant:offset];
+    self.titleWidthConstraint.active = YES;
+
+    // Move title slightly left to balance the icon on the right
+    [self.titleLabel.centerXAnchor constraintEqualToAnchor:self.centerXAnchor constant:-(rightOffset / 2)].active = YES;
+
+    self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
+    self.heightConstraint.active = YES;
 }
 
 @end
