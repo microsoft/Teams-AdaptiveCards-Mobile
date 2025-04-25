@@ -22,6 +22,7 @@
 @property ACRIconPlacement iconPlacement;
 @property ACRActionType actionType;
 @property __weak UIImageView *iconView;
+@property __weak UIImageView *trailingIconView;
 @property NSLayoutConstraint *heightConstraint;
 @property NSLayoutConstraint *titleWidthConstraint;
 

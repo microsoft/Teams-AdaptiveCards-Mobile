@@ -327,16 +327,7 @@
         UIImageView *view = [[ACRSVGImageView alloc] init:url rtl:rootView.context.rtl isFilled:true size:iconSize tintColor:button.currentTitleColor];
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [button addSubview:view];
-        if (button.iconView == nil)
-        {
-            button.iconPlacement = ACRRightOfTitle;
-            button.iconView = view;
-            [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f imageSize:iconSize];
-        }
-        else
-        {
-            [button setTrailingIcon:view WithConfig:config];
-        }
+        [button setTrailingIcon:view WithConfig:config];
     }
     
     if (button.isEnabled == NO) {
@@ -394,6 +385,7 @@
 
 - (void)setTrailingIcon:(UIImageView *)imageView WithConfig:(ACOHostConfig *)config
 {
+    self.trailingIconView = imageView;
     int npadding = 0;
     int iconPadding = [config getHostConfig]->GetSpacing().defaultSpacing;
     if (self.doesItHaveAnImageView) {
