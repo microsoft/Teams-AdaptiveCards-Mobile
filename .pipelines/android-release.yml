@@ -173,7 +173,14 @@ extends:
                 echo "Copying artifact $_.Name"
                 cp $_.FullName (Join-Path $(build.artifactstagingdirectory) $_.Name)
                 }
-
+          
+          - task: Powershell@2
+                    name: prepareSigningTask
+                    displayName: 'Copy Files For Signing'
+                    inputs:
+                      targetType: inline
+                      script: |
+                        ls $(build.artifactstagingdirectory)
           # - task: Gradle@2
           #   displayName: 'Gradle Signed Publish to OSSRH Staging'
           #   inputs:
