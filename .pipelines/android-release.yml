@@ -175,8 +175,8 @@ extends:
                 }
           
           - task: Powershell@2
-            name: prepareSigningTask
-            displayName: 'Copy Files For Signing'
+            name: listStagingDir
+            displayName: 'list signed Files'
             inputs:
               targetType: inline
               script: |
