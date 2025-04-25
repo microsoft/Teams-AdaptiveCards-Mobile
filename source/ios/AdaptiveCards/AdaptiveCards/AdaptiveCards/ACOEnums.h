@@ -10,11 +10,12 @@
 typedef NS_ENUM(NSInteger, ACRActionType) {
     ACRExecute = 1,
     ACROpenUrl,
+    ACRPopover,
     ACRShowCard,
     ACRSubmit,
     ACRToggleVisibility,
     ACROverflow,
-    ACRUnknownAction = 7,
+    ACRUnknownAction = 8,
 };
 
 typedef NS_ENUM(NSInteger, ACRIconPlacement) {

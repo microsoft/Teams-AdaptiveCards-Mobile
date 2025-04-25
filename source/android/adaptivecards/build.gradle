@@ -189,6 +189,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.caverock:androidsvg-aar:$androidsvg"
+    implementation "com.google.android.material:material:$googleMaterialVersion"
 
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:${androidxViewPager2Version}"

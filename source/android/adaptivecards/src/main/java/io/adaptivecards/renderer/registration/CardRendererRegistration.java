@@ -134,6 +134,7 @@ public class CardRendererRegistration
         registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.Submit), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.ShowCard), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.OpenUrl), ActionElementRenderer.getInstance());
+        //registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.Popover), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.ToggleVisibility), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ModeToString(Mode.Primary), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ModeToString(Mode.Secondary), DropdownElementRenderer.getInstance());

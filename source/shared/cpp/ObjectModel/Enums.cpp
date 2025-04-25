@@ -266,7 +266,11 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ThemedIconUrls, "themedIconUrls"},
             {AdaptiveCardSchemaKey::ThemedUrls, "themedUrls"},
             {AdaptiveCardSchemaKey::Theme, "theme"},
-            {AdaptiveCardSchemaKey::LabelPosition, "labelPosition"}});
+            {AdaptiveCardSchemaKey::LabelPosition, "labelPosition"},
+            {AdaptiveCardSchemaKey::Content, "content"},
+            {AdaptiveCardSchemaKey::DisplayArrow, "displayArrow"},
+            {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
+            {AdaptiveCardSchemaKey::Position, "position"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -306,6 +310,7 @@ namespace AdaptiveCards
             {ActionType::Unsupported, "Unsupported"},
             {ActionType::Execute, "Action.Execute"},
             {ActionType::OpenUrl, "Action.OpenUrl"},
+            {ActionType::Popover, "Action.Popover"},
             {ActionType::ShowCard, "Action.ShowCard"},
             {ActionType::Submit, "Action.Submit"},
             {ActionType::ToggleVisibility, "Action.ToggleVisibility"},

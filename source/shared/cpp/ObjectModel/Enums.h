@@ -268,7 +268,11 @@ enum class AdaptiveCardSchemaKey
     ThemedIconUrls,
     ThemedUrls,
     Theme,
-    LabelPosition
+    LabelPosition,
+    Content,
+    DisplayArrow,
+    MaxPopoverWidth,
+    Position
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -457,6 +461,7 @@ enum class ActionType
     Unsupported = 0,
     Execute,
     OpenUrl,
+    Popover,
     ShowCard,
     Submit,
     ToggleVisibility,
