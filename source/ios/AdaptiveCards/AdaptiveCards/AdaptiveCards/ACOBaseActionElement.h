@@ -28,6 +28,7 @@
 - (NSData *)additionalProperty;
 - (BOOL)isEnabled;
 - (BOOL)meetsRequirements:(ACOFeatureRegistration *)featureReg;
+- (BOOL)shouldFlipInRtl;
 
 + (NSNumber *)getKey:(ACRActionType)actionType;
 

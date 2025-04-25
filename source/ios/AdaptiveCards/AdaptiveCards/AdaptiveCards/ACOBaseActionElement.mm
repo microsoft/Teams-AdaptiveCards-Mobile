@@ -152,6 +152,14 @@ using namespace AdaptiveCards;
     return YES;
 }
 
+- (BOOL)shouldFlipInRtl
+{
+    if (_elem) {
+        return _elem->GetIsRtl();
+    }
+    return NO;
+}
+
 - (NSArray *)menuActions
 {
     NSMutableArray *menuActions = [NSMutableArray array];
