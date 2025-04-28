@@ -48,7 +48,7 @@ extends:
         enabled: true
         break: true
     pool:
-      name: name: 1ES-Teams-Windows-2022-Compliant-Daily
+      name: 1ES-Teams-Windows-2022-Compliant-Daily
     stages:
       - stage: Staging
         jobs:
