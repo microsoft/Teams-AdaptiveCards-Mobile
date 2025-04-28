@@ -200,14 +200,14 @@ extends:
               connectedservicename: "TeamsESRP-CP-464385-Pgp"
               usemanagedidentity: true
               keyvaultname: 'esrp-teams'
-              signcertname: 'd91c83b4-bfc6-40d3-a591-e5b0598a2796''
-              clientid: 'd91c83b4-bfc6-40d3-a591-e5b0598a2796''
+              signcertname: 'd91c83b4-bfc6-40d3-a591-e5b0598a2796'
+              clientid: 'd91c83b4-bfc6-40d3-a591-e5b0598a2796'
               contenttype: 'MAVEN'
               folderlocation: '$(build.artifactstagingdirectory)'
-              owners: 'vidoddab@microsoft.com' # alias of an owner. owner and approver should be different. sg's and dl's are not supported.
-              approvers: 'mejain@microsoft.com' # alias of an approver, this is auto approved on behalf of this user
+              owners: 'vidoddab@microsoft.com'
+              approvers: 'mejain@microsoft.com'
               mainpublisher: ESRPRELPACMAN
-              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2' # Should the one of 975f013f-7f24-47e8-a7d3-abc4752bf346 (PME), 33e01921-4d64-4f8c-a055-5bdaffd5e33d (AME) and cdc5aeea-15c5-4db6-b079-fcadd2505dc2 (Torus)
+              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
           
           - task: 1ES.PublishPipelineArtifact@1
             displayName: 'Publish Artifact: drop'
