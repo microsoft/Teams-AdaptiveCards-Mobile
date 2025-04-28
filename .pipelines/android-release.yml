@@ -181,6 +181,19 @@ extends:
               targetType: inline
               script: |
                 Get-ChildItem *.md | foreach { Remove-Item -Path $_.FullName }
+                
+                $folderPath = $(build.artifactstagingdirectory)
+                
+                # Get all .md files in the folder
+                $mdFiles = Get-ChildItem -Path $folderPath -Filter *.md
+                
+                # Delete each .md file
+                foreach ($file in $mdFiles) {
+                    Remove-Item -Path $file.FullName -Force
+                }
+                
+                Write-Host "All .md files have been deleted from $folderPath"
+
                 ls $(build.artifactstagingdirectory)
           # - task: Gradle@2
           #   displayName: 'Gradle Signed Publish to OSSRH Staging'
