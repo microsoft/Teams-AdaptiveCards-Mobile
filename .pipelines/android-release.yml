@@ -4,7 +4,7 @@ pr: none
 trigger: none
 
 pool:
-  name: 1ES-Teams-Windows-2022-Compliant-Daily
+    name: 1ES-Teams-Windows-2022-Compliant-Daily
 
 parameters:
 - name: base_version
