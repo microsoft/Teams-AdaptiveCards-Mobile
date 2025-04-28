@@ -180,9 +180,7 @@ extends:
             inputs:
               targetType: inline
               script: |
-                Get-ChildItem *.md | foreach { Remove-Item -Path $_.FullName }
-                
-                $folderPath = $(build.artifactstagingdirectory)
+                $folderPath = "$(build.artifactstagingdirectory)"
                 
                 # Get all .md files in the folder
                 $mdFiles = Get-ChildItem -Path $folderPath -Filter *.md
