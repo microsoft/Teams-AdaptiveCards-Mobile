@@ -429,7 +429,28 @@ SeparatorConfig SeparatorConfig::Deserialize(const Json::Value& json, const Sepa
 
     std::string lineColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColor);
     result.lineColor = lineColor == "" ? defaultValue.lineColor : lineColor;
-
+    
+    // Assign lineColor to default value if not exists to avoid regression
+    std::string lineColorDefault = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorDefault);
+    result.lineColorDefault = lineColorDefault == "" ? lineColor : lineColorDefault;
+    lineColorDefault = result.lineColorDefault;
+    
+    // All other colors should have the default value if not exist
+    std::string lineColorEmphasis = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorEmphasis);
+    result.lineColorEmphasis = lineColorEmphasis == "" ? lineColorDefault : lineColorEmphasis;
+    
+    std::string lineColorGood = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorGood);
+    result.lineColorGood = lineColorGood == "" ? lineColorDefault : lineColorGood;
+    
+    std::string lineColorAttention = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAttention);
+    result.lineColorAttention = lineColorAttention == "" ? lineColorDefault : lineColorAttention;
+    
+    std::string lineColorWarning = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorWarning);
+    result.lineColorWarning = lineColorWarning == "" ? lineColorDefault : lineColorWarning;
+    
+    std::string lineColorAccent = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAccent);
+    result.lineColorAccent = lineColorAccent == "" ? lineColorDefault : lineColorAccent;
+    
     return result;
 }
 
@@ -888,6 +909,25 @@ std::string HostConfig::GetHighlightColor(ContainerStyle style, ForegroundColor 
 {
     auto colorConfig = GetContainerColorConfig(GetContainerStyle(style).foregroundColors, color).highlightColors;
     return GetColorFromColorConfig(colorConfig, isSubtle);
+}
+
+std::string HostConfig::GetSeparatorColor(ContainerStyle style, SeparatorConfig separator) const
+{
+    switch (style) {
+        case ContainerStyle::Accent:
+            return separator.lineColorAccent;
+        case ContainerStyle::Attention:
+            return separator.lineColorAttention;
+        case ContainerStyle::Emphasis:
+            return separator.lineColorEmphasis;
+        case ContainerStyle::Good:
+            return separator.lineColorGood;
+        case ContainerStyle::Warning:
+            return separator.lineColorWarning;
+        case ContainerStyle::Default:
+        default:
+            return separator.lineColorDefault;
+    }
 }
 
 std::string HostConfig::GetBorderColor(ContainerStyle style) const
