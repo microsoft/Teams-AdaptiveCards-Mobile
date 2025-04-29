@@ -192,6 +192,31 @@ extends:
                 Write-Host "All .md files have been deleted from $folderPath"
 
                 ls $(build.artifactstagingdirectory)
+                
+                $folderPath = "$(build.artifactstagingdirectory)"
+                $files = Get-ChildItem -Path $folderPath -File
+ 
+                foreach ($file in $files) {
+                    $filePath = $file.FullName
+                    $baseName = $file.Name
+ 
+                    # Generate checksums
+                    $md5 = Get-FileHash -Path $filePath -Algorithm MD5
+                    $sha1 = Get-FileHash -Path $filePath -Algorithm SHA1
+                    $sha256 = Get-FileHash -Path $filePath -Algorithm SHA256
+                    $sha512 = Get-FileHash -Path $filePath -Algorithm SHA512
+ 
+                    # Write each hash to corresponding file
+                    Set-Content -Path "$folderPath\$baseName.md5" -Value "$($md5.Hash)"
+                    Set-Content -Path "$folderPath\$baseName.sha1" -Value "$($sha1.Hash)"
+                    Set-Content -Path "$folderPath\$baseName.sha256" -Value "$($sha256.Hash)"
+                    Set-Content -Path "$folderPath\$baseName.sha512" -Value "$($sha512.Hash)"
+                    Write-Host "Generated checksums for $baseName"
+                }
+ 
+                Write-Host "All checksums have been generated and stored next to the original files."
+
+                ls $(build.artifactstagingdirectory)
 
           - task: EsrpRelease@9
             displayName: 'Publish Maven artifacts via ESRP'
