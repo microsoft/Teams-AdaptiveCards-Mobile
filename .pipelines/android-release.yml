@@ -207,10 +207,10 @@ extends:
                     $sha512 = Get-FileHash -Path $filePath -Algorithm SHA512
  
                     # Write each hash to corresponding file
-                    Set-Content -Path "$folderPath\$baseName.md5" -Value "$($md5.Hash) *$baseName"
-                    Set-Content -Path "$folderPath\$baseName.sha1" -Value "$($sha1.Hash) *$baseName"
-                    Set-Content -Path "$folderPath\$baseName.sha256" -Value "$($sha256.Hash) *$baseName"
-                    Set-Content -Path "$folderPath\$baseName.sha512" -Value "$($sha512.Hash) *$baseName"
+                    Set-Content -Path "$folderPath\$baseName.md5" -Value "$($md5.Hash)"
+                    Set-Content -Path "$folderPath\$baseName.sha1" -Value "$($sha1.Hash)"
+                    Set-Content -Path "$folderPath\$baseName.sha256" -Value "$($sha256.Hash)"
+                    Set-Content -Path "$folderPath\$baseName.sha512" -Value "$($sha512.Hash)"
                     Write-Host "Generated checksums for $baseName"
                 }
  
