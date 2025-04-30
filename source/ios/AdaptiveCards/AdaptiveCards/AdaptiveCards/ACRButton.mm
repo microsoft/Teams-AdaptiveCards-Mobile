@@ -100,22 +100,22 @@
 - (void)setImageView:(UIImage *)image
           withConfig:(ACOHostConfig *)config
 {
-    [self setImageView:image withConfig:config widthToHeightRatio:0.0f];
+    [self setImageView:image withConfig:config aspectRatio:0.0f];
 }
 
 - (void)setImageView:(UIImage *)image
           withConfig:(ACOHostConfig *)config
-  widthToHeightRatio:(float)widthToHeightRatio
+  aspectRatio:(float)aspectRatio
 {
-    [self setImageView:image withConfig:config widthToHeightRatio:widthToHeightRatio imageSize:CGSizeZero];
+    [self setImageView:image withConfig:config aspectRatio:aspectRatio imageSize:CGSizeZero];
 }
 
 - (void)setImageView:(UIImage *)image
           withConfig:(ACOHostConfig *)config
-  widthToHeightRatio:(float)widthToHeightRatio
-           imageSize:(CGSize)imgSize
+  aspectRatio:(float)aspectRatio
+           imageSize:(CGSize)imageSize
 {
-    float imageHeight = 0.0f;
+    CGFloat imageHeight = 0.0f;
     CGSize contentSize = [self.titleLabel intrinsicContentSize];
     
     // apply explicit image size when the below condition is met
@@ -126,10 +126,10 @@
     }
     
     if (image && image.size.height > 0) {
-        widthToHeightRatio = image.size.width / image.size.height;
+        aspectRatio = image.size.width / image.size.height;
     }
     
-    CGSize imageSize = CGSizeEqualToSize(imgSize, CGSizeZero) ? CGSizeMake(imageHeight * widthToHeightRatio, imageHeight) : imgSize;
+    CGSize calculatedImageSize = CGSizeEqualToSize(imageSize, CGSizeZero) ? CGSizeMake(imageHeight * aspectRatio, imageHeight) : imageSize;
     _iconView.translatesAutoresizingMaskIntoConstraints = NO;
     
     // scale the image using UIImageView
@@ -139,7 +139,7 @@
                                     toItem:nil
                                  attribute:NSLayoutAttributeNotAnAttribute
                                 multiplier:1.0
-                                  constant:imageSize.width]
+                                  constant:calculatedImageSize.width]
         .active = YES;
     
     [NSLayoutConstraint constraintWithItem:_iconView
@@ -148,7 +148,7 @@
                                     toItem:nil
                                  attribute:NSLayoutAttributeNotAnAttribute
                                 multiplier:1.0
-                                  constant:imageSize.height]
+                                  constant:calculatedImageSize.height]
         .active = YES;
     
     int iconPadding = [config getHostConfig]->GetSpacing().defaultSpacing;
@@ -174,7 +174,7 @@
         // image can't be postion at the top of the title, so adjust title inset edges
         [self setTitleEdgeInsets:UIEdgeInsetsMake(0, iconPadding, -imageHeight - iconPadding, 0)];
         [self setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -imageHeight - iconPadding, 0)];
-        CGFloat insetConstant = (imageSize.height + iconPadding) / 2;
+        CGFloat insetConstant = (calculatedImageSize.height + iconPadding) / 2;
         [self setContentEdgeInsets:UIEdgeInsetsMake(self.contentEdgeInsets.top + insetConstant, 0, self.contentEdgeInsets.bottom + insetConstant, 0)];
     } else if (_iconPlacement == ACRLeftOfTitle) {
         int npadding = 0;
@@ -182,7 +182,7 @@
             iconPadding += (self.imageView.frame.size.width + iconPadding);
             npadding = [config getHostConfig]->GetSpacing().defaultSpacing;
         }
-        CGFloat widthOffset = (imageSize.width + iconPadding);
+        CGFloat widthOffset = (calculatedImageSize.width + iconPadding);
         
         [self setContentEdgeInsets:UIEdgeInsetsMake(self.contentEdgeInsets.top, self.contentEdgeInsets.left + widthOffset / 2, self.contentEdgeInsets.bottom, self.contentEdgeInsets.right + widthOffset / 2)];
         [self setTitleEdgeInsets:UIEdgeInsetsMake(0, npadding, 0, -(widthOffset + npadding))];
@@ -205,7 +205,7 @@
             npadding = [config getHostConfig]->GetSpacing().defaultSpacing;
         }
 
-        CGFloat widthOffset = (imageSize.width + iconPadding);
+        CGFloat widthOffset = (calculatedImageSize.width + iconPadding);
 
         // Adjust content insets to accommodate icon on the right
         [self setContentEdgeInsets:UIEdgeInsetsMake(
@@ -216,7 +216,7 @@
         )];
 
         // Move the title slightly left, and account for spacing
-        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -iconPadding, 0, npadding + imageSize.width)];
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -iconPadding, 0, npadding + calculatedImageSize.width)];
 
         [_iconView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor constant:iconPadding].active = YES;
 
@@ -301,7 +301,7 @@
             UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl isFilled:isFilled size:CGSizeMake(imageHeight, imageHeight) tintColor:button.currentTitleColor];
             button.iconView = view;
             [button addSubview:view];
-            [button setImageView:view.image withConfig:config widthToHeightRatio:1.0f];
+            [button setImageView:view.image withConfig:config aspectRatio:1.0f];
         } else if (view) {
             if (view.image) {
                 button.iconView = view;

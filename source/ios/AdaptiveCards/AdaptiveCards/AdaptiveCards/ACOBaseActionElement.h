@@ -17,6 +17,7 @@
 @property NSString *sentiment;
 @property (nonatomic, copy) NSString *tooltip;
 @property (nonatomic, readonly) NSString *inlineTooltip;
+@property (readonly) BOOL shouldFlipInRtl;
 
 - (NSString *)title;
 - (NSString *)elementId;
@@ -28,7 +29,6 @@
 - (NSData *)additionalProperty;
 - (BOOL)isEnabled;
 - (BOOL)meetsRequirements:(ACOFeatureRegistration *)featureReg;
-- (BOOL)shouldFlipInRtl;
 
 + (NSNumber *)getKey:(ACRActionType)actionType;
 
