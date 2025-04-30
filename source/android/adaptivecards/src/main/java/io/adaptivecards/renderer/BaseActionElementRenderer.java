@@ -22,9 +22,12 @@ import io.adaptivecards.objectmodel.ActionMode;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AssociatedInputs;
 import io.adaptivecards.objectmodel.BaseActionElement;
+import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.ExecuteAction;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IsVisible;
+import io.adaptivecards.objectmodel.LabelPosition;
+import io.adaptivecards.objectmodel.PopoverAction;
 import io.adaptivecards.objectmodel.ShowCardAction;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityAction;
@@ -332,6 +335,13 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
+        private void handlePopoverAction(@NonNull PopoverAction action) {
+            BaseCardElement content = action.GetContent();
+            boolean displayArrow = action.GetDisplayArrow();
+            String maxPopoverWidth = action.GetMaxPopoverWidth();
+            LabelPosition position = action.GetPosition();
+        }
+
         private void handleToggleVisibilityAction(View v)
         {
             ToggleVisibilityTargetVector toggleVisibilityTargetVector = m_toggleVisibilityAction.GetTargetElements();
@@ -435,6 +445,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             else if (m_action.GetElementType() == ActionType.ToggleVisibility)
             {
                 handleToggleVisibilityAction(view);
+            } else if (m_action.GetElementType() == ActionType.Popover) {
+                handlePopoverAction(Util.castTo(m_action, PopoverAction.class));
             }
             else
             {

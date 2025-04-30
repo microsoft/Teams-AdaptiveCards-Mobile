@@ -202,6 +202,9 @@ using namespace AdaptiveCards;
         case ACROpenUrl:
             key = [NSNumber numberWithInt:static_cast<int>(ActionType::OpenUrl)];
             break;
+        case ACRPopover:
+            key = [NSNumber numberWithInt:static_cast<int>(ActionType::Popover)];
+            break;
         case ACRToggleVisibility:
             key = [NSNumber numberWithInt:static_cast<int>(ActionType::ToggleVisibility)];
             break;

@@ -143,6 +143,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/TimeInput.h"
 #include "../../../shared/cpp/ObjectModel/ToggleInput.h"
 #include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
+#include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 #include "../../../shared/cpp/ObjectModel/SemanticVersion.h"
 #include "../../../shared/cpp/ObjectModel/ShowCardAction.h"
 #include "../../../shared/cpp/ObjectModel/SubmitAction.h"
@@ -185,6 +186,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/IconInfo.h"
 #include "../../../shared/cpp/ObjectModel/Badge.h"
 #include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
+#include "../../../shared/cpp/ObjectModel/ProgressBar.h"
+#include "../../../shared/cpp/ObjectModel/ProgressRing.h"
 %}
 
 
@@ -261,6 +264,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ToggleInputParser)
 %shared_ptr(AdaptiveCards::ExecuteActionParser)
 %shared_ptr(AdaptiveCards::OpenUrlActionParser)
+%shared_ptr(AdaptiveCards::PopoverAction)
+%shared_ptr(AdaptiveCards::PopoverActionParser)
 %shared_ptr(AdaptiveCards::ShowCardActionParser)
 %shared_ptr(AdaptiveCards::SubmitActionParser)
 %shared_ptr(AdaptiveCards::ImageSetParser)
@@ -298,6 +303,10 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::Badge)
 %shared_ptr(AdaptiveCards::BadgeParser)
 %shared_ptr(AdaptiveCards::ThemedUrl)
+%shared_ptr(AdaptiveCards::ProgressBar)
+%shared_ptr(AdaptiveCards::ProgressBarParser)
+%shared_ptr(AdaptiveCards::ProgressRing)
+%shared_ptr(AdaptiveCards::ProgressRingParser)
 
 
 %apply unsigned int& INOUT { unsigned int& };
@@ -991,6 +1000,21 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::PopoverAction::dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::PopoverAction {
+        static AdaptiveCards::PopoverAction *dynamic_cast(AdaptiveCards::BaseActionElement *baseActionElement) {
+            return dynamic_cast<AdaptiveCards::PopoverAction *>(baseActionElement);
+        }
+};
+
 %exception AdaptiveCards::ValueChangedAction::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
     $action
     if (!result) {
@@ -1097,6 +1121,36 @@ namespace Json {
         }
 };
 
+%exception AdaptiveCards::ProgressBar::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::ProgressBar {
+        static AdaptiveCards::ProgressBar *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::ProgressBar *>(baseCardElement);
+        }
+};
+
+%exception AdaptiveCards::ProgressRing::dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::ProgressRing {
+        static AdaptiveCards::ProgressRing *dynamic_cast(AdaptiveCards::BaseCardElement *baseCardElement) {
+            return dynamic_cast<AdaptiveCards::ProgressRing *>(baseCardElement);
+        }
+};
+
 %include "../../../shared/cpp/ObjectModel/pch.h"
 %include "../../../shared/cpp/ObjectModel/EnumMagic.h"
 %include "../../../shared/cpp/ObjectModel/Enums.h"
@@ -1146,6 +1200,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/Refresh.h"
 %include "../../../shared/cpp/ObjectModel/Authentication.h"
 %include "../../../shared/cpp/ObjectModel/OpenUrlAction.h"
+%include "../../../shared/cpp/ObjectModel/PopoverAction.h"
 %include "../../../shared/cpp/ObjectModel/ShowCardAction.h"
 %include "../../../shared/cpp/ObjectModel/SubmitAction.h"
 %include "../../../shared/cpp/ObjectModel/ParseResult.h"
@@ -1181,3 +1236,5 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/IconInfo.h"
 %include "../../../shared/cpp/ObjectModel/Badge.h"
 %include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
+%include "../../../shared/cpp/ObjectModel/ProgressBar.h"
+%include "../../../shared/cpp/ObjectModel/ProgressRing.h"

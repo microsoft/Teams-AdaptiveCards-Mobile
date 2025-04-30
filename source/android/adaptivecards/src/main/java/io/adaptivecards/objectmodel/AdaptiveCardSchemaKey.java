@@ -268,7 +268,12 @@ public enum AdaptiveCardSchemaKey {
   MenuActions,
   ThemedIconUrls,
   ThemedUrls,
-  Theme;
+  Theme,
+  LabelPosition,
+  Content,
+  DisplayArrow,
+  MaxPopoverWidth,
+  Position;
 
   public final int swigValue() {
     return swigValue;
