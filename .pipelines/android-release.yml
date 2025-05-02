@@ -90,7 +90,7 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:build'
               publishJUnitResults: false
-              jdkVersionOption: 1.8
+              jdkVersionOption: 1.17
 
           - task: Gradle@3
             displayName: 'Gradle Unsigned Publication'
@@ -99,7 +99,7 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
               publishJUnitResults: false
-              jdkVersionOption: 1.8
+              jdkVersionOption: 1.17
 
           - task: Powershell@2
             name: prepareSigningTask
@@ -156,7 +156,7 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishSignedReleasePublicationToSignedArtifactRepository'
               publishJUnitResults: false
-              jdkVersionOption: 1.8
+              jdkVersionOption: 1.17
             env:
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
