@@ -83,7 +83,7 @@ extends:
               command: custom
               custom: '--list-sdks '
 
-          - task: Gradle@2
+          - task: Gradle@3
             displayName: build
             inputs:
               gradleWrapperFile: source/android/gradlew.bat
@@ -92,7 +92,7 @@ extends:
               publishJUnitResults: false
               jdkVersionOption: 1.11
 
-          - task: Gradle@2
+          - task: Gradle@3
             displayName: 'Gradle Unsigned Publication'
             inputs:
               gradleWrapperFile: source/android/gradlew.bat
@@ -149,7 +149,7 @@ extends:
                   }
                 ]
 
-          - task: Gradle@2
+          - task: Gradle@3
             displayName: 'Gradle Signed Publish to Local Directory'
             inputs:
               gradleWrapperFile: source/android/gradlew.bat

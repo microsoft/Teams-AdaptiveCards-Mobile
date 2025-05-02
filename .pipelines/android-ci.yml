@@ -22,7 +22,7 @@ pool:
   vmImage: macOS-latest
 
 steps:
-- task: Gradle@2
+- task: Gradle@3
   displayName: gradlew build
   inputs:
     wrapperScript: source/android/gradlew
@@ -64,7 +64,7 @@ steps:
   displayName: Creation of emulator for testing
   enabled: false
 
-- task: Gradle@2
+- task: Gradle@3
   displayName: gradlew test
   enabled: false
   inputs:
