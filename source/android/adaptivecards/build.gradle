@@ -41,7 +41,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.17"
+        jvmTarget = "17"
     }
     ndkVersion '23.1.7779620'
     lint {
