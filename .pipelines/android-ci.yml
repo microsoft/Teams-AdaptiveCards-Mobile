@@ -28,7 +28,7 @@ steps:
     wrapperScript: source/android/gradlew
     cwd: source/android
     publishJUnitResults: false
-    jdkVersionOption: 1.17
+    jdkVersionOption: 1.8
 
 - bash: |
    #!/usr/bin/env bash
@@ -71,7 +71,7 @@ steps:
     wrapperScript: source/android/gradlew
     cwd: source/android
     tasks: connectedAndroidTest
-    jdkVersionOption: 1.17
+    jdkVersionOption: 1.8
 
 - script: |
    mkdir Screenshots
