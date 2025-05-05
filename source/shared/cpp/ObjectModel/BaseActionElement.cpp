@@ -119,6 +119,16 @@ void AdaptiveCards::BaseActionElement::SetIsEnabled(const bool isEnabled)
     m_isEnabled = isEnabled;
 }
 
+bool BaseActionElement::GetIsRtl() const
+{
+    return m_isRtl;
+}
+
+void AdaptiveCards::BaseActionElement::SetIsRtl(const bool isRtl)
+{
+    m_isRtl = isRtl;
+}
+
 ActionType BaseActionElement::GetElementType() const
 {
     return m_type;
@@ -242,6 +252,7 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip));
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
     element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
+    element->SetIsRtl(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Rtl, false));
 
     auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedIconUrls, ThemedUrl::Deserialize, false);
     element->m_themedIconUrls = std::move(themedUrls);

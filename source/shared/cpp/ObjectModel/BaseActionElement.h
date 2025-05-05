@@ -55,6 +55,9 @@ public:
 
     bool GetIsEnabled() const;
     void SetIsEnabled(const bool isEnabled);
+    
+    bool GetIsRtl() const;
+    void SetIsRtl(const bool isRtl);
 
     ActionRole GetRole() const;
     void SetRole(const ActionRole role);
@@ -109,6 +112,7 @@ private:
     std::string m_tooltip;
 
     bool m_isEnabled;
+    bool m_isRtl;
 
     ActionType m_type;
     Mode m_mode;
