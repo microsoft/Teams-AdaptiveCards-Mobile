@@ -34,6 +34,18 @@ class ProgressBar : public BaseCardElement {
         const HorizontalAlignment GetHorizontalAlignment() const;
 
         Json::Value SerializeToJsonValue() const override;
+    
+        ProgressBarColor GetColor() {
+            return m_color;
+        }
+    
+        double GetMax() {
+            return m_max;
+        }
+    
+        std::optional<double> GetValue() {
+            return m_value;
+        }
 
     private:
         void PopulateKnownPropertiesSet();

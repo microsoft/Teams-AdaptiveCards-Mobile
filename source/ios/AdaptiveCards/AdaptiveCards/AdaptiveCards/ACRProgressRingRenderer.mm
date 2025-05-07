@@ -10,6 +10,7 @@
 #import "ACOBaseCardElementPrivate.h"
 #import "ACOHostConfigPrivate.h"
 #import "ACRRegistration.h"
+#import "ProgressRing.h"
 #import "UtiliOS.h"
 
 @implementation ACRProgressRingRenderer
@@ -31,6 +32,9 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+    std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<ProgressRing> progressRing = std::dynamic_pointer_cast<ProgressRing>(elem);
     return [[UIView alloc] init];
 }
 
