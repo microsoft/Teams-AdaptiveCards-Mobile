@@ -6,19 +6,23 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.collection.ArraySet;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.ACTheme;
+import io.adaptivecards.objectmodel.CardElementType;
 import io.adaptivecards.renderer.inputhandler.BaseInputHandler;
 import io.adaptivecards.renderer.inputhandler.IInputHandler;
 
-public class RenderedAdaptiveCard {
+public final class RenderedAdaptiveCard {
 
     private final ACTheme theme;
+    private final Map<CardElementType, Set<Map<String, ?>>> renderedElementsMap;
     private View view;
     private Vector<AdaptiveWarning> warnings;
     private Vector<IInputHandler> handlers;
@@ -46,6 +50,7 @@ public class RenderedAdaptiveCard {
         this.parentCardForCard = new HashMap<>();
         this.prevalidatedInputs = new HashMap<>();
         this.theme = theme;
+        this.renderedElementsMap = new HashMap<>();
     }
 
     @NonNull
@@ -215,21 +220,34 @@ public class RenderedAdaptiveCard {
      * @param renderedAction View where the action listener has been set
      * @param renderArgs RenderArgs passed as a parameter from the render method
      */
-    public void registerSubmitableAction(View renderedAction, RenderArgs renderArgs)
-    {
+    public void registerSubmitableAction(View renderedAction, RenderArgs renderArgs) {
         long actionId = Util.getViewId(renderedAction);
         setCardForSubmitAction(actionId, renderArgs.getContainerCardId());
     }
 
-    protected boolean isActionSubmitable(View action)
-    {
+    public boolean isActionSubmitable(View action) {
         long actionId = action.getId();
         return submitActionCard.containsKey(actionId);
     }
 
-    protected void clearValidatedInputs()
-    {
+    public void clearValidatedInputs() {
         prevalidatedInputs.clear();
         lastValidationResult = false;
+    }
+
+    @NonNull
+    public Map<CardElementType, Set<Map<String, ?>>> getRenderedElements() {
+        return renderedElementsMap;
+    }
+
+    public void addRenderedElement(@NonNull CardElementType type, @NonNull Map<String, ?> element) {
+        if (!renderedElementsMap.containsKey(type)) {
+            renderedElementsMap.put(type, new ArraySet<>());
+        }
+
+        Set<Map<String, ?>> set = renderedElementsMap.get(type);
+        if (set != null) {
+            set.add(element);
+        }
     }
 }

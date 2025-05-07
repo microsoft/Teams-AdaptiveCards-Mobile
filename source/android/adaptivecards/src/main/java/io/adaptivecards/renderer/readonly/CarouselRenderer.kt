@@ -13,6 +13,7 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.R
 import io.adaptivecards.objectmodel.BaseCardElement
+import io.adaptivecards.objectmodel.CardElementType
 import io.adaptivecards.objectmodel.Carousel
 import io.adaptivecards.objectmodel.CarouselPageVector
 import io.adaptivecards.objectmodel.HostConfig
@@ -28,6 +29,7 @@ import io.adaptivecards.renderer.layout.carousel.CrossFadePageTransformer
 import io.adaptivecards.renderer.layout.carousel.NoAnimationPageTransformer
 import io.adaptivecards.renderer.layout.scrollingpage.ScrollingPageControlView
 import io.adaptivecards.renderer.layout.scrollingpage.ScrollingPageControlViewConfiguration
+import java.util.HashMap
 
 /**
  * Renderer for [Carousel] element.
@@ -137,5 +139,15 @@ object CarouselRenderer : BaseCardElementRenderer() {
     private fun View.markImportantForAccessibility(contentDescription: String? = null) {
         this.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
         contentDescription?.let { this.contentDescription = it }
+    }
+
+    private fun logRenderedElement(
+        renderedCard: RenderedAdaptiveCard,
+        carousel: Carousel
+    ) {
+        val dataBag = HashMap<String, Any>()
+        dataBag.put("", carousel.GetPages().size)
+        dataBag.put("", carousel.pageAnimation.name)
+        renderedCard.addRenderedElement(CardElementType.Carousel, dataBag)
     }
 }
