@@ -68,7 +68,7 @@
         CGFloat barWidth = self.progressView.bounds.size.width;
         
         self.glowLayer = [CAGradientLayer layer];
-        self.glowLayer.frame = CGRectMake(-pulseWidth, 0, pulseWidth, barHeight); // Start off-screen
+        self.glowLayer.frame = CGRectMake(-pulseWidth, 0, pulseWidth, barHeight);
         self.glowLayer.colors = @[
             (__bridge id)[UIColor clearColor].CGColor,
             (__bridge id)[UIColor systemBlueColor].CGColor,
