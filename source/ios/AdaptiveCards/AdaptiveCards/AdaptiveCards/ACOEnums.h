@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, ACRActionType) {
 typedef NS_ENUM(NSInteger, ACRIconPlacement) {
     ACRAboveTitle = 0,
     ACRLeftOfTitle,
+    ACRRightOfTitle,
     ACRNoTitle,
 };
 
