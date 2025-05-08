@@ -30,6 +30,11 @@ using namespace AdaptiveCards;
     SwiftAdaptiveCardParseResult * _adaptiveCardParseResult;
 }
 
+- (SwiftAdaptiveCardParseResult *)swiftParseResult
+{
+    return _adaptiveCardParseResult;
+}
+
 - (void)setInputs:(NSArray *)inputs
 {
     _inputs = [[NSMutableArray<ACRIBaseInputHandler> alloc] initWithArray:inputs];
