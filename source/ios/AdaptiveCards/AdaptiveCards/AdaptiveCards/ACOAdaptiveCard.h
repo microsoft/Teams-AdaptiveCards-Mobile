@@ -22,6 +22,8 @@
 #endif
 #import <Foundation/Foundation.h>
 
+@class SwiftAdaptiveCardParseResult;
+
 @interface ACOAdaptiveCard : NSObject
 
 @property ACORefresh *refresh;
@@ -34,5 +36,6 @@
 - (void)appendInputs:(NSArray *)inputs;
 - (NSArray<ACORemoteResourceInformation *> *)remoteResourceInformation;
 - (NSData *)additionalProperty;
+- (SwiftAdaptiveCardParseResult *)swiftParseResult;
 
 @end
