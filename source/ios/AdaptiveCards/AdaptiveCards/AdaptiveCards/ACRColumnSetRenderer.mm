@@ -109,7 +109,7 @@
 
     for (std::shared_ptr<Column> column : columns) {
         if (*firstColumn != column && column->MeetsTargetWidthRequirement(hostWidth)) {
-            separator = [ACRSeparator renderSeparation:column forSuperview:columnSetView withHostConfig:config];
+            separator = [ACRSeparator renderSeparation:column forSuperview:columnSetView withStyle:[ACOHostConfig getPlatformContainerStyle: column->GetStyle()] withHostConfig:config];
         }
 
         [acoColumn setElem:column];

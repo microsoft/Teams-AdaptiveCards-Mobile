@@ -256,6 +256,7 @@ using namespace AdaptiveCards;
         if (*firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
             separator = [ACRSeparator renderSeparation:elem
                                           forSuperview:view
+                                             withStyle:view.style
                                         withHostConfig:[config getHostConfig]];
         }
 

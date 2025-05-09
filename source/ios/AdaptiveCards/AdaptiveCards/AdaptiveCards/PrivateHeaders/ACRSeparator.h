@@ -26,6 +26,7 @@
 
 + (ACRSeparator *)renderSeparation:(std::shared_ptr<AdaptiveCards::BaseCardElement> const &)elem
                       forSuperview:(UIView *)view
+                         withStyle:(ACRContainerStyle)style
                     withHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)config;
 
 + (void)renderActionsSeparator:(UIView *)view

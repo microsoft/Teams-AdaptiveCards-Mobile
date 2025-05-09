@@ -174,6 +174,12 @@ struct SeparatorConfig
 {
     unsigned int lineThickness = 1;
     std::string lineColor = "#B2000000";
+    std::string lineColorDefault;
+    std::string lineColorEmphasis;
+    std::string lineColorGood;
+    std::string lineColorAttention;
+    std::string lineColorWarning;
+    std::string lineColorAccent;
 
     static SeparatorConfig Deserialize(const Json::Value& json, const SeparatorConfig& defaultValue);
 };
@@ -548,6 +554,7 @@ public:
     std::string GetBackgroundColor(ContainerStyle style) const;
     std::string GetForegroundColor(ContainerStyle style, ForegroundColor color, bool isSubtle) const;
     std::string GetHighlightColor(ContainerStyle style, ForegroundColor color, bool isSubtle) const;
+    std::string GetSeparatorColor(ContainerStyle style, SeparatorConfig separator) const;
     std::string GetBorderColor(ContainerStyle style) const;
     unsigned int GetBorderWidth(CardElementType elementType) const;
     unsigned int GetCornerRadius(CardElementType elementType) const;

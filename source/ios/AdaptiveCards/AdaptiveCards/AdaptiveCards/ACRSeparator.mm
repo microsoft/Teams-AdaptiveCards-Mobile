@@ -7,6 +7,7 @@
 
 #import "ACRSeparator.h"
 #import "ACRContentStackView.h"
+#import "ACOHostConfigPrivate.h"
 #import "HostConfig.h"
 #import "TextBlock.h"
 #import "UtiliOS.h"
@@ -109,19 +110,22 @@ using namespace AdaptiveCards;
     [ACRSeparator renderSeparation:nullBaseCardElem
                          superview:view
                         hostConfig:config
+                             style:ACRContainerStyle::ACRDefault
                            spacing:config->GetActions().spacing];
 }
 
 + (ACRSeparator *)renderSeparation:(std::shared_ptr<BaseCardElement> const &)elem
                       forSuperview:(UIView *)view
+                         withStyle:(ACRContainerStyle)style
                     withHostConfig:(std::shared_ptr<HostConfig> const &)config
 {
-    return [ACRSeparator renderSeparation:elem superview:view hostConfig:config spacing:Spacing::None];
+    return [ACRSeparator renderSeparation:elem superview:view hostConfig:config style:style spacing:Spacing::None];
 }
 
 + (ACRSeparator *)renderSeparation:(std::shared_ptr<BaseCardElement> const &)elem
                          superview:(UIView *)view
                         hostConfig:(std::shared_ptr<HostConfig> const &)config
+                             style:(ACRContainerStyle)style
                            spacing:(Spacing)spacing
 {
     ACRSeparator *separator = nil;
@@ -143,7 +147,9 @@ using namespace AdaptiveCards;
             separator->width = s;
             separator->height = s;
             if (elem && elem->GetSeparator()) {
-                separator->rgb = std::stoul(config->GetSeparator().lineColor.substr(1), nullptr, 16);
+                ContainerStyle sharedStyle = [ACOHostConfig getSharedContainerStyle:style];
+                std::string separatorColor = config->GetSeparatorColor(sharedStyle, config->GetSeparator());
+                separator->rgb = std::stoul(separatorColor.substr(1), nullptr, 16);
                 separator->lineWidth = config->GetSeparator().lineThickness;
                 ;
             }
