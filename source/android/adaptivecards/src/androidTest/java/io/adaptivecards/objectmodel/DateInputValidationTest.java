@@ -8,7 +8,7 @@ import org.junit.Assert;
 
 import org.junit.Test;
 
-import io.adaptivecards.renderer.RenderedAdaptiveCard;
+import java.lang.ref.WeakReference;
 import io.adaptivecards.renderer.inputhandler.DateInputHandler;
 
 public class DateInputValidationTest
@@ -43,7 +43,7 @@ public class DateInputValidationTest
         class CustomDateInputHandler extends DateInputHandler
         {
             public CustomDateInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager) {
-                super(baseInputElement, fragmentManager, null, 0);
+                super(baseInputElement, new WeakReference<>(fragmentManager), null, 0);
             }
 
             @Override

@@ -17,12 +17,15 @@
 @property NSString *sentiment;
 @property (nonatomic, copy) NSString *tooltip;
 @property (nonatomic, readonly) NSString *inlineTooltip;
+@property (readonly) BOOL shouldFlipInRtl;
 
 - (NSString *)title;
 - (NSString *)elementId;
 - (NSString *)url;
 - (NSString *)data;
 - (NSString *)verb;
+- (NSArray *)menuActions;
+- (NSString *)elementIconUrl;
 - (NSData *)additionalProperty;
 - (BOOL)isEnabled;
 - (BOOL)meetsRequirements:(ACOFeatureRegistration *)featureReg;

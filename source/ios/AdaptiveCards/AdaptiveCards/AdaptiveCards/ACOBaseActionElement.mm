@@ -152,6 +152,34 @@ using namespace AdaptiveCards;
     return YES;
 }
 
+- (BOOL)shouldFlipInRtl
+{
+    if (_elem) {
+        return _elem->GetIsRtl();
+    }
+    return NO;
+}
+
+- (NSArray *)menuActions
+{
+    NSMutableArray *menuActions = [NSMutableArray array];
+    const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> m_menuActions = _elem->GetMenuActions();
+    
+    for (auto &action : m_menuActions) {
+        ACOBaseActionElement *acoElem = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:action];
+        [menuActions addObject:acoElem];
+    }
+    return menuActions;
+}
+
+- (NSString *)elementIconUrl
+{
+    if (_elem) {
+        return [NSString stringWithCString:_elem->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    }
+    return nil;
+}
+
 - (BOOL)meetsRequirements:(ACOFeatureRegistration *)featureReg
 {
     if (_elem) {
@@ -173,6 +201,9 @@ using namespace AdaptiveCards;
             break;
         case ACROpenUrl:
             key = [NSNumber numberWithInt:static_cast<int>(ActionType::OpenUrl)];
+            break;
+        case ACRPopover:
+            key = [NSNumber numberWithInt:static_cast<int>(ActionType::Popover)];
             break;
         case ACRToggleVisibility:
             key = [NSNumber numberWithInt:static_cast<int>(ActionType::ToggleVisibility)];

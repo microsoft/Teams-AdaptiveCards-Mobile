@@ -20,19 +20,74 @@
 {
     self = [super init];
     if (self) {
-        [self setup:expandable];
+        if (expandable) {
+            [self setupExpandableConfig];
+        } else {
+            [self setupDefaultConfig];
+        }
     }
     return self;
 }
 
-- (void)setup:(BOOL)expandable
+- (void)setupExpandableConfig
 {
+    self.backgroundColor = UIColor.systemBlueColor;
+    self.tintColor = UIColor.systemBackgroundColor;
+    
+    // Configure autoresizing mask
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+    UIViewAutoresizingFlexibleHeight;
+    
+    // Set content insets (10 on all sides)
+    self.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    
     // Set the title font (system font with a point size of 15)
     self.titleLabel.font = [UIFont systemFontOfSize:15];
+    
+    // Set images for various button states using SF Symbols (iOS 13+)
+    if (@available(iOS 13.0, *)) {
+        UIImage *chevronUp = [UIImage systemImageNamed:@"chevron.up"];
+        UIImage *chevronDown = [UIImage systemImageNamed:@"chevron.down"];
+        
+        [self setImage:chevronUp forState:UIControlStateNormal];
+        [self setImage:chevronUp forState:UIControlStateDisabled];
+        [self setImage:chevronDown forState:UIControlStateSelected];
+        [self setImage:chevronUp forState:UIControlStateHighlighted];
+    }
+    
+    // Set title color for normal state to white
+    [self setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+    
+    // Set corner radius
+    self.layer.cornerRadius = 10;
+    
+    // Custom runtime attributes translated as properties
+    self.positiveForegroundColor = [UIColor colorWithWhite:0.6666666667 alpha:1.0];
+    self.positiveBackgroundColor = [UIColor colorWithWhite:0.3333333333 alpha:1.0];
+    self.destructiveForegroundColor = [UIColor colorWithWhite:1 alpha:1];
+    self.destructiveBackgroundColor = [UIColor colorWithWhite:0.3333333333 alpha:1.0];
+    self.positiveUseDefault = YES;
+    self.destructiveUseDefault = NO;
+}
 
-    // Set the auto resizing mask
-    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
+- (void)setupDefaultConfig
+{
+    self.backgroundColor = UIColor.systemBlueColor;
+    self.tintColor = UIColor.systemBlueColor;
+    
+    // Configure autoresizing mask
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+    UIViewAutoresizingFlexibleHeight;
+    
+    // Content insets of 10 on all sides.
+    self.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    
+    // Set title color for normal state to white.
+    [self setTitleColor:[UIColor colorWithWhite:1 alpha:1] forState:UIControlStateNormal];
+    
+    // Set corner radius.
+    self.layer.cornerRadius = 10;
+    
     // Custom runtime attributes translated as properties on ACRButton:
     self.positiveForegroundColor = [UIColor colorWithWhite:0.6666666667 alpha:1.0];
     self.positiveBackgroundColor = [UIColor colorWithWhite:0.3333333333 alpha:1.0];
@@ -40,101 +95,158 @@
     self.destructiveBackgroundColor = [UIColor colorWithWhite:0.3333333333 alpha:1.0];
     self.positiveUseDefault = YES;
     self.destructiveUseDefault = NO;
-
-    // Set this to avoid unexpected external modification to background color break the style.
-    self.layer.cornerRadius = 10;
-
-    // Create a filled button configuration
-    UIButtonConfiguration *buttonConfig = [UIButtonConfiguration filledButtonConfiguration];
-
-    // Set the default background and title colors
-    buttonConfig.baseBackgroundColor = UIColor.systemBlueColor;
-    buttonConfig.baseForegroundColor = UIColor.systemBackgroundColor; // title color
-
-    // Set the default content insets (10 on all sides)
-    buttonConfig.contentInsets = NSDirectionalEdgeInsetsMake(10, 10, 10, 10);
-
-    // Set the default corner radius on the background configuration
-    buttonConfig.background.cornerRadius = 10;
-
-    if (expandable) {
-        // Prepare images for different states
-        UIImage *chevronUp = [UIImage systemImageNamed:@"chevron.up"];
-        UIImage *chevronDown = [UIImage systemImageNamed:@"chevron.down"];
-
-        // Set a default image (for the normal state)
-        buttonConfig.image = chevronUp;
-
-        self.configurationUpdateHandler = ^(__kindof UIButton *_Nonnull button) {
-            UIButtonConfiguration *updatedConfig = button.configuration;
-            if (button.isSelected) {
-                updatedConfig.image = chevronDown;
-            } else {
-                updatedConfig.image = chevronUp;
-            }
-            // Re-assign the updated configuration back to the button
-            button.configuration = updatedConfig;
-        };
-    }
-
-    self.configuration = buttonConfig;
 }
 
 - (void)setImageView:(UIImage *)image
           withConfig:(ACOHostConfig *)config
 {
-    [self setImageView:image withConfig:config widthToHeightRatio:0.0f];
+    [self setImageView:image withConfig:config aspectRatio:0.0f];
 }
 
 - (void)setImageView:(UIImage *)image
-            withConfig:(ACOHostConfig *)config
-    widthToHeightRatio:(float)widthToHeightRatio
+          withConfig:(ACOHostConfig *)config
+  aspectRatio:(float)aspectRatio
 {
-    float imageHeight = 0.0f;
-    float ratio = 1.0f;
-    CGSize contentSize = self.titleLabel.intrinsicContentSize;
+    [self setImageView:image withConfig:config aspectRatio:aspectRatio imageSize:CGSizeZero];
+}
 
+- (void)setImageView:(UIImage *)image
+          withConfig:(ACOHostConfig *)config
+  aspectRatio:(float)aspectRatio
+           imageSize:(CGSize)imageSize
+{
+    CGFloat imageHeight = 0.0f;
+    CGSize contentSize = [self.titleLabel intrinsicContentSize];
+    
     // apply explicit image size when the below condition is met
     if (_iconPlacement == ACRAboveTitle) {
         imageHeight = [config getHostConfig]->GetActions().iconSize;
     } else { // format the image so it fits in the button
         imageHeight = contentSize.height;
     }
-
+    
     if (image && image.size.height > 0) {
-        ratio = image.size.width / image.size.height;
+        aspectRatio = image.size.width / image.size.height;
     }
-
-    CGSize imageSize = CGSizeMake(imageHeight * ratio, imageHeight);
-
-    UIButtonConfiguration *buttonConfiguration = self.configuration;
-
-    buttonConfiguration.image = image;
-
-    // Resize the image to desired size
-    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:imageSize];
-    buttonConfiguration.image = [[renderer imageWithActions:^(__unused UIGraphicsImageRendererContext *_Nonnull rendererContext) {
-        [image drawInRect:CGRectMake(0, 0, imageSize.width, imageSize.height)];
-    }] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
-    // Set the image on the button
-    buttonConfiguration.imagePadding = [config getHostConfig]->GetSpacing().defaultSpacing;
-
+    
+    CGSize calculatedImageSize = CGSizeEqualToSize(imageSize, CGSizeZero) ? CGSizeMake(imageHeight * aspectRatio, imageHeight) : imageSize;
+    _iconView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // scale the image using UIImageView
+    [NSLayoutConstraint constraintWithItem:_iconView
+                                 attribute:NSLayoutAttributeWidth
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeNotAnAttribute
+                                multiplier:1.0
+                                  constant:calculatedImageSize.width]
+        .active = YES;
+    
+    [NSLayoutConstraint constraintWithItem:_iconView
+                                 attribute:NSLayoutAttributeHeight
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeNotAnAttribute
+                                multiplier:1.0
+                                  constant:calculatedImageSize.height]
+        .active = YES;
+    
+    int iconPadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+    
     if (_iconPlacement == ACRAboveTitle) {
-        // Set the image placement to the top
-        buttonConfiguration.imagePlacement = NSDirectionalRectEdgeTop;
-    } else {
-        // Otherwise, set the image placement to the leading edge
-        buttonConfiguration.imagePlacement = NSDirectionalRectEdgeLeading;
-    }
+        // fix image view to top and center x of the button
+        [NSLayoutConstraint constraintWithItem:_iconView
+                                     attribute:NSLayoutAttributeTop
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeTop
+                                    multiplier:1.0
+                                      constant:self.contentEdgeInsets.top]
+            .active = YES;
+        [NSLayoutConstraint constraintWithItem:_iconView
+                                     attribute:NSLayoutAttributeCenterX
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeCenterX
+                                    multiplier:1.0
+                                      constant:0]
+            .active = YES;
+        // image can't be postion at the top of the title, so adjust title inset edges
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, iconPadding, -imageHeight - iconPadding, 0)];
+        [self setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -imageHeight - iconPadding, 0)];
+        CGFloat insetConstant = (calculatedImageSize.height + iconPadding) / 2;
+        [self setContentEdgeInsets:UIEdgeInsetsMake(self.contentEdgeInsets.top + insetConstant, 0, self.contentEdgeInsets.bottom + insetConstant, 0)];
+    } else if (_iconPlacement == ACRLeftOfTitle) {
+        int npadding = 0;
+        if (self.doesItHaveAnImageView) {
+            iconPadding += (self.imageView.frame.size.width + iconPadding);
+            npadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+        }
+        CGFloat widthOffset = (calculatedImageSize.width + iconPadding);
+        
+        [self setContentEdgeInsets:UIEdgeInsetsMake(self.contentEdgeInsets.top, self.contentEdgeInsets.left + widthOffset / 2, self.contentEdgeInsets.bottom, self.contentEdgeInsets.right + widthOffset / 2)];
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, npadding, 0, -(widthOffset + npadding))];
+        [_iconView.trailingAnchor constraintEqualToAnchor:self.titleLabel.leadingAnchor constant:-iconPadding].active = YES;
+        
+        [NSLayoutConstraint constraintWithItem:_iconView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0].active = YES;
+        CGFloat offset = -(self.contentEdgeInsets.left + self.contentEdgeInsets.right);
+        
+        self.titleWidthConstraint = [self.titleLabel.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor constant:offset];
+        self.titleWidthConstraint.active = YES;
+        
+        [self.titleLabel.centerXAnchor constraintEqualToAnchor:self.centerXAnchor constant:(widthOffset / 2)].active = YES;
+        
+        self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
+        self.heightConstraint.active = YES;
+    } else if (_iconPlacement == ACRRightOfTitle) {
+        int npadding = 0;
+        if (self.doesItHaveAnImageView) {
+            iconPadding += (self.imageView.frame.size.width + iconPadding);
+            npadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+        }
 
-    self.configuration = buttonConfiguration;
+        CGFloat widthOffset = (calculatedImageSize.width + iconPadding);
+
+        // Adjust content insets to accommodate icon on the right
+        [self setContentEdgeInsets:UIEdgeInsetsMake(
+            self.contentEdgeInsets.top,
+            self.contentEdgeInsets.left + widthOffset / 2,
+            self.contentEdgeInsets.bottom,
+            self.contentEdgeInsets.right + widthOffset / 2
+        )];
+
+        // Move the title slightly left, and account for spacing
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -iconPadding, 0, npadding + calculatedImageSize.width)];
+
+        [_iconView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor constant:iconPadding].active = YES;
+
+        [NSLayoutConstraint constraintWithItem:_iconView
+                                     attribute:NSLayoutAttributeCenterY
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeCenterY
+                                    multiplier:1.0
+                                      constant:0].active = YES;
+
+        CGFloat offset = -(self.contentEdgeInsets.left + self.contentEdgeInsets.right);
+
+        // Title should not exceed button width minus edge insets
+        self.titleWidthConstraint = [self.titleLabel.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor constant:offset];
+        self.titleWidthConstraint.active = YES;
+
+        // Shift title to left slightly to visually center the whole content (title + icon)
+        [self.titleLabel.centerXAnchor constraintEqualToAnchor:self.centerXAnchor constant:-(widthOffset / 2)].active = YES;
+
+        // Ensure button height is enough for title + insets
+        self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
+        self.heightConstraint.active = YES;
+    }
 }
 
 + (UIButton *)rootView:(ACRView *)rootView
      baseActionElement:(ACOBaseActionElement *)acoAction
                  title:(NSString *)title
-         andHostConfig:(ACOHostConfig *)config
+         andHostConfig:(ACOHostConfig *)config;
 {
     ACRButton *button = [[ACRButton alloc] initWithExpandable:[acoAction type] == ACRShowCard];
     [button setTitle:title forState:UIControlStateNormal];
@@ -147,96 +259,110 @@
     } else {
         button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     }
-
+    
     button.isAccessibilityElement = YES;
     button.accessibilityLabel = title;
     button.enabled = [acoAction isEnabled];
-
+    
     button.sentiment = acoAction.sentiment;
     button.actionType = acoAction.type;
-
+    
     button.defaultPositiveBackgroundColor = [config getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:(ForegroundColor::Accent)subtleOption:false];
     button.defaultDestructiveForegroundColor = [config getTextBlockColor:(ACRContainerStyle::ACRDefault) textColor:(ForegroundColor::Attention)subtleOption:false];
     [button applySentimentStyling];
-
+    
     std::shared_ptr<AdaptiveCards::BaseActionElement> action = [acoAction element];
     NSDictionary *imageViewMap = [rootView getImageMap];
-    NSString *iconURL = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString *iconURL = [NSString stringWithCString:action->GetIconUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *key = iconURL;
-    UIImage *image = imageViewMap[key];
-    button.iconPlacement = [ACRButton getIconPlacmentAtCurrentContext:rootView url:key];
-
-    if (image) {
-        [button setImageView:image withConfig:config];
+    UIImage *img = imageViewMap[key];
+    button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key];
+    BOOL isSplitButton = action->GetIsSplitAction();
+    
+    if (img) {
+        UIImageView *iconView = [[ACRUIImageView alloc] init];
+        iconView.image = img;
+        [button addSubview:iconView];
+        button.iconView = iconView;
+        [button setImageView:img withConfig:config];
     } else if (key.length) {
         NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
-        NSString *k = [number stringValue];
-        UIImageView *view = [rootView getImageView:k];
+        NSString *key = [number stringValue];
+        UIImageView *view = [rootView getImageView:key];
         if ([iconURL hasPrefix:@"icon:"]) {
             // Rendering svg fluent icon here on button
-
+            
             // intentionally kept this 24 so that it always loads
             // irrespective of size given in host config.
             // it is possible that host config has some size which is not available in CDN.
             unsigned int imageHeight = 24;
             BOOL isFilled = [[iconURL lowercaseString] containsString:@"filled"];
-            NSString *getSVGURL = cdnURLForIcon(@(action->GetSVGPath().c_str()));
-            [ACRSVGImageView requestIcon:getSVGURL
-                                  filled:isFilled
-                                    size:CGSizeMake(imageHeight, imageHeight)
-                                     rtl:rootView.context.rtl
-                              completion:^(UIImage *icon) {
-                                  [button setImageView:icon withConfig:config widthToHeightRatio:1.0f];
-                              }];
+            NSString *getSVGURL = cdnURLForIcon(@(action->GetSVGPath([iconURL UTF8String]).c_str()));
+            UIImageView *view = [[ACRSVGImageView alloc] init:getSVGURL rtl:rootView.context.rtl isFilled:isFilled size:CGSizeMake(imageHeight, imageHeight) tintColor:button.currentTitleColor];
+            button.iconView = view;
+            [button addSubview:view];
+            [button setImageView:view.image withConfig:config aspectRatio:1.0f];
         } else if (view) {
             if (view.image) {
+                button.iconView = view;
+                [button addSubview:view];
+                [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
                 [button setImageView:view.image withConfig:config];
-                [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:k];
+            } else {
+                button.iconView = view;
+                [button addSubview:view];
+                [rootView setImageView:key view:button];
             }
         }
+    } else {
+        button.heightConstraint = [button.heightAnchor constraintGreaterThanOrEqualToAnchor:button.titleLabel.heightAnchor constant:button.contentEdgeInsets.top + button.contentEdgeInsets.bottom];
+        button.heightConstraint.active = YES;
     }
-
+    
+    if (isSplitButton)
+    {
+        NSString *chevronDownIcon = @"ChevronDown";
+        NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];
+        CGSize iconSize = CGSizeMake(16, 16);
+        UIImageView *view = [[ACRSVGImageView alloc] init:url rtl:rootView.context.rtl isFilled:true size:iconSize tintColor:button.currentTitleColor];
+        view.translatesAutoresizingMaskIntoConstraints = NO;
+        [button addSubview:view];
+        [button setTrailingIcon:view WithConfig:config];
+    }
+    
     if (button.isEnabled == NO) {
-        UIButtonConfiguration *buttonConfiguration = button.configuration;
-        buttonConfiguration.baseBackgroundColor = [buttonConfiguration.baseBackgroundColor colorWithAlphaComponent:0.5];
-        button.configuration = buttonConfiguration;
+        [button setBackgroundColor:[button.backgroundColor colorWithAlphaComponent:0.5]];
     }
-
+    
     return button;
-}
-
-- (void)setBackgroundColor:(UIColor *)backgroundColor
-{
-    [super setBackgroundColor:backgroundColor];
-    UIButtonConfiguration *buttonConfiguration = self.configuration;
-    buttonConfiguration.baseBackgroundColor = backgroundColor;
-    self.configuration = buttonConfiguration;
 }
 
 - (void)applySentimentStyling
 {
-    UIButtonConfiguration *buttonConfiguration = self.configuration;
     if ([@"positive" caseInsensitiveCompare:_sentiment] == NSOrderedSame) {
+        BOOL usePositiveDefault = _positiveUseDefault;
+        
         // By default, positive sentiment must have background accentColor and white text/foreground color
-        if (_positiveUseDefault) {
-            buttonConfiguration.baseBackgroundColor = _defaultPositiveBackgroundColor;
-            buttonConfiguration.baseForegroundColor = UIColor.whiteColor;
+        if (usePositiveDefault) {
+            [self setBackgroundColor:_defaultPositiveBackgroundColor];
+            [self setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
         } else {
-            // Otherwise use the defined values
-            buttonConfiguration.baseBackgroundColor = _positiveBackgroundColor;
-            buttonConfiguration.baseForegroundColor = _positiveForegroundColor;
+            // Otherwise use the values defined by the user in the ACRButton.xib
+            [self setBackgroundColor:_positiveBackgroundColor];
+            [self setTitleColor:_positiveForegroundColor forState:UIControlStateNormal];
         }
     } else if ([@"destructive" caseInsensitiveCompare:_sentiment] == NSOrderedSame) {
+        BOOL useDestructiveDefault = _destructiveUseDefault;
+        
         // By default, destructive sentiment must have a attention text/foreground color
-        if (_destructiveUseDefault) {
-            buttonConfiguration.baseForegroundColor = _defaultDestructiveForegroundColor;
+        if (useDestructiveDefault) {
+            [self setTitleColor:_defaultDestructiveForegroundColor forState:UIControlStateNormal];
         } else {
-            // Otherwise use the defined values
-            buttonConfiguration.baseBackgroundColor = _destructiveBackgroundColor;
-            buttonConfiguration.baseForegroundColor = _destructiveForegroundColor;
+            // Otherwise use the values defined by the user in the ACRButton.xib
+            [self setBackgroundColor:_destructiveBackgroundColor];
+            [self setTitleColor:_destructiveForegroundColor forState:UIControlStateNormal];
         }
     }
-    self.configuration = buttonConfiguration;
 }
 
 - (BOOL)doesItHaveAnImageView
@@ -244,17 +370,62 @@
     return (self.actionType == ACRShowCard && self.imageView && self.imageView.frame.size.width);
 }
 
-+ (ACRIconPlacement)getIconPlacmentAtCurrentContext:(ACRView *)rootView url:(NSString *)key
++ (ACRIconPlacement)getIconPlacementAtCurrentContext:(ACRView *)rootView url:(NSString *)key
 {
     if (!key or key.length == 0) {
         return ACRNoTitle;
     }
-
+    
     if ([rootView.context.hostConfig getIconPlacement] == ACRAboveTitle and rootView.context.allHasActionIcons) {
         return ACRAboveTitle;
     }
-
+    
     return ACRLeftOfTitle;
+}
+
+- (void)setTrailingIcon:(UIImageView *)imageView WithConfig:(ACOHostConfig *)config
+{
+    self.trailingIconView = imageView;
+    int npadding = 0;
+    int iconPadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+    if (self.doesItHaveAnImageView) {
+        iconPadding += (self.imageView.frame.size.width + iconPadding);
+        npadding = [config getHostConfig]->GetSpacing().defaultSpacing;
+    }
+
+    CGFloat rightIconWidth = imageView.image.size.width;
+    CGFloat rightOffset = rightIconWidth + iconPadding;
+
+    [self setContentEdgeInsets:UIEdgeInsetsMake(
+        self.contentEdgeInsets.top,
+        self.contentEdgeInsets.left + rightOffset / 2,
+        self.contentEdgeInsets.bottom,
+        self.contentEdgeInsets.right + rightOffset / 2
+    )];
+
+    // Shift title left to make space for the right icon
+    [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -iconPadding, 0, npadding + rightIconWidth)];
+
+    [imageView.leadingAnchor constraintEqualToAnchor:self.titleLabel.trailingAnchor constant:iconPadding].active = YES;
+
+    [NSLayoutConstraint constraintWithItem:imageView
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self
+                                 attribute:NSLayoutAttributeCenterY
+                                multiplier:1.0
+                                  constant:0].active = YES;
+
+    CGFloat offset = -(self.contentEdgeInsets.left + self.contentEdgeInsets.right);
+
+    self.titleWidthConstraint = [self.titleLabel.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor constant:offset];
+    self.titleWidthConstraint.active = YES;
+
+    // Move title slightly left to balance the icon on the right
+    [self.titleLabel.centerXAnchor constraintEqualToAnchor:self.centerXAnchor constant:-(rightOffset / 2)].active = YES;
+
+    self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
+    self.heightConstraint.active = YES;
 }
 
 @end

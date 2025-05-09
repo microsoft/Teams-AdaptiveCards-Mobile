@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
@@ -15,6 +16,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.HashMap;
 
+import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.AdaptiveCardObjectModel;
@@ -85,6 +87,8 @@ import io.adaptivecards.renderer.readonly.FluentIconsRenderer;
 import io.adaptivecards.renderer.readonly.ImageRenderer;
 import io.adaptivecards.renderer.readonly.ImageSetRenderer;
 import io.adaptivecards.renderer.readonly.MediaRenderer;
+import io.adaptivecards.renderer.readonly.ProgressBarRenderer;
+import io.adaptivecards.renderer.readonly.ProgressRingRenderer;
 import io.adaptivecards.renderer.readonly.RatingDisplayRenderer;
 import io.adaptivecards.renderer.readonly.RichTextBlockRenderer;
 import io.adaptivecards.renderer.readonly.TableRenderer;
@@ -113,6 +117,8 @@ public class CardRendererRegistration
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Badge), BadgeRenderer.INSTANCE);
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.Carousel), CarouselRenderer.INSTANCE);
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.CarouselPage), CarouselPageRenderer.INSTANCE);
+        registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.ProgressBar), ProgressBarRenderer.INSTANCE);
+        registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.ProgressRing), ProgressRingRenderer.INSTANCE);
 
         // Register Input Renderers
         registerRenderer(AdaptiveCardObjectModel.CardElementTypeToString(CardElementType.TextInput), TextInputRenderer.getInstance());
@@ -128,6 +134,7 @@ public class CardRendererRegistration
         registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.Submit), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.ShowCard), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.OpenUrl), ActionElementRenderer.getInstance());
+        //registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.Popover), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ActionTypeToString(ActionType.ToggleVisibility), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ModeToString(Mode.Primary), ActionElementRenderer.getInstance());
         registerActionRenderer(AdaptiveCardObjectModel.ModeToString(Mode.Secondary), DropdownElementRenderer.getInstance());
@@ -268,6 +275,7 @@ public class CardRendererRegistration
         m_featureFlagResolver = featureFlagResolver;
     }
 
+    @Nullable
     public IFeatureFlagResolver getFeatureFlagResolver()
     {
         return m_featureFlagResolver;
@@ -312,6 +320,15 @@ public class CardRendererRegistration
     public BaseCardElement getRootFallbackCard()
     {
         return m_rootFallbackCard;
+    }
+
+    @NonNull
+    public ACTheme getTheme() {
+        return mTheme;
+    }
+
+    public void setThemeForThemedUrl(@NonNull ACTheme theme) {
+        mTheme = theme;
     }
 
     public View renderElements(RenderedAdaptiveCard renderedCard,
@@ -733,6 +750,14 @@ public class CardRendererRegistration
         return null;
     }
 
+    public boolean isIsSplitActionEnabled() {
+        return mIsSplitActionEnabled;
+    }
+
+    public void setIsSplitActionEnabled(boolean isSplitActionEnabled) {
+        mIsSplitActionEnabled = isSplitActionEnabled;
+    }
+
     private static CardRendererRegistration s_instance = null;
     private IInputWatcher m_InputWatcher = null;
     private HashMap<String, IBaseCardElementRenderer> m_typeToRendererMap = new HashMap<String, IBaseCardElementRenderer>();
@@ -747,4 +772,6 @@ public class CardRendererRegistration
     private IFeatureFlagResolver m_featureFlagResolver;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
+    private boolean mIsSplitActionEnabled = false;
+    private ACTheme mTheme = ACTheme.None;
 }

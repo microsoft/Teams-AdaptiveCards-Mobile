@@ -7,6 +7,7 @@
 #include "RemoteResourceInformation.h"
 #include "BaseElement.h"
 #include "Enums.h"
+#include "ThemedUrl.h"
 
 void HandleUnknownProperties(const Json::Value& json, const std::unordered_set<std::string>& knownProperties, Json::Value& unknownProperties);
 
@@ -29,8 +30,10 @@ public:
     virtual void SetTitle(std::string&& value);
     virtual void SetTitle(const std::string& value);
 
+    const std::string& GetIconUrl(const ACTheme theme) const;
     const std::string& GetIconUrl() const;
     std::string GetSVGPath() const;
+    std::string GetSVGPath(const std::string& iconUrl) const;
 
     void SetIconUrl(std::string&& value);
     void SetIconUrl(const std::string& value);
@@ -52,12 +55,18 @@ public:
 
     bool GetIsEnabled() const;
     void SetIsEnabled(const bool isEnabled);
+    
+    bool GetIsRtl() const;
+    void SetIsRtl(const bool isRtl);
 
     ActionRole GetRole() const;
     void SetRole(const ActionRole role);
 
     void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceUris) override;
     Json::Value SerializeToJsonValue() const override;
+
+    bool GetIsSplitAction() const;
+    const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& GetMenuActions() const;
 
     template <typename T>
     static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json);
@@ -66,6 +75,30 @@ public:
     static std::shared_ptr<BaseActionElement> DeserializeBaseProperties(ParseContext& context, const Json::Value& json);
 
     static void ParseJsonObject(AdaptiveCards::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element);
+
+    static const bool IsSplitActionSupported(const ActionType actionType) {
+        return actionType == ActionType::Execute
+               || actionType == ActionType::OpenUrl
+               //|| actionType == ActionType::ResetInputs // Todo add ResetInputs once implemented
+               || actionType == ActionType::ShowCard
+               || actionType == ActionType::Submit
+               || actionType == ActionType::ToggleVisibility;
+    }
+
+    /**
+     * Determines if the given action type is a valid menu action.
+     * @param actionType The type of action to be validated.
+     * @return `true` if the action type is valid, `false` otherwise.
+     * @note The `ActionType::ResetInputs` is planned for future implementation and is
+     * currently commented out in the code.
+     */
+    static const bool IsValidMenuAction(const ActionType actionType) {
+        return actionType == ActionType::Execute
+               || actionType == ActionType::OpenUrl
+               //|| actionType == ActionType::ResetInputs // Todo add ResetInputs once implemented
+               || actionType == ActionType::Submit
+               || actionType == ActionType::ToggleVisibility;
+    }
 
 private:
     void PopulateKnownPropertiesSet();
@@ -79,10 +112,13 @@ private:
     std::string m_tooltip;
 
     bool m_isEnabled;
+    bool m_isRtl;
 
     ActionType m_type;
     Mode m_mode;
     ActionRole m_role;
+    std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> m_menuActions;
+    std::vector<std::shared_ptr<AdaptiveCards::ThemedUrl>> m_themedIconUrls;
 };
 
 template <typename T>

@@ -12,6 +12,7 @@ public enum ActionType {
   Unsupported(0),
   Execute,
   OpenUrl,
+  Popover,
   ShowCard,
   Submit,
   ToggleVisibility,

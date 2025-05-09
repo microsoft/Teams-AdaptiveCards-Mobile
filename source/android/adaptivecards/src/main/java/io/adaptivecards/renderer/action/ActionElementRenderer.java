@@ -29,6 +29,7 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.renderer.BaseActionElementRenderer;
+import io.adaptivecards.renderer.IconUtils;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
@@ -151,8 +152,8 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         int minHeight = context.getResources().getDimensionPixelSize(R.dimen.action_min_height);
         button.post(() -> Util.expandClickArea(button, minHeight));
 
-        String iconUrl = baseActionElement.GetIconUrl();
-        String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath());
+        String iconUrl = baseActionElement.GetIconUrl(renderedCard.getTheme());
+        String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath(iconUrl));
 
         if (!iconUrl.isEmpty())
         {
@@ -163,6 +164,11 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             }
 
             Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
+        }
+
+        if (ActionElementUtils.isSplitAction(baseActionElement)) {
+            String splitButtonSvgURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath(SPLIT_BUTTON_ICON_URL));
+            Util.loadIcon(context, button, SPLIT_BUTTON_ICON_URL, splitButtonSvgURL, hostConfig, renderedCard, IconPlacement.RightOfTitle);
         }
 
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
@@ -207,7 +213,11 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         List<IInputHandler> inputHandlers = adaptiveCard.getInputsToValidate(Util.getViewId(button));
         button.setEnabled(isAnyInputValid(inputHandlers));
         for (IInputHandler inputHandler : inputHandlers) {
-            inputHandler.addInputWatcher((id, val) -> button.setEnabled(isAnyInputValid(inputHandlers)));
+            inputHandler.addInputWatcher((id, val) -> {
+                boolean isEnabled = isAnyInputValid(inputHandlers);
+                button.setEnabled(isEnabled);
+                IconUtils.applyIconColor(button, button.getCurrentTextColor());
+            });
         }
     }
 
@@ -227,10 +237,11 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         }
 
         Button button = renderButton(context, viewGroup, baseActionElement, hostConfig, renderedCard, renderArgs);
-        button.setOnClickListener(new BaseActionElementRenderer.ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
+        button.setOnClickListener(BaseActionElementRenderer.ActionOnClickListener.newInstance(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs));
 
         return button;
     }
 
     private static ActionElementRenderer s_instance = null;
+    private static final String SPLIT_BUTTON_ICON_URL = "icon:ChevronDown,Filled";
 }

@@ -1,12 +1,26 @@
 {
 	"type": "AdaptiveCard",
 	"version": "1.5",
+	"rtl": false,
 	"body": [
 		{
 			"type": "TextBlock",
 			"text": "New Icon element",
 			"wrap": true,
 			"size": "Large"
+		},
+		{
+			"type": "Icon",
+			"name": "Airplane",
+			"selectAction": {
+				"type": "Action.ToggleVisibility",
+				"targetElements": [
+					"reimbursement",
+					"chevronUp",
+					"chevronDown"
+				]
+			},
+			"id": "chevronDown"
 		},
 		{
 			"type": "ColumnSet",
@@ -363,7 +377,9 @@
 			"type": "Action.OpenUrl",
 			"title": "Filled icon",
 			"url": "https://www.microsoft.com",
-			"iconUrl": "icon:AccessTime,filled"
+			"iconUrl": "icon:AccessTime,filled",
+			"style": "destructive",
+			"rtl": true
 		},
 		{
 			"type": "Action.OpenUrl",

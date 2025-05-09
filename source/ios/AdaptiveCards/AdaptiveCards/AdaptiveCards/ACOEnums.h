@@ -10,16 +10,18 @@
 typedef NS_ENUM(NSInteger, ACRActionType) {
     ACRExecute = 1,
     ACROpenUrl,
+    ACRPopover,
     ACRShowCard,
     ACRSubmit,
     ACRToggleVisibility,
     ACROverflow,
-    ACRUnknownAction = 7,
+    ACRUnknownAction = 8,
 };
 
 typedef NS_ENUM(NSInteger, ACRIconPlacement) {
     ACRAboveTitle = 0,
     ACRLeftOfTitle,
+    ACRRightOfTitle,
     ACRNoTitle,
 };
 
@@ -55,6 +57,8 @@ typedef NS_ENUM(NSInteger, ACRCardElementType) {
     ACRCarousel,
     ACRCarouselPage,
     ACRBadge,
+    ACRProgressBar,
+    ACRProgressRing,
     ACRUnknown
 };
 
@@ -66,6 +70,12 @@ typedef NS_ENUM(NSInteger, ACRContainerStyle) {
     ACRAttention,
     ACRWarning,
     ACRAccent
+};
+
+typedef NS_ENUM(NSInteger, ACRTheme) {
+    ACRThemeNone = 0,
+    ACRThemeLight,
+    ACRThemeDark
 };
 
 typedef NS_ENUM(NSInteger, ACRBleedDirection) {
