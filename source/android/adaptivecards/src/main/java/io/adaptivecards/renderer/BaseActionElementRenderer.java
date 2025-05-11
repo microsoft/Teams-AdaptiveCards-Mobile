@@ -5,6 +5,7 @@ package io.adaptivecards.renderer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.adaptivecards.R;
 import io.adaptivecards.objectmodel.ActionMode;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AssociatedInputs;
@@ -342,17 +344,13 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
-            BaseCardElement content = action.GetContent();
-            boolean displayArrow = action.GetDisplayArrow();
-            String maxPopoverWidth = action.GetMaxPopoverWidth();
-            LabelPosition position = action.GetPosition();
-
             Context context = v.getContext();
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-            LinearLayout linearLayout = new LinearLayout(context);
-            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            bottomSheetDialog.setContentView(linearLayout);
-            renderPopoverContent(linearLayout);
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.PopoverDailog);
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View view = inflater.inflate(R.layout.popover_bottom_sheet_layout, null);
+            bottomSheetDialog.setContentView(view);
+            final LinearLayout parentLayout = view.findViewById(R.id.popover_parentlayout);
+            renderPopoverContent(parentLayout);
             bottomSheetDialog.show();
         }
 
