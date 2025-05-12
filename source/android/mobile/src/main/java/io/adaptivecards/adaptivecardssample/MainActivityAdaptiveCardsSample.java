@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -34,6 +33,7 @@ import io.adaptivecards.renderer.AdaptiveCardRenderer;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
 import io.adaptivecards.renderer.Util;
+import io.adaptivecards.renderer.Utils;
 import io.adaptivecards.renderer.actionhandler.AfterTextChangedListener;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
@@ -331,8 +331,9 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         CardRendererRegistration.getInstance().registerFeatureFlagResolver(new FeatureFlagResolver());
     }
 
-    private void registerCustomFeatures()
-    {
+    private void registerCustomFeatures(@NonNull Context context) {
+        // Register Theme
+        CardRendererRegistration.getInstance().setThemeForThemedUrl(Utils.getTheme(context));
         registerCustomImageLoaders();
         registerCustomMediaLoaders();
         registerFeatureRegistration();
@@ -364,6 +365,9 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             {
                 hostConfig = HostConfig.DeserializeFromString(hostConfigText);
             }
+            ActionsConfig actionsConfig = hostConfig.GetActions();
+            actionsConfig.setIconPlacement(IconPlacement.LeftOfTitle);
+            hostConfig.SetActions(actionsConfig);
 
             ParseContext context = createParseContextForCustomElements();
             ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
@@ -372,7 +376,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
 
             registerFeatureFlagResolver();
             CardRendererRegistration.getInstance().setIsSplitActionEnabled(true);
-            registerCustomFeatures();
+            registerCustomFeatures(layout.getContext());
             if (mLayoutWidth != 0) {
                 CardRendererRegistration.getInstance().registerHostCardContainer(mLayoutWidth);
             }

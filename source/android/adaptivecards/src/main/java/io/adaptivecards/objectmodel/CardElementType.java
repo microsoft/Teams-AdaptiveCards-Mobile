@@ -39,6 +39,8 @@ public enum CardElementType {
   Carousel,
   CarouselPage,
   Badge,
+  ProgressBar,
+  ProgressRing,
   Unknown;
 
   public final int swigValue() {

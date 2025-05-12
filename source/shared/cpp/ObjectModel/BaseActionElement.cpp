@@ -33,6 +33,10 @@ void BaseActionElement::SetTitle(const std::string& value)
     m_title = value;
 }
 
+const std::string& BaseActionElement::GetIconUrl(const ACTheme theme) const {
+    return ThemedUrl::GetThemedUrl(theme, m_themedIconUrls, m_iconUrl);
+}
+
 const std::string& BaseActionElement::GetIconUrl() const
 {
     return m_iconUrl;
@@ -113,6 +117,16 @@ bool BaseActionElement::GetIsEnabled() const
 void AdaptiveCards::BaseActionElement::SetIsEnabled(const bool isEnabled)
 {
     m_isEnabled = isEnabled;
+}
+
+bool BaseActionElement::GetIsRtl() const
+{
+    return m_isRtl;
+}
+
+void AdaptiveCards::BaseActionElement::SetIsRtl(const bool isRtl)
+{
+    m_isRtl = isRtl;
 }
 
 ActionType BaseActionElement::GetElementType() const
@@ -238,6 +252,10 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip));
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
     element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
+    element->SetIsRtl(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Rtl, false));
+
+    auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedIconUrls, ThemedUrl::Deserialize, false);
+    element->m_themedIconUrls = std::move(themedUrls);
 
     if (IsSplitActionSupported(element->GetElementType())) {
         //Parse Menu Actions

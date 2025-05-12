@@ -1,6 +1,7 @@
 use_frameworks!
 pod 'MicrosoftFluentUI', '0.1.9'
 pod 'SVGKit', '3.0.0'
+pod 'SwiftAdaptiveCards', :path => 'AdaptiveCards/Packages/SwiftAdaptiveCards'
 target 'AdaptiveCards' do
   project './AdaptiveCards/AdaptiveCards.xcodeproj'
   target 'AdaptiveCardsTests' do

@@ -262,7 +262,15 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Shape, "shape"},
             {AdaptiveCardSchemaKey::ExtraSmall,"extraSmall"},
             {AdaptiveCardSchemaKey::Wrap, "wrap"},
-            {AdaptiveCardSchemaKey::MenuActions, "menuActions"}});
+            {AdaptiveCardSchemaKey::MenuActions, "menuActions"},
+            {AdaptiveCardSchemaKey::ThemedIconUrls, "themedIconUrls"},
+            {AdaptiveCardSchemaKey::ThemedUrls, "themedUrls"},
+            {AdaptiveCardSchemaKey::Theme, "theme"},
+            {AdaptiveCardSchemaKey::LabelPosition, "labelPosition"},
+            {AdaptiveCardSchemaKey::Content, "content"},
+            {AdaptiveCardSchemaKey::DisplayArrow, "displayArrow"},
+            {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
+            {AdaptiveCardSchemaKey::Position, "position"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -294,12 +302,15 @@ namespace AdaptiveCards
             {CardElementType::CompoundButton,"CompoundButton"},
             {CardElementType::Carousel,"Carousel"},
             {CardElementType::CarouselPage,"CarouselPage"},
+            {CardElementType::ProgressBar,"ProgressBar"},
+            {CardElementType::ProgressRing,"ProgressRing"},
             {CardElementType::Unknown, "Unknown"}});
 
     DEFINE_ADAPTIVECARD_ENUM(ActionType, {
             {ActionType::Unsupported, "Unsupported"},
             {ActionType::Execute, "Action.Execute"},
             {ActionType::OpenUrl, "Action.OpenUrl"},
+            {ActionType::Popover, "Action.Popover"},
             {ActionType::ShowCard, "Action.ShowCard"},
             {ActionType::Submit, "Action.Submit"},
             {ActionType::ToggleVisibility, "Action.ToggleVisibility"},
@@ -499,6 +510,10 @@ namespace AdaptiveCards
             {Mode::Primary, "primary"},
             {Mode::Secondary, "secondary"}});
 
+    DEFINE_ADAPTIVECARD_ENUM(ACTheme, {
+            {ACTheme::Light, "Light"},
+            {ACTheme::Dark, "Dark"}})
+
     DEFINE_ADAPTIVECARD_ENUM(ErrorStatusCode, {
             {ErrorStatusCode::InvalidJson, "InvalidJson"},
             {ErrorStatusCode::RenderFailed, "RenderFailed"},
@@ -553,4 +568,21 @@ namespace AdaptiveCards
         {BadgeAppearance::Filled, "Filled"},
         {BadgeAppearance::Tint, "Tint"}});
 
+    DEFINE_ADAPTIVECARD_ENUM(ProgressBarColor, {
+        {ProgressBarColor::Accent, "Accent"},
+        {ProgressBarColor::Attention, "Attention"},
+        {ProgressBarColor::Good, "Good"},
+        {ProgressBarColor::Warning, "Warning"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(ProgressSize, {
+        {ProgressSize::Tiny, "Tiny"},
+        {ProgressSize::Small, "Small"},
+        {ProgressSize::Medium, "Medium"},
+        {ProgressSize::Large, "Large"}})
+
+    DEFINE_ADAPTIVECARD_ENUM(LabelPosition, {
+        {LabelPosition::Above, "Above"},
+        {LabelPosition::Below, "Below"},
+        {LabelPosition::Before, "Before"},
+        {LabelPosition::After, "After"}})
 }

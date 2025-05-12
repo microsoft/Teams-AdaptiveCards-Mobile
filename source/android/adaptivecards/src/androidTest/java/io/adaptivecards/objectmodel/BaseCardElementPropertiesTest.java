@@ -9,7 +9,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import io.adaptivecards.renderer.Util;
-import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
 public class BaseCardElementPropertiesTest
 {
@@ -84,7 +83,8 @@ public class BaseCardElementPropertiesTest
 
             BaseCardElement fallbackBaseCardElement = TestUtil.castToBaseCardElement(parsedTextBlock.GetFallbackContent());
             Image fallbackImage = TestUtil.castToImage(fallbackBaseCardElement);
-            Assert.assertEquals("http://", fallbackImage.GetUrl());
+            Assert.assertEquals("http://", fallbackImage.GetUrl(ACTheme.Light));
+            Assert.assertEquals("http://", fallbackImage.GetUrl(ACTheme.Dark));
         }
 
     }

@@ -80,6 +80,10 @@ Json::Value Image::SerializeToJsonValue() const
     return root;
 }
 
+const std::string& Image::GetUrl(const ACTheme theme) const {
+    return ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
+}
+
 std::string Image::GetUrl() const
 {
     return m_url;
@@ -210,6 +214,10 @@ std::shared_ptr<BaseCardElement> ImageParser::DeserializeWithoutCheckingType(Par
 
     // Parse optional selectAction
     image->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
+
+    auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedUrls, ThemedUrl::Deserialize, false);
+    image->m_themedUrls = std::move(themedUrls);
+
     return image;
 }
 

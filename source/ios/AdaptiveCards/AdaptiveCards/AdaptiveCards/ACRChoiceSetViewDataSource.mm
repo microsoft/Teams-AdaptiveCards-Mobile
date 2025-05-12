@@ -59,7 +59,7 @@ const CGFloat minimumRowHeight = 44.0;
     if (self.imageView.image) {
         self.imageView.frame = CGRectMake(0, 0, _imageSize.width, _imageSize.height);
         self.imageView.center = CGPointMake(_imageSize.width / 2, self.bounds.size.height / 2);
-        self.textLabel.frame = CGRectMake(_imageSize.width + padding, 0, self.bounds.size.width - _imageSize.width + padding, self.bounds.size.height);
+        self.textLabel.frame = CGRectMake(_imageSize.width + padding, 0, self.bounds.size.width - _imageSize.width - padding, self.bounds.size.height);
     }
 }
 
@@ -363,7 +363,7 @@ const CGFloat minimumRowHeight = 44.0;
 
 - (float)getNonInputWidth:(UITableViewCell *)cell
 {
-    return padding * 3 + cell.imageView.image.size.width;
+    return padding * 2 + cell.imageView.image.size.width;
 }
 
 @synthesize isRequired;

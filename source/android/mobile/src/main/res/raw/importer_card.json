@@ -240,6 +240,10 @@
 										"value": "v1.5/Elements/Action.MenuActions.json"
 									},
 									{
+										"title": "Actions Popover",
+										"value": "v1.5/Elements/Action.Popover.json"
+									},
+									{
 										"title": "Carousel",
 										"value": "v1.5/Scenarios/Carousel.json"
 									},
@@ -260,8 +264,28 @@
 										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
 									},
 									{
+										"title": "Progress Bar",
+										"value": "v1.5/Elements/ProgressBar.json"
+									},
+									{
+										"title": "Progress Ring",
+										"value": "v1.5/Elements/ProgressRing.json"
+									},
+									{
 										"title": "Spacing Sample",
 										"value": "v1.5/Scenarios/spacing_sample.json"
+									},
+									{
+										"title": "ThemedUrls Actions",
+										"value": "v1.5/Elements/ThemedUrls.Actions.json"
+									},
+									{
+										"title": "ThemedUrls BackgroundImage",
+										"value": "v1.5/Elements/ThemedUrls.BackgroundImage.json"
+									},
+									{
+										"title": "ThemedUrls Image",
+										"value": "v1.5/Elements/ThemedUrls.Image.json"
 									}
 								],
                                 "placeholder": "(choose sample)",
