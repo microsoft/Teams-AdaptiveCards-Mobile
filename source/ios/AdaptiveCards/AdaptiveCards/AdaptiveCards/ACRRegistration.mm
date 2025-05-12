@@ -46,6 +46,8 @@
 #import "ACRCompoundButtonRenderer.h"
 #import "ACRCarouselViewRenderer.h"
 #import "ACRBadgeRenderer.h"
+#import "ACRProgressBarRenderer.h"
+#import "ACRProgressRingRenderer.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -99,6 +101,8 @@ using namespace AdaptiveCards;
                                              [ACRCompoundButtonRenderer getInstance], [NSNumber numberWithInt:(int)[ACRCompoundButtonRenderer elemType]],
                                              [ACRCarouselViewRenderer getInstance],[NSNumber numberWithInt:(int)[ACRCarouselViewRenderer elemType]],
                                              [ACRCustomRenderer getInstance], [NSNumber numberWithInt:(int)[ACRCustomRenderer elemType]],
+                                             [ACRProgressBarRenderer getInstance], [NSNumber numberWithInt:(int)[ACRProgressBarRenderer elemType]],
+                                             [ACRProgressRingRenderer getInstance], [NSNumber numberWithInt:(int)[ACRProgressRingRenderer elemType]],
                                              nil];
         actionRendererDict =
             [[NSMutableDictionary alloc] initWithObjectsAndKeys:
