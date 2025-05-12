@@ -429,24 +429,27 @@ SeparatorConfig SeparatorConfig::Deserialize(const Json::Value& json, const Sepa
 
     std::string lineColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColor);
     result.lineColor = lineColor == "" ? defaultValue.lineColor : lineColor;
+    // Update line color with result value
+    lineColor = result.lineColor;
     
+    // Assign lineColor as default values if not exists to avoid regression
     std::string lineColorDefault = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorDefault);
-    result.lineColorDefault = lineColorDefault == "" ? defaultValue.lineColorDefault : lineColorDefault;
+    result.lineColorDefault = lineColorDefault == "" ? lineColor : lineColorDefault;
     
     std::string lineColorEmphasis = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorEmphasis);
-    result.lineColorEmphasis = lineColorEmphasis == "" ? defaultValue.lineColorEmphasis : lineColorEmphasis;
+    result.lineColorEmphasis = lineColorEmphasis == "" ? lineColor : lineColorEmphasis;
     
     std::string lineColorGood = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorGood);
-    result.lineColorGood = lineColorGood == "" ? defaultValue.lineColorGood : lineColorGood;
+    result.lineColorGood = lineColorGood == "" ? lineColor : lineColorGood;
     
     std::string lineColorAttention = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAttention);
-    result.lineColorAttention = lineColorAttention == "" ? defaultValue.lineColorAttention : lineColorAttention;
+    result.lineColorAttention = lineColorAttention == "" ? lineColor : lineColorAttention;
     
     std::string lineColorWarning = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorWarning);
-    result.lineColorWarning = lineColorWarning == "" ? defaultValue.lineColorWarning : lineColorWarning;
+    result.lineColorWarning = lineColorWarning == "" ? lineColor : lineColorWarning;
     
     std::string lineColorAccent = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAccent);
-    result.lineColorAccent = lineColorAccent == "" ? defaultValue.lineColorAccent : lineColorAccent;
+    result.lineColorAccent = lineColorAccent == "" ? lineColor : lineColorAccent;
     
     return result;
 }
