@@ -174,12 +174,12 @@ struct SeparatorConfig
 {
     unsigned int lineThickness = 1;
     std::string lineColor = "#B2000000";
-    std::string lineColorDefault;
-    std::string lineColorEmphasis;
-    std::string lineColorGood;
-    std::string lineColorAttention;
-    std::string lineColorWarning;
-    std::string lineColorAccent;
+    std::string lineColorDefault = "#B2000000";
+    std::string lineColorEmphasis = "#B2000000";
+    std::string lineColorGood = "#B2000000";
+    std::string lineColorAttention = "#B2000000";
+    std::string lineColorWarning = "#B2000000";
+    std::string lineColorAccent = "#B2000000";
 
     static SeparatorConfig Deserialize(const Json::Value& json, const SeparatorConfig& defaultValue);
 };

@@ -430,26 +430,23 @@ SeparatorConfig SeparatorConfig::Deserialize(const Json::Value& json, const Sepa
     std::string lineColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColor);
     result.lineColor = lineColor == "" ? defaultValue.lineColor : lineColor;
     
-    // Assign lineColor to default value if not exists to avoid regression
     std::string lineColorDefault = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorDefault);
-    result.lineColorDefault = lineColorDefault == "" ? lineColor : lineColorDefault;
-    lineColorDefault = result.lineColorDefault;
+    result.lineColorDefault = lineColorDefault == "" ? defaultValue.lineColorDefault : lineColorDefault;
     
-    // All other colors should have the default value if not exist
     std::string lineColorEmphasis = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorEmphasis);
-    result.lineColorEmphasis = lineColorEmphasis == "" ? lineColorDefault : lineColorEmphasis;
+    result.lineColorEmphasis = lineColorEmphasis == "" ? defaultValue.lineColorEmphasis : lineColorEmphasis;
     
     std::string lineColorGood = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorGood);
-    result.lineColorGood = lineColorGood == "" ? lineColorDefault : lineColorGood;
+    result.lineColorGood = lineColorGood == "" ? defaultValue.lineColorGood : lineColorGood;
     
     std::string lineColorAttention = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAttention);
-    result.lineColorAttention = lineColorAttention == "" ? lineColorDefault : lineColorAttention;
+    result.lineColorAttention = lineColorAttention == "" ? defaultValue.lineColorAttention : lineColorAttention;
     
     std::string lineColorWarning = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorWarning);
-    result.lineColorWarning = lineColorWarning == "" ? lineColorDefault : lineColorWarning;
+    result.lineColorWarning = lineColorWarning == "" ? defaultValue.lineColorWarning : lineColorWarning;
     
     std::string lineColorAccent = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAccent);
-    result.lineColorAccent = lineColorAccent == "" ? lineColorDefault : lineColorAccent;
+    result.lineColorAccent = lineColorAccent == "" ? defaultValue.lineColorAccent : lineColorAccent;
     
     return result;
 }
