@@ -32,14 +32,14 @@ variables:
   AC_APPEND_BUILD_NUMBER: ${{ parameters.append_build_number }}
 
 steps:
-- task: Gradle@2
+- task: Gradle@3
   displayName: 'gradlew adaptivecards:build'
   inputs:
     gradleWrapperFile: source/android/gradlew.bat
     workingDirectory: source/android
     tasks: 'adaptivecards:build'
 
-- task: Gradle@2
+- task: Gradle@3
   displayName: 'Gradle Unsigned Publish Local'
   inputs:
     gradleWrapperFile: source/android/gradlew.bat
@@ -47,7 +47,7 @@ steps:
     tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
     publishJUnitResults: false
 
-- task: Gradle@2
+- task: Gradle@3
   displayName: 'Gradle Unsigned Publish to ADO'
   inputs:
     gradleWrapperFile: source/android/gradlew.bat
