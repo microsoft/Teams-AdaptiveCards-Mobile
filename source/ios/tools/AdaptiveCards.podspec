@@ -13,13 +13,15 @@ Pod::Spec.new do |spec|
   
   spec.source       = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.10.0' }
 
-  spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders'
+  spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders', 'AdaptiveCardsBridge'
 
   spec.subspec 'AdaptiveCardsCore' do | sspec |
     sspec.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/*.{h,m,mm}'
+    sspec.exclude_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/SwiftAdaptiveCardSwiftBridge.swift'
     sspec.resource_bundles = {'AdaptiveCards' => ['source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/Resources/**/*']}
     sspec.dependency 'AdaptiveCards/AdaptiveCardsPrivate'
     sspec.dependency 'AdaptiveCards/ObjectModel'
+    sspec.dependency 'AdaptiveCards/AdaptiveCardsBridge'
     sspec.dependency 'SVGKit', '>= 3.0.0'
   end
 
@@ -37,6 +39,15 @@ Pod::Spec.new do |spec|
     sspec.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/PrivateHeaders/**/*.{h,m,mm}'
     sspec.header_mappings_dir = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/PrivateHeaders/'
     sspec.private_header_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/PrivateHeaders/*.h'
+  end
+
+  spec.subspec 'AdaptiveCardsBridge' do | sspec |
+    sspec.source_files = [
+      'source/ios/AdaptiveCards/AdaptiveCardsBridge/*.{h,swift}',
+      'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/SwiftAdaptiveCardSwiftBridge.swift'
+    ]
+    sspec.dependency 'AdaptiveCards/ObjectModel'
+    sspec.dependency 'AdaptiveCards/AdaptiveCardsPrivate'
   end
 
   spec.subspec 'UIProviders' do | sspec |

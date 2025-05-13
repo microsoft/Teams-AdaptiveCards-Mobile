@@ -14,10 +14,14 @@ let package = Package(
         .library(
             name: "AdaptiveCards",
             targets: ["AdaptiveCards", "ObjectModel"]),
+        .library(
+            name: "AdaptiveCardsBridge",
+            targets: ["AdaptiveCardsBridge"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
          .package(url: "https://github.com/SVGKit/SVGKit", from: "3.0.0"),
+         .package(path: "source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -39,7 +43,8 @@ let package = Package(
                 "testcards/ImageAutoInColumnSet.json",
                 "testcards/CustomerCard1.json",
                 "testcards/TextBlock.Issue.json",
-                "testcards/TextBlockStrechInColumnSet.json"
+                "testcards/TextBlockStrechInColumnSet.json",
+                "SwiftAdaptiveCardSwiftBridge.swift" // Exclude Swift file from Obj-C/C++ module
             ],
             resources: [
                 .process("Resources")
@@ -56,6 +61,20 @@ let package = Package(
                 LinkerSetting.linkedFramework("QuartzCore")
             ]
             ),
+        .target(
+            name: "AdaptiveCardsBridge",
+            dependencies: ["SwiftAdaptiveCards", "AdaptiveCards"],
+            path: "source/ios/AdaptiveCards/AdaptiveCardsBridge",
+            exclude: [
+                "Info.plist"
+            ],
+            sources: [
+                "../AdaptiveCards/AdaptiveCards/SwiftAdaptiveCardSwiftBridge.swift"  // Use the original file location
+            ],
+            swiftSettings: [
+                .define("SWIFT_PACKAGE")
+            ]
+        ),
         .testTarget(
             name:"AdaptiveCardsTest",
             dependencies: ["ObjectModel", "AdaptiveCards"],

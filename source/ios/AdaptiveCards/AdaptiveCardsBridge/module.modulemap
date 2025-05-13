@@ -1,0 +1,6 @@
+framework module AdaptiveCardsBridge {
+  umbrella header "AdaptiveCardsBridge.h"
+
+  export *
+  module * { export * }
+}

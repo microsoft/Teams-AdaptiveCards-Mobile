@@ -20,7 +20,6 @@
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
 #import "SwiftAdaptiveCardObjcBridge.h"
-#import <AdaptiveCards/AdaptiveCards-Swift.h>
 
 using namespace AdaptiveCards;
 
@@ -152,11 +151,40 @@ using namespace AdaptiveCards;
             NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
             std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
             
-            BOOL useSwiftParser = [SwiftAdaptiveCardParser isSwiftParserEnabled];
-            if (useSwiftParser) {
-                swiftResult = [SwiftAdaptiveCardParser parseWithPayload:payload];
-                if (swiftResult != nil) {
-                    [card setAdaptiveCardParseResult:swiftResult];
+            // Use runtime checks to access Swift classes and methods
+            Class swiftParserClass = NSClassFromString(@"SwiftAdaptiveCardParser");
+            BOOL useSwiftParser = NO;
+            
+            if (swiftParserClass) {
+                // Check if Swift parser is enabled
+                SEL isEnabledSelector = NSSelectorFromString(@"isSwiftParserEnabled");
+                if ([swiftParserClass respondsToSelector:isEnabledSelector]) {
+                    NSMethodSignature *signature = [swiftParserClass methodSignatureForSelector:isEnabledSelector];
+                    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+                    [invocation setSelector:isEnabledSelector];
+                    [invocation setTarget:swiftParserClass];
+                    [invocation invoke];
+                    
+                    [invocation getReturnValue:&useSwiftParser];
+                }
+            }
+            
+            if (useSwiftParser && swiftParserClass) {
+                // Parse using Swift parser
+                SEL parseSelector = NSSelectorFromString(@"parseWithPayload:");
+                if ([swiftParserClass respondsToSelector:parseSelector]) {
+                    NSMethodSignature *signature = [swiftParserClass methodSignatureForSelector:parseSelector];
+                    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+                    [invocation setSelector:parseSelector];
+                    [invocation setTarget:swiftParserClass];
+                    [invocation setArgument:&payload atIndex:2]; // First arg is at index 2 (0=self, 1=_cmd)
+                    [invocation invoke];
+                    
+                    [invocation getReturnValue:&swiftResult];
+                    
+                    if (swiftResult != nil) {
+                        [card setAdaptiveCardParseResult:swiftResult];
+                    }
                 }
                 acrParseWarnings = [SwiftAdaptiveCardObjcBridge getWarningsFromParseResult:swiftResult useSwift:YES];
             } else {

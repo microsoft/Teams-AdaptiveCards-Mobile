@@ -13,7 +13,8 @@
 #import "ACOAdaptiveCardParseResult.h"
 #import "ACRParseWarningPrivate.h"
 #import "UtiliOS.h"
-#import <AdaptiveCards/AdaptiveCards-Swift.h>
+
+// Remove direct Swift header import and use Objective-C runtime instead
 
 using namespace AdaptiveCards;
 
@@ -21,13 +22,15 @@ using namespace AdaptiveCards;
 
 + (NSMutableArray *)getWarningsFromParseResult:(id)parseResult useSwift:(BOOL)useSwift {
     NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
+    
     if (useSwift) {
-        // Swift implementation
-       SwiftAdaptiveCardParseResult *swiftResult = (SwiftAdaptiveCardParseResult *)parseResult;
-       NSArray *swiftWarnings = [swiftResult warnings];
-       if (swiftWarnings) {
-           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
-       }
+        // Use runtime lookup to access Swift objects without direct header import
+        if ([parseResult respondsToSelector:@selector(warnings)]) {
+            NSArray *swiftWarnings = [parseResult performSelector:@selector(warnings)];
+            if (swiftWarnings) {
+                acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
+            }
+        }
     } else {
         // For C++ implementation, check the type of parseResult
         if ([parseResult isKindOfClass:[NSValue class]]) {
@@ -42,6 +45,7 @@ using namespace AdaptiveCards;
             NSLog(@"Error retrieving parsed result");
         }
     }
+    
     return acrParseWarnings;
 }
 
