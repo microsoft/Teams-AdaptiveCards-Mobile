@@ -4,68 +4,43 @@
 	"version": "1.5",
 	"body": [
 		{
-			"type": "Container",
-			"items": [
+			"type": "TextBlock",
+			"weight": "bolder",
+			"size": "large",
+			"text": "Click below to open a Popover"
+		},
+		{
+			"type": "Input.Text",
+			"id": "inputOutsidePopover",
+			"label": "Input outside Popover"
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
 				{
-					"type": "Input.Text",
-					"id": "defaultInputId",
-					"isRequired": true,
-					"placeholder": "enter comment",
-					"maxLength": 500
-				},
-				{
-					"type": "Input.ChoiceSet",
-					"id": "myCountry",
-					"style": "compact",
-					"label": "Country",
-					"isRequired": true,
-					"isMultiSelect": false,
-					"choices": [
-						{
-							"title": "India",
-							"value": "1"
-						},
-						{
-							"title": "USA",
-							"value": "2"
-						},
-						{
-							"title": "UK",
-							"value": "3"
-						}
-					],
-					"valueChangedAction": {
-						"type": "Action.ResetInputs",
-						"targetInputIds": [
-							"defaultInputId",
-							"myZone"
+					"type": "Action.Popover",
+					"title": "Add Name",
+					"content": {
+						"type": "Container",
+						"items": [
+							{
+								"type": "Input.Text",
+								"id": "inputInPopover1",
+								"label": "Please enter your name"
+							},
+							{
+								"type": "ActionSet",
+								"actions": [
+									{
+										"type": "Action.Submit",
+										"title": "Submit",
+										"tooltip": "Click me",
+										"mode": "secondary"
+									}
+								]
+							}
 						]
 					}
-				},
-				{
-					"type": "Input.ChoiceSet",
-					"id": "myZone",
-					"style": "compact",
-					"label": "Zone",
-					"isMultiSelect": false,
-					"choices": [
-						{
-							"title": "East",
-							"value": "1"
-						},
-						{
-							"title": "West",
-							"value": "2"
-						},
-						{
-							"title": "North",
-							"value": "3"
-						},
-						{
-							"title": "South",
-							"value": "3"
-						}
-					]
 				}
 			]
 		},
@@ -74,92 +49,23 @@
 			"actions": [
 				{
 					"type": "Action.Popover",
-					"title": "Action.Popover 1",
+					"title": "Add Number",
 					"content": {
 						"type": "Container",
 						"items": [
 							{
 								"type": "Input.Text",
-								"id": "defaultInputId2",
-								"isRequired": true,
-								"placeholder": "enter comment",
-								"maxLength": 500
-							},
-							{
-								"type": "Input.ChoiceSet",
-								"id": "myCountry2",
-								"style": "compact",
-								"label": "Country",
-								"isRequired": true,
-								"isMultiSelect": false,
-								"choices": [
-									{
-										"title": "India",
-										"value": "1"
-									},
-									{
-										"title": "USA",
-										"value": "2"
-									},
-									{
-										"title": "UK",
-										"value": "3"
-									}
-								],
-								"valueChangedAction": {
-									"type": "Action.ResetInputs",
-									"targetInputIds": [
-										"defaultInputId2",
-										"myZone2"
-									]
-								}
-							},
-							{
-								"type": "Input.ChoiceSet",
-								"id": "myZone2",
-								"style": "compact",
-								"label": "Zone",
-								"isMultiSelect": false,
-								"choices": [
-									{
-										"title": "East",
-										"value": "1"
-									},
-									{
-										"title": "West",
-										"value": "2"
-									},
-									{
-										"title": "North",
-										"value": "3"
-									},
-									{
-										"title": "South",
-										"value": "3"
-									}
-								]
+								"id": "inputInPopover2",
+								"label": "Please enter your phone"
 							},
 							{
 								"type": "ActionSet",
 								"actions": [
 									{
-										"type": "Action.OpenUrl",
-										"title": "OpenUrl",
-										"iconUrl": "icon:Open,Filled",
-										"tooltip": "Tooltip for OpenUrl",
-										"style": "positive",
-										"url": "https://www.microsoft.com"
-									},
-									{
-										"type": "Action.ToggleVisibility",
-										"title": "ToggleVisibility",
-										"iconUrl": "icon:ToggleLeft,Filled",
-										"tooltip": "Tooltip for ToggleVisibility",
-										"style": "positive",
-										"targetElements": [
-											"defaultInputId",
-											"myZone"
-										]
+										"type": "Action.Submit",
+										"title": "Submit",
+										"tooltip": "Click me",
+										"mode": "secondary"
 									}
 								]
 							}
@@ -167,30 +73,71 @@
 					}
 				}
 			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Submit",
+					"title": "Submit"
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Execute",
+					"title": "Execute"
+				}
+			]
 		}
 	],
 	"actions": [
 		{
 			"type": "Action.Popover",
-			"title": "Action.Popover 11",
+			"title": "Add email",
 			"content": {
 				"type": "Container",
 				"items": [
 					{
-						"type": "TextBlock",
-						"text": "This is a popover"
+						"type": "Input.Text",
+						"id": "inputInPopover3",
+						"label": "Please enter your email"
 					},
 					{
-						"type": "TextBlock",
-						"text": "This is a popover"
-					},
-					{
-						"type": "TextBlock",
-						"text": "This is a popover"
-					},
-					{
-						"type": "TextBlock",
-						"text": "This is a popover"
+						"type": "ActionSet",
+						"actions": [
+							{
+								"type": "Action.Submit",
+								"title": "Submit",
+								"tooltip": "Click me"
+							},
+							{
+								"type": "Action.Popover",
+								"title": "Popover nested",
+								"content": {
+									"type": "Container",
+									"items": [
+										{
+											"type": "Input.Text",
+											"id": "inputInPopover4",
+											"label": "Please enter your email"
+										},
+										{
+											"type": "ActionSet",
+											"actions": [
+												{
+													"type": "Action.Submit",
+													"title": "Submit",
+													"tooltip": "Click me"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
 					}
 				]
 			}

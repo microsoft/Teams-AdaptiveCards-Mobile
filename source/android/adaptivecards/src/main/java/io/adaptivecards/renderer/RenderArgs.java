@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 
@@ -25,6 +29,7 @@ public class RenderArgs {
         setColumnHeader(renderArgs.isColumnHeader());
         setHorizontalAlignment(renderArgs.getHorizontalAlignment());
         setAncestorHasSelectAction(renderArgs.getAncestorHasSelectAction());
+        setIgnoreActions(renderArgs.getIgnoreActions());
     }
 
     public boolean getAncestorHasFallback()
@@ -131,6 +136,18 @@ public class RenderArgs {
         m_ancestorHasSelectAction = ancestorHasSelectAction;
     }
 
+    public List<ActionType> getIgnoreActions() {
+        return ignoreActions;
+    }
+
+    public void setIgnoreActions(List<ActionType> ignoreActions) {
+        this.ignoreActions = ignoreActions;
+    }
+
+    public void addIgnoreAction(ActionType action) {
+        this.ignoreActions.add(action);
+    }
+
     private boolean m_ancestorHasFallback;
     private ContainerStyle m_containerStyle = ContainerStyle.Default;
     private boolean m_isColumnHeader;
@@ -139,4 +156,5 @@ public class RenderArgs {
     private long m_containerCardId;
     private boolean m_isRootLevelActions;
     private boolean m_ancestorHasSelectAction = false;
+    private List<ActionType> ignoreActions = new ArrayList<>();
 }

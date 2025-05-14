@@ -355,23 +355,29 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         protected final void renderPopoverContent(@NonNull ViewGroup viewGroup) {
-            if (m_action.GetElementType() == ActionType.Popover) {
-                PopoverAction action = Util.castTo(m_action, PopoverAction.class);
-                try {
-                    CardRendererRegistration.getInstance().renderElementAndPerformFallback(
-                        m_renderedAdaptiveCard,
-                        viewGroup.getContext(),
-                        m_fragmentManager,
-                        action.GetContent(),
-                        viewGroup,
-                        m_cardActionHandler,
-                        m_hostConfig,
-                        m_renderArgs,
-                        CardRendererRegistration.getInstance().getFeatureRegistration());
-                } catch (Exception e) {
+            PopoverAction action = Util.castTo(m_action, PopoverAction.class);
+            try {
+                CardRendererRegistration.getInstance().renderElementAndPerformFallback(
+                    m_renderedAdaptiveCard,
+                    viewGroup.getContext(),
+                    m_fragmentManager,
+                    action.GetContent(),
+                    viewGroup,
+                    m_cardActionHandler,
+                    m_hostConfig,
+                    getUpdatedRenderedArgsForPopover(),
+                    CardRendererRegistration.getInstance().getFeatureRegistration());
+            } catch (Exception e) {
 
-                }
             }
+        }
+
+        private RenderArgs getUpdatedRenderedArgsForPopover() {
+            RenderArgs updatedsRenderArgs = new RenderArgs(m_renderArgs);
+            updatedsRenderArgs.addIgnoreAction(ActionType.Popover);
+            updatedsRenderArgs.addIgnoreAction(ActionType.ToggleVisibility);
+            updatedsRenderArgs.addIgnoreAction(ActionType.ShowCard);
+            return updatedsRenderArgs;
         }
 
         private void handleToggleVisibilityAction(View v)
