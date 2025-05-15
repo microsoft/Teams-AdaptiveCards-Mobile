@@ -277,6 +277,8 @@
     NSString *key = iconURL;
     UIImage *img = imageViewMap[key];
     button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key];
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
     BOOL isSplitButton = action->GetIsSplitAction();
     
     if (img) {
@@ -319,7 +321,7 @@
         button.heightConstraint.active = YES;
     }
     
-    if (isSplitButton)
+    if (isSplitButtonEnabled && isSplitButton)
     {
         NSString *chevronDownIcon = @"ChevronDown";
         NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];
