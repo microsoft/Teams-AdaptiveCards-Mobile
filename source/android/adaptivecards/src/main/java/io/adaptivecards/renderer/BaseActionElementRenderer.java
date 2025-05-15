@@ -350,12 +350,11 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             View view = inflater.inflate(R.layout.popover_bottom_sheet_layout, null);
             bottomSheetDialog.setContentView(view);
             final LinearLayout parentLayout = view.findViewById(R.id.popover_parentlayout);
-            renderPopoverContent(parentLayout);
+            renderPopoverContent(action, parentLayout);
             bottomSheetDialog.show();
         }
 
-        protected final void renderPopoverContent(@NonNull ViewGroup viewGroup) {
-            PopoverAction action = Util.castTo(m_action, PopoverAction.class);
+        protected final void renderPopoverContent(@NonNull PopoverAction action, @NonNull ViewGroup viewGroup) {
             try {
                 CardRendererRegistration.getInstance().renderElementAndPerformFallback(
                     m_renderedAdaptiveCard,
