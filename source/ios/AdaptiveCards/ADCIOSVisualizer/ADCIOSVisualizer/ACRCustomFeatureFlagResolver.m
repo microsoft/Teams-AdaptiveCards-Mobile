@@ -29,7 +29,7 @@ static NSString *const isSplitButtonEnabledKey = @"isSplitButtonEnabled";
     {
         return YES;
     }
-    if([flag isEqual:isSplitButtonEnabledKey])
+    if([flag isEqualToString:isSplitButtonEnabledKey])
     {
         return YES;
     }
