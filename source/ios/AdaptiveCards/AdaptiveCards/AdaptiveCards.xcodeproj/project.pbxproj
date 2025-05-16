@@ -314,8 +314,6 @@
 		84AE295A27FFA26F00D01B82 /* ContentSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295527FFA26F00D01B82 /* ContentSource.h */; };
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
-		904CEE612DD6763E007B0570 /* ACRParseWarning+Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 904CEE5F2DD6763E007B0570 /* ACRParseWarning+Swift.h */; };
-		904CEE622DD6763E007B0570 /* ACRParseWarning+Swift.mm in Sources */ = {isa = PBXBuildFile; fileRef = 904CEE602DD6763E007B0570 /* ACRParseWarning+Swift.mm */; };
 		904CEE672DD67683007B0570 /* SwiftAdaptiveCardParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 904CEE632DD67683007B0570 /* SwiftAdaptiveCardParser.h */; };
 		904CEE682DD67683007B0570 /* SwiftAdaptiveCardParseResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 904CEE652DD67683007B0570 /* SwiftAdaptiveCardParseResult.h */; };
 		904CEE692DD67683007B0570 /* SwiftAdaptiveCardParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 904CEE662DD67683007B0570 /* SwiftAdaptiveCardParseResult.m */; };
@@ -876,8 +874,6 @@
 		84AE295627FFA26F00D01B82 /* CaptionSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptionSource.h; path = ../../../../shared/cpp/ObjectModel/CaptionSource.h; sourceTree = "<group>"; };
 		84AE295727FFA26F00D01B82 /* CaptionSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CaptionSource.cpp; path = ../../../../shared/cpp/ObjectModel/CaptionSource.cpp; sourceTree = "<group>"; };
 		904266D02D7B765B001CEFB6 /* SwiftAdaptiveCards */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftAdaptiveCards; path = Packages/SwiftAdaptiveCards; sourceTree = SOURCE_ROOT; };
-		904CEE5F2DD6763E007B0570 /* ACRParseWarning+Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ACRParseWarning+Swift.h"; sourceTree = "<group>"; };
-		904CEE602DD6763E007B0570 /* ACRParseWarning+Swift.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "ACRParseWarning+Swift.mm"; sourceTree = "<group>"; };
 		904CEE632DD67683007B0570 /* SwiftAdaptiveCardParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftAdaptiveCardParser.h; sourceTree = "<group>"; };
 		904CEE642DD67683007B0570 /* SwiftAdaptiveCardParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwiftAdaptiveCardParser.m; sourceTree = "<group>"; };
 		904CEE652DD67683007B0570 /* SwiftAdaptiveCardParseResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftAdaptiveCardParseResult.h; sourceTree = "<group>"; };
@@ -1225,8 +1221,6 @@
 				904CEE642DD67683007B0570 /* SwiftAdaptiveCardParser.m */,
 				904CEE652DD67683007B0570 /* SwiftAdaptiveCardParseResult.h */,
 				904CEE662DD67683007B0570 /* SwiftAdaptiveCardParseResult.m */,
-				904CEE5F2DD6763E007B0570 /* ACRParseWarning+Swift.h */,
-				904CEE602DD6763E007B0570 /* ACRParseWarning+Swift.mm */,
 				906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */,
 				906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */,
 				F4CAE77F1F75AB9000545555 /* ACOAdaptiveCard.h */,
@@ -1918,7 +1912,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				904CEE612DD6763E007B0570 /* ACRParseWarning+Swift.h in Headers */,
 				CFF954DD2981B2A700F321C3 /* ACRTypeaheadSearchParameters.h in Headers */,
 				6B27CD6624BD52D600C0F90F /* ACRInputLabelView.h in Headers */,
 				6BBE841923CD184D00ECA586 /* ACREnums.h in Headers */,
@@ -2406,7 +2399,6 @@
 				7773C2E62CA5592200097C06 /* ACRCarouselView.mm in Sources */,
 				7773C2E22CA558AE00097C06 /* ACRCarouselPageContainerView.mm in Sources */,
 				CA1218C921C4509400152EA8 /* ToggleVisibilityAction.cpp in Sources */,
-				904CEE622DD6763E007B0570 /* ACRParseWarning+Swift.mm in Sources */,
 				468F1F1A2BFC5BC500C2F561 /* ACRRatingInputDataSource.mm in Sources */,
 				6BFCA143264F54B500195CA7 /* ACRTableView.mm in Sources */,
 				F401A8781F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm in Sources */,

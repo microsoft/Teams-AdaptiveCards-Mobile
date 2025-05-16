@@ -12,7 +12,6 @@
 #import "ParseResult.h"
 #import "ACOAdaptiveCardParseResult.h"
 #import "ACRParseWarningPrivate.h"
-#import "ACRParseWarning+Swift.h"
 #import "UtiliOS.h"
 
 using namespace AdaptiveCards;
@@ -45,9 +44,9 @@ using namespace AdaptiveCards;
 //                    }
                     
                     // Create ACRParseWarning from Swift warning data
-                    ACRParseWarning *acrWarning = [ACRParseWarning createWithStatusCode:(unsigned int)statusCode 
-                                                                                reason:reason];
-                    [acrParseWarnings addObject:acrWarning];
+//                    ACRParseWarning *acrWarning = [ACRParseWarning createWithStatusCode:(unsigned int)statusCode 
+//                                                                                reason:reason];
+//                    [acrParseWarnings addObject:acrWarning];
                 }
             }
         }
