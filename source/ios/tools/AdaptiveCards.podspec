@@ -53,12 +53,26 @@ Pod::Spec.new do |spec|
 
   spec.exclude_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/include/**/*'
   
-  # Swift implementation - included directly in the pod
+  # Swift implementation subspec
   spec.subspec 'Swift' do | sspec |
+    # Include AdaptiveCardsSwift files
     sspec.source_files = 'source/ios/AdaptiveCardsSwift/Sources/AdaptiveCardsSwift/**/*.{swift}'
+    
+    # Define preprocessor macros for conditional compilation
     sspec.pod_target_xcconfig = {
       'SWIFT_VERSION' => '5.0',
       'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'COCOAPODS'
+    }
+    
+    # Add SwiftAdaptiveCards as a dependency
+    sspec.dependency 'AdaptiveCards/SwiftAdaptiveCards'
+  end
+  
+  # SwiftAdaptiveCards integration directly within the pod
+  spec.subspec 'SwiftAdaptiveCards' do |swiftspec|
+    swiftspec.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/**/*.swift'
+    swiftspec.pod_target_xcconfig = {
+      'SWIFT_VERSION' => '5.0'
     }
   end
 
