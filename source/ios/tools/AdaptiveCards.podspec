@@ -13,13 +13,16 @@ Pod::Spec.new do |spec|
   
   spec.source       = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.10.0' }
 
-  spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders'
+  spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders', 'Swift'
+  
+  # AdaptiveCardsSwift is now a required dependency for automatic Swift implementation integration
 
   spec.subspec 'AdaptiveCardsCore' do | sspec |
     sspec.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/*.{h,m,mm}'
     sspec.resource_bundles = {'AdaptiveCards' => ['source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/Resources/**/*']}
     sspec.dependency 'AdaptiveCards/AdaptiveCardsPrivate'
     sspec.dependency 'AdaptiveCards/ObjectModel'
+    sspec.dependency 'AdaptiveCards/Swift'
     sspec.dependency 'SVGKit', '>= 3.0.0'
   end
 
@@ -49,6 +52,11 @@ Pod::Spec.new do |spec|
   spec.frameworks = 'AVFoundation', 'AVKit', 'CoreGraphics', 'QuartzCore', 'UIKit'
 
   spec.exclude_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/include/**/*'
+  
+  # Swift support through AdaptiveCardsSwift (required dependency)
+  spec.subspec 'Swift' do | sspec |
+    sspec.dependency 'AdaptiveCardsSwift', '~> 1.0.0'
+    # This is just a reference to the separate pod, so no source files are needed here
+  end
 
 end
-
