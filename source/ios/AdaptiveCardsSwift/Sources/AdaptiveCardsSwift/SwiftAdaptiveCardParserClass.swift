@@ -45,7 +45,7 @@ public class SwiftAdaptiveCardParserSwift: NSObject {
             
             // In a real implementation, we would deserialize this into a SwiftAdaptiveCard object
             // For now, we're just returning a successful result with sample data
-            let parseResult = SwiftParseResult(statusCode: 0, adaptiveCard: nil)
+            let parseResult = SwiftParseResultSwift(statusCode: 0, adaptiveCard: nil)
             result.parseResult = parseResult
             result.warnings = []
             

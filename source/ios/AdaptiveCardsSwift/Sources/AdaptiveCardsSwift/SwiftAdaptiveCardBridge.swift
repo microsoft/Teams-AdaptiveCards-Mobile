@@ -30,7 +30,7 @@ extension Array where Element: Convertible {
 
 @objc(SwiftAdaptiveCardParseResultSwift)
 public class SwiftAdaptiveCardParseResultSwift: NSObject {
-    @objc public var parseResult: SwiftParseResult?
+    @objc public var parseResult: SwiftParseResultSwift?
     @objc public var errors: [NSError]?
     @objc public var warnings: [SwiftAdaptiveCardBridgeWarning]?
     
@@ -183,7 +183,7 @@ public class SwiftAdaptiveCardBridgeWarning: NSObject {
     }
     
     // Add conversion from the primary warning type
-    public convenience init(from warning: SwiftAdaptiveCardParseWarning) {
+    public convenience init(from warning: SwiftAdaptiveCardParseWarningSwift) {
         self.init(statusCode: warning.statusCode, reason: warning.reason)
     }
 }

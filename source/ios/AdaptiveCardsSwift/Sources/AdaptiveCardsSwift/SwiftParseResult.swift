@@ -11,8 +11,8 @@ import SwiftAdaptiveCards
 import UIKit
 
 /// Represents the result of parsing an Adaptive Card.
-@objc(SwiftParseResult)
-public class SwiftParseResult: NSObject {
+@objc(SwiftParseResultSwift)
+public class SwiftParseResultSwift: NSObject {
     
     /// The status code of the parsing operation.
     @objc public var statusCode: Int
@@ -29,8 +29,8 @@ public class SwiftParseResult: NSObject {
 }
 
 /// Represents a warning that occurred during parsing.
-@objc(SwiftAdaptiveCardParseWarning)
-public class SwiftAdaptiveCardParseWarning: NSObject {
+@objc(SwiftAdaptiveCardParseWarningSwift)
+public class SwiftAdaptiveCardParseWarningSwift: NSObject {
     
     /// The status code of the warning.
     @objc public var statusCode: Int
