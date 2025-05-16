@@ -1,5 +1,4 @@
 //
-//  ACRSVGImageView.m
 //  AdaptiveCards
 //
 //  Created by Abhishek on 26/04/24.

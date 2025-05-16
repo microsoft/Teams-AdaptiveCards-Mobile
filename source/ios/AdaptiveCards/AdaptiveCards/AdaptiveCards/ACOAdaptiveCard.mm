@@ -20,7 +20,7 @@
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
 #import "SwiftAdaptiveCardObjcBridge.h"
-#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#import "SwiftAdaptiveCardParser.h"
 
 using namespace AdaptiveCards;
 
@@ -29,6 +29,66 @@ using namespace AdaptiveCards;
     NSMutableArray<ACRIBaseInputHandler> *_inputs;
     SwiftAdaptiveCardParseResult * _adaptiveCardParseResult;
 }
+
+// MARK: - Swift Implementation Toggle
+
++ (void)setUseSwiftImplementation:(BOOL)enabled {
+    // This provides a centralized place to toggle Swift implementation
+    // First try the native Swift parser
+    Class swiftParserClass = NSClassFromString(@"SwiftAdaptiveCardParser");
+    if (swiftParserClass && [swiftParserClass respondsToSelector:@selector(enableSwiftParser:)]) {
+        [swiftParserClass enableSwiftParser:enabled];
+        NSLog(@"Swift Adaptive Cards implementation %@", enabled ? @"enabled" : @"disabled");
+        return;
+    }
+    
+    // Fallback to the bridge class if available
+    Class bridgeClass = NSClassFromString(@"ACRAdaptiveCardSwiftBridge");
+    if (bridgeClass && [bridgeClass respondsToSelector:@selector(enableSwiftParser:)]) {
+        [bridgeClass enableSwiftParser:enabled];
+        NSLog(@"Swift Adaptive Cards implementation %@ via bridge", enabled ? @"enabled" : @"disabled");
+        return;
+    }
+    
+    // If neither is available, log a message
+    NSLog(@"Swift Adaptive Cards implementation not available");
+}
+
++ (BOOL)isSwiftImplementationEnabled {
+    // First try the native Swift parser
+    Class swiftParserClass = NSClassFromString(@"SwiftAdaptiveCardParser");
+    if (swiftParserClass && [swiftParserClass respondsToSelector:@selector(isSwiftParserEnabled)]) {
+        return [swiftParserClass isSwiftParserEnabled];
+    }
+    
+    // Fallback to the bridge class if available
+    Class bridgeClass = NSClassFromString(@"ACRAdaptiveCardSwiftBridge");
+    if (bridgeClass && [bridgeClass respondsToSelector:@selector(isSwiftParserEnabled)]) {
+        return [bridgeClass isSwiftParserEnabled];
+    }
+    
+    // If neither is available, return NO
+    return NO;
+}
+
++ (BOOL)isSwiftImplementationAvailable {
+    // First check if the native Swift parser is available
+    Class swiftParserClass = NSClassFromString(@"SwiftAdaptiveCardParser");
+    if (swiftParserClass) {
+        return YES;
+    }
+    
+    // Then check if the bridge class is available
+    Class bridgeClass = NSClassFromString(@"ACRAdaptiveCardSwiftBridge");
+    if (bridgeClass) {
+        return YES;
+    }
+    
+    // If neither is available, return NO
+    return NO;
+}
+
+// MARK: - Parse Result Access
 
 - (SwiftAdaptiveCardParseResult *)swiftParseResult
 {
@@ -152,14 +212,30 @@ using namespace AdaptiveCards;
             NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
             std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
             
-            BOOL useSwiftParser = [SwiftAdaptiveCardParser isSwiftParserEnabled];
+            // Check if Swift parser is enabled
+//            BOOL useSwiftParser = [SwiftAdaptiveCardParser isSwiftParserEnabled];
+            BOOL useSwiftParser = YES;
+
             if (useSwiftParser) {
+                // Try to use the Swift parser
                 swiftResult = [SwiftAdaptiveCardParser parseWithPayload:payload];
                 if (swiftResult != nil) {
+                    // Swift parser succeeded
                     [card setAdaptiveCardParseResult:swiftResult];
+                    acrParseWarnings = [SwiftAdaptiveCardObjcBridge getWarningsFromParseResult:swiftResult useSwift:YES];
+                    
+                    // Log success
+                    NSLog(@"Successfully parsed AdaptiveCard using Swift implementation");
+                } else {
+                    // Swift parser didn't return a result, fall back to C++ parser
+                    NSLog(@"Swift parser failed, falling back to C++ implementation");
+                    useSwiftParser = NO;
                 }
-                acrParseWarnings = [SwiftAdaptiveCardObjcBridge getWarningsFromParseResult:swiftResult useSwift:YES];
-            } else {
+            }
+            
+            // If Swift parser is disabled or failed, use C++ implementation
+            if (!useSwiftParser || !swiftResult) {
+                parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
                 NSValue *pointerValue = [NSValue valueWithPointer:&parseResult];
                 acrParseWarnings = [SwiftAdaptiveCardObjcBridge getWarningsFromParseResult:pointerValue useSwift:NO];
             }

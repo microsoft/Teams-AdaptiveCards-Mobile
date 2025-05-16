@@ -314,10 +314,13 @@
 		84AE295A27FFA26F00D01B82 /* ContentSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295527FFA26F00D01B82 /* ContentSource.h */; };
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
-		904266D22D7B7665001CEFB6 /* SwiftAdaptiveCards in Frameworks */ = {isa = PBXBuildFile; productRef = 904266D12D7B7665001CEFB6 /* SwiftAdaptiveCards */; };
-		904266D52D7B9AFC001CEFB6 /* SwiftAdaptiveCards in Frameworks */ = {isa = PBXBuildFile; productRef = 904266D42D7B9AFC001CEFB6 /* SwiftAdaptiveCards */; };
+		904CEE612DD6763E007B0570 /* ACRParseWarning+Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = 904CEE5F2DD6763E007B0570 /* ACRParseWarning+Swift.h */; };
+		904CEE622DD6763E007B0570 /* ACRParseWarning+Swift.mm in Sources */ = {isa = PBXBuildFile; fileRef = 904CEE602DD6763E007B0570 /* ACRParseWarning+Swift.mm */; };
+		904CEE672DD67683007B0570 /* SwiftAdaptiveCardParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 904CEE632DD67683007B0570 /* SwiftAdaptiveCardParser.h */; };
+		904CEE682DD67683007B0570 /* SwiftAdaptiveCardParseResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 904CEE652DD67683007B0570 /* SwiftAdaptiveCardParseResult.h */; };
+		904CEE692DD67683007B0570 /* SwiftAdaptiveCardParseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 904CEE662DD67683007B0570 /* SwiftAdaptiveCardParseResult.m */; };
+		904CEE6A2DD67683007B0570 /* SwiftAdaptiveCardParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 904CEE642DD67683007B0570 /* SwiftAdaptiveCardParser.m */; };
 		906040BB2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */; };
-		906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */; };
 		906040BD2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */; };
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
@@ -873,8 +876,13 @@
 		84AE295627FFA26F00D01B82 /* CaptionSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptionSource.h; path = ../../../../shared/cpp/ObjectModel/CaptionSource.h; sourceTree = "<group>"; };
 		84AE295727FFA26F00D01B82 /* CaptionSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CaptionSource.cpp; path = ../../../../shared/cpp/ObjectModel/CaptionSource.cpp; sourceTree = "<group>"; };
 		904266D02D7B765B001CEFB6 /* SwiftAdaptiveCards */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftAdaptiveCards; path = Packages/SwiftAdaptiveCards; sourceTree = SOURCE_ROOT; };
+		904CEE5F2DD6763E007B0570 /* ACRParseWarning+Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ACRParseWarning+Swift.h"; sourceTree = "<group>"; };
+		904CEE602DD6763E007B0570 /* ACRParseWarning+Swift.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "ACRParseWarning+Swift.mm"; sourceTree = "<group>"; };
+		904CEE632DD67683007B0570 /* SwiftAdaptiveCardParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftAdaptiveCardParser.h; sourceTree = "<group>"; };
+		904CEE642DD67683007B0570 /* SwiftAdaptiveCardParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwiftAdaptiveCardParser.m; sourceTree = "<group>"; };
+		904CEE652DD67683007B0570 /* SwiftAdaptiveCardParseResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftAdaptiveCardParseResult.h; sourceTree = "<group>"; };
+		904CEE662DD67683007B0570 /* SwiftAdaptiveCardParseResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwiftAdaptiveCardParseResult.m; sourceTree = "<group>"; };
 		906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SwiftAdaptiveCardObjcBridge.mm; sourceTree = "<group>"; };
-		906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftAdaptiveCardSwiftBridge.swift; sourceTree = "<group>"; };
 		906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftAdaptiveCardObjcBridge.h; sourceTree = "<group>"; };
 		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
 		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1107,12 +1115,10 @@
 			files = (
 				6B421CC121015EDD002F401A /* CoreGraphics.framework in Frameworks */,
 				6B421CC02101503E002F401A /* QuartzCore.framework in Frameworks */,
-				904266D52D7B9AFC001CEFB6 /* SwiftAdaptiveCards in Frameworks */,
 				6BB21219210015A7009EA1BA /* AVKit.framework in Frameworks */,
 				6BB2121821001596009EA1BA /* AVFoundation.framework in Frameworks */,
 				F45A071F1EF4BD67007C6503 /* UIKit.framework in Frameworks */,
 				DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */,
-				904266D22D7B7665001CEFB6 /* SwiftAdaptiveCards in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1215,9 +1221,14 @@
 		6B92A71B266FE84F00CAE3BF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				904CEE632DD67683007B0570 /* SwiftAdaptiveCardParser.h */,
+				904CEE642DD67683007B0570 /* SwiftAdaptiveCardParser.m */,
+				904CEE652DD67683007B0570 /* SwiftAdaptiveCardParseResult.h */,
+				904CEE662DD67683007B0570 /* SwiftAdaptiveCardParseResult.m */,
+				904CEE5F2DD6763E007B0570 /* ACRParseWarning+Swift.h */,
+				904CEE602DD6763E007B0570 /* ACRParseWarning+Swift.mm */,
 				906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */,
 				906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */,
-				906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */,
 				F4CAE77F1F75AB9000545555 /* ACOAdaptiveCard.h */,
 				F4CAE7801F75AB9000545555 /* ACOAdaptiveCard.mm */,
 				F4D4020D1F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.h */,
@@ -1907,6 +1918,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				904CEE612DD6763E007B0570 /* ACRParseWarning+Swift.h in Headers */,
 				CFF954DD2981B2A700F321C3 /* ACRTypeaheadSearchParameters.h in Headers */,
 				6B27CD6624BD52D600C0F90F /* ACRInputLabelView.h in Headers */,
 				6BBE841923CD184D00ECA586 /* ACREnums.h in Headers */,
@@ -2124,6 +2136,8 @@
 				6B25D3E226138E3700A47AFB /* ACOEnums.h in Headers */,
 				6B25D3EB2613D83700A47AFB /* ACORenderContext.h in Headers */,
 				6BFF23F02714C0F000183C59 /* ACRViewPrivate.h in Headers */,
+				904CEE672DD67683007B0570 /* SwiftAdaptiveCardParser.h in Headers */,
+				904CEE682DD67683007B0570 /* SwiftAdaptiveCardParseResult.h in Headers */,
 				6BFF23F12714C0F000183C59 /* ACOAuthenticationPrivate.h in Headers */,
 				6BFF23EF2714C0F000183C59 /* ACRInputLabelViewPrivate.h in Headers */,
 				6BFF23F42714C0F000183C59 /* ACOParseContextPrivate.h in Headers */,
@@ -2175,8 +2189,6 @@
 			);
 			name = AdaptiveCards;
 			packageProductDependencies = (
-				904266D12D7B7665001CEFB6 /* SwiftAdaptiveCards */,
-				904266D42D7B9AFC001CEFB6 /* SwiftAdaptiveCards */,
 			);
 			productName = AdaptiveCards;
 			productReference = F423C0B51EE1FBA900905679 /* AdaptiveCards.framework */;
@@ -2297,6 +2309,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AdaptiveCardsSwift/AdaptiveCardsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/MicrosoftFluentUI/FluentUI.framework",
 				"${BUILT_PRODUCTS_DIR}/SVGKit/SVGKit.framework",
@@ -2304,6 +2317,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AdaptiveCardsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FluentUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVGKit.framework",
@@ -2392,6 +2406,7 @@
 				7773C2E62CA5592200097C06 /* ACRCarouselView.mm in Sources */,
 				7773C2E22CA558AE00097C06 /* ACRCarouselPageContainerView.mm in Sources */,
 				CA1218C921C4509400152EA8 /* ToggleVisibilityAction.cpp in Sources */,
+				904CEE622DD6763E007B0570 /* ACRParseWarning+Swift.mm in Sources */,
 				468F1F1A2BFC5BC500C2F561 /* ACRRatingInputDataSource.mm in Sources */,
 				6BFCA143264F54B500195CA7 /* ACRTableView.mm in Sources */,
 				F401A8781F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm in Sources */,
@@ -2547,6 +2562,8 @@
 				F44872F91EE2261F00FCAFAE /* BaseCardElement.cpp in Sources */,
 				F427410B1EF864A900399FBB /* ACRBaseCardElementRenderer.mm in Sources */,
 				F43660781F0706D800EBA868 /* SharedAdaptiveCard.cpp in Sources */,
+				904CEE692DD67683007B0570 /* SwiftAdaptiveCardParseResult.m in Sources */,
+				904CEE6A2DD67683007B0570 /* SwiftAdaptiveCardParser.m in Sources */,
 				0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */,
 				CFF954D329819B4A00F321C3 /* ACOTypeaheadDynamicChoicesService.mm in Sources */,
 				6B7B1A9120B4D2AB00260731 /* Media.cpp in Sources */,
@@ -2570,7 +2587,6 @@
 				7773C2DB2CA3FF8600097C06 /* ACRCarouselPageView.mm in Sources */,
 				F4C1F5DA1F218ABC0018CB78 /* ACRInputTimeRenderer.mm in Sources */,
 				463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */,
-				906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */,
 				6BFCA14D265452E100195CA7 /* ACRTableRenderer.mm in Sources */,
 				F4D402121F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.mm in Sources */,
 				6B22426E2203BE98000ACDA1 /* UnknownAction.cpp in Sources */,
@@ -2745,7 +2761,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED131801E4C2E2B662925ABF /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -2994,7 +3009,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -3017,7 +3031,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -3103,17 +3116,6 @@
 			relativePath = Packages/SwiftAdaptiveCards;
 		};
 /* End XCLocalSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		904266D12D7B7665001CEFB6 /* SwiftAdaptiveCards */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftAdaptiveCards;
-		};
-		904266D42D7B9AFC001CEFB6 /* SwiftAdaptiveCards */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftAdaptiveCards;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F423C0AC1EE1FBA900905679 /* Project object */;
 }

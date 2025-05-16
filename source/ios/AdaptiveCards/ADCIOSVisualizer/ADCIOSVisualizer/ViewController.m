@@ -19,6 +19,8 @@
 #import "CustomTextBlockRenderer.h"
 #import <SafariServices/SafariServices.h>
 #import "ACRCustomFeatureFlagResolver.h"
+#import "AppDelegate.h"
+#import <AdaptiveCards/ACOAdaptiveCard.h>
 
 // the width of the AdaptiveCards does not need to be set.
 // if the width for Adaptive Cards is zero, the width is determined by the contraint(s) set externally on the card.
@@ -143,6 +145,10 @@ UIColor* defaultButtonBackgroundColor;
     // Required registration for testing responsive layout
     [registration registerHostCardContainer:kFileBrowserWidth];
     [registration setFeatureFlagResolver:([[ACRCustomFeatureFlagResolver alloc] init])];
+    
+    // Initialize AppDelegate's Swift implementation toggle based on current state
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.useSwiftImplementation = [ACOAdaptiveCard isSwiftImplementationEnabled];
 
     self.ACVTabVC = [[ACVTableViewController alloc] init];
     [self addChildViewController:self.ACVTabVC];
@@ -550,6 +556,34 @@ UIColor* defaultButtonBackgroundColor;
 
     [layout[1] addArrangedSubview:customControlLabel];
     [layout[1] addArrangedSubview:self.enableCustomRendererSwitch];
+    
+    // Add Swift implementation toggle
+    UIView *padding2 = [[UIView alloc] init];
+    [layout[1] addArrangedSubview:padding2];
+    
+    UILabel *swiftImplementationLabel = [[UILabel alloc] init];
+    swiftImplementationLabel.text = @"Enable Swift Implementation";
+    
+    self.enableSwiftImplementationSwitch = [[UISwitch alloc] init];
+    [self.enableSwiftImplementationSwitch addTarget:self action:@selector(toggleSwiftImplementation:) forControlEvents:UIControlEventValueChanged];
+    
+    // Check if Swift implementation is available
+    // Check if Swift implementation is available and set switch state
+    BOOL isSwiftAvailable = [ACOAdaptiveCard isSwiftImplementationEnabled] || 
+                           (NSClassFromString(@"SwiftAdaptiveCardParser") != nil);
+    
+    self.enableSwiftImplementationSwitch.enabled = isSwiftAvailable;
+    
+    // Set initial state based on current implementation
+    if (isSwiftAvailable) {
+        self.enableSwiftImplementationSwitch.on = [ACOAdaptiveCard isSwiftImplementationEnabled];
+    } else {
+        // Swift implementation not available
+        self.enableSwiftImplementationSwitch.enabled = NO;
+    }
+    
+    [layout[1] addArrangedSubview:swiftImplementationLabel];
+    [layout[1] addArrangedSubview:self.enableSwiftImplementationSwitch];
 
     return layout;
 }
@@ -761,5 +795,34 @@ UIColor* defaultButtonBackgroundColor;
     // Update responsive layout's host card container when device orientation changes
     CGFloat cardWidthAfterTransition = size.width - 32.0f;
     [[ACRRegistration getInstance] registerHostCardContainer:cardWidthAfterTransition];
+}
+
+#pragma mark - Swift Implementation Toggle
+
+- (IBAction)toggleSwiftImplementation:(UISwitch *)sender {
+    // Get reference to the AppDelegate
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    // Update the AppDelegate's property (this will use the centralized toggle method)
+    appDelegate.useSwiftImplementation = sender.isOn;
+    
+    // Show feedback to user
+    NSString *message = sender.isOn ? @"Swift implementation enabled" : @"Swift implementation disabled";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Swift Toggle"
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+        
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" 
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+                                                         // Reload the current card if one is displayed to see changes
+                                                         if (self.ACVTabVC.userSelectedJSon) {
+                                                             [self fromACVTable:self.ACVTabVC 
+                                                              userSelectedJson:self.ACVTabVC.userSelectedJSon];
+                                                         }
+                                                     }];
+    [alert addAction:okAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 @end

@@ -15,6 +15,9 @@
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 
+// Controls whether the Swift implementation is used for Adaptive Cards
+@property (nonatomic, assign) BOOL useSwiftImplementation;
+
 - (void)saveContext;
 
 

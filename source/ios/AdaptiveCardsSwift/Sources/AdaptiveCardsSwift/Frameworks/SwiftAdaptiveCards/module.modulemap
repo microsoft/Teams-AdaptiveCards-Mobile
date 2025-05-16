@@ -1,0 +1,4 @@
+module SwiftAdaptiveCards {
+    header "SwiftAdaptiveCards.h"
+    export *
+}

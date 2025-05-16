@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <AdaptiveCards/AdaptiveCards.h>
+#import <AdaptiveCards/ACOAdaptiveCard.h>
 
 @interface AppDelegate ()
 
@@ -14,9 +16,14 @@
 
 @implementation AppDelegate
 
+// Synthesize our new property
+@synthesize useSwiftImplementation = _useSwiftImplementation;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Default to not using Swift implementation
+    self.useSwiftImplementation = NO;
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -53,6 +60,16 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+#pragma mark - Swift Implementation Toggle
+
+- (void)setUseSwiftImplementation:(BOOL)useSwiftImplementation
+{
+    _useSwiftImplementation = useSwiftImplementation;
+    
+    // Use centralized implementation in ACOAdaptiveCard
+    [ACOAdaptiveCard setUseSwiftImplementation:useSwiftImplementation];
 }
 
 

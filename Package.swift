@@ -14,10 +14,18 @@ let package = Package(
         .library(
             name: "AdaptiveCards",
             targets: ["AdaptiveCards", "ObjectModel"]),
+        
+        // Swift implementation (new product)
+        .library(
+            name: "AdaptiveCardsSwift",
+            targets: ["AdaptiveCardsSwift"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
          .package(url: "https://github.com/SVGKit/SVGKit", from: "3.0.0"),
+         // Include SwiftAdaptiveCards as a local package
+         .package(path: "source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards"),
+         .package(path: "source/ios/AdaptiveCardsSwift")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -28,10 +36,13 @@ let package = Package(
             exclude: [
                 "CMakeLists.txt"
             ]
-            ),
+        ),
         .target(
             name: "AdaptiveCards",
-            dependencies: ["ObjectModel", "SVGKit"],
+            dependencies: [
+                "ObjectModel", 
+                "SVGKit"
+            ],
             path: "source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards",
             exclude: [
                 "CMakeLists.txt",
@@ -39,7 +50,8 @@ let package = Package(
                 "testcards/ImageAutoInColumnSet.json",
                 "testcards/CustomerCard1.json",
                 "testcards/TextBlock.Issue.json",
-                "testcards/TextBlockStrechInColumnSet.json"
+                "testcards/TextBlockStrechInColumnSet.json",
+                "Packages" // Exclude the SwiftAdaptiveCards package folder
             ],
             resources: [
                 .process("Resources")
@@ -73,6 +85,20 @@ let package = Package(
                 LinkerSetting.linkedFramework("CoreGraphics"),
                 LinkerSetting.linkedFramework("QuartzCore")
             ]
+        ),
+        // New Swift-only target
+        .target(
+            name: "AdaptiveCardsSwift",
+            dependencies: [
+                .product(name: "SwiftAdaptiveCards", package: "SwiftAdaptiveCards")
+            ],
+            path: "source/ios/AdaptiveCardsSwift/Sources/AdaptiveCardsSwift",
+            exclude: []
+        ),
+        .testTarget(
+            name: "AdaptiveCardsSwiftTests",
+            dependencies: ["AdaptiveCardsSwift"],
+            path: "source/ios/AdaptiveCardsSwift/Tests/AdaptiveCardsSwiftTests"
         )
     ],
     cxxLanguageStandard: CXXLanguageStandard.cxx17
