@@ -53,10 +53,14 @@ Pod::Spec.new do |spec|
 
   spec.exclude_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/include/**/*'
   
-  # Swift support through AdaptiveCardsSwift (required dependency)
+  # Swift implementation - included directly in the pod instead of as a separate dependency
   spec.subspec 'Swift' do | sspec |
-    sspec.dependency 'AdaptiveCardsSwift', '~> 1.0.0'
-    # This is just a reference to the separate pod, so no source files are needed here
+    sspec.source_files = 'source/ios/AdaptiveCardsSwift/Sources/AdaptiveCardsSwift/**/*.{swift}'
+    sspec.pod_target_xcconfig = {
+      'SWIFT_VERSION' => '5.0'
+    }
   end
 
 end
+
+
