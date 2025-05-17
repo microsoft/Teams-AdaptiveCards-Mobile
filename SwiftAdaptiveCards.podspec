@@ -1,0 +1,1 @@
+source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/SwiftAdaptiveCards.podspec
