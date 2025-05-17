@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -27,6 +27,7 @@
 		0D45F5A7261731E400EF03C5 /* ACRActionOverflowRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D45F5A6261731E400EF03C5 /* ACRActionOverflowRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */; };
 		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
+		16F02244E6C4F5ED7E9C5B17 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CABB73F5F2A0E6B7BA7CD70 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
 		24EDF0BC2DCB7B2500558378 /* ACRProgressBarRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */; };
 		24EDF0BE2DCB7B6C00558378 /* ACRProgressBarRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */; };
 		24EDF0C02DCB7F8100558378 /* ACRProgressRingRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */; };
@@ -317,7 +318,6 @@
 		904266D22D7B7665001CEFB6 /* SwiftAdaptiveCards in Frameworks */ = {isa = PBXBuildFile; productRef = 904266D12D7B7665001CEFB6 /* SwiftAdaptiveCards */; };
 		904266D52D7B9AFC001CEFB6 /* SwiftAdaptiveCards in Frameworks */ = {isa = PBXBuildFile; productRef = 904266D42D7B9AFC001CEFB6 /* SwiftAdaptiveCards */; };
 		906040BB2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */; };
-		906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */; };
 		906040BD2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */; };
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
@@ -348,8 +348,7 @@
 		CFF95C0B2982E38500F321C3 /* ACRChoiceSetCompactStyleViewTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0A2982E38500F321C3 /* ACRChoiceSetCompactStyleViewTests.mm */; };
 		CFF95C0D2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0C2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm */; };
 		CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */; };
-		DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */; };
-		EC367F912F6036B68C5BBFDB /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
+		DBE434FFAC949EC3AC0BCF9E /* Pods_AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01399E726447A87BFDF7111C /* Pods_AdaptiveCards.framework */; };
 		F401A8781F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = F401A8761F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm */; };
 		F401A87C1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = F401A87A1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm */; };
 		F401A87F1F1045CA006D7AF2 /* ACRContentHoldingUIView.h in Headers */ = {isa = PBXBuildFile; fileRef = F401A87D1F1045CA006D7AF2 /* ACRContentHoldingUIView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -559,21 +558,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01399E726447A87BFDF7111C /* Pods_AdaptiveCards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D3485EC26180E9900614EB9 /* ACOActionOverflow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACOActionOverflow.h; sourceTree = "<group>"; };
 		0D3485F026180F8F00614EB9 /* ACOActionOverflow.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOActionOverflow.mm; sourceTree = "<group>"; };
 		0D45F59A2617319D00EF03C5 /* ACRActionOverflowRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRActionOverflowRenderer.mm; sourceTree = "<group>"; };
 		0D45F5A6261731E400EF03C5 /* ACRActionOverflowRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRActionOverflowRenderer.h; sourceTree = "<group>"; };
 		0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ARCGridViewLayout.mm; sourceTree = "<group>"; };
 		0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRLayoutHelper.mm; sourceTree = "<group>"; };
-		0E46B8FBE57A09301765F779 /* Pods-Fluent-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCardsTests/Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRProgressBarRenderer.h; sourceTree = "<group>"; };
 		24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressBarRenderer.mm; sourceTree = "<group>"; };
 		24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressRingRenderer.mm; sourceTree = "<group>"; };
 		24EDF0C12DCB7F9100558378 /* ACRProgressRingRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRProgressRingRenderer.h; sourceTree = "<group>"; };
-		255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		270B2D4F8E11C644BA95F36D /* Pods-Fluent-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCardsTests/Pods-Fluent-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
-		27CC4CEB2C16B73E2987EB85 /* Pods-Fluent-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCards/Pods-Fluent-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		300ECB61219A12D100371DC5 /* AdaptiveBase64Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AdaptiveBase64Util.cpp; path = ../../../../shared/cpp/ObjectModel/AdaptiveBase64Util.cpp; sourceTree = "<group>"; };
 		300ECB62219A12D100371DC5 /* AdaptiveBase64Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdaptiveBase64Util.h; path = ../../../../shared/cpp/ObjectModel/AdaptiveBase64Util.h; sourceTree = "<group>"; };
 		30D56DE8268298B300D6E418 /* AdaptiveCardsTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdaptiveCardsTests.mm; sourceTree = "<group>"; };
@@ -586,8 +581,7 @@
 		37A8DF512DB79C8800F3A23F /* ProgressRing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressRing.cpp; path = ../../../../shared/cpp/ObjectModel/ProgressRing.cpp; sourceTree = "<group>"; };
 		37CC40EB2DBA1BD9004D5C66 /* PopoverAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PopoverAction.h; path = ../../../../shared/cpp/ObjectModel/PopoverAction.h; sourceTree = "<group>"; };
 		37CC40EC2DBA1BD9004D5C66 /* PopoverAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PopoverAction.cpp; path = ../../../../shared/cpp/ObjectModel/PopoverAction.cpp; sourceTree = "<group>"; };
-		3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		3F6C8BE651A079A691A01A7B /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		46058FCE2C5CCBAA00966E76 /* Layout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Layout.h; path = ../../../../shared/cpp/ObjectModel/Layout.h; sourceTree = "<group>"; };
 		46058FD02C5CCBED00966E76 /* Layout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Layout.cpp; path = ../../../../shared/cpp/ObjectModel/Layout.cpp; sourceTree = "<group>"; };
 		46058FD22C5CEEFE00966E76 /* FlowLayout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowLayout.cpp; path = ../../../../shared/cpp/ObjectModel/FlowLayout.cpp; sourceTree = "<group>"; };
@@ -645,7 +639,8 @@
 		46DF58E22C6F12FC00DCBA77 /* ACRFlowLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRFlowLayout.mm; sourceTree = "<group>"; };
 		46F6F7802BFF1C8200D31C47 /* ValueChangedAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ValueChangedAction.h; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.h; sourceTree = "<group>"; };
 		46F6F7822BFF1CB400D31C47 /* ValueChangedAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValueChangedAction.cpp; path = ../../../../shared/cpp/ObjectModel/ValueChangedAction.cpp; sourceTree = "<group>"; };
-		4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
+		56BE08BBAE48E13CFB6CD81E /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		5A4735D3ECF1B256A20B1A08 /* Pods-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		6B00E1152A3A58B30079D8A6 /* ACRTypeaheadSearchViewControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRTypeaheadSearchViewControllerPrivate.h; path = PrivateHeaders/ACRTypeaheadSearchViewControllerPrivate.h; sourceTree = "<group>"; };
 		6B096D4C225431D0006CC034 /* ACRRichTextBlockRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRRichTextBlockRenderer.h; sourceTree = "<group>"; };
 		6B096D4D225431D0006CC034 /* ACRRichTextBlockRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRRichTextBlockRenderer.mm; sourceTree = "<group>"; };
@@ -839,9 +834,6 @@
 		6BFF99F926003EBA0028069F /* ACOAuthCardButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACOAuthCardButton.h; sourceTree = "<group>"; };
 		6BFF9A0026004C580028069F /* ACOAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACOAuthentication.h; sourceTree = "<group>"; };
 		6BFF9A0226004C580028069F /* ACOAuthentication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOAuthentication.mm; sourceTree = "<group>"; };
-		709889F4E83C1064F49E7DDC /* Pods-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests/Pods-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
-		75D7DB0E51EC8A155E83E2D0 /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-ADCIOSVisualizer-AdaptiveCardsTests/Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		7749A56FE5104914C2BA9D02 /* Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig"; sourceTree = "<group>"; };
 		7751C0722CAC0EEB00C876DD /* ACRPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRPageControl.h; path = PrivateHeaders/ACRPageControl.h; sourceTree = "<group>"; };
 		7751C0742CAC0F0B00C876DD /* ACRCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRCarouselView.h; path = PrivateHeaders/ACRCarouselView.h; sourceTree = "<group>"; };
 		7751C0752CAC0F0B00C876DD /* ACRCarouselViewRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACRCarouselViewRenderer.h; path = PrivateHeaders/ACRCarouselViewRenderer.h; sourceTree = "<group>"; };
@@ -856,8 +848,6 @@
 		7773C2E12CA558AE00097C06 /* ACRCarouselPageContainerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselPageContainerView.mm; sourceTree = "<group>"; };
 		7773C2E42CA5592200097C06 /* ACRCarouselView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselView.mm; sourceTree = "<group>"; };
 		7773C2E82CA5656100097C06 /* ACRPageControl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPageControl.mm; sourceTree = "<group>"; };
-		777DD1173C03E3F4EC695141 /* Pods-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
-		7DC49373563AE22454C070D6 /* Pods-Fluent-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCards/Pods-Fluent-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		7ECFB63E219A3940004727A9 /* ParseContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParseContext.cpp; path = ../../../../shared/cpp/ObjectModel/ParseContext.cpp; sourceTree = "<group>"; };
 		7ECFB63F219A3940004727A9 /* ParseContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseContext.h; path = ../../../../shared/cpp/ObjectModel/ParseContext.h; sourceTree = "<group>"; };
 		7EDC0F65213878E800077A13 /* SemanticVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SemanticVersion.h; path = ../../../../shared/cpp/ObjectModel/SemanticVersion.h; sourceTree = "<group>"; };
@@ -871,12 +861,11 @@
 		84AE295527FFA26F00D01B82 /* ContentSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContentSource.h; path = ../../../../shared/cpp/ObjectModel/ContentSource.h; sourceTree = "<group>"; };
 		84AE295627FFA26F00D01B82 /* CaptionSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptionSource.h; path = ../../../../shared/cpp/ObjectModel/CaptionSource.h; sourceTree = "<group>"; };
 		84AE295727FFA26F00D01B82 /* CaptionSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CaptionSource.cpp; path = ../../../../shared/cpp/ObjectModel/CaptionSource.cpp; sourceTree = "<group>"; };
+		8CABB73F5F2A0E6B7BA7CD70 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards_AdaptiveCardsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D3FB4981C5C0DEA2E76AB9D /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
 		904266D02D7B765B001CEFB6 /* SwiftAdaptiveCards */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftAdaptiveCards; path = Packages/SwiftAdaptiveCards; sourceTree = SOURCE_ROOT; };
 		906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SwiftAdaptiveCardObjcBridge.mm; sourceTree = "<group>"; };
-		906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftAdaptiveCardSwiftBridge.swift; sourceTree = "<group>"; };
 		906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftAdaptiveCardObjcBridge.h; sourceTree = "<group>"; };
-		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
-		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
 		B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionValid.json; sourceTree = "<group>"; };
 		B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionInvalid.json; sourceTree = "<group>"; };
@@ -884,7 +873,7 @@
 		B37FE7562CBEAAEC00537817 /* ACRBadgeView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBadgeView.mm; sourceTree = "<group>"; };
 		B37FE75F2CBEB00400537817 /* ACRBadgeRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRBadgeRenderer.h; path = PrivateHeaders/ACRBadgeRenderer.h; sourceTree = "<group>"; };
 		B37FE7602CBEB00400537817 /* ACRBadgeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRBadgeView.h; path = PrivateHeaders/ACRBadgeView.h; sourceTree = "<group>"; };
-		C1BFE0C10A542B2DABBE89DC /* Pods-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests/Pods-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B930906154D2D74084DA400E /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8DEDF37220CDEB00001AAED /* ActionSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActionSet.cpp; path = ../../../../shared/cpp/ObjectModel/ActionSet.cpp; sourceTree = "<group>"; };
 		C8DEDF38220CDEB00001AAED /* ActionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionSet.h; path = ../../../../shared/cpp/ObjectModel/ActionSet.h; sourceTree = "<group>"; };
 		CA1218C221C4509300152EA8 /* ToggleVisibilityTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToggleVisibilityTarget.h; path = ../../../../shared/cpp/ObjectModel/ToggleVisibilityTarget.h; sourceTree = "<group>"; };
@@ -908,8 +897,7 @@
 		CFF95C0A2982E38500F321C3 /* ACRChoiceSetCompactStyleViewTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACRChoiceSetCompactStyleViewTests.mm; sourceTree = "<group>"; };
 		CFF95C0C2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACOTypeaheadDynamicChoicesServiceTests.mm; sourceTree = "<group>"; };
 		CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACOTypeaheadDebouncerTests.mm; sourceTree = "<group>"; };
-		E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards_AdaptiveCardsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED131801E4C2E2B662925ABF /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig"; sourceTree = "<group>"; };
+		F213EC4D8B19A7ECEA9C298C /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig"; sourceTree = "<group>"; };
 		F401A8761F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRImageSetUICollectionView.mm; sourceTree = "<group>"; };
 		F401A8791F0DCBC8006D7AF2 /* ACRImageSetRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRImageSetRenderer.h; sourceTree = "<group>"; };
 		F401A87A1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRImageSetRenderer.mm; sourceTree = "<group>"; };
@@ -1109,8 +1097,8 @@
 				6BB21219210015A7009EA1BA /* AVKit.framework in Frameworks */,
 				6BB2121821001596009EA1BA /* AVFoundation.framework in Frameworks */,
 				F45A071F1EF4BD67007C6503 /* UIKit.framework in Frameworks */,
-				DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */,
 				904266D22D7B7665001CEFB6 /* SwiftAdaptiveCards in Frameworks */,
+				DBE434FFAC949EC3AC0BCF9E /* Pods_AdaptiveCards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,37 +1109,13 @@
 				6B124CA826D050DB007E9641 /* CoreGraphics.framework in Frameworks */,
 				6B124C8E26B4B3CD007E9641 /* UIKit.framework in Frameworks */,
 				F423C0BF1EE1FBAA00905679 /* AdaptiveCards.framework in Frameworks */,
-				EC367F912F6036B68C5BBFDB /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */,
+				16F02244E6C4F5ED7E9C5B17 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1779FD9986EE958A93BD0A28 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				777DD1173C03E3F4EC695141 /* Pods-AdaptiveCards.debug.xcconfig */,
-				4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */,
-				C1BFE0C10A542B2DABBE89DC /* Pods-AdaptiveCardsTests.debug.xcconfig */,
-				709889F4E83C1064F49E7DDC /* Pods-AdaptiveCardsTests.release.xcconfig */,
-				3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */,
-				92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */,
-				7DC49373563AE22454C070D6 /* Pods-Fluent-AdaptiveCards.debug.xcconfig */,
-				27CC4CEB2C16B73E2987EB85 /* Pods-Fluent-AdaptiveCards.release.xcconfig */,
-				0E46B8FBE57A09301765F779 /* Pods-Fluent-AdaptiveCardsTests.debug.xcconfig */,
-				270B2D4F8E11C644BA95F36D /* Pods-Fluent-AdaptiveCardsTests.release.xcconfig */,
-				0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */,
-				7749A56FE5104914C2BA9D02 /* Pods-AdaptiveCardsTests-AdaptiveCards.release.xcconfig */,
-				75D7DB0E51EC8A155E83E2D0 /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.debug.xcconfig */,
-				45580A4A0B0DE521608DDA3A /* Pods-ADCIOSVisualizer-AdaptiveCardsTests.release.xcconfig */,
-				9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */,
-				ED131801E4C2E2B662925ABF /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
-			sourceTree = "<group>";
-		};
 		6B124C9226B8AE3B007E9641 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1215,7 +1179,6 @@
 			children = (
 				906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */,
 				906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */,
-				906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */,
 				F4CAE77F1F75AB9000545555 /* ACOAdaptiveCard.h */,
 				F4CAE7801F75AB9000545555 /* ACOAdaptiveCard.mm */,
 				F4D4020D1F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.h */,
@@ -1448,7 +1411,7 @@
 				F423C0C21EE1FBAA00905679 /* AdaptiveCardsTests */,
 				F45A07191EF4BC44007C6503 /* Frameworks */,
 				F423C0B61EE1FBA900905679 /* Products */,
-				1779FD9986EE958A93BD0A28 /* Pods */,
+				F5352BFCC42046321983F391 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1883,10 +1846,24 @@
 				F45A071E1EF4BD67007C6503 /* UIKit.framework */,
 				F45A071C1EF4BCC3007C6503 /* CoreGraphics.framework */,
 				F45A071A1EF4BC44007C6503 /* Foundation.framework */,
-				255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */,
-				E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */,
+				01399E726447A87BFDF7111C /* Pods_AdaptiveCards.framework */,
+				8CABB73F5F2A0E6B7BA7CD70 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F5352BFCC42046321983F391 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5A4735D3ECF1B256A20B1A08 /* Pods-AdaptiveCards.debug.xcconfig */,
+				3F6C8BE651A079A691A01A7B /* Pods-AdaptiveCards.release.xcconfig */,
+				8D3FB4981C5C0DEA2E76AB9D /* Pods-AdaptiveCards.apprelease.xcconfig */,
+				B930906154D2D74084DA400E /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */,
+				56BE08BBAE48E13CFB6CD81E /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */,
+				F213EC4D8B19A7ECEA9C298C /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2151,7 +2128,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F423C0C91EE1FBAA00905679 /* Build configuration list for PBXNativeTarget "AdaptiveCards" */;
 			buildPhases = (
-				8CD5C2E532EDBA1D1879049F /* [CP] Check Pods Manifest.lock */,
+				E2524FD5B6F3A40465FE1DAD /* [CP] Check Pods Manifest.lock */,
 				6BF339D220A6647500DA5973 /* CopyFiles */,
 				F423C0B01EE1FBA900905679 /* Sources */,
 				F423C0B11EE1FBA900905679 /* Frameworks */,
@@ -2175,11 +2152,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F423C0CC1EE1FBAA00905679 /* Build configuration list for PBXNativeTarget "AdaptiveCardsTests" */;
 			buildPhases = (
-				EC2A78897FE6224EAF525E8C /* [CP] Check Pods Manifest.lock */,
+				BB0EAA7CB33CB1632C94C485 /* [CP] Check Pods Manifest.lock */,
 				F423C0BA1EE1FBAA00905679 /* Sources */,
 				F423C0BB1EE1FBAA00905679 /* Frameworks */,
 				F423C0BC1EE1FBAA00905679 /* Resources */,
-				254423FF1DE5FEC29B4DA914 /* [CP] Embed Pods Frameworks */,
+				A26B3D49E03C6E986674E8BF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2228,9 +2205,6 @@
 				Base,
 			);
 			mainGroup = F423C0AB1EE1FBA900905679;
-			packageReferences = (
-				904266D32D7B9AFC001CEFB6 /* XCLocalSwiftPackageReference "SwiftAdaptiveCards" */,
-			);
 			productRefGroup = F423C0B61EE1FBA900905679 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2278,7 +2252,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		254423FF1DE5FEC29B4DA914 /* [CP] Embed Pods Frameworks */ = {
+		A26B3D49E03C6E986674E8BF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2286,14 +2260,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-				"${BUILT_PRODUCTS_DIR}/MicrosoftFluentUI/FluentUI.framework",
 				"${BUILT_PRODUCTS_DIR}/SVGKit/SVGKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftAdaptiveCards/SwiftAdaptiveCards.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FluentUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVGKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftAdaptiveCards.framework",
 			);
@@ -2302,29 +2274,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8CD5C2E532EDBA1D1879049F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AdaptiveCards-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EC2A78897FE6224EAF525E8C /* [CP] Check Pods Manifest.lock */ = {
+		BB0EAA7CB33CB1632C94C485 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2340,6 +2290,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-AdaptiveCards-AdaptiveCardsTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E2524FD5B6F3A40465FE1DAD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AdaptiveCards-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2558,7 +2530,6 @@
 				7773C2DB2CA3FF8600097C06 /* ACRCarouselPageView.mm in Sources */,
 				F4C1F5DA1F218ABC0018CB78 /* ACRInputTimeRenderer.mm in Sources */,
 				463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */,
-				906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */,
 				6BFCA14D265452E100195CA7 /* ACRTableRenderer.mm in Sources */,
 				F4D402121F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.mm in Sources */,
 				6B22426E2203BE98000ACDA1 /* UnknownAction.cpp in Sources */,
@@ -2683,7 +2654,7 @@
 		};
 		6BC1C77F286BBC800084D1D9 /* AppRelease */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */;
+			baseConfigurationReference = 8D3FB4981C5C0DEA2E76AB9D /* Pods-AdaptiveCards.apprelease.xcconfig */;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CLANG_ENABLE_MODULES = YES;
@@ -2731,9 +2702,8 @@
 		};
 		6BC1C780286BBC800084D1D9 /* AppRelease */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED131801E4C2E2B662925ABF /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */;
+			baseConfigurationReference = F213EC4D8B19A7ECEA9C298C /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -2883,7 +2853,7 @@
 		};
 		F423C0CA1EE1FBAA00905679 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 777DD1173C03E3F4EC695141 /* Pods-AdaptiveCards.debug.xcconfig */;
+			baseConfigurationReference = 5A4735D3ECF1B256A20B1A08 /* Pods-AdaptiveCards.debug.xcconfig */;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CLANG_ENABLE_MODULES = YES;
@@ -2932,7 +2902,7 @@
 		};
 		F423C0CB1EE1FBAA00905679 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B0881019D2B9BA6009F1B94 /* Pods-AdaptiveCards.release.xcconfig */;
+			baseConfigurationReference = 3F6C8BE651A079A691A01A7B /* Pods-AdaptiveCards.release.xcconfig */;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CLANG_ENABLE_MODULES = YES;
@@ -2980,9 +2950,8 @@
 		};
 		F423C0CD1EE1FBAA00905679 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F3FBD57C361267D351D4B65 /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */;
+			baseConfigurationReference = B930906154D2D74084DA400E /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -3003,9 +2972,8 @@
 		};
 		F423C0CE1EE1FBAA00905679 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */;
+			baseConfigurationReference = 56BE08BBAE48E13CFB6CD81E /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -3084,13 +3052,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		904266D32D7B9AFC001CEFB6 /* XCLocalSwiftPackageReference "SwiftAdaptiveCards" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/SwiftAdaptiveCards;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		904266D12D7B7665001CEFB6 /* SwiftAdaptiveCards */ = {

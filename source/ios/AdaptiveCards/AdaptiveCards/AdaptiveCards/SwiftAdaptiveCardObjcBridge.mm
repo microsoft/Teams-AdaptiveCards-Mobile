@@ -13,7 +13,6 @@
 #import "ACOAdaptiveCardParseResult.h"
 #import "ACRParseWarningPrivate.h"
 #import "UtiliOS.h"
-#import <AdaptiveCards/AdaptiveCards-Swift.h>
 
 using namespace AdaptiveCards;
 
@@ -22,12 +21,11 @@ using namespace AdaptiveCards;
 + (NSMutableArray *)getWarningsFromParseResult:(id)parseResult useSwift:(BOOL)useSwift {
     NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
     if (useSwift) {
+        // TODO
         // Swift implementation
-       SwiftAdaptiveCardParseResult *swiftResult = (SwiftAdaptiveCardParseResult *)parseResult;
-       NSArray *swiftWarnings = [swiftResult warnings];
-       if (swiftWarnings) {
-           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
-       }
+//       if (swiftWarnings) {
+//           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
+//       }
     } else {
         // For C++ implementation, check the type of parseResult
         if ([parseResult isKindOfClass:[NSValue class]]) {
