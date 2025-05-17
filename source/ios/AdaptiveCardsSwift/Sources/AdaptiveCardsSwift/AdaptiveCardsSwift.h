@@ -14,4 +14,5 @@ FOUNDATION_EXPORT double AdaptiveCardsSwiftVersionNumber;
 //! Project version string for AdaptiveCardsSwift.
 FOUNDATION_EXPORT const unsigned char AdaptiveCardsSwiftVersionString[];
 
-// No Objective-C headers to import - this is a pure Swift framework
+// This is the umbrella header for the AdaptiveCardsSwift framework
+// This framework depends on SwiftAdaptiveCards

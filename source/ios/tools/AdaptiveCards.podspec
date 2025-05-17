@@ -65,7 +65,9 @@ Pod::Spec.new do |spec|
       'DEFINES_MODULE' => 'YES',
       'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
       'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/source/ios/AdaptiveCardsSwift/Sources $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards',
-      'SWIFT_OPTIMIZATION_LEVEL' => '-Onone'
+      'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
+      'PRODUCT_MODULE_NAME' => 'AdaptiveCardsSwift',
+      'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards/SwiftAdaptiveCards.framework/Headers'
     }
     
     # Add SwiftAdaptiveCards as a dependency

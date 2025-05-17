@@ -31,9 +31,8 @@ Pod::Spec.new do |spec|
   spec.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
     'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sources $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards',
-    'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit',
+    'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards/SwiftAdaptiveCards.framework/Headers',
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
-    'OTHER_SWIFT_FLAGS' => '-Xcc -fmodule-map-file=$(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards/SwiftAdaptiveCards.framework/Modules/module.modulemap',
     'SWIFT_OPTIMIZATION_LEVEL' => '-Onone'
   }
   
