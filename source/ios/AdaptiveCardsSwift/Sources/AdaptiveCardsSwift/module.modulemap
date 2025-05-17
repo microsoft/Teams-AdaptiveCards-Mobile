@@ -1,6 +1,9 @@
+// Disabled - using Swift module definition instead
+/*
 framework module AdaptiveCardsSwift {
   umbrella header "AdaptiveCardsSwift.h"
   
   export *
   module * { export * }
 }
+*/

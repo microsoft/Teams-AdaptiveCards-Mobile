@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name             = 'AdaptiveCardsSwift'
-  spec.version          = '2.10.0'  # Match with AdaptiveCards version
+  spec.version          = '1.0.0'
   spec.license          = { :type => 'Adaptive Cards Binary EULA', :file => '../../EULA-Non-Windows.txt' }
   spec.homepage         = 'https://adaptivecards.io'
   spec.authors          = { 'AdaptiveCards' => 'adaptivecardsdevelopers@microsoft.com' }
@@ -10,39 +10,35 @@ Pod::Spec.new do |spec|
   making it easier for Swift developers to integrate and use adaptive cards in their iOS apps.
   This package bridges between the Objective-C++ implementation and Swift.
                        DESC
-  spec.source           = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.10.0' }
+  spec.source           = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios-swift@1.0.0' }
   spec.swift_version    = '5.0'
   
-  spec.ios.deployment_target = '14.0'
+  spec.ios.deployment_target = '15.0'
   
-  spec.source_files = 'Sources/AdaptiveCardsSwift/**/*.{swift}'
+  # Define header file paths
+  spec.ios.private_header_files = 'Sources/AdaptiveCardsSwift/AdaptiveCardsSwift.h'
   
-  # Define pod configuration for proper module visibility
-  spec.pod_target_xcconfig = {
-    'DEFINES_MODULE' => 'YES',
-    'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/AdaptiveCardsSwift/Sources'
-  }
+  # Source files - include both Swift files and umbrella header
+  spec.source_files = 'Sources/AdaptiveCardsSwift/**/*.swift', 'Sources/AdaptiveCardsSwift/AdaptiveCardsSwift.h'
   
-  # This ensures the SwiftAdaptiveCards pod is included
-  spec.subspec 'SwiftAdaptiveCards' do |sspec|
-    sspec.source_files = '../AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/SwiftAdaptiveCards/**/*.{swift}'
-    sspec.public_header_files = '../AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/SwiftAdaptiveCards/**/*.{h}'
-    sspec.module_name = 'SwiftAdaptiveCards'
-    sspec.pod_target_xcconfig = {
-      'DEFINES_MODULE' => 'YES',
-      'SWIFT_VERSION' => '5.0'
-    }
-  end
+  # Direct dependency on SwiftAdaptiveCards
+  spec.dependency 'SwiftAdaptiveCards'
   
-  # Optional dependency on AdaptiveCards Objective-C framework
+  # Optional dependency on SVGKit
   spec.dependency 'SVGKit', '3.0.0'
   
-  # Include the bridging header
-  spec.preserve_paths = 'Sources/AdaptiveCardsSwift/AdaptiveCardsSwift-Bridging-Header.h'
-  
-  # This ensures the bridging header is properly imported
-  spec.xcconfig = { 
-    'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/AdaptiveCardsSwift/Sources',
-    'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit'
+  # This ensures proper module definition for pure Swift module
+  spec.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES',
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sources $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards',
+    'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit',
+    'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
+    'OTHER_SWIFT_FLAGS' => '-Xcc -fmodule-map-file=$(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards/SwiftAdaptiveCards.framework/Modules/module.modulemap',
+    'SWIFT_OPTIMIZATION_LEVEL' => '-Onone'
   }
+  
+  # Ensure proper compilation
+  spec.libraries = 'c++'
+  spec.requires_arc = true
+  spec.static_framework = false
 end

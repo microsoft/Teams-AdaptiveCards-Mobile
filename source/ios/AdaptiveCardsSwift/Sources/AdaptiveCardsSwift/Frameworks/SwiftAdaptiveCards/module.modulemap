@@ -1,4 +1,7 @@
+// Disabled - using Swift module definition instead
+/*
 module SwiftAdaptiveCards {
     header "SwiftAdaptiveCards.h"
     export *
 }
+*/

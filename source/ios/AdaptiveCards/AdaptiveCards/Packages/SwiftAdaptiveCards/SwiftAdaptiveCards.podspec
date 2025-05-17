@@ -6,18 +6,21 @@ Pod::Spec.new do |s|
   A Swift package that provides implementation of Adaptive Cards for iOS applications.
                        DESC
   s.homepage         = 'https://github.com/microsoft/AdaptiveCards'
-  s.license          = { :type => 'Adaptive Cards Binary EULA', :file => 'source/EULA-Non-Windows.txt' }
+  s.license          = { :type => 'Adaptive Cards Binary EULA', :file => '../../../../../EULA-Non-Windows.txt' }
   s.author           = { 'Microsoft' => 'adaptivecardsdevelopers@microsoft.com' }
   s.source           = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.10.0' }
   
   s.ios.deployment_target = '14.0'
   s.swift_version = '5.0'
   
-  # Specify source files
-  s.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/**/*.swift'
+  # Define header file paths
+  s.ios.private_header_files = 'Sources/SwiftAdaptiveCards/SwiftAdaptiveCards.h'
   
-  # Make the headers public to ensure they can be imported
-  s.public_header_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/**/*.h'
+  # Specify source files - using relative paths for better integration
+  s.source_files = 'Sources/**/*.swift', 'Sources/SwiftAdaptiveCards/SwiftAdaptiveCards.h'
+  
+  # No public headers for a pure Swift module
+  # s.public_header_files = 'Sources/**/*.h'
   
   # Framework dependencies if any
   s.frameworks = 'Foundation', 'UIKit'
@@ -26,6 +29,13 @@ Pod::Spec.new do |s|
   s.module_name = 'SwiftAdaptiveCards'
   s.pod_target_xcconfig = { 
     'DEFINES_MODULE' => 'YES',
-    'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/SwiftAdaptiveCards/source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources'
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sources',
+    'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
+    'APPLICATION_EXTENSION_API_ONLY' => 'YES',
+    'SWIFT_OPTIMIZATION_LEVEL' => '-Onone'
   }
+  
+  # Ensure proper compilation
+  s.requires_arc = true
+  s.static_framework = false
 end
