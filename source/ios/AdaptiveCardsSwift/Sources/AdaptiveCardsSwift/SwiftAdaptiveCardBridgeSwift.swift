@@ -9,9 +9,7 @@
 import Foundation
 
 // Try to import SwiftAdaptiveCards if available
-#if canImport(SwiftAdaptiveCards)
 import SwiftAdaptiveCards
-#endif
 
 // MARK: - Conversion Protocol
 
@@ -129,8 +127,8 @@ public class SwiftAdaptiveCardBridgeParserSwift: NSObject {
 
 // MARK: - Warning Type Definition
 
-@objc(SwiftWarningStatusCode)
-public class SwiftWarningStatusCode: NSObject {
+@objc(SwiftWarningStatusCodeSwift)
+public class SwiftWarningStatusCodeSwift: NSObject {
     @objc public static let unknownElementType = 0
     @objc public static let unknownActionElementType = 1
     @objc public static let unknownPropertyOnElement = 2
