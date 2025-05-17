@@ -7,6 +7,8 @@
 //
 
 #import "SwiftAdaptiveCardParser.h"
+// Import the generated Swift header
+#import <AdaptiveCardsSwift/AdaptiveCardsSwift-Swift.h>
 
 @implementation SwiftAdaptiveCardParser
 
@@ -19,11 +21,8 @@ static BOOL _swiftParserEnabled = NO;
 + (void)enableSwiftParser:(BOOL)enabled {
     _swiftParserEnabled = enabled;
     
-    // Also try to update the Swift bridge directly if available
-    Class bridgeParserClass = NSClassFromString(@"SwiftAdaptiveCardBridgeParserSwift");
-    if (bridgeParserClass && [bridgeParserClass respondsToSelector:@selector(enableSwiftParser:)]) {
-        [bridgeParserClass performSelector:@selector(enableSwiftParser:) withObject:@(enabled)];
-    }
+    [SwiftAdaptiveCardParserSwift enableSwiftParser:enabled];
+    NSLog(@"Swift parser module found and enabled: %@", enabled ? @"YES" : @"NO");
 }
 
 + (id)parseWithPayload:(NSString *)payload {
@@ -32,19 +31,14 @@ static BOOL _swiftParserEnabled = NO;
         return nil;
     }
     
-    // Try to use the Swift implementation via the bridge
-//    SwiftAdaptiveCardBridgeParserSwift *bridgeParserClass;
-    Class bridgeParserClass = NSClassFromString(@"SwiftAdaptiveCardBridgeParserSwift");
-    if (bridgeParserClass && [bridgeParserClass respondsToSelector:@selector(parseWithPayload:)]) {
-        id result = [bridgeParserClass performSelector:@selector(parseWithPayload:) withObject:payload];
-        if (result) {
-            NSLog(@"Successfully parsed using Swift implementation");
-            return result;
-        } else {
-            NSLog(@"Swift implementation failed to parse the payload");
-        }
+    // If Swift module is available, use it directly
+    NSLog(@"Attempting to use Swift parser bridge");
+    id result = [SwiftAdaptiveCardBridgeParserSwift parseWithPayload:payload];
+    if (result) {
+        NSLog(@"Successfully parsed using Swift implementation");
+        return result;
     } else {
-        NSLog(@"Swift bridge not available - import AdaptiveCardsSwift module to enable Swift parsing");
+        NSLog(@"Swift implementation failed to parse the payload");
     }
     
     return nil;
