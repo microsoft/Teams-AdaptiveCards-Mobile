@@ -82,9 +82,10 @@ Pod::Spec.new do |spec|
       'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources',
       'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
       'APPLICATION_EXTENSION_API_ONLY' => 'YES',
-      'SWIFT_OPTIMIZATION_LEVEL' => '-Onone'
+      'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
+      'PRODUCT_MODULE_NAME' => 'SwiftAdaptiveCards'
     }
-    swiftspec.module_name = 'SwiftAdaptiveCards'
+    # Removed module_name attribute as it's not allowed on subspecs
     swiftspec.frameworks = 'Foundation', 'UIKit'
     swiftspec.requires_arc = true
   end
