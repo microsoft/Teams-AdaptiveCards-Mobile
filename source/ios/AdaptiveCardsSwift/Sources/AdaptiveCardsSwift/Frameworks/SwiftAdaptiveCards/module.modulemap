@@ -1,7 +1,5 @@
-// Disabled - using Swift module definition instead
-/*
+// Module map for Swift module
 module SwiftAdaptiveCards {
     header "SwiftAdaptiveCards.h"
     export *
 }
-*/

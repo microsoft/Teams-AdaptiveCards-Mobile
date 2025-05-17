@@ -32,7 +32,8 @@ Pod::Spec.new do |s|
     'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sources',
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
     'APPLICATION_EXTENSION_API_ONLY' => 'YES',
-    'SWIFT_OPTIMIZATION_LEVEL' => '-Onone'
+    'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
+    'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop'
   }
   
   # Ensure proper compilation

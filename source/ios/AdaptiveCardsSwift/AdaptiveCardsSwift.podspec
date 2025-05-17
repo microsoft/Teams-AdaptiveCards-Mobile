@@ -33,7 +33,8 @@ Pod::Spec.new do |spec|
     'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sources $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards',
     'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards/SwiftAdaptiveCards.framework/Headers',
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
-    'SWIFT_OPTIMIZATION_LEVEL' => '-Onone'
+    'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
+    'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop'
   }
   
   # Ensure proper compilation

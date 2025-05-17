@@ -67,7 +67,8 @@ Pod::Spec.new do |spec|
       'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/source/ios/AdaptiveCardsSwift/Sources $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards',
       'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
       'PRODUCT_MODULE_NAME' => 'AdaptiveCardsSwift',
-      'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards/SwiftAdaptiveCards.framework/Headers'
+      'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards/SwiftAdaptiveCards.framework/Headers',
+      'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop'
     }
     
     # Add SwiftAdaptiveCards as a dependency
@@ -85,7 +86,8 @@ Pod::Spec.new do |spec|
       'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
       'APPLICATION_EXTENSION_API_ONLY' => 'YES',
       'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
-      'PRODUCT_MODULE_NAME' => 'SwiftAdaptiveCards'
+      'PRODUCT_MODULE_NAME' => 'SwiftAdaptiveCards',
+      'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop'
     }
     # Removed module_name attribute as it's not allowed on subspecs
     swiftspec.frameworks = 'Foundation', 'UIKit'
