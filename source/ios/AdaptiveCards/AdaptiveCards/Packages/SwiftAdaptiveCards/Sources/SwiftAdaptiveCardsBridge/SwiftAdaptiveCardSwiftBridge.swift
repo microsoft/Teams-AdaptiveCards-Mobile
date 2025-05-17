@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftAdaptiveCards
 
 public protocol Convertible {
     associatedtype Target
@@ -24,8 +23,15 @@ extension Array where Element: Convertible {
 public class SwiftAdaptiveCardParseResult: NSObject {
     public var parseResult: SwiftParseResult?
     public var errors: [NSError]?
-//    public var warnings: [ACRParseWarning]?
     public var warnings: [NSObject]?
+    
+    public static func parse(payload: String) -> SwiftAdaptiveCardParseResult? {
+        guard let parseResult = try? SwiftAdaptiveCard.deserializeFromString(payload, version: "1.6") else {
+            return nil
+        }
+        let result = SwiftAdaptiveCardParseResult()
+        return result
+    }
 }
 
 @objcMembers
@@ -48,20 +54,9 @@ public class SwiftAdaptiveCardParser: NSObject {
             return nil
         }
         let result = SwiftAdaptiveCardParseResult()
-//        result.parseResult = parseResult
-//        result.warnings = parseResult.warnings.convert()
         return result
     }
 }
-
-// MARK: - ACRParseWarning
-//extension SwiftAdaptiveCardParseWarning: Convertible {
-//    public typealias Target = ACRParseWarning
-//
-//    public func convert() -> ACRParseWarning {
-//        return .createWithStatusCode(getStatusCode().convert().rawValue, reason: getReason())
-//    }
-//}
 
 //extension SwiftWarningStatusCode: Convertible {
 //    public typealias Target = ACRWarningStatusCode

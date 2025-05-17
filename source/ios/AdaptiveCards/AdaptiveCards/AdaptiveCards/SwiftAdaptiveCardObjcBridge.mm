@@ -14,6 +14,9 @@
 #import "ACRParseWarningPrivate.h"
 #import "UtiliOS.h"
 
+// Import SwiftAdaptiveCardsBridge module
+#import <SwiftAdaptiveCards/SwiftAdaptiveCards-Swift.h>
+
 using namespace AdaptiveCards;
 
 @implementation SwiftAdaptiveCardObjcBridge
@@ -21,11 +24,13 @@ using namespace AdaptiveCards;
 + (NSMutableArray *)getWarningsFromParseResult:(id)parseResult useSwift:(BOOL)useSwift {
     NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
     if (useSwift) {
-        // TODO
-        // Swift implementation
-//       if (swiftWarnings) {
-//           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
-//       }
+        // Extract warnings from Swift parse result
+        if ([parseResult isKindOfClass:[SwiftAdaptiveCardParseResult class]]) {
+            SwiftAdaptiveCardParseResult *swiftResult = (SwiftAdaptiveCardParseResult *)parseResult;
+            if (swiftResult.warnings) {
+                acrParseWarnings = [NSMutableArray arrayWithArray:swiftResult.warnings];
+            }
+        }
     } else {
         // For C++ implementation, check the type of parseResult
         if ([parseResult isKindOfClass:[NSValue class]]) {
@@ -41,6 +46,18 @@ using namespace AdaptiveCards;
         }
     }
     return acrParseWarnings;
+}
+
++ (BOOL)isSwiftParserEnabled {
+    return [SwiftAdaptiveCardParser isSwiftParserEnabled];
+}
+
++ (void)setSwiftParserEnabled:(BOOL)enabled {
+    [SwiftAdaptiveCardParser setSwiftParserEnabled:enabled];
+}
+
++ (SwiftAdaptiveCardParseResult *)parseWithPayload:(NSString *)payload {
+    return [SwiftAdaptiveCardParser parseWithPayload:payload];
 }
 
 @end

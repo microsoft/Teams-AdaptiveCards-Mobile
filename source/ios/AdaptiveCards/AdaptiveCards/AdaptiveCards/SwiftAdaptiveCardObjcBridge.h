@@ -10,9 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class SwiftAdaptiveCardParseResult;
+
 @interface SwiftAdaptiveCardObjcBridge : NSObject
 
 + (NSMutableArray *)getWarningsFromParseResult:(id)parseResult useSwift:(BOOL)useSwift;
+
+// Swift parser interface methods
++ (BOOL)isSwiftParserEnabled;
++ (void)setSwiftParserEnabled:(BOOL)enabled;
++ (SwiftAdaptiveCardParseResult * _Nullable)parseWithPayload:(NSString *)payload;
 
 @end
 
