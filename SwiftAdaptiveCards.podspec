@@ -12,17 +12,32 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '14.0'
   s.swift_version = '5.0'
+  s.module_name = 'SwiftAdaptiveCards'
   
   # Default to include both the core library and bridge
   s.default_subspecs = 'Core', 'Bridge'
   
   s.frameworks = 'Foundation', 'UIKit'
   
+  # Common settings for all subspecs
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES',
+    'SWIFT_INSTALL_OBJC_HEADER' => 'YES',
+    'SWIFT_OBJC_INTERFACE_HEADER_NAME' => 'SwiftAdaptiveCards-Swift.h',
+    'GCC_PREPROCESSOR_DEFINITIONS' => 'ADAPTIVE_CARDS_USE_SWIFT=1',
+    'CLANG_ENABLE_MODULES' => 'YES',
+    'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES'
+  }
+  
+  # Make Objective-C aware of Swift
+  s.user_target_xcconfig = {
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/SwiftAdaptiveCards/source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources'
+  }
+  
   # Core implementation
   s.subspec 'Core' do |core|
     core.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/SwiftAdaptiveCards/**/*.swift'
     core.pod_target_xcconfig = {
-      'DEFINES_MODULE' => 'YES',
       'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/SwiftAdaptiveCards/source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources'
     }
   end
@@ -31,8 +46,5 @@ Pod::Spec.new do |s|
   s.subspec 'Bridge' do |bridge|
     bridge.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/SwiftAdaptiveCardsBridge/**/*.swift'
     bridge.dependency 'SwiftAdaptiveCards/Core'
-    bridge.pod_target_xcconfig = {
-      'DEFINES_MODULE' => 'YES'
-    }
   end
 end
