@@ -33,9 +33,6 @@ Pod::Spec.new do |spec|
   # This ensures the bridging header is properly imported
   spec.xcconfig = { 
     'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/AdaptiveCardsSwift/Sources',
-    'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit',
-    'DEFINES_MODULE' => 'YES',
-    'SWIFT_INSTALL_OBJC_HEADER' => 'YES',
-    'SWIFT_OBJC_INTERFACE_HEADER_NAME' => 'AdaptiveCardsSwift-Swift.h'
+    'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit'
   }
 end
