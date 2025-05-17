@@ -13,7 +13,7 @@ Pod::Spec.new do |spec|
   
   spec.source       = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.10.0' }
 
-  spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders', 'Swift'
+  spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders', 'SwiftAdaptiveCards', 'Swift'
   
   # AdaptiveCardsSwift is now a required dependency for automatic Swift implementation integration
 
@@ -57,6 +57,7 @@ Pod::Spec.new do |spec|
   spec.subspec 'Swift' do | sspec |
     # Include AdaptiveCardsSwift files
     sspec.source_files = 'source/ios/AdaptiveCardsSwift/Sources/AdaptiveCardsSwift/**/*.swift', 'source/ios/AdaptiveCardsSwift/Sources/AdaptiveCardsSwift/AdaptiveCardsSwift.h'
+    sspec.private_header_files = 'source/ios/AdaptiveCardsSwift/Sources/AdaptiveCardsSwift/AdaptiveCardsSwift.h'
     
     # Define preprocessor macros for conditional compilation
     sspec.pod_target_xcconfig = {
@@ -64,10 +65,9 @@ Pod::Spec.new do |spec|
       'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'COCOAPODS',
       'DEFINES_MODULE' => 'YES',
       'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
-      'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/source/ios/AdaptiveCardsSwift/Sources $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards',
+      'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/source/ios/AdaptiveCardsSwift/Sources $(PODS_CONFIGURATION_BUILD_DIR)/AdaptiveCards/SwiftAdaptiveCards',
       'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
-      'PRODUCT_MODULE_NAME' => 'AdaptiveCardsSwift',
-      'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit $(PODS_CONFIGURATION_BUILD_DIR)/SwiftAdaptiveCards/SwiftAdaptiveCards.framework/Headers',
+      'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/SVGKit $(PODS_CONFIGURATION_BUILD_DIR)/AdaptiveCards/SwiftAdaptiveCards/**',
       'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop'
     }
     
@@ -79,6 +79,8 @@ Pod::Spec.new do |spec|
   # SwiftAdaptiveCards integration directly within the pod
   spec.subspec 'SwiftAdaptiveCards' do |swiftspec|
     swiftspec.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/**/*.swift', 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/**/SwiftAdaptiveCards.h'
+    swiftspec.private_header_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/**/SwiftAdaptiveCards.h'
+    
     swiftspec.pod_target_xcconfig = {
       'SWIFT_VERSION' => '5.0',
       'DEFINES_MODULE' => 'YES',
@@ -87,9 +89,11 @@ Pod::Spec.new do |spec|
       'APPLICATION_EXTENSION_API_ONLY' => 'YES',
       'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
       'PRODUCT_MODULE_NAME' => 'SwiftAdaptiveCards',
-      'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop'
+      'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop',
+      'MODULEMAP_FILE' => '$(PODS_TARGET_SRCROOT)/source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/SwiftAdaptiveCards/SwiftAdaptiveCards.modulemap'
     }
-    # Removed module_name attribute as it's not allowed on subspecs
+    
+    # Frameworks
     swiftspec.frameworks = 'Foundation', 'UIKit'
     swiftspec.requires_arc = true
   end

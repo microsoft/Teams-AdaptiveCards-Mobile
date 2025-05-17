@@ -19,9 +19,6 @@ Pod::Spec.new do |s|
   # Specify source files - using relative paths for better integration
   s.source_files = 'Sources/**/*.swift', 'Sources/SwiftAdaptiveCards/SwiftAdaptiveCards.h'
   
-  # No public headers for a pure Swift module
-  # s.public_header_files = 'Sources/**/*.h'
-  
   # Framework dependencies if any
   s.frameworks = 'Foundation', 'UIKit'
   
@@ -33,7 +30,8 @@ Pod::Spec.new do |s|
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
     'APPLICATION_EXTENSION_API_ONLY' => 'YES',
     'SWIFT_OPTIMIZATION_LEVEL' => '-Onone',
-    'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop'
+    'OTHER_SWIFT_FLAGS' => '-Xfrontend -enable-objc-interop',
+    'MODULEMAP_FILE' => '$(PODS_TARGET_SRCROOT)/Sources/SwiftAdaptiveCards/SwiftAdaptiveCards.modulemap'
   }
   
   # Ensure proper compilation
