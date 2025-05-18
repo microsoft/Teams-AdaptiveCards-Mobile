@@ -12,6 +12,15 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '15.0'
   s.swift_version = '5.0'
+
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES',
+    'SWIFT_OBJC_INTERFACE_HEADER_NAME' => 'SwiftAdaptiveCards-Swift.h',
+    'CLANG_ENABLE_MODULES' => 'YES',
+    'CLANG_ENABLE_OBJC_ARC' => 'YES'
+  }
+
+
   
   # Specify source files
   s.source_files = 'Sources/**/*.swift'
