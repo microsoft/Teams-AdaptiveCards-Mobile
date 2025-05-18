@@ -152,7 +152,7 @@ using namespace AdaptiveCards;
             NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
             std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
             
-            BOOL useSwiftParser = [SwiftAdaptiveCardParser isSwiftParserEnabled];
+            BOOL useSwiftParser = YES;
             if (useSwiftParser) {
                 swiftResult = [SwiftAdaptiveCardParser parseWithPayload:payload];
                 if (swiftResult != nil) {

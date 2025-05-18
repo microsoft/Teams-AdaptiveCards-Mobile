@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftAdaptiveCards
 
 public protocol Convertible {
     associatedtype Target
