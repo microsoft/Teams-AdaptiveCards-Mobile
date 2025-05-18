@@ -3,9 +3,5 @@ framework module AdaptiveCards {
 
   export *
   module * { export * }
-
-  explicit module SwiftAdaptiveCards [extern_c] {
-    header "SwiftAdaptiveCards-Swift.h"
-  }
 }
 
