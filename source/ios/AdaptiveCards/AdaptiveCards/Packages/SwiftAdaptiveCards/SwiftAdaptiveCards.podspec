@@ -15,6 +15,15 @@ Pod::Spec.new do |s|
   
   # Specify source files
   s.source_files = 'Sources/**/*.swift'
+
+  s.subspec 'Core' do |core|
+    core.source_files = 'Sources/SwiftAdaptiveCards/**/*.{swift,h}'
+  end
+
+  s.subspec 'Bridge' do |bridge|
+    bridge.source_files = 'Sources/SwiftAdaptiveCardsBridge/**/*.{swift,h}'
+    bridge.dependency 'SwiftAdaptiveCards/Core'
+  end
   
   # Framework dependencies if any
   s.frameworks = 'Foundation'
