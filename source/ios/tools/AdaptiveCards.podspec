@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.swift_versions = ['5.0']
 
   spec.subspec 'SwiftAdapter' do |sa|
-    sa.dependency 'SwiftAdaptiveCards/Bridge'
+    sa.dependency 'SwiftAdaptiveCards'
   end
 
   spec.subspec 'AdaptiveCardsCore' do | sspec |
