@@ -50,7 +50,6 @@ Pod::Spec.new do |spec|
 
   spec.subspec 'SwiftBridge' do |sb|
     sb.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/SwiftAdaptiveCards/**/*.{swift,h}'
-    sb.swift_version = '5.0'
   end
 
   spec.subspec 'UIProviders' do | sspec |
