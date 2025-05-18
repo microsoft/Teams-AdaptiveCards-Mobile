@@ -20,7 +20,6 @@
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
 #import "SwiftAdaptiveCardObjcBridge.h"
-#import <AdaptiveCards/AdaptiveCards-Swift.h>
 
 using namespace AdaptiveCards;
 
@@ -152,9 +151,10 @@ using namespace AdaptiveCards;
             NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
             std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
             
-            BOOL useSwiftParser = [SwiftAdaptiveCardParser isSwiftParserEnabled];
+            BOOL useSwiftParser = YES;
+            
             if (useSwiftParser) {
-                swiftResult = [SwiftAdaptiveCardParser parseWithPayload:payload];
+                swiftResult = [SwiftAdaptiveCardObjcBridge parseWithPayload:payload];
                 if (swiftResult != nil) {
                     [card setAdaptiveCardParseResult:swiftResult];
                 }

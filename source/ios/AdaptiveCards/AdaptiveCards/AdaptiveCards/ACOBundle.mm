@@ -26,7 +26,7 @@
     self = [super init];
     if (self) {
 #ifdef SWIFT_PACKAGE
-        self->_bundle = SWIFTPM_MODULE_BUNDLE;
+//        self->_bundle = SWIFTPM_MODULE_BUNDLE;
 #else
         NSBundle *bundle = [NSBundle bundleForClass:[ACRView class]];
         if (bundle) {

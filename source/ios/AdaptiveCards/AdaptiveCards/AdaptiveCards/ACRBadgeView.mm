@@ -15,7 +15,7 @@
 #import "ACRSVGIconHoldingView.h"
 #import "ACRBaseTarget.h"
 #if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS)
-#import <FluentUI/FluentUI-Swift.h>
+//#import <FluentUI/FluentUI-Swift.h>
 #endif
 
 @implementation ACRBadgeView
@@ -101,11 +101,11 @@
 
 - (void)showToolTip:(UILongPressGestureRecognizer *)recognizer
 {
-#if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS)
-    if (recognizer.state == UIGestureRecognizerStateBegan && _toolTip && recognizer.view) {
-        [MSFTooltip.shared showWith:_toolTip for:recognizer.view preferredArrowDirection:MSFTooltipArrowDirectionUp offset:CGPointZero screenMargins:MSFTooltip.defaultScreenMargins dismissOn:MSFTooltipDismissModeTapAnywhere onTap:nil];
-    }
-#endif
+//#if defined(ADAPTIVECARDS_USE_FLUENT_TOOLTIPS)
+//    if (recognizer.state == UIGestureRecognizerStateBegan && _toolTip && recognizer.view) {
+//        [MSFTooltip.shared showWith:_toolTip for:recognizer.view preferredArrowDirection:MSFTooltipArrowDirectionUp offset:CGPointZero screenMargins:MSFTooltip.defaultScreenMargins dismissOn:MSFTooltipDismissModeTapAnywhere onTap:nil];
+//    }
+//#endif
 }
 
 -(CGFloat)getTextLabelFontSize
