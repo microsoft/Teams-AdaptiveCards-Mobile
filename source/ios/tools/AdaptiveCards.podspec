@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.swift_versions = ['5.0']
 
   spec.subspec 'SwiftAdapter' do |sa|
-    sa.dependency 'SwiftAdaptiveCards'
+    sa.dependency 'AdaptiveCards/SwiftAdaptiveCards/Bridge'
   end
 
   spec.subspec 'AdaptiveCardsCore' do | sspec |
@@ -50,6 +50,18 @@ Pod::Spec.new do |spec|
     sspec.dependency 'MicrosoftFluentUI/Tooltip_ios', '~> 0.3.6'
     sspec.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'ADAPTIVECARDS_USE_FLUENT_TOOLTIPS=1' }
   end
+
+  spec.subspec 'SwiftAdaptiveCards' do |sac|
+    sac.subspec 'Core' do |core|
+      core.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/SwiftAdaptiveCards/**/*.{swift,h}'
+    end
+  
+    sac.subspec 'Bridge' do |bridge|
+      bridge.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/Packages/SwiftAdaptiveCards/Sources/SwiftAdaptiveCardsBridge/**/*.{swift,h}'
+      bridge.dependency 'AdaptiveCards/SwiftAdaptiveCards/Core'
+    end
+  end
+
 
   spec.platform         = :ios, '14'
 
