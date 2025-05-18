@@ -1219,9 +1219,11 @@
 		6B92A71B266FE84F00CAE3BF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				900787EE2DDA6D650080519E /* SwiftAdaptiveCardsBridge */,
 				900787C02DDA6C190080519E /* SwiftAdaptiveCards */,
 				F4CAE77F1F75AB9000545555 /* ACOAdaptiveCard.h */,
+				906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */,
+				906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */,
+				906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */,
 				F4CAE7801F75AB9000545555 /* ACOAdaptiveCard.mm */,
 				F4D4020D1F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.h */,
 				F4D4020E1F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.mm */,
@@ -1462,16 +1464,6 @@
 				900787D02DDA6C460080519E /* SwiftUtil.swift */,
 			);
 			path = Util;
-			sourceTree = "<group>";
-		};
-		900787EE2DDA6D650080519E /* SwiftAdaptiveCardsBridge */ = {
-			isa = PBXGroup;
-			children = (
-				906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */,
-				906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */,
-				906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */,
-			);
-			path = SwiftAdaptiveCardsBridge;
 			sourceTree = "<group>";
 		};
 		906040BE2D7B74A300978EA5 /* Packages */ = {
