@@ -1,0 +1,11 @@
+framework module AdaptiveCards {
+  umbrella header "AdaptiveCards.h"
+
+  export *
+  module * { export * }
+
+  explicit module SwiftAdaptiveCards [extern_c] {
+    header "SwiftAdaptiveCards-Swift.h"
+  }
+}
+

@@ -15,6 +15,8 @@ Pod::Spec.new do |spec|
 
   spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders'
 
+  spec.module_map = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/module.modulemap'
+
   spec.swift_versions = ['5.0']
 
   spec.pod_target_xcconfig = {
