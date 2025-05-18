@@ -143,5 +143,6 @@ FOUNDATION_EXPORT const unsigned char AdaptiveCarsFrameworkVersionString[];
 #import <AdaptiveCards/ACRTextView.h>
 #import <AdaptiveCards/ACRToggleInputView.h>
 #import <AdaptiveCards/ACRView.h>
+#import <SwiftAdaptiveCards/SwiftAdaptiveCards-Swift.h>
 
 #endif
