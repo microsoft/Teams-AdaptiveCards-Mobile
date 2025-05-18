@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.swift_versions = ['5.0']
 
-  s.pod_target_xcconfig = {
+  spec.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
     'CLANG_ENABLE_MODULES' => 'YES'
   }
