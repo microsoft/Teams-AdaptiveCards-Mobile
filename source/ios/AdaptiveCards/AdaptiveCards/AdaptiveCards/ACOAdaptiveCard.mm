@@ -20,7 +20,6 @@
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
 #import "SwiftAdaptiveCardObjcBridge.h"
-#import <AdaptiveCards/AdaptiveCards-Swift.h>
 
 using namespace AdaptiveCards;
 
@@ -154,7 +153,7 @@ using namespace AdaptiveCards;
             
             BOOL useSwiftParser = YES;
             if (useSwiftParser) {
-                swiftResult = [SwiftAdaptiveCardParser parseWithPayload:payload];
+                swiftResult = [SwiftAdaptiveCardObjcBridge parseWithPayload:payload];
                 if (swiftResult != nil) {
                     [card setAdaptiveCardParseResult:swiftResult];
                 }

@@ -13,21 +13,31 @@
 #import "ACOAdaptiveCardParseResult.h"
 #import "ACRParseWarningPrivate.h"
 #import "UtiliOS.h"
+
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
 #import <AdaptiveCards/AdaptiveCards-Swift.h>
+#endif
 
 using namespace AdaptiveCards;
 
 @implementation SwiftAdaptiveCardObjcBridge
 
-+ (NSMutableArray *)getWarningsFromParseResult:(id)parseResult useSwift:(BOOL)useSwift {
++ (BOOL)canUseSwift {
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+    return YES;
+#endif
+    return NO;
+}
+
++ (NSMutableArray * _Nullable)getWarningsFromParseResult:(id _Nullable)parseResult useSwift:(BOOL)useSwift {
     NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
-    if (useSwift) {
+    if (useSwift && [self canUseSwift]) {
         // Swift implementation
        SwiftAdaptiveCardParseResult *swiftResult = (SwiftAdaptiveCardParseResult *)parseResult;
-       NSArray *swiftWarnings = [swiftResult warnings];
-       if (swiftWarnings) {
-           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
-       }
+//       NSArray *swiftWarnings = [swiftResult warnings];
+//       if (swiftWarnings) {
+//           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
+//       }
     } else {
         // For C++ implementation, check the type of parseResult
         if ([parseResult isKindOfClass:[NSValue class]]) {
@@ -44,5 +54,32 @@ using namespace AdaptiveCards;
     }
     return acrParseWarnings;
 }
+
++ (BOOL)isSwiftParserEnabled {
+    if ([self canUseSwift]) {
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+        return [SwiftAdaptiveCardParser isSwiftParserEnabled];
+#endif
+    }
+    return NO;
+}
+
++ (void)setSwiftParserEnabled:(BOOL)enabled {
+    if ([self canUseSwift]) {
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+        [SwiftAdaptiveCardParser setSwiftParserEnabled:enabled];
+#endif
+    }
+}
+
++ (SwiftAdaptiveCardParseResult * _Nullable)parseWithPayload:(NSString *_Nonnull)payload {
+    if ([self canUseSwift]) {
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+        return [SwiftAdaptiveCardParser parseWithPayload:payload];
+#endif
+    }
+    return nil;
+}
+
 
 @end

@@ -16,7 +16,6 @@ FOUNDATION_EXPORT const unsigned char AdaptiveCarsFrameworkVersionString[];
 /// Swift Package Imports
 #import "ACOActionOverflow.h"
 #import "ACOAdaptiveCard.h"
-#import "SwiftAdaptiveCardObjcBridge.h"
 #import "ACOAdaptiveCardParseResult.h"
 #import "ACOBaseActionElement.h"
 #import "ACOBaseCardElement.h"
@@ -83,7 +82,6 @@ FOUNDATION_EXPORT const unsigned char AdaptiveCarsFrameworkVersionString[];
 /// Cocoapods Imports
 #import <AdaptiveCards/ACOActionOverflow.h>
 #import <AdaptiveCards/ACOAdaptiveCard.h>
-#import <AdaptiveCards/SwiftAdaptiveCardObjcBridge.h>
 #import <AdaptiveCards/ACOAdaptiveCardParseResult.h>
 #import <AdaptiveCards/ACOBaseCardElement.h>
 #import <AdaptiveCards/ACOEnums.h>

@@ -39,6 +39,8 @@ let package = Package(
                 "testcards/ImageAutoInColumnSet.json",
                 "testcards/CustomerCard1.json",
                 "testcards/TextBlock.Issue.json",
+                "SwiftAdaptiveCardSwiftBridge.swift",
+                "SwiftAdaptiveCards",
                 "testcards/TextBlockStrechInColumnSet.json"
             ],
             resources: [
@@ -47,6 +49,10 @@ let package = Package(
             publicHeadersPath: "include",
             cxxSettings: [
                 .headerSearchPath("../../../../shared/cpp/ObjectModel") 
+            ],
+            swiftSettings: [
+                .unsafeFlags(["-DSWIFT_PACKAGE=1"], .when(platforms: [.iOS])),
+                .define("SWIFT_PACKAGE")
             ],
             linkerSettings:[
                 LinkerSetting.linkedFramework("AVFoundation"),
