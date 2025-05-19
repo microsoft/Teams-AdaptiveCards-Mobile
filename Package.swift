@@ -13,11 +13,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "AdaptiveCards",
-            targets: ["AdaptiveCards", "ObjectModel"]),
+            targets: ["AdaptiveCards", "ObjectModel"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
          .package(url: "https://github.com/SVGKit/SVGKit", from: "3.0.0"),
+         .package(path: "source/shared/swift/SwiftAdaptiveCards")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -31,7 +32,11 @@ let package = Package(
             ),
         .target(
             name: "AdaptiveCards",
-            dependencies: ["ObjectModel", "SVGKit"],
+            dependencies: [
+            "ObjectModel", 
+            "SVGKit",
+            .product(name: "SwiftAdaptiveCardsBridge", package: "SwiftAdaptiveCards")
+            ],
             path: "source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards",
             exclude: [
                 "CMakeLists.txt",
@@ -39,6 +44,7 @@ let package = Package(
                 "testcards/ImageAutoInColumnSet.json",
                 "testcards/CustomerCard1.json",
                 "testcards/TextBlock.Issue.json",
+                "SwiftAdaptiveCardSwiftBridge.swift",
                 "testcards/TextBlockStrechInColumnSet.json"
             ],
             resources: [

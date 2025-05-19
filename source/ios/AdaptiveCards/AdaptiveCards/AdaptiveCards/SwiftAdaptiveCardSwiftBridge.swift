@@ -6,6 +6,8 @@
 //  Copyright © 2025 Microsoft. All rights reserved.
 //
 
+#if SWIFT_PACKAGE
+#else
 import Foundation
 
 public protocol Convertible {
@@ -119,3 +121,4 @@ extension SwiftWarningStatusCode: Convertible {
         )
     }
 }
+#endif

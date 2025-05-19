@@ -13,7 +13,12 @@
 #import "ACOAdaptiveCardParseResult.h"
 #import "ACRParseWarningPrivate.h"
 #import "UtiliOS.h"
+
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
 #import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#import "SwiftAdaptiveCardObjcExports.h"
+#endif
 
 using namespace AdaptiveCards;
 
@@ -24,10 +29,10 @@ using namespace AdaptiveCards;
     if (useSwift) {
         // Swift implementation
        SwiftAdaptiveCardParseResult *swiftResult = (SwiftAdaptiveCardParseResult *)parseResult;
-       NSArray *swiftWarnings = [swiftResult warnings];
-       if (swiftWarnings) {
-           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
-       }
+//       NSArray *swiftWarnings = [swiftResult warnings];
+//       if (swiftWarnings) {
+//           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
+//       }
     } else {
         // For C++ implementation, check the type of parseResult
         if ([parseResult isKindOfClass:[NSValue class]]) {
@@ -44,5 +49,18 @@ using namespace AdaptiveCards;
     }
     return acrParseWarnings;
 }
+
++ (BOOL)isSwiftParserEnabled {
+    return [SwiftAdaptiveCardParser isSwiftParserEnabled];
+}
+
++ (void)setSwiftParserEnabled:(BOOL)enabled {
+    [SwiftAdaptiveCardParser setSwiftParserEnabled:enabled];
+}
+
++ (SwiftAdaptiveCardParseResult *)parseWithPayload:(NSString *)payload {
+    return [SwiftAdaptiveCardParser parseWithPayload:payload];
+}
+
 
 @end

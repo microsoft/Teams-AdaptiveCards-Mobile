@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
     sspec.resource_bundles = {'AdaptiveCards' => ['source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/Resources/**/*']}
     sspec.dependency 'AdaptiveCards/AdaptiveCardsPrivate'
     sspec.dependency 'AdaptiveCards/ObjectModel'
-    sspec.dependency 'AdaptiveCards/SwiftBridge'
+    sspec.dependency 'AdaptiveCards/Swift'
     sspec.dependency 'SVGKit', '>= 3.0.0'
   end
 
@@ -48,8 +48,8 @@ Pod::Spec.new do |spec|
     sspec.private_header_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/PrivateHeaders/*.h'
   end
 
-  spec.subspec 'SwiftBridge' do |sb|
-    sb.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/SwiftAdaptiveCards/**/*.{swift,h}'
+  spec.subspec 'Swift' do |sb|
+    sb.source_files = 'source/shared/swift/SwiftAdaptiveCards/**/*.{swift,h}'
   end
 
   spec.subspec 'UIProviders' do | sspec |
