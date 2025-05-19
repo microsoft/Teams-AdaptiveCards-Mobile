@@ -317,9 +317,10 @@
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
 		906040BB2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */; };
-		906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridgeStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridgeStub.swift */; };
+		906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardBridgeCocoaPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardBridgeCocoaPods.swift */; };
 		906040BD2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */; };
 		906E107D2DDABD1000B02C05 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906E107C2DDABD1000B02C05 /* SwiftAdaptiveCardSwiftBridge.swift */; };
+		907AC86A2DDAE87A008DFE60 /* SwiftAdaptiveCardObjcExports.h in Headers */ = {isa = PBXBuildFile; fileRef = 907AC8692DDAE87A008DFE60 /* SwiftAdaptiveCardObjcExports.h */; };
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
 		B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */; };
@@ -1101,7 +1102,6 @@
 				6BB2121821001596009EA1BA /* AVFoundation.framework in Frameworks */,
 				F45A071F1EF4BD67007C6503 /* UIKit.framework in Frameworks */,
 				570869FDD450F74A5996F530 /* Pods_AdaptiveCards.framework in Frameworks */,
-				90B4B6062DDA939F00C24B99 /* SwiftAdaptiveCards in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1195,10 +1195,11 @@
 			isa = PBXGroup;
 			children = (
 				906E107C2DDABD1000B02C05 /* SwiftAdaptiveCardSwiftBridge.swift */,
+				907AC8692DDAE87A008DFE60 /* SwiftAdaptiveCardObjcExports.h */,
 				F4CAE77F1F75AB9000545555 /* ACOAdaptiveCard.h */,
 				906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */,
 				906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */,
-				906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridgeStub.swift */,
+				906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardBridgeCocoaPods.swift */,
 				F4CAE7801F75AB9000545555 /* ACOAdaptiveCard.mm */,
 				F4D4020D1F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.h */,
 				F4D4020E1F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.mm */,
@@ -2021,6 +2022,7 @@
 				7751C0732CAC0EEB00C876DD /* ACRPageControl.h in Headers */,
 				6B9BDF8020F40D1000F13155 /* ACOResourceResolvers.h in Headers */,
 				6BB211FD20FF9FEA009EA1BA /* ACRActionSetRenderer.h in Headers */,
+				907AC86A2DDAE87A008DFE60 /* SwiftAdaptiveCardObjcExports.h in Headers */,
 				6B9BDFCA20F6BF5D00F13155 /* ACOIResourceResolver.h in Headers */,
 				6B7B1A9420B4D2AB00260731 /* Media.h in Headers */,
 				6B22425E21E80647000ACDA1 /* ACOParseContext.h in Headers */,
@@ -2532,7 +2534,7 @@
 				7773C2DB2CA3FF8600097C06 /* ACRCarouselPageView.mm in Sources */,
 				F4C1F5DA1F218ABC0018CB78 /* ACRInputTimeRenderer.mm in Sources */,
 				463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */,
-				906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridgeStub.swift in Sources */,
+				906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardBridgeCocoaPods.swift in Sources */,
 				6BFCA14D265452E100195CA7 /* ACRTableRenderer.mm in Sources */,
 				F4D402121F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.mm in Sources */,
 				6B22426E2203BE98000ACDA1 /* UnknownAction.cpp in Sources */,

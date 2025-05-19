@@ -14,7 +14,11 @@
 #import "ACRParseWarningPrivate.h"
 #import "UtiliOS.h"
 
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
 #import "SwiftAdaptiveCardObjcExports.h"
+#endif
 
 using namespace AdaptiveCards;
 
