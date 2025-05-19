@@ -12,9 +12,9 @@
 
 @interface SwiftAdaptiveCardObjcBridge : NSObject
 
-+ (NSMutableArray *)getWarningsFromParseResult:(id)parseResult useSwift:(BOOL)useSwift;
++ (NSMutableArray *_Nullable)getWarningsFromParseResult:(id _Nullable )parseResult useSwift:(BOOL)useSwift;
 
 + (BOOL)isSwiftParserEnabled;
 + (void)setSwiftParserEnabled:(BOOL)enabled;
-+ (SwiftAdaptiveCardParseResult * _Nullable)parseWithPayload:(NSString *)payload;
++ (SwiftAdaptiveCardParseResult * _Nullable)parseWithPayload:(NSString *_Nonnull)payload;
 @end

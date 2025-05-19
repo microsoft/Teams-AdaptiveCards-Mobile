@@ -20,7 +20,7 @@ using namespace AdaptiveCards;
 
 @implementation SwiftAdaptiveCardObjcBridge
 
-+ (NSMutableArray *)getWarningsFromParseResult:(id)parseResult useSwift:(BOOL)useSwift {
++ (NSMutableArray * _Nullable)getWarningsFromParseResult:(id _Nullable)parseResult useSwift:(BOOL)useSwift {
     NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
     if (useSwift) {
         // Swift implementation
@@ -54,7 +54,7 @@ using namespace AdaptiveCards;
     [SwiftAdaptiveCardParser setSwiftParserEnabled:enabled];
 }
 
-+ (SwiftAdaptiveCardParseResult *)parseWithPayload:(NSString *)payload {
++ (SwiftAdaptiveCardParseResult * _Nullable)parseWithPayload:(NSString *_Nonnull)payload {
     return [SwiftAdaptiveCardParser parseWithPayload:payload];
 }
 
