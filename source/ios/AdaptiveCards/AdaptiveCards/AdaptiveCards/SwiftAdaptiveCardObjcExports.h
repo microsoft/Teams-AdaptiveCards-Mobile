@@ -1,9 +1,10 @@
 #import <Foundation/Foundation.h>
 
 #ifdef SWIFT_PACKAGE
-@class SwiftAdaptiveCardParseResult;
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class SwiftAdaptiveCardParseResult;
 
 @interface SwiftAdaptiveCardParser : NSObject
 
@@ -18,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSArray *warnings;
 
 @end
-#endif
 
 NS_ASSUME_NONNULL_END
+
+#endif // SWIFT_PACKAGE
