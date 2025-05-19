@@ -49,7 +49,7 @@ Pod::Spec.new do |spec|
   end
 
   spec.subspec 'Swift' do |sb|
-    sb.source_files = 'source/shared/swift/SwiftAdaptiveCards/**/*.{swift,h}'
+    sb.source_files = 'source/shared/swift/SwiftAdaptiveCards/Sources/**/*.{swift,h}'
   end
 
   spec.subspec 'UIProviders' do | sspec |
