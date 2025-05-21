@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name             = 'AdaptiveCards'
 
-  spec.version          = '2.10.0'
+  spec.version          = '2.10.1'
 
   spec.license          = { :type => 'Adaptive Cards Binary EULA', :file => 'source/EULA-Non-Windows.txt' } 
 
@@ -11,12 +11,13 @@ Pod::Spec.new do |spec|
 
   spec.summary          = 'Adaptive Cards are a new way for developers to exchange card content in a common and consistent way'
   
-  spec.source       = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.10.0' }
+  spec.source       = { :git => 'https://github.com/microsoft/AdaptiveCards-Mobile.git', :tag => 'iOS/adaptivecards-ios@2.10.1' }
 
   spec.default_subspecs = 'AdaptiveCardsCore', 'AdaptiveCardsPrivate', 'ObjectModel', 'UIProviders'
 
   spec.subspec 'AdaptiveCardsCore' do | sspec |
     sspec.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/*.{h,m,mm}'
+    sspec.resource_bundles = {'AdaptiveCards' => ['source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/Resources/**/*']}
     sspec.dependency 'AdaptiveCards/AdaptiveCardsPrivate'
     sspec.dependency 'AdaptiveCards/ObjectModel'
     sspec.dependency 'SVGKit', '>= 3.0.0'
