@@ -278,7 +278,8 @@ enum class AdaptiveCardSchemaKey
     Content,
     DisplayArrow,
     MaxPopoverWidth,
-    Position
+    Position,
+    Popover
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);

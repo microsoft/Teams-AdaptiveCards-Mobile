@@ -276,7 +276,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Content, "content"},
             {AdaptiveCardSchemaKey::DisplayArrow, "displayArrow"},
             {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
-            {AdaptiveCardSchemaKey::Position, "position"}});
+            {AdaptiveCardSchemaKey::Position, "position"},
+            {AdaptiveCardSchemaKey::Popover, "popover"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
