@@ -5,6 +5,7 @@ package io.adaptivecards.renderer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -350,6 +351,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             View view = inflater.inflate(R.layout.popover_bottom_sheet_layout, null);
             bottomSheetDialog.setContentView(view);
             final LinearLayout parentLayout = view.findViewById(R.id.popover_parentlayout);
+            parentLayout.setBackgroundColor(Color.parseColor(m_hostConfig.GetActions().getPopover().getBackgroundColor()));
             renderPopoverContent(action, parentLayout);
             bottomSheetDialog.show();
         }
