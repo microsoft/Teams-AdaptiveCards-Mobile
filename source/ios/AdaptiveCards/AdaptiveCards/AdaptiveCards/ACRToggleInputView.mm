@@ -43,14 +43,17 @@
     title.numberOfLines = 0;
     title.lineBreakMode = NSLineBreakByWordWrapping;
     title.translatesAutoresizingMaskIntoConstraints = NO;
+    [title setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    [title setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [contentview addArrangedSubview:title];
 
     // Initialize toggle switch
     UISwitch *toggle = [[UISwitch alloc] init];
     toggle.translatesAutoresizingMaskIntoConstraints = NO;
+    [toggle setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [toggle setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     [contentview addArrangedSubview:toggle];
 
-    [title setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     toggle.tintColor = self.switchOffStateColor;
     toggle.backgroundColor = self.switchOffStateColor;
     toggle.layer.cornerRadius = 16.0f;
@@ -65,17 +68,11 @@
 
     // Set constraints for contentView
     [NSLayoutConstraint activateConstraints:@[
-        [contentview.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor],
-        [contentview.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
-        [contentview.centerYAnchor constraintEqualToAnchor:self.layoutMarginsGuide.centerYAnchor],
+        [contentview.leadingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor],
+        [contentview.trailingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.trailingAnchor],
+        [contentview.centerYAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.centerYAnchor],
         [contentview.heightAnchor constraintEqualToAnchor:self.heightAnchor],
     ]];
-
-    // Configure margins
-    NSDirectionalEdgeInsets insets = self.directionalLayoutMargins;
-    insets.leading = 0.0f;
-    insets.trailing = 2.0f;
-    self.directionalLayoutMargins = insets;
 }
 
 - (CGSize)intrinsicContentSize
