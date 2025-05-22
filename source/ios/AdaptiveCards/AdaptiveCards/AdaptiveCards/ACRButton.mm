@@ -247,11 +247,7 @@
     button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     button.titleLabel.adjustsFontForContentSizeCategory = YES;
     [button.titleLabel setFont:[UIFont systemFontOfSize:15.0]];
-    if (button.titleLabel.font) {
-        button.titleLabel.font = [UIFontMetrics.defaultMetrics scaledFontForFont:button.titleLabel.font];
-    } else {
-        button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    }
+    button.titleLabel.font = [UIFontMetrics.defaultMetrics scaledFontForFont:button.titleLabel.font];
     button.isAccessibilityElement = YES;
     button.accessibilityLabel = title;
     button.enabled = [acoAction isEnabled];
