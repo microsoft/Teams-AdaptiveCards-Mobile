@@ -5,6 +5,8 @@ package io.adaptivecards.renderer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -14,10 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.adaptivecards.R;
 import io.adaptivecards.objectmodel.ActionMode;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AssociatedInputs;
@@ -35,6 +40,7 @@ import io.adaptivecards.objectmodel.ToggleVisibilityTarget;
 import io.adaptivecards.objectmodel.ToggleVisibilityTargetVector;
 import io.adaptivecards.renderer.action.ActionElementUtils;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
 public abstract class BaseActionElementRenderer implements IBaseActionElementRenderer
 {
@@ -139,6 +145,9 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             // comment added to avoid the warning
             this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
             m_isInlineShowCardAction = (baseActionElement.GetElementType() == ActionType.ShowCard) && (hostConfig.GetActions().getShowCard().getActionMode() == ActionMode.Inline);
+            m_fragmentManager = fragmentManager;
+            m_renderArgs = renderArgs;
+            m_hostConfig = hostConfig;
 
             // As SelectAction doesn't support ShowCard actions, then this line won't be executed
             if (m_isInlineShowCardAction)
@@ -335,11 +344,41 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
-        private void handlePopoverAction(@NonNull PopoverAction action) {
-            BaseCardElement content = action.GetContent();
-            boolean displayArrow = action.GetDisplayArrow();
-            String maxPopoverWidth = action.GetMaxPopoverWidth();
-            LabelPosition position = action.GetPosition();
+        private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
+            Context context = v.getContext();
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.PopoverDailog);
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View view = inflater.inflate(R.layout.popover_bottom_sheet_layout, null);
+            bottomSheetDialog.setContentView(view);
+            final LinearLayout parentLayout = view.findViewById(R.id.popover_parentlayout);
+            parentLayout.setBackgroundColor(Color.parseColor(m_hostConfig.GetActions().getPopover().getBackgroundColor()));
+            renderPopoverContent(action, parentLayout);
+            bottomSheetDialog.show();
+        }
+
+        protected final void renderPopoverContent(@NonNull PopoverAction action, @NonNull ViewGroup viewGroup) {
+            try {
+                CardRendererRegistration.getInstance().renderElementAndPerformFallback(
+                    m_renderedAdaptiveCard,
+                    viewGroup.getContext(),
+                    m_fragmentManager,
+                    action.GetContent(),
+                    viewGroup,
+                    m_cardActionHandler,
+                    m_hostConfig,
+                    getUpdatedRenderedArgsForPopover(),
+                    CardRendererRegistration.getInstance().getFeatureRegistration());
+            } catch (Exception e) {
+
+            }
+        }
+
+        private RenderArgs getUpdatedRenderedArgsForPopover() {
+            RenderArgs updatedsRenderArgs = new RenderArgs(m_renderArgs);
+            updatedsRenderArgs.addIgnoreAction(ActionType.Popover);
+            updatedsRenderArgs.addIgnoreAction(ActionType.ToggleVisibility);
+            updatedsRenderArgs.addIgnoreAction(ActionType.ShowCard);
+            return updatedsRenderArgs;
         }
 
         private void handleToggleVisibilityAction(View v)
@@ -446,7 +485,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             {
                 handleToggleVisibilityAction(view);
             } else if (m_action.GetElementType() == ActionType.Popover) {
-                handlePopoverAction(Util.castTo(m_action, PopoverAction.class));
+                PopoverAction action = Util.castTo(m_action, PopoverAction.class);
+                handlePopoverAction(action, view);
             }
             else
             {
@@ -478,6 +518,13 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 m_cardActionHandler.onAction(m_action, m_renderedAdaptiveCard);
             }
         }
+
+        @Nullable
+        protected FragmentManager m_fragmentManager;
+        @Nullable
+        protected HostConfig m_hostConfig;
+        @Nullable
+        protected RenderArgs m_renderArgs;
 
         protected BaseActionElement m_action;
         protected RenderedAdaptiveCard m_renderedAdaptiveCard;
