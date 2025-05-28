@@ -29,7 +29,7 @@ public class RenderArgs {
         setColumnHeader(renderArgs.isColumnHeader());
         setHorizontalAlignment(renderArgs.getHorizontalAlignment());
         setAncestorHasSelectAction(renderArgs.getAncestorHasSelectAction());
-        setIgnoreActions(renderArgs.getIgnoreActions());
+        setPopoverId(renderArgs.getPopoverId());
     }
 
     public boolean getAncestorHasFallback()
@@ -136,16 +136,16 @@ public class RenderArgs {
         m_ancestorHasSelectAction = ancestorHasSelectAction;
     }
 
-    public List<ActionType> getIgnoreActions() {
-        return ignoreActions;
+    public int getPopoverId() {
+        return popoverId;
     }
 
-    public void setIgnoreActions(List<ActionType> ignoreActions) {
-        this.ignoreActions = ignoreActions;
+    public void setPopoverId(int popoverId) {
+        this.popoverId = popoverId;
     }
 
-    public void addIgnoreAction(ActionType action) {
-        this.ignoreActions.add(action);
+    public boolean isPopoverContent() {
+        return this.popoverId != -1;
     }
 
     private boolean m_ancestorHasFallback;
@@ -156,5 +156,5 @@ public class RenderArgs {
     private long m_containerCardId;
     private boolean m_isRootLevelActions;
     private boolean m_ancestorHasSelectAction = false;
-    private List<ActionType> ignoreActions = new ArrayList<>();
+    private int popoverId = -1;
 }

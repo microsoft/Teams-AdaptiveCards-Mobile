@@ -180,7 +180,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
         EditText editText = null;
         TextInput textInput = Util.tryCastTo(baseInputElement, TextInput.class);
 
-        if (baseInputElement.GetIsRequired() || hasSpecificValidation)
+        if ((baseInputElement.GetIsRequired() || hasSpecificValidation))
         {
             editText = new ValidatedEditText(context, getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)));
         }

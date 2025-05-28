@@ -366,18 +366,16 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                     viewGroup,
                     m_cardActionHandler,
                     m_hostConfig,
-                    getUpdatedRenderedArgsForPopover(),
+                    getUpdatedRenderedArgsForPopover(viewGroup.getId()),
                     CardRendererRegistration.getInstance().getFeatureRegistration());
             } catch (Exception e) {
 
             }
         }
 
-        private RenderArgs getUpdatedRenderedArgsForPopover() {
+        private RenderArgs getUpdatedRenderedArgsForPopover(int popoverId) {
             RenderArgs updatedsRenderArgs = new RenderArgs(m_renderArgs);
-            updatedsRenderArgs.addIgnoreAction(ActionType.Popover);
-            updatedsRenderArgs.addIgnoreAction(ActionType.ToggleVisibility);
-            updatedsRenderArgs.addIgnoreAction(ActionType.ShowCard);
+            updatedsRenderArgs.setPopoverId(popoverId);
             return updatedsRenderArgs;
         }
 
@@ -466,7 +464,12 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         @Override
         public void onClick(View view)
         {
-            if (areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
+            /*
+                1. menuActions not allowed inside popover
+                2. if menu actions are present inside the action
+                3. if hub is handling the menu actions, else go down
+             */
+            if (!m_renderArgs.isPopoverContent() && areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
                 return;
             }
 

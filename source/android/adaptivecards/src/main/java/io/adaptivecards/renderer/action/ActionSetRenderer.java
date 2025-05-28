@@ -79,15 +79,19 @@ public class ActionSetRenderer extends BaseCardElementRenderer
 
         BaseActionElementVector baseActionElementList = actionSet.GetActions();
 
-        // filter out actions which are not supposed to be rendered
         BaseActionElementVector baseActionElementFilteredList = new BaseActionElementVector();
-        List<ActionType> ignoreActions = renderArgs.getIgnoreActions();
-        for (BaseActionElement actionElement : baseActionElementList)
-        {
-            if (!ignoreActions.contains(actionElement.GetElementType()))
+        // remove actions which are not supposed to be rendered inside popover
+        if (renderArgs.isPopoverContent()) {
+            List<ActionType> ignoreActions = List.of(ActionType.ToggleVisibility, ActionType.Popover, ActionType.ShowCard);
+            for (BaseActionElement actionElement : baseActionElementList)
             {
-                baseActionElementFilteredList.add(actionElement);
+                if (!ignoreActions.contains(actionElement.GetElementType()))
+                {
+                    baseActionElementFilteredList.add(actionElement);
+                }
             }
+        } else {
+            baseActionElementFilteredList = baseActionElementList;
         }
 
         //Split Action Elements and render.
