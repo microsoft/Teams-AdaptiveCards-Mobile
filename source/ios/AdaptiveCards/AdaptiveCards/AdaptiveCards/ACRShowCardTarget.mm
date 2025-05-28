@@ -39,9 +39,7 @@
         _rootView = rootView;
         _adcView = nil;
         _button = button;
-        std::shared_ptr<ShowCardAction> showCardAction = std::make_shared<ShowCardAction>();
-        showCardAction->SetCard(showCardActionElement->GetCard());
-        _actionElement = [[ACOBaseActionElement alloc] initWithBaseActionElement:std::dynamic_pointer_cast<BaseActionElement>(showCardAction)];
+        _actionElement = [[ACOBaseActionElement alloc] initWithBaseActionElement:std::dynamic_pointer_cast<BaseActionElement>(showCardActionElement)];
     }
     return self;
 }
