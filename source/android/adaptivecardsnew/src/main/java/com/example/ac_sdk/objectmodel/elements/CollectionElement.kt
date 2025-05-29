@@ -3,6 +3,7 @@ package com.example.ac_sdk.objectmodel.elements
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.Util
 import com.example.ac_sdk.objectmodel.serializer.WidthSerializer
+import com.example.ac_sdk.objectmodel.utils.PageAnimation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -92,7 +93,57 @@ sealed class CollectionElement {
         val width: String? = null,
         val bleed: Boolean? = null,
         val rtl: Boolean? = null
-    ) : StyledCollectionElement()
+    ) : StyledCollectionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.WIDTH,
+                        AdaptiveCardSchemaKey.BLEED,
+                        AdaptiveCardSchemaKey.RTL
+                    )
+                )
+            }
+        }
+    }
+
+    @Serializable
+    @SerialName("CarouselPage")
+    data class CarouselPage(
+        val items: List<BaseCardElement> = emptyList(),
+        val layouts: List<Layout> = emptyList(),
+        val rtl: Boolean? = null
+    ) : StyledCollectionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.LAYOUTS,
+                        AdaptiveCardSchemaKey.RTL
+                    )
+                )
+            }
+        }
+    }
+
+    @Serializable
+    @SerialName("Carousel")
+    data class Carousel(
+        val pages: List<CarouselPage> = emptyList(),
+        val pageAnimation: PageAnimation = PageAnimation.SLIDE
+    ) : StyledCollectionElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.PAGES,
+                        AdaptiveCardSchemaKey.PAGE_ANIMATION
+                    )
+                )
+            }
+        }
+    }
+
 }
 
 

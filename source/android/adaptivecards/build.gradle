@@ -192,6 +192,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:' + androidxKotlinCoreVersion
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
     implementation "com.caverock:androidsvg-aar:$androidsvg"
+    implementation project(':adaptivecardsnew')
 
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:${androidxViewPager2Version}"

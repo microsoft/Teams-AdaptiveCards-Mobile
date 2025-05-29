@@ -476,3 +476,13 @@ enum class LayoutContainerType {
     @SerialName("AreaGrid")
     AREAGRID
 }
+
+@Serializable
+enum class PageAnimation {
+    @SerialName("Slide")
+    SLIDE,
+    @SerialName("CrossFade")
+    CROSS_FADE,
+    @SerialName("None")
+    NONE
+}

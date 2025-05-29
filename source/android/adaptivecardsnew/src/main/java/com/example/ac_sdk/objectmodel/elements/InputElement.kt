@@ -151,9 +151,9 @@ sealed class InputElement {
     @Serializable
     @SerialName("Input.Rating")
     data class RatingInput(
-        val horizontalAlignment: HorizontalAlignment?,
-        val value: Double,
-        val max: Double
+        val horizontalAlignment: HorizontalAlignment? = null,
+        val value: Double = 0.0,
+        val max: Double = 0.0
     ) : BaseInputElement() {
 
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {

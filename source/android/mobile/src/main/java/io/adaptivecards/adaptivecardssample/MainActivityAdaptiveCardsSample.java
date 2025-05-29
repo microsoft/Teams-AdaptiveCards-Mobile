@@ -386,8 +386,6 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             }
 
             ParseContext context = createParseContextForCustomElements();
-            long start = System.currentTimeMillis();
-            //ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
             ParseResult parseResult = AdaptiveCardNativeParser.INSTANCE.deserializeFromString(
             jsonText,
                 AdaptiveCardRenderer.VERSION,
