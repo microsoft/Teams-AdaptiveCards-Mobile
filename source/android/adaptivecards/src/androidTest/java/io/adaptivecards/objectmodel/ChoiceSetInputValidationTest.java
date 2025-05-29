@@ -122,7 +122,7 @@ public class ChoiceSetInputValidationTest
         checkBox.setText("sample title");
         checkBoxes.add(checkBox);
 
-        CheckBoxSetInputHandler choiceSetInputHandler = new CheckBoxSetInputHandler(choiceSetInput, checkBoxes, null, null);
+        CheckBoxSetInputHandler choiceSetInputHandler = new CheckBoxSetInputHandler(choiceSetInput, checkBoxes, null, TestUtil.createMockRenderArgs(-1));
         choiceSetInputHandler.setView(new CheckBox(getContext()));
         return choiceSetInputHandler;
     }
@@ -471,7 +471,7 @@ public class ChoiceSetInputValidationTest
         checkBox.setText("sample title");
         checkBoxes.add(checkBox);
 
-        CheckBoxSetInputHandler choiceSetInputHandler = new CheckBoxSetInputHandler(choiceSetInput, checkBoxes, null, null);
+        CheckBoxSetInputHandler choiceSetInputHandler = new CheckBoxSetInputHandler(choiceSetInput, checkBoxes, null, TestUtil.createMockRenderArgs(-1));
         choiceSetInputHandler.setView(new CheckBox(getContext()));
 
         // Validate that empty input is always invalid
