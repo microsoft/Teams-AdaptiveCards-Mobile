@@ -41,6 +41,20 @@ class AdaptiveCardParser {
             }
         }
 
+        fun deserializeFromString(
+            jsonText: String,
+            rendererVersion: String,
+            context: ParseContext,
+            optimizeParsing: Boolean
+        ): ParseResult {
+            val json = Json.parseToJsonElement(jsonText)
+            val result =  deserialize(json.jsonObject, rendererVersion, context).also {
+                val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
+                Log.d("checkPoint", adaptiveCardJson)
+            }
+            return result
+        }
+
         fun deserializeFromFile(jsonFile: String, rendererVersion: String): ParseResult {
             val context = ParseContext()
             return deserializeFromFile(jsonFile, rendererVersion, context)
@@ -67,7 +81,6 @@ class AdaptiveCardParser {
             throwIfNotJsonObject(jsonObject)
 
             val enforceVersion = rendererVersion.isNotEmpty()
-//
 
 
             val json = Json {
@@ -135,8 +148,8 @@ class AdaptiveCardParser {
             val fallbackBaseElement = adaptiveCard.fallback
 
             if (Util.meetsRootRequirements(requiresSet)) {
-                adaptiveCard.additionalProperties =
-                    Util.handleUnknownProperties(jsonObject, adaptiveCard.knownProperties)
+//                adaptiveCard.additionalProperties =
+//                    Util.handleUnknownProperties(jsonObject, adaptiveCard.knownProperties)
                 return ParseResult(adaptiveCard, context.warnings)
             } else if (fallbackBaseElement == null) {
                 val fallbackText = "We're sorry, this card couldn't be displayed"

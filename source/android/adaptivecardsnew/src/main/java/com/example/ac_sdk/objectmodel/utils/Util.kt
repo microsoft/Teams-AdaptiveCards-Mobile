@@ -90,8 +90,6 @@ object Util {
         if (shouldParseForExplicitDimension(sizeString)) {
             val unit = "px"
             validateUserInputForDimensionWithUnit(unit, sizeString, parsedSize, warnings)
-        } else if (sizeString.all { it.isDigit() }) {
-            sizeString.toInt().also { parsedSize.add(it) }
         }
         return if (parsedSize.isEmpty()) 0 else parsedSize[0]
     }

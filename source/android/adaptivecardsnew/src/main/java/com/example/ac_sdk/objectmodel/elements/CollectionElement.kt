@@ -54,6 +54,7 @@ sealed class CollectionElement {
     }
 
     @Serializable
+    @SerialName("Column")
     data class Column(
         @Serializable(with = WidthSerializer::class)
         var width: String = "auto",
@@ -65,17 +66,11 @@ sealed class CollectionElement {
 
         init {
             setFlexibleWidth(width)
-            setExplicitPixelWidth(pixelWidth)
         }
         // In Kotlin, you can add helper methods if needed (e.g. a setter that sets pixelWidth based on width)
         private fun setFlexibleWidth(value: String) {
             width = value.lowercase()
             pixelWidth = Util.parseSizeForPixelSize(width, null) ?: 0
-        }
-
-        private fun setExplicitPixelWidth(value: Int) {
-            pixelWidth = value
-            width = "${value}px"
         }
 
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
