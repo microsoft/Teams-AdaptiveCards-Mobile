@@ -35,7 +35,7 @@ public class TimeInputValidationTest
 
     private TimeInputHandler createInputHandler(TimeInput dateInput)
     {
-        TimeInputHandler dateInputHandler = new TimeInputHandler(dateInput, null, null, 0);
+        TimeInputHandler dateInputHandler = new TimeInputHandler(dateInput, null, null, TestUtil.createMockRenderArgs(-1));
         dateInputHandler.setView(new EditText(InstrumentationRegistry.getContext()));
         return dateInputHandler;
     }
@@ -46,7 +46,7 @@ public class TimeInputValidationTest
         {
             public CustomTimeInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
             {
-                super(baseInputElement, new WeakReference<>(fragmentManager), renderedAdaptiveCard, cardId);
+                super(baseInputElement, new WeakReference<>(fragmentManager), renderedAdaptiveCard, TestUtil.createMockRenderArgs(-1));
             }
 
             @Override

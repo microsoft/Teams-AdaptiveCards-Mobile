@@ -33,7 +33,7 @@ public class DateInputValidationTest
 
     private DateInputHandler createInputHandler(DateInput dateInput)
     {
-        DateInputHandler dateInputHandler = new DateInputHandler(dateInput, null, null, 0);
+        DateInputHandler dateInputHandler = new DateInputHandler(dateInput, null, null, TestUtil.createMockRenderArgs(-1));
         dateInputHandler.setView(new EditText(InstrumentationRegistry.getContext()));
         return dateInputHandler;
     }
@@ -43,7 +43,7 @@ public class DateInputValidationTest
         class CustomDateInputHandler extends DateInputHandler
         {
             public CustomDateInputHandler(BaseInputElement baseInputElement, FragmentManager fragmentManager) {
-                super(baseInputElement, new WeakReference<>(fragmentManager), null, 0);
+                super(baseInputElement, new WeakReference<>(fragmentManager), null, TestUtil.createMockRenderArgs(-1));
             }
 
             @Override

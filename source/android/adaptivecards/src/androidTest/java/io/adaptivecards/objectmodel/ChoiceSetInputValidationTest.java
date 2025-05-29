@@ -66,7 +66,7 @@ public class ChoiceSetInputValidationTest
 
     private ComboBoxInputHandler createComboBoxInputHandler(ChoiceSetInput choiceSetInput)
     {
-        ComboBoxInputHandler choiceSetInputHandler = new ComboBoxInputHandler(choiceSetInput, null, 0);
+        ComboBoxInputHandler choiceSetInputHandler = new ComboBoxInputHandler(choiceSetInput, null, TestUtil.createMockRenderArgs(-1));
         Spinner spinner = new Spinner(getContext());
         spinner.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, new String[]{"sample title", ""}));
         spinner.setSelection(1);
@@ -76,14 +76,14 @@ public class ChoiceSetInputValidationTest
 
     private AutoCompleteTextViewHandler createAutoCompleteTextViewInputHandler(ChoiceSetInput choiceSetInput)
     {
-        final AutoCompleteTextViewHandler choiceSetInputHandler = new AutoCompleteTextViewHandler(choiceSetInput, null, 0);
+        final AutoCompleteTextViewHandler choiceSetInputHandler = new AutoCompleteTextViewHandler(choiceSetInput, null, TestUtil.createMockRenderArgs(-1));
         choiceSetInputHandler.setView(createAutoCompleteTextView());
         return choiceSetInputHandler;
     }
 
     private AutoCompleteTextViewHandler createAutoCompleteTextViewInputHandler(ChoiceSetInput choiceSetInput, AutoCompleteTextView autoCompleteTextView)
     {
-        final AutoCompleteTextViewHandler choiceSetInputHandler = new AutoCompleteTextViewHandler(choiceSetInput, null, 0);
+        final AutoCompleteTextViewHandler choiceSetInputHandler = new AutoCompleteTextViewHandler(choiceSetInput, null, TestUtil.createMockRenderArgs(-1));
         choiceSetInputHandler.setView(autoCompleteTextView);
         return choiceSetInputHandler;
     }
@@ -104,7 +104,7 @@ public class ChoiceSetInputValidationTest
 
     private RadioGroupInputHandler createRadioGroupInputHandler(ChoiceSetInput choiceSetInput)
     {
-        RadioGroupInputHandler choiceSetInputHandler = new RadioGroupInputHandler(choiceSetInput, null, 0);
+        RadioGroupInputHandler choiceSetInputHandler = new RadioGroupInputHandler(choiceSetInput, null, TestUtil.createMockRenderArgs(-1));
 
         RadioGroup radioGroup = new RadioGroup(getContext());
         RadioButton radioButton = new RadioButton(getContext());
