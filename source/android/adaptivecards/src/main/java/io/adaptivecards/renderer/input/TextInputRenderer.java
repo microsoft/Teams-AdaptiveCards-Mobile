@@ -346,7 +346,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
 
         TextInput textInput = Util.castTo(baseCardElement, TextInput.class);
 
-        TextInputHandler textInputHandler = new TextInputHandler(textInput, renderedCard, renderArgs.getContainerCardId());
+        TextInputHandler textInputHandler = new TextInputHandler(textInput, renderedCard, renderArgs);
         TagContent tagContent = new TagContent(textInput, textInputHandler);
         final EditText editText = renderInternal(
                 renderedCard,

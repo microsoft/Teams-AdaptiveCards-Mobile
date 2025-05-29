@@ -41,7 +41,7 @@ public class InputUtil
 
         paragraph = RichTextBlockRenderer.setColor(paragraph, 0, text.length(), inputLabelConfig.getColor(), inputLabelConfig.getIsSubtle(), hostConfig, renderArgs);
 
-        if (isRequired)
+        if (!renderArgs.isPopoverContent() && isRequired)
         {
             int spanStart = text.length();
             String requiredLabelSuffix = inputLabelConfig.getSuffix();

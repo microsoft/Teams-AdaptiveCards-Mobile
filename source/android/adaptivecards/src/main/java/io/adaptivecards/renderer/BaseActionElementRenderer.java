@@ -349,14 +349,15 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.PopoverDailog);
             LayoutInflater inflater = LayoutInflater.from(context);
             View view = inflater.inflate(R.layout.popover_bottom_sheet_layout, null);
+            int dailogContentViewId = (int) Util.getViewId(view);
             bottomSheetDialog.setContentView(view);
             final LinearLayout parentLayout = view.findViewById(R.id.popover_parentlayout);
             parentLayout.setBackgroundColor(Color.parseColor(m_hostConfig.GetActions().getPopover().getBackgroundColor()));
-            renderPopoverContent(action, parentLayout);
+            renderPopoverContent(action, parentLayout, dailogContentViewId);
             bottomSheetDialog.show();
         }
 
-        protected final void renderPopoverContent(@NonNull PopoverAction action, @NonNull ViewGroup viewGroup) {
+        protected final void renderPopoverContent(@NonNull PopoverAction action, @NonNull ViewGroup viewGroup, int parentViewId) {
             try {
                 CardRendererRegistration.getInstance().renderElementAndPerformFallback(
                     m_renderedAdaptiveCard,
@@ -366,7 +367,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                     viewGroup,
                     m_cardActionHandler,
                     m_hostConfig,
-                    getUpdatedRenderedArgsForPopover(viewGroup.getId()),
+                    getUpdatedRenderedArgsForPopover(parentViewId),
                     CardRendererRegistration.getInstance().getFeatureRegistration());
             } catch (Exception e) {
 
@@ -512,7 +513,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                     {
                         // Custom action with Submit type will continue to gather inputs
                     }
-                    if (gatherInputs && !m_renderedAdaptiveCard.areInputsValid(Util.getViewId(view)))
+                    if (gatherInputs && !m_renderedAdaptiveCard.areInputsValid(Util.getViewId(view), m_renderArgs))
                     {
                         return;
                     }
