@@ -22,6 +22,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.lifecycle.LifecycleCoroutineScope;
+import androidx.lifecycle.LifecycleOwnerKt;
+
 import android.widget.TabHost;
 import android.view.View;
 import android.view.Menu;
@@ -32,6 +35,7 @@ import com.example.ac_sdk.AdaptiveCardParser;
 
 import io.adaptivecards.adaptivecardssample.CustomObjects.FeatureFlagResolver;
 import io.adaptivecards.objectmodel.*;
+import io.adaptivecards.renderer.AdaptiveCardNativeParser;
 import io.adaptivecards.renderer.AdaptiveCardRenderer;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
@@ -368,13 +372,16 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             }
 
             ParseContext context = createParseContextForCustomElements();
-            ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
-            com.example.ac_sdk.objectmodel.AdaptiveCard adaptiveCard = AdaptiveCardParser.Companion.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, new
-                com.example.ac_sdk.objectmodel.parser.ParseContext());
-            for (int i=0; i<adaptiveCard.getBody().size(); i++) {
+            long start = System.currentTimeMillis();
+            //ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
+            ParseResult parseResult = AdaptiveCardNativeParser.INSTANCE.deserializeFromString(
+            jsonText,
+                AdaptiveCardRenderer.VERSION,
+            true,
+            LifecycleOwnerKt.getLifecycleScope(this)
+        );
 
-                Log.d("checkPoint", adaptiveCard.getBody().get(i).serialize());
-            }
+
             LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
             layout.removeAllViews();
 

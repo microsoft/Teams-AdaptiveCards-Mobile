@@ -17,7 +17,6 @@ object AdaptiveCardNativeParser {
     fun deserializeFromString(
         stringifiedAdaptiveCard: String,
         rendererVersion: String,
-        context: ParseContext,
         optimizeParsing: Boolean,
         coroutineScope: CoroutineScope?
     ): ParseResult {
@@ -31,7 +30,7 @@ object AdaptiveCardNativeParser {
                     stringifiedAdaptiveCard,
                     legacyParseResult,
                     rendererVersion,
-                    context)
+                    ParseContext())
             }
         }
 
