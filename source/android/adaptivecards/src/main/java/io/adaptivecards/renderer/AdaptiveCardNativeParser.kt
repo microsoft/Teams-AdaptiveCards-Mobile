@@ -1,5 +1,6 @@
 package io.adaptivecards.renderer
 
+import android.util.Log
 import com.example.ac_sdk.AdaptiveCardParser
 import com.example.ac_sdk.objectmodel.parser.ParseContext
 import io.adaptivecards.objectmodel.AdaptiveCard
@@ -50,6 +51,8 @@ object AdaptiveCardNativeParser {
             rendererVersion,
             context
         )
+        val r = nativeParseResult.adaptiveCard.serialize()
+        Log.d("AdaptiveCardNativeParser", "nativeParseResult: $r")
 
         if (nativeParseResult.toString() != legacyParseResult.toString()) {
             val nativeJson = JSONObject(nativeParseResult.adaptiveCard.serialize())

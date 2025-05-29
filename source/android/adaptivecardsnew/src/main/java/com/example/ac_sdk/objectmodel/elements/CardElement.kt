@@ -127,13 +127,13 @@ sealed class CardElement {
     }
 
     @Serializable
-    @SerialName("icon")
+    @SerialName("Icon")
     data class Icon(
-        val foregroundColor: ForegroundColor,
-        val iconStyle: IconStyle,
-        val iconSize: IconSize,
+        val foregroundColor: ForegroundColor? = null,
+        val iconStyle: IconStyle = IconStyle.REGULAR,
+        val iconSize: IconSize = IconSize.STANDARD,
         val name: String,
-        val selectAction: BaseActionElement?
+        val selectAction: BaseActionElement? = null
     ) : BaseCardElement() {
 
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
