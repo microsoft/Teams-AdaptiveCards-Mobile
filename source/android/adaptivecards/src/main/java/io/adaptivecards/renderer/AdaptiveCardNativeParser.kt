@@ -1,6 +1,5 @@
 package io.adaptivecards.renderer
 
-import android.util.Log
 import com.example.ac_sdk.AdaptiveCardParser
 import com.example.ac_sdk.objectmodel.parser.ParseContext
 import io.adaptivecards.objectmodel.AdaptiveCard
@@ -22,7 +21,8 @@ object AdaptiveCardNativeParser {
     ): ParseResult {
         val legacyParseResult = AdaptiveCard.DeserializeFromString(
             stringifiedAdaptiveCard,
-            AdaptiveCardRenderer.VERSION);
+            AdaptiveCardRenderer.VERSION
+        );
 
         if (optimizeParsing) {
             coroutineScope?.launch {
@@ -30,7 +30,8 @@ object AdaptiveCardNativeParser {
                     stringifiedAdaptiveCard,
                     legacyParseResult,
                     rendererVersion,
-                    ParseContext())
+                    ParseContext()
+                )
             }
         }
 
@@ -58,25 +59,29 @@ object AdaptiveCardNativeParser {
 
     }
 
-    fun compareJsonObjects(json1: JSONObject, json2: JSONObject, path: String = ""): List<String> {
+    private fun compareJsonObjects(
+        json1: JSONObject,
+        json2: JSONObject,
+        path: String = ""
+    ): List<String> {
         val diffs = mutableListOf<String>()
         val keys = (json1.keys().asSequence().toSet() + json2.keys().asSequence().toSet())
         for (key in keys) {
             val newPath = if (path.isEmpty()) key else "$path.$key"
             if (!json1.has(key)) {
                 diffs.add("Key missing in json1: $newPath")
-                Log.d("compareJsonObjects", "Key missing in native: $newPath, container - $path")
             } else if (!json2.has(key)) {
                 diffs.add("Key missing in json2: $newPath")
-                Log.d("compareJsonObjects", "Key missing in legacy: $newPath, container - $path")
             } else {
                 val value1 = json1.get(key)
                 val value2 = json2.get(key)
                 when {
                     value1 is JSONObject && value2 is JSONObject ->
                         diffs.addAll(compareJsonObjects(value1, value2, newPath))
+
                     value1 is JSONArray && value2 is JSONArray ->
                         diffs.addAll(compareJsonArrays(value1, value2, newPath))
+
                     value1 != value2 ->
                         diffs.add("Value mismatch at $newPath: '$value1' vs '$value2'")
                 }
@@ -85,25 +90,29 @@ object AdaptiveCardNativeParser {
         return diffs
     }
 
-    fun compareJsonArrays(array1: JSONArray, array2: JSONArray, path: String): List<String> {
+    private fun compareJsonArrays(
+        array1: JSONArray,
+        array2: JSONArray,
+        path: String
+    ): List<String> {
         val diffs = mutableListOf<String>()
         val maxLength = maxOf(array1.length(), array2.length())
         for (i in 0 until maxLength) {
             val newPath = "$path[$i]"
             if (i >= array1.length()) {
                 diffs.add("Index $i missing in array1 at $newPath")
-                Log.d("compareJsonArrays", "Index $i missing in native at $newPath, container - $path")
             } else if (i >= array2.length()) {
                 diffs.add("Index $i missing in array2 at $newPath")
-                Log.d("compareJsonArrays", "Index $i missing in legacy at $newPath, container - $path")
             } else {
                 val value1 = array1[i]
                 val value2 = array2[i]
                 when {
                     value1 is JSONObject && value2 is JSONObject ->
                         diffs.addAll(compareJsonObjects(value1, value2, newPath))
+
                     value1 is JSONArray && value2 is JSONArray ->
                         diffs.addAll(compareJsonArrays(value1, value2, newPath))
+
                     value1 != value2 ->
                         diffs.add("Value mismatch at $newPath: '$value1' vs '$value2'")
                 }
@@ -111,6 +120,4 @@ object AdaptiveCardNativeParser {
         }
         return diffs
     }
-
-
 }
