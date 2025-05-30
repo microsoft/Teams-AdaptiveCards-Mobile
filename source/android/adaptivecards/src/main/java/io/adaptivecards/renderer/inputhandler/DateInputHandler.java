@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.DateInput;
+import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.readonly.RendererUtil;
@@ -20,9 +21,9 @@ import java.util.Date;
 
 public class DateInputHandler extends TextInputHandler
 {
-    public DateInputHandler(BaseInputElement baseInputElement, WeakReference<FragmentManager> fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
+    public DateInputHandler(BaseInputElement baseInputElement, WeakReference<FragmentManager> fragmentManager, RenderedAdaptiveCard renderedAdaptiveCard, RenderArgs renderArgs)
     {
-        super(baseInputElement, renderedAdaptiveCard, cardId);
+        super(baseInputElement, renderedAdaptiveCard, renderArgs);
         m_fragmentManager = fragmentManager;
         s_simpleDateFormat.setLenient(false);
     }

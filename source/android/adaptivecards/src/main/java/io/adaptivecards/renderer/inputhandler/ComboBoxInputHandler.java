@@ -12,6 +12,7 @@ import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ChoiceInput;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
+import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedSpinnerLayout;
@@ -19,9 +20,9 @@ import io.adaptivecards.renderer.input.customcontrols.ValidatedSpinnerLayout;
 
 public class ComboBoxInputHandler extends BaseInputHandler
 {
-    public ComboBoxInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
+    public ComboBoxInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, RenderArgs renderArgs)
     {
-        super(baseInputElement, renderedAdaptiveCard, cardId);
+        super(baseInputElement, renderedAdaptiveCard, renderArgs);
     }
 
     protected Spinner getSpinner()

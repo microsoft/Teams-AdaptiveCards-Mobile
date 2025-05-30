@@ -45,6 +45,15 @@ public class ActionsConfig {
     return (cPtr == 0) ? null : new ShowCardActionConfig(cPtr, false);
   }
 
+  public void setPopover(PopoverConfig value) {
+    AdaptiveCardObjectModelJNI.ActionsConfig_popover_set(swigCPtr, this, PopoverConfig.getCPtr(value), value);
+  }
+
+  public PopoverConfig getPopover() {
+    long cPtr = AdaptiveCardObjectModelJNI.ActionsConfig_popover_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new PopoverConfig(cPtr, false);
+  }
+
   public void setActionsOrientation(ActionsOrientation value) {
     AdaptiveCardObjectModelJNI.ActionsConfig_actionsOrientation_set(swigCPtr, this, value.swigValue());
   }

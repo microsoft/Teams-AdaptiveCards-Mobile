@@ -166,7 +166,7 @@ public class ActionElementRenderer extends BaseActionElementRenderer
             Util.loadIcon(context, button, iconUrl, svgInfoURL, hostConfig, renderedCard, iconPlacement);
         }
 
-        if (ActionElementUtils.isSplitAction(baseActionElement)) {
+        if (!renderArgs.isPopoverContent() && ActionElementUtils.isSplitAction(baseActionElement)) {
             String splitButtonSvgURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath(SPLIT_BUTTON_ICON_URL));
             Util.loadIcon(context, button, SPLIT_BUTTON_ICON_URL, splitButtonSvgURL, hostConfig, renderedCard, IconPlacement.RightOfTitle);
         }

@@ -10,7 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
 import io.adaptivecards.objectmodel.ActionSet;
+import io.adaptivecards.objectmodel.ActionType;
+import io.adaptivecards.objectmodel.BaseActionElement;
 import io.adaptivecards.objectmodel.BaseActionElementVector;
 import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.ContainerStyle;
@@ -18,7 +22,6 @@ import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.renderer.ActionLayoutRenderer;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
 import io.adaptivecards.renderer.IActionLayoutRenderer;
-import io.adaptivecards.renderer.OverflowActionLayoutRenderer;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.TagContent;
@@ -76,8 +79,23 @@ public class ActionSetRenderer extends BaseCardElementRenderer
 
         BaseActionElementVector baseActionElementList = actionSet.GetActions();
 
+        BaseActionElementVector baseActionElementFilteredList = new BaseActionElementVector();
+        // remove actions which are not supposed to be rendered inside popover
+        if (renderArgs.isPopoverContent()) {
+            List<ActionType> ignoreActions = List.of(ActionType.ToggleVisibility, ActionType.Popover, ActionType.ShowCard);
+            for (BaseActionElement actionElement : baseActionElementList)
+            {
+                if (!ignoreActions.contains(actionElement.GetElementType()))
+                {
+                    baseActionElementFilteredList.add(actionElement);
+                }
+            }
+        } else {
+            baseActionElementFilteredList = baseActionElementList;
+        }
+
         //Split Action Elements and render.
-        Pair<BaseActionElementVector,BaseActionElementVector> actionElementVectorPair = Util.splitActionsByMode(baseActionElementList, hostConfig, renderedCard);
+        Pair<BaseActionElementVector,BaseActionElementVector> actionElementVectorPair = Util.splitActionsByMode(baseActionElementFilteredList, hostConfig, renderedCard);
         BaseActionElementVector primaryElementVector = actionElementVectorPair.first;
         BaseActionElementVector secondaryElementVector = actionElementVectorPair.second;
 

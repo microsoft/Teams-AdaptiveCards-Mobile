@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ChoiceInputVector;
 import io.adaptivecards.objectmodel.ChoiceSetInput;
+import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 
@@ -18,9 +19,9 @@ import java.util.Vector;
 
 public class CheckBoxSetInputHandler extends BaseInputHandler
 {
-    public CheckBoxSetInputHandler(BaseInputElement baseInputElement, List<CheckBox> checkBoxList, RenderedAdaptiveCard renderedAdaptiveCard, long cardId)
+    public CheckBoxSetInputHandler(BaseInputElement baseInputElement, List<CheckBox> checkBoxList, RenderedAdaptiveCard renderedAdaptiveCard, RenderArgs renderArgs)
     {
-        super(baseInputElement, renderedAdaptiveCard, cardId);
+        super(baseInputElement, renderedAdaptiveCard, renderArgs);
         m_checkBoxList = checkBoxList;
     }
 

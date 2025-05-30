@@ -7,6 +7,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -35,6 +38,8 @@ public class RenderedAdaptiveCard {
     private Map<String, String> prevalidatedInputs;
 
     private boolean lastValidationResult = false;
+
+    private BottomSheetDialog popoverDailog;
 
     protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull ACTheme theme) {
         this.warnings = new Vector<>();
@@ -66,16 +71,6 @@ public class RenderedAdaptiveCard {
     public Vector<AdaptiveWarning> getWarnings()
     {
         return warnings;
-    }
-
-    /**
-     * Registers an input handler with the card where it is located.
-     * @param handler Input handler to be registered
-     * @param renderArgs RenderArgs passed as parameter in the render method
-     */
-    public void registerInputHandler(IInputHandler handler, RenderArgs renderArgs)
-    {
-        registerInputHandler(handler, renderArgs.getContainerCardId());
     }
 
     /**
@@ -159,7 +154,7 @@ public class RenderedAdaptiveCard {
         return inputsInCard.get(cardId);
     }
 
-    protected boolean areInputsValid(long actionId)
+    protected boolean areInputsValid(long actionId, RenderArgs clickedButtonRenderArgs)
     {
         boolean allInputsAreValid = true;
         boolean hasSetFocusToElement = false;
@@ -167,11 +162,14 @@ public class RenderedAdaptiveCard {
 
         Vector<IInputHandler> inputsToValidate = getInputsToValidate(actionId);
 
-        for(IInputHandler i : inputsToValidate)
+        // get only those inputs which are supposed to be passed on Action, remove other inputs
+        ArrayList<IInputHandler> filteredInputsToValidate = filterOutInputs(inputsToValidate, clickedButtonRenderArgs);
+
+        for(IInputHandler i : filteredInputsToValidate)
         {
             // This variable is calculated out of the assignment as optimizations may make this code
             // not execute if allInputsAreValid is set to true
-            allInputsAreValid &= i.isValid();
+            allInputsAreValid &= (i.isPopoverContent() || i.isValid());
 
             // We populate the validated inputs only if all inputs are valid, otherwise, just save time
             if (allInputsAreValid)
@@ -193,6 +191,28 @@ public class RenderedAdaptiveCard {
         }
 
         return lastValidationResult = allInputsAreValid;
+    }
+
+    private ArrayList<IInputHandler> filterOutInputs(Vector<IInputHandler> inputsToValidate, RenderArgs clickedButtonRenderArgs) {
+        ArrayList<IInputHandler> filteredInputsToValidate = new ArrayList<>();
+
+        // if button clicked is inside a popover
+        if (clickedButtonRenderArgs.isPopoverContent()) {
+            for (IInputHandler inputHandler : inputsToValidate) {
+                // take input from same popover and inputs from main card
+                if ((inputHandler.getPopoverId() == clickedButtonRenderArgs.getPopoverId()) || !inputHandler.isPopoverContent()) {
+                    filteredInputsToValidate.add(inputHandler);
+                }
+            }
+        } else { // if button clicked is not part of popover and is present on main card
+            for (IInputHandler inputHandler : inputsToValidate) {
+                // take inputs only from main card
+                if (!inputHandler.isPopoverContent()) {
+                    filteredInputsToValidate.add(inputHandler);
+                }
+            }
+        }
+        return filteredInputsToValidate;
     }
 
     public boolean areInputsValid()
@@ -231,5 +251,13 @@ public class RenderedAdaptiveCard {
     {
         prevalidatedInputs.clear();
         lastValidationResult = false;
+    }
+
+    public BottomSheetDialog getPopoverDailog() {
+        return popoverDailog;
+    }
+
+    public void setPopoverDailog(BottomSheetDialog popoverDailog) {
+        this.popoverDailog = popoverDailog;
     }
 }
