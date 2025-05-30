@@ -36,6 +36,22 @@ class ProgressRing : public BaseCardElement {
         }
 
         Json::Value SerializeToJsonValue() const override;
+    
+        LabelPosition GetLabelPosition() {
+            return m_labelPosition;
+        }
+    
+        std::string GetLabel() {
+            return m_label;
+        }
+    
+        ProgressSize GetSize() {
+            return m_size;
+        }
+    
+        HorizontalAlignment GetHorizontalAlignment() {
+            return m_horizontalAlignment;
+        }
 
     private:
         void PopulateKnownPropertiesSet();
