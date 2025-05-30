@@ -345,16 +345,26 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
+            // create popover dailog
             Context context = v.getContext();
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.PopoverDailog);
             LayoutInflater inflater = LayoutInflater.from(context);
             View view = inflater.inflate(R.layout.popover_bottom_sheet_layout, null);
             int dailogContentViewId = (int) Util.getViewId(view);
             bottomSheetDialog.setContentView(view);
+
+            // add background to popover
             final LinearLayout parentLayout = view.findViewById(R.id.popover_parentlayout);
             parentLayout.setBackgroundColor(Color.parseColor(m_hostConfig.GetActions().getPopover().getBackgroundColor()));
+
+            // add content to popover
             renderPopoverContent(action, parentLayout, dailogContentViewId);
+
+            // show dailog
             bottomSheetDialog.show();
+
+            // store dailog object in rendered card to dismiss it later
+            m_renderedAdaptiveCard.setPopoverDailog(bottomSheetDialog);
         }
 
         protected final void renderPopoverContent(@NonNull PopoverAction action, @NonNull ViewGroup viewGroup, int parentViewId) {
@@ -496,6 +506,13 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             {
                 if (m_action.GetElementType() == ActionType.Execute || m_action.GetElementType() == ActionType.Submit || m_renderedAdaptiveCard.isActionSubmitable(view))
                 {
+
+                    // dismiss popover on click of submit and execute
+                    if (m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDailog() != null) {
+                        m_renderedAdaptiveCard.getPopoverDailog().dismiss();
+                        m_renderedAdaptiveCard.setPopoverDailog(null);
+                    }
+
                     // Don't gather inputs or perform validation when AssociatedInputs is None
                     boolean gatherInputs = true;
                     try

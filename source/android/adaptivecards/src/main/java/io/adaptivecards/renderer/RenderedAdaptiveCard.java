@@ -7,6 +7,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +38,8 @@ public class RenderedAdaptiveCard {
     private Map<String, String> prevalidatedInputs;
 
     private boolean lastValidationResult = false;
+
+    private BottomSheetDialog popoverDailog;
 
     protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull ACTheme theme) {
         this.warnings = new Vector<>();
@@ -247,5 +251,13 @@ public class RenderedAdaptiveCard {
     {
         prevalidatedInputs.clear();
         lastValidationResult = false;
+    }
+
+    public BottomSheetDialog getPopoverDailog() {
+        return popoverDailog;
+    }
+
+    public void setPopoverDailog(BottomSheetDialog popoverDailog) {
+        this.popoverDailog = popoverDailog;
     }
 }
