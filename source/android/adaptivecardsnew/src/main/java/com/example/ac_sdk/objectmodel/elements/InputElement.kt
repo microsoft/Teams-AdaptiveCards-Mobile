@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.elements.models.Choice
@@ -147,7 +149,6 @@ sealed class InputElement {
         }
     }
 
-
     @Serializable
     @SerialName("Input.Rating")
     data class RatingInput(
@@ -155,7 +156,6 @@ sealed class InputElement {
         val value: Double = 0.0,
         val max: Double = 0.0
     ) : BaseInputElement() {
-
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
                 addAll(

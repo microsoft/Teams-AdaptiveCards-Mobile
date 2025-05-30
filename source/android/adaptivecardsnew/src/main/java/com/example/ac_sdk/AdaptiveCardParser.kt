@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 package com.example.ac_sdk
 
 import com.example.ac_sdk.objectmodel.AdaptiveCard
@@ -42,7 +44,7 @@ class AdaptiveCardParser {
             return deserializeFromFile(jsonFile, rendererVersion, context)
         }
 
-        fun deserializeFromFile(
+        private fun deserializeFromFile(
             jsonFile: String,
             rendererVersion: String,
             context: ParseContext

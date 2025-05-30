@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-package com.microsoft.adaptivecards.markdown
+package com.example.ac_sdk.objectmodel.markdown
 
 /**
  * Enum class representing different types of delimiters in Markdown

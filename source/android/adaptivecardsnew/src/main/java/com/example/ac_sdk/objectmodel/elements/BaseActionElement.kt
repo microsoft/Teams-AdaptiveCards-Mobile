@@ -1,10 +1,10 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.utils.ActionRole
-import com.example.ac_sdk.objectmodel.utils.ActionType
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.Mode
-import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

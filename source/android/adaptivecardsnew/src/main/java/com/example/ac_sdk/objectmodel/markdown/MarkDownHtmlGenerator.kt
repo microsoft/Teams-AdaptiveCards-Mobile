@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 package com.example.ac_sdk.objectmodel.markdown
 
-import com.microsoft.adaptivecards.markdown.DelimiterType
-
 /**
  * Base class for HTML generation from Markdown elements
  */

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.elements.models.Fact
@@ -182,7 +184,6 @@ sealed class CardElement {
         }
     }
 
-
     @Serializable
     @SerialName("ActionSet")
     data class ActionSet(
@@ -223,7 +224,6 @@ sealed class CardElement {
         val images: List<Image>? = null,
         val imageSize: ImageSize? = null
     ) : BaseCardElement() {
-
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
                 addAll(

@@ -1,5 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 package com.example.ac_sdk.objectmodel.elements
-
 
 import com.example.ac_sdk.objectmodel.elements.models.ValueChangedAction
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
