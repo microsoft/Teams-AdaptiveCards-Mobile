@@ -429,7 +429,28 @@ SeparatorConfig SeparatorConfig::Deserialize(const Json::Value& json, const Sepa
 
     std::string lineColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColor);
     result.lineColor = lineColor == "" ? defaultValue.lineColor : lineColor;
-
+    // Update line color with result value
+    lineColor = result.lineColor;
+    
+    // Assign lineColor as default values if not exists to avoid regression
+    std::string lineColorDefault = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorDefault);
+    result.lineColorDefault = lineColorDefault == "" ? lineColor : lineColorDefault;
+    
+    std::string lineColorEmphasis = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorEmphasis);
+    result.lineColorEmphasis = lineColorEmphasis == "" ? lineColor : lineColorEmphasis;
+    
+    std::string lineColorGood = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorGood);
+    result.lineColorGood = lineColorGood == "" ? lineColor : lineColorGood;
+    
+    std::string lineColorAttention = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAttention);
+    result.lineColorAttention = lineColorAttention == "" ? lineColor : lineColorAttention;
+    
+    std::string lineColorWarning = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorWarning);
+    result.lineColorWarning = lineColorWarning == "" ? lineColor : lineColorWarning;
+    
+    std::string lineColorAccent = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAccent);
+    result.lineColorAccent = lineColorAccent == "" ? lineColor : lineColorAccent;
+    
     return result;
 }
 
@@ -553,7 +574,7 @@ CompoundButtonConfig CompoundButtonConfig::Deserialize(const Json::Value &json, 
     return result;
 }
 
-PageControlConfig PageControlConfig::Deserialize(const Json::Value &json, const PageControlConfig &defaultValue)
+PageControlConfig PageControlConfig::Deserialize(const Json::Value &json, __unused const PageControlConfig &defaultValue)
 {
     PageControlConfig result;
     result.selectedTintColor =  ParseUtil::GetString(json, AdaptiveCardSchemaKey::SelectedTintColor, result.selectedTintColor);
@@ -888,6 +909,25 @@ std::string HostConfig::GetHighlightColor(ContainerStyle style, ForegroundColor 
 {
     auto colorConfig = GetContainerColorConfig(GetContainerStyle(style).foregroundColors, color).highlightColors;
     return GetColorFromColorConfig(colorConfig, isSubtle);
+}
+
+std::string HostConfig::GetSeparatorColor(ContainerStyle style, SeparatorConfig separator) const
+{
+    switch (style) {
+        case ContainerStyle::Accent:
+            return separator.lineColorAccent;
+        case ContainerStyle::Attention:
+            return separator.lineColorAttention;
+        case ContainerStyle::Emphasis:
+            return separator.lineColorEmphasis;
+        case ContainerStyle::Good:
+            return separator.lineColorGood;
+        case ContainerStyle::Warning:
+            return separator.lineColorWarning;
+        case ContainerStyle::Default:
+        default:
+            return separator.lineColorDefault;
+    }
 }
 
 std::string HostConfig::GetBorderColor(ContainerStyle style) const

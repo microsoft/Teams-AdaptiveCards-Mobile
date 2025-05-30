@@ -486,3 +486,39 @@ enum class PageAnimation {
     @SerialName("None")
     NONE
 }
+
+@Serializable
+enum class ProgressBarColor {
+    @SerialName("Accent")
+    ACCENT,
+    @SerialName("Good")
+    GOOD,
+    @SerialName("Warning")
+    WARNING,
+    @SerialName("Attention")
+    ATTENTION,
+}
+
+@Serializable
+enum class LabelPosition {
+    @SerialName("Above")
+    ABOVE,
+    @SerialName("Below")
+    BELOW,
+    @SerialName("Before")
+    BEFORE,
+    @SerialName("After")
+    AFTER
+}
+
+@Serializable
+enum class ProgressSize {
+    @SerialName("Tiny")
+    TINY,
+    @SerialName("Small")
+    SMALL,
+    @SerialName("Medium")
+    MEDIUM,
+    @SerialName("Large")
+    LARGE
+}

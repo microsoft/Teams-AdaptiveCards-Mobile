@@ -29,13 +29,13 @@ using namespace AdaptiveCards;
     self.valueOff = [[NSString alloc] initWithCString:toggleInput->GetValueOff().c_str()
                                              encoding:NSUTF8StringEncoding];
     self.defaultValue = [[NSString alloc] initWithCString:toggleInput->GetValue().c_str()
-                                             encoding:NSUTF8StringEncoding];
+                                                 encoding:NSUTF8StringEncoding];
     self.hasValidationProperties = self.isRequired;
     self._completionHandlers = [[NSMutableArray alloc] init];
     return self;
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError *__autoreleasing *)error
 {
     if (self.isRequired) {
         return _toggleSwitch.on;
@@ -54,17 +54,20 @@ using namespace AdaptiveCards;
     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _toggleSwitch);
 }
 
-- (void)resetInput {
+- (void)resetInput
+{
     [_toggleSwitch setOn:self.defaultValue animated:YES];
 }
 
-- (void)addObserverWithCompletion:(CompletionHandler)completion {
+- (void)addObserverWithCompletion:(CompletionHandler)completion
+{
     [_toggleSwitch addTarget:self action:@selector(onSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self._completionHandlers addObject:completion];
 }
 
-- (void)onSwitchValueChanged:(UISwitch *)sender {
-    for(CompletionHandler completion in self._completionHandlers) {
+- (void)onSwitchValueChanged:(UISwitch *)sender
+{
+    for (CompletionHandler completion in self._completionHandlers) {
         completion();
     }
 }

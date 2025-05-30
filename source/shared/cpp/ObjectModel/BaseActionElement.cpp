@@ -11,7 +11,7 @@ using namespace AdaptiveCards;
 constexpr const char* const BaseActionElement::defaultStyle;
 
 BaseActionElement::BaseActionElement(ActionType type) :
-    m_style(BaseActionElement::defaultStyle), m_type(type), m_mode(Mode::Primary), m_isEnabled(true),
+    m_style(BaseActionElement::defaultStyle), m_isEnabled(true), m_type(type), m_mode(Mode::Primary),
     m_role(type == ActionType::OpenUrl ? ActionRole::Link : ActionRole::Button)
 {
     SetTypeString(ActionTypeToString(type));
@@ -33,6 +33,10 @@ void BaseActionElement::SetTitle(const std::string& value)
     m_title = value;
 }
 
+const std::string& BaseActionElement::GetIconUrl(const ACTheme theme) const {
+    return ThemedUrl::GetThemedUrl(theme, m_themedIconUrls, m_iconUrl);
+}
+
 const std::string& BaseActionElement::GetIconUrl() const
 {
     return m_iconUrl;
@@ -40,8 +44,13 @@ const std::string& BaseActionElement::GetIconUrl() const
 
 std::string BaseActionElement::GetSVGPath() const
 {
+    return GetSVGPath(m_iconUrl);
+}
+
+std::string BaseActionElement::GetSVGPath(const std::string& iconUrl) const
+{
     std::regex regex{R"([,:]+)"}; // split on ':' and ','
-    std::sregex_token_iterator it{m_iconUrl.begin(), m_iconUrl.end(), regex, -1};
+    std::sregex_token_iterator it{iconUrl.begin(), iconUrl.end(), regex, -1};
     std::vector<std::string> config{it, {}};
     std::string iconStyle = IconStyleToString(IconStyle::Regular);
     std::string iconName = "";
@@ -110,6 +119,16 @@ void AdaptiveCards::BaseActionElement::SetIsEnabled(const bool isEnabled)
     m_isEnabled = isEnabled;
 }
 
+bool BaseActionElement::GetIsRtl() const
+{
+    return m_isRtl;
+}
+
+void AdaptiveCards::BaseActionElement::SetIsRtl(const bool isRtl)
+{
+    m_isRtl = isRtl;
+}
+
 ActionType BaseActionElement::GetElementType() const
 {
     return m_type;
@@ -168,6 +187,11 @@ Json::Value BaseActionElement::SerializeToJsonValue() const
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::ActionRole)] = ActionRoleToString(m_role);
     }
 
+    for (const auto& menuActions : m_menuActions)
+    {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::MenuActions)].append(menuActions->SerializeToJsonValue());
+    }
+
     return root;
 }
 
@@ -192,6 +216,11 @@ void BaseActionElement::GetResourceInformation(std::vector<RemoteResourceInforma
         imageResourceInfo.mimeType = "image";
         resourceInfo.push_back(imageResourceInfo);
     }
+}
+
+const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>>& BaseActionElement::GetMenuActions() const
+{
+    return m_menuActions;
 }
 
 void BaseActionElement::ParseJsonObject(AdaptiveCards::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& baseElement)
@@ -223,4 +252,45 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip));
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
     element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
+    element->SetIsRtl(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Rtl, false));
+
+    auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedIconUrls, ThemedUrl::Deserialize, false);
+    element->m_themedIconUrls = std::move(themedUrls);
+
+    if (IsSplitActionSupported(element->GetElementType())) {
+        //Parse Menu Actions
+        auto menuActions = ParseUtil::GetElementCollection<BaseActionElement>(
+                true,
+                context,
+                json,
+                AdaptiveCardSchemaKey::MenuActions,
+                false);
+
+        // Filter the collection to include only allowed items into menuActions
+        std::vector<std::shared_ptr<BaseActionElement>> filteredMenuActions;
+        for (const auto& action : menuActions)
+        {
+            if (IsValidMenuAction(action->GetElementType())) {
+                filteredMenuActions.push_back(action);
+            }
+        }
+        element->m_menuActions = std::move(filteredMenuActions);
+
+        if (!element->m_menuActions.empty()) {
+            // Set the mode, override mode to primary if menuActions are present
+            element->SetMode(Mode::Primary);
+
+            // Avoid nesting of menuActions within menuActions by setting such instances to empty
+            for (const auto& menuAction: element->m_menuActions) {
+                if (!menuAction->m_menuActions.empty()) {
+                    menuAction->m_menuActions.clear();
+                }
+            }
+        }
+    }
+}
+
+bool BaseActionElement::GetIsSplitAction() const
+{
+    return !m_menuActions.empty();
 }

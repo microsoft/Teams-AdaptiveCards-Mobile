@@ -36,7 +36,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
@@ -109,7 +109,7 @@
 
     for (std::shared_ptr<Column> column : columns) {
         if (*firstColumn != column && column->MeetsTargetWidthRequirement(hostWidth)) {
-            separator = [ACRSeparator renderSeparation:column forSuperview:columnSetView withHostConfig:config];
+            separator = [ACRSeparator renderSeparation:column forSuperview:columnSetView withStyle:[ACOHostConfig getPlatformContainerStyle: column->GetStyle()] withHostConfig:config];
         }
 
         [acoColumn setElem:column];

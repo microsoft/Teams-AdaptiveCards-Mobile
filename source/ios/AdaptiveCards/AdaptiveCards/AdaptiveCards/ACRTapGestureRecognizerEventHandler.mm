@@ -12,7 +12,7 @@
 // this method does the followings
 // 1. it provides users with cue that select action is about to be initiated
 // 2. execute select action by calling its delegate
-- (IBAction)processTapGesture:(UITapGestureRecognizer *)recognizer;
+- (IBAction)processTapGesture:(UITapGestureRecognizer *)recognizer
 {
     // activate it when fingers lifts off
     if (recognizer.state == UIGestureRecognizerStateBegan) {
@@ -28,7 +28,7 @@
                                      blue:0xD4 / 255.0
                                     alpha:0x1];
             }
-            completion:^(UIViewAnimatingPosition finalPosition) {
+            completion:^(__unused UIViewAnimatingPosition finalPosition) {
                 recognizer.view.backgroundColor = backgroundColor;
             }];
         [animation startAnimation];

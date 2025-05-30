@@ -7,6 +7,7 @@
 #include "BaseElement.h"
 #include "ExecuteAction.h"
 #include "OpenUrlAction.h"
+#include "PopoverAction.h"
 #include "ShowCardAction.h"
 #include "SubmitAction.h"
 #include "ToggleVisibilityAction.h"
@@ -40,6 +41,7 @@ ActionParserRegistration::ActionParserRegistration()
     m_knownElements.insert({
         ActionTypeToString(ActionType::Execute),
         ActionTypeToString(ActionType::OpenUrl),
+        ActionTypeToString(ActionType::Popover),
         ActionTypeToString(ActionType::ShowCard),
         ActionTypeToString(ActionType::Submit),
         ActionTypeToString(ActionType::ToggleVisibility),
@@ -49,6 +51,7 @@ ActionParserRegistration::ActionParserRegistration()
     m_cardElementParsers.insert(
         {{ActionTypeToString(ActionType::Execute), std::make_shared<ExecuteActionParser>()},
          {ActionTypeToString(ActionType::OpenUrl), std::make_shared<OpenUrlActionParser>()},
+         {ActionTypeToString(ActionType::Popover), std::make_shared<PopoverActionParser>()},
          {ActionTypeToString(ActionType::ShowCard), std::make_shared<ShowCardActionParser>()},
          {ActionTypeToString(ActionType::Submit), std::make_shared<SubmitActionParser>()},
          {ActionTypeToString(ActionType::ToggleVisibility), std::make_shared<ToggleVisibilityActionParser>()},

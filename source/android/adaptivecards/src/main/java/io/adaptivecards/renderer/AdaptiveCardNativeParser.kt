@@ -18,11 +18,13 @@ object AdaptiveCardNativeParser {
         stringifiedAdaptiveCard: String,
         rendererVersion: String,
         optimizeParsing: Boolean,
+        context: io.adaptivecards.objectmodel.ParseContext,
         coroutineScope: CoroutineScope?
     ): ParseResult {
         val legacyParseResult = AdaptiveCard.DeserializeFromString(
             stringifiedAdaptiveCard,
-            AdaptiveCardRenderer.VERSION
+            AdaptiveCardRenderer.VERSION,
+            context
         );
 
         if (optimizeParsing) {

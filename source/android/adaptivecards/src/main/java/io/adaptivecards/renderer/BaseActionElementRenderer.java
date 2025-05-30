@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
@@ -21,14 +22,18 @@ import io.adaptivecards.objectmodel.ActionMode;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AssociatedInputs;
 import io.adaptivecards.objectmodel.BaseActionElement;
+import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.ExecuteAction;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IsVisible;
+import io.adaptivecards.objectmodel.LabelPosition;
+import io.adaptivecards.objectmodel.PopoverAction;
 import io.adaptivecards.objectmodel.ShowCardAction;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityAction;
 import io.adaptivecards.objectmodel.ToggleVisibilityTarget;
 import io.adaptivecards.objectmodel.ToggleVisibilityTargetVector;
+import io.adaptivecards.renderer.action.ActionElementUtils;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 
 public abstract class BaseActionElementRenderer implements IBaseActionElementRenderer
@@ -51,7 +56,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
 
         public SelectActionOnClickListener(RenderedAdaptiveCard renderedCard, BaseActionElement action, ICardActionHandler cardActionHandler)
         {
-            super(renderedCard, action, cardActionHandler);
+            super(renderedCard, action, cardActionHandler, false);
 
             if (m_action.GetElementType() == ActionType.ShowCard)
             {
@@ -77,6 +82,38 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
     public static class ActionOnClickListener implements View.OnClickListener
     {
 
+        public static ActionOnClickListener newInstance(
+            RenderedAdaptiveCard renderedCard,
+            BaseActionElement baseActionElement,
+            ICardActionHandler cardActionHandler) {
+            return new ActionOnClickListener(renderedCard,  baseActionElement, cardActionHandler, false);
+        }
+
+        public static ActionOnClickListener newInstance(
+            RenderedAdaptiveCard renderedCard,
+            Context context,
+            FragmentManager fragmentManager,
+            ViewGroup viewGroup,
+            BaseActionElement baseActionElement,
+            ICardActionHandler cardActionHandler,
+            HostConfig hostConfig,
+            RenderArgs renderArgs) {
+            return newInstance(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, false);
+        }
+
+        public static ActionOnClickListener newInstance(
+            RenderedAdaptiveCard renderedCard,
+            Context context,
+            FragmentManager fragmentManager,
+            ViewGroup viewGroup,
+            BaseActionElement baseActionElement,
+            ICardActionHandler cardActionHandler,
+            HostConfig hostConfig,
+            RenderArgs renderArgs,
+            boolean isMenuAction) {
+            return new ActionOnClickListener(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, isMenuAction);
+        }
+
         /**
          * Constructs an ActionOnClickListener. Use this constructor if you want to support any type of action
          * @param renderedCard
@@ -86,18 +123,21 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
          * @param baseActionElement
          * @param cardActionHandler
          * @param hostConfig
+         * @param renderArgs
+         * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
          */
-        public ActionOnClickListener(RenderedAdaptiveCard renderedCard,
+        protected ActionOnClickListener(RenderedAdaptiveCard renderedCard,
                                      Context context,
                                      FragmentManager fragmentManager,
                                      ViewGroup viewGroup,
                                      BaseActionElement baseActionElement,
                                      ICardActionHandler cardActionHandler,
                                      HostConfig hostConfig,
-                                     RenderArgs renderArgs)
+                                     RenderArgs renderArgs,
+                                     boolean isMenuAction)
         {
-            this(renderedCard, baseActionElement, cardActionHandler);
-
+            // comment added to avoid the warning
+            this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
             m_isInlineShowCardAction = (baseActionElement.GetElementType() == ActionType.ShowCard) && (hostConfig.GetActions().getShowCard().getActionMode() == ActionMode.Inline);
 
             // As SelectAction doesn't support ShowCard actions, then this line won't be executed
@@ -112,12 +152,18 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
          * @param renderedCard
          * @param baseActionElement
          * @param cardActionHandler
+         * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
          */
-        public ActionOnClickListener(RenderedAdaptiveCard renderedCard, BaseActionElement baseActionElement, ICardActionHandler cardActionHandler)
+        protected ActionOnClickListener(
+            RenderedAdaptiveCard renderedCard,
+            BaseActionElement baseActionElement,
+            ICardActionHandler cardActionHandler,
+            boolean isMenuAction)
         {
             m_action = baseActionElement;
             m_renderedAdaptiveCard = renderedCard;
             m_cardActionHandler = cardActionHandler;
+            m_isMenuAction = isMenuAction;
 
             // In case of the action being a ToggleVisibility action, store the action as ToggleVisibility action so no recasting must be made
             if (m_action.GetElementType() == ActionType.ToggleVisibility)
@@ -289,6 +335,13 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
+        private void handlePopoverAction(@NonNull PopoverAction action) {
+            BaseCardElement content = action.GetContent();
+            boolean displayArrow = action.GetDisplayArrow();
+            String maxPopoverWidth = action.GetMaxPopoverWidth();
+            LabelPosition position = action.GetPosition();
+        }
+
         private void handleToggleVisibilityAction(View v)
         {
             ToggleVisibilityTargetVector toggleVisibilityTargetVector = m_toggleVisibilityAction.GetTargetElements();
@@ -337,9 +390,51 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
+        // Identifies if this action is primary action(not menu action) and contains menu actions in it
+        private boolean areMenuActionsPresent(@NonNull BaseActionElement baseActionElement) {
+            return !m_isMenuAction && ActionElementUtils.isSplitAction(baseActionElement);
+        }
+
+        /***
+         * Handle menu actions scenario for the given action element.
+         * By default this is a no-op. Subclasses can override this method
+         * to define the required behavior.
+         *
+         * @return Boolean - true if scenario is handled, false if not.
+         * Default return type is false.
+         */
+        protected boolean handleMenuActionsScenario(@NonNull View view, @NonNull BaseActionElement baseActionElement) {
+            return false;
+        }
+
+        // Identifies if this action is show card action
+        private boolean isShowCardAction(@NonNull BaseActionElement baseActionElement) {
+            return baseActionElement.GetElementType() == ActionType.ShowCard;
+        }
+
+        /***
+         * Handle show card scenario for the given action element.
+         * By default this is a no-op. Subclasses can override this method
+         * to define the required behavior.
+         *
+         * @return Boolean - true if scenario is handled, false if not.
+         * Default return type is false.
+         */
+        protected boolean handleShowCardScenario(@NonNull View view, @NonNull BaseActionElement baseActionElement) {
+            return false;
+        }
+
         @Override
         public void onClick(View view)
         {
+            if (areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
+                return;
+            }
+
+            if (isShowCardAction(m_action) && handleShowCardScenario(view, m_action)) {
+                return;
+            }
+
             m_renderedAdaptiveCard.clearValidatedInputs();
 
             if (m_isInlineShowCardAction)
@@ -350,6 +445,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             else if (m_action.GetElementType() == ActionType.ToggleVisibility)
             {
                 handleToggleVisibilityAction(view);
+            } else if (m_action.GetElementType() == ActionType.Popover) {
+                handlePopoverAction(Util.castTo(m_action, PopoverAction.class));
             }
             else
             {
@@ -394,5 +491,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         // Information for handling ToggleVisibility actions
         private HashMap<String, View> m_viewDictionary = null;
         private ToggleVisibilityAction m_toggleVisibilityAction = null;
+
+        // Information for handling SplitAction scenario for actions
+        private final boolean m_isMenuAction;
     }
 }

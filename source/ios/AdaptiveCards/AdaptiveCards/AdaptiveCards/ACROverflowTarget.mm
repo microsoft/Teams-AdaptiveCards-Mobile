@@ -39,7 +39,7 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
 
 - (NSString *)iconUrl
 {
-    return [NSString stringWithUTF8String:_action->GetIconUrl().c_str()];
+    return [NSString stringWithUTF8String:_action->GetIconUrl(ACTheme(_rootView.theme)).c_str()];
 }
 
 - (NSObject<ACRSelectActionDelegate> *)target
@@ -62,7 +62,7 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
 
 - (void)loadIconImage:(void (^)(UIImage *))completion
 {
-    auto &iconUrl = _action->GetIconUrl();
+    auto &iconUrl = _action->GetIconUrl(ACTheme(_rootView.theme));
     NSDictionary *imageViewMap = [_rootView getImageMap];
     NSString *key = [NSString stringWithCString:iconUrl.c_str()
                                        encoding:[NSString defaultCStringEncoding]];
@@ -72,8 +72,8 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
         completion(img);
     } else if (key.length) {
         NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)_action.get()];
-        NSString *key = [number stringValue];
-        UIImageView *view = [_rootView getImageView:key];
+        NSString *k = [number stringValue];
+        UIImageView *view = [_rootView getImageView:k];
         if (view.image) {
             completion(view.image);
         } else {
@@ -145,11 +145,11 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
             [_menuItems addObject:menuItem];
             UIAlertAction *menuAction = [UIAlertAction actionWithTitle:title
                                                                  style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction *_Nonnull action) {
+                                                               handler:^(__unused UIAlertAction *_Nonnull alertAction) {
                                                                    [target doSelectAction];
                                                                }];
 
-            auto &iconUrl = action.element->GetIconUrl();
+            auto &iconUrl = action.element->GetIconUrl(ACTheme(_rootView.theme));
             if (!iconUrl.empty()) {
                 [menuItem loadIconImageWithSize:CGSizeMake(40, 40)
                                    onIconLoaded:^(UIImage *image) {

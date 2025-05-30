@@ -12,6 +12,9 @@ import com.example.ac_sdk.objectmodel.utils.IconSize
 import com.example.ac_sdk.objectmodel.utils.IconStyle
 import com.example.ac_sdk.objectmodel.utils.ImageSize
 import com.example.ac_sdk.objectmodel.utils.ImageStyle
+import com.example.ac_sdk.objectmodel.utils.LabelPosition
+import com.example.ac_sdk.objectmodel.utils.ProgressBarColor
+import com.example.ac_sdk.objectmodel.utils.ProgressSize
 import com.example.ac_sdk.objectmodel.utils.TextSize
 import com.example.ac_sdk.objectmodel.utils.TextStyle
 import com.example.ac_sdk.objectmodel.utils.TextWeight
@@ -272,6 +275,51 @@ sealed class CardElement {
                         AdaptiveCardSchemaKey.ICON,
                         AdaptiveCardSchemaKey.SELECT_ACTION,
                         AdaptiveCardSchemaKey.TITLE
+                    )
+                )
+            }
+        }
+    }
+
+    @Serializable
+    @SerialName("ProgressBar")
+    data class ProgressBar(
+        val value: Double = 0.0,
+        val max: Double = 100.0,
+        val color: ProgressBarColor = ProgressBarColor.ACCENT,
+        val horizontalAlignment: HorizontalAlignment? = HorizontalAlignment.LEFT
+    ) : BaseCardElement() {
+
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.COLOR,
+                        AdaptiveCardSchemaKey.HORIZONTAL_ALIGNMENT,
+                        AdaptiveCardSchemaKey.MAX,
+                        AdaptiveCardSchemaKey.VALUE
+                    )
+                )
+            }
+        }
+    }
+
+    @Serializable
+    @SerialName("ProgressRing")
+    data class ProgressRing(
+        val label: String = "",
+        val labelPosition: LabelPosition = LabelPosition.ABOVE,
+        val size: ProgressSize = ProgressSize.MEDIUM,
+        val horizontalAlignment: HorizontalAlignment = HorizontalAlignment.LEFT
+    ) : BaseCardElement() {
+        override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
+            return super.populateKnownPropertiesSet().apply {
+                addAll(
+                    listOf(
+                        AdaptiveCardSchemaKey.HORIZONTAL_ALIGNMENT,
+                        AdaptiveCardSchemaKey.LABEL,
+                        AdaptiveCardSchemaKey.LABEL_POSITION,
+                        AdaptiveCardSchemaKey.SIZE
                     )
                 )
             }

@@ -24,7 +24,7 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
     BOOL _doValidation;
 }
 
-- (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView;
+- (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView
 {
     self = [super init];
     if (self) {

@@ -144,7 +144,7 @@
 - (void)setupConstraints 
 {
     CGFloat gap = _readOnly ? 4 : 12;
-    for (NSInteger i = 0; i < _starImageViews.count; i++)
+    for (NSUInteger i = 0; i < _starImageViews.count; i++)
     {
         UIImageView *starImageView = _starImageViews[i];
         
@@ -212,7 +212,7 @@
     [self updateStarImages];
 }
 
-- (UIImage *)emptyStarImage 
+- (UIImage *)emptyStarImage
 {
     NSString *emptyStarFormat = _readOnly ? @"ic_fluent_star_%ld_filled" : @"ic_fluent_star_%ld_regular";
     NSString *nameOfStar = [[NSString alloc] initWithFormat:emptyStarFormat, (long)([self sizeOfStar].width)];
@@ -220,7 +220,7 @@
     return emptyStarImage;
 }
 
-- (UIImage *)filledStarImage 
+- (UIImage *)filledStarImage
 {
     NSString *nameOfStar = [[NSString alloc] initWithFormat:@"ic_fluent_star_%ld_filled", (long)([self sizeOfStar].width)];
     UIImage *filledStarImage = [UIImage imageNamed:nameOfStar inBundle:[[ACOBundle getInstance] getBundle] compatibleWithTraitCollection:nil];
@@ -238,8 +238,8 @@
 
 - (void)updateStarImages 
 {
-    NSInteger totalFilledStars = (NSInteger)_value;
-    for (NSInteger i = 0; i < _starImageViews.count; i++) 
+    NSUInteger totalFilledStars = (NSUInteger)_value;
+    for (NSUInteger i = 0; i < _starImageViews.count; i++) 
     {
         UIImageView *starImageView = _starImageViews[i];
         if (i < totalFilledStars) 

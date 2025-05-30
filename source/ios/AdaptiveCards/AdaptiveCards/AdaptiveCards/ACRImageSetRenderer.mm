@@ -33,7 +33,7 @@ using namespace AdaptiveCards;
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<ImageSet> imgSetElem = std::dynamic_pointer_cast<ImageSet>(elem);

@@ -31,31 +31,14 @@ const CGFloat minimumRowHeight = 44.0;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         UIImage *iconImage = nil;
-        NSBundle *bundle = [[ACOBundle getInstance] getBundle];
         if ([reuseIdentifier isEqualToString:@"checked-checkbox"]) {
-            if (@available(iOS 13.0, *)) {
-                iconImage = [UIImage systemImageNamed:@"checkmark.square"];
-            } else {
-                iconImage = [UIImage imageNamed:@"checked-checkbox-24.png" inBundle:bundle compatibleWithTraitCollection:nil];
-            }
+            iconImage = [UIImage systemImageNamed:@"checkmark.square"];
         } else if ([reuseIdentifier isEqualToString:@"checked-radiobutton"]) {
-            if (@available(iOS 13.0, *)) {
-                iconImage = [UIImage systemImageNamed:@"record.circle"];
-            } else {
-                iconImage = [UIImage imageNamed:@"checked.png" inBundle:bundle compatibleWithTraitCollection:nil];
-            }
+            iconImage = [UIImage systemImageNamed:@"record.circle"];
         } else if ([reuseIdentifier isEqualToString:@"unchecked-checkbox"]) {
-            if (@available(iOS 13.0, *)) {
-                iconImage = [UIImage systemImageNamed:@"square"];
-            } else {
-                iconImage = [UIImage imageNamed:@"square" inBundle:bundle compatibleWithTraitCollection:nil];
-            }
+            iconImage = [UIImage systemImageNamed:@"square"];
         } else if ([reuseIdentifier isEqualToString:@"unchecked-radiobutton"]) {
-            if (@available(iOS 13.0, *)) {
-                iconImage = [UIImage systemImageNamed:@"circle"];
-            } else {
-                iconImage = [UIImage imageNamed:@"unchecked.png" inBundle:bundle compatibleWithTraitCollection:nil];
-            }
+            iconImage = [UIImage systemImageNamed:@"circle"];
         }
 
         if (iconImage) {
@@ -76,7 +59,7 @@ const CGFloat minimumRowHeight = 44.0;
     if (self.imageView.image) {
         self.imageView.frame = CGRectMake(0, 0, _imageSize.width, _imageSize.height);
         self.imageView.center = CGPointMake(_imageSize.width / 2, self.bounds.size.height / 2);
-        self.textLabel.frame = CGRectMake(_imageSize.width + padding, 0, self.bounds.size.width - _imageSize.width + padding, self.bounds.size.height);
+        self.textLabel.frame = CGRectMake(_imageSize.width + padding, 0, self.bounds.size.width - _imageSize.width - padding, self.bounds.size.height);
     }
 }
 
@@ -96,7 +79,7 @@ const CGFloat minimumRowHeight = 44.0;
     NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
-- (instancetype)initWithInputChoiceSet:(std::shared_ptr<AdaptiveCards::ChoiceSetInput> const &)choiceSet WithHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)hostConfig;
+- (instancetype)initWithInputChoiceSet:(std::shared_ptr<AdaptiveCards::ChoiceSetInput> const &)choiceSet WithHostConfig:(std::shared_ptr<AdaptiveCards::HostConfig> const &)hostConfig
 {
     self = [super init];
     if (self) {
@@ -300,7 +283,7 @@ const CGFloat minimumRowHeight = 44.0;
     }
 }
 
-- (BOOL)validate:(NSError **)error
+- (BOOL)validate:(NSError * __autoreleasing *)error
 {
     if (self.isRequired) {
         if (_isMultiChoicesAllowed) {
@@ -380,7 +363,7 @@ const CGFloat minimumRowHeight = 44.0;
 
 - (float)getNonInputWidth:(UITableViewCell *)cell
 {
-    return padding * 3 + cell.imageView.image.size.width;
+    return padding * 2 + cell.imageView.image.size.width;
 }
 
 @synthesize isRequired;

@@ -117,6 +117,7 @@ enum class AdaptiveCardSchemaKey(val key: String) {
     ITALIC("italic"),
     ITEMS("items"),
     LABEL("label"),
+    LABEL_POSITION("LabelPosition"),
     LANGUAGE("lang"),
     LARGE("large"),
     LEFT("left"),

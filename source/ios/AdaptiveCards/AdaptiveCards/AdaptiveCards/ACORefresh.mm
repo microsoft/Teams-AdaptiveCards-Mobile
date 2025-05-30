@@ -13,7 +13,7 @@
     std::shared_ptr<Refresh> _refreshElement;
 }
 
-- (instancetype)init:(std::shared_ptr<Refresh> const &)refreshElement;
+- (instancetype)init:(std::shared_ptr<Refresh> const &)refreshElement
 {
     self = [super init];
     if (self && refreshElement) {

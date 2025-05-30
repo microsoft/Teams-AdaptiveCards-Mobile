@@ -12,14 +12,14 @@
 using namespace AdaptiveCards;
 
 BaseCardElement::BaseCardElement(CardElementType type, Spacing spacing, bool separator, HeightType height, TargetWidthType targetWidthType) :
-    m_type(type), m_spacing(spacing), m_height(height), m_separator(separator), m_isVisible(true), m_targetWidth(targetWidthType)
+    m_type(type), m_spacing(spacing), m_height(height), m_targetWidth(targetWidthType), m_separator(separator), m_isVisible(true)
 {
     SetTypeString(CardElementTypeToString(type));
     PopulateKnownPropertiesSet();
 }
 
 BaseCardElement::BaseCardElement(CardElementType type) :
-    m_type(type), m_spacing(Spacing::Default), m_height(HeightType::Auto), m_separator(false), m_isVisible(true), m_targetWidth(TargetWidthType::Default)
+    m_type(type), m_spacing(Spacing::Default), m_height(HeightType::Auto), m_targetWidth(TargetWidthType::Default), m_separator(false), m_isVisible(true)
 {
     SetTypeString(CardElementTypeToString(type));
     PopulateKnownPropertiesSet();

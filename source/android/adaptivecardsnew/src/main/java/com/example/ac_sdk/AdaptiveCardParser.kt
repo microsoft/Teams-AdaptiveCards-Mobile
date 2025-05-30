@@ -1,6 +1,5 @@
 package com.example.ac_sdk
 
-import android.util.Log
 import com.example.ac_sdk.objectmodel.AdaptiveCard
 import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.elements.LayoutElement
@@ -35,24 +34,7 @@ class AdaptiveCardParser {
             context: ParseContext
         ): ParseResult {
             val json = Json.parseToJsonElement(jsonText)
-            return deserialize(json.jsonObject, rendererVersion, context).also {
-                val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
-                Log.d("checkPoint", adaptiveCardJson)
-            }
-        }
-
-        fun deserializeFromString(
-            jsonText: String,
-            rendererVersion: String,
-            context: ParseContext,
-            optimizeParsing: Boolean
-        ): ParseResult {
-            val json = Json.parseToJsonElement(jsonText)
-            val result =  deserialize(json.jsonObject, rendererVersion, context).also {
-                val adaptiveCardJson = Json.encodeToString(it.adaptiveCard)
-                Log.d("checkPoint", adaptiveCardJson)
-            }
-            return result
+            return deserialize(json.jsonObject, rendererVersion, context)
         }
 
         fun deserializeFromFile(jsonFile: String, rendererVersion: String): ParseResult {

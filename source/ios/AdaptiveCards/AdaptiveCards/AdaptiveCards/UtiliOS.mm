@@ -103,11 +103,11 @@ void configRtl(UIView *view, ACORenderContext *context)
 void renderBackgroundImage(const std::shared_ptr<AdaptiveCards::BackgroundImage> backgroundImage,
                            ACRContentStackView *containerView, ACRView *rootView)
 {
-    if (rootView == nil || backgroundImage == nullptr || backgroundImage->GetUrl().empty()) {
+    if (rootView == nil || backgroundImage == nullptr || backgroundImage->GetUrl(ACTheme(rootView.theme)).empty()) {
         return;
     }
 
-    std::string imageUrl = backgroundImage->GetUrl();
+    std::string imageUrl = backgroundImage->GetUrl(ACTheme(rootView.theme));
     NSString *key = [[NSNumber numberWithUnsignedLongLong:(unsigned long long)(backgroundImage.get())] stringValue];
     if ([key length]) {
         UIImageView *imgView = nil;
@@ -435,7 +435,7 @@ ObserverActionBlock generateBackgroundImageObserverAction(
     std::shared_ptr<BaseCardElement> const &context)
 {
     return ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key,
-             std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
+            __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
         if (view) {
             [view addObserver:observer
@@ -584,7 +584,7 @@ void handleActionFallbackException(ACOFallbackException *exception,
             break;
         }
 
-        ACOBaseActionElement *acoElem =
+        ACOBaseActionElement *actionElement =
             [[ACOBaseActionElement alloc] initWithBaseActionElement:elem];
 
         ACRBaseActionElementRenderer *renderer =
@@ -595,7 +595,7 @@ void handleActionFallbackException(ACOFallbackException *exception,
                 UIButton *button = [renderer renderButton:rootView
                                                    inputs:inputs
                                                 superview:view
-                                        baseActionElement:acoElem
+                                        baseActionElement:actionElement
                                                hostConfig:config];
                 [actionSet addArrangedSubview:button];
                 bHandled = true;
@@ -690,10 +690,10 @@ UIFont *getFont(ACOHostConfig *hostConfig, const AdaptiveCards::RichTextElementP
                                                     @(UIFontWeightSemibold), @(UIFontWeightBold), @(UIFontWeightHeavy), @(UIFontWeightBlack) ];
         const CGFloat size = [hostConfig getTextBlockTextSize:sharedFontType textSize:sharedTextSize];
         if (textProperties.GetFontType() == FontType::Monospace) {
-            const NSArray<NSString *> *fontweights = @[ @"UltraLight", @"Thin", @"Light", @"Regular",
+            const NSArray<NSString *> *weights = @[ @"UltraLight", @"Thin", @"Light", @"Regular",
                                                         @"Medium", @"Semibold", @"Bold", @"Heavy", @"Black" ];
             UIFontDescriptor *descriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:@{UIFontDescriptorFamilyAttribute : @"Courier New",
-                                                                                                UIFontDescriptorFaceAttribute : fontweights[fontweight]}];
+                                                                                                UIFontDescriptorFaceAttribute : weights[fontweight]}];
             descriptor = getItalicFontDescriptor(descriptor, textProperties.GetItalic());
 
             font = [UIFont fontWithDescriptor:descriptor size:[hostConfig getTextBlockTextSize:sharedFontType textSize:sharedTextSize]];
@@ -812,7 +812,7 @@ void UpdateFontWithDynamicType(NSMutableAttributedString *content)
     [content enumerateAttribute:NSFontAttributeName
                         inRange:NSMakeRange(0, content.length)
                         options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
-                     usingBlock:^(id value, NSRange range, BOOL *stop) {
+                     usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
                          [content addAttribute:NSFontAttributeName value:[UIFontMetrics.defaultMetrics scaledFontForFont:(UIFont *)value] range:range];
                      }];
 }
@@ -1313,11 +1313,11 @@ HostWidth convertHostCardContainerToHostWidth(int hostCardContainer, HostWidthCo
 
     HostWidth hostWidth;
 
-    if (hostCardContainer <= hostWidthConfig.veryNarrow) {
+    if (hostCardContainer <= (int)hostWidthConfig.veryNarrow) {
         hostWidth = HostWidth::VeryNarrow;
-    } else if (hostCardContainer > hostWidthConfig.veryNarrow && hostCardContainer <= hostWidthConfig.narrow) {
+    } else if (hostCardContainer > (int)hostWidthConfig.veryNarrow && hostCardContainer <= (int)hostWidthConfig.narrow) {
         hostWidth = HostWidth::Narrow;
-    } else if (hostCardContainer > hostWidthConfig.narrow && hostCardContainer <= hostWidthConfig.standard) {
+    } else if (hostCardContainer > (int)hostWidthConfig.narrow && hostCardContainer <= (int)hostWidthConfig.standard) {
         hostWidth = HostWidth::Standard;
     } else {
         hostWidth = HostWidth::Wide;

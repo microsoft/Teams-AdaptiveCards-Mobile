@@ -101,6 +101,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
           hostconfig:(ACOHostConfig *)config
      widthConstraint:(float)width
             delegate:(id<ACRActionDelegate>)acrActionDelegate
+               theme:(ACRTheme)theme
 {
     self = [self initWithFrame:CGRectMake(0, 0, width, 0)];
     if (self) {
@@ -121,6 +122,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         [self applyPadding:padding priority:1000];
 
         self.acrActionDelegate = acrActionDelegate;
+        self.theme = theme;
         [self render];
     }
     // call to check if all resources are loaded
@@ -132,8 +134,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 - (instancetype)init:(ACOAdaptiveCard *)card
           hostconfig:(ACOHostConfig *)config
      widthConstraint:(float)width
+               theme:(ACRTheme)theme
 {
-    self = [self init:card hostconfig:config widthConstraint:width delegate:nil];
+    self = [self init:card hostconfig:config widthConstraint:width delegate:nil theme:theme];
     return self;
 }
 
@@ -250,7 +253,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case CardElementType::Image: {
 
             ObserverActionBlock observerAction =
-                ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
+                ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &element, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                     if (view) {
                         // check image already exists in the returned image view and register the image
@@ -258,11 +261,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         [view addObserver:self
                                forKeyPath:@"image"
                                   options:NSKeyValueObservingOptionNew
-                                  context:elem.get()];
+                                  context:element.get()];
 
                         // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
                         [rootView setImageView:key view:view];
-                        [rootView setImageContext:key context:elem];
+                        [rootView setImageContext:key context:element];
                     }
                 };
             [self loadImageAccordingToResourceResolverIF:elem key:nil observerAction:observerAction];
@@ -276,7 +279,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 img->SetImageSize(imgSetElem->GetImageSize());
 
                 ObserverActionBlock observerAction =
-                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
+                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
                             // check image already exists in the returned image view and register the image
@@ -284,11 +287,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                             [view addObserver:self
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                                      context:element.get()];
 
                             // store the image view and image set element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
-                            [rootView setImageContext:key context:elem];
+                            [rootView setImageContext:key context:element];
                         }
                     };
 
@@ -305,7 +308,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
             if (!poster.empty()) {
                 ObserverActionBlock observerAction =
-                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &imgElem, NSURL *url, ACRView *rootView) {
+                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &imgElem, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         ACRContentHoldingUIView *contentholdingview = [[ACRContentHoldingUIView alloc] initWithFrame:view.frame];
                         if (view) {
@@ -328,7 +331,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
             if (![_hostConfig getHostConfig]->GetMedia().playButton.empty()) {
                 ObserverActionBlock observerAction =
-                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
+                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
                             // check image already exists in the returned image view and register the image
@@ -353,15 +356,15 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case CardElementType::TextInput: {
             std::shared_ptr<TextInput> textInput = std::static_pointer_cast<TextInput>(elem);
             std::shared_ptr<BaseActionElement> action = textInput->GetInlineAction();
-            if (action != nullptr && !action->GetIconUrl().empty()) {
+            if (action != nullptr && !action->GetIconUrl(ACTheme(_theme)).empty()) {
                 ObserverActionBlockForBaseAction observerAction =
-                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
+                    ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
                             [view addObserver:self
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                                      context:element.get()];
 
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -394,7 +397,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             std::shared_ptr<Container> container = std::static_pointer_cast<Container>(elem);
 
             auto backgroundImageProperties = container->GetBackgroundImage();
-            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(ACTheme(_theme)).empty())) {
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, container);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
@@ -407,7 +410,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             std::shared_ptr<Carousel> carousel = std::static_pointer_cast<Carousel>(elem);
 
             auto backgroundImageProperties = carousel->GetBackgroundImage();
-            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(ACTheme(_theme)).empty())) {
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carousel);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
@@ -432,7 +435,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             std::shared_ptr<Column> column = std::static_pointer_cast<Column>(elem);
             // Handle background image (if necessary)
             auto backgroundImageProperties = column->GetBackgroundImage();
-            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(ACTheme(_theme)).empty())) {
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, column);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
@@ -453,7 +456,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case CardElementType::CarouselPage: {
             std::shared_ptr<CarouselPage> carouselPage = std::static_pointer_cast<CarouselPage>(elem);
             auto backgroundImageProperties = carouselPage->GetBackgroundImage();
-            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl().empty())) {
+            if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(ACTheme(_theme)).empty())) {
                 ObserverActionBlock observerAction = generateBackgroundImageObserverAction(backgroundImageProperties, self, carouselPage);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
@@ -472,6 +475,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         case AdaptiveCards::CardElementType::TimeInput:
         case AdaptiveCards::CardElementType::ToggleInput:
         case AdaptiveCards::CardElementType::Unknown:
+        case AdaptiveCards::CardElementType::RatingLabel:
+        case AdaptiveCards::CardElementType::CompoundButton:
+        case AdaptiveCards::CardElementType::Badge:
             break;
     }
 }
@@ -506,7 +512,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 {
     [hostConfig setIconPlacement:hash placement:YES];
     for (auto &action : actions) {
-        if (!action->GetIconUrl().empty()) {
+        if (!action->GetIconUrl(ACTheme(_theme)).empty()) {
             ObserverActionBlockForBaseAction observerAction =
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
@@ -558,17 +564,17 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         url = [NSURL URLWithString:nSUrlStr relativeToURL:_hostConfig.baseURL];
     }
 
-    ImageLoadBlock imageloadblock = ^(NSURL *url) {
+    ImageLoadBlock imageloadblock = ^(NSURL *imgUrl) {
         // download image
         UIImage *img = nil;
-        if ([url.scheme isEqualToString:@"data"]) {
-            NSString *absoluteUri = url.absoluteString;
+        if ([imgUrl.scheme isEqualToString:@"data"]) {
+            NSString *absoluteUri = imgUrl.absoluteString;
             std::string dataUri = AdaptiveCards::AdaptiveBase64Util::ExtractDataFromUri(std::string([absoluteUri UTF8String]));
             std::vector<char> decodedDataUri = AdaptiveCards::AdaptiveBase64Util::Decode(dataUri);
             NSData *decodedBase64 = [NSData dataWithBytes:decodedDataUri.data() length:decodedDataUri.size()];
             img = [UIImage imageWithData:decodedBase64];
         } else {
-            img = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+            img = [UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl]];
         }
         return img;
     };
@@ -700,7 +706,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 - (void)loadBackgroundImageAccordingToResourceResolverIF:(std::shared_ptr<BackgroundImage> const &)backgroundImage key:(NSString *)key observerAction:(ObserverActionBlock)observerAction
 {
     NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)(backgroundImage.get())];
-    NSString *nSUrlStr = [NSString stringWithCString:backgroundImage->GetUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString *nSUrlStr = [NSString stringWithCString:backgroundImage->GetUrl(ACTheme(_theme)).c_str() encoding:[NSString defaultCStringEncoding]];
 
     if (!key) {
         key = [number stringValue];
@@ -737,7 +743,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     } else {
         std::shared_ptr<Image> imgElem = std::static_pointer_cast<Image>(elem);
         number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)imgElem.get()];
-        nSUrlStr = [NSString stringWithCString:imgElem->GetUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+        nSUrlStr = [NSString stringWithCString:imgElem->GetUrl(ACTheme(_theme)).c_str() encoding:[NSString defaultCStringEncoding]];
     }
 
     if (!key) {
@@ -769,7 +775,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     NSString *nSUrlStr = nil;
 
     number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)elem.get()];
-    nSUrlStr = [NSString stringWithCString:elem->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+    nSUrlStr = [NSString stringWithCString:elem->GetIconUrl(ACTheme(_theme)).c_str() encoding:[NSString defaultCStringEncoding]];
     if (!key) {
         key = [number stringValue];
     }
@@ -793,8 +799,6 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
         if ([object isKindOfClass:[ACRContentHoldingUIView class]]) {
             object = ((UIView *)object).subviews[0];
-        } else if ([object isKindOfClass:[ACRButton class]]) {
-            object = ((ACRButton *)object).iconView;
         }
 
         if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
@@ -874,7 +878,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     [_inputHandlerLookupTable setObject:parent forKey:child];
 }
 
-- (void)pushCurrentShowcard:(ACRColumnView *)showcard;
+- (void)pushCurrentShowcard:(ACRColumnView *)showcard
 {
     if (showcard) {
         [_showcards addObject:showcard];

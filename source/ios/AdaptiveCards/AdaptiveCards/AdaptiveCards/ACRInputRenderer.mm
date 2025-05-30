@@ -44,14 +44,13 @@
 + (ACRTextField *)configTextFiled:(std::shared_ptr<TextInput> const &)inputBlock renderAction:(BOOL)renderAction rootView:(ACRView *)rootView viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
 {
     ACRTextField *txtInput = nil;
-    NSBundle *bundle = [[ACOBundle getInstance] getBundle];
     switch (inputBlock->GetTextInputStyle()) {
         case TextInputStyle::Email: {
-            txtInput = [bundle loadNibNamed:@"ACRTextEmailField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextEmailField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             break;
         }
         case TextInputStyle::Tel: {
-            txtInput = [bundle loadNibNamed:@"ACRTextTelelphoneField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextTelelphoneField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
 #if !TARGET_OS_VISION
             CGRect frame = CGRectMake(0, 0, viewGroup.frame.size.width, 30);
             UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:frame];
@@ -64,17 +63,17 @@
             break;
         }
         case TextInputStyle::Url: {
-            txtInput = [bundle loadNibNamed:@"ACRTextUrlField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextUrlField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             break;
         }
         case TextInputStyle::Password: {
-            txtInput = [bundle loadNibNamed:@"ACRTextField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             txtInput.secureTextEntry = YES;
             break;
         }
         case TextInputStyle::Text:
         default: {
-            txtInput = [bundle loadNibNamed:@"ACRTextField" owner:rootView options:nil][0];
+            txtInput = [[ACRTextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
             break;
         }
     }
@@ -90,7 +89,7 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
@@ -170,8 +169,9 @@
         }
         textInputHandler.textField = txtInput;
         txtInput.delegate = textInputHandler;
-        if ([textInputHandler respondsToSelector:@selector(textFieldDidChange:)]) {
-            [txtInput addTarget:textInputHandler action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        SEL textFielsDidChangeSel = NSSelectorFromString(@"textFieldDidChange:");
+        if ([textInputHandler respondsToSelector:textFielsDidChangeSel]) {
+            [txtInput addTarget:textInputHandler action:textFielsDidChangeSel forControlEvents:UIControlEventEditingChanged];
             }
     }
 
@@ -189,7 +189,7 @@
         }
         NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
         NSDictionary *imageViewMap = [rootView getImageMap];
-        NSString *key = [NSString stringWithCString:action->GetIconUrl().c_str() encoding:[NSString defaultCStringEncoding]];
+        NSString *key = [NSString stringWithCString:action->GetIconUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
         UIImage *img = imageViewMap[key];
         button.iconPlacement = ACRNoTitle;
         button.accessibilityLabel = title;
@@ -202,16 +202,14 @@
             [button setImageView:img withConfig:acoConfig];
         } else if (key.length) {
             NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)action.get()];
-            NSString *key = [number stringValue];
-            UIImageView *view = [rootView getImageView:key];
+            NSString *k = [number stringValue];
+            UIImageView *view = [rootView getImageView:k];
+            button.iconView = view;
+            [button addSubview:view];
             if (view && view.image) {
-                button.iconView = view;
-                [button addSubview:view];
                 [button setImageView:view.image withConfig:acoConfig];
             } else {
-                button.iconView = view;
-                [button addSubview:view];
-                [rootView setImageView:key view:button];
+                [rootView setImageView:k view:button];
             }
             [NSLayoutConstraint constraintWithItem:button
                                          attribute:NSLayoutAttributeWidth

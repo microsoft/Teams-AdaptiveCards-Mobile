@@ -85,7 +85,7 @@
 
         configBleed(rootView, element, self, acoConfig);
 
-        for (auto idx = 0; idx < endIdx; idx++) {
+        for (NSUInteger idx = 0; idx < endIdx; idx++) {
             ACRColumnDefinition *ithColumnDefinition = columnDefinition[idx];
             if (ithColumnDefinition.isValid) {
                 ACRTableCellView *cellView = nil;
@@ -108,7 +108,7 @@
                                                    hostConfig:acoConfig];
                     
                     cellView.isAccessibilityElement = YES;
-                    cellView.accessibilityValue = [NSString stringWithFormat:@"Row %i of %i, Column %i of %i", (rowIndex + 1), totalRows, (idx + 1), (int)endIdx];
+                    cellView.accessibilityValue = [NSString stringWithFormat:@"Row %i of %i, Column %i of %i", (rowIndex + 1), totalRows, (int)(idx + 1), (int)endIdx];
                     
                     [[ACRTableCellRenderer getInstance] render:cellView rootView:rootView inputs:inputs baseCardElement:cellElement hostConfig:acoConfig];
                     [rootView.context popBaseCardElementContext:cellElement];
