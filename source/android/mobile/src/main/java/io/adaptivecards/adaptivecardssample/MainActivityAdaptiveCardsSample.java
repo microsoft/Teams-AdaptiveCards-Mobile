@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 package io.adaptivecards.adaptivecardssample;
 
+import static androidx.lifecycle.LifecycleOwnerKt.getLifecycleScope;
+
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -17,10 +19,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ViewTreeObserver;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.lifecycle.LifecycleCoroutineScope;
+
 import android.widget.TabHost;
 import android.view.View;
 import android.view.Menu;
@@ -29,6 +34,7 @@ import android.widget.Toast;
 
 import io.adaptivecards.adaptivecardssample.CustomObjects.FeatureFlagResolver;
 import io.adaptivecards.objectmodel.*;
+import io.adaptivecards.renderer.AdaptiveCardNativeParser;
 import io.adaptivecards.renderer.AdaptiveCardRenderer;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
@@ -79,6 +85,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
     private TextView m_selectedHostConfigText;
     private Timer m_timer=new Timer();
     private final long DELAY = 1000; // milliseconds
+    private CheckBox m_checkBox;
 
     // Options for custom elements
     private SwitchCompat m_customActions;
@@ -109,6 +116,8 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         // Add text change handler
         m_jsonEditText = findViewById(R.id.jsonAdaptiveCard);
         m_configEditText = findViewById(R.id.hostConfig);
+
+        m_checkBox = findViewById(R.id.checkBox);
 
         TextWatcher watcher = new AfterTextChangedListener() {
             @Override
@@ -370,7 +379,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             hostConfig.SetActions(actionsConfig);
 
             ParseContext context = createParseContextForCustomElements();
-            ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
+            ParseResult parseResult = AdaptiveCardNativeParser.INSTANCE.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, m_checkBox.isChecked(), context, getLifecycleScope(this));
             LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
             layout.removeAllViews();
 

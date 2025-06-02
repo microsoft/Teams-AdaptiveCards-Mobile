@@ -48,6 +48,15 @@
             android:text="@string/default_config" />
     </LinearLayout>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optimize_card_parsing"
+        android:id="@+id/checkBox">
+
+
+    </CheckBox>
+
     <TabHost
         android:id="@+id/tabHost"
         android:layout_width="match_parent"
