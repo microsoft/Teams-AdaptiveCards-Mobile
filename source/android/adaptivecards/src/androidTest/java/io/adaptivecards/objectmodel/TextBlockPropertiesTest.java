@@ -396,10 +396,10 @@ public class TextBlockPropertiesTest
     @Test
     public void TestNumberedListIncrementsCorrectly () throws Exception
     {
-        final String textWithNewLines = "18. Gr\r19. Or";
+        final String textWithNewLines = "18. Green\r18. Orange\r18. Blue";
         // This looks counter intuitive but without the replacement of '\n\r' for "<br/>" the
         // output will only contain a blank space where '\n' is expected
-        final String expectedHtml = "18. Gr\n19. Or";
+        final String expectedHtml = "18. Green\n19. Orange\n20. Blue";
 
         String html = RendererUtil.handleSpecialText(textWithNewLines).toString();
 
