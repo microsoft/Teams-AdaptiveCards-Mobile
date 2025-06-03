@@ -83,23 +83,23 @@ extends:
               command: custom
               custom: '--list-sdks '
 
-          - task: Gradle@2
+          - task: Gradle@3
             displayName: build
             inputs:
               gradleWrapperFile: source/android/gradlew.bat
               workingDirectory: source/android
               tasks: 'adaptivecards:build'
               publishJUnitResults: false
-              jdkVersionOption: 1.11
+              jdkVersionOption: 1.17
 
-          - task: Gradle@2
+          - task: Gradle@3
             displayName: 'Gradle Unsigned Publication'
             inputs:
               gradleWrapperFile: source/android/gradlew.bat
               workingDirectory: source/android
               tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
               publishJUnitResults: false
-              jdkVersionOption: 1.11
+              jdkVersionOption: 1.17
 
           - task: Powershell@2
             name: prepareSigningTask
@@ -149,14 +149,14 @@ extends:
                   }
                 ]
 
-          - task: Gradle@2
+          - task: Gradle@3
             displayName: 'Gradle Signed Publish to Local Directory'
             inputs:
               gradleWrapperFile: source/android/gradlew.bat
               workingDirectory: source/android
               tasks: 'adaptivecards:publishSignedReleasePublicationToSignedArtifactRepository'
               publishJUnitResults: false
-              jdkVersionOption: 1.11
+              jdkVersionOption: 1.17
             env:
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
