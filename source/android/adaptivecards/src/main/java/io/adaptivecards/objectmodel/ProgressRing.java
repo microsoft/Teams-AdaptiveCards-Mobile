@@ -52,19 +52,19 @@ public class ProgressRing extends BaseCardElement {
   }
 
   public String GetLabel() {
-    return AdaptiveCardObjectModelJNI.ProgressRing_GetLabel(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.ProgressRing_GetLabel__SWIG_0(swigCPtr, this);
   }
 
   public LabelPosition GetLabelPosition() {
-    return LabelPosition.swigToEnum(AdaptiveCardObjectModelJNI.ProgressRing_GetLabelPosition(swigCPtr, this));
+    return LabelPosition.swigToEnum(AdaptiveCardObjectModelJNI.ProgressRing_GetLabelPosition__SWIG_0(swigCPtr, this));
   }
 
   public ProgressSize GetSize() {
-    return ProgressSize.swigToEnum(AdaptiveCardObjectModelJNI.ProgressRing_GetSize(swigCPtr, this));
+    return ProgressSize.swigToEnum(AdaptiveCardObjectModelJNI.ProgressRing_GetSize__SWIG_0(swigCPtr, this));
   }
 
   public HorizontalAlignment GetHorizontalAlignment() {
-    return HorizontalAlignment.swigToEnum(AdaptiveCardObjectModelJNI.ProgressRing_GetHorizontalAlignment(swigCPtr, this));
+    return HorizontalAlignment.swigToEnum(AdaptiveCardObjectModelJNI.ProgressRing_GetHorizontalAlignment__SWIG_0(swigCPtr, this));
   }
 
   public ProgressRing(ProgressSize progressSize, LabelPosition labelPosition, String label, HorizontalAlignment horizontalAlignment) {
