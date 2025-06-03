@@ -137,6 +137,12 @@ public enum AdaptiveCardSchemaKey {
   Light,
   Lighter,
   LineColor,
+  LineColorDefault,
+  LineColorEmphasis,
+  LineColorGood,
+  LineColorAttention,
+  LineColorWarning,
+  LineColorAccent,
   LineThickness,
   Max,
   MaxActions,
@@ -273,7 +279,9 @@ public enum AdaptiveCardSchemaKey {
   Content,
   DisplayArrow,
   MaxPopoverWidth,
-  Position;
+  Position,
+  ImageFitMode,
+  HorizontalContentAlignment;
 
   public final int swigValue() {
     return swigValue;

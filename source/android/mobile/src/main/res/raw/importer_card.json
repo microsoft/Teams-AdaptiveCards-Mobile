@@ -264,6 +264,18 @@
 										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
 									},
 									{
+										"title": "Image FitMode Contain",
+										"value": "v1.5/Elements/Image.FitMode.Contain.json"
+									},
+									{
+										"title": "Image FitMode Cover",
+										"value": "v1.5/Elements/Image.FitMode.Cover.json"
+									},
+									{
+										"title": "Image FitMode Fill",
+										"value": "v1.5/Elements/Image.FitMode.Fill.json"
+									},
+									{
 										"title": "Progress Bar",
 										"value": "v1.5/Elements/ProgressBar.json"
 									},

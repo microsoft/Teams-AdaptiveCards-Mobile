@@ -9,6 +9,11 @@
 
 namespace AdaptiveCards
 {
+
+static ImageFitMode DEFAULT_IMAGE_FIT_MODE = ImageFitMode::Fill;
+static HorizontalContentAlignment DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT = HorizontalContentAlignment::Left;
+static VerticalContentAlignment DEFAULT_VERTICAL_CONTENT_ALIGNMENT = VerticalContentAlignment::Top;
+
 class Image : public BaseCardElement
 {
 
@@ -28,7 +33,10 @@ public:
         m_imageSize(ImageSize::None),
         m_pixelWidth(0),
         m_pixelHeight(0),
-        m_hAlignment(std::nullopt) {
+        m_hAlignment(std::nullopt),
+        m_imageFitMode(DEFAULT_IMAGE_FIT_MODE),
+        m_horizontalContentAlignment(DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT),
+        m_verticalContentAlignment(DEFAULT_VERTICAL_CONTENT_ALIGNMENT) {
         PopulateKnownPropertiesSet();
     }
 
@@ -46,6 +54,10 @@ public:
 
     ImageSize GetImageSize() const;
     void SetImageSize(const ImageSize value);
+
+    const ImageFitMode GetImageFitMode() const;
+    const HorizontalContentAlignment GetHorizontalContentAlignment() const;
+    const VerticalContentAlignment GetVerticalContentAlignment() const;
 
     std::string GetAltText() const;
     void SetAltText(const std::string& value);
@@ -71,6 +83,9 @@ private:
     std::string m_backgroundColor;
     ImageStyle m_imageStyle;
     ImageSize m_imageSize;
+    ImageFitMode m_imageFitMode;
+    HorizontalContentAlignment m_horizontalContentAlignment;
+    VerticalContentAlignment m_verticalContentAlignment;
     unsigned int m_pixelWidth;
     unsigned int m_pixelHeight;
     std::string m_altText;

@@ -10793,6 +10793,54 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_getHorizontalContentAlignmentEnum(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::HorizontalContentAlignment > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::HorizontalContentAlignment > *) &AdaptiveCards::EnumHelpers::getHorizontalContentAlignmentEnum();
+  *(AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::HorizontalContentAlignment > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HorizontalContentAlignmentToString(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  jstring jresult = 0 ;
+  AdaptiveCards::HorizontalContentAlignment arg1 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::HorizontalContentAlignment)jarg1; 
+  result = (std::string *) &AdaptiveCards::HorizontalContentAlignmentToString(arg1);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HorizontalContentAlignmentFromString(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  AdaptiveCards::HorizontalContentAlignment result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = (AdaptiveCards::HorizontalContentAlignment)AdaptiveCards::HorizontalContentAlignmentFromString((std::string const &)*arg1);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_getVerticalAlignmentEnum(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::VerticalAlignment > *result = 0 ;
@@ -10836,6 +10884,54 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   result = (AdaptiveCards::VerticalAlignment)AdaptiveCards::VerticalAlignmentFromString((std::string const &)*arg1);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_getVerticalContentAlignmentEnum(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::VerticalContentAlignment > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::VerticalContentAlignment > *) &AdaptiveCards::EnumHelpers::getVerticalContentAlignmentEnum();
+  *(AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::VerticalContentAlignment > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_VerticalContentAlignmentToString(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  jstring jresult = 0 ;
+  AdaptiveCards::VerticalContentAlignment arg1 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::VerticalContentAlignment)jarg1; 
+  result = (std::string *) &AdaptiveCards::VerticalContentAlignmentToString(arg1);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_VerticalContentAlignmentFromString(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  AdaptiveCards::VerticalContentAlignment result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = (AdaptiveCards::VerticalContentAlignment)AdaptiveCards::VerticalContentAlignmentFromString((std::string const &)*arg1);
   jresult = (jint)result; 
   return jresult;
 }
@@ -11172,6 +11268,54 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   result = (AdaptiveCards::ImageSize)AdaptiveCards::ImageSizeFromString((std::string const &)*arg1);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_getImageFitModeEnum(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::ImageFitMode > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::ImageFitMode > *) &AdaptiveCards::EnumHelpers::getImageFitModeEnum();
+  *(AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::ImageFitMode > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ImageFitModeToString(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  jstring jresult = 0 ;
+  AdaptiveCards::ImageFitMode arg1 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::ImageFitMode)jarg1; 
+  result = (std::string *) &AdaptiveCards::ImageFitModeToString(arg1);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ImageFitModeFromString(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jint jresult = 0 ;
+  std::string *arg1 = 0 ;
+  AdaptiveCards::ImageFitMode result;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = (AdaptiveCards::ImageFitMode)AdaptiveCards::ImageFitModeFromString((std::string const &)*arg1);
   jresult = (jint)result; 
   return jresult;
 }
@@ -11892,54 +12036,6 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   result = (AdaptiveCards::IconPlacement)AdaptiveCards::IconPlacementFromString((std::string const &)*arg1);
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_getVerticalContentAlignmentEnum(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::VerticalContentAlignment > *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::VerticalContentAlignment > *) &AdaptiveCards::EnumHelpers::getVerticalContentAlignmentEnum();
-  *(AdaptiveCards::EnumHelpers::EnumMapping< AdaptiveCards::VerticalContentAlignment > **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_VerticalContentAlignmentToString(JNIEnv *jenv, jclass jcls, jint jarg1) {
-  jstring jresult = 0 ;
-  AdaptiveCards::VerticalContentAlignment arg1 ;
-  std::string *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = (AdaptiveCards::VerticalContentAlignment)jarg1; 
-  result = (std::string *) &AdaptiveCards::VerticalContentAlignmentToString(arg1);
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_VerticalContentAlignmentFromString(JNIEnv *jenv, jclass jcls, jstring jarg1) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  AdaptiveCards::VerticalContentAlignment result;
-  
-  (void)jenv;
-  (void)jcls;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  result = (AdaptiveCards::VerticalContentAlignment)AdaptiveCards::VerticalContentAlignmentFromString((std::string const &)*arg1);
   jresult = (jint)result; 
   return jresult;
 }
@@ -15924,6 +16020,40 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseActionElement_1GetIsRtl(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  AdaptiveCards::BaseActionElement *arg1 = (AdaptiveCards::BaseActionElement *) 0 ;
+  std::shared_ptr< AdaptiveCards::BaseActionElement const > *smartarg1 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::BaseActionElement > **)&jarg1;
+  arg1 = (AdaptiveCards::BaseActionElement *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (bool)((AdaptiveCards::BaseActionElement const *)arg1)->GetIsRtl();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseActionElement_1SetIsRtl(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  AdaptiveCards::BaseActionElement *arg1 = (AdaptiveCards::BaseActionElement *) 0 ;
+  bool arg2 ;
+  std::shared_ptr< AdaptiveCards::BaseActionElement > *smartarg1 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr<  AdaptiveCards::BaseActionElement > **)&jarg1;
+  arg1 = (AdaptiveCards::BaseActionElement *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->SetIsRtl(arg2);
+}
+
+
 SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_BaseActionElement_1GetRole(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   AdaptiveCards::BaseActionElement *arg1 = (AdaptiveCards::BaseActionElement *) 0 ;
@@ -19841,6 +19971,72 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_DEFAULT_1IMAGE_1FIT_1MODE_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  AdaptiveCards::ImageFitMode arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::ImageFitMode)jarg1; 
+  AdaptiveCards::DEFAULT_IMAGE_FIT_MODE = arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_DEFAULT_1IMAGE_1FIT_1MODE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  AdaptiveCards::ImageFitMode result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::ImageFitMode)AdaptiveCards::DEFAULT_IMAGE_FIT_MODE;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_DEFAULT_1HORIZONTAL_1CONTENT_1ALIGNMENT_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  AdaptiveCards::HorizontalContentAlignment arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::HorizontalContentAlignment)jarg1; 
+  AdaptiveCards::DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT = arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_DEFAULT_1HORIZONTAL_1CONTENT_1ALIGNMENT_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  AdaptiveCards::HorizontalContentAlignment result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::HorizontalContentAlignment)AdaptiveCards::DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_DEFAULT_1VERTICAL_1CONTENT_1ALIGNMENT_1set(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  AdaptiveCards::VerticalContentAlignment arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (AdaptiveCards::VerticalContentAlignment)jarg1; 
+  AdaptiveCards::DEFAULT_VERTICAL_CONTENT_ALIGNMENT = arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_DEFAULT_1VERTICAL_1CONTENT_1ALIGNMENT_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  AdaptiveCards::VerticalContentAlignment result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::VerticalContentAlignment)AdaptiveCards::DEFAULT_VERTICAL_CONTENT_ALIGNMENT;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1Image_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   AdaptiveCards::Image *result = 0 ;
@@ -20101,6 +20297,60 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
   arg1 = (AdaptiveCards::Image *)(smartarg1 ? smartarg1->get() : 0); 
   arg2 = (AdaptiveCards::ImageSize)jarg2; 
   (arg1)->SetImageSize(arg2);
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Image_1GetImageFitMode(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  AdaptiveCards::Image *arg1 = (AdaptiveCards::Image *) 0 ;
+  std::shared_ptr< AdaptiveCards::Image const > *smartarg1 = 0 ;
+  AdaptiveCards::ImageFitMode result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::Image > **)&jarg1;
+  arg1 = (AdaptiveCards::Image *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (AdaptiveCards::ImageFitMode)((AdaptiveCards::Image const *)arg1)->GetImageFitMode();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Image_1GetHorizontalContentAlignment(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  AdaptiveCards::Image *arg1 = (AdaptiveCards::Image *) 0 ;
+  std::shared_ptr< AdaptiveCards::Image const > *smartarg1 = 0 ;
+  AdaptiveCards::HorizontalContentAlignment result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::Image > **)&jarg1;
+  arg1 = (AdaptiveCards::Image *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (AdaptiveCards::HorizontalContentAlignment)((AdaptiveCards::Image const *)arg1)->GetHorizontalContentAlignment();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Image_1GetVerticalContentAlignment(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  AdaptiveCards::Image *arg1 = (AdaptiveCards::Image *) 0 ;
+  std::shared_ptr< AdaptiveCards::Image const > *smartarg1 = 0 ;
+  AdaptiveCards::VerticalContentAlignment result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  
+  smartarg1 = *(std::shared_ptr< const AdaptiveCards::Image > **)&jarg1;
+  arg1 = (AdaptiveCards::Image *)(smartarg1 ? smartarg1->get() : 0); 
+  result = (AdaptiveCards::VerticalContentAlignment)((AdaptiveCards::Image const *)arg1)->GetVerticalContentAlignment();
+  jresult = (jint)result; 
+  return jresult;
 }
 
 
@@ -32959,6 +33209,222 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorDefault_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if (arg1) (arg1)->lineColorDefault = *arg2;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorDefault_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  result = (std::string *) & ((arg1)->lineColorDefault);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorEmphasis_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if (arg1) (arg1)->lineColorEmphasis = *arg2;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorEmphasis_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  result = (std::string *) & ((arg1)->lineColorEmphasis);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorGood_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if (arg1) (arg1)->lineColorGood = *arg2;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorGood_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  result = (std::string *) & ((arg1)->lineColorGood);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorAttention_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if (arg1) (arg1)->lineColorAttention = *arg2;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorAttention_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  result = (std::string *) & ((arg1)->lineColorAttention);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorWarning_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if (arg1) (arg1)->lineColorWarning = *arg2;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorWarning_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  result = (std::string *) & ((arg1)->lineColorWarning);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorAccent_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if (arg1) (arg1)->lineColorAccent = *arg2;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1lineColorAccent_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::SeparatorConfig *arg1 = (AdaptiveCards::SeparatorConfig *) 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::SeparatorConfig **)&jarg1; 
+  result = (std::string *) & ((arg1)->lineColorAccent);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_SeparatorConfig_1Deserialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jlong jresult = 0 ;
   Json::Value *arg1 = 0 ;
@@ -36314,6 +36780,32 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
   arg3 = (AdaptiveCards::ForegroundColor)jarg3; 
   arg4 = jarg4 ? true : false; 
   result = ((AdaptiveCards::HostConfig const *)arg1)->GetHighlightColor(arg2,arg3,arg4);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_HostConfig_1GetSeparatorColor(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3, jobject jarg3_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::HostConfig *arg1 = (AdaptiveCards::HostConfig *) 0 ;
+  AdaptiveCards::ContainerStyle arg2 ;
+  AdaptiveCards::SeparatorConfig arg3 ;
+  AdaptiveCards::SeparatorConfig *argp3 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg3_;
+  arg1 = *(AdaptiveCards::HostConfig **)&jarg1; 
+  arg2 = (AdaptiveCards::ContainerStyle)jarg2; 
+  argp3 = *(AdaptiveCards::SeparatorConfig **)&jarg3; 
+  if (!argp3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null AdaptiveCards::SeparatorConfig");
+    return 0;
+  }
+  arg3 = *argp3; 
+  result = ((AdaptiveCards::HostConfig const *)arg1)->GetSeparatorColor(arg2,arg3);
   jresult = jenv->NewStringUTF((&result)->c_str()); 
   return jresult;
 }
@@ -45625,7 +46117,7 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetColor(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetColor_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
   std::shared_ptr< AdaptiveCards::ProgressBar const > *smartarg1 = 0 ;
@@ -45643,7 +46135,7 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetMax(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jdouble JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetMax_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jdouble jresult = 0 ;
   AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
   std::shared_ptr< AdaptiveCards::ProgressBar const > *smartarg1 = 0 ;
@@ -45661,7 +46153,7 @@ SWIGEXPORT jdouble JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
-SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressBar_1GetValue_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   AdaptiveCards::ProgressBar *arg1 = (AdaptiveCards::ProgressBar *) 0 ;
   std::shared_ptr< AdaptiveCards::ProgressBar const > *smartarg1 = 0 ;
@@ -45910,7 +46402,7 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetLabel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetLabel_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   AdaptiveCards::ProgressRing *arg1 = (AdaptiveCards::ProgressRing *) 0 ;
   std::shared_ptr< AdaptiveCards::ProgressRing const > *smartarg1 = 0 ;
@@ -45928,7 +46420,7 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
-SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetLabelPosition(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetLabelPosition_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   AdaptiveCards::ProgressRing *arg1 = (AdaptiveCards::ProgressRing *) 0 ;
   std::shared_ptr< AdaptiveCards::ProgressRing const > *smartarg1 = 0 ;
@@ -45946,7 +46438,7 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetSize_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   AdaptiveCards::ProgressRing *arg1 = (AdaptiveCards::ProgressRing *) 0 ;
   std::shared_ptr< AdaptiveCards::ProgressRing const > *smartarg1 = 0 ;
@@ -45964,7 +46456,7 @@ SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
-SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetHorizontalAlignment(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ProgressRing_1GetHorizontalAlignment_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   AdaptiveCards::ProgressRing *arg1 = (AdaptiveCards::ProgressRing *) 0 ;
   std::shared_ptr< AdaptiveCards::ProgressRing const > *smartarg1 = 0 ;
