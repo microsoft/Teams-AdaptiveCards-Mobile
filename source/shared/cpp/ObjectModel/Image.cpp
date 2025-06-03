@@ -124,6 +124,18 @@ void Image::SetImageSize(const ImageSize value)
     m_imageSize = value;
 }
 
+const ImageFitMode Image::GetImageFitMode() const {
+    return m_imageFitMode;
+}
+
+const HorizontalContentAlignment Image::GetHorizontalContentAlignment() const {
+    return m_horizontalContentAlignment;
+}
+
+const VerticalContentAlignment Image::GetVerticalContentAlignment() const {
+    return m_verticalContentAlignment;
+}
+
 std::string Image::GetAltText() const
 {
     return m_altText;
