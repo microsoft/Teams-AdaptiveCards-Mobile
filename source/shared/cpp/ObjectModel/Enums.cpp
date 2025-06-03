@@ -516,11 +516,6 @@ namespace AdaptiveCards
             {IconPlacement::AboveTitle, "AboveTitle"},
             {IconPlacement::LeftOfTitle, "LeftOfTitle"}});
 
-    DEFINE_ADAPTIVECARD_ENUM(VerticalContentAlignment, {
-            {VerticalContentAlignment::Top, "Top"},
-            {VerticalContentAlignment::Center, "Center"},
-            {VerticalContentAlignment::Bottom, "Bottom"}});
-
     DEFINE_ADAPTIVECARD_ENUM(PageAnimation, {
             {PageAnimation::Slide,"Slide"},
             {PageAnimation::CrossFade,"CrossFade"},
