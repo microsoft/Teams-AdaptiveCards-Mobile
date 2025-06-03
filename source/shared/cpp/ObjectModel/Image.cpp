@@ -196,6 +196,10 @@ std::shared_ptr<BaseCardElement> ImageParser::DeserializeWithoutCheckingType(Par
     image->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
 
+    image->m_imageFitMode = ParseUtil::GetEnumValue<ImageFitMode>(json, AdaptiveCardSchemaKey::ImageFitMode, DEFAULT_IMAGE_FIT_MODE, ImageFitModeFromString);
+    image->m_horizontalContentAlignment = ParseUtil::GetEnumValue<HorizontalContentAlignment>(json, AdaptiveCardSchemaKey::HorizontalContentAlignment, DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT, HorizontalContentAlignmentFromString);
+    image->m_verticalContentAlignment = ParseUtil::GetEnumValue<VerticalContentAlignment>(json, AdaptiveCardSchemaKey::VerticalContentAlignment, DEFAULT_VERTICAL_CONTENT_ALIGNMENT, VerticalContentAlignmentFromString);
+
     const auto& widthDimension =
         ParseSizeForPixelSize(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Width), &context.warnings);
     const auto& heightDimension =
