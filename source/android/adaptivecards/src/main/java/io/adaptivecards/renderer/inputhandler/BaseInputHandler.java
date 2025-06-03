@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
+import io.adaptivecards.renderer.input.InputUtil;
 import io.adaptivecards.renderer.layout.StretchableInputLayout;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public abstract class BaseInputHandler implements IInputHandler
         m_baseInputElement = baseInputElement;
         m_inputWatchers = new ArrayList<>();
         m_RenderArgs = renderArgs;
+        InputUtil.setIsRequired(baseInputElement, renderArgs);
     }
 
     public BaseInputHandler(@NonNull BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, RenderArgs renderArgs) {
@@ -140,6 +142,6 @@ public abstract class BaseInputHandler implements IInputHandler
     @Nullable
     private RenderedAdaptiveCard m_renderedAdaptiveCard;
     private Long m_cardId;
-    private RenderArgs m_RenderArgs;
+    private final RenderArgs m_RenderArgs;
 
 }

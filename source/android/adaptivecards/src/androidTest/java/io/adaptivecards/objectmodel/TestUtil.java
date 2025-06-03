@@ -87,9 +87,8 @@ public class TestUtil
         return adaptiveCard;
     }
 
-    public static RenderArgs createMockRenderArgs(int popoverId) {
+    public static RenderArgs createMockRenderArgs() {
         RenderArgs renderArgs = new RenderArgs();
-        renderArgs.setPopoverId(popoverId);
         return renderArgs;
     }
 

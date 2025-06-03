@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -380,7 +381,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                     getUpdatedRenderedArgsForPopover(parentViewId),
                     CardRendererRegistration.getInstance().getFeatureRegistration());
             } catch (Exception e) {
-
+                Log.e("BaseActionElementRend", "Error rendering popover content", e);
             }
         }
 
@@ -508,10 +509,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 {
 
                     // dismiss popover on click of submit and execute
-                    if (m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDailog() != null) {
-                        m_renderedAdaptiveCard.getPopoverDailog().dismiss();
-                        m_renderedAdaptiveCard.setPopoverDailog(null);
-                    }
+                    dismissPopoverIfNeeded();
 
                     // Don't gather inputs or perform validation when AssociatedInputs is None
                     boolean gatherInputs = true;
@@ -537,6 +535,13 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 }
 
                 m_cardActionHandler.onAction(m_action, m_renderedAdaptiveCard);
+            }
+        }
+
+        private void dismissPopoverIfNeeded() {
+            if (m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDailog() != null) {
+                m_renderedAdaptiveCard.getPopoverDailog().dismiss();
+                m_renderedAdaptiveCard.setPopoverDailog(null);
             }
         }
 

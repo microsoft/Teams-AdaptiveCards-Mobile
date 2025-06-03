@@ -156,5 +156,5 @@ public class RenderArgs {
     private long m_containerCardId;
     private boolean m_isRootLevelActions;
     private boolean m_ancestorHasSelectAction = false;
-    private int popoverId = -1;
+    private int popoverId = Constants.POPOVER_ID_DEFAULT;
 }

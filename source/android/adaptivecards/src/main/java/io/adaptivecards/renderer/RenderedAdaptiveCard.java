@@ -39,6 +39,7 @@ public class RenderedAdaptiveCard {
 
     private boolean lastValidationResult = false;
 
+    @Nullable
     private BottomSheetDialog popoverDailog;
 
     protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull ACTheme theme) {
@@ -169,7 +170,7 @@ public class RenderedAdaptiveCard {
         {
             // This variable is calculated out of the assignment as optimizations may make this code
             // not execute if allInputsAreValid is set to true
-            allInputsAreValid &= (i.isPopoverContent() || i.isValid());
+            allInputsAreValid &= i.isValid();
 
             // We populate the validated inputs only if all inputs are valid, otherwise, just save time
             if (allInputsAreValid)
@@ -253,11 +254,12 @@ public class RenderedAdaptiveCard {
         lastValidationResult = false;
     }
 
+    @Nullable
     public BottomSheetDialog getPopoverDailog() {
         return popoverDailog;
     }
 
-    public void setPopoverDailog(BottomSheetDialog popoverDailog) {
+    public void setPopoverDailog(@NonNull BottomSheetDialog popoverDailog) {
         this.popoverDailog = popoverDailog;
     }
 }

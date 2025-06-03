@@ -62,7 +62,7 @@ public class TextInputValidationTest
 
     private TextInputHandler createTextInputHandler(TextInput textInput)
     {
-        TextInputHandler textInputHandler = new TextInputHandler(textInput, null, TestUtil.createMockRenderArgs(-1));
+        TextInputHandler textInputHandler = new TextInputHandler(textInput, null, TestUtil.createMockRenderArgs());
         textInputHandler.setView(new EditText(InstrumentationRegistry.getContext()));
         return textInputHandler;
     }
@@ -71,7 +71,7 @@ public class TextInputValidationTest
     {
         class CustomTextInputHandler extends TextInputHandler
         {
-            public CustomTextInputHandler(BaseInputElement baseInputElement) { super(baseInputElement, null, TestUtil.createMockRenderArgs(-1)); }
+            public CustomTextInputHandler(BaseInputElement baseInputElement) { super(baseInputElement, null, TestUtil.createMockRenderArgs()); }
 
             @Override
             public boolean isValidOnSpecifics(String NumberInputValue) { return true; }
