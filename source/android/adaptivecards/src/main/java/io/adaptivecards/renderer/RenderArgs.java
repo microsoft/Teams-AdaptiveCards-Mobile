@@ -29,7 +29,12 @@ public class RenderArgs {
         setColumnHeader(renderArgs.isColumnHeader());
         setHorizontalAlignment(renderArgs.getHorizontalAlignment());
         setAncestorHasSelectAction(renderArgs.getAncestorHasSelectAction());
-        setPopoverId(renderArgs.getPopoverId());
+        this.popoverId = renderArgs.getPopoverId();
+    }
+
+    public RenderArgs(RenderArgs renderArgs, int popoverId) {
+        this(renderArgs);
+        this.popoverId = popoverId;
     }
 
     public boolean getAncestorHasFallback()
@@ -140,9 +145,9 @@ public class RenderArgs {
         return popoverId;
     }
 
-    public void setPopoverId(int popoverId) {
-        this.popoverId = popoverId;
-    }
+//    public void setPopoverId(int popoverId) {
+//        this.popoverId = popoverId;
+//    }
 
     public boolean isPopoverContent() {
         return this.popoverId != -1;

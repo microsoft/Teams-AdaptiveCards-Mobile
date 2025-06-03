@@ -378,17 +378,11 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                     viewGroup,
                     m_cardActionHandler,
                     m_hostConfig,
-                    getUpdatedRenderedArgsForPopover(parentViewId),
+                    new RenderArgs(m_renderArgs, parentViewId),
                     CardRendererRegistration.getInstance().getFeatureRegistration());
             } catch (Exception e) {
                 Log.e("BaseActionElementRend", "Error rendering popover content", e);
             }
-        }
-
-        private RenderArgs getUpdatedRenderedArgsForPopover(int popoverId) {
-            RenderArgs updatedsRenderArgs = new RenderArgs(m_renderArgs);
-            updatedsRenderArgs.setPopoverId(popoverId);
-            return updatedsRenderArgs;
         }
 
         private void handleToggleVisibilityAction(View v)
