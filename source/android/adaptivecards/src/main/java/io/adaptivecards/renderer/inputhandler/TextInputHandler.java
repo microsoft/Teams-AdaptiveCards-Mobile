@@ -10,14 +10,15 @@ import java.util.regex.Pattern;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.TextInput;
+import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.AfterTextChangedListener;
 
 public class TextInputHandler extends BaseInputHandler
 {
-    public TextInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, Long cardId){
-        super(baseInputElement, renderedAdaptiveCard, cardId);
+    public TextInputHandler(BaseInputElement baseInputElement, RenderedAdaptiveCard renderedAdaptiveCard, RenderArgs renderArgs){
+        super(baseInputElement, renderedAdaptiveCard, renderArgs);
     }
 
     protected EditText getEditText()

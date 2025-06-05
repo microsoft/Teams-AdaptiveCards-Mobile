@@ -27,6 +27,16 @@ public interface IInputHandler
     boolean isValid();
 
     /**
+     * @return check if the input view is inside popover
+     */
+    boolean isPopoverContent();
+
+    /**
+     * @return popoverId if inside popover, else it is -1
+     */
+    int getPopoverId();
+
+    /**
      * @return check if the input view is valid or not
      * and can skip showing the error if required
      */

@@ -52,6 +52,54 @@ public class SeparatorConfig {
     return AdaptiveCardObjectModelJNI.SeparatorConfig_lineColor_get(swigCPtr, this);
   }
 
+  public void setLineColorDefault(String value) {
+    AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorDefault_set(swigCPtr, this, value);
+  }
+
+  public String getLineColorDefault() {
+    return AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorDefault_get(swigCPtr, this);
+  }
+
+  public void setLineColorEmphasis(String value) {
+    AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorEmphasis_set(swigCPtr, this, value);
+  }
+
+  public String getLineColorEmphasis() {
+    return AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorEmphasis_get(swigCPtr, this);
+  }
+
+  public void setLineColorGood(String value) {
+    AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorGood_set(swigCPtr, this, value);
+  }
+
+  public String getLineColorGood() {
+    return AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorGood_get(swigCPtr, this);
+  }
+
+  public void setLineColorAttention(String value) {
+    AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorAttention_set(swigCPtr, this, value);
+  }
+
+  public String getLineColorAttention() {
+    return AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorAttention_get(swigCPtr, this);
+  }
+
+  public void setLineColorWarning(String value) {
+    AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorWarning_set(swigCPtr, this, value);
+  }
+
+  public String getLineColorWarning() {
+    return AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorWarning_get(swigCPtr, this);
+  }
+
+  public void setLineColorAccent(String value) {
+    AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorAccent_set(swigCPtr, this, value);
+  }
+
+  public String getLineColorAccent() {
+    return AdaptiveCardObjectModelJNI.SeparatorConfig_lineColorAccent_get(swigCPtr, this);
+  }
+
   public static SeparatorConfig Deserialize(JsonValue json, SeparatorConfig defaultValue) {
     return new SeparatorConfig(AdaptiveCardObjectModelJNI.SeparatorConfig_Deserialize(JsonValue.getCPtr(json), json, SeparatorConfig.getCPtr(defaultValue), defaultValue), true);
   }

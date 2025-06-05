@@ -65,7 +65,7 @@ public class ToggleInputRenderer extends BaseCardElementRenderer
         }
 
         ToggleInput toggleInput = Util.castTo(baseCardElement, ToggleInput.class);
-        final ToggleInputHandler toggleInputHandler = new ToggleInputHandler(toggleInput, renderedCard, renderArgs.getContainerCardId());
+        final ToggleInputHandler toggleInputHandler = new ToggleInputHandler(toggleInput, renderedCard, renderArgs);
         ValidatedCheckBox checkBox = new ValidatedCheckBox(context,
                                                            getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)));
 

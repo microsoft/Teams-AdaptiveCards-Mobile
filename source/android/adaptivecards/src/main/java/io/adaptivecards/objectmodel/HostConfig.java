@@ -76,6 +76,10 @@ public class HostConfig {
     return AdaptiveCardObjectModelJNI.HostConfig_GetHighlightColor(swigCPtr, this, style.swigValue(), color.swigValue(), isSubtle);
   }
 
+  public String GetSeparatorColor(ContainerStyle style, SeparatorConfig separator) {
+    return AdaptiveCardObjectModelJNI.HostConfig_GetSeparatorColor(swigCPtr, this, style.swigValue(), SeparatorConfig.getCPtr(separator), separator);
+  }
+
   public String GetBorderColor(ContainerStyle style) {
     return AdaptiveCardObjectModelJNI.HostConfig_GetBorderColor(swigCPtr, this, style.swigValue());
   }
