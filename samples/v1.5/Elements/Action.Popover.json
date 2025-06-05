@@ -91,6 +91,69 @@
 			"actions": [
 				{
 					"type": "Action.Popover",
+					"title": "Progress Bar",
+					"content": {
+						"type": "Container",
+						"roundedCorners": true,
+						"items": [
+							{
+								"type": "TextBlock",
+								"text": "Progress in Accent",
+								"color": "Accent"
+							},
+							{
+								"type": "ProgressBar",
+								"color": "Accent",
+								"value": 70
+							},
+							{
+								"type": "TextBlock",
+								"text": "Progress in Attention",
+								"color": "Attention"
+							},
+							{
+								"type": "ProgressBar",
+								"color": "Attention",
+								"value": 80
+							},
+							{
+								"type": "TextBlock",
+								"text": "Progress in Good",
+								"color": "Good"
+							},
+							{
+								"type": "ProgressBar",
+								"color": "Good",
+								"value": 30
+							},
+							{
+								"type": "TextBlock",
+								"text": "Progress in Warning",
+								"color": "Warning"
+							},
+							{
+								"type": "ProgressBar",
+								"color": "Warning",
+								"value": 90
+							},
+							{
+								"type": "TextBlock",
+								"text": "No Progress"
+							},
+							{
+								"type": "ProgressBar",
+								"color": "Accent"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Popover",
 					"title": "Select rating Popover",
 					"content": {
 						"type": "Container",
@@ -185,11 +248,9 @@
 			"type": "Action.Submit",
 			"title": "Submit"
 		},
-
 		{
 			"type": "Action.Execute",
 			"title": "Execute"
 		}
 	]
-
 }
