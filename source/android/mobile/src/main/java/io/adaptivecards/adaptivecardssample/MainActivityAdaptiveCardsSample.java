@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -50,6 +51,11 @@ import io.adaptivecards.renderer.registration.CardRendererRegistration;
 import io.adaptivecards.adaptivecardssample.CustomObjects.Actions.*;
 import io.adaptivecards.adaptivecardssample.CustomObjects.CardElements.*;
 import io.adaptivecards.adaptivecardssample.CustomObjects.Media.*;
+import kotlinx.coroutines.BuildersKt;
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.CoroutineStart;
+import kotlinx.coroutines.Dispatchers;
+import kotlinx.coroutines.GlobalScope;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +66,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -379,7 +386,17 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             hostConfig.SetActions(actionsConfig);
 
             ParseContext context = createParseContextForCustomElements();
-            ParseResult parseResult = AdaptiveCardNativeParser.INSTANCE.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, m_checkBox.isChecked(), context, getLifecycleScope(this));
+            ParseResult parseResult = AdaptiveCardNativeParser.INSTANCE.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
+            if (m_checkBox.isChecked()) {
+                try {
+
+                    // get the all the warnings
+                    Set<String> warnings = AdaptiveCardNativeParser.INSTANCE.evaluateNativeParsingDiff(jsonText, AdaptiveCardRenderer.VERSION, parseResult);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
             layout.removeAllViews();
 
