@@ -69,15 +69,14 @@ object AdaptiveCardNativeParser {
         val nativeParseResult = AdaptiveCardParser.deserializeFromString(
             stringifiedAdaptiveCard, rendererVersion, context
         )
-        val r = nativeParseResult.adaptiveCard.serialize()
-        Log.d("AdaptiveCardNativeParser", "nativeParseResult: $r")
+        val native = nativeParseResult.adaptiveCard.serialize()
+        val legacy = legacyParseResult.GetAdaptiveCard().Serialize()
 
-        if (nativeParseResult.toString() != legacyParseResult.toString()) {
-            val nativeJson = JSONObject(nativeParseResult.adaptiveCard.serialize())
-            val legacyJson = JSONObject(legacyParseResult.GetAdaptiveCard().Serialize())
+        if (native != legacy) {
+            val nativeJson = JSONObject(native)
+            val legacyJson = JSONObject(legacy)
             return compareJsonObjects(nativeJson, legacyJson)
         }
-
         return emptySet()
     }
 
