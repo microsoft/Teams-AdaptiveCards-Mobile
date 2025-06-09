@@ -279,6 +279,7 @@ enum class AdaptiveCardSchemaKey
     DisplayArrow,
     MaxPopoverWidth,
     Position,
+    Popover,
     ImageFitMode,
     HorizontalContentAlignment
 };

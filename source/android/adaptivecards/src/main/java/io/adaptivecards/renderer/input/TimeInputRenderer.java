@@ -62,7 +62,7 @@ public class TimeInputRenderer extends TextInputRenderer
         }
 
         TimeInput timeInput = Util.castTo(baseCardElement, TimeInput.class);
-        TimeInputHandler timeInputHandler = new TimeInputHandler(timeInput, new WeakReference<>(fragmentManager), renderedCard, renderArgs.getContainerCardId());
+        TimeInputHandler timeInputHandler = new TimeInputHandler(timeInput, new WeakReference<>(fragmentManager), renderedCard, renderArgs);
         String time = "";
         String value = timeInput.GetValue();
         if (RendererUtil.isValidTime(value) && !value.isEmpty())

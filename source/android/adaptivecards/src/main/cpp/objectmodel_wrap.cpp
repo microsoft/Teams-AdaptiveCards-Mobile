@@ -34498,6 +34498,90 @@ SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMode
 }
 
 
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverConfig_1backgroundColor_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  AdaptiveCards::PopoverConfig *arg1 = (AdaptiveCards::PopoverConfig *) 0 ;
+  std::string *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::PopoverConfig **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  if (arg1) (arg1)->backgroundColor = *arg2;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverConfig_1backgroundColor_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  AdaptiveCards::PopoverConfig *arg1 = (AdaptiveCards::PopoverConfig *) 0 ;
+  std::string *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::PopoverConfig **)&jarg1; 
+  result = (std::string *) & ((arg1)->backgroundColor);
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_PopoverConfig_1Deserialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
+  Json::Value *arg1 = 0 ;
+  AdaptiveCards::PopoverConfig *arg2 = 0 ;
+  AdaptiveCards::PopoverConfig result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(Json::Value **)&jarg1;
+  if (!arg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Json::Value const & reference is null");
+    return 0;
+  } 
+  arg2 = *(AdaptiveCards::PopoverConfig **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "AdaptiveCards::PopoverConfig const & reference is null");
+    return 0;
+  } 
+  result = AdaptiveCards::PopoverConfig::Deserialize((Json::Value const &)*arg1,(AdaptiveCards::PopoverConfig const &)*arg2);
+  *(AdaptiveCards::PopoverConfig **)&jresult = new AdaptiveCards::PopoverConfig((const AdaptiveCards::PopoverConfig &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_new_1PopoverConfig(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  AdaptiveCards::PopoverConfig *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (AdaptiveCards::PopoverConfig *)new AdaptiveCards::PopoverConfig();
+  *(AdaptiveCards::PopoverConfig **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_delete_1PopoverConfig(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  AdaptiveCards::PopoverConfig *arg1 = (AdaptiveCards::PopoverConfig *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(AdaptiveCards::PopoverConfig **)&jarg1; 
+  delete arg1;
+}
+
+
 SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ActionsConfig_1showCard_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   AdaptiveCards::ActionsConfig *arg1 = (AdaptiveCards::ActionsConfig *) 0 ;
   AdaptiveCards::ShowCardActionConfig *arg2 = (AdaptiveCards::ShowCardActionConfig *) 0 ;
@@ -34523,6 +34607,35 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   arg1 = *(AdaptiveCards::ActionsConfig **)&jarg1; 
   result = (AdaptiveCards::ShowCardActionConfig *)& ((arg1)->showCard);
   *(AdaptiveCards::ShowCardActionConfig **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ActionsConfig_1popover_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  AdaptiveCards::ActionsConfig *arg1 = (AdaptiveCards::ActionsConfig *) 0 ;
+  AdaptiveCards::PopoverConfig *arg2 = (AdaptiveCards::PopoverConfig *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(AdaptiveCards::ActionsConfig **)&jarg1; 
+  arg2 = *(AdaptiveCards::PopoverConfig **)&jarg2; 
+  if (arg1) (arg1)->popover = *arg2;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_ActionsConfig_1popover_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  AdaptiveCards::ActionsConfig *arg1 = (AdaptiveCards::ActionsConfig *) 0 ;
+  AdaptiveCards::PopoverConfig *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(AdaptiveCards::ActionsConfig **)&jarg1; 
+  result = (AdaptiveCards::PopoverConfig *)& ((arg1)->popover);
+  *(AdaptiveCards::PopoverConfig **)&jresult = result; 
   return jresult;
 }
 

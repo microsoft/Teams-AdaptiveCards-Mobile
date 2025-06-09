@@ -8,6 +8,9 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import io.adaptivecards.objectmodel.BaseInputElement;
 import io.adaptivecards.objectmodel.ErrorMessageConfig;
 import io.adaptivecards.objectmodel.FontType;
 import io.adaptivecards.objectmodel.ForegroundColor;
@@ -90,6 +93,13 @@ public class InputUtil
         errorMessageView.setVisibility(View.GONE);
 
         return errorMessageView;
+    }
+
+    // set isRequired false in case of popover content
+    public static void setIsRequired(@NonNull BaseInputElement baseInputElement, @NonNull RenderArgs renderArgs) {
+        if (baseInputElement.GetIsRequired()) {
+            baseInputElement.SetIsRequired(!renderArgs.isPopoverContent());
+        }
     }
 
 }

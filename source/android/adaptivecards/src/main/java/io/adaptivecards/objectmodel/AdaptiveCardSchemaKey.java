@@ -280,6 +280,7 @@ public enum AdaptiveCardSchemaKey {
   DisplayArrow,
   MaxPopoverWidth,
   Position,
+  Popover,
   ImageFitMode,
   HorizontalContentAlignment;
 
