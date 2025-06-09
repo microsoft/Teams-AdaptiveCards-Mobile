@@ -4,20 +4,18 @@
 	"body": [
 		{
 			"type": "Container",
-			"layouts": [
-				{
-					"type": "Layout.Flow"
-				}
-			],
+			"layouts": [],
 			"items": [
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain"
 						},
 						{
@@ -29,12 +27,14 @@
 				},
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "left",
 							"verticalContentAlignment": "center"
@@ -48,12 +48,14 @@
 				},
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "left",
 							"verticalContentAlignment": "bottom"
@@ -67,12 +69,14 @@
 				},
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "center"
 						},
@@ -85,12 +89,14 @@
 				},
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "center",
 							"verticalContentAlignment": "center"
@@ -104,12 +110,14 @@
 				},
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "center",
 							"verticalContentAlignment": "bottom"
@@ -123,12 +131,14 @@
 				},
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "right"
 						},
@@ -141,12 +151,14 @@
 				},
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "right",
 							"verticalContentAlignment": "center"
@@ -160,12 +172,14 @@
 				},
 				{
 					"type": "Container",
+					"showBorder": true,
+					"roundedCorners": true,
 					"items": [
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
+							"height": "100px",
+							"width": "400px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "right",
 							"verticalContentAlignment": "bottom"
