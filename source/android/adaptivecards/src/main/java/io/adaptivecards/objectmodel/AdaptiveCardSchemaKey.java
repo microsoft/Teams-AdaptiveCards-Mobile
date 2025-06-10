@@ -137,12 +137,6 @@ public enum AdaptiveCardSchemaKey {
   Light,
   Lighter,
   LineColor,
-  LineColorDefault,
-  LineColorEmphasis,
-  LineColorGood,
-  LineColorAttention,
-  LineColorWarning,
-  LineColorAccent,
   LineThickness,
   Max,
   MaxActions,
@@ -280,6 +274,7 @@ public enum AdaptiveCardSchemaKey {
   DisplayArrow,
   MaxPopoverWidth,
   Position,
+  Popover,
   ImageFitMode,
   HorizontalContentAlignment;
 

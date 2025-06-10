@@ -191,6 +191,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:' + androidxKotlinCoreVersion
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
     implementation "com.caverock:androidsvg-aar:$androidsvg"
+    implementation "com.google.android.material:material:$googleMaterialVersion"
 
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:${androidxViewPager2Version}"

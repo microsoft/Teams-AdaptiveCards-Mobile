@@ -1701,8 +1701,15 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long ShowCardActionConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, ShowCardActionConfig jarg2_);
   public final static native long new_ShowCardActionConfig();
   public final static native void delete_ShowCardActionConfig(long jarg1);
+  public final static native void PopoverConfig_backgroundColor_set(long jarg1, PopoverConfig jarg1_, String jarg2);
+  public final static native String PopoverConfig_backgroundColor_get(long jarg1, PopoverConfig jarg1_);
+  public final static native long PopoverConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, PopoverConfig jarg2_);
+  public final static native long new_PopoverConfig();
+  public final static native void delete_PopoverConfig(long jarg1);
   public final static native void ActionsConfig_showCard_set(long jarg1, ActionsConfig jarg1_, long jarg2, ShowCardActionConfig jarg2_);
   public final static native long ActionsConfig_showCard_get(long jarg1, ActionsConfig jarg1_);
+  public final static native void ActionsConfig_popover_set(long jarg1, ActionsConfig jarg1_, long jarg2, PopoverConfig jarg2_);
+  public final static native long ActionsConfig_popover_get(long jarg1, ActionsConfig jarg1_);
   public final static native void ActionsConfig_actionsOrientation_set(long jarg1, ActionsConfig jarg1_, int jarg2);
   public final static native int ActionsConfig_actionsOrientation_get(long jarg1, ActionsConfig jarg1_);
   public final static native void ActionsConfig_actionAlignment_set(long jarg1, ActionsConfig jarg1_, int jarg2);
