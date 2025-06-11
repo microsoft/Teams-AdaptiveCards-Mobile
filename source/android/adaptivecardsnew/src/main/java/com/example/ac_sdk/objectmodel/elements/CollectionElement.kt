@@ -60,7 +60,7 @@ sealed class CollectionElement {
     @SerialName("Column")
     data class Column(
         @Serializable(with = WidthSerializer::class)
-        var width: String = "auto",
+        var width: String = "Auto",
         var pixelWidth: Int = 0,
         var items: List<BaseCardElement> = emptyList(),
         var rtl: Boolean? = null,

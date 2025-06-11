@@ -5,6 +5,7 @@ package com.example.ac_sdk.objectmodel.elements
 import com.example.ac_sdk.objectmodel.elements.models.Choice
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
+import com.example.ac_sdk.objectmodel.utils.TextInputStyle
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
@@ -17,7 +18,7 @@ sealed class InputElement {
         val isMultiline: Boolean? = null,
         val maxLength: Int? = null,
         val placeholder: String? = null,
-        val style: String? = null,
+        val style: TextInputStyle? = null,
         val value: String? = null,
         val regex: String? = null,
         val inlineAction: BaseActionElement? = null

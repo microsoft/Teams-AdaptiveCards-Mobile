@@ -56,19 +56,19 @@ enum class ChoiceSetStyle {
 }
 
 enum class TextInputStyle {
-    @SerialName("email")
+    @SerialName("Email")
     MAIL,
 
-    @SerialName("tel")
+    @SerialName("Tel")
     TEL,
 
-    @SerialName("text")
+    @SerialName("Text")
     TEXT,
 
-    @SerialName("url")
+    @SerialName("Url")
     URL,
 
-    @SerialName("password")
+    @SerialName("Password")
     PASSWORD
 }
 

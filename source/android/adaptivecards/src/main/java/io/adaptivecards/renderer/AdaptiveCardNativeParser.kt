@@ -72,6 +72,9 @@ object AdaptiveCardNativeParser {
         val native = nativeParseResult.adaptiveCard.serialize()
         val legacy = legacyParseResult.GetAdaptiveCard().Serialize()
 
+       // Log.d("Check_point_Native", native);
+       // Log.d("Check_point_Legacy", legacy);
+
         if (native != legacy) {
             val nativeJson = JSONObject(native)
             val legacyJson = JSONObject(legacy)
@@ -84,25 +87,50 @@ object AdaptiveCardNativeParser {
         nativeJson: JSONObject, legacyJson: JSONObject, path: String = ""
     ): Set<String> {
         val diffs = mutableSetOf<String>()
-        val keys = (nativeJson.keys().asSequence().toSet() + legacyJson.keys().asSequence().toSet())
+        val allKeys = nativeJson.keys().asSequence().toSet() + legacyJson.keys().asSequence().toSet()
 
-        for (key in keys) {
+        val type = takeIf { legacyJson.has("type") }?.let {
+            legacyJson.getString("type")
+        } ?: ""
+        for (key in allKeys) {
+            if (key == "type" || key == "grid.area" || key == "\$schema") continue
+
             val newPath = if (path.isEmpty()) key else "$path.$key"
 
-            if (!nativeJson.has(key)) {
-                diffs.add("Key missing in native : $newPath - Parent: $path")
-            } else if (!legacyJson.has(key)) {
-                diffs.add("Key missing in legacy: $newPath - Parent: $path")
-            } else {
-                val nativeValue = nativeJson.get(key)
-                val legacyValue = legacyJson.get(key)
+            val nativeHasKey = nativeJson.has(key)
+            val legacyHasKey = legacyJson.has(key)
 
-                when {
-                    nativeValue is JSONObject && legacyValue is JSONObject ->
-                        diffs.addAll(compareJsonObjects(nativeValue, legacyValue, newPath))
+            when {
+                !nativeHasKey && legacyHasKey -> {
+                    val legacyValue = legacyJson.get(key)
+                    if (legacyValue is JSONObject) {
+                        diffs.add("Key missing in native: $newPath, value: $legacyValue, type: $type")
+                    } else if (legacyValue is JSONArray) {
+                        diffs.add("Key missing in native: $newPath, value:  $legacyValue, type: $type")
+                    } else {
+                        diffs.add("Key missing in native: $newPath, Value: $legacyValue, type: $type")
+                    }
+                }
 
-                    nativeValue is JSONArray && legacyValue is JSONArray ->
-                        diffs.addAll(compareJsonArrays(nativeValue, legacyValue, newPath))
+                nativeHasKey && !legacyHasKey -> {
+                    diffs.add("Key missing in legacy: $newPath")
+                }
+
+                nativeHasKey && legacyHasKey -> {
+                    val nativeValue = nativeJson.get(key)
+                    val legacyValue = legacyJson.get(key)
+
+                    when {
+                        nativeValue is JSONObject && legacyValue is JSONObject ->
+                            diffs.addAll(compareJsonObjects(nativeValue, legacyValue, newPath))
+
+                        nativeValue is JSONArray && legacyValue is JSONArray ->
+                            diffs.addAll(compareJsonArrays(nativeValue, legacyValue, newPath))
+
+                        nativeValue != legacyValue -> {
+                            diffs.add("Value mismatch at $newPath - Native: $nativeValue, Legacy: $legacyValue")
+                        }
+                    }
                 }
             }
         }

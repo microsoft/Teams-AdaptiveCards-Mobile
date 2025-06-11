@@ -30,7 +30,7 @@ sealed class BaseActionElement : BaseElement() {
     val mode: Mode? = null
 
     @SerialName("role")
-    val role: ActionRole? = null
+    var role: ActionRole? = null
 
     override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
         return super.populateKnownPropertiesSet().apply {

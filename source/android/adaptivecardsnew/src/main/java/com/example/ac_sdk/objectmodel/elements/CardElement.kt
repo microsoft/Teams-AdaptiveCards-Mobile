@@ -20,6 +20,7 @@ import com.example.ac_sdk.objectmodel.utils.ProgressSize
 import com.example.ac_sdk.objectmodel.utils.TextSize
 import com.example.ac_sdk.objectmodel.utils.TextStyle
 import com.example.ac_sdk.objectmodel.utils.TextWeight
+import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -68,8 +69,9 @@ sealed class CardElement {
         val altText: String? = null,
         val backgroundColor: String? = "",
         val horizontalAlignment: HorizontalAlignment? = null,
-        val size: ImageSize? = ImageSize.AUTO,
-        val style: ImageStyle? = ImageStyle.DEFAULT,
+        @EncodeDefault
+        val size: ImageSize = ImageSize.AUTO,
+        val style: ImageStyle = ImageStyle.DEFAULT,
         val pixelWidth: Int = 0,
         val pixelHeight: Int = 0,
         val selectAction: BaseActionElement? = null

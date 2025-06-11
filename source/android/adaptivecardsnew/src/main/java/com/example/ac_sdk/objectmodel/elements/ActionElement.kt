@@ -4,6 +4,7 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.AdaptiveCard
 import com.example.ac_sdk.objectmodel.serializer.TargetElementSerializer
+import com.example.ac_sdk.objectmodel.utils.ActionRole
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
 import com.example.ac_sdk.objectmodel.utils.AssociatedInputs
 import kotlinx.serialization.*
@@ -31,8 +32,13 @@ sealed class ActionElement {
     @Serializable
     @SerialName("Action.OpenUrl")
     data class ActionOpenUrl(
-        val url: String
+        val url: String,
     ) : BaseActionElement() {
+        init {
+            takeIf { role == null }?.let {
+                role = ActionRole.LINK
+            }
+        }
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
                 listOf(
