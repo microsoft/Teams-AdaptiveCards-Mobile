@@ -457,9 +457,15 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getHorizontalAlignmentEnum();
   public final static native String HorizontalAlignmentToString(int jarg1);
   public final static native int HorizontalAlignmentFromString(String jarg1);
+  public final static native long getHorizontalContentAlignmentEnum();
+  public final static native String HorizontalContentAlignmentToString(int jarg1);
+  public final static native int HorizontalContentAlignmentFromString(String jarg1);
   public final static native long getVerticalAlignmentEnum();
   public final static native String VerticalAlignmentToString(int jarg1);
   public final static native int VerticalAlignmentFromString(String jarg1);
+  public final static native long getVerticalContentAlignmentEnum();
+  public final static native String VerticalContentAlignmentToString(int jarg1);
+  public final static native int VerticalContentAlignmentFromString(String jarg1);
   public final static native long getIconSizeEnum();
   public final static native String IconSizeToString(int jarg1);
   public final static native int IconSizeFromString(String jarg1);
@@ -481,6 +487,9 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getImageSizeEnum();
   public final static native String ImageSizeToString(int jarg1);
   public final static native int ImageSizeFromString(String jarg1);
+  public final static native long getImageFitModeEnum();
+  public final static native String ImageFitModeToString(int jarg1);
+  public final static native int ImageFitModeFromString(String jarg1);
   public final static native long getTextInputStyleEnum();
   public final static native String TextInputStyleToString(int jarg1);
   public final static native int TextInputStyleFromString(String jarg1);
@@ -526,9 +535,6 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long getIconPlacementEnum();
   public final static native String IconPlacementToString(int jarg1);
   public final static native int IconPlacementFromString(String jarg1);
-  public final static native long getVerticalContentAlignmentEnum();
-  public final static native String VerticalContentAlignmentToString(int jarg1);
-  public final static native int VerticalContentAlignmentFromString(String jarg1);
   public final static native long getPageAnimationEnum();
   public final static native String PageAnimationToString(int jarg1);
   public final static native int PageAnimationFromString(String jarg1);
@@ -945,6 +951,12 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_RatingLabelParser(long jarg1);
   public final static native long RatingLabelParser_Deserialize(long jarg1, RatingLabelParser jarg1_, long jarg2, ParseContext jarg2_, long jarg3, JsonValue jarg3_);
   public final static native long RatingLabelParser_DeserializeFromString(long jarg1, RatingLabelParser jarg1_, long jarg2, ParseContext jarg2_, String jarg3);
+  public final static native void DEFAULT_IMAGE_FIT_MODE_set(int jarg1);
+  public final static native int DEFAULT_IMAGE_FIT_MODE_get();
+  public final static native void DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT_set(int jarg1);
+  public final static native int DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT_get();
+  public final static native void DEFAULT_VERTICAL_CONTENT_ALIGNMENT_set(int jarg1);
+  public final static native int DEFAULT_VERTICAL_CONTENT_ALIGNMENT_get();
   public final static native long new_Image__SWIG_0();
   public final static native long new_Image__SWIG_1(long jarg1, Image jarg1_);
   public final static native void delete_Image(long jarg1);
@@ -959,6 +971,9 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void Image_SetImageStyle(long jarg1, Image jarg1_, int jarg2);
   public final static native int Image_GetImageSize(long jarg1, Image jarg1_);
   public final static native void Image_SetImageSize(long jarg1, Image jarg1_, int jarg2);
+  public final static native int Image_GetImageFitMode(long jarg1, Image jarg1_);
+  public final static native int Image_GetHorizontalContentAlignment(long jarg1, Image jarg1_);
+  public final static native int Image_GetVerticalContentAlignment(long jarg1, Image jarg1_);
   public final static native String Image_GetAltText(long jarg1, Image jarg1_);
   public final static native void Image_SetAltText(long jarg1, Image jarg1_, String jarg2);
   public final static native long Image_GetHorizontalAlignment(long jarg1, Image jarg1_);

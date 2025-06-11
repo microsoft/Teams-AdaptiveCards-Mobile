@@ -279,7 +279,9 @@ enum class AdaptiveCardSchemaKey
     DisplayArrow,
     MaxPopoverWidth,
     Position,
-    Popover
+    Popover,
+    ImageFitMode,
+    HorizontalContentAlignment
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -381,13 +383,26 @@ enum class HorizontalAlignment
 };
 DECLARE_ADAPTIVECARD_ENUM(HorizontalAlignment);
 
-enum class VerticalAlignment
-{
+enum class HorizontalContentAlignment {
+    Left = 0,
+    Center,
+    Right
+};
+DECLARE_ADAPTIVECARD_ENUM(HorizontalContentAlignment);
+
+enum class VerticalAlignment {
     Top = 0,
     Center,
     Bottom
 };
 DECLARE_ADAPTIVECARD_ENUM(VerticalAlignment);
+
+enum class VerticalContentAlignment {
+    Top = 0,
+    Center,
+    Bottom
+};
+DECLARE_ADAPTIVECARD_ENUM(VerticalContentAlignment);
 
 enum class IconSize
 {
@@ -452,6 +467,13 @@ enum class ImageSize
     Large,
 };
 DECLARE_ADAPTIVECARD_ENUM(ImageSize);
+
+enum class ImageFitMode {
+    Cover,
+    Contain,
+    Fill
+};
+DECLARE_ADAPTIVECARD_ENUM(ImageFitMode);
 
 enum class TextInputStyle
 {
@@ -672,15 +694,6 @@ enum class IconPlacement
     RightOfTitle
 };
 DECLARE_ADAPTIVECARD_ENUM(IconPlacement);
-
-enum class VerticalContentAlignment
-{
-    Top = 0,
-    Center,
-    Bottom
-};
-
-DECLARE_ADAPTIVECARD_ENUM(VerticalContentAlignment);
 
 enum class PageAnimation
 {

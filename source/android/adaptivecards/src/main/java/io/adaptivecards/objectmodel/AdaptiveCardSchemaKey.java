@@ -280,7 +280,9 @@ public enum AdaptiveCardSchemaKey {
   DisplayArrow,
   MaxPopoverWidth,
   Position,
-  Popover;
+  Popover,
+  ImageFitMode,
+  HorizontalContentAlignment;
 
   public final int swigValue() {
     return swigValue;

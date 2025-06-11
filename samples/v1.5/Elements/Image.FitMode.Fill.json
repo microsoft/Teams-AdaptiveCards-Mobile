@@ -1,0 +1,174 @@
+{
+	"type": "AdaptiveCard",
+	"version": "1.5",
+	"body": [
+		{
+			"type": "Container",
+			"layouts": [
+				{
+					"type": "Layout.Flow"
+				}
+			],
+			"items": [
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Left Top"
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px",
+							"horizontalContentAlignment": "left",
+							"verticalContentAlignment": "center"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Left Center"
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px",
+							"horizontalContentAlignment": "left",
+							"verticalContentAlignment": "bottom"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Left Bottom"
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px",
+							"horizontalContentAlignment": "center"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Center Top"
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px",
+							"horizontalContentAlignment": "center",
+							"verticalContentAlignment": "center"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Center Center"
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px",
+							"horizontalContentAlignment": "center",
+							"verticalContentAlignment": "bottom"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Center Bottom"
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px",
+							"horizontalContentAlignment": "right"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Right Top"
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px",
+							"horizontalContentAlignment": "right",
+							"verticalContentAlignment": "center"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Right Center"
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "300px",
+							"width": "200px",
+							"horizontalContentAlignment": "right",
+							"verticalContentAlignment": "bottom"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Large",
+							"text": "Fill Right Bottom"
+						}
+					]
+				}
+			]
+		}
+	]
+}
