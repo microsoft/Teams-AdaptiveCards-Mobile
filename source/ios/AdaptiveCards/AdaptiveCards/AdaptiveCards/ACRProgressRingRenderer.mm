@@ -32,7 +32,91 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
-    return nil;
+    std::shared_ptr<BaseCardElement> elem = [acoElem element];
+    std::shared_ptr<ProgressRing> progressRing = std::dynamic_pointer_cast<ProgressRing>(elem);
+    UIActivityIndicatorViewStyle style;
+    switch (progressRing->GetSize()) {
+        case AdaptiveCards::ProgressSize::Tiny:
+        case AdaptiveCards::ProgressSize::Small:
+            style = UIActivityIndicatorViewStyleMedium;
+            break;
+        case AdaptiveCards::ProgressSize::Medium:
+        case AdaptiveCards::ProgressSize::Large:
+            style = UIActivityIndicatorViewStyleLarge;
+            break;
+    }
+
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:style];
+    [activityIndicator startAnimating];
+    activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    label.font = [UIFont systemFontOfSize:15];
+    label.numberOfLines = 0;
+    label.adjustsFontSizeToFitWidth = NO;
+    label.text = [NSString stringWithUTF8String:progressRing->GetLabel().c_str()];
+
+    [activityIndicator setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [activityIndicator setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [label setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [label setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+
+    UIStackView *loaderView;
+    UILayoutConstraintAxis axis;
+    CGFloat spacing = 2;
+
+    switch (progressRing->GetLabelPosition())
+    {
+        case AdaptiveCards::LabelPosition::Above:
+            loaderView = [[UIStackView alloc] initWithArrangedSubviews:@[label, activityIndicator]];
+            axis = UILayoutConstraintAxisVertical;
+            break;
+        case AdaptiveCards::LabelPosition::Below:
+            loaderView = [[UIStackView alloc] initWithArrangedSubviews:@[activityIndicator, label]];
+            axis = UILayoutConstraintAxisVertical;
+            break;
+        case AdaptiveCards::LabelPosition::Before:
+            loaderView = [[UIStackView alloc] initWithArrangedSubviews:@[label, activityIndicator]];
+            axis = UILayoutConstraintAxisHorizontal;
+            break;
+        case AdaptiveCards::LabelPosition::After:
+            loaderView = [[UIStackView alloc] initWithArrangedSubviews:@[activityIndicator, label]];
+            axis = UILayoutConstraintAxisHorizontal;
+            break;
+    }
+    
+    loaderView.axis = axis;
+    loaderView.spacing = spacing;
+    loaderView.alignment = UIStackViewAlignmentCenter;
+    loaderView.distribution = UIStackViewDistributionFill;
+    loaderView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UIStackView *containerView = [[UIStackView alloc] initWithArrangedSubviews:@[loaderView]];
+    containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    containerView.axis = UILayoutConstraintAxisVertical;
+
+    switch (progressRing->GetHorizontalAlignment())
+    {
+        case AdaptiveCards::HorizontalAlignment::Left:
+            containerView.alignment = UIStackViewAlignmentLeading;
+            break;
+        case AdaptiveCards::HorizontalAlignment::Center:
+            containerView.alignment = UIStackViewAlignmentCenter;
+            break;
+        case AdaptiveCards::HorizontalAlignment::Right:
+            containerView.alignment = UIStackViewAlignmentTrailing;
+            break;
+    }
+
+    viewGroup.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UIStackView *wrapperView = [[UIStackView alloc] initWithArrangedSubviews:@[containerView]];
+
+    NSString *areaName = stringForCString(elem->GetAreaGridName());
+    [viewGroup addArrangedSubview:wrapperView withAreaName:areaName];
+    return wrapperView;
 }
+
 
 @end
