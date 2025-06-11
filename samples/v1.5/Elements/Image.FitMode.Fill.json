@@ -17,7 +17,8 @@
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
 							"height": "auto",
-							"width": "auto"
+							"width": "auto",
+							"fitMode": "fill"
 						},
 						{
 							"type": "TextBlock",
@@ -48,8 +49,9 @@
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "200px",
-							"width": "400px"
+							"height": "100px",
+							"width": "300px",
+							"fitMode": "fill"
 						},
 						{
 							"type": "TextBlock",
@@ -65,7 +67,8 @@
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
 							"height": "400px",
-							"width": "200px"
+							"width": "200px",
+							"fitMode": "fill"
 						},
 						{
 							"type": "TextBlock",
@@ -80,8 +83,8 @@
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px"
+							"height": "300px",
+							"width": "300px"
 						},
 						{
 							"type": "TextBlock",
@@ -129,7 +132,7 @@
 							"type": "Image",
 							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
 							"height": "200px",
-							"width": "400px"
+							"width": "300px"
 						},
 						{
 							"type": "TextBlock",
@@ -161,7 +164,7 @@
 							"type": "Image",
 							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
 							"height": "400px",
-							"width": "400px"
+							"width": "300px"
 						},
 						{
 							"type": "TextBlock",

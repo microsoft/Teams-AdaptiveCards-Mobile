@@ -5,69 +5,23 @@
 		{
 			"type": "Container",
 			"layouts": [
-				{
-
-				}
+				{}
 			],
 			"items": [
 				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "1A Contain Left Top"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Large",
+					"text": "Potrait Image (Without fitMode)"
 				},
 				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "1A Contain Left Top"
-						}
-					]
+					"type": "Image",
+					"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
+					"size": "Medium"
 				},
 				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "left",
-							"verticalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "1B Contain Left Center"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Large",
+					"text": "Potrait Image (fitMode as Contain)"
 				},
 				{
 					"type": "Container",
@@ -77,266 +31,63 @@
 						{
 							"type": "Image",
 							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
+							"height": "250px",
+							"width": "250px",
 							"fitMode": "contain",
-							"horizontalContentAlignment": "left",
-							"verticalContentAlignment": "center"
+							"horizontalContentAlignment": "left"
 						},
 						{
 							"type": "TextBlock",
-							"size": "Large",
-							"text": "1B Contain Left Center"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "left",
-							"verticalContentAlignment": "bottom"
+							"size": "Medium",
+							"text": "Horizontal Left"
 						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "1C Contain Left Bottom"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
 						{
 							"type": "Image",
 							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "left",
-							"verticalContentAlignment": "bottom"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "1C Contain Left Bottom"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
+							"height": "250px",
+							"width": "250px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "center"
 						},
 						{
 							"type": "TextBlock",
-							"size": "Large",
-							"text": "2A Contain Center Top"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
+							"size": "Medium",
+							"text": "Horizontal Center"
+						},
 						{
 							"type": "Image",
 							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "2A Contain Center Top"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "center",
-							"verticalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "2B Contain Center Center"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "center",
-							"verticalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "2B Contain Center Center"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "center",
-							"verticalContentAlignment": "bottom"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "2C Contain Center Bottom"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "center",
-							"verticalContentAlignment": "bottom"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "2C Contain Center Bottom"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
+							"height": "250px",
+							"width": "250px",
 							"fitMode": "contain",
 							"horizontalContentAlignment": "right"
 						},
 						{
 							"type": "TextBlock",
-							"size": "Large",
-							"text": "3A Contain Right Top"
+							"size": "Medium",
+							"text": "Horizontal Right"
 						}
 					]
 				},
 				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "right"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "3A Contain Right Top"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Large",
+					"text": "   "
 				},
 				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "right",
-							"verticalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "3B Contain Right Center"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Large",
+					"text": "Landscape Image (Without fitMode)"
 				},
 				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
-							"fitMode": "contain",
-							"horizontalContentAlignment": "right",
-							"verticalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "3B Contain Right Center"
-						}
-					]
+					"type": "Image",
+					"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+					"size": "Medium"
+				},
+				{
+					"type": "TextBlock",
+					"size": "Large",
+					"text": "Landscape Image (fitMode as Contain)"
 				},
 				{
 					"type": "Container",
@@ -346,37 +97,41 @@
 						{
 							"type": "Image",
 							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "400px",
-							"width": "400px",
+							"height": "250px",
+							"width": "250px",
 							"fitMode": "contain",
-							"horizontalContentAlignment": "right",
-							"verticalContentAlignment": "bottom"
+							"verticalContentAlignment": "top"
 						},
 						{
 							"type": "TextBlock",
-							"size": "Large",
-							"text": "3C Contain Right Bottom"
-						}
-					]
-				},
-				{
-					"type": "Container",
-					"showBorder": true,
-					"roundedCorners": true,
-					"items": [
+							"size": "Medium",
+							"text": "Vertical Top"
+						},
 						{
 							"type": "Image",
-							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
-							"width": "400px",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "250px",
+							"width": "250px",
 							"fitMode": "contain",
-							"horizontalContentAlignment": "right",
+							"verticalContentAlignment": "center"
+						},
+						{
+							"type": "TextBlock",
+							"size": "Medium",
+							"text": "Vertical Center"
+						},
+						{
+							"type": "Image",
+							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+							"height": "250px",
+							"width": "250px",
+							"fitMode": "contain",
 							"verticalContentAlignment": "bottom"
 						},
 						{
 							"type": "TextBlock",
-							"size": "Large",
-							"text": "3C Contain Right Bottom"
+							"size": "Medium",
+							"text": "Vertical Bottom"
 						}
 					]
 				}
