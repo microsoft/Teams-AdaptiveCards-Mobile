@@ -278,6 +278,9 @@
             "inlineTopMargin": 16,
             "style": "emphasis"
         },
+		"popover": {
+			"backgroundColor": "#ff2d2c2c"
+		},
         "preExpandSingleShowCardAction": false,
         "actionsOrientation": "Horizontal",
         "actionAlignment": "Left"

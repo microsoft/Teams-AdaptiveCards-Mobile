@@ -5,6 +5,7 @@ import org.junit.Assert;
 import java.lang.reflect.Array;
 import java.util.List;
 
+import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.inputhandler.BaseInputHandler;
 
@@ -84,6 +85,11 @@ public class TestUtil
     {
         AdaptiveCard adaptiveCard = new AdaptiveCard();
         return adaptiveCard;
+    }
+
+    public static RenderArgs createMockRenderArgs() {
+        RenderArgs renderArgs = new RenderArgs();
+        return renderArgs;
     }
 
     public static AdaptiveCard createSampleCard()

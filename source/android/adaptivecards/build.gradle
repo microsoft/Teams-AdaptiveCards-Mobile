@@ -10,7 +10,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
+    compileSdk = project.ext.compileSdkVersion
+    namespace = "io.adaptivecards"
 
     defaultConfig {
         minSdkVersion project.ext.minSdkVersion
@@ -36,19 +37,21 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
     ndkVersion '23.1.7779620'
-
-    lintOptions {
+    lint {
         abortOnError false
     }
 }
 
-task sourceJar(type: Jar) {
+tasks.register("sourcesJar", Jar) {
     from android.sourceSets.main.java.srcDirs
-    classifier "sources"
+    archiveClassifier = 'sources'
 }
 
 def projectInfo = {
@@ -187,7 +190,6 @@ dependencies {
     testImplementation 'junit:junit:' + junitVersion
     implementation 'androidx.core:core-ktx:' + androidxKotlinCoreVersion
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.caverock:androidsvg-aar:$androidsvg"
     implementation "com.google.android.material:material:$googleMaterialVersion"
 

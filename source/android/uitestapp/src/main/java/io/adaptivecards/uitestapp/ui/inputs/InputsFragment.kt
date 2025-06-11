@@ -38,16 +38,13 @@ class InputsFragment : Fragment() {
 
     private inner class InputsAdapter<T>(context: Context, resource: Int, itemsList: List<T>?) : ArrayAdapter<Any?>(context, resource, itemsList!!) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            var convertView: View? = convertView
-            if (convertView == null) {
-                convertView = layoutInflater.inflate(R.layout.inputs_list_item, parent, false)
-            }
+            val view = convertView ?: layoutInflater.inflate(R.layout.inputs_list_item, parent, false)
             val retrievedInput = getItem(position) as RetrievedInput?
             val inputIdTextView = convertView?.findViewById<TextView>(R.id.text_input_id)
-            inputIdTextView?.text = retrievedInput!!.id
+            inputIdTextView?.text = retrievedInput?.id
             val inputValueTextView = convertView?.findViewById<TextView>(R.id.text_input_value)
-            inputValueTextView?.text = retrievedInput.value
-            return convertView!!
+            inputValueTextView?.text = retrievedInput?.value
+            return view
         }
     }
 }

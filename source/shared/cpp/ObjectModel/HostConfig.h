@@ -174,6 +174,12 @@ struct SeparatorConfig
 {
     unsigned int lineThickness = 1;
     std::string lineColor = "#B2000000";
+    std::string lineColorDefault = "#B2000000";
+    std::string lineColorEmphasis = "#B2000000";
+    std::string lineColorGood = "#B2000000";
+    std::string lineColorAttention = "#B2000000";
+    std::string lineColorWarning = "#B2000000";
+    std::string lineColorAccent = "#B2000000";
 
     static SeparatorConfig Deserialize(const Json::Value& json, const SeparatorConfig& defaultValue);
 };
@@ -321,9 +327,16 @@ struct ShowCardActionConfig
     static ShowCardActionConfig Deserialize(const Json::Value& json, const ShowCardActionConfig& defaultValue);
 };
 
+struct PopoverConfig {
+    std::string backgroundColor = "#000000";
+
+    static PopoverConfig Deserialize(const Json::Value& json, const PopoverConfig& defaultValue);
+};
+
 struct ActionsConfig
 {
     ShowCardActionConfig showCard;
+    PopoverConfig popover;
     ActionsOrientation actionsOrientation = ActionsOrientation::Horizontal;
     ActionAlignment actionAlignment = ActionAlignment::Stretch;
     unsigned int buttonSpacing = 10;
@@ -548,6 +561,7 @@ public:
     std::string GetBackgroundColor(ContainerStyle style) const;
     std::string GetForegroundColor(ContainerStyle style, ForegroundColor color, bool isSubtle) const;
     std::string GetHighlightColor(ContainerStyle style, ForegroundColor color, bool isSubtle) const;
+    std::string GetSeparatorColor(ContainerStyle style, SeparatorConfig separator) const;
     std::string GetBorderColor(ContainerStyle style) const;
     unsigned int GetBorderWidth(CardElementType elementType) const;
     unsigned int GetCornerRadius(CardElementType elementType) const;

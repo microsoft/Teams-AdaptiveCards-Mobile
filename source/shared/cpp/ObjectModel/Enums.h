@@ -136,6 +136,12 @@ enum class AdaptiveCardSchemaKey
     Light,
     Lighter,
     LineColor,
+    LineColorDefault,
+    LineColorEmphasis,
+    LineColorGood,
+    LineColorAttention,
+    LineColorWarning,
+    LineColorAccent,
     LineThickness,
     Max,
     MaxActions,
@@ -272,7 +278,8 @@ enum class AdaptiveCardSchemaKey
     Content,
     DisplayArrow,
     MaxPopoverWidth,
-    Position
+    Position,
+    Popover
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);

@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import io.adaptivecards.objectmodel.BaseInputElement;
+import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
+import io.adaptivecards.renderer.input.InputUtil;
 import io.adaptivecards.renderer.layout.StretchableInputLayout;
 
 import java.util.ArrayList;
@@ -16,15 +18,17 @@ import java.util.List;
 
 public abstract class BaseInputHandler implements IInputHandler
 {
-    public BaseInputHandler(BaseInputElement baseInputElement) {
+    public BaseInputHandler(BaseInputElement baseInputElement, RenderArgs renderArgs) {
         m_baseInputElement = baseInputElement;
         m_inputWatchers = new ArrayList<>();
+        m_RenderArgs = renderArgs;
+        InputUtil.setIsRequired(baseInputElement, renderArgs);
     }
 
-    public BaseInputHandler(@NonNull BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, long cardId) {
-        this(baseInputElement);
+    public BaseInputHandler(@NonNull BaseInputElement baseInputElement, @Nullable RenderedAdaptiveCard renderedAdaptiveCard, RenderArgs renderArgs) {
+        this(baseInputElement, renderArgs);
         m_renderedAdaptiveCard = renderedAdaptiveCard;
-        m_cardId = cardId;
+        m_cardId = renderArgs.getContainerCardId();
     }
 
     public void setView(View view)
@@ -94,6 +98,16 @@ public abstract class BaseInputHandler implements IInputHandler
     }
 
     @Override
+    public boolean isPopoverContent() {
+        return m_RenderArgs.isPopoverContent();
+    }
+
+    @Override
+    public int getPopoverId() {
+        return m_RenderArgs.getPopoverId();
+    }
+
+    @Override
     public void addInputWatcher(IInputWatcher observer) {
         m_inputWatchers.add(observer);
     }
@@ -128,5 +142,6 @@ public abstract class BaseInputHandler implements IInputHandler
     @Nullable
     private RenderedAdaptiveCard m_renderedAdaptiveCard;
     private Long m_cardId;
+    private final RenderArgs m_RenderArgs;
 
 }

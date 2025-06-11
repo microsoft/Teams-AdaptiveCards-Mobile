@@ -159,6 +159,14 @@ public class BaseActionElement extends BaseElement {
     AdaptiveCardObjectModelJNI.BaseActionElement_SetIsEnabled(swigCPtr, this, isEnabled);
   }
 
+  public boolean GetIsRtl() {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_GetIsRtl(swigCPtr, this);
+  }
+
+  public void SetIsRtl(boolean isRtl) {
+    AdaptiveCardObjectModelJNI.BaseActionElement_SetIsRtl(swigCPtr, this, isRtl);
+  }
+
   public ActionRole GetRole() {
     return ActionRole.swigToEnum(AdaptiveCardObjectModelJNI.BaseActionElement_GetRole(swigCPtr, this));
   }

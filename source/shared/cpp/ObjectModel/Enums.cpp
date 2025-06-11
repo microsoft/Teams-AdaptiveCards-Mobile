@@ -134,6 +134,12 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Light, "light"},
             {AdaptiveCardSchemaKey::Lighter, "lighter"},
             {AdaptiveCardSchemaKey::LineColor, "lineColor"},
+            {AdaptiveCardSchemaKey::LineColorDefault, "lineColorDefault"},
+            {AdaptiveCardSchemaKey::LineColorEmphasis, "lineColorEmphasis"},
+            {AdaptiveCardSchemaKey::LineColorGood, "lineColorGood"},
+            {AdaptiveCardSchemaKey::LineColorAttention, "lineColorAttention"},
+            {AdaptiveCardSchemaKey::LineColorWarning, "lineColorWarning"},
+            {AdaptiveCardSchemaKey::LineColorAccent, "lineColorAccent"},
             {AdaptiveCardSchemaKey::LineThickness, "lineThickness"},
             {AdaptiveCardSchemaKey::Max, "max"},
             {AdaptiveCardSchemaKey::MaxActions, "maxActions"},
@@ -270,7 +276,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Content, "content"},
             {AdaptiveCardSchemaKey::DisplayArrow, "displayArrow"},
             {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
-            {AdaptiveCardSchemaKey::Position, "position"}});
+            {AdaptiveCardSchemaKey::Position, "position"},
+            {AdaptiveCardSchemaKey::Popover, "popover"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},

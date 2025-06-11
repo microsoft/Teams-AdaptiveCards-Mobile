@@ -314,6 +314,12 @@ ShowCardActionConfig ShowCardActionConfig::Deserialize(const Json::Value& json, 
     return result;
 }
 
+PopoverConfig PopoverConfig::Deserialize(const Json::Value& json, const PopoverConfig& defaultValue) {
+    PopoverConfig result;
+    result.backgroundColor = ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::BackgroundColor).value_or(defaultValue.backgroundColor);
+    return result;
+}
+
 ActionsConfig ActionsConfig::Deserialize(const Json::Value& json, const ActionsConfig& defaultValue)
 {
     ActionsConfig result;
@@ -330,6 +336,9 @@ ActionsConfig ActionsConfig::Deserialize(const Json::Value& json, const ActionsC
 
     result.showCard = ParseUtil::ExtractJsonValueAndMergeWithDefault<ShowCardActionConfig>(
         json, AdaptiveCardSchemaKey::ShowCard, defaultValue.showCard, ShowCardActionConfig::Deserialize);
+
+    result.popover = ParseUtil::ExtractJsonValueAndMergeWithDefault<PopoverConfig>(
+            json, AdaptiveCardSchemaKey::Popover, defaultValue.popover, PopoverConfig::Deserialize);
 
     result.spacing = ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::Spacing, defaultValue.spacing, SpacingFromString);
 
@@ -415,9 +424,9 @@ SpacingConfig SpacingConfig::Deserialize(const Json::Value& json, const SpacingC
     result.extraLargeSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::ExtraLarge, defaultValue.extraLargeSpacing);
 
     result.paddingSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::Padding, defaultValue.paddingSpacing);
-    
+
     result.extraSmallSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::ExtraSmall, defaultValue.extraSmallSpacing);
-    
+
     return result;
 }
 
@@ -429,7 +438,28 @@ SeparatorConfig SeparatorConfig::Deserialize(const Json::Value& json, const Sepa
 
     std::string lineColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColor);
     result.lineColor = lineColor == "" ? defaultValue.lineColor : lineColor;
-
+    // Update line color with result value
+    lineColor = result.lineColor;
+    
+    // Assign lineColor as default values if not exists to avoid regression
+    std::string lineColorDefault = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorDefault);
+    result.lineColorDefault = lineColorDefault == "" ? lineColor : lineColorDefault;
+    
+    std::string lineColorEmphasis = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorEmphasis);
+    result.lineColorEmphasis = lineColorEmphasis == "" ? lineColor : lineColorEmphasis;
+    
+    std::string lineColorGood = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorGood);
+    result.lineColorGood = lineColorGood == "" ? lineColor : lineColorGood;
+    
+    std::string lineColorAttention = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAttention);
+    result.lineColorAttention = lineColorAttention == "" ? lineColor : lineColorAttention;
+    
+    std::string lineColorWarning = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorWarning);
+    result.lineColorWarning = lineColorWarning == "" ? lineColor : lineColorWarning;
+    
+    std::string lineColorAccent = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAccent);
+    result.lineColorAccent = lineColorAccent == "" ? lineColor : lineColorAccent;
+    
     return result;
 }
 
@@ -888,6 +918,25 @@ std::string HostConfig::GetHighlightColor(ContainerStyle style, ForegroundColor 
 {
     auto colorConfig = GetContainerColorConfig(GetContainerStyle(style).foregroundColors, color).highlightColors;
     return GetColorFromColorConfig(colorConfig, isSubtle);
+}
+
+std::string HostConfig::GetSeparatorColor(ContainerStyle style, SeparatorConfig separator) const
+{
+    switch (style) {
+        case ContainerStyle::Accent:
+            return separator.lineColorAccent;
+        case ContainerStyle::Attention:
+            return separator.lineColorAttention;
+        case ContainerStyle::Emphasis:
+            return separator.lineColorEmphasis;
+        case ContainerStyle::Good:
+            return separator.lineColorGood;
+        case ContainerStyle::Warning:
+            return separator.lineColorWarning;
+        case ContainerStyle::Default:
+        default:
+            return separator.lineColorDefault;
+    }
 }
 
 std::string HostConfig::GetBorderColor(ContainerStyle style) const
