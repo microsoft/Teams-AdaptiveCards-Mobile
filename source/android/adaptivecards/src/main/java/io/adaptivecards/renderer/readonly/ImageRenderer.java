@@ -323,6 +323,7 @@ public class ImageRenderer extends BaseCardElementRenderer
                 break;
         }
 
+        // TODO :- Need to remove it before merging
         imageView.setBackgroundColor(Color.RED);
     }
 
@@ -391,14 +392,14 @@ public class ImageRenderer extends BaseCardElementRenderer
 
     @Override
     public ImageView render(
-        RenderedAdaptiveCard renderedCard,
-        Context context,
-        FragmentManager fragmentManager,
-        ViewGroup viewGroup,
-        BaseCardElement baseCardElement,
-        ICardActionHandler cardActionHandler,
-        HostConfig hostConfig,
-        RenderArgs renderArgs) throws Exception
+            RenderedAdaptiveCard renderedCard,
+            Context context,
+            FragmentManager fragmentManager,
+            ViewGroup viewGroup,
+            BaseCardElement baseCardElement,
+            ICardActionHandler cardActionHandler,
+            HostConfig hostConfig,
+            RenderArgs renderArgs) throws Exception
     {
         Image image = Util.castTo(baseCardElement, Image.class);
 
