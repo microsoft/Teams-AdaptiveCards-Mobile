@@ -296,10 +296,30 @@
 			"type": "ActionSet",
 			"actions": [
 				{
-					"type": "Action.Submit",
-					"title": "Submit",
-					"iconUrl": "icon:Send,Filled",
+					"type": "Action.ShowCard",
+					"title": "ShowCard",
+					"iconUrl": "icon:Open,Filled",
+					"card": {
+						"type": "AdaptiveCard",
+						"body": [
+							{
+								"type": "TextBlock",
+								"text": "This is a show card"
+							},
+							{
+								"type": "Input.Text",
+								"id": "defaultInputIdShow2",
+								"placeholder": "enter comment",
+								"maxLength": 500
+							}
+						]
+					},
 					"menuActions": [
+						{
+							"type": "Action.Submit",
+							"title": "Submit",
+							"iconUrl": "icon:Send,Filled"
+						},
 						{
 							"type": "Action.OpenUrl",
 							"title": "OpenUrl",
