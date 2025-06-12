@@ -4,6 +4,18 @@
 	"body": [
 		{
 			"type": "Container",
+			"showBorder": true,
+			"roundedCorners": true,
+			"items": [
+				{
+					"type": "TextBlock",
+					"size": "Large",
+					"text": "Fill Mode Card"
+				}
+			]
+		},
+		{
+			"type": "Container",
 			"layouts": [
 				{
 					"type": "Layout.Flow"
@@ -56,7 +68,7 @@
 						{
 							"type": "TextBlock",
 							"size": "Large",
-							"text": "Fit Landscape"
+							"text": "Fit Landscape - 100px * 300px"
 						}
 					]
 				},
@@ -73,7 +85,7 @@
 						{
 							"type": "TextBlock",
 							"size": "Large",
-							"text": "Fit Portrait"
+							"text": "Fit Portrait - 400px * 200px"
 						}
 					]
 				},
@@ -89,7 +101,7 @@
 						{
 							"type": "TextBlock",
 							"size": "Large",
-							"text": "Fit Square"
+							"text": "Fit Square - 300px * 300px"
 						}
 					]
 				},
@@ -137,7 +149,7 @@
 						{
 							"type": "TextBlock",
 							"size": "Large",
-							"text": "Fit Landscape"
+							"text": "Fit Landscape - 200px * 300px"
 						}
 					]
 				},
@@ -153,7 +165,7 @@
 						{
 							"type": "TextBlock",
 							"size": "Large",
-							"text": "Fit Portrait"
+							"text": "Fit Portrait - 400px * 200px"
 						}
 					]
 				},
@@ -163,13 +175,13 @@
 						{
 							"type": "Image",
 							"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-							"height": "400px",
+							"height": "300px",
 							"width": "300px"
 						},
 						{
 							"type": "TextBlock",
 							"size": "Large",
-							"text": "Fit Square"
+							"text": "Fit Square - 300px * 300px"
 						}
 					]
 				}
