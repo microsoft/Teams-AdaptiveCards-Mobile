@@ -7,10 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.text.TextUtils;
@@ -310,86 +308,6 @@ public class ImageRenderer extends BaseCardElementRenderer
         return backgroundColor;
     }
 
-    private void setImageFittingMode(ImageView imageView, Image image) {
-        switch (image.GetImageFitMode()) {
-            case Fill:
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                break;
-            case Cover:
-                setImageInCoverAndContainMode(imageView, image);
-                break;
-            case Contain:
-                setImageInCoverAndContainMode(imageView, image);
-                break;
-        }
-
-        // TODO :- Need to remove it before merging
-        imageView.setBackgroundColor(Color.RED);
-    }
-
-    private void setImageInCoverAndContainMode(ImageView imageView, Image image) {
-        imageView.setScaleType(ImageView.ScaleType.MATRIX);
-
-        imageView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            Drawable drawable = imageView.getDrawable();
-            if (drawable == null) return;
-
-            float viewWidth = imageView.getWidth();
-            float viewHeight = imageView.getHeight();
-
-            int dWidth = drawable.getIntrinsicWidth();
-            int dHeight = drawable.getIntrinsicHeight();
-
-            float scale = 1.0f;
-            switch (image.GetImageFitMode()) {
-                case Cover:
-                    scale = Math.max(viewWidth / dWidth, viewHeight / dHeight);
-                    break;
-                case Contain:
-                    scale = Math.min(viewWidth / dWidth, viewHeight / dHeight);
-                    break;
-                default:
-                    return;
-            }
-
-            float scaledWidth = scale * dWidth;
-            float scaledHeight = scale * dHeight;
-
-            float dx = 0, dy = 0;
-
-            // Horizontal alignment
-            switch (image.GetHorizontalContentAlignment()) {
-                case Left:
-                    dx = 0;
-                    break;
-                case Center:
-                    dx = (viewWidth - scaledWidth) / 2f;
-                    break;
-                case Right:
-                    dx = viewWidth - scaledWidth;
-                    break;
-            }
-
-            // Vertical alignment
-            switch (image.GetVerticalContentAlignment()) {
-                case Top:
-                    dy = 0;
-                    break;
-                case Center:
-                    dy = (viewHeight - scaledHeight) / 2f;
-                    break;
-                case Bottom:
-                    dy = viewHeight - scaledHeight;
-                    break;
-            }
-
-            Matrix matrix = new Matrix();
-            matrix.setScale(scale, scale);
-            matrix.postTranslate(dx, dy);
-            imageView.setImageMatrix(matrix);
-        });
-    }
-
     @Override
     public ImageView render(
             RenderedAdaptiveCard renderedCard,
@@ -456,7 +374,7 @@ public class ImageRenderer extends BaseCardElementRenderer
         }
 
         imageView.setTag(tagContent);
-        setImageFittingMode(imageView, image);
+        ImageRendererKt.setImageFitMode(image, imageView);
         setVisibility(baseCardElement.GetIsVisible(), imageView);
 
         if (image.GetImageStyle() == ImageStyle.RoundedCorners) {
