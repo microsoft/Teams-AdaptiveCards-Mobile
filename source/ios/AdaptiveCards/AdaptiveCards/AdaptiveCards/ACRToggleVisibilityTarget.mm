@@ -13,14 +13,16 @@
 #import "ACRView.h"
 #import "BaseActionElement.h"
 #import "ToggleVisibilityTarget.h"
+#import "ACRIFeatureFlagResolver.h"
+#import "ACRRegistration.h"
 
 @implementation ACRToggleVisibilityTarget {
     ACOHostConfig *_config;
     __weak ACRView *_rootView;
-    std::shared_ptr<ToggleVisibilityAction> _action;
+    ACOBaseActionElement *_actionElement;
 }
 
-- (instancetype)initWithActionElement:(std::shared_ptr<AdaptiveCards::ToggleVisibilityAction> const &)actionElement
+- (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement
                                config:(ACOHostConfig *)config
                              rootView:(ACRView *)rootView
 {
@@ -28,15 +30,52 @@
     if (self) {
         _config = config;
         _rootView = rootView;
-        _action = std::make_shared<ToggleVisibilityAction>(*(actionElement.get()));
+        _actionElement = actionElement;
     }
     return self;
 }
 
 - (void)doSelectAction
 {
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
+    isSplitButtonEnabled = isSplitButtonEnabled &&
+    [_rootView.acrActionDelegate respondsToSelector:@selector(showBottomSheetForSplitButton:completion:)];
+    /// Perform default implementation if:
+    /// 1. If split button is disabled or
+    /// 2. There are no menuactions or
+    /// 3.a. There are menuactions and
+    /// 3.b. (If the action is from bottom sheet) or (If there's no implementation of showBottomSheetForSplitButton method in delegate)
+    if (!isSplitButtonEnabled ||
+        _actionElement.menuActions.count <= 0 ||
+        (_actionElement.menuActions.count > 0 &&
+         (_actionElement.isActionFromSplitButtonBottomSheet)))
+    {
+        [self doSelectActionWithAction:_actionElement];
+    }
+    else
+    {
+        NSArray<ACOBaseActionElement *> *menuActions = [@[ _actionElement ] arrayByAddingObjectsFromArray:_actionElement.menuActions];
+        __weak typeof(self) weakSelf = self;
+        [_rootView.acrActionDelegate showBottomSheetForSplitButton: menuActions completion:^(ACOBaseActionElement *acoElement) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (acoElement.type == ACRToggleVisibility)
+            {
+                [strongSelf doSelectActionWithAction:acoElement];
+            }
+            [strongSelf->_rootView.acrActionDelegate didFetchUserResponses:[strongSelf->_rootView card] action:acoElement];
+        }];
+    }
+
+    [_rootView.acrActionDelegate didFetchUserResponses:[_rootView card] action:_actionElement];
+}
+
+- (void) doSelectActionWithAction:(ACOBaseActionElement *)actionElement
+{
     NSMutableSet<id<ACOIVisibilityManagerFacade>> *facades = [[NSMutableSet alloc] init];
-    for (const auto &target : _action->GetTargetElements()) {
+    std::shared_ptr<BaseActionElement> elem = [actionElement element];
+    std::shared_ptr<ToggleVisibilityAction> action = std::dynamic_pointer_cast<ToggleVisibilityAction>(elem);
+    for (const auto &target : action->GetTargetElements()) {
         NSString *hashString = [NSString stringWithCString:target->GetElementId().c_str() encoding:NSUTF8StringEncoding];
         NSUInteger tag = hashString.hash;
         UIView *view = [_rootView viewWithTag:tag];
@@ -67,8 +106,6 @@
     for (id<ACOIVisibilityManagerFacade> viewToUpdateVisibility in facades) {
         [viewToUpdateVisibility updatePaddingVisibility];
     }
-
-    [_rootView.acrActionDelegate didFetchUserResponses:[_rootView card] action:[[ACOBaseActionElement alloc] initWithBaseActionElement:_action]];
 }
 
 @end

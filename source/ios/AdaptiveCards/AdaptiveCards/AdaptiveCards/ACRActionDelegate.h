@@ -86,9 +86,9 @@
 
 #pragma mark - callbacks for split button actions
 /**
- Shows bottom sheet with all possible buttons.
- Client needs to implement this and handle showing the bottom sheet with split button options
+ Client needs to set this flag `isSplitButtonEnabled` in  **ACRCustomFeatureFlagResolver** to enable split button
+ Client needs to implement the below method to show bottom sheet with all possible buttons
  */
-- (void) showBottomSheetForSplitButton:(NSArray<ACOBaseActionElement *>*)menuActions;
+- (void) showBottomSheetForSplitButton:(NSArray<ACOBaseActionElement *>*)menuActions completion:(void (^)(ACOBaseActionElement *acoElement))completion;
 
 @end
