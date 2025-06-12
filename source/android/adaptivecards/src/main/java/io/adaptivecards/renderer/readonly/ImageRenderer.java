@@ -316,10 +316,10 @@ public class ImageRenderer extends BaseCardElementRenderer
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 break;
             case Cover:
-                setImageInCoveAndContainrMode(imageView, image);
+                setImageInCoverAndContainMode(imageView, image);
                 break;
             case Contain:
-                setImageInCoveAndContainrMode(imageView, image);
+                setImageInCoverAndContainMode(imageView, image);
                 break;
         }
 
@@ -327,7 +327,7 @@ public class ImageRenderer extends BaseCardElementRenderer
         imageView.setBackgroundColor(Color.RED);
     }
 
-    private void setImageInCoveAndContainrMode(ImageView imageView, Image image) {
+    private void setImageInCoverAndContainMode(ImageView imageView, Image image) {
         imageView.setScaleType(ImageView.ScaleType.MATRIX);
 
         imageView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
