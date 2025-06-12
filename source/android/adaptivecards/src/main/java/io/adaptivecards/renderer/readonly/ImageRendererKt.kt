@@ -15,6 +15,10 @@ object ImageRendererKt {
 
     @JvmStatic
     fun setImageFitMode(image: Image, imageView: ImageView) {
+        if (image.GetPixelWidth() <= 0L || image.GetPixelHeight() <= 0L) {
+            return
+        }
+
         val imageFitMode = image.GetImageFitMode() ?: ImageFitMode.Fill
 
         if (imageFitMode == ImageFitMode.Fill) {
