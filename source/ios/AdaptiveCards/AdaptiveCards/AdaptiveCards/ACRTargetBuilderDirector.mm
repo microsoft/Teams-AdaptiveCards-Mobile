@@ -130,7 +130,7 @@
         std::dynamic_pointer_cast<ToggleVisibilityAction>(action.element);
 
     if (toggleVisibilityAction && director.adaptiveHostConfig && director.rootView) {
-        return [[ACRToggleVisibilityTarget alloc] initWithActionElement:toggleVisibilityAction
+        return [[ACRToggleVisibilityTarget alloc] initWithActionElement:action
                                                                  config:director.adaptiveHostConfig
                                                                rootView:director.rootView];
     }

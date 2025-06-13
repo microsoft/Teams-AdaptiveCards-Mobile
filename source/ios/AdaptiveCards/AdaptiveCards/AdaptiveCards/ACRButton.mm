@@ -267,6 +267,8 @@
     button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key];
     NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
     BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
+    isSplitButtonEnabled = isSplitButtonEnabled &&
+    [rootView.acrActionDelegate respondsToSelector:@selector(showBottomSheetForSplitButton:completion:)];
     BOOL isSplitButton = action->GetIsSplitAction();
     
     if (img) {
