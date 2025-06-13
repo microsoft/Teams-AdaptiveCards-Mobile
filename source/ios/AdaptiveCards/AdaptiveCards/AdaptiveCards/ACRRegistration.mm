@@ -12,6 +12,7 @@
 #import "ACRActionExecuteRenderer.h"
 #import "ACRActionOpenURLRenderer.h"
 #import "ACRActionOverflowRenderer.h"
+#import "ACRActionPopoverRenderer.h"
 #import "ACRActionSetRenderer.h"
 #import "ACRActionShowCardRenderer.h"
 #import "ACRActionSubmitRenderer.h"
@@ -111,6 +112,7 @@ using namespace AdaptiveCards;
                                              [ACRActionSubmitRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::Submit],
                                              [ACRActionExecuteRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::Execute],
                                              [ACRActionToggleVisibilityRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::ToggleVisibility],
+                                             [ACRActionPopoverRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::Popover],
                                              [ACRCustomActionRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::UnknownAction],
                                              [ACRActionOverflowRenderer getInstance], [NSNumber numberWithInt:(int)ActionType::Overflow],
              
@@ -431,6 +433,7 @@ using namespace AdaptiveCards;
     NSNumber *toggle = [ACOBaseActionElement getKey:ACRToggleVisibility];
     NSNumber *unknown = [ACOBaseActionElement getKey:ACRUnknownAction];
     NSNumber *execute = [ACOBaseActionElement getKey:ACRExecute];
+    NSNumber *popover = [ACOBaseActionElement getKey:ACRPopover];
     NSNumber *overflow = [ACOBaseActionElement getKey:ACROverflow];
 
     _overwrittenBuilders = [[NSMutableDictionary alloc] init];
@@ -444,6 +447,7 @@ using namespace AdaptiveCards;
                 execute : [ACRAggregateTargetBuilder getInstance],
                 showcard : [ACRShowCardTargetBuilder getInstance],
                 toggle : [ACRToggleVisibilityTargetBuilder getInstance],
+                popover : [ACRAggregateTargetBuilder getInstance],
                 overflow : [ACROverflowActionTargetBuilder getInstance]
             };
             break;
@@ -453,6 +457,7 @@ using namespace AdaptiveCards;
                 submit : [ACRAggregateTargetBuilder getInstance],
                 execute : [ACRAggregateTargetBuilder getInstance],
                 toggle : [ACRToggleVisibilityTargetBuilder getInstance],
+                popover : [ACRAggregateTargetBuilder getInstance],
                 unknown : [ACRUnknownActionTargetBuilder getInstance]
             };
             break;

@@ -1,256 +1,54 @@
 {
-	"type": "AdaptiveCard",
-	"$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
-	"version": "1.5",
-	"body": [
-		{
+  "type": "AdaptiveCard",
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+	{
+	  "type": "TextBlock",
+	  "weight": "bolder",
+	  "size": "large",
+	  "text": "Please review your order"
+	},
+	{
+	  "type": "FactSet",
+	  "facts": [
+		{ "title": "Item:", "value": "Zombie Halloween costume" },
+		{ "title": "Quantity:", "value": "1" },
+		{ "title": "Price:", "value": "$14.99" }
+	  ]
+	}
+  ],
+  "actions": [
+	{
+	  "type": "Action.Submit",
+	  "title": "Confirm"
+	},
+	{
+	  "type": "Action.Popover",
+	  "title": "Cancel",
+	  "displayArrow": true,
+	  "content": {
+		"type": "Container",
+		"items": [
+		  {
 			"type": "TextBlock",
-			"weight": "Bolder",
-			"size": "ExtraLarge",
-			"text": "Popover"
-		},
-		{
-			"type": "Input.Text",
-			"id": "outsidePopover1",
-			"isRequired": true,
-			"label": "Outside Popover Input Required"
-		},
-		{
-			"type": "Input.Text",
-			"id": "outsidePopover2",
-			"label": "Outside Popover Input"
-		},
-		{
+			"text": "Are you sure you want to cancel this order?"
+		  },
+		  {
 			"type": "ActionSet",
 			"actions": [
-				{
-					"type": "Action.Popover",
-					"title": "Add Name Popover",
-					"content": {
-						"type": "Container",
-						"items": [
-							{
-								"type": "TextBlock",
-								"text": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies ne. pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. \n\nIn enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. ",
-								"wrap": true
-							},
-							{
-								"type": "Input.Text",
-								"id": "inputInPopover1",
-								"label": "Please enter your name"
-							},
-							{
-								"type": "ActionSet",
-								"actions": [
-									{
-										"type": "Action.Submit",
-										"title": "Submit",
-										"tooltip": "Click me",
-										"mode": "secondary"
-									}
-								]
-							}
-						]
-					}
-				}
+			  {
+				"type": "Action.Submit",
+				"title": "Yes, cancel my order"
+			  },
+			  {
+				"type": "Action.Submit",
+				"title": "No, keep my order"
+			  }
 			]
-		},
-		{
-			"type": "ActionSet",
-			"actions": [
-				{
-					"type": "Action.Popover",
-					"title": "Add Number Popover",
-					"content": {
-						"type": "Container",
-						"items": [
-							{
-								"type": "Input.Text",
-								"id": "inputInPopover2",
-								"label": "Please enter your phone(Input Required)",
-								"isRequired": true
-							},
-							{
-								"type": "ActionSet",
-								"actions": [
-									{
-										"type": "Action.Submit",
-										"title": "Submit",
-										"tooltip": "Click me",
-										"mode": "secondary"
-									}
-								]
-							}
-						]
-					}
-				}
-			]
-		},
-		{
-			"type": "ActionSet",
-			"actions": [
-				{
-					"type": "Action.Popover",
-					"title": "Progress Bar",
-					"content": {
-						"type": "Container",
-						"roundedCorners": true,
-						"items": [
-							{
-								"type": "TextBlock",
-								"text": "Progress in Accent",
-								"color": "Accent"
-							},
-							{
-								"type": "ProgressBar",
-								"color": "Accent",
-								"value": 70
-							},
-							{
-								"type": "TextBlock",
-								"text": "Progress in Attention",
-								"color": "Attention"
-							},
-							{
-								"type": "ProgressBar",
-								"color": "Attention",
-								"value": 80
-							},
-							{
-								"type": "TextBlock",
-								"text": "Progress in Good",
-								"color": "Good"
-							},
-							{
-								"type": "ProgressBar",
-								"color": "Good",
-								"value": 30
-							},
-							{
-								"type": "TextBlock",
-								"text": "Progress in Warning",
-								"color": "Warning"
-							},
-							{
-								"type": "ProgressBar",
-								"color": "Warning",
-								"value": 90
-							},
-							{
-								"type": "TextBlock",
-								"text": "No Progress"
-							},
-							{
-								"type": "ProgressBar",
-								"color": "Accent"
-							}
-						]
-					}
-				}
-			]
-		},
-		{
-			"type": "ActionSet",
-			"actions": [
-				{
-					"type": "Action.Popover",
-					"title": "Select rating Popover",
-					"content": {
-						"type": "Container",
-						"items": [
-							{
-								"type": "Input.Rating",
-								"id": "rating1",
-								"label": "Pick a rating(Rating Required)",
-								"size": "Medium",
-								"isRequired": true,
-								"errorMessage": "Please pick a rating"
-							},
-							{
-								"type": "ActionSet",
-								"actions": [
-									{
-										"type": "Action.Submit",
-										"title": "Submit",
-										"tooltip": "Click me"
-									},
-									{
-										"type": "Action.Popover",
-										"title": "Popover nested",
-										"content": {
-											"type": "Container",
-											"items": [
-												{
-													"type": "Input.Text",
-													"id": "inputInPopover10",
-													"label": "Please content in nested popover"
-												}
-											]
-										}
-									}
-								]
-							}
-						]
-					}
-				}
-			]
-		},
-		{
-			"type": "ActionSet",
-			"actions": [
-				{
-					"type": "Action.Popover",
-					"title": "Menu Actions Popover",
-					"content": {
-						"type": "Container",
-						"items": [
-							{
-								"type": "Input.Text",
-								"id": "inputInPopover4",
-								"label": "Input anything"
-							},
-							{
-								"type": "ActionSet",
-								"actions": [
-									{
-										"type": "Action.Submit",
-										"title": "Submit with Menu Actions",
-										"menuActions": [
-											{
-												"type": "Action.Execute",
-												"title": "Execute"
-											},
-											{
-												"type": "Action.Submit",
-												"title": "Submit"
-											},
-											{
-												"type": "Action.OpenUrl",
-												"title": "https://www.microsoft.com/en-in/",
-												"url": "https://www.microsoft.com/en-in/"
-											},
-											{
-												"type": "Action.ResetInputs",
-												"title": "Reset Inputs"
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				}
-			]
-		}
-	],
-	"actions": [
-		{
-			"type": "Action.Submit",
-			"title": "Submit"
-		},
-		{
-			"type": "Action.Execute",
-			"title": "Execute"
-		}
-	]
+		  }
+		]
+	  }
+	}
+  ]
 }

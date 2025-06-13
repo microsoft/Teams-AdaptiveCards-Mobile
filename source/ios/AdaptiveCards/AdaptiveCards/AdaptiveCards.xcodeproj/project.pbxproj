@@ -301,6 +301,8 @@
 		7773C2E22CA558AE00097C06 /* ACRCarouselPageContainerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7773C2E12CA558AE00097C06 /* ACRCarouselPageContainerView.mm */; };
 		7773C2E62CA5592200097C06 /* ACRCarouselView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7773C2E42CA5592200097C06 /* ACRCarouselView.mm */; };
 		7773C2EA2CA5656100097C06 /* ACRPageControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7773C2E82CA5656100097C06 /* ACRPageControl.mm */; };
+		7A2D17552DFAE0CB00E59055 /* ACRActionPopoverRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A2D17542DFAE0BC00E59055 /* ACRActionPopoverRenderer.h */; };
+		7A2D17572DFAE1B800E59055 /* ACRActionPopoverRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */; };
 		7ECFB640219A3940004727A9 /* ParseContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFB63E219A3940004727A9 /* ParseContext.cpp */; };
 		7ECFB641219A3940004727A9 /* ParseContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ECFB63F219A3940004727A9 /* ParseContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7EDC0F67213878E800077A13 /* SemanticVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EDC0F65213878E800077A13 /* SemanticVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -853,6 +855,8 @@
 		7773C2E42CA5592200097C06 /* ACRCarouselView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCarouselView.mm; sourceTree = "<group>"; };
 		7773C2E82CA5656100097C06 /* ACRPageControl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPageControl.mm; sourceTree = "<group>"; };
 		777DD1173C03E3F4EC695141 /* Pods-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
+		7A2D17542DFAE0BC00E59055 /* ACRActionPopoverRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRActionPopoverRenderer.h; sourceTree = "<group>"; };
+		7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRActionPopoverRenderer.mm; sourceTree = "<group>"; };
 		7DC49373563AE22454C070D6 /* Pods-Fluent-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCards/Pods-Fluent-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		7ECFB63E219A3940004727A9 /* ParseContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParseContext.cpp; path = ../../../../shared/cpp/ObjectModel/ParseContext.cpp; sourceTree = "<group>"; };
 		7ECFB63F219A3940004727A9 /* ParseContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseContext.h; path = ../../../../shared/cpp/ObjectModel/ParseContext.h; sourceTree = "<group>"; };
@@ -1381,6 +1385,14 @@
 			name = Action.Execute;
 			sourceTree = "<group>";
 		};
+		7A2D17532DFA9A2C00E59055 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				E28177D82DD1BAA300DA3EA0 /* FluentAssets.xcassets */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		CFF954CC29819A6B00F321C3 /* DynamicTypeahead */ = {
 			isa = PBXGroup;
 			children = (
@@ -1411,14 +1423,6 @@
 			path = DynamicTypeahead;
 			sourceTree = "<group>";
 		};
-		E28177D92DD1BAA300DA3EA0 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				E28177D82DD1BAA300DA3EA0 /* FluentAssets.xcassets */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		F4071C751FCCBAEF00AF4FEA /* json */ = {
 			isa = PBXGroup;
 			children = (
@@ -1437,6 +1441,7 @@
 				F45A07191EF4BC44007C6503 /* Frameworks */,
 				F423C0B61EE1FBA900905679 /* Products */,
 				1779FD9986EE958A93BD0A28 /* Pods */,
+				7A2D17532DFA9A2C00E59055 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1723,6 +1728,8 @@
 		F42979331F30079D00E89914 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
+				7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */,
+				7A2D17542DFAE0BC00E59055 /* ACRActionPopoverRenderer.h */,
 				0D3485EC26180E9900614EB9 /* ACOActionOverflow.h */,
 				0D3485F026180F8F00614EB9 /* ACOActionOverflow.mm */,
 				6BFF23ED2714C0F000183C59 /* ACOActionOverflowPrivate.h */,
@@ -2081,6 +2088,7 @@
 				6BFCA141264F54B500195CA7 /* ACRTableView.h in Headers */,
 				CFF954D029819AC300F321C3 /* ACOTypeaheadDebouncer.h in Headers */,
 				37CC40EE2DBA1BD9004D5C66 /* PopoverAction.h in Headers */,
+				7A2D17552DFAE0CB00E59055 /* ACRActionPopoverRenderer.h in Headers */,
 				6BFF24142714EF2200183C59 /* UtiliOS.h in Headers */,
 				6BFF24082714E30B00183C59 /* ACRShowCardTarget.h in Headers */,
 				46CBB63C2C22BA33008FC5D5 /* CompoundButton.h in Headers */,
@@ -2456,6 +2464,7 @@
 				F4071C7E1FCCBAEF00AF4FEA /* ActionParserRegistration.cpp in Sources */,
 				6B2242A72233442C000ACDA1 /* RichTextBlock.cpp in Sources */,
 				F4FE456B1F196F3D0071D9E5 /* ACRContentStackView.mm in Sources */,
+				7A2D17572DFAE1B800E59055 /* ACRActionPopoverRenderer.mm in Sources */,
 				F429793F1F3155EF00E89914 /* ACRTextField.mm in Sources */,
 				F43A94191F20502D0001920B /* ACRInputToggleRenderer.mm in Sources */,
 				6B124C9B26B9F7AD007E9641 /* ACOVisibilityManager.mm in Sources */,

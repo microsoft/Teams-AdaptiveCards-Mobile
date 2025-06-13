@@ -14,6 +14,7 @@
 #import "OpenUrlAction.h"
 #import "ShowCardAction.h"
 #import "SubmitAction.h"
+#import "PopoverAction.h"
 #import "ToggleVisibilityAction.h"
 #import "UtiliOS.h"
 
