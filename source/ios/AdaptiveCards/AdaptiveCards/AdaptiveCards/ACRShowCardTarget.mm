@@ -154,9 +154,9 @@
     else
     {
         NSArray<ACOBaseActionElement *> *menuActions = [@[ _actionElement ] arrayByAddingObjectsFromArray:_actionElement.menuActions];
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self) weakSelf = self;
         [_rootView.acrActionDelegate showBottomSheetForSplitButton: menuActions completion:^(ACOBaseActionElement *acoElement) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
+            __strong __typeof(self) strongSelf = weakSelf;
             if (acoElement.type == ACRShowCard)
             {
                 [strongSelf toggleVisibilityOfShowCard];
