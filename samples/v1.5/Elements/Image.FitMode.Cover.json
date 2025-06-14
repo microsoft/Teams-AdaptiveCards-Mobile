@@ -23,7 +23,9 @@
 		{
 			"type": "Image",
 			"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
-			"size": "Medium"
+			"height": "auto",
+			"width": "stretch",
+			"fitMode": "cover"
 		},
 		{
 			"type": "TextBlock",
@@ -87,7 +89,9 @@
 		{
 			"type": "Image",
 			"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-			"size": "Medium"
+			"height": "200px",
+			"width": "stretch",
+			"fitMode": "cover"
 		},
 		{
 			"type": "TextBlock",
