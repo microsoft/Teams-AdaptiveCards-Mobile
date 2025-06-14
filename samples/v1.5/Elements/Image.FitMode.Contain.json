@@ -32,8 +32,6 @@
 		},
 		{
 			"type": "Container",
-			"showBorder": true,
-			"roundedCorners": true,
 			"items": [
 				{
 					"type": "Image",
@@ -98,8 +96,6 @@
 		},
 		{
 			"type": "Container",
-			"showBorder": true,
-			"roundedCorners": true,
 			"items": [
 				{
 					"type": "Image",
