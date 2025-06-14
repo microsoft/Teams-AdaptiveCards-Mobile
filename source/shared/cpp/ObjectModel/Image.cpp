@@ -212,6 +212,11 @@ std::shared_ptr<BaseCardElement> ImageParser::DeserializeWithoutCheckingType(Par
     image->m_horizontalContentAlignment = ParseUtil::GetEnumValue<HorizontalContentAlignment>(json, AdaptiveCardSchemaKey::HorizontalContentAlignment, DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT, HorizontalContentAlignmentFromString);
     image->m_verticalContentAlignment = ParseUtil::GetEnumValue<VerticalContentAlignment>(json, AdaptiveCardSchemaKey::VerticalContentAlignment, DEFAULT_VERTICAL_CONTENT_ALIGNMENT, VerticalContentAlignmentFromString);
 
+    // When fitMode is set to contain, the default style is always used
+    if (image->m_imageFitMode == ImageFitMode::Contain) {
+        image->SetImageStyle(ImageStyle::Default);
+    }
+
     const auto& widthDimension =
         ParseSizeForPixelSize(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Width), &context.warnings);
     const auto& heightDimension =

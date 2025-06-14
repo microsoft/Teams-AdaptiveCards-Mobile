@@ -374,6 +374,7 @@ public class ImageRenderer extends BaseCardElementRenderer
         }
 
         imageView.setTag(tagContent);
+        ImageRendererKt.setImageFitMode(image, imageView);
         setVisibility(baseCardElement.GetIsVisible(), imageView);
 
         if (image.GetImageStyle() == ImageStyle.RoundedCorners) {

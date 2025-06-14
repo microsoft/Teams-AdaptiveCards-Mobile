@@ -158,6 +158,24 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         /**
+         * Constructs an ActionOnClickListener. Use this constructor if you want to pass renderArgs also
+         * @param renderedCard
+         * @param baseActionElement
+         * @param cardActionHandler
+         * @param renderArgs
+         * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
+         */
+        protected ActionOnClickListener(RenderedAdaptiveCard renderedCard,
+                                        BaseActionElement baseActionElement,
+                                        ICardActionHandler cardActionHandler,
+                                        RenderArgs renderArgs,
+                                        boolean isMenuAction)
+        {
+            this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
+            m_renderArgs = renderArgs;
+        }
+
+        /**
          * Constructs an ActionOnClickListener. Use this constructor if you want to support any type of action except ShowCardAction
          * @param renderedCard
          * @param baseActionElement
