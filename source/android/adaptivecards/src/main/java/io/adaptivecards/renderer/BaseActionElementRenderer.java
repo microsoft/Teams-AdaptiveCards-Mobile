@@ -364,43 +364,16 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
-            // create popover dailog
-            Context context = v.getContext();
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.PopoverDailog);
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View view = inflater.inflate(R.layout.popover_bottom_sheet_layout, null);
-            int dailogContentViewId = (int) Util.getViewId(view);
-            bottomSheetDialog.setContentView(view);
-
-            // add background to popover
-            final LinearLayout parentLayout = view.findViewById(R.id.popover_parentlayout);
-            parentLayout.setBackgroundColor(Color.parseColor(m_hostConfig.GetActions().getPopover().getBackgroundColor()));
-
-            // add content to popover
-            renderPopoverContent(action, parentLayout, dailogContentViewId);
-
-            // show dailog
-            bottomSheetDialog.show();
-
-            // store dailog object in rendered card to dismiss it later
-            m_renderedAdaptiveCard.setPopoverDailog(bottomSheetDialog);
-        }
-
-        protected final void renderPopoverContent(@NonNull PopoverAction action, @NonNull ViewGroup viewGroup, int parentViewId) {
-            try {
-                CardRendererRegistration.getInstance().renderElementAndPerformFallback(
-                    m_renderedAdaptiveCard,
-                    viewGroup.getContext(),
-                    m_fragmentManager,
-                    action.GetContent(),
-                    viewGroup,
-                    m_cardActionHandler,
-                    m_hostConfig,
-                    new RenderArgs(m_renderArgs, parentViewId),
-                    CardRendererRegistration.getInstance().getFeatureRegistration());
-            } catch (Exception e) {
-                Log.e("BaseActionElementRend", "Error rendering popover content", e);
-            }
+            PopoverRenderer popoverRenderer = new PopoverRenderer(
+                action,
+                v,
+                m_renderedAdaptiveCard,
+                m_fragmentManager,
+                m_cardActionHandler,
+                m_hostConfig,
+                m_renderArgs
+            );
+            popoverRenderer.showPopover();
         }
 
         private void handleToggleVisibilityAction(View v)
