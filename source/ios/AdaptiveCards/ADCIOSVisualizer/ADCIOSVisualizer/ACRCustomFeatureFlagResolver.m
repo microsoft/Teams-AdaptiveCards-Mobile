@@ -12,6 +12,7 @@
 @implementation ACRCustomFeatureFlagResolver
 
 static NSString *const isSplitButtonEnabledKey = @"isSplitButtonEnabled";
+static NSString *const isProgressRingEnabledKey = @"isProgressRingEnabled";
 
 - (NSArray *)arrayForFlag:(NSString *)flag 
 {
@@ -29,7 +30,13 @@ static NSString *const isSplitButtonEnabledKey = @"isSplitButtonEnabled";
     {
         return YES;
     }
+    
     if([flag isEqualToString:isSplitButtonEnabledKey])
+    {
+        return YES;
+    }
+    
+    if([flag isEqualToString:isProgressRingEnabledKey])
     {
         return YES;
     }
