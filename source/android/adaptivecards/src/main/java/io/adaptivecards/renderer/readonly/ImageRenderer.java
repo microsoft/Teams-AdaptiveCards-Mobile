@@ -393,7 +393,7 @@ public class ImageRenderer extends BaseCardElementRenderer
             imageView.setClipToOutline(true);
         }
 
-        ContainerRenderer.setSelectAction(renderedCard, image.GetSelectAction(), imageView, cardActionHandler, renderArgs);
+        ContainerRenderer.setSelectAction(renderedCard, image.GetSelectAction(), imageView, cardActionHandler, fragmentManager, hostConfig, renderArgs);
 
         return imageView;
     }

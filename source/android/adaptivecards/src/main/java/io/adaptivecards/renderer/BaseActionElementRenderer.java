@@ -52,9 +52,14 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
     public static class SelectActionOnClickListener extends ActionOnClickListener
     {
 
-        public SelectActionOnClickListener(RenderedAdaptiveCard renderedCard, BaseActionElement action, ICardActionHandler cardActionHandler)
+        public SelectActionOnClickListener(RenderedAdaptiveCard renderedCard,
+                                           BaseActionElement action,
+                                           ICardActionHandler cardActionHandler,
+                                           FragmentManager fragmentManager,
+                                           HostConfig hostConfig,
+                                           RenderArgs renderArgs)
         {
-            super(renderedCard, action, cardActionHandler, false);
+            super(renderedCard, action, cardActionHandler, fragmentManager, hostConfig, renderArgs, false);
 
             if (m_action.GetElementType() == ActionType.ShowCard)
             {
@@ -159,11 +164,15 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         protected ActionOnClickListener(RenderedAdaptiveCard renderedCard,
                                         BaseActionElement baseActionElement,
                                         ICardActionHandler cardActionHandler,
+                                        FragmentManager fragmentManager,
+                                        HostConfig hostConfig,
                                         RenderArgs renderArgs,
                                         boolean isMenuAction)
         {
             this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
             m_renderArgs = renderArgs;
+            m_fragmentManager = fragmentManager;
+            m_hostConfig = hostConfig;
         }
 
         /**
@@ -173,7 +182,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
          * @param cardActionHandler
          * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
          */
-        protected ActionOnClickListener(
+        private ActionOnClickListener(
             RenderedAdaptiveCard renderedCard,
             BaseActionElement baseActionElement,
             ICardActionHandler cardActionHandler,

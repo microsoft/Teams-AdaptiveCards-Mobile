@@ -66,7 +66,7 @@ object TableCellRenderer : BaseCardElementRenderer() {
         ContainerRenderer.applyContainerStyle(computedStyle, renderArgs.containerStyle, cellLayout, hostConfig)
         ContainerRenderer.applyVerticalContentAlignment(cellLayout,
                 computeVerticalContentAlignment(cell.GetVerticalContentAlignment(), row, col, renderArgs.table), layoutToApply)
-        ContainerRenderer.setSelectAction(renderedCard, cell.GetSelectAction(), cellLayout, cardActionHandler, renderArgs)
+        ContainerRenderer.setSelectAction(renderedCard, cell.GetSelectAction(), cellLayout, cardActionHandler, fragmentManager, hostConfig, renderArgs)
 
         CardRendererRegistration.getInstance().renderElements(renderedCard,
             context,
