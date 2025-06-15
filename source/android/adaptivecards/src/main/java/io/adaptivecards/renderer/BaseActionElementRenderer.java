@@ -5,9 +5,6 @@ package io.adaptivecards.renderer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.graphics.Color;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -17,22 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import io.adaptivecards.R;
 import io.adaptivecards.objectmodel.ActionMode;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AssociatedInputs;
 import io.adaptivecards.objectmodel.BaseActionElement;
-import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.ExecuteAction;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IsVisible;
-import io.adaptivecards.objectmodel.LabelPosition;
 import io.adaptivecards.objectmodel.PopoverAction;
 import io.adaptivecards.objectmodel.ShowCardAction;
 import io.adaptivecards.objectmodel.SubmitAction;
@@ -41,7 +33,6 @@ import io.adaptivecards.objectmodel.ToggleVisibilityTarget;
 import io.adaptivecards.objectmodel.ToggleVisibilityTargetVector;
 import io.adaptivecards.renderer.action.ActionElementUtils;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
-import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
 public abstract class BaseActionElementRenderer implements IBaseActionElementRenderer
 {
@@ -524,9 +515,9 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private void dismissPopoverIfNeeded() {
-            if (m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDailog() != null) {
-                m_renderedAdaptiveCard.getPopoverDailog().dismiss();
-                m_renderedAdaptiveCard.setPopoverDailog(null);
+            if (m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDialog() != null) {
+                m_renderedAdaptiveCard.getPopoverDialog().dismiss();
+                m_renderedAdaptiveCard.setPopoverDialog(null);
             }
         }
 

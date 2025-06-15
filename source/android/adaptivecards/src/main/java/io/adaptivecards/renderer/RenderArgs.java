@@ -145,10 +145,6 @@ public class RenderArgs {
         return popoverId;
     }
 
-//    public void setPopoverId(int popoverId) {
-//        this.popoverId = popoverId;
-//    }
-
     public boolean isPopoverContent() {
         return this.popoverId != -1;
     }

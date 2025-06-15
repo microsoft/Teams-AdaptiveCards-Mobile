@@ -26,16 +26,16 @@ class PopoverRenderer(
 ) {
 
     fun showPopover() {
-        // create popover dailog
+        // create popover dialog
         val context: Context = clickedView.getContext()
-        val bottomSheetDialog = BottomSheetDialog(context, R.style.PopoverDailog)
+        val bottomSheetDialog = BottomSheetDialog(context, R.style.PopoverDialog)
         val inflater = LayoutInflater.from(context)
         val view: View = inflater.inflate(R.layout.popover_bottom_sheet_layout, null)
-        val dailogContentViewId = Util.getViewId(view).toInt()
+        val dialogContentViewId = Util.getViewId(view).toInt()
         bottomSheetDialog.setContentView(view)
 
         // add background to popover
-        val parentLayout = view.findViewById<LinearLayout>(R.id.popover_parentlayout)
+        val parentLayout = view.findViewById<LinearLayout>(R.id.popover_parentContentLayout)
         parentLayout.setBackgroundColor(
             Color.parseColor(
                 hostConfig.GetActions().getPopover().getBackgroundColor()
@@ -43,13 +43,13 @@ class PopoverRenderer(
         )
 
         // add content to popover
-        renderPopoverContent(popoverAction, parentLayout, dailogContentViewId)
+        renderPopoverContent(popoverAction, parentLayout, dialogContentViewId)
 
-        // show dailog
+        // show dialog
         bottomSheetDialog.show()
 
-        // store dailog object in rendered card to dismiss it later
-        renderedAdaptiveCard.setPopoverDailog(bottomSheetDialog)
+        // store dialog object in rendered card to dismiss it later
+        renderedAdaptiveCard.setPopoverDialog(bottomSheetDialog)
     }
 
     protected fun renderPopoverContent(
