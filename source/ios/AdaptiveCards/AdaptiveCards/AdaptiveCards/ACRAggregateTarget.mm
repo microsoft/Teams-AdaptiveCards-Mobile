@@ -10,6 +10,7 @@
 #import "ACOInputResults.h"
 #import "ACRContentHoldingUIView.h"
 #import "ACRIBaseInputHandler.h"
+#import "ACRToggleVisibilityTarget.h"
 #import "ACRViewController.h"
 #import "ACRViewPrivate.h"
 #import "ExecuteAction.h"
@@ -47,20 +48,50 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
 // main entry point to the event handler, override each methods whithin it for custom behaviors
 - (IBAction)send:(UIButton *)sender
 {
-    if (!_doValidation) {
-        [[_view card] setInputs:@[]];
-        [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
-        return;
-    }
-    // dispatch and validate inputs
-    ACOInputResults *result = [_view dispatchAndValidateInput:_currentShowcard];
-    // update UI with the inputs
-    [self updateInputUI:result button:sender];
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
+    isSplitButtonEnabled = isSplitButtonEnabled &&
+    [_view.acrActionDelegate respondsToSelector:@selector(showBottomSheetForSplitButton:completion:)];
+    /// Perform default implementation if:
+    /// 1. If split button is disabled or
+    /// 2. There are no menuactions or
+    /// 3.a. There are menuactions and
+    /// 3.b. (If the action is from bottom sheet) or (If there's no implementation of showBottomSheetForSplitButton method in delegate)
+    if (!isSplitButtonEnabled ||
+        _actionElement.menuActions.count <= 0 ||
+        (_actionElement.isActionFromSplitButtonBottomSheet && _actionElement.menuActions.count > 0))
+    {
+        if (!_doValidation) {
+            [[_view card] setInputs:@[]];
+            [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
+            return;
+        }
+        // dispatch and validate inputs
+        ACOInputResults *result = [_view dispatchAndValidateInput:_currentShowcard];
+        // update UI with the inputs
+        [self updateInputUI:result button:sender];
 
-    if (result.hasValidationPassed) {
-        [self doIfValidationPassed:result button:sender];
-    } else {
-        [self doIfValidationFailed:result button:sender];
+        if (result.hasValidationPassed) {
+            [self doIfValidationPassed:result button:sender];
+        } else {
+            [self doIfValidationFailed:result button:sender];
+        }
+    }
+    else if (_actionElement.type == ACROpenUrl ||
+             _actionElement.type == ACRSubmit ||
+             _actionElement.type == ACRExecute)
+    {
+        NSArray<ACOBaseActionElement *> *menuActions = [@[ _actionElement ] arrayByAddingObjectsFromArray:_actionElement.menuActions];
+        __weak __typeof(self) weakSelf = self;
+        [_view.acrActionDelegate showBottomSheetForSplitButton: menuActions completion:^(ACOBaseActionElement *acoElement) {
+            __strong __typeof(self) strongSelf = weakSelf;
+            if (acoElement.type == ACRToggleVisibility)
+            {
+                ACRToggleVisibilityTarget *toggleVisibility = [[ACRToggleVisibilityTarget alloc] initWithActionElement:acoElement config:strongSelf.view.hostConfig rootView:strongSelf.view];
+                [toggleVisibility doSelectAction];
+            }
+            [strongSelf.view.acrActionDelegate didFetchUserResponses:[strongSelf.view card] action:acoElement];
+        }];
     }
 }
 

@@ -23,7 +23,7 @@
 
 @interface ACRToggleVisibilityTarget : ACRBaseTarget
 
-- (instancetype)initWithActionElement:(std::shared_ptr<AdaptiveCards::ToggleVisibilityAction> const &)action
+- (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement
                                config:(ACOHostConfig *)config
                              rootView:(ACRView *)rootView;
 @end

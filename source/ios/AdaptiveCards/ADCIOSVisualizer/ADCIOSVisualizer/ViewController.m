@@ -258,52 +258,113 @@ UIColor* defaultButtonBackgroundColor;
 
 - (void)didFetchUserResponses:(ACOAdaptiveCard *)card action:(ACOBaseActionElement *)action
 {
-    if (action.type == ACROpenUrl) {
-        NSURL *url = [NSURL URLWithString:[action url]];
-        SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:url];
-        [self presentViewController:svc animated:YES completion:nil];
-    } else if (action.type == ACRSubmit || action.type == ACRExecute) {
-        NSMutableArray<NSString *> *fetchedInputList = [NSMutableArray array];
-        NSData *userInputsAsJson = [card inputs];
-        if (userInputsAsJson) {
-            [fetchedInputList addObject:[[NSString alloc] initWithData:userInputsAsJson
-                                                              encoding:NSUTF8StringEncoding]];
-        }
-
-        NSString *data = [action data];
-        if (data && data.length) {
-            [fetchedInputList addObject:[NSString stringWithFormat:@"\"data\" : %@", data]];
-        }
-
-        if (action.type == ACRExecute) {
-            if (action.verb && action.verb.length) {
-                [fetchedInputList addObject:[NSString stringWithFormat:@"\"verb\" : %@", action.verb]];
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
+    isSplitButtonEnabled = isSplitButtonEnabled &&
+    [self respondsToSelector:@selector(showBottomSheetForSplitButton:completion:)];
+    if (!isSplitButtonEnabled || action.menuActions.count <= 0 || action.isActionFromSplitButtonBottomSheet)
+    {
+        switch (action.type) {
+            case ACRExecute:
+            case ACRSubmit:
+            {
+                action.isActionFromSplitButtonBottomSheet = NO;
+                NSMutableArray<NSString *> *fetchedInputList = [NSMutableArray arrayWithCapacity:3];
+                NSData *userInputsAsJson = [card inputs];
+                if (userInputsAsJson) {
+                    [fetchedInputList addObject:[[NSString alloc] initWithData:userInputsAsJson
+                                                                      encoding:NSUTF8StringEncoding]];
+                }
+                
+                NSString *data = [action data];
+                if (data && data.length) {
+                    [fetchedInputList addObject:[NSString stringWithFormat:@"\"data\" : %@", data]];
+                }
+                
+                if (action.type == ACRExecute) {
+                    if (action.verb && action.verb.length) {
+                        [fetchedInputList addObject:[NSString stringWithFormat:@"\"verb\" : %@", action.verb]];
+                    }
+                } else {
+                    [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows];
+                }
+                NSString *str = [NSString stringWithFormat:@"{\n%@\n}", [fetchedInputList componentsJoinedByString:@",\n"]];
+                
+                // if the app is being tested we set the result in the uilabel, otherwise
+                // we show the label in a popup
+                if ([self appIsBeingTested]) {
+                    NSString *str2 = [NSString stringWithFormat:@"{\n\t\"inputs\":%@\n}", [fetchedInputList componentsJoinedByString:@",\n"]];
+                    [self.retrievedInputsTextView setText:str2];
+                } else {
+                    [self presentViewController:[self createAlertController:@"user response fetched" message:str] animated:YES completion:nil];
+                }
+                
             }
-        } else {
-            [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows];
+                break;
+            case ACROpenUrl:
+            {
+                action.isActionFromSplitButtonBottomSheet = NO;
+                NSURL *url = [NSURL URLWithString:[action url]];
+                SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:url];
+                [self presentViewController:svc animated:YES completion:nil];
+            }
+                
+                break;
+            case ACRShowCard:
+            {
+                action.isActionFromSplitButtonBottomSheet = NO;
+                [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows targetView:_targetView];
+            }
+                break;
+            case ACRToggleVisibility:
+            {
+                action.isActionFromSplitButtonBottomSheet = NO;
+                [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows];
+            }
+                break;
+            default:
+                break;
         }
-        NSString *str = [NSString stringWithFormat:@"{\n%@\n}", [fetchedInputList componentsJoinedByString:@",\n"]];
-
-        // if the app is being tested we set the result in the uilabel, otherwise
-        // we show the label in a popup
-        if ([self appIsBeingTested]) {
-            NSString *str2 = [NSString stringWithFormat:@"{\n\t\"inputs\":%@\n}", [fetchedInputList componentsJoinedByString:@",\n"]];
-            [self.retrievedInputsTextView setText:str2];
-        } else {
-            [self presentViewController:[self createAlertController:@"user response fetched" message:str] animated:YES completion:nil];
-        }
-
-    } else if (action.type == ACRUnknownAction) {
+    }
+    
+    if (action.type == ACRUnknownAction)
+    {
         if ([action isKindOfClass:[CustomActionNewType class]]) {
             CustomActionNewType *newType = (CustomActionNewType *)action;
             newType.alertController = [self createAlertController:@"successfully rendered new button type" message:newType.alertMessage];
             [self presentViewController:newType.alertController animated:YES completion:nil];
         }
-    } else if (action.type == ACRToggleVisibility) {
-        [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows];
-    } else if (action.type == ACRShowCard) {
-        [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows targetView:_targetView];
     }
+}
+
+- (void) showBottomSheetForSplitButton:(NSArray<ACOBaseActionElement *>*)menuActions completion:(void (^)(ACOBaseActionElement *acoElement))completion
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    for (ACOBaseActionElement *menuAction in menuActions) {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:menuAction.title
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+            menuAction.isActionFromSplitButtonBottomSheet = YES;
+            completion(menuAction);
+        }];
+        [alert addAction:action];
+    }
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Dismiss"
+                                                           style:UIAlertActionStyleDestructive
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"Dismissed bottomsheet");
+    }];
+    [alert addAction:cancelAction];
+    UIPopoverPresentationController *pop = alert.popoverPresentationController;
+    pop.sourceView = self.view;
+    pop.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height, 1.0, 1.0);
+    pop.permittedArrowDirections = 0;
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (UIAlertController *)createAlertController:(NSString *)title message:(NSString *)message

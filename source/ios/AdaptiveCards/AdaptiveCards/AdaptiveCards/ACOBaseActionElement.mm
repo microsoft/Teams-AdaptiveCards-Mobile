@@ -33,6 +33,7 @@ using namespace AdaptiveCards;
     if (self) {
         [self setElem:element];
     }
+    self.isActionFromSplitButtonBottomSheet = NO;
     return self;
 }
 
@@ -160,7 +161,7 @@ using namespace AdaptiveCards;
     return NO;
 }
 
-- (NSArray *)menuActions
+- (NSArray<ACOBaseActionElement *> *)menuActions
 {
     NSMutableArray *menuActions = [NSMutableArray array];
     const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> m_menuActions = _elem->GetMenuActions();
