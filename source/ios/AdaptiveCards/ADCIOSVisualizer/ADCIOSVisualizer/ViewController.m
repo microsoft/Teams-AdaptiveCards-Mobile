@@ -262,12 +262,14 @@ UIColor* defaultButtonBackgroundColor;
     BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
     isSplitButtonEnabled = isSplitButtonEnabled &&
     [self respondsToSelector:@selector(showBottomSheetForSplitButton:completion:)];
-    switch (action.type) {
-        case ACRExecute:
-        case ACRSubmit:
-            if (action.menuActions.count <= 0 || !isSplitButtonEnabled || action.isActionFromSplitButtonBottomSheet) {
+    if (!isSplitButtonEnabled || action.menuActions.count <= 0 || action.isActionFromSplitButtonBottomSheet)
+    {
+        switch (action.type) {
+            case ACRExecute:
+            case ACRSubmit:
+            {
                 action.isActionFromSplitButtonBottomSheet = NO;
-                NSMutableArray<NSString *> *fetchedInputList = [NSMutableArray array];
+                NSMutableArray<NSString *> *fetchedInputList = [NSMutableArray arrayWithCapacity:3];
                 NSData *userInputsAsJson = [card inputs];
                 if (userInputsAsJson) {
                     [fetchedInputList addObject:[[NSString alloc] initWithData:userInputsAsJson
@@ -298,39 +300,40 @@ UIColor* defaultButtonBackgroundColor;
                 }
                 
             }
-            break;
-        case ACROpenUrl:
-            if (action.menuActions.count <= 0 || !isSplitButtonEnabled || action.isActionFromSplitButtonBottomSheet)
+                break;
+            case ACROpenUrl:
             {
                 action.isActionFromSplitButtonBottomSheet = NO;
                 NSURL *url = [NSURL URLWithString:[action url]];
                 SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:url];
                 [self presentViewController:svc animated:YES completion:nil];
             }
-            break;
-        case ACRShowCard:
-            if (action.menuActions.count <= 0 || !isSplitButtonEnabled || action.isActionFromSplitButtonBottomSheet)
+                
+                break;
+            case ACRShowCard:
             {
                 action.isActionFromSplitButtonBottomSheet = NO;
                 [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows targetView:_targetView];
             }
-            break;
-        case ACRToggleVisibility:
-            if (action.menuActions.count <= 0 || !isSplitButtonEnabled || action.isActionFromSplitButtonBottomSheet)
+                break;
+            case ACRToggleVisibility:
             {
                 action.isActionFromSplitButtonBottomSheet = NO;
                 [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows];
             }
-            break;
-        case ACRUnknownAction:
-            if ([action isKindOfClass:[CustomActionNewType class]]) {
-                CustomActionNewType *newType = (CustomActionNewType *)action;
-                newType.alertController = [self createAlertController:@"successfully rendered new button type" message:newType.alertMessage];
-                [self presentViewController:newType.alertController animated:YES completion:nil];
-            }
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
+        }
+    }
+    
+    if (action.type == ACRUnknownAction)
+    {
+        if ([action isKindOfClass:[CustomActionNewType class]]) {
+            CustomActionNewType *newType = (CustomActionNewType *)action;
+            newType.alertController = [self createAlertController:@"successfully rendered new button type" message:newType.alertMessage];
+            [self presentViewController:newType.alertController animated:YES completion:nil];
+        }
     }
 }
 

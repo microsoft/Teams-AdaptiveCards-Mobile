@@ -48,8 +48,7 @@
     /// 3.b. (If the action is from bottom sheet) or (If there's no implementation of showBottomSheetForSplitButton method in delegate)
     if (!isSplitButtonEnabled ||
         _actionElement.menuActions.count <= 0 ||
-        (_actionElement.menuActions.count > 0 &&
-         (_actionElement.isActionFromSplitButtonBottomSheet)))
+        (_actionElement.isActionFromSplitButtonBottomSheet && _actionElement.menuActions.count > 0))
     {
         [self doSelectActionWithAction:_actionElement];
     }

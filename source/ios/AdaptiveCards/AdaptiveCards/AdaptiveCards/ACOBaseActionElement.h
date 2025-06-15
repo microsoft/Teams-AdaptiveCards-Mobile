@@ -18,7 +18,7 @@
 @property (nonatomic, copy) NSString *tooltip;
 @property (nonatomic, readonly) NSString *inlineTooltip;
 @property (readonly) BOOL shouldFlipInRtl;
-@property (readwrite) BOOL isActionFromSplitButtonBottomSheet;
+@property BOOL isActionFromSplitButtonBottomSheet;
 
 - (NSString *)title;
 - (NSString *)elementId;

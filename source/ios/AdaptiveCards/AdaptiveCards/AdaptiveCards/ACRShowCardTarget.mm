@@ -116,13 +116,12 @@
     /// 3.b. (If the action is from bottom sheet) or (If there's no implementation of showBottomSheetForSplitButton method in delegate)
     if (!isSplitButtonEnabled ||
         _actionElement.menuActions.count <= 0 ||
-        (_actionElement.menuActions.count > 0 &&
-         (_actionElement.isActionFromSplitButtonBottomSheet)))
+        (_actionElement.isActionFromSplitButtonBottomSheet && _actionElement.menuActions.count > 0))
     {
         BOOL isSelected = _button.selected;
         BOOL hidden = _adcView.hidden;
         [_superview hideAllShowCards];
-        _adcView.hidden = (hidden == YES) ? NO : YES;
+        _adcView.hidden = !hidden;
 
         // send candidate background image view, if the sent view is UIImageView and has UIImage in it
         // AdatpiveCard will configure the backgroun
