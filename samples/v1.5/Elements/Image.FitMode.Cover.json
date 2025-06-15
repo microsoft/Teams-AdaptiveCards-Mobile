@@ -4,178 +4,141 @@
 	"body": [
 		{
 			"type": "Container",
-			"layouts": [
-				{
-					"type": "Layout.Flow"
-				}
-			],
+			"showBorder": true,
+			"roundedCorners": true,
 			"items": [
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Left Top"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Large",
+					"text": "Cover Mode Card"
+				}
+			]
+		},
+
+		{
+			"type": "TextBlock",
+			"size": "Large",
+			"text": "Potrait Image (Original Image)"
+		},
+		{
+			"type": "Image",
+			"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
+			"height": "auto",
+			"width": "stretch",
+			"fitMode": "cover"
+		},
+		{
+			"type": "TextBlock",
+			"size": "Large",
+			"text": "Potrait Image (fitMode as Cover)"
+		},
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "Image",
+					"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
+					"height": "250px",
+					"width": "250px",
+					"fitMode": "cover",
+					"verticalContentAlignment": "top"
 				},
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover",
-							"horizontalContentAlignment": "left",
-							"verticalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Left Center"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Medium",
+					"text": "Vertical Top"
 				},
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover",
-							"horizontalContentAlignment": "left",
-							"verticalContentAlignment": "bottom"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Left Bottom"
-						}
-					]
+					"type": "Image",
+					"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
+					"height": "250px",
+					"width": "250px",
+					"fitMode": "cover",
+					"verticalContentAlignment": "center"
 				},
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover",
-							"horizontalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Center Top"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Medium",
+					"text": "Vertical Center"
 				},
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover",
-							"horizontalContentAlignment": "center",
-							"verticalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Center Center"
-						}
-					]
+					"type": "Image",
+					"url": "https://cdn.pixabay.com/photo/2021/12/20/16/28/moose-6883432_1280.jpg",
+					"height": "250px",
+					"width": "250px",
+					"fitMode": "cover",
+					"verticalContentAlignment": "bottom"
 				},
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover",
-							"horizontalContentAlignment": "center",
-							"verticalContentAlignment": "bottom"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Center Bottom"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Medium",
+					"text": "Vertical Bottom"
+				}
+			]
+		},
+		{
+			"type": "TextBlock",
+			"size": "Large",
+			"text": "   "
+		},
+		{
+			"type": "TextBlock",
+			"size": "Large",
+			"text": "Landscape Image (Original Image)"
+		},
+		{
+			"type": "Image",
+			"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+			"height": "200px",
+			"width": "stretch",
+			"fitMode": "cover"
+		},
+		{
+			"type": "TextBlock",
+			"size": "Large",
+			"text": "Landscape Image (fitMode as Cover)"
+		},
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "Image",
+					"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+					"height": "250px",
+					"width": "250px",
+					"fitMode": "cover",
+					"horizontalContentAlignment": "left"
 				},
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover",
-							"horizontalContentAlignment": "right"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Right Top"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Medium",
+					"text": "Horizontal Left"
 				},
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover",
-							"horizontalContentAlignment": "right",
-							"verticalContentAlignment": "center"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Right Center"
-						}
-					]
+					"type": "Image",
+					"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+					"height": "250px",
+					"width": "250px",
+					"fitMode": "cover",
+					"horizontalContentAlignment": "center"
 				},
 				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "Image",
-							"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
-							"height": "300px",
-							"width": "200px",
-							"fitMode": "cover",
-							"horizontalContentAlignment": "right",
-							"verticalContentAlignment": "bottom"
-						},
-						{
-							"type": "TextBlock",
-							"size": "Large",
-							"text": "Cover Right Bottom"
-						}
-					]
+					"type": "TextBlock",
+					"size": "Medium",
+					"text": "Horizontal Center"
+				},
+				{
+					"type": "Image",
+					"url": "https://th.bing.com/th/id/OIP.wlTpyLn8mhmAwuX9-lbcjwHaEO?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7",
+					"height": "250px",
+					"width": "250px",
+					"fitMode": "cover",
+					"horizontalContentAlignment": "right"
+				},
+				{
+					"type": "TextBlock",
+					"size": "Medium",
+					"text": "Horizontal Right"
 				}
 			]
 		}
