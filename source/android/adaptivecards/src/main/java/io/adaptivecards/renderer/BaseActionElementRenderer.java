@@ -365,6 +365,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
 
         private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
             PopoverRenderer popoverRenderer = new PopoverRenderer(
+                v.getContext(),
                 action,
                 v,
                 m_renderedAdaptiveCard,
@@ -466,7 +467,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 2. if menu actions are present inside the action
                 3. if hub is handling the menu actions, else go down
              */
-            if (!m_renderArgs.isPopoverContent() && areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
+            if (!isPopoverContent() && areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
                 return;
             }
 
@@ -521,6 +522,10 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
 
                 m_cardActionHandler.onAction(m_action, m_renderedAdaptiveCard);
             }
+        }
+
+        private boolean isPopoverContent() {
+            return m_renderArgs != null && m_renderArgs.isPopoverContent();
         }
 
         private void dismissPopoverIfNeeded() {

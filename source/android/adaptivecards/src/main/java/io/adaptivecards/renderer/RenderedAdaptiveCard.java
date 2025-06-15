@@ -259,7 +259,7 @@ public class RenderedAdaptiveCard {
         return popoverDialog;
     }
 
-    public void setPopoverDialog(@NonNull BottomSheetDialog popoverDialog) {
+    public void setPopoverDialog(@Nullable BottomSheetDialog popoverDialog) {
         this.popoverDialog = popoverDialog;
     }
 }
