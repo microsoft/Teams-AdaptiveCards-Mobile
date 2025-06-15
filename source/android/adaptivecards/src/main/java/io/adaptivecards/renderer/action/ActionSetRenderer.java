@@ -79,20 +79,7 @@ public class ActionSetRenderer extends BaseCardElementRenderer
 
         BaseActionElementVector baseActionElementList = actionSet.GetActions();
 
-        BaseActionElementVector baseActionElementFilteredList = new BaseActionElementVector();
-        // remove actions which are not supposed to be rendered inside popover
-        if (renderArgs.isPopoverContent()) {
-            List<ActionType> ignoreActions = List.of(ActionType.ToggleVisibility, ActionType.Popover, ActionType.ShowCard);
-            for (BaseActionElement actionElement : baseActionElementList)
-            {
-                if (!ignoreActions.contains(actionElement.GetElementType()))
-                {
-                    baseActionElementFilteredList.add(actionElement);
-                }
-            }
-        } else {
-            baseActionElementFilteredList = baseActionElementList;
-        }
+        BaseActionElementVector baseActionElementFilteredList = getActionElementsFilteredList(renderArgs, baseActionElementList);
 
         //Split Action Elements and render.
         Pair<BaseActionElementVector,BaseActionElementVector> actionElementVectorPair = Util.splitActionsByMode(baseActionElementFilteredList, hostConfig, renderedCard);
@@ -114,6 +101,24 @@ public class ActionSetRenderer extends BaseCardElementRenderer
 
         viewGroup.addView(rootLayout);
         return rootLayout;
+    }
+
+    public BaseActionElementVector getActionElementsFilteredList(RenderArgs renderArgs, BaseActionElementVector baseActionElementList) {
+        BaseActionElementVector baseActionElementFilteredList = new BaseActionElementVector();
+        if (renderArgs.isPopoverContent()) {
+            // remove actions which are not supposed to be rendered inside popover
+            List<ActionType> ignoreActions = List.of(ActionType.ToggleVisibility, ActionType.Popover, ActionType.ShowCard);
+            for (BaseActionElement actionElement : baseActionElementList)
+            {
+                if (!ignoreActions.contains(actionElement.GetElementType()))
+                {
+                    baseActionElementFilteredList.add(actionElement);
+                }
+            }
+        } else {
+            baseActionElementFilteredList = baseActionElementList;
+        }
+        return baseActionElementFilteredList;
     }
 
     private static ActionSetRenderer s_instance = null;
