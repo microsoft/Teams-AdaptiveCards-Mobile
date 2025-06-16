@@ -5,6 +5,7 @@ package io.adaptivecards.renderer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -89,8 +90,11 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         public static ActionOnClickListener newInstance(
             RenderedAdaptiveCard renderedCard,
             BaseActionElement baseActionElement,
-            ICardActionHandler cardActionHandler) {
-            return new ActionOnClickListener(renderedCard,  baseActionElement, cardActionHandler, false);
+            ICardActionHandler cardActionHandler,
+            FragmentManager fragmentManager,
+            HostConfig hostConfig,
+            RenderArgs renderArgs) {
+            return new ActionOnClickListener(renderedCard,  baseActionElement, cardActionHandler, fragmentManager, hostConfig, renderArgs, false);
         }
 
         public static ActionOnClickListener newInstance(
@@ -365,6 +369,10 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
+            if (m_renderedAdaptiveCard == null || m_cardActionHandler == null || m_fragmentManager == null || m_hostConfig == null || m_renderArgs == null){
+                Log.e("BaseActionElementRenderer", "handlePopoverAction: Required parameters are null.");
+                return;
+            }
             PopoverBottomSheetDailogFragmentFactory factory = new PopoverBottomSheetDailogFragmentFactory(v.getContext(),
                 action,
                 m_renderedAdaptiveCard,
