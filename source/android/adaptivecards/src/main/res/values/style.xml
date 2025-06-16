@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="PopoverDialog" parent="@style/Theme.Design.BottomSheetDialog">
-        <item name="android:colorBackground">@android:color/transparent</item>
-    </style>
-</resources>

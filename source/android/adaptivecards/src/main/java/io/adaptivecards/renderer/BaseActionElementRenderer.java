@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.HashMap;
@@ -364,17 +365,22 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
-            PopoverRenderer popoverRenderer = new PopoverRenderer(
-                v.getContext(),
+            PopoverBottomSheetDailogFragmentFactory factory = new PopoverBottomSheetDailogFragmentFactory(v.getContext(),
                 action,
-                v,
                 m_renderedAdaptiveCard,
-                m_fragmentManager,
                 m_cardActionHandler,
                 m_hostConfig,
                 m_renderArgs
             );
-            popoverRenderer.showPopover();
+
+            m_fragmentManager.setFragmentFactory(factory);
+
+            Fragment fragment = factory.instantiate(
+                ClassLoader.getSystemClassLoader(),
+                PopoverBottomSheetDailogFragment.class.getName()
+            );
+
+            ((PopoverBottomSheetDailogFragment) fragment).show(m_fragmentManager, "profile_bottom_sheet");
         }
 
         private void handleToggleVisibilityAction(View v)

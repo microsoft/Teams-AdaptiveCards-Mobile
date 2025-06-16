@@ -7,13 +7,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:layout_marginTop="8dp"
+        android:padding="10dp">
 
         <ImageButton
             android:id="@+id/popover_closeButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:padding="0dp"
             android:scaleType="fitXY"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"></LinearLayout>
+            android:padding="10dp">
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

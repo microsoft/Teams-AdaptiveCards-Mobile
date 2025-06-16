@@ -4,6 +4,12 @@ package io.adaptivecards.renderer
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Rect
+import android.os.Build
+import android.util.DisplayMetrics
+import android.view.WindowInsets
+import android.view.WindowManager
+import android.view.WindowMetrics
 import io.adaptivecards.objectmodel.ACTheme
 
 object Utils {
@@ -24,5 +30,27 @@ object Utils {
     private fun Context.isDarkTheme() : Boolean {
         val nightModeFlags: Int = this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return nightModeFlags == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    fun getScreenActualAvailableHeight(context: Context): Int {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // For API 30+ (Android 11+)
+            val windowMetrics: WindowMetrics = windowManager.currentWindowMetrics
+            val insets: WindowInsets = windowMetrics.windowInsets
+            val insetsIgnoringVisibility = insets.getInsetsIgnoringVisibility(
+                WindowInsets.Type.systemBars()
+            )
+            val bounds: Rect = windowMetrics.bounds
+            val height = bounds.height() - insetsIgnoringVisibility.top - insetsIgnoringVisibility.bottom
+            height
+        } else {
+            // For API 26–29
+            val displayMetrics = DisplayMetrics()
+            @Suppress("DEPRECATION")
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+            displayMetrics.heightPixels
+        }
     }
 }
