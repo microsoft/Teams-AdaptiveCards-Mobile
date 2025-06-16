@@ -78,7 +78,7 @@ object CarouselPageRenderer : BaseCardElementRenderer() {
         }
 
         ContainerRenderer.setBackgroundImage(renderedCard, context, carouselPage.GetBackgroundImage(), hostConfig, renderArgs, carouselPageView)
-        ContainerRenderer.setSelectAction(renderedCard, carouselPage.GetSelectAction(), carouselPageView, cardActionHandler, renderArgs)
+        ContainerRenderer.setSelectAction(renderedCard, carouselPage.GetSelectAction(), carouselPageView, cardActionHandler, fragmentManager, hostConfig, renderArgs)
         viewGroup.addView(carouselPageView)
         return carouselPageView
     }

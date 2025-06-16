@@ -279,7 +279,7 @@ public class TextRendererUtil
         return Typeface.create((String) null, Typeface.NORMAL);
     }
 
-    static String getTextColor(ForegroundColor foregroundColor, HostConfig hostConfig, boolean isSubtle, ContainerStyle containerStyle)
+    public static String getTextColor(ForegroundColor foregroundColor, HostConfig hostConfig, boolean isSubtle, ContainerStyle containerStyle)
     {
         return hostConfig.GetForegroundColor(containerStyle, foregroundColor, isSubtle);
     }

@@ -242,7 +242,7 @@ public class AdaptiveCardRenderer
         }
 
         ContainerRenderer.setBackgroundImage(renderedCard, context, adaptiveCard.GetBackgroundImage(), hostConfig, renderArgs, cardLayout);
-        ContainerRenderer.setSelectAction(renderedCard, renderedCard.getAdaptiveCard().GetSelectAction(), rootLayout, cardActionHandler, renderArgs);
+        ContainerRenderer.setSelectAction(renderedCard, renderedCard.getAdaptiveCard().GetSelectAction(), rootLayout, cardActionHandler, fragmentManager, hostConfig, renderArgs);
 
         return rootLayout;
     }

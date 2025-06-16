@@ -40,7 +40,7 @@ public class RenderedAdaptiveCard {
     private boolean lastValidationResult = false;
 
     @Nullable
-    private BottomSheetDialog popoverDailog;
+    private BottomSheetDialog popoverDialog;
 
     protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull ACTheme theme) {
         this.warnings = new Vector<>();
@@ -255,11 +255,11 @@ public class RenderedAdaptiveCard {
     }
 
     @Nullable
-    public BottomSheetDialog getPopoverDailog() {
-        return popoverDailog;
+    public BottomSheetDialog getPopoverDialog() {
+        return popoverDialog;
     }
 
-    public void setPopoverDailog(@NonNull BottomSheetDialog popoverDailog) {
-        this.popoverDailog = popoverDailog;
+    public void setPopoverDialog(@Nullable BottomSheetDialog popoverDialog) {
+        this.popoverDialog = popoverDialog;
     }
 }

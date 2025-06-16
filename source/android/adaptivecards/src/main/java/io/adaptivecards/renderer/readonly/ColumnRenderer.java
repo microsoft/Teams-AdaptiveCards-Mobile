@@ -188,7 +188,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
         ContainerRenderer.applyRoundedCorners(columnLayout, hostConfig, column.GetElementType(), column.GetRoundedCorners());
         BaseCardElementRenderer.applyRtl(column.GetRtl(), columnLayout);
 
-        ContainerRenderer.setSelectAction(renderedCard, column.GetSelectAction(), columnLayout, cardActionHandler, renderArgs);
+        ContainerRenderer.setSelectAction(renderedCard, column.GetSelectAction(), columnLayout, cardActionHandler, fragmentManager, hostConfig, renderArgs);
         viewGroup.addView(columnLayout);
         return columnLayout;
     }

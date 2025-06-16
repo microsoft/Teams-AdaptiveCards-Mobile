@@ -62,7 +62,7 @@ public class CompoundButtonRenderer extends BaseCardElementRenderer {
         ViewGroup compoundButtonLayout = getCompoundButtonLayout(context, compoundButton, renderedCard, hostConfig, renderArgs);
         compoundButtonLayout.setTag(new TagContent(compoundButton));
         viewGroup.addView(compoundButtonLayout);
-        ContainerRenderer.setSelectAction(renderedCard, compoundButton.GetSelectAction(), compoundButtonLayout, cardActionHandler, renderArgs);
+        ContainerRenderer.setSelectAction(renderedCard, compoundButton.GetSelectAction(), compoundButtonLayout, cardActionHandler, fragmentManager, hostConfig, renderArgs);
         return compoundButtonLayout;
     }
 

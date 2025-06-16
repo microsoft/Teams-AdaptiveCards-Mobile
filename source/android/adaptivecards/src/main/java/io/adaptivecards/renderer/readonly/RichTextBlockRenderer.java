@@ -62,9 +62,9 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
 
     private class ActionSpan extends ClickableSpan
     {
-        public ActionSpan(BaseActionElement action, RenderedAdaptiveCard renderedCard, ICardActionHandler cardActionHandler)
+        public ActionSpan(BaseActionElement action, RenderedAdaptiveCard renderedCard, ICardActionHandler cardActionHandler, FragmentManager fragmentManager, HostConfig hostConfig, RenderArgs renderArgs)
         {
-            m_actionListener = new BaseActionElementRenderer.SelectActionOnClickListener(renderedCard, action, cardActionHandler);
+            m_actionListener = new BaseActionElementRenderer.SelectActionOnClickListener(renderedCard, action, cardActionHandler, fragmentManager, hostConfig, renderArgs);
         }
 
         @Override
@@ -108,6 +108,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 RenderedAdaptiveCard renderedCard,
                 InlineVector inlines,
                 ICardActionHandler cardActionHandler,
+                FragmentManager fragmentManager,
                 HostConfig hostConfig,
                 RenderArgs renderArgs)
     {
@@ -186,7 +187,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
 
                 if(textRun.GetSelectAction() != null && textRun.GetSelectAction().GetIsEnabled())
                 {
-                    paragraph.setSpan(new ActionSpan(textRun.GetSelectAction(), renderedCard, cardActionHandler), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    paragraph.setSpan(new ActionSpan(textRun.GetSelectAction(), renderedCard, cardActionHandler, fragmentManager, hostConfig, renderArgs), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
             }
         }
@@ -225,7 +226,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
         InlineVector inlines = richTextBlock.GetInlines();
 
         textView.setText("");
-        SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, inlines, cardActionHandler, hostConfig, renderArgs);
+        SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, inlines, cardActionHandler, fragmentManager, hostConfig, renderArgs);
         textView.append(convertedString);
 
         // Properties required for actions to fire onClick event

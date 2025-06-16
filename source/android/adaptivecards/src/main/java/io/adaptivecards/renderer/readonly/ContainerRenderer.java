@@ -136,7 +136,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
             }
         }
         ContainerRenderer.setBackgroundImage(renderedCard, context, container.GetBackgroundImage(), hostConfig, renderArgs, containerView);
-        setSelectAction(renderedCard, container.GetSelectAction(), containerView, cardActionHandler, renderArgs);
+        setSelectAction(renderedCard, container.GetSelectAction(), containerView, cardActionHandler, fragmentManager, hostConfig, renderArgs);
         viewGroup.addView(containerView);
         return containerView;
     }
@@ -412,7 +412,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
     }
 
-    public static void setSelectAction(RenderedAdaptiveCard renderedCard, BaseActionElement selectAction, View view, ICardActionHandler cardActionHandler, RenderArgs renderArgs)
+    public static void setSelectAction(RenderedAdaptiveCard renderedCard, BaseActionElement selectAction, View view, ICardActionHandler cardActionHandler, FragmentManager fragmentManager, HostConfig hostConfig, RenderArgs renderArgs)
     {
         if (selectAction != null)
         {
@@ -424,7 +424,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
                 renderedCard.registerSubmitableAction(view, renderArgs);
             }
 
-            view.setOnClickListener(new BaseActionElementRenderer.SelectActionOnClickListener(renderedCard, selectAction, cardActionHandler));
+            view.setOnClickListener(new BaseActionElementRenderer.SelectActionOnClickListener(renderedCard, selectAction, cardActionHandler, fragmentManager, hostConfig, renderArgs));
 
             applyTitleAndTooltip(selectAction, view);
 
