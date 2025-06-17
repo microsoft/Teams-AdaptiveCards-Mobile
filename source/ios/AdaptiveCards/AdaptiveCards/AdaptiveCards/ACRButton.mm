@@ -105,15 +105,7 @@
 
 - (void)setImageView:(UIImage *)image
           withConfig:(ACOHostConfig *)config
-  aspectRatio:(float)aspectRatio
-{
-    [self setImageView:image withConfig:config aspectRatio:aspectRatio imageSize:CGSizeZero];
-}
-
-- (void)setImageView:(UIImage *)image
-          withConfig:(ACOHostConfig *)config
-  aspectRatio:(float)aspectRatio
-           imageSize:(CGSize)imageSize
+         aspectRatio:(float)aspectRatio
 {
     CGFloat imageHeight = 0.0f;
     CGSize contentSize = [self.titleLabel intrinsicContentSize];
@@ -129,7 +121,7 @@
         aspectRatio = image.size.width / image.size.height;
     }
     
-    CGSize calculatedImageSize = CGSizeEqualToSize(imageSize, CGSizeZero) ? CGSizeMake(imageHeight * aspectRatio, imageHeight) : imageSize;
+    CGSize calculatedImageSize = CGSizeMake(imageHeight * aspectRatio, imageHeight);
     _iconView.translatesAutoresizingMaskIntoConstraints = NO;
     
     // scale the image using UIImageView
@@ -254,12 +246,8 @@
     button.titleLabel.numberOfLines = 0;
     button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     button.titleLabel.adjustsFontForContentSizeCategory = YES;
-    if (button.titleLabel.font) {
-        button.titleLabel.font = [UIFontMetrics.defaultMetrics scaledFontForFont:button.titleLabel.font];
-    } else {
-        button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    }
-    
+    [button.titleLabel setFont:[UIFont systemFontOfSize:15.0]];
+    button.titleLabel.font = [UIFontMetrics.defaultMetrics scaledFontForFont:button.titleLabel.font];
     button.isAccessibilityElement = YES;
     button.accessibilityLabel = title;
     button.enabled = [acoAction isEnabled];
@@ -277,6 +265,10 @@
     NSString *key = iconURL;
     UIImage *img = imageViewMap[key];
     button.iconPlacement = [ACRButton getIconPlacementAtCurrentContext:rootView url:key];
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
+    isSplitButtonEnabled = isSplitButtonEnabled &&
+    [rootView.acrActionDelegate respondsToSelector:@selector(showBottomSheetForSplitButton:completion:)];
     BOOL isSplitButton = action->GetIsSplitAction();
     
     if (img) {
@@ -319,7 +311,7 @@
         button.heightConstraint.active = YES;
     }
     
-    if (isSplitButton)
+    if (isSplitButtonEnabled && isSplitButton)
     {
         NSString *chevronDownIcon = @"ChevronDown";
         NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, chevronDownIcon, chevronDownIcon];

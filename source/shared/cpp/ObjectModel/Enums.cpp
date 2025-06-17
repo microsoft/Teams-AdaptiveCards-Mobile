@@ -276,7 +276,10 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Content, "content"},
             {AdaptiveCardSchemaKey::DisplayArrow, "displayArrow"},
             {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
-            {AdaptiveCardSchemaKey::Position, "position"}});
+            {AdaptiveCardSchemaKey::Position, "position"},
+            {AdaptiveCardSchemaKey::Popover, "popover"},
+        {AdaptiveCardSchemaKey::ImageFitMode, "fitMode"},
+        {AdaptiveCardSchemaKey::HorizontalContentAlignment, "horizontalContentAlignment"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -383,6 +386,11 @@ namespace AdaptiveCards
         { VerticalAlignment::Center, "center" },
         { VerticalAlignment::Bottom, "bottom" }});
 
+    DEFINE_ADAPTIVECARD_ENUM(VerticalContentAlignment, {
+        { VerticalContentAlignment::Top, "Top" },
+        { VerticalContentAlignment::Center, "Center" },
+        { VerticalContentAlignment::Bottom, "Bottom" }});
+
     DEFINE_ADAPTIVECARD_ENUM(ImageFillMode, {
         { ImageFillMode::Cover, "cover" },
         { ImageFillMode::RepeatHorizontally, "repeatHorizontally" },
@@ -406,10 +414,20 @@ namespace AdaptiveCards
             {ImageSize::Small, "Small"},
             {ImageSize::Stretch, "Stretch"}});
 
+    DEFINE_ADAPTIVECARD_ENUM(ImageFitMode, {
+        {ImageFitMode::Cover, "Cover"},
+        {ImageFitMode::Contain, "Contain"},
+        {ImageFitMode::Fill, "Fill"}});
+
     DEFINE_ADAPTIVECARD_ENUM(HorizontalAlignment, {
             {HorizontalAlignment::Center, "center"},
             {HorizontalAlignment::Left, "left"},
             {HorizontalAlignment::Right, "right"}});
+
+    DEFINE_ADAPTIVECARD_ENUM(HorizontalContentAlignment, {
+        {HorizontalContentAlignment::Left, "Left"},
+        {HorizontalContentAlignment::Center, "Center"},
+        {HorizontalContentAlignment::Right, "Right"}});
 
     DEFINE_ADAPTIVECARD_ENUM(ForegroundColor, {
             {ForegroundColor::Accent, "Accent"},
@@ -498,11 +516,6 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(IconPlacement, {
             {IconPlacement::AboveTitle, "AboveTitle"},
             {IconPlacement::LeftOfTitle, "LeftOfTitle"}});
-
-    DEFINE_ADAPTIVECARD_ENUM(VerticalContentAlignment, {
-            {VerticalContentAlignment::Top, "Top"},
-            {VerticalContentAlignment::Center, "Center"},
-            {VerticalContentAlignment::Bottom, "Bottom"}});
 
     DEFINE_ADAPTIVECARD_ENUM(PageAnimation, {
             {PageAnimation::Slide,"Slide"},

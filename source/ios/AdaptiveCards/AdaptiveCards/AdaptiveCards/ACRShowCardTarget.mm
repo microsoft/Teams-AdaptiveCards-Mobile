@@ -13,6 +13,7 @@
 #import "ACRRendererPrivate.h"
 #import "ACRViewPrivate.h"
 #import "BaseActionElement.h"
+#import "ACRToggleVisibilityTarget.h"
 #import "UtiliOS.h"
 #import <UIKit/UIKit.h>
 
@@ -39,9 +40,7 @@
         _rootView = rootView;
         _adcView = nil;
         _button = button;
-        std::shared_ptr<ShowCardAction> showCardAction = std::make_shared<ShowCardAction>();
-        showCardAction->SetCard(showCardActionElement->GetCard());
-        _actionElement = [[ACOBaseActionElement alloc] initWithBaseActionElement:std::dynamic_pointer_cast<BaseActionElement>(showCardAction)];
+        _actionElement = [[ACOBaseActionElement alloc] initWithBaseActionElement:std::dynamic_pointer_cast<BaseActionElement>(showCardActionElement)];
     }
     return self;
 }
@@ -106,37 +105,68 @@
 
 - (IBAction)toggleVisibilityOfShowCard
 {
+    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+    BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
+    isSplitButtonEnabled = isSplitButtonEnabled &&
+    [_rootView.acrActionDelegate respondsToSelector:@selector(showBottomSheetForSplitButton:completion:)];
+    /// Perform default implementation if:
+    /// 1. If split button is disabled or
+    /// 2. There are no menuactions or
+    /// 3.a. There are menuactions and
+    /// 3.b. (If the action is from bottom sheet) or (If there's no implementation of showBottomSheetForSplitButton method in delegate)
+    if (!isSplitButtonEnabled ||
+        _actionElement.menuActions.count <= 0 ||
+        (_actionElement.isActionFromSplitButtonBottomSheet && _actionElement.menuActions.count > 0))
+    {
+        BOOL isSelected = _button.selected;
+        BOOL hidden = _adcView.hidden;
+        [_superview hideAllShowCards];
+        _adcView.hidden = !hidden;
 
-    BOOL isSelected = _button.selected;
-    BOOL hidden = _adcView.hidden;
-    [_superview hideAllShowCards];
-    _adcView.hidden = (hidden == YES) ? NO : YES;
+        // send candidate background image view, if the sent view is UIImageView and has UIImage in it
+        // AdatpiveCard will configure the backgroun
+        if (hidden) {
+            if ([_adcView.subviews count] > 1) {
+                NSMutableArray<NSLayoutConstraint *> *constraints = [[NSMutableArray alloc] init];
+                renderBackgroundCoverMode(_adcView.subviews[1], _adcView.backgroundView, constraints, _adcView);
+                [NSLayoutConstraint activateConstraints:constraints];
+            }
+        }
+        _button.selected = !isSelected;
 
-    // send candidate background image view, if the sent view is UIImageView and has UIImage in it
-    // AdatpiveCard will configure the backgroun
-    if (hidden) {
-        if ([_adcView.subviews count] > 1) {
-            NSMutableArray<NSLayoutConstraint *> *constraints = [[NSMutableArray alloc] init];
-            renderBackgroundCoverMode(_adcView.subviews[1], _adcView.backgroundView, constraints, _adcView);
-            [NSLayoutConstraint activateConstraints:constraints];
+        NSString *hint = hidden ? @"card expanded" : @"card collapsed";
+        _button.accessibilityValue = NSLocalizedString(hint, nil);
+
+        if ([_rootView.acrActionDelegate respondsToSelector:@selector(didChangeVisibility:isVisible:)]) {
+            [_rootView.acrActionDelegate didChangeVisibility:_button isVisible:(!_adcView.hidden)];
+        }
+
+        if ([_rootView.acrActionDelegate respondsToSelector:@selector(didChangeViewLayout:newFrame:)] && _adcView.hidden == NO) {
+            CGRect showCardFrame = _adcView.frame;
+            showCardFrame.origin = [_adcView convertPoint:_adcView.frame.origin toView:nil];
+            CGRect oldFrame = showCardFrame;
+            oldFrame.size.height = 0;
+            showCardFrame.size.height += [_config getHostConfig]->GetActions().showCard.inlineTopMargin;
+            [_rootView.acrActionDelegate didChangeViewLayout:oldFrame newFrame:showCardFrame];
         }
     }
-    _button.selected = !isSelected;
-
-    NSString *hint = hidden ? @"card expanded" : @"card collapsed";
-    _button.accessibilityValue = NSLocalizedString(hint, nil);
-
-    if ([_rootView.acrActionDelegate respondsToSelector:@selector(didChangeVisibility:isVisible:)]) {
-        [_rootView.acrActionDelegate didChangeVisibility:_button isVisible:(!_adcView.hidden)];
-    }
-
-    if ([_rootView.acrActionDelegate respondsToSelector:@selector(didChangeViewLayout:newFrame:)] && _adcView.hidden == NO) {
-        CGRect showCardFrame = _adcView.frame;
-        showCardFrame.origin = [_adcView convertPoint:_adcView.frame.origin toView:nil];
-        CGRect oldFrame = showCardFrame;
-        oldFrame.size.height = 0;
-        showCardFrame.size.height += [_config getHostConfig]->GetActions().showCard.inlineTopMargin;
-        [_rootView.acrActionDelegate didChangeViewLayout:oldFrame newFrame:showCardFrame];
+    else
+    {
+        NSArray<ACOBaseActionElement *> *menuActions = [@[ _actionElement ] arrayByAddingObjectsFromArray:_actionElement.menuActions];
+        __weak __typeof(self) weakSelf = self;
+        [_rootView.acrActionDelegate showBottomSheetForSplitButton: menuActions completion:^(ACOBaseActionElement *acoElement) {
+            __strong __typeof(self) strongSelf = weakSelf;
+            if (acoElement.type == ACRShowCard)
+            {
+                [strongSelf toggleVisibilityOfShowCard];
+            }
+            if (acoElement.type == ACRToggleVisibility)
+            {
+                ACRToggleVisibilityTarget *toggleVisibility = [[ACRToggleVisibilityTarget alloc] initWithActionElement:acoElement config:strongSelf->_config rootView:strongSelf->_rootView];
+                [toggleVisibility doSelectAction];
+            }
+            [strongSelf->_rootView.acrActionDelegate didFetchUserResponses:[strongSelf->_rootView card] action:acoElement];
+        }];
     }
     [_rootView.acrActionDelegate didFetchUserResponses:[_rootView card] action:_actionElement];
 }

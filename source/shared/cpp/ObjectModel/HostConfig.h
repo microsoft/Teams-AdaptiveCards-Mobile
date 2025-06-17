@@ -327,9 +327,16 @@ struct ShowCardActionConfig
     static ShowCardActionConfig Deserialize(const Json::Value& json, const ShowCardActionConfig& defaultValue);
 };
 
+struct PopoverConfig {
+    std::string backgroundColor = "#000000";
+
+    static PopoverConfig Deserialize(const Json::Value& json, const PopoverConfig& defaultValue);
+};
+
 struct ActionsConfig
 {
     ShowCardActionConfig showCard;
+    PopoverConfig popover;
     ActionsOrientation actionsOrientation = ActionsOrientation::Horizontal;
     ActionAlignment actionAlignment = ActionAlignment::Stretch;
     unsigned int buttonSpacing = 10;

@@ -314,6 +314,12 @@ ShowCardActionConfig ShowCardActionConfig::Deserialize(const Json::Value& json, 
     return result;
 }
 
+PopoverConfig PopoverConfig::Deserialize(const Json::Value& json, const PopoverConfig& defaultValue) {
+    PopoverConfig result;
+    result.backgroundColor = ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::BackgroundColor).value_or(defaultValue.backgroundColor);
+    return result;
+}
+
 ActionsConfig ActionsConfig::Deserialize(const Json::Value& json, const ActionsConfig& defaultValue)
 {
     ActionsConfig result;
@@ -330,6 +336,9 @@ ActionsConfig ActionsConfig::Deserialize(const Json::Value& json, const ActionsC
 
     result.showCard = ParseUtil::ExtractJsonValueAndMergeWithDefault<ShowCardActionConfig>(
         json, AdaptiveCardSchemaKey::ShowCard, defaultValue.showCard, ShowCardActionConfig::Deserialize);
+
+    result.popover = ParseUtil::ExtractJsonValueAndMergeWithDefault<PopoverConfig>(
+            json, AdaptiveCardSchemaKey::Popover, defaultValue.popover, PopoverConfig::Deserialize);
 
     result.spacing = ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::Spacing, defaultValue.spacing, SpacingFromString);
 
@@ -415,9 +424,9 @@ SpacingConfig SpacingConfig::Deserialize(const Json::Value& json, const SpacingC
     result.extraLargeSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::ExtraLarge, defaultValue.extraLargeSpacing);
 
     result.paddingSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::Padding, defaultValue.paddingSpacing);
-    
+
     result.extraSmallSpacing = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::ExtraSmall, defaultValue.extraSmallSpacing);
-    
+
     return result;
 }
 

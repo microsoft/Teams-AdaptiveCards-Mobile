@@ -11,6 +11,9 @@
 
 @implementation ACRCustomFeatureFlagResolver
 
+static NSString *const isSplitButtonEnabledKey = @"isSplitButtonEnabled";
+static NSString *const isProgressRingEnabledKey = @"isProgressRingEnabled";
+
 - (NSArray *)arrayForFlag:(NSString *)flag 
 {
     return nil;
@@ -24,6 +27,16 @@
     }
     
     if([flag isEqualToString:@"isGridLayoutEnabled"])
+    {
+        return YES;
+    }
+    
+    if([flag isEqualToString:isSplitButtonEnabledKey])
+    {
+        return YES;
+    }
+    
+    if([flag isEqualToString:isProgressRingEnabledKey])
     {
         return YES;
     }

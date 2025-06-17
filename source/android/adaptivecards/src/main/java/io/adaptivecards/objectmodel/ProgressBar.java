@@ -56,15 +56,15 @@ public class ProgressBar extends BaseCardElement {
   }
 
   public ProgressBarColor GetColor() {
-    return ProgressBarColor.swigToEnum(AdaptiveCardObjectModelJNI.ProgressBar_GetColor(swigCPtr, this));
+    return ProgressBarColor.swigToEnum(AdaptiveCardObjectModelJNI.ProgressBar_GetColor__SWIG_0(swigCPtr, this));
   }
 
   public double GetMax() {
-    return AdaptiveCardObjectModelJNI.ProgressBar_GetMax(swigCPtr, this);
+    return AdaptiveCardObjectModelJNI.ProgressBar_GetMax__SWIG_0(swigCPtr, this);
   }
 
   public @androidx.annotation.Nullable Double GetValue() {
-    StdOptionalDouble optvalue = new StdOptionalDouble(AdaptiveCardObjectModelJNI.ProgressBar_GetValue(swigCPtr, this), false);
+    StdOptionalDouble optvalue = new StdOptionalDouble(AdaptiveCardObjectModelJNI.ProgressBar_GetValue__SWIG_0(swigCPtr, this), false);
     return optvalue.has_value() ? optvalue.value() : null;
   }
 

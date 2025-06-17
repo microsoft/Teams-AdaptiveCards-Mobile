@@ -5,6 +5,9 @@ package io.adaptivecards.renderer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Color;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -14,10 +17,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.adaptivecards.R;
 import io.adaptivecards.objectmodel.ActionMode;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AssociatedInputs;
@@ -35,6 +41,7 @@ import io.adaptivecards.objectmodel.ToggleVisibilityTarget;
 import io.adaptivecards.objectmodel.ToggleVisibilityTargetVector;
 import io.adaptivecards.renderer.action.ActionElementUtils;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
 public abstract class BaseActionElementRenderer implements IBaseActionElementRenderer
 {
@@ -139,12 +146,33 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             // comment added to avoid the warning
             this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
             m_isInlineShowCardAction = (baseActionElement.GetElementType() == ActionType.ShowCard) && (hostConfig.GetActions().getShowCard().getActionMode() == ActionMode.Inline);
+            m_fragmentManager = fragmentManager;
+            m_renderArgs = renderArgs;
+            m_hostConfig = hostConfig;
 
             // As SelectAction doesn't support ShowCard actions, then this line won't be executed
             if (m_isInlineShowCardAction)
             {
                 renderHiddenCard(context, fragmentManager, viewGroup, hostConfig, renderArgs);
             }
+        }
+
+        /**
+         * Constructs an ActionOnClickListener. Use this constructor if you want to pass renderArgs also
+         * @param renderedCard
+         * @param baseActionElement
+         * @param cardActionHandler
+         * @param renderArgs
+         * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
+         */
+        protected ActionOnClickListener(RenderedAdaptiveCard renderedCard,
+                                        BaseActionElement baseActionElement,
+                                        ICardActionHandler cardActionHandler,
+                                        RenderArgs renderArgs,
+                                        boolean isMenuAction)
+        {
+            this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
+            m_renderArgs = renderArgs;
         }
 
         /**
@@ -335,11 +363,44 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
-        private void handlePopoverAction(@NonNull PopoverAction action) {
-            BaseCardElement content = action.GetContent();
-            boolean displayArrow = action.GetDisplayArrow();
-            String maxPopoverWidth = action.GetMaxPopoverWidth();
-            LabelPosition position = action.GetPosition();
+        private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
+            // create popover dailog
+            Context context = v.getContext();
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.PopoverDailog);
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View view = inflater.inflate(R.layout.popover_bottom_sheet_layout, null);
+            int dailogContentViewId = (int) Util.getViewId(view);
+            bottomSheetDialog.setContentView(view);
+
+            // add background to popover
+            final LinearLayout parentLayout = view.findViewById(R.id.popover_parentlayout);
+            parentLayout.setBackgroundColor(Color.parseColor(m_hostConfig.GetActions().getPopover().getBackgroundColor()));
+
+            // add content to popover
+            renderPopoverContent(action, parentLayout, dailogContentViewId);
+
+            // show dailog
+            bottomSheetDialog.show();
+
+            // store dailog object in rendered card to dismiss it later
+            m_renderedAdaptiveCard.setPopoverDailog(bottomSheetDialog);
+        }
+
+        protected final void renderPopoverContent(@NonNull PopoverAction action, @NonNull ViewGroup viewGroup, int parentViewId) {
+            try {
+                CardRendererRegistration.getInstance().renderElementAndPerformFallback(
+                    m_renderedAdaptiveCard,
+                    viewGroup.getContext(),
+                    m_fragmentManager,
+                    action.GetContent(),
+                    viewGroup,
+                    m_cardActionHandler,
+                    m_hostConfig,
+                    new RenderArgs(m_renderArgs, parentViewId),
+                    CardRendererRegistration.getInstance().getFeatureRegistration());
+            } catch (Exception e) {
+                Log.e("BaseActionElementRend", "Error rendering popover content", e);
+            }
         }
 
         private void handleToggleVisibilityAction(View v)
@@ -427,7 +488,12 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         @Override
         public void onClick(View view)
         {
-            if (areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
+            /*
+                1. menuActions not allowed inside popover
+                2. if menu actions are present inside the action
+                3. if hub is handling the menu actions, else go down
+             */
+            if (!m_renderArgs.isPopoverContent() && areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
                 return;
             }
 
@@ -446,12 +512,17 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             {
                 handleToggleVisibilityAction(view);
             } else if (m_action.GetElementType() == ActionType.Popover) {
-                handlePopoverAction(Util.castTo(m_action, PopoverAction.class));
+                PopoverAction action = Util.castTo(m_action, PopoverAction.class);
+                handlePopoverAction(action, view);
             }
             else
             {
                 if (m_action.GetElementType() == ActionType.Execute || m_action.GetElementType() == ActionType.Submit || m_renderedAdaptiveCard.isActionSubmitable(view))
                 {
+
+                    // dismiss popover on click of submit and execute
+                    dismissPopoverIfNeeded();
+
                     // Don't gather inputs or perform validation when AssociatedInputs is None
                     boolean gatherInputs = true;
                     try
@@ -469,7 +540,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                     {
                         // Custom action with Submit type will continue to gather inputs
                     }
-                    if (gatherInputs && !m_renderedAdaptiveCard.areInputsValid(Util.getViewId(view)))
+                    if (gatherInputs && !m_renderedAdaptiveCard.areInputsValid(Util.getViewId(view), m_renderArgs))
                     {
                         return;
                     }
@@ -478,6 +549,20 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 m_cardActionHandler.onAction(m_action, m_renderedAdaptiveCard);
             }
         }
+
+        private void dismissPopoverIfNeeded() {
+            if (m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDailog() != null) {
+                m_renderedAdaptiveCard.getPopoverDailog().dismiss();
+                m_renderedAdaptiveCard.setPopoverDailog(null);
+            }
+        }
+
+        @Nullable
+        protected FragmentManager m_fragmentManager;
+        @Nullable
+        protected HostConfig m_hostConfig;
+        @Nullable
+        protected RenderArgs m_renderArgs;
 
         protected BaseActionElement m_action;
         protected RenderedAdaptiveCard m_renderedAdaptiveCard;

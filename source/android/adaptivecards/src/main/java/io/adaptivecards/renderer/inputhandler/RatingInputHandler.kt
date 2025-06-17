@@ -5,6 +5,7 @@ package io.adaptivecards.renderer.inputhandler
 import android.view.accessibility.AccessibilityEvent
 import io.adaptivecards.objectmodel.BaseInputElement
 import io.adaptivecards.objectmodel.RatingInput
+import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Util
 import io.adaptivecards.renderer.layout.RatingStarInputView
@@ -16,8 +17,8 @@ import io.adaptivecards.renderer.layout.RatingStarInputViewListener
 class RatingInputHandler(
     baseInputElement: BaseInputElement,
     renderedAdaptiveCard: RenderedAdaptiveCard?,
-    cardId: Long
-): BaseInputHandler(baseInputElement, renderedAdaptiveCard, cardId) {
+    renderArgs: RenderArgs
+): BaseInputHandler(baseInputElement, renderedAdaptiveCard, renderArgs) {
 
     override fun getInput() = (m_view as RatingStarInputView).getRating().toString()
 

@@ -23,10 +23,10 @@ ProgressBar::ProgressBar() : BaseCardElement(CardElementType::ProgressBar)
 
 void ProgressBar::PopulateKnownPropertiesSet(){
     m_knownProperties.insert({
-        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Label),
-        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::LabelPosition),
-        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Size),
-        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalAlignment)
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Color),
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::HorizontalAlignment),
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Max),
+        AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Value)
     });
 }
 

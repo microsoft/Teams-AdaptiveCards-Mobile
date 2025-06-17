@@ -907,7 +907,8 @@
 		906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SwiftAdaptiveCardObjcBridge.mm; sourceTree = "<group>"; };
 		906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftAdaptiveCardSwiftBridge.swift; sourceTree = "<group>"; };
 		906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftAdaptiveCardObjcBridge.h; sourceTree = "<group>"; };
-		A7B62FECA1207CAF130C0332 /* Pods_AdaptiveCards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
+		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
 		B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionValid.json; sourceTree = "<group>"; };
 		B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionInvalid.json; sourceTree = "<group>"; };
@@ -1140,7 +1141,7 @@
 				6BB21219210015A7009EA1BA /* AVKit.framework in Frameworks */,
 				6BB2121821001596009EA1BA /* AVFoundation.framework in Frameworks */,
 				F45A071F1EF4BD67007C6503 /* UIKit.framework in Frameworks */,
-				CFEFBB8F217CA234487DE146 /* Pods_AdaptiveCards.framework in Frameworks */,
+				DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1545,8 +1546,6 @@
 		F423C0B71EE1FBA900905679 /* AdaptiveCards */ = {
 			isa = PBXGroup;
 			children = (
-				E28177D92DD1BAA300DA3EA0 /* Resources */,
-				906040BE2D7B74A300978EA5 /* Packages */,
 				F42979331F30079D00E89914 /* Actions */,
 				6BFF24152714FA1D00183C59 /* AdaptiveCards.h */,
 				F423C0B91EE1FBAA00905679 /* Info.plist */,
@@ -2141,7 +2140,6 @@
 				F4C1F5EB1F2ABD6B0018CB78 /* ACRBaseActionElementRenderer.h in Headers */,
 				6B1147D11F32E53A008846EC /* ACRActionDelegate.h in Headers */,
 				6BFF99C725FFF53E0028069F /* Authentication.h in Headers */,
-				906040BD2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h in Headers */,
 				6BFF99C325FFF53E0028069F /* AuthCardButton.h in Headers */,
 				3714EB532DAFB30400EE15AA /* ThemedUrl.h in Headers */,
 				6BFF99C425FFF53E0028069F /* ExecuteAction.h in Headers */,
@@ -2281,7 +2279,6 @@
 					F423C0B41EE1FBA900905679 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = UBF8T346G9;
-						LastSwiftMigration = 1540;
 						ProvisioningStyle = Automatic;
 					};
 					F423C0BD1EE1FBAA00905679 = {
@@ -2489,7 +2486,6 @@
 				24EDF0C02DCB7F8100558378 /* ACRProgressRingRenderer.mm in Sources */,
 				46DF37CF2C9034E6001C254F /* ACRCompoundButtonRenderer.mm in Sources */,
 				6BFF99FB26003EBA0028069F /* ACOAutoCardButton.mm in Sources */,
-				906040BB2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm in Sources */,
 				F4F6BA2A204E107F003741B6 /* UnknownElement.cpp in Sources */,
 				CFF954DC2981B2A700F321C3 /* ACRTypeaheadSearchParameters.mm in Sources */,
 				24EDF0BE2DCB7B6C00558378 /* ACRProgressBarRenderer.mm in Sources */,
@@ -2651,7 +2647,6 @@
 				7773C2DB2CA3FF8600097C06 /* ACRCarouselPageView.mm in Sources */,
 				F4C1F5DA1F218ABC0018CB78 /* ACRInputTimeRenderer.mm in Sources */,
 				463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */,
-				906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */,
 				6BFCA14D265452E100195CA7 /* ACRTableRenderer.mm in Sources */,
 				F4D402121F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.mm in Sources */,
 				6B22426E2203BE98000ACDA1 /* UnknownAction.cpp in Sources */,
@@ -2779,7 +2774,6 @@
 			baseConfigurationReference = 1D24FF5625726778F626A187 /* Pods-AdaptiveCards.apprelease.xcconfig */;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "iPhone Developer";
@@ -2812,7 +2806,6 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2822,7 +2815,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E72C29D3EBB42768C09AAB37 /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -2971,7 +2963,6 @@
 			baseConfigurationReference = F72C0D5A2C4F11349247B410 /* Pods-AdaptiveCards.debug.xcconfig */;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "iPhone Developer";
@@ -3004,8 +2995,6 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -3016,7 +3005,6 @@
 			baseConfigurationReference = FD36421C0C004464290C1849 /* Pods-AdaptiveCards.release.xcconfig */;
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "iPhone Developer";
@@ -3049,7 +3037,6 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -3059,7 +3046,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5E33F505FFE4BF92C6A7872B /* Pods-AdaptiveCards-AdaptiveCardsTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -3078,7 +3064,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0FDB78326DFBBD9A171E6937 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;

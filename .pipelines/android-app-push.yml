@@ -26,13 +26,13 @@ variables:
 
 steps:
     
-- task: Gradle@2
+- task: Gradle@3
   inputs:
     workingDirectory: 'source/android'
     gradleWrapperFile: 'source/android/gradlew'
     gradleOptions: '-Xmx3072m'
     publishJUnitResults: false
-    jdkVersionOption: 1.11
+    jdkVersionOption: 1.17
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'mobile:assembleRelease'
     
