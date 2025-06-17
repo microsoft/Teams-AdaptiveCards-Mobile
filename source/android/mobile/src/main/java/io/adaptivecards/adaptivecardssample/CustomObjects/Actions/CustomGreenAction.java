@@ -81,7 +81,7 @@ public class CustomGreenAction extends BaseActionElement
             greenActionButton.getBackground().setColorFilter(m_activity.getResources().getColor(R.color.greenActionColor), PorterDuff.Mode.SRC_ATOP);
             greenActionButton.setText(customAction.getMessage());
             greenActionButton.setAllCaps(false);
-            greenActionButton.setOnClickListener(BaseActionElementRenderer.ActionOnClickListener.newInstance(renderedCard, baseActionElement, cardActionHandler));
+            greenActionButton.setOnClickListener(BaseActionElementRenderer.ActionOnClickListener.newInstance(renderedCard, baseActionElement, cardActionHandler, fragmentManager, hostConfig, renderArgs));
 
             viewGroup.addView(greenActionButton);
 

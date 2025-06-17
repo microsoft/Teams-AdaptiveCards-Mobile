@@ -60,31 +60,80 @@
 			"actions": [
 				{
 					"type": "Action.Popover",
-					"title": "Add Number Popover",
+					"title": "Less Content Popover",
 					"content": {
 						"type": "Container",
 						"items": [
 							{
-								"type": "Input.Text",
-								"id": "inputInPopover2",
-								"label": "Please enter your phone(Input Required)",
-								"isRequired": true
-							},
-							{
-								"type": "ActionSet",
-								"actions": [
-									{
-										"type": "Action.Submit",
-										"title": "Submit",
-										"tooltip": "Click me",
-										"mode": "secondary"
-									}
-								]
+								"type": "TextBlock",
+								"text": "Less Content"
 							}
 						]
 					}
 				}
 			]
+		},
+		{
+			"type": "Container",
+			"showBorder": true,
+			"roundedCorners": true,
+			"style": "emphasis",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "This Container is clickable and will show a popover",
+					"wrap": true
+				}
+			],
+			"selectAction": {
+				"type": "Action.Popover",
+				"tooltip": "Click me to show a popover",
+				"content": {
+					"type": "TextBlock",
+					"text": "This is a popover"
+				}
+			}
+		},
+		{
+			"type": "Image",
+			"url": "https://adaptivecards.io/content/adaptive-card-50.png",
+			"selectAction": {
+				"type": "Action.Popover",
+				"tooltip": "Click me to show a popover",
+				"content": {
+					"type": "TextBlock",
+					"text": "This Popover is made with Adaptive Card elements, it supports actions and is fully accessible.",
+					"wrap": true
+				}
+			}
+		},
+		{
+			"type": "Icon",
+			"name": "AccessTime",
+			"size": "Large",
+			"horizontalAlignment": "Center",
+			"selectAction": {
+				"type": "Action.Popover",
+				"tooltip": "Click me to show a popover",
+				"content": {
+					"type": "TextBlock",
+					"text": "This Popover is made with Adaptive Card elements, it supports actions and is fully accessible.",
+					"wrap": true
+				}
+			}
+		},
+		{
+			"type": "CompoundButton",
+			"title": "I have a popover!",
+			"description": "Click me to display a popover",
+			"selectAction": {
+				"type": "Action.Popover",
+				"tooltip": "Click me to show a popover",
+				"content": {
+					"type": "TextBlock",
+					"text": "This is a popover"
+				}
+			}
 		},
 		{
 			"type": "ActionSet",
@@ -187,6 +236,37 @@
 												}
 											]
 										}
+									}
+								]
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Popover",
+					"title": "Add Number Popover",
+					"content": {
+						"type": "Container",
+						"items": [
+							{
+								"type": "Input.Text",
+								"id": "inputInPopover2",
+								"label": "Please enter your phone(Input Required)",
+								"isRequired": true
+							},
+							{
+								"type": "ActionSet",
+								"actions": [
+									{
+										"type": "Action.Submit",
+										"title": "Submit",
+										"tooltip": "Click me",
+										"mode": "secondary"
 									}
 								]
 							}
