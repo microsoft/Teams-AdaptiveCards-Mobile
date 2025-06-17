@@ -115,7 +115,7 @@ class PopoverBottomSheetDailogFragment(
                 CardRendererRegistration.getInstance().featureRegistration
             )
         } catch (e: Exception) {
-            Log.e(TAG, "Error rendering popover content", e)
+            // Error rendering popover content
         }
     }
 
