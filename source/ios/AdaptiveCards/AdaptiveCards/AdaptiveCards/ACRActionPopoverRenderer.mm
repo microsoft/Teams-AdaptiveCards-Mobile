@@ -24,18 +24,7 @@
     return singletonInstance;
 }
 
-- (UIButton *)render_Button:(ACRView *)rootView
-                    inputs:(NSMutableArray *)inputs
-                 superview:(UIView<ACRIContentHoldingView> *)superview
-         baseActionElement:(ACOBaseActionElement *)acoElem
-                hostConfig:(ACOHostConfig *)acoConfig
-{
-    UIButton *containingView =[[UIButton  alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    containingView.backgroundColor = UIColor.redColor;
-    [containingView setTitle:@"Popover" forState:UIControlStateNormal];
-    return containingView;
-                                           
-}
+
 - (UIButton *)renderButton:(ACRView *)rootView
                     inputs:(NSMutableArray *)inputs
                  superview:(UIView<ACRIContentHoldingView> *)superview
