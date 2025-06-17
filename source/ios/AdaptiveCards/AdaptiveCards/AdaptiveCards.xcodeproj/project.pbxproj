@@ -336,9 +336,9 @@
 		900787EC2DDA6C460080519E /* SwiftElementParserRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900787C32DDA6C460080519E /* SwiftElementParserRegistration.swift */; };
 		900787ED2DDA6C460080519E /* SwiftLegacyACSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900787C42DDA6C460080519E /* SwiftLegacyACSupport.swift */; };
 		9009E5E4922DE43401BEFB1E /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7487FDBA022A78CA95546EB1 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
-		906040BB2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */; };
-		906040BC2D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */; };
-		906040BD2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */; };
+		90989CF62E01B7C200A92D77 /* SwiftAdaptiveCardObjcBridge.h in Sources */ = {isa = PBXBuildFile; fileRef = 906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */; };
+		90989CF72E01B7C200A92D77 /* SwiftAdaptiveCardObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */; };
+		90989CF82E01B7C200A92D77 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */; };
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
 		B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */; };
@@ -2435,6 +2435,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90989CF62E01B7C200A92D77 /* SwiftAdaptiveCardObjcBridge.h in Sources */,
+				90989CF72E01B7C200A92D77 /* SwiftAdaptiveCardObjcBridge.mm in Sources */,
+				90989CF82E01B7C200A92D77 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */,
 				46058FD82C6086AA00966E76 /* GridArea.cpp in Sources */,
 				7EF8879E21F14CDD00BAFF02 /* BackgroundImage.cpp in Sources */,
 				6B5BA8BF2707BBD000719853 /* ACOWarning.mm in Sources */,
