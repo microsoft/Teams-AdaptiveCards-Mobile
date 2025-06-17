@@ -370,7 +370,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
 
         private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
             if (m_renderedAdaptiveCard == null || m_cardActionHandler == null || m_fragmentManager == null || m_hostConfig == null || m_renderArgs == null){
-                Log.e("BaseActionElementRenderer", "handlePopoverAction: Required parameters are null.");
+                // Required parameters are null.
                 return;
             }
 
