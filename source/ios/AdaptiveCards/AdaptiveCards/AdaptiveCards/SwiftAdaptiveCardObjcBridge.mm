@@ -15,7 +15,10 @@
 #import "UtiliOS.h"
 
 #if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 1
 #import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 0
 #endif
 
 using namespace AdaptiveCards;
@@ -23,7 +26,7 @@ using namespace AdaptiveCards;
 @implementation SwiftAdaptiveCardObjcBridge
 
 + (BOOL)canUseSwift {
-#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
     return YES;
 #endif
     return NO;
@@ -34,10 +37,10 @@ using namespace AdaptiveCards;
     if (useSwift && [self canUseSwift]) {
         // Swift implementation
        SwiftAdaptiveCardParseResult *swiftResult = (SwiftAdaptiveCardParseResult *)parseResult;
-//       NSArray *swiftWarnings = [swiftResult warnings];
-//       if (swiftWarnings) {
-//           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
-//       }
+       NSArray *swiftWarnings = [swiftResult warnings];
+       if (swiftWarnings) {
+           acrParseWarnings = [NSMutableArray arrayWithArray:swiftWarnings];
+       }
     } else {
         // For C++ implementation, check the type of parseResult
         if ([parseResult isKindOfClass:[NSValue class]]) {
@@ -57,7 +60,7 @@ using namespace AdaptiveCards;
 
 + (BOOL)isSwiftParserEnabled {
     if ([self canUseSwift]) {
-#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
         return [SwiftAdaptiveCardParser isSwiftParserEnabled];
 #endif
     }
@@ -66,7 +69,7 @@ using namespace AdaptiveCards;
 
 + (void)setSwiftParserEnabled:(BOOL)enabled {
     if ([self canUseSwift]) {
-#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
         [SwiftAdaptiveCardParser setSwiftParserEnabled:enabled];
 #endif
     }
@@ -74,7 +77,7 @@ using namespace AdaptiveCards;
 
 + (SwiftAdaptiveCardParseResult * _Nullable)parseWithPayload:(NSString *_Nonnull)payload {
     if ([self canUseSwift]) {
-#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
         return [SwiftAdaptiveCardParser parseWithPayload:payload];
 #endif
     }

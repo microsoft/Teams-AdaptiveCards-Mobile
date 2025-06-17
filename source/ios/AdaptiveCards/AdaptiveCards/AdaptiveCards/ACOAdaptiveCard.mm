@@ -34,6 +34,16 @@ using namespace AdaptiveCards;
     return _adaptiveCardParseResult;
 }
 
++ (BOOL)isSwiftParserEnabled
+{
+    return [SwiftAdaptiveCardObjcBridge isSwiftParserEnabled];
+}
+
++ (void)setSwiftParserEnabled:(BOOL)enabled
+{
+    [SwiftAdaptiveCardObjcBridge setSwiftParserEnabled:enabled];
+}
+
 - (void)setInputs:(NSArray *)inputs
 {
     _inputs = [[NSMutableArray<ACRIBaseInputHandler> alloc] initWithArray:inputs];
@@ -151,7 +161,7 @@ using namespace AdaptiveCards;
             NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
             std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
             
-            BOOL useSwiftParser = YES;
+            BOOL useSwiftParser = [SwiftAdaptiveCardObjcBridge isSwiftParserEnabled];
             if (useSwiftParser) {
                 swiftResult = [SwiftAdaptiveCardObjcBridge parseWithPayload:payload];
                 if (swiftResult != nil) {
