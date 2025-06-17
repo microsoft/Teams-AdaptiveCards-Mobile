@@ -373,6 +373,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 Log.e("BaseActionElementRenderer", "handlePopoverAction: Required parameters are null.");
                 return;
             }
+
             PopoverBottomSheetDailogFragmentFactory factory = new PopoverBottomSheetDailogFragmentFactory(v.getContext(),
                 action,
                 m_renderedAdaptiveCard,
@@ -380,7 +381,6 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 m_hostConfig,
                 m_renderArgs
             );
-
             m_fragmentManager.setFragmentFactory(factory);
 
             Fragment fragment = factory.instantiate(
@@ -388,7 +388,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 PopoverBottomSheetDailogFragment.class.getName()
             );
 
-            ((PopoverBottomSheetDailogFragment) fragment).show(m_fragmentManager, "profile_bottom_sheet");
+            ((PopoverBottomSheetDailogFragment) fragment).show(m_fragmentManager, "popover_bottom_sheet");
         }
 
         private void handleToggleVisibilityAction(View v)
@@ -543,7 +543,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         private void dismissPopoverIfNeeded() {
-            if (m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDialog() != null) {
+            if (m_renderArgs != null && m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDialog() != null) {
                 m_renderedAdaptiveCard.getPopoverDialog().dismiss();
                 m_renderedAdaptiveCard.setPopoverDialog(null);
             }

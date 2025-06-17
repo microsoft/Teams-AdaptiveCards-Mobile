@@ -32,7 +32,7 @@ object Utils {
         return nightModeFlags == Configuration.UI_MODE_NIGHT_YES
     }
 
-    fun getScreenActualAvailableHeight(context: Context): Int {
+    fun getScreenAvailableHeight(context: Context): Int {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

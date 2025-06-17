@@ -115,7 +115,7 @@ class PopoverBottomSheetDailogFragment(
                 CardRendererRegistration.getInstance().featureRegistration
             )
         } catch (e: Exception) {
-            Log.e("BaseActionElementRend", "Error rendering popover content", e)
+            Log.e(TAG, "Error rendering popover content", e)
         }
     }
 
@@ -144,7 +144,7 @@ class PopoverBottomSheetDailogFragment(
             override fun onGlobalLayout() {
                 bottomSheet.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 val height = bottomSheet.height
-                Log.d("BottomSheet", "Bottom sheet height: $height")
+                Log.d(TAG, "Bottom sheet height: $height")
 
                 bottomSheet?.let {
                     val behavior = BottomSheetBehavior.from(it)
@@ -165,7 +165,7 @@ class PopoverBottomSheetDailogFragment(
         get() = this * Resources.getSystem().displayMetrics.density
 
     private fun getPeekHeight(contentHeight: Int): Int {
-        val screenHeight = Utils.getScreenActualAvailableHeight(context)
+        val screenHeight = Utils.getScreenAvailableHeight(context)
         val minHeight = screenHeight / 5
         val maxHeight = (screenHeight * 2) / 3
         return contentHeight.coerceIn(minHeight, maxHeight)
@@ -173,6 +173,7 @@ class PopoverBottomSheetDailogFragment(
 
     companion object {
         val CLOSE_ICON_URL: String = "icon:Dismiss"
+        val TAG = "PopoverBottomSheetDailogFragment"
     }
 
 }
