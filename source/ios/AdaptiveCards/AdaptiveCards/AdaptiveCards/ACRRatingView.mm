@@ -146,7 +146,7 @@
 
 - (void)setupConstraints
 {
-    CGFloat gap = _readOnly ? 2 : 0;
+    CGFloat gap = _readOnly ? 2 : 4;
     for (NSUInteger i = 0; i < _starImageViews.count; i++)
     {
         UIImageView *starImageView = _starImageViews[i];
