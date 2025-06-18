@@ -88,6 +88,7 @@
     {
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
         starImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        starImageView.contentMode = UIViewContentModeCenter;
         [self addSubview:starImageView];
         [_starImageViews addObject:starImageView];
         starImageView.userInteractionEnabled = YES;
@@ -109,6 +110,7 @@
     {
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
         starImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        starImageView.contentMode = UIViewContentModeCenter;
         [self addSubview:starImageView];
         [_starImageViews addObject:starImageView];
     }
@@ -118,6 +120,7 @@
         {
             UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
             starImageView.translatesAutoresizingMaskIntoConstraints = NO;
+            starImageView.contentMode = UIViewContentModeCenter;
             [self addSubview:starImageView];
             [_starImageViews addObject:starImageView];
         }
