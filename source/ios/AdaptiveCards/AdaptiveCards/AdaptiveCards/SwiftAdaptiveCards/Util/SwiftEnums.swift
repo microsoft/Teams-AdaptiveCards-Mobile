@@ -340,10 +340,22 @@ extension SwiftVerticalContentAlignment {
     static func toString(_ value: SwiftVerticalContentAlignment) -> String {
         return value.rawValue
     }
+    
     init(from string: String) {
-        // Normalize to capitalized form; expected raw values are "Top", "Center", "Bottom"
-        let normalized = string.capitalized
-        self = SwiftVerticalContentAlignment(rawValue: normalized) ?? .top
+        // Handle case-insensitive matching for vertical content alignment
+        let lowercased = string.lowercased()
+        switch lowercased {
+        case "top":
+            self = .top
+        case "center":
+            self = .center
+        case "bottom":
+            self = .bottom
+        default:
+            // Fallback to original capitalization approach
+            let normalized = string.capitalized
+            self = SwiftVerticalContentAlignment(rawValue: normalized) ?? .top
+        }
     }
     
     static func fromString(_ string: String) -> SwiftVerticalContentAlignment {

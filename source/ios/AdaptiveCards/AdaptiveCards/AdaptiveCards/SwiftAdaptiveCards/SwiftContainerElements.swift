@@ -99,7 +99,13 @@ class SwiftTable: SwiftBaseCardElement, SwiftCollectionCoreElement {
         firstRowAsHeaders = try container.decodeIfPresent(Bool.self, forKey: .firstRowAsHeaders) ?? true
         roundedCorners = try container.decodeIfPresent(Bool.self, forKey: .roundedCorners) ?? false
         horizontalCellContentAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .horizontalCellContentAlignment)
-        verticalCellContentAlignment = try container.decodeIfPresent(SwiftVerticalContentAlignment.self, forKey: .verticalCellContentAlignment)
+        
+        // Custom decoding for verticalCellContentAlignment to handle case variations
+        if let verticalString = try container.decodeIfPresent(String.self, forKey: .verticalCellContentAlignment) {
+            verticalCellContentAlignment = SwiftVerticalContentAlignment(from: verticalString)
+        } else {
+            verticalCellContentAlignment = nil
+        }
         
         // Handle grid style
         if let gridStyleString = try container.decodeIfPresent(String.self, forKey: .gridStyle) {
@@ -208,7 +214,14 @@ class SwiftTableRow: SwiftBaseCardElement {
         // Decode properties before super.init
         style = try container.decodeIfPresent(SwiftContainerStyle.self, forKey: .style) ?? .none
         horizontalCellContentAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .horizontalCellContentAlignment)
-        verticalCellContentAlignment = try container.decodeIfPresent(SwiftVerticalContentAlignment.self, forKey: .verticalCellContentAlignment)
+        
+        // Custom decoding for verticalCellContentAlignment to handle case variations
+        if let verticalString = try container.decodeIfPresent(String.self, forKey: .verticalCellContentAlignment) {
+            verticalCellContentAlignment = SwiftVerticalContentAlignment(from: verticalString)
+        } else {
+            verticalCellContentAlignment = nil
+        }
+        
         cells = try container.decodeIfPresent([SwiftTableCell].self, forKey: .cells) ?? []
         
         // Call super.init
@@ -545,7 +558,14 @@ class SwiftStyledCollectionElement: SwiftBaseCardElement {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.style = try container.decodeIfPresent(SwiftContainerStyle.self, forKey: .style) ?? .none
-        self.verticalContentAlignment = try container.decodeIfPresent(SwiftVerticalContentAlignment.self, forKey: .verticalContentAlignment)
+        
+        // Custom decoding for verticalContentAlignment to handle case variations
+        if let verticalString = try container.decodeIfPresent(String.self, forKey: .verticalContentAlignment) {
+            self.verticalContentAlignment = SwiftVerticalContentAlignment(from: verticalString)
+        } else {
+            self.verticalContentAlignment = nil
+        }
+        
         self.bleedDirection = try container.decodeIfPresent(SwiftContainerBleedDirection.self, forKey: .bleedDirection) ?? .bleedAll
         self.minHeight = try container.decodeIfPresent(UInt.self, forKey: .minHeight) ?? 0
         self.hasPadding = try container.decodeIfPresent(Bool.self, forKey: .hasPadding) ?? false
