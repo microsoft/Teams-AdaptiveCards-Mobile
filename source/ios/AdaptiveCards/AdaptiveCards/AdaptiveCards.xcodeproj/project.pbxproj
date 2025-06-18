@@ -336,6 +336,34 @@
 		900787EC2DDA6C460080519E /* SwiftElementParserRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900787C32DDA6C460080519E /* SwiftElementParserRegistration.swift */; };
 		900787ED2DDA6C460080519E /* SwiftLegacyACSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900787C42DDA6C460080519E /* SwiftLegacyACSupport.swift */; };
 		9009E5E4922DE43401BEFB1E /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7487FDBA022A78CA95546EB1 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
+		908D4DD62E03697C00781770 /* ACAdaptiveCardParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DCF2E03697C00781770 /* ACAdaptiveCardParserTests.swift */; };
+		908D4DD72E03697C00781770 /* ACCardActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DD02E03697C00781770 /* ACCardActionsTests.swift */; };
+		908D4DD82E03697C00781770 /* ACInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DD42E03697C00781770 /* ACInputTests.swift */; };
+		908D4DD92E03697C00781770 /* ACElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DD22E03697C00781770 /* ACElementTests.swift */; };
+		908D4DDA2E03697C00781770 /* ACContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DD12E03697C00781770 /* ACContainerTests.swift */; };
+		908D4DDB2E03697C00781770 /* ACFallBackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DD32E03697C00781770 /* ACFallBackTests.swift */; };
+		908D4DF32E03698000781770 /* FactUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE52E03698000781770 /* FactUnitTest.swift */; };
+		908D4DF42E03698000781770 /* ParserRegistrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DEC2E03698000781770 /* ParserRegistrationTest.swift */; };
+		908D4DF52E03698000781770 /* FallBackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE62E03698000781770 /* FallBackTests.swift */; };
+		908D4DF62E03698000781770 /* FontStylesUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE72E03698000781770 /* FontStylesUnitTest.swift */; };
+		908D4DF72E03698000781770 /* HostConfigTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE82E03698000781770 /* HostConfigTest.swift */; };
+		908D4DF82E03698000781770 /* ImageBackgroundColorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE92E03698000781770 /* ImageBackgroundColorTest.swift */; };
+		908D4DF92E03698000781770 /* Base64Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DDE2E03698000781770 /* Base64Test.swift */; };
+		908D4DFA2E03698000781770 /* AdditionalPropertiesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DDD2E03698000781770 /* AdditionalPropertiesTest.swift */; };
+		908D4DFB2E03698000781770 /* EnumTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE22E03698000781770 /* EnumTest.swift */; };
+		908D4DFC2E03698000781770 /* ExplicitDimensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE42E03698000781770 /* ExplicitDimensionTest.swift */; };
+		908D4DFD2E03698000781770 /* ObjectModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DEB2E03698000781770 /* ObjectModelTest.swift */; };
+		908D4DFE2E03698000781770 /* SemanticVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DEE2E03698000781770 /* SemanticVersionTest.swift */; };
+		908D4DFF2E03698000781770 /* EverythingBagelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE32E03698000781770 /* EverythingBagelTest.swift */; };
+		908D4E002E03698000781770 /* ElementTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE12E03698000781770 /* ElementTest.swift */; };
+		908D4E012E03698000781770 /* ParseUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DED2E03698000781770 /* ParseUtilTest.swift */; };
+		908D4E022E03698000781770 /* UnsupportedtypesParsingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DF12E03698000781770 /* UnsupportedtypesParsingTest.swift */; };
+		908D4E032E03698000781770 /* TableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DEF2E03698000781770 /* TableTests.swift */; };
+		908D4E042E03698000781770 /* TextParsingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DF02E03698000781770 /* TextParsingTest.swift */; };
+		908D4E052E03698000781770 /* ContainerStyleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DDF2E03698000781770 /* ContainerStyleTest.swift */; };
+		908D4E062E03698000781770 /* MarkDownUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DEA2E03698000781770 /* MarkDownUnitTest.swift */; };
+		908D4E072E03698000781770 /* DateAndTimeUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DE02E03698000781770 /* DateAndTimeUnitTest.swift */; };
+		908D4E082E03698000781770 /* AdaptiveCardParseExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D4DDC2E03698000781770 /* AdaptiveCardParseExceptionTest.swift */; };
 		90989CF62E01B7C200A92D77 /* SwiftAdaptiveCardObjcBridge.h in Sources */ = {isa = PBXBuildFile; fileRef = 906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */; };
 		90989CF72E01B7C200A92D77 /* SwiftAdaptiveCardObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 906040B82D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.mm */; };
 		90989CF82E01B7C200A92D77 /* SwiftAdaptiveCardSwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906040B92D7B6D2800978EA5 /* SwiftAdaptiveCardSwiftBridge.swift */; };
@@ -909,6 +937,34 @@
 		906040BA2D7B6D2800978EA5 /* SwiftAdaptiveCardObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftAdaptiveCardObjcBridge.h; sourceTree = "<group>"; };
 		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
 		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		908D4DCF2E03697C00781770 /* ACAdaptiveCardParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACAdaptiveCardParserTests.swift; sourceTree = "<group>"; };
+		908D4DD02E03697C00781770 /* ACCardActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACCardActionsTests.swift; sourceTree = "<group>"; };
+		908D4DD12E03697C00781770 /* ACContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACContainerTests.swift; sourceTree = "<group>"; };
+		908D4DD22E03697C00781770 /* ACElementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACElementTests.swift; sourceTree = "<group>"; };
+		908D4DD32E03697C00781770 /* ACFallBackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACFallBackTests.swift; sourceTree = "<group>"; };
+		908D4DD42E03697C00781770 /* ACInputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACInputTests.swift; sourceTree = "<group>"; };
+		908D4DDC2E03698000781770 /* AdaptiveCardParseExceptionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardParseExceptionTest.swift; sourceTree = "<group>"; };
+		908D4DDD2E03698000781770 /* AdditionalPropertiesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalPropertiesTest.swift; sourceTree = "<group>"; };
+		908D4DDE2E03698000781770 /* Base64Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64Test.swift; sourceTree = "<group>"; };
+		908D4DDF2E03698000781770 /* ContainerStyleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerStyleTest.swift; sourceTree = "<group>"; };
+		908D4DE02E03698000781770 /* DateAndTimeUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimeUnitTest.swift; sourceTree = "<group>"; };
+		908D4DE12E03698000781770 /* ElementTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementTest.swift; sourceTree = "<group>"; };
+		908D4DE22E03698000781770 /* EnumTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumTest.swift; sourceTree = "<group>"; };
+		908D4DE32E03698000781770 /* EverythingBagelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverythingBagelTest.swift; sourceTree = "<group>"; };
+		908D4DE42E03698000781770 /* ExplicitDimensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplicitDimensionTest.swift; sourceTree = "<group>"; };
+		908D4DE52E03698000781770 /* FactUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactUnitTest.swift; sourceTree = "<group>"; };
+		908D4DE62E03698000781770 /* FallBackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallBackTests.swift; sourceTree = "<group>"; };
+		908D4DE72E03698000781770 /* FontStylesUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStylesUnitTest.swift; sourceTree = "<group>"; };
+		908D4DE82E03698000781770 /* HostConfigTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostConfigTest.swift; sourceTree = "<group>"; };
+		908D4DE92E03698000781770 /* ImageBackgroundColorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBackgroundColorTest.swift; sourceTree = "<group>"; };
+		908D4DEA2E03698000781770 /* MarkDownUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDownUnitTest.swift; sourceTree = "<group>"; };
+		908D4DEB2E03698000781770 /* ObjectModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectModelTest.swift; sourceTree = "<group>"; };
+		908D4DEC2E03698000781770 /* ParserRegistrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserRegistrationTest.swift; sourceTree = "<group>"; };
+		908D4DED2E03698000781770 /* ParseUtilTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseUtilTest.swift; sourceTree = "<group>"; };
+		908D4DEE2E03698000781770 /* SemanticVersionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersionTest.swift; sourceTree = "<group>"; };
+		908D4DEF2E03698000781770 /* TableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTests.swift; sourceTree = "<group>"; };
+		908D4DF02E03698000781770 /* TextParsingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextParsingTest.swift; sourceTree = "<group>"; };
+		908D4DF12E03698000781770 /* UnsupportedtypesParsingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsupportedtypesParsingTest.swift; sourceTree = "<group>"; };
 		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
 		B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionValid.json; sourceTree = "<group>"; };
 		B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionInvalid.json; sourceTree = "<group>"; };
@@ -1561,6 +1617,7 @@
 		F423C0C21EE1FBAA00905679 /* AdaptiveCardsTests */ = {
 			isa = PBXGroup;
 			children = (
+				908D4DCE2E03693800781770 /* SwiftAdaptiveCardsTests */,
 				CFF95C052982E2CB00F321C3 /* DynamicTypeahead */,
 				6B4C05BE27864B0800882387 /* ACRImagePropertiesTests.mm */,
 				6B124C8B26B4AA07007E9641 /* AdaptiveCardsActionsTest.mm */,
@@ -2681,6 +2738,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				908D4DF32E03698000781770 /* FactUnitTest.swift in Sources */,
+				908D4DF42E03698000781770 /* ParserRegistrationTest.swift in Sources */,
+				908D4DF52E03698000781770 /* FallBackTests.swift in Sources */,
+				908D4DF62E03698000781770 /* FontStylesUnitTest.swift in Sources */,
+				908D4DF72E03698000781770 /* HostConfigTest.swift in Sources */,
+				908D4DF82E03698000781770 /* ImageBackgroundColorTest.swift in Sources */,
+				908D4DF92E03698000781770 /* Base64Test.swift in Sources */,
+				908D4DFA2E03698000781770 /* AdditionalPropertiesTest.swift in Sources */,
+				908D4DFB2E03698000781770 /* EnumTest.swift in Sources */,
+				908D4DFC2E03698000781770 /* ExplicitDimensionTest.swift in Sources */,
+				908D4DFD2E03698000781770 /* ObjectModelTest.swift in Sources */,
+				908D4DFE2E03698000781770 /* SemanticVersionTest.swift in Sources */,
+				908D4DFF2E03698000781770 /* EverythingBagelTest.swift in Sources */,
+				908D4E002E03698000781770 /* ElementTest.swift in Sources */,
+				908D4E012E03698000781770 /* ParseUtilTest.swift in Sources */,
+				908D4E022E03698000781770 /* UnsupportedtypesParsingTest.swift in Sources */,
+				908D4E032E03698000781770 /* TableTests.swift in Sources */,
+				908D4E042E03698000781770 /* TextParsingTest.swift in Sources */,
+				908D4E052E03698000781770 /* ContainerStyleTest.swift in Sources */,
+				908D4E062E03698000781770 /* MarkDownUnitTest.swift in Sources */,
+				908D4E072E03698000781770 /* DateAndTimeUnitTest.swift in Sources */,
+				908D4E082E03698000781770 /* AdaptiveCardParseExceptionTest.swift in Sources */,
 				6B124C8C26B4AA07007E9641 /* AdaptiveCardsActionsTest.mm in Sources */,
 				46B78E642C0580D100EF4566 /* AdaptiveCardsRatingElementTests.mm in Sources */,
 				6BE6C7C126E2ECEA009E9171 /* ADCMockResolver.m in Sources */,
@@ -2694,6 +2773,12 @@
 				30D56DE9268298B300D6E418 /* AdaptiveCardsTests.mm in Sources */,
 				CFF95C072982E30E00F321C3 /* ACRTypeaheadSearchParametersTests.mm in Sources */,
 				CFF95C0D2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm in Sources */,
+				908D4DD62E03697C00781770 /* ACAdaptiveCardParserTests.swift in Sources */,
+				908D4DD72E03697C00781770 /* ACCardActionsTests.swift in Sources */,
+				908D4DD82E03697C00781770 /* ACInputTests.swift in Sources */,
+				908D4DD92E03697C00781770 /* ACElementTests.swift in Sources */,
+				908D4DDA2E03697C00781770 /* ACContainerTests.swift in Sources */,
+				908D4DDB2E03697C00781770 /* ACFallBackTests.swift in Sources */,
 				6B124C9026B8AC37007E9641 /* ACRMockViews.mm in Sources */,
 				B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */,
 				CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */,
@@ -2830,6 +2915,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = AppRelease;
 		};
@@ -3063,6 +3149,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -3081,6 +3168,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
