@@ -98,11 +98,17 @@ class SwiftTable: SwiftBaseCardElement, SwiftCollectionCoreElement {
         showGridLines = try container.decodeIfPresent(Bool.self, forKey: .showGridLines) ?? true
         firstRowAsHeaders = try container.decodeIfPresent(Bool.self, forKey: .firstRowAsHeaders) ?? true
         roundedCorners = try container.decodeIfPresent(Bool.self, forKey: .roundedCorners) ?? false
-        horizontalCellContentAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .horizontalCellContentAlignment)
+        
+        // Custom decoding for horizontalCellContentAlignment to handle case variations
+        if let horizontalString = try container.decodeIfPresent(String.self, forKey: .horizontalCellContentAlignment) {
+            horizontalCellContentAlignment = SwiftHorizontalAlignment.caseInsensitiveValue(from: horizontalString)
+        } else {
+            horizontalCellContentAlignment = nil
+        }
         
         // Custom decoding for verticalCellContentAlignment to handle case variations
         if let verticalString = try container.decodeIfPresent(String.self, forKey: .verticalCellContentAlignment) {
-            verticalCellContentAlignment = SwiftVerticalContentAlignment(from: verticalString)
+            verticalCellContentAlignment = SwiftVerticalContentAlignment.caseInsensitiveValue(from: verticalString)
         } else {
             verticalCellContentAlignment = nil
         }
@@ -213,11 +219,17 @@ class SwiftTableRow: SwiftBaseCardElement {
         
         // Decode properties before super.init
         style = try container.decodeIfPresent(SwiftContainerStyle.self, forKey: .style) ?? .none
-        horizontalCellContentAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .horizontalCellContentAlignment)
+        
+        // Custom decoding for horizontalCellContentAlignment to handle case variations
+        if let horizontalString = try container.decodeIfPresent(String.self, forKey: .horizontalCellContentAlignment) {
+            horizontalCellContentAlignment = SwiftHorizontalAlignment.caseInsensitiveValue(from: horizontalString)
+        } else {
+            horizontalCellContentAlignment = nil
+        }
         
         // Custom decoding for verticalCellContentAlignment to handle case variations
         if let verticalString = try container.decodeIfPresent(String.self, forKey: .verticalCellContentAlignment) {
-            verticalCellContentAlignment = SwiftVerticalContentAlignment(from: verticalString)
+            verticalCellContentAlignment = SwiftVerticalContentAlignment.caseInsensitiveValue(from: verticalString)
         } else {
             verticalCellContentAlignment = nil
         }
@@ -384,7 +396,7 @@ struct SwiftTableColumnDefinition: Codable {
         
         // Decode vertical alignment with default
         if let verticalString = try container.decodeIfPresent(String.self, forKey: .verticalCellContentAlignment) {
-            self.verticalCellContentAlignment = SwiftVerticalContentAlignment(from: verticalString)
+            self.verticalCellContentAlignment = SwiftVerticalContentAlignment.caseInsensitiveValue(from: verticalString)
         } else {
             self.verticalCellContentAlignment = .top
         }
@@ -561,7 +573,7 @@ class SwiftStyledCollectionElement: SwiftBaseCardElement {
         
         // Custom decoding for verticalContentAlignment to handle case variations
         if let verticalString = try container.decodeIfPresent(String.self, forKey: .verticalContentAlignment) {
-            self.verticalContentAlignment = SwiftVerticalContentAlignment(from: verticalString)
+            self.verticalContentAlignment = SwiftVerticalContentAlignment.caseInsensitiveValue(from: verticalString)
         } else {
             self.verticalContentAlignment = nil
         }

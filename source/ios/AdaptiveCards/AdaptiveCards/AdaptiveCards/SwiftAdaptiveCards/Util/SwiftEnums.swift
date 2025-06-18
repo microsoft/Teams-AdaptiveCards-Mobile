@@ -312,12 +312,23 @@ extension SwiftHorizontalAlignment {
     }
     
     static func fromString(_ s: String) -> SwiftHorizontalAlignment? {
-        switch s {
-        case "left": return .left
-        case "center": return .center
-        case "right": return .right
-        default: return nil
+        // Handle case-insensitive matching for horizontal alignment
+        let lowercased = s.lowercased()
+        switch lowercased {
+        case "left":
+            return .left
+        case "center":
+            return .center
+        case "right":
+            return .right
+        default:
+            return nil
         }
+    }
+    
+    // Create a caseInsensitiveValue function to use in our decoder
+    static func caseInsensitiveValue(from string: String) -> SwiftHorizontalAlignment {
+        return fromString(string) ?? .left
     }
 }
 
@@ -341,25 +352,26 @@ extension SwiftVerticalContentAlignment {
         return value.rawValue
     }
     
-    init(from string: String) {
+    static func fromString(_ string: String) -> SwiftVerticalContentAlignment {
         // Handle case-insensitive matching for vertical content alignment
         let lowercased = string.lowercased()
         switch lowercased {
         case "top":
-            self = .top
+            return .top
         case "center":
-            self = .center
+            return .center
         case "bottom":
-            self = .bottom
+            return .bottom
         default:
             // Fallback to original capitalization approach
             let normalized = string.capitalized
-            self = SwiftVerticalContentAlignment(rawValue: normalized) ?? .top
+            return SwiftVerticalContentAlignment(rawValue: normalized) ?? .top
         }
     }
     
-    static func fromString(_ string: String) -> SwiftVerticalContentAlignment {
-        return SwiftVerticalContentAlignment(from: string)
+    // Create a caseInsensitiveValue function to use in our decoder
+    static func caseInsensitiveValue(from string: String) -> SwiftVerticalContentAlignment {
+        return fromString(string)
     }
 }
 
@@ -387,7 +399,7 @@ extension SwiftImageSize {
     }
     static func fromString(_ s: String) -> SwiftImageSize? {
         switch s.lowercased() {
-        case "none": return .none
+        case "none": return SwiftImageSize.none
         case "auto": return .auto
         case "stretch": return .stretch
         case "small": return .small

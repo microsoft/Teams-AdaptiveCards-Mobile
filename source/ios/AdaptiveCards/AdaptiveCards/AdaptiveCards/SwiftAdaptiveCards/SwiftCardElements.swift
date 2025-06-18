@@ -102,7 +102,14 @@ class SwiftTextBlock: SwiftBaseCardElement {
         isSubtle = try container.decodeIfPresent(Bool.self, forKey: .isSubtle)
         wrap = try container.decodeIfPresent(Bool.self, forKey: .wrap) ?? false
         maxLines = try container.decodeIfPresent(UInt.self, forKey: .maxLines) ?? 0
-        horizontalAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .horizontalAlignment)
+        
+        // Custom decoding for horizontalAlignment to handle case variations
+        if let alignmentString = try container.decodeIfPresent(String.self, forKey: .horizontalAlignment) {
+            horizontalAlignment = SwiftHorizontalAlignment.caseInsensitiveValue(from: alignmentString)
+        } else {
+            horizontalAlignment = nil
+        }
+        
         language = try container.decodeIfPresent(String.self, forKey: .language) ?? "en"
         
         // Decode the base class properties
@@ -289,7 +296,13 @@ class SwiftImage: SwiftBaseCardElement {
         
         // Decode altText and hAlignment
         altText = try container.decodeIfPresent(String.self, forKey: .altText) ?? ""
-        hAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .hAlignment)
+        
+        // Custom decoding for hAlignment to handle case variations
+        if let alignmentString = try container.decodeIfPresent(String.self, forKey: .hAlignment) {
+            hAlignment = SwiftHorizontalAlignment.caseInsensitiveValue(from: alignmentString)
+        } else {
+            hAlignment = nil
+        }
         
         // Handle pixel dimensions including string parsing (before super.init)
         var tempPixelWidth = try container.decodeIfPresent(UInt.self, forKey: .pixelWidth) ?? 0
@@ -959,7 +972,14 @@ class SwiftRatingInput: SwiftBaseCardElement {
         // Decode all properties before super.init
         value = try container.decode(Double.self, forKey: .value)
         max = try container.decode(Double.self, forKey: .max)
-        horizontalAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .horizontalAlignment)
+        
+        // Custom decoding for horizontalAlignment to handle case variations
+        if let alignmentString = try container.decodeIfPresent(String.self, forKey: .horizontalAlignment) {
+            horizontalAlignment = SwiftHorizontalAlignment.caseInsensitiveValue(from: alignmentString)
+        } else {
+            horizontalAlignment = nil
+        }
+        
         size = try container.decodeIfPresent(SwiftRatingSize.self, forKey: .size) ?? .medium
         color = try container.decodeIfPresent(SwiftRatingColor.self, forKey: .color) ?? .neutral
         
@@ -1011,7 +1031,14 @@ class SwiftRatingLabel: SwiftBaseCardElement {
         value = try container.decode(Double.self, forKey: .value)
         max = try container.decode(Double.self, forKey: .max)
         count = try container.decodeIfPresent(UInt.self, forKey: .count)
-        horizontalAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .horizontalAlignment)
+        
+        // Custom decoding for horizontalAlignment to handle case variations
+        if let alignmentString = try container.decodeIfPresent(String.self, forKey: .horizontalAlignment) {
+            horizontalAlignment = SwiftHorizontalAlignment.caseInsensitiveValue(from: alignmentString)
+        } else {
+            horizontalAlignment = nil
+        }
+        
         size = try container.decodeIfPresent(SwiftRatingSize.self, forKey: .size) ?? .medium
         color = try container.decodeIfPresent(SwiftRatingColor.self, forKey: .color) ?? .neutral
         style = try container.decodeIfPresent(SwiftRatingStyle.self, forKey: .style) ?? .default
@@ -1616,7 +1643,13 @@ class SwiftFlowLayout: SwiftLayout {
         self.maxItemWidth = try container.decodeIfPresent(String.self, forKey: .maxItemWidth)
         self.rowSpacing = try container.decodeIfPresent(SwiftSpacing.self, forKey: .rowSpacing) ?? .default
         self.columnSpacing = try container.decodeIfPresent(SwiftSpacing.self, forKey: .columnSpacing) ?? .default
-        self.horizontalAlignment = try container.decodeIfPresent(SwiftHorizontalAlignment.self, forKey: .horizontalAlignment) ?? .center
+        // Custom decoding for horizontalAlignment to handle case variations
+        if let alignmentString = try container.decodeIfPresent(String.self, forKey: .horizontalAlignment) {
+            self.horizontalAlignment = SwiftHorizontalAlignment.caseInsensitiveValue(from: alignmentString)
+        } else {
+            self.horizontalAlignment = .center
+        }
+        
         self.itemPixelWidth = SwiftFlowLayout.parseSizeToPixels(try container.decodeIfPresent(String.self, forKey: .itemWidth)) ?? -1
         self.minItemPixelWidth = SwiftFlowLayout.parseSizeToPixels(try container.decodeIfPresent(String.self, forKey: .minItemWidth)) ?? -1
         self.maxItemPixelWidth = SwiftFlowLayout.parseSizeToPixels(try container.decodeIfPresent(String.self, forKey: .maxItemWidth)) ?? -1
