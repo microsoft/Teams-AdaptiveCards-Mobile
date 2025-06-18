@@ -75,13 +75,24 @@ using namespace AdaptiveCards;
     }
 }
 
-+ (SwiftAdaptiveCardParseResult * _Nullable)parseWithPayload:(NSString *_Nonnull)payload {
-    if ([self canUseSwift]) {
++ (SwiftAdaptiveCardParseResult * _Nonnull)parseWithPayload:(NSString *_Nonnull)payload {
 #if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+    if ([self canUseSwift]) {
         return [SwiftAdaptiveCardParser parseWithPayload:payload];
-#endif
     }
-    return nil;
+#endif
+    // If Swift is not available, we need to return something
+    // This should ideally never happen if canUseSwift is checked properly
+    // but we need to satisfy the nonnull contract
+    return (SwiftAdaptiveCardParseResult *)[[NSObject alloc] init];
+}
+
++ (BOOL)isParseResultSuccessful:(SwiftAdaptiveCardParseResult *_Nonnull)result {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+    // Check if there are any errors
+    return (result.errors == nil || result.errors.count == 0);
+#endif
+    return NO;
 }
 
 

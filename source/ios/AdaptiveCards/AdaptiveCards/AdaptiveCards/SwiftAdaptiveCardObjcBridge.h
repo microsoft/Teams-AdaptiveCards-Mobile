@@ -16,5 +16,6 @@
 
 + (BOOL)isSwiftParserEnabled;
 + (void)setSwiftParserEnabled:(BOOL)enabled;
-+ (SwiftAdaptiveCardParseResult * _Nullable)parseWithPayload:(NSString *_Nonnull)payload;
++ (SwiftAdaptiveCardParseResult * _Nonnull)parseWithPayload:(NSString *_Nonnull)payload;
++ (BOOL)isParseResultSuccessful:(SwiftAdaptiveCardParseResult *_Nonnull)result;
 @end

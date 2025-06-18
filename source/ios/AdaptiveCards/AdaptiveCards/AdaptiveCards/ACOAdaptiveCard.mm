@@ -164,9 +164,8 @@ using namespace AdaptiveCards;
             BOOL useSwiftParser = [SwiftAdaptiveCardObjcBridge isSwiftParserEnabled];
             if (useSwiftParser) {
                 swiftResult = [SwiftAdaptiveCardObjcBridge parseWithPayload:payload];
-                if (swiftResult != nil) {
-                    [card setAdaptiveCardParseResult:swiftResult];
-                }
+                // Always set the result so consumers can access errors if they exist
+                [card setAdaptiveCardParseResult:swiftResult];
                 acrParseWarnings = [SwiftAdaptiveCardObjcBridge getWarningsFromParseResult:swiftResult useSwift:YES];
             } else {
                 NSValue *pointerValue = [NSValue valueWithPointer:&parseResult];

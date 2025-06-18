@@ -41,13 +41,21 @@ public class SwiftAdaptiveCardParser: NSObject {
         return main.swiftParserEnabled
     }
     
-    public static func parse(payload: String) -> SwiftAdaptiveCardParseResult? {
-        guard let parseResult = try? SwiftAdaptiveCard.deserializeFromString(payload, version: "1.6") else {
-            return nil
-        }
+    public static func parse(payload: String) -> SwiftAdaptiveCardParseResult {
         let result = SwiftAdaptiveCardParseResult()
-        result.parseResult = parseResult
-        result.warnings = parseResult.warnings.convert()
+        
+        do {
+            let parseResult = try SwiftAdaptiveCard.deserializeFromString(payload, version: "1.6")
+            result.parseResult = parseResult
+            result.warnings = parseResult.warnings.convert()
+        } catch {
+            // Capture the error instead of returning nil
+            let nsError = error as NSError
+            result.errors = [nsError]
+            result.parseResult = nil
+            result.warnings = []
+        }
+        
         return result
     }
 }
