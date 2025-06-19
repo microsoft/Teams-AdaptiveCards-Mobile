@@ -871,7 +871,8 @@ struct SwiftImageSetParser: SwiftBaseCardElementParser {
         imageSet.images = images
         
         // Decode imageSize from the original JSON if present.
-        if let sizeStr = value["imageSize"] as? String, let size = SwiftImageSize.fromString(sizeStr) {
+        if let sizeStr = value["imageSize"] as? String {
+            let size = SwiftImageSize.caseInsensitiveValue(from: sizeStr)
             imageSet.imageSize = size
         } else {
             imageSet.imageSize = .auto

@@ -3182,7 +3182,7 @@ enum SwiftTableCellLegacySupport {
         
         // Explicitly set style if provided
         if let styleString = value["style"] as? String {
-            cell.style = SwiftContainerStyle(rawValue: styleString.capitalized) ?? .none
+            cell.style = SwiftContainerStyle(rawValue: styleString.capitalized) ?? SwiftContainerStyle.none
         }
         
         // Set RTL if present
@@ -3417,7 +3417,7 @@ enum SwiftTableRowLegacySupport {
             from: value,
             key: "style",
             defaultValue: .none,
-            converter: SwiftContainerStyle.fromString
+            converter: SwiftContainerStyle.caseInsensitiveValue
         )
         
         // Parse cells
@@ -3901,7 +3901,7 @@ extension SwiftTextRun {
         
         // Mapping for legacy keys
         let sizeString = json["textSize"] as? String ?? json["size"] as? String
-        let textSize = sizeString.flatMap { SwiftTextSize.fromString($0) }
+        let textSize = sizeString.map { SwiftTextSize.caseInsensitiveValue(from: $0) }
         
         let textWeight = (json["textWeight"] as? String ?? json["weight"] as? String)
             .flatMap { SwiftTextWeight(rawValue: $0) }
@@ -5505,7 +5505,7 @@ extension SwiftAdaptiveCard {
         
         // Parse basic properties
         let speak = json[SwiftAdaptiveCardSchemaKey.speak.rawValue] as? String
-        let style = SwiftContainerStyle(rawValue: json[SwiftAdaptiveCardSchemaKey.style.rawValue] as? String ?? "none") ?? .none
+        let style = SwiftContainerStyle(rawValue: json[SwiftAdaptiveCardSchemaKey.style.rawValue] as? String ?? "none") ?? SwiftContainerStyle.none
         let language = (json[SwiftAdaptiveCardSchemaKey.language.rawValue] as? String) ?? (json["lang"] as? String)
         let verticalContentAlignment = SwiftVerticalContentAlignment(rawValue: json[SwiftAdaptiveCardSchemaKey.verticalContentAlignment.rawValue] as? String ?? "top") ?? .top
         let height = SwiftHeightType(rawValue: json[SwiftAdaptiveCardSchemaKey.height.rawValue] as? String ?? "auto") ?? .auto

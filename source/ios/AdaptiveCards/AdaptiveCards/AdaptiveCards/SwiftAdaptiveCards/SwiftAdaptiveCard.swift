@@ -26,7 +26,7 @@ public class SwiftAdaptiveCard: Codable {
     let refresh: SwiftRefresh?                         // Defined in Refresh.swift
     let authentication: SwiftAuthentication?           // Defined in Authentication.swift
     let speak: String?
-    let style: SwiftContainerStyle                     // Defined in EnumMagic.swift
+    let style: SwiftContainerStyle                     // Defined in SwiftEnums.swift
     let language: String?
     let verticalContentAlignment: SwiftVerticalContentAlignment // See alias above
     let height: SwiftHeightType
@@ -54,7 +54,7 @@ public class SwiftAdaptiveCard: Codable {
         refresh: SwiftRefresh? = nil,
         authentication: SwiftAuthentication? = nil,
         speak: String? = nil,
-        style: SwiftContainerStyle = .none,
+        style: SwiftContainerStyle = SwiftContainerStyle.none,
         language: String? = nil,
         verticalContentAlignment: SwiftVerticalContentAlignment = .top,
         height: SwiftHeightType = .auto,
@@ -190,7 +190,7 @@ public class SwiftAdaptiveCard: Codable {
         
         // Decode the rest of the properties as before.
         let styleRaw = try container.decodeIfPresent(String.self, forKey: .style) ?? "none"
-        let style = SwiftContainerStyle(rawValue: styleRaw) ?? .none
+        let style = SwiftContainerStyle(rawValue: styleRaw) ?? SwiftContainerStyle.none
         let rtl = try container.decodeIfPresent(Bool.self, forKey: .rtl)
         let fallbackTypeRaw = try container.decodeIfPresent(String.self, forKey: .fallbackType) ?? "none"
         let fallbackType = SwiftFallbackType(rawValue: fallbackTypeRaw) ?? .none

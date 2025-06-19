@@ -203,10 +203,10 @@ struct SwiftTextStyleConfig: Codable, Equatable {
     static func deserialize(from json: [String: Any], defaultValue: SwiftTextStyleConfig) -> SwiftTextStyleConfig {
         // Use the fromString methods (with capitalization if needed)
         let weightStr = json["weight"] as? String ?? defaultValue.weight.rawValue
-        let weight = SwiftTextWeight.fromString(weightStr.capitalized) ?? defaultValue.weight
+        let weight = SwiftTextWeight.caseInsensitiveValue(from: weightStr)
         
         let sizeStr = json["size"] as? String ?? defaultValue.size.rawValue
-        let size = SwiftTextSize.fromString(sizeStr) ?? defaultValue.size
+        let size = SwiftTextSize.caseInsensitiveValue(from: sizeStr)
         
         let isSubtle = json["isSubtle"] as? Bool ?? defaultValue.isSubtle
         

@@ -115,7 +115,7 @@ class SwiftTable: SwiftBaseCardElement, SwiftCollectionCoreElement {
         
         // Handle grid style
         if let gridStyleString = try container.decodeIfPresent(String.self, forKey: .gridStyle) {
-            gridStyle = SwiftContainerStyle.fromString(gridStyleString)
+            gridStyle = SwiftContainerStyle.caseInsensitiveValue(from: gridStyleString)
         } else {
             gridStyle = .none
         }
@@ -218,7 +218,7 @@ class SwiftTableRow: SwiftBaseCardElement {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Decode properties before super.init
-        style = try container.decodeIfPresent(SwiftContainerStyle.self, forKey: .style) ?? .none
+        style = try container.decodeIfPresent(SwiftContainerStyle.self, forKey: .style) ?? SwiftContainerStyle.none
         
         // Custom decoding for horizontalCellContentAlignment to handle case variations
         if let horizontalString = try container.decodeIfPresent(String.self, forKey: .horizontalCellContentAlignment) {
@@ -295,7 +295,7 @@ class SwiftTableCell: SwiftContainer {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if let styleString = try container.decodeIfPresent(String.self, forKey: .style) {
             // Force the style to be set after super.init
-            self.style = SwiftContainerStyle(rawValue: styleString.capitalized) ?? .none
+            self.style = SwiftContainerStyle(rawValue: styleString.capitalized) ?? SwiftContainerStyle.none
         }
     }
     
@@ -541,7 +541,7 @@ class SwiftStyledCollectionElement: SwiftBaseCardElement {
     
     // MARK: - Initializer
     init(type: SwiftCardElementType,
-         style: SwiftContainerStyle = .none,
+         style: SwiftContainerStyle = SwiftContainerStyle.none,
          verticalContentAlignment: SwiftVerticalContentAlignment? = nil,
          bleedDirection: SwiftContainerBleedDirection = .bleedAll,
          minHeight: UInt = 0,
@@ -569,7 +569,7 @@ class SwiftStyledCollectionElement: SwiftBaseCardElement {
     // MARK: - Codable Implementation
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.style = try container.decodeIfPresent(SwiftContainerStyle.self, forKey: .style) ?? .none
+        self.style = try container.decodeIfPresent(SwiftContainerStyle.self, forKey: .style) ?? SwiftContainerStyle.none
         
         // Custom decoding for verticalContentAlignment to handle case variations
         if let verticalString = try container.decodeIfPresent(String.self, forKey: .verticalContentAlignment) {

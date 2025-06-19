@@ -94,7 +94,7 @@ enum SwiftTextSize: String, Codable {
     case extraLarge = "ExtraLarge"
     
     init(from rawValue: String) {
-        self = SwiftTextSize(rawValue: rawValue) ?? .defaultSize
+        self = SwiftTextSize.caseInsensitiveValue(from: rawValue)
     }
 }
 
@@ -107,6 +107,7 @@ extension SwiftTextSize {
         let lowered = s.lowercased()
         if lowered == "normal" { return .defaultSize }
         switch lowered {
+        case "default": return .defaultSize
         case "small": return .small
         case "medium": return .medium
         case "large": return .large
@@ -115,22 +116,23 @@ extension SwiftTextSize {
         }
     }
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let raw = try container.decode(String.self)
-        // Use the provided fromString helper (which is case-insensitive)
-        if let value = SwiftTextSize.fromString(raw) {
-            self = value
-        } else {
-            // Fall back to the default case if unrecognized.
-            self = .defaultSize
+    // Create a caseInsensitiveValue function for consistent parser handling
+    static func caseInsensitiveValue(from string: String) -> SwiftTextSize {
+        let lowercased = string.lowercased()
+        switch lowercased {
+        case "default", "normal": return .defaultSize
+        case "small": return .small
+        case "medium": return .medium
+        case "large": return .large
+        case "extralarge": return .extraLarge
+        default: return .defaultSize // Default to defaultSize if not recognized
         }
     }
     
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        // Always encode using the rawValue (e.g. "Default")
-        try container.encode(self.rawValue)
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let raw = try container.decode(String.self)
+        self = SwiftTextSize.caseInsensitiveValue(from: raw)
     }
 }
 
@@ -140,9 +142,9 @@ enum SwiftTextWeight: String, Codable {
     case defaultWeight = "Default"
     case lighter = "Lighter"
     case bolder = "Bolder"
-    // We add no changes to init since your code uses it.
+    
     init(from rawValue: String) {
-        self = SwiftTextWeight(rawValue: rawValue) ?? .defaultWeight
+        self = SwiftTextWeight.caseInsensitiveValue(from: rawValue)
     }
 }
 
@@ -165,21 +167,21 @@ extension SwiftTextWeight {
         }
     }
     
+    // Create a caseInsensitiveValue function for consistent parser handling
+    static func caseInsensitiveValue(from string: String) -> SwiftTextWeight {
+        let lowercased = string.lowercased()
+        switch lowercased {
+        case "default", "normal": return .defaultWeight
+        case "lighter": return .lighter
+        case "bolder": return .bolder
+        default: return .defaultWeight // Default to default weight if not recognized
+        }
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
-        // Compare in a case-insensitive way.
-        switch raw.lowercased() {
-        case "default":
-            self = .defaultWeight
-        case "lighter":
-            self = .lighter
-        case "bolder":
-            self = .bolder
-        default:
-            // Fallback to .defaultWeight if unrecognized.
-            self = .defaultWeight
-        }
+        self = SwiftTextWeight.caseInsensitiveValue(from: raw)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -384,6 +386,13 @@ enum SwiftImageSize: String, Codable {
     case medium = "Medium"
     case small = "Small"
     case stretch = "Stretch"
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let raw = try container.decode(String.self)
+        // Use the caseInsensitiveValue method for consistent handling
+        self = SwiftImageSize.caseInsensitiveValue(from: raw)
+    }
 }
 
 extension SwiftImageSize {
@@ -398,7 +407,9 @@ extension SwiftImageSize {
         }
     }
     static func fromString(_ s: String) -> SwiftImageSize? {
-        switch s.lowercased() {
+        let lowered = s.lowercased()
+        if lowered == "normal" { return .medium } // Normal maps to medium size
+        switch lowered {
         case "none": return SwiftImageSize.none
         case "auto": return .auto
         case "stretch": return .stretch
@@ -409,14 +420,17 @@ extension SwiftImageSize {
         }
     }
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let raw = try container.decode(String.self)
-        if let value = SwiftImageSize.fromString(raw) {
-            self = value
-        } else {
-            // Fallback value; you can also choose to throw an error if you prefer.
-            self = .none
+    // Create a caseInsensitiveValue function for consistent parser handling
+    static func caseInsensitiveValue(from string: String) -> SwiftImageSize {
+        let lowercased = string.lowercased()
+        switch lowercased {
+        case "none": return .none
+        case "auto": return .auto
+        case "stretch": return .stretch
+        case "small": return .small
+        case "medium": return .medium
+        case "large": return .large
+        default: return .auto // Default to auto if not recognized
         }
     }
     
@@ -563,6 +577,14 @@ enum SwiftActionType: String, Codable {
 
 enum SwiftActionAlignment: String, Codable {
     case left, center, right, stretch
+    
+    // Add custom decoder for case-insensitive parsing
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let raw = try container.decode(String.self)
+        // Use caseInsensitiveValue for consistent handling
+        self = SwiftActionAlignment.caseInsensitiveValue(from: raw)
+    }
 }
 
 extension SwiftActionAlignment {
@@ -581,6 +603,18 @@ extension SwiftActionAlignment {
         case "Right": return .right
         case "Stretch": return .stretch
         default: return nil
+        }
+    }
+    
+    // Create a caseInsensitiveValue function to use in our decoder
+    static func caseInsensitiveValue(from string: String) -> SwiftActionAlignment {
+        let lowercased = string.lowercased()
+        switch lowercased {
+        case "left": return .left
+        case "center": return .center
+        case "right": return .right
+        case "stretch": return .stretch
+        default: return .center // Default to center if not recognized
         }
     }
 }
@@ -694,17 +728,7 @@ enum SwiftContainerStyle: String, Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
-        // Handle both lowercase and proper case inputs
-        switch raw.lowercased() {
-        case "none": self = .none
-        case "default": self = .default
-        case "emphasis": self = .emphasis
-        case "good": self = .good
-        case "attention": self = .attention
-        case "warning": self = .warning
-        case "accent": self = .accent
-        default: self = .none
-        }
+        self = SwiftContainerStyle.caseInsensitiveValue(from: raw)
     }
 }
 
@@ -713,9 +737,23 @@ extension SwiftContainerStyle {
         return value.rawValue  // Always return the properly capitalized raw value
     }
     
-    static func fromString(_ value: String) -> SwiftContainerStyle {
-        // Case-insensitive comparison for input
-        switch value.lowercased() {
+    static func fromString(_ s: String) -> SwiftContainerStyle? {
+        switch s {
+        case "None": return .none
+        case "Default": return .default
+        case "Emphasis": return .emphasis
+        case "Good": return .good
+        case "Attention": return .attention
+        case "Warning": return .warning
+        case "Accent": return .accent
+        default: return nil
+        }
+    }
+    
+    // Create a caseInsensitiveValue function for consistent parser handling
+    static func caseInsensitiveValue(from string: String) -> SwiftContainerStyle {
+        let lowercased = string.lowercased()
+        switch lowercased {
         case "none": return .none
         case "default": return .default
         case "emphasis": return .emphasis
@@ -723,7 +761,7 @@ extension SwiftContainerStyle {
         case "attention": return .attention
         case "warning": return .warning
         case "accent": return .accent
-        default: return .none
+        default: return .default // Default to .default if not recognized
         }
     }
 }
