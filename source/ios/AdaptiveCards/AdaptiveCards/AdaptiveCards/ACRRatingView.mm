@@ -191,7 +191,7 @@
                     [_ratingLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor]
                 ]];
                 [NSLayoutConstraint activateConstraints:@[
-                    [starImageView.trailingAnchor constraintEqualToAnchor:_ratingLabel.leadingAnchor constant:-(gap)]
+                    [starImageView.trailingAnchor constraintEqualToAnchor:_ratingLabel.leadingAnchor constant:-(_readOnly ? 4: gap)]
                 ]];
             }
             else
@@ -324,17 +324,24 @@
     
     if(_count != 0)
     {
-        NSMutableAttributedString *ratingCountStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"•%ld", (long)_count]];
+        UIColor *countTextColor = [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.ratingTextColor.c_str()];
+        NSMutableAttributedString *ratingCountStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"%ld", (long)_count]];
         UIFont *ratingFont = [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+        NSDictionary *dotAttributes = @{
+            NSFontAttributeName: [UIFont systemFontOfSize:_ratingSize == ACRMedium ? 11 : 11 weight:UIFontWeightRegular],
+            NSForegroundColorAttributeName: countTextColor,
+            NSBaselineOffsetAttributeName: @2
+        };
         [ratingCountStr addAttribute:NSFontAttributeName
                                 value:ratingFont
                                 range:NSMakeRange(0, ratingCountStr.length)];
-
-        UIColor *countTextColor = [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.ratingTextColor.c_str()];
-         [ratingCountStr addAttribute:NSForegroundColorAttributeName
+        
+        [ratingCountStr addAttribute:NSForegroundColorAttributeName
                                 value:countTextColor
                                 range:NSMakeRange(0, ratingCountStr.length)];
+        NSMutableAttributedString *dotStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@" • "] attributes:dotAttributes];
         
+        [ratingAttributedStr appendAttributedString:dotStr];
         [ratingAttributedStr appendAttributedString:ratingCountStr];
     }
     
