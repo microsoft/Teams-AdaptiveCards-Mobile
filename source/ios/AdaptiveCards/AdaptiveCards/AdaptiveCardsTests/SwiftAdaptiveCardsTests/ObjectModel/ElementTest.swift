@@ -61,4 +61,67 @@ final class ElementTests: XCTestCase {
             "'Stretch' Column serialization mismatch"
         )
     }
+    
+    func testColumnWidthDecodingFromJSON() throws {
+        // Test numeric width decoding
+        let numericWidthJSON = """
+        {
+            "type": "Column",
+            "width": 1,
+            "items": []
+        }
+        """
+        
+        let columnWithNumericWidth = try SwiftColumn.deserialize(from: numericWidthJSON) as! SwiftColumn
+        XCTAssertEqual(columnWithNumericWidth.width, "1", "Numeric width should be converted to string '1'")
+        
+        // Test string width decoding
+        let stringWidthJSON = """
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": []
+        }
+        """
+        
+        let columnWithStringWidth = try SwiftColumn.deserialize(from: stringWidthJSON) as! SwiftColumn
+        XCTAssertEqual(columnWithStringWidth.width, "stretch", "String width should remain 'stretch'")
+        
+        // Test pixel width decoding
+        let pixelWidthJSON = """
+        {
+            "type": "Column",
+            "width": "50px", 
+            "items": []
+        }
+        """
+        
+        let columnWithPixelWidth = try SwiftColumn.deserialize(from: pixelWidthJSON) as! SwiftColumn
+        XCTAssertEqual(columnWithPixelWidth.width, "50px", "Pixel width should remain '50px'")
+        XCTAssertEqual(columnWithPixelWidth.pixelWidth, 50, "Pixel width should be parsed to 50")
+        
+        // Test integer numeric width decoding
+        let integerWidthJSON = """
+        {
+            "type": "Column",
+            "width": 2,
+            "items": []
+        }
+        """
+        
+        let columnWithIntegerWidth = try SwiftColumn.deserialize(from: integerWidthJSON) as! SwiftColumn
+        XCTAssertEqual(columnWithIntegerWidth.width, "2", "Integer width should be converted to string '2'")
+        
+        // Test decimal numeric width decoding
+        let decimalWidthJSON = """
+        {
+            "type": "Column",
+            "width": 1.5,
+            "items": []
+        }
+        """
+        
+        let columnWithDecimalWidth = try SwiftColumn.deserialize(from: decimalWidthJSON) as! SwiftColumn
+        XCTAssertEqual(columnWithDecimalWidth.width, "2", "Decimal width should be rounded to string '2'")
+    }
 }

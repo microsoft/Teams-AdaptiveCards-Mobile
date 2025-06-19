@@ -970,9 +970,25 @@ class SwiftColumn: SwiftStyledCollectionElement {
         try super.init(from: decoder)
         
         // Decode width using "width" key or fallback to "size"
-        let decodedWidth = try container.decodeIfPresent(String.self, forKey: .width)
-            ?? container.decodeIfPresent(String.self, forKey: .size)
-            ?? "Auto"
+        // Support both String and numeric types for width to handle JSON variations
+        let decodedWidth: String
+        if container.contains(.width) {
+            // Use AnyCodable to decode without type errors, then convert to String
+            if let anyValue = try? container.decode(AnyCodable.self, forKey: .width) {
+                decodedWidth = convertToWidthString(anyValue.value)
+            } else {
+                decodedWidth = "Auto"
+            }
+        } else if container.contains(.size) {
+            // Fallback to "size" key with same robust decoding
+            if let anyValue = try? container.decode(AnyCodable.self, forKey: .size) {
+                decodedWidth = convertToWidthString(anyValue.value)
+            } else {
+                decodedWidth = "Auto"
+            }
+        } else {
+            decodedWidth = "Auto"
+        }
         // Set the default flag based on the decoded value.
         // If JSON provides "auto" (lowercase) then default should be false.
         self.isDefaultWidth = (decodedWidth == "Auto")
@@ -1008,6 +1024,23 @@ class SwiftColumn: SwiftStyledCollectionElement {
         
         self.rtl = try container.decodeIfPresent(Bool.self, forKey: .rtl)
         self.layouts = try container.decodeIfPresent([SwiftLayout].self, forKey: .layouts) ?? []
+    }
+    
+    // MARK: - Helper Methods
+    
+    /// Converts a value of any type to a width string
+    private func convertToWidthString(_ value: Any) -> String {
+        if let stringValue = value as? String {
+            return stringValue
+        } else if let intValue = value as? Int {
+            return String(intValue)
+        } else if let doubleValue = value as? Double {
+            return String(format: "%.0f", doubleValue)
+        } else if let floatValue = value as? Float {
+            return String(format: "%.0f", floatValue)
+        } else {
+            return "Auto"
+        }
     }
     
     override func configForContainerStyle(_ context: SwiftParseContext) {
