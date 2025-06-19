@@ -92,6 +92,33 @@ class SwiftBaseActionElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol
     /// Converts this action into a JSON dictionary.
     override func toJSON() -> [String: Any] {
         var json: [String: Any] = ["type": typeString]
+        
+        // Include core action properties
+        if let id = id, !id.isEmpty {
+            json["id"] = id
+        }
+        if !title.isEmpty {
+            json["title"] = title
+        }
+        if !iconUrl.isEmpty {
+            json["iconUrl"] = iconUrl
+        }
+        if style != "default" {
+            json["style"] = style
+        }
+        if !tooltip.isEmpty {
+            json["tooltip"] = tooltip
+        }
+        if mode != .primary {
+            json["mode"] = mode.rawValue
+        }
+        if !isEnabled {
+            json["isEnabled"] = isEnabled
+        }
+        if let role = role {
+            json["role"] = role.rawValue
+        }
+        
         if let additionalProps = additionalProperties {
             for (key, value) in additionalProps {
                 json[key] = value.value
@@ -231,6 +258,21 @@ class SwiftOpenUrlAction: SwiftBaseActionElement {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(url, forKey: .url)
     }
+    
+    /// Override serialization to ensure role is included
+    override func serializeToJsonValue() throws -> [String: Any] {
+        var json = try super.serializeToJsonValue()
+        
+        // Ensure role is set for OpenUrl actions if not already set
+        if json["role"] == nil {
+            json["role"] = "Link"
+        }
+        
+        // Add URL
+        json["url"] = url
+        
+        return json
+    }
 }
 
 /// Represents an action that displays a card when triggered.
@@ -261,6 +303,19 @@ class SwiftShowCardAction: SwiftBaseActionElement {
         try container.encodeIfPresent(card, forKey: .card)
         try super.encode(to: encoder)
     }
+    
+    /// Serializes the action into a JSON object.
+    override func serializeToJsonValue() throws -> [String: Any] {
+        var json = try super.serializeToJsonValue()
+        
+        // Add ShowCard-specific properties
+        if let card = card {
+            json["card"] = try card.serializeToJsonValue()
+        }
+        
+        return json
+    }
+    
     // MARK: - Coding Keys
 
     private enum CodingKeys: String, CodingKey {
@@ -354,6 +409,28 @@ final class SwiftExecuteAction: SwiftBaseActionElement {
         try container.encode(associatedInputs, forKey: .associatedInputs)
         try container.encode(conditionallyEnabled, forKey: .conditionallyEnabled)
     }
+    
+    /// Serializes the action into a JSON object.
+    override func serializeToJsonValue() throws -> [String: Any] {
+        var json = try super.serializeToJsonValue()
+        
+        // Add Execute-specific properties
+        if let dataJson = dataJson {
+            let dataDict = dataJson.mapValues { $0.value }
+            json["data"] = dataDict
+        }
+        if !verb.isEmpty {
+            json["verb"] = verb
+        }
+        if associatedInputs != .auto {
+            json["associatedInputs"] = associatedInputs.rawValue
+        }
+        if conditionallyEnabled {
+            json["conditionallyEnabled"] = conditionallyEnabled
+        }
+        
+        return json
+    }
 }
 
 /// Represents a refresh action in an adaptive card.
@@ -407,6 +484,10 @@ struct SwiftRefresh: Codable {
     // MARK: - Serialization to JSON
     func serializeToJson() -> [String: Any] {
         return SwiftRefreshLegacySupport.serializeToJson(self)
+    }
+    
+    func serializeToJsonValue() throws -> [String: Any] {
+        return serializeToJson()
     }
     
     // MARK: - Utility

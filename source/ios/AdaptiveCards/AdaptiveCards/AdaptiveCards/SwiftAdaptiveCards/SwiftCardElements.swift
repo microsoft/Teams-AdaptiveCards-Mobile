@@ -341,13 +341,8 @@ class SwiftImage: SwiftBaseCardElement {
         // Call super.init after initializing all properties
         try super.init(from: decoder)
         
-        // Default spacing and height if not set
-        if self.height == nil {
-            self.height = .auto
-        }
-        if self.spacing == nil {
-            self.spacing = SwiftSpacing.none
-        }
+        // Don't set default values after parsing - let them remain nil if not specified
+        // This allows proper serialization to skip default values
         
         self.populateKnownPropertiesSet()
     }
@@ -598,7 +593,7 @@ struct SwiftTextRun: Codable, SwiftInline {
         strikethrough: Bool = false,
         highlight: Bool = false,
         underline: Bool = false,
-        language: String? = "en", // Default to "en"
+        language: String? = nil, // Default to nil, not "en"
         selectAction: SwiftBaseActionElement? = nil,
         additionalProperties: [String: AnyCodable] = [:]
     ) {
@@ -612,7 +607,7 @@ struct SwiftTextRun: Codable, SwiftInline {
         self.strikethrough = strikethrough
         self.highlight = highlight
         self.underline = underline
-        self.language = language // Defaults to "en" if nil
+        self.language = language // Don't default to "en"
         self.selectAction = selectAction
         self.additionalProperties = additionalProperties
     }
@@ -770,8 +765,8 @@ class SwiftImageSet: SwiftBaseCardElement {
     init(id: String? = nil) {
         super.init(
             type: .imageSet,
-            spacing: nil,
-            height: nil,
+            spacing: .default,
+            height: .auto,
             targetWidth: nil,
             separator: nil,
             isVisible: true,
@@ -828,8 +823,8 @@ class SwiftImageSet: SwiftBaseCardElement {
     override func serializeToJsonValue() throws -> [String: Any] {
         var json = try super.serializeToJsonValue()
         json["type"] = "ImageSet"
-        // Use the rawValue directly, so that "Auto" is preserved.
-        json["imageSize"] = imageSize.rawValue
+        // Use the toString method to get proper lowercase for "auto" 
+        json["imageSize"] = SwiftImageSize.toString(imageSize)
         json["images"] = try images.map { try $0.serializeToJsonValue() }
         return json
     }
@@ -1415,8 +1410,8 @@ class SwiftUnknownElement: SwiftBaseCardElement {
         self.elementType = elementType
         super.init(
             type: .unknown,
-            spacing: nil,
-            height: nil,
+            spacing: .default,
+            height: .auto,
             targetWidth: nil,
             separator: nil,
             isVisible: true,

@@ -789,7 +789,17 @@ enum SwiftBackgroundImageLegacySupport {
     }
     
     /// Converts a SwiftBackgroundImage to JSON dictionary
-    static func serializeToJson(_ backgroundImage: SwiftBackgroundImage) -> [String: Any] {
+    /// Returns a string if all values are default (matches C++ behavior)
+    static func serializeToJson(_ backgroundImage: SwiftBackgroundImage) -> Any {
+        // Check if all values are default - if so, return just the URL string
+        let defaultBackgroundImage = SwiftBackgroundImage()
+        if backgroundImage.fillMode == defaultBackgroundImage.fillMode &&
+           backgroundImage.horizontalAlignment == defaultBackgroundImage.horizontalAlignment &&
+           backgroundImage.verticalAlignment == defaultBackgroundImage.verticalAlignment {
+            return backgroundImage.url
+        }
+        
+        // Otherwise, return the full object
         guard let jsonData = try? JSONEncoder().encode(backgroundImage),
               let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
             return ["url": backgroundImage.url]
@@ -823,11 +833,11 @@ extension SwiftBackgroundImage {
         return SwiftBackgroundImageLegacySupport.serialize(self)
     }
     
-    func serializeToJsonValue() -> [String: Any] {
+    func serializeToJsonValue() -> Any {
         return SwiftBackgroundImageLegacySupport.serializeToJson(self)
     }
     
-    func toJSON() -> [String: Any] {
+    func toJSON() -> Any {
         return SwiftBackgroundImageLegacySupport.serializeToJson(self)
     }
     
@@ -1251,7 +1261,7 @@ enum SwiftBaseInputElementLegacySupport {
             json["label"] = label
         }
         
-        // Only add non-default properties
+        // Only add isRequired if it's true (non-default)
         if inputElement.isRequired {
             json["isRequired"] = inputElement.isRequired
         }
@@ -1602,9 +1612,10 @@ enum SwiftTextInputLegacySupport {
             json["value"] = value
         }
         
-        // The test specifically wants to see "isMultiline": true
-        // so always write out the actual value of isMultiline:
-        json["isMultiline"] = textInput.isMultiline
+        // Only add isMultiline if it's true (non-default)
+        if textInput.isMultiline {
+            json["isMultiline"] = textInput.isMultiline
+        }
         
         // Only add non-default properties
         if textInput.maxLength > 0 {
@@ -2418,8 +2429,8 @@ extension SwiftRatingInput {
                        horizontalAlignment: SwiftHorizontalAlignment? = nil,
                        size: SwiftRatingSize = .medium,
                        color: SwiftRatingColor = .neutral,
-                       spacing: SwiftSpacing? = nil,
-                       height: SwiftHeightType? = nil,
+                       spacing: SwiftSpacing = .default,
+                       height: SwiftHeightType = .auto,
                        targetWidth: SwiftTargetWidthType? = nil,
                        separator: Bool? = nil,
                        isVisible: Bool = true,
@@ -2438,8 +2449,8 @@ extension SwiftRatingInput {
         // Add optional properties
         if let id = id { json["id"] = id }
         if let horizontalAlignment = horizontalAlignment { json["horizontalAlignment"] = horizontalAlignment.rawValue }
-        if let spacing = spacing { json["spacing"] = spacing.rawValue }
-        if let height = height { json["height"] = height.rawValue }
+        if spacing != .default { json["spacing"] = spacing.rawValue }
+        if height != .auto { json["height"] = height.rawValue }
         if let targetWidth = targetWidth { json["targetWidth"] = targetWidth.rawValue }
         if let separator = separator { json["separator"] = separator }
         if let areaGridName = areaGridName { json["areaGridName"] = areaGridName }
@@ -2602,8 +2613,8 @@ extension SwiftRatingLabel {
                        size: SwiftRatingSize = .medium,
                        color: SwiftRatingColor = .neutral,
                        style: SwiftRatingStyle = .default,
-                       spacing: SwiftSpacing? = nil,
-                       height: SwiftHeightType? = nil,
+                       spacing: SwiftSpacing = .default,
+                       height: SwiftHeightType = .auto,
                        targetWidth: SwiftTargetWidthType? = nil,
                        separator: Bool? = nil,
                        isVisible: Bool = true,
@@ -2624,8 +2635,8 @@ extension SwiftRatingLabel {
         if let id = id { json["id"] = id }
         if let count = count { json["count"] = count }
         if let horizontalAlignment = horizontalAlignment { json["horizontalAlignment"] = horizontalAlignment.rawValue }
-        if let spacing = spacing { json["spacing"] = spacing.rawValue }
-        if let height = height { json["height"] = height.rawValue }
+        if spacing != .default { json["spacing"] = spacing.rawValue }
+        if height != .auto { json["height"] = height.rawValue }
         if let targetWidth = targetWidth { json["targetWidth"] = targetWidth.rawValue }
         if let separator = separator { json["separator"] = separator }
         if let areaGridName = areaGridName { json["areaGridName"] = areaGridName }
@@ -2686,7 +2697,12 @@ enum SwiftRefreshLegacySupport {
         var json: [String: Any] = [:]
         
         if let action = refresh.action {
-            json["action"] = action.toJSON()
+            do {
+                json["action"] = try action.serializeToJsonValue()
+            } catch {
+                // Fallback to toJSON if serializeToJsonValue fails
+                json["action"] = action.toJSON()
+            }
         }
         
         if !refresh.userIds.isEmpty {
@@ -2861,8 +2877,8 @@ extension SwiftRichTextBlock {
     static func create(id: String? = nil,
                        horizontalAlignment: SwiftHorizontalAlignment? = nil,
                        inlines: [Any] = [],
-                       spacing: SwiftSpacing? = nil,
-                       height: SwiftHeightType? = nil,
+                       spacing: SwiftSpacing = .default,
+                       height: SwiftHeightType = .auto,
                        separator: Bool? = nil,
                        isVisible: Bool = true) -> SwiftRichTextBlock {
         
@@ -2875,8 +2891,8 @@ extension SwiftRichTextBlock {
         // Add optional properties
         if let id = id { json["id"] = id }
         if let horizontalAlignment = horizontalAlignment { json["horizontalAlignment"] = horizontalAlignment.rawValue }
-        if let spacing = spacing { json["spacing"] = spacing.rawValue }
-        if let height = height { json["height"] = height.rawValue }
+        if spacing != .default { json["spacing"] = spacing.rawValue }
+        if height != .auto { json["height"] = height.rawValue }
         if let separator = separator { json["separator"] = separator }
         
         // Handle inlines - this is complex due to heterogeneous array
@@ -3586,7 +3602,7 @@ enum TextBlockLegacySupport {
         }
         
         if let textColor = textBlock.textColor {
-            json[SwiftAdaptiveCardSchemaKey.color.rawValue] = textColor.serializedString
+            json[SwiftAdaptiveCardSchemaKey.color.rawValue] = textColor.rawValue
         }
         
         if let isSubtle = textBlock.isSubtle {
@@ -3830,15 +3846,13 @@ enum SwiftTextRunLegacySupport {
         // Add required property
         json["text"] = textRun.text
         
-        // Add optional properties
+        // Add optional properties (use standard keys only, not alternate keys)
         if let textSize = textRun.textSize {
-            json["textSize"] = textSize.rawValue
-            json["size"] = textSize.rawValue // Alternate key for compatibility
+            json["size"] = textSize.rawValue
         }
         
         if let textWeight = textRun.textWeight {
-            json["textWeight"] = textWeight.rawValue
-            json["weight"] = textWeight.rawValue // Alternate key for compatibility
+            json["weight"] = textWeight.rawValue
         }
         
         if let fontType = textRun.fontType {
@@ -3846,8 +3860,7 @@ enum SwiftTextRunLegacySupport {
         }
         
         if let textColor = textRun.textColor {
-            json["textColor"] = textColor.rawValue
-            json["color"] = textColor.rawValue // Alternate key for compatibility
+            json["color"] = textColor.rawValue
         }
         
         if let isSubtle = textRun.isSubtle {
@@ -3860,10 +3873,9 @@ enum SwiftTextRunLegacySupport {
         if textRun.highlight { json["highlight"] = true }
         if textRun.underline { json["underline"] = true }
         
-        // Add language if present (with alternate key)
+        // Add language if present (only use one key)
         if let language = textRun.language {
             json["language"] = language
-            json["lang"] = language
         }
         
         // Add selectAction if present
@@ -5638,9 +5650,18 @@ extension SwiftAdaptiveCard {
             json["lang"] = language
         }
         
-        // Background image
+        // Background image - serialize as string if it's simple URL, object if complex
         if let backgroundImage = backgroundImage {
-            json[SwiftAdaptiveCardSchemaKey.backgroundImage.rawValue] = backgroundImage.serializeToJsonValue()
+            // Check if it's a simple background image (just URL with default values)
+            if backgroundImage.fillMode == .cover && 
+               backgroundImage.horizontalAlignment == .left && 
+               backgroundImage.verticalAlignment == .top {
+                // Serialize as simple string for simple cases
+                json[SwiftAdaptiveCardSchemaKey.backgroundImage.rawValue] = backgroundImage.url
+            } else {
+                // Serialize as object for complex cases
+                json[SwiftAdaptiveCardSchemaKey.backgroundImage.rawValue] = SwiftBackgroundImageLegacySupport.serializeToJson(backgroundImage)
+            }
         }
         
         // Body elements

@@ -187,9 +187,15 @@ extension SwiftImage: AdaptiveCardLegacySerializable {
         json["type"] = "Image"
         json["url"] = self.url
         
-        // Format style properties
-        json["style"] = self.imageStyle.rawValue
-        json["size"] = self.imageSize.rawValue.lowercased()
+        // Only include style if it's not the default value
+        if self.imageStyle != .defaultImageStyle {
+            json["style"] = self.imageStyle.rawValue
+        }
+        
+        // Only include size if it's not None
+        if self.imageSize != .none {
+            json["size"] = SwiftImageSize.toString(self.imageSize)
+        }
         
         // Add optional properties
         if let alignment = self.hAlignment {
@@ -210,12 +216,13 @@ extension SwiftImage: AdaptiveCardLegacySerializable {
             json["selectAction"] = try SwiftBaseCardElement.serializeSelectAction(action)
         }
         
-        // Format layout properties
-        if let spacing = self.spacing {
-            json["spacing"] = spacing.rawValue.lowercased()
+        // Don't include spacing if it's .none or .default (which is the default behavior)
+        if self.spacing != .none && self.spacing != .default {
+            json["spacing"] = self.spacing.rawValue.lowercased()
         }
         
-        if let separator = self.separator {
+        // Don't include separator if it's nil or false
+        if let separator = self.separator, separator == true {
             json["separator"] = separator
         }
         

@@ -150,17 +150,14 @@ enum SwiftTextWeight: String, Codable {
 
 extension SwiftTextWeight {
     static func toString(_ value: SwiftTextWeight) -> String {
-        // defaultWeight → "Normal"
-        switch value {
-        case .defaultWeight: return "Normal"
-        case .lighter: return "Lighter"
-        case .bolder: return "Bolder"
-        }
+        // Use rawValue for consistent capitalization
+        return value.rawValue
     }
     
     static func fromString(_ s: String) -> SwiftTextWeight? {
         switch s {
-        case "Normal": return .defaultWeight
+        case "Default": return .defaultWeight
+        case "Normal": return .defaultWeight  // Additional reverse mapping for backward compatibility
         case "Lighter": return .lighter
         case "Bolder": return .bolder
         default: return nil
@@ -182,12 +179,6 @@ extension SwiftTextWeight {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         self = SwiftTextWeight.caseInsensitiveValue(from: raw)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        // Always encode using the rawValue you defined (e.g. "Default")
-        try container.encode(self.rawValue)
     }
 }
 
@@ -233,38 +224,25 @@ extension SwiftFontType {
 // MARK: - ForegroundColor
 
 enum SwiftForegroundColor: String, Codable {
-    case `default`, dark, light, accent, good, warning, attention
-    
-    // Static dictionary to store original values
-    private static var originalValues: [String: String] = [:]
+    case `default` = "Default"
+    case dark = "Dark"
+    case light = "Light"
+    case accent = "Accent"
+    case good = "Good"
+    case warning = "Warning"
+    case attention = "Attention"
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
-        // Store original value in dictionary using instance description as key
-        if let color = SwiftForegroundColor(rawValue: raw.lowercased()) {
-            SwiftForegroundColor.originalValues["\(color)"] = raw
+        // Try direct match first, then try case-insensitive match
+        if let color = SwiftForegroundColor(rawValue: raw) {
+            self = color
+        } else if let color = SwiftForegroundColor.fromString(raw) {
             self = color
         } else {
             throw DecodingError.dataCorruptedError(in: container,
                 debugDescription: "Cannot initialize ForegroundColor from invalid String value \(raw)")
-        }
-    }
-    
-    // Update serializedString to use original value if available
-    var serializedString: String {
-        if let original = SwiftForegroundColor.originalValues["\(self)"] {
-            return original
-        }
-        // Fall back to existing capitalized values if no original
-        switch self {
-        case .default: return "Default"
-        case .dark: return "Dark"
-        case .light: return "Light"
-        case .accent: return "Accent"
-        case .good: return "Good"
-        case .warning: return "Warning"
-        case .attention: return "Attention"
         }
     }
 }
@@ -970,6 +948,8 @@ enum SwiftAdaptiveCardSchemaKey: String, SwiftAdaptiveCardEnum {
     case altText
     case name
     case borderWidth
+    case fallbackContent
+    case fallbackType
     case cornerRadius
     case connectionName
     case count
@@ -1391,6 +1371,10 @@ struct SwiftSemanticVersion: Codable, Comparable, CustomStringConvertible {
 
     static func >= (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
         return !(lhs < rhs)
+    }
+    
+    func serializeToJsonValue() -> String {
+        return description
     }
 }
 

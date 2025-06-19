@@ -50,7 +50,10 @@ class SwiftBaseInputElement: SwiftBaseCardElement {
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(label, forKey: .label)
-        try container.encode(isRequired, forKey: .isRequired)
+        // Only encode isRequired if it's true (non-default)
+        if isRequired {
+            try container.encode(isRequired, forKey: .isRequired)
+        }
         try container.encodeIfPresent(errorMessage, forKey: .errorMessage)
         try container.encodeIfPresent(valueChangedAction, forKey: .valueChangedAction)
         
@@ -254,7 +257,10 @@ class SwiftChoiceSetInput: SwiftBaseInputElement {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(isMultiSelect, forKey: .isMultiSelect)
         try container.encode(choiceSetStyle, forKey: .choiceSetStyle)
+        
+        // Encode choices with their type field included
         try container.encode(choices, forKey: .choices)
+        
         try container.encodeIfPresent(choicesData, forKey: .choicesData)
         try container.encode(value, forKey: .value)
         try container.encode(wrap, forKey: .wrap)
@@ -270,6 +276,7 @@ class SwiftChoiceSetInput: SwiftBaseInputElement {
     }
     
     override func populateKnownPropertiesSet() {
+        super.populateKnownPropertiesSet()
         self.knownProperties.insert("isMultiSelect")
         self.knownProperties.insert("style")
         self.knownProperties.insert("choices")
@@ -423,8 +430,14 @@ class SwiftTextInput: SwiftBaseInputElement {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(placeholder, forKey: .placeholder)
         try container.encodeIfPresent(value, forKey: .value)
-        try container.encode(isMultiline, forKey: .isMultiline)
-        try container.encode(maxLength, forKey: .maxLength)
+        // Only encode isMultiline if it's true (non-default)
+        if isMultiline {
+            try container.encode(isMultiline, forKey: .isMultiline)
+        }
+        // Only encode maxLength if it's greater than 0 (non-default)
+        if maxLength > 0 {
+            try container.encode(maxLength, forKey: .maxLength)
+        }
         try container.encodeIfPresent(style, forKey: .style)
         try container.encodeIfPresent(regex, forKey: .regex)
         
@@ -442,6 +455,7 @@ class SwiftTextInput: SwiftBaseInputElement {
     }
     
     override func populateKnownPropertiesSet() {
+        super.populateKnownPropertiesSet()
         self.knownProperties.insert("placeholder")
         self.knownProperties.insert("value")
         self.knownProperties.insert("isMultiline")
@@ -509,6 +523,33 @@ class SwiftDateInput: SwiftBaseInputElement {
 /// Represents a choice input in an Adaptive Card.
 struct SwiftChoiceInput: Codable {
     // MARK: - Properties
+    let type: String?
     let title: String
     let value: String
+    
+    init(title: String, value: String) {
+        self.type = "Input.Choice"
+        self.title = title
+        self.value = value
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "Input.Choice"
+        self.title = try container.decode(String.self, forKey: .title)
+        self.value = try container.decode(String.self, forKey: .value)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(type ?? "Input.Choice", forKey: .type)
+        try container.encode(title, forKey: .title)
+        try container.encode(value, forKey: .value)
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case type
+        case title
+        case value
+    }
 }

@@ -18,13 +18,17 @@ protocol SwiftAdaptiveCardElementProtocol: Codable {
 class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
     // MARK: - Properties
     let type: SwiftCardElementType
-    var spacing: SwiftSpacing?
-    var height: SwiftHeightType?
+    var spacing: SwiftSpacing = .default
+    var height: SwiftHeightType = .auto
     var targetWidth: SwiftTargetWidthType?
     var separator: Bool?
     var isVisible: Bool = true
     var areaGridName: String?
     var parentalId: SwiftInternalId?
+    
+    /// Properties to track if values were explicitly set in JSON
+    private var spacingWasExplicitlySet: Bool = false
+    private var heightWasExplicitlySet: Bool = false
     
     override var typeString: String {
         get { return type.rawValue }
@@ -45,8 +49,8 @@ class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
     // MARK: - Initializers
     init(
         type: SwiftCardElementType,
-        spacing: SwiftSpacing? = nil,
-        height: SwiftHeightType? = nil,
+        spacing: SwiftSpacing = .default,
+        height: SwiftHeightType = .auto,
         targetWidth: SwiftTargetWidthType? = nil,
         separator: Bool? = nil,
         isVisible: Bool = true,
@@ -62,6 +66,12 @@ class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
         self.isVisible = isVisible
         self.areaGridName = areaGridName
         self.parentalId = parentalId
+        
+        // When programmatically creating elements, spacing and height are 
+        // considered explicitly set only if they're not default values
+        self.spacingWasExplicitlySet = (spacing != .default)
+        self.heightWasExplicitlySet = (height != .auto)
+        
         super.init(typeString: type.rawValue, id: id)
     }
 
@@ -95,8 +105,25 @@ class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
         }
         
         self.type = decodedType
-        self.spacing = try container.decodeIfPresent(String.self, forKey: .spacing).flatMap { SwiftSpacing(rawValue: $0) }
-        self.height = try container.decodeIfPresent(String.self, forKey: .height).flatMap { SwiftHeightType(rawValue: $0) }
+        
+        // Track if spacing was explicitly set and decode it
+        if let spacingString = try container.decodeIfPresent(String.self, forKey: .spacing) {
+            self.spacingWasExplicitlySet = true
+            self.spacing = SwiftSpacing(rawValue: spacingString) ?? .default
+        } else {
+            self.spacingWasExplicitlySet = false
+            self.spacing = .default
+        }
+        
+        // Track if height was explicitly set and decode it
+        if let heightString = try container.decodeIfPresent(String.self, forKey: .height) {
+            self.heightWasExplicitlySet = true
+            self.height = SwiftHeightType(rawValue: heightString) ?? .auto
+        } else {
+            self.heightWasExplicitlySet = false
+            self.height = .auto
+        }
+        
         self.targetWidth = try container.decodeIfPresent(String.self, forKey: .targetWidth).flatMap { SwiftTargetWidthType(rawValue: $0) }
         self.separator = try container.decodeIfPresent(Bool.self, forKey: .separator)
         self.isVisible = try container.decodeIfPresent(Bool.self, forKey: .isVisible) ?? true
@@ -111,8 +138,17 @@ class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type.rawValue, forKey: .type)
-        try container.encodeIfPresent(spacing?.rawValue, forKey: .spacing)
-        try container.encodeIfPresent(height?.rawValue, forKey: .height)
+        
+        // Only encode spacing if it was explicitly set OR is not default
+        if spacingWasExplicitlySet || spacing != .default {
+            try container.encode(spacing.rawValue, forKey: .spacing)
+        }
+        
+        // Only encode height if it was explicitly set OR is not default
+        if heightWasExplicitlySet || height != .auto {
+            try container.encode(height.rawValue, forKey: .height)
+        }
+        
         try container.encodeIfPresent(targetWidth?.rawValue, forKey: .targetWidth)
         try container.encodeIfPresent(separator, forKey: .separator)
         try container.encode(isVisible, forKey: .isVisible)
@@ -128,31 +164,38 @@ class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
         // Ensure type is set correctly
         json["type"] = typeString
         
-        // Add optional properties
-        if let spacing = spacing {
+        // Only add optional properties if they were explicitly set or are not default values
+        // Include spacing if it was explicitly set OR if it's not the default value
+        if spacingWasExplicitlySet || spacing != .default {
             json["spacing"] = spacing.rawValue
         }
         
-        if let height = height {
+        // Include height if it was explicitly set OR if it's not the default value
+        if heightWasExplicitlySet || height != .auto {
             json["height"] = height.rawValue
         }
         
-        if let targetWidth = targetWidth {
+        // Don't include targetWidth if it's nil
+        if let targetWidth = targetWidth, targetWidth != .default {
             json["targetWidth"] = targetWidth.rawValue
         }
         
-        if let separator = separator {
+        // Don't include separator if it's nil or false
+        if let separator = separator, separator == true {
             json["separator"] = separator
         }
         
+        // Don't include isVisible if it's true (default value)
         if !isVisible {
             json["isVisible"] = isVisible
         }
         
-        if let areaGridName = areaGridName {
+        // Don't include areaGridName if it's nil
+        if let areaGridName = areaGridName, !areaGridName.isEmpty {
             json["areaGridName"] = areaGridName
         }
         
+        // Don't include parentalId if it's nil
         if let parentalId = parentalId {
             json["parentalId"] = parentalId
         }

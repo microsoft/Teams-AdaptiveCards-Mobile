@@ -149,6 +149,43 @@ public class SwiftAdaptiveCard: Codable {
             json[SwiftAdaptiveCardSchemaKey.minHeight.rawValue] = "\(minHeight)px"
         }
         
+        // Include refresh, authentication, and rtl fields if they exist
+        if let refresh = refresh {
+            json[SwiftAdaptiveCardSchemaKey.refresh.rawValue] = try refresh.serializeToJsonValue()
+        }
+        
+        if let authentication = authentication {
+            json[SwiftAdaptiveCardSchemaKey.authentication.rawValue] = try authentication.serializeToJsonValue()
+        }
+        
+        if let rtl = rtl {
+            json[SwiftAdaptiveCardSchemaKey.rtl.rawValue] = rtl
+        }
+        
+        // Include selectAction if present
+        if let selectAction = selectAction {
+            json[SwiftAdaptiveCardSchemaKey.selectAction.rawValue] = try selectAction.serializeToJsonValue()
+        }
+        
+        // Include requires if not empty
+        if !requires.isEmpty {
+            var requiresJson: [String: Any] = [:]
+            for (key, value) in requires {
+                requiresJson[key] = value.serializeToJsonValue()
+            }
+            json[SwiftAdaptiveCardSchemaKey.requires.rawValue] = requiresJson
+        }
+        
+        // Include fallbackContent if present
+        if let fallbackContent = fallbackContent {
+            json[SwiftAdaptiveCardSchemaKey.fallbackContent.rawValue] = try fallbackContent.serializeToJsonValue()
+        }
+        
+        // Include fallbackType if not none
+        if fallbackType != .none {
+            json[SwiftAdaptiveCardSchemaKey.fallbackType.rawValue] = fallbackType.rawValue
+        }
+        
         return json
     }
     

@@ -55,16 +55,16 @@ let EVERYTHING_BAGEL_JSON =
         {
             "type": "TextBlock",
             "text": "TextBlock_text",
-            "color": "default",
+            "color": "Default",
             "horizontalAlignment": "left",
             "isSubtle": false,
             "italic": true,
             "maxLines": 1,
-            "size": "default",
-            "weight": "default",
+            "size": "Default",
+            "weight": "Default",
             "wrap": false,
             "id": "TextBlock_id",
-            "spacing": "default",
+            "spacing": "Default",
             "separator": false,
             "strikethrough": true,
             "style": "Heading"
@@ -72,16 +72,16 @@ let EVERYTHING_BAGEL_JSON =
         {
             "type": "TextBlock",
             "text": "TextBlock_text",
-            "color": "default",
+            "color": "Default",
             "horizontalAlignment": "left",
             "isSubtle": false,
             "italic": true,
             "maxLines": 1,
-            "size": "default",
+            "size": "Default",
             "weight": "normAl",
             "wrap": false,
             "id": "TextBlock_id_mono",
-            "spacing": "default",
+            "spacing": "Default",
             "separator": false,
             "strikethrough": true,
             "fontType": "monospace"
@@ -89,19 +89,19 @@ let EVERYTHING_BAGEL_JSON =
         {
             "type": "TextBlock",
             "text": "TextBlock_text",
-            "color": "default",
+            "color": "Default",
             "horizontalAlignment": "left",
             "isSubtle": false,
             "italic": true,
             "maxLines": 1,
-            "size": "default",
-            "weight": "default",
+            "size": "Default",
+            "weight": "Default",
             "wrap": false,
             "id": "TextBlock_id_def",
-            "spacing": "default",
+            "spacing": "Default",
             "separator": false,
             "strikethrough": true,
-            "fontType": "default"
+            "fontType": "Default"
         },
         {
             "type": "Image",
@@ -112,7 +112,7 @@ let EVERYTHING_BAGEL_JSON =
                 "title": "Image_Action.OpenUrl",
                 "url": "https://adaptivecards.io/"
             },
-            "size": "auto",
+            "size": "Auto",
             "style": "person",
             "url": "https://adaptivecards.io/content/cats/1.png",
             "id": "Image_id",
@@ -122,7 +122,7 @@ let EVERYTHING_BAGEL_JSON =
         },
         {
             "type": "Container",
-            "style": "default",
+            "style": "Default",
             "selectAction": {
                 "type": "Action.Submit",
                 "title": "Container_Action.Submit",
@@ -141,7 +141,7 @@ let EVERYTHING_BAGEL_JSON =
                     "columns": [
                         {
                             "type": "Column",
-                            "style": "default",
+                            "style": "Default",
                             "width": "auto",
                             "id": "Column_id1",
                             "rtl":false,
@@ -154,7 +154,7 @@ let EVERYTHING_BAGEL_JSON =
                         },
                         {
                             "type": "Column",
-                            "style": "emphasis",
+                            "style": "Emphasis",
                             "width": "20px",
                             "id": "Column_id2",
                             "items": [
@@ -166,7 +166,7 @@ let EVERYTHING_BAGEL_JSON =
                         },
                         {
                             "type": "Column",
-                            "style": "default",
+                            "style": "Default",
                             "width": "stretch",
                             "id": "Column_id3",
                             "items": [
@@ -285,8 +285,8 @@ let EVERYTHING_BAGEL_JSON =
                 },
                 {
                     "type": "TextBlock",
-                    "weight": "BoLdEr",
-                    "size": "large",
+                    "weight": "Bolder",
+                    "size": "Large",
                     "text": "Everybody's got choices"
                 },
                 {
@@ -294,7 +294,7 @@ let EVERYTHING_BAGEL_JSON =
                     "id": "Input.ChoiceSet_id",
                     "isMultiSelect": true,
                     "label": "Input.ChoiceSet_label",
-                    "style": "compact",
+                    "style": "Compact",
                     "value": "Input.Choice2,Input.Choice4",
                     "choices": [
                         {
@@ -328,7 +328,7 @@ let EVERYTHING_BAGEL_JSON =
                     "type": "Action.Submit",
                     "title": "ActionSet.Action.Submit",
                     "id": "ActionSet.Action.Submit_id",
-                    "associatedInputs": "none",
+                    "associatedInputs": "None",
                     "tooltip": "tooltip",
                     "isEnabled": false
                 },
@@ -336,6 +336,7 @@ let EVERYTHING_BAGEL_JSON =
                     "type": "Action.OpenUrl",
                     "title": "ActionSet.Action.OpenUrl",
                     "id": "ActionSet.Action.OpenUrl_id",
+                    "role": "Link",
                     "tooltip": "tooltip",
                     "url": "https://adaptivecards.io/",
                     "isEnabled": true
@@ -353,7 +354,7 @@ let EVERYTHING_BAGEL_JSON =
                     "highlight": true,
                     "isSubtle": true,
                     "italic": true,
-                    "size": "large",
+                    "size": "Large",
                     "strikethrough": true,
                     "text": "This is a text run",
                     "type": "TextRun",
@@ -385,7 +386,7 @@ let EVERYTHING_BAGEL_JSON =
             "verb": "Action.Execute_verb",
             "title": "Action.Execute_title",
             "id": "Action.Execute_id",
-            "associatedInputs": "none",
+            "associatedInputs": "None",
             "isEnabled": false,
             "data": {
                 "Action.Execute_data_keyA": "Action.Execute_data_valueA"
@@ -1091,6 +1092,10 @@ class EverythingBagelTests: XCTestCase {
         // Convert both JSONs to dictionaries
         let expectedData = EVERYTHING_JSON.data(using: .utf8)!
         let actualData = try everythingBagel.serialize().data(using: .utf8)!
+        
+        let actualJsonString = String(data: actualData, encoding: .utf8)!
+        print("🔧 DEBUG: Actual serialized JSON:")
+        print(actualJsonString)
         
         let expectedDict = try JSONSerialization.jsonObject(with: expectedData, options: []) as! [String: Any]
         let actualDict = try JSONSerialization.jsonObject(with: actualData, options: []) as! [String: Any]
