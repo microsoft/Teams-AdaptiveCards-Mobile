@@ -350,10 +350,43 @@ class SwiftToggleVisibilityAction: SwiftBaseActionElement {
 }
 
 /// Enum representing visibility states for an element in Adaptive Cards.
-enum SwiftIsVisible: String, Codable {
-    case toggle = "toggle"
-    case visible = "true"
-    case hidden = "false"
+enum SwiftIsVisible: Codable {
+    case toggle
+    case visible
+    case hidden
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        
+        if let boolValue = try? container.decode(Bool.self) {
+            self = boolValue ? .visible : .hidden
+        } else if let stringValue = try? container.decode(String.self) {
+            switch stringValue.lowercased() {
+            case "true":
+                self = .visible
+            case "false":
+                self = .hidden
+            case "toggle":
+                self = .toggle
+            default:
+                self = .toggle
+            }
+        } else {
+            self = .toggle
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .visible:
+            try container.encode(true)
+        case .hidden:
+            try container.encode(false)
+        case .toggle:
+            try container.encode("toggle")
+        }
+    }
 }
 
 /// Represents a target element for the `ToggleVisibilityAction`.
@@ -362,6 +395,36 @@ struct SwiftToggleVisibilityTarget: Codable {
     let elementId: String
     /// The visibility state of the target element.
     let isVisible: SwiftIsVisible
+    
+    /// Initializer for creating a SwiftToggleVisibilityTarget programmatically
+    init(elementId: String, isVisible: SwiftIsVisible) {
+        self.elementId = elementId
+        self.isVisible = isVisible
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case elementId
+        case isVisible
+    }
+    
+    init(from decoder: Decoder) throws {
+        // Try to decode as a string first (simple element ID)
+        if let container = try? decoder.singleValueContainer(), let elementId = try? container.decode(String.self) {
+            self.elementId = elementId
+            self.isVisible = .toggle // Default to toggle when only ID is provided
+        } else {
+            // Decode as an object with elementId and isVisible properties
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.elementId = try container.decode(String.self, forKey: .elementId)
+            self.isVisible = try container.decodeIfPresent(SwiftIsVisible.self, forKey: .isVisible) ?? .toggle
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(elementId, forKey: .elementId)
+        try container.encode(isVisible, forKey: .isVisible)
+    }
 }
 
 
