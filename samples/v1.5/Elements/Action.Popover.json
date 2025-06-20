@@ -60,31 +60,80 @@
 			"actions": [
 				{
 					"type": "Action.Popover",
-					"title": "Add Number Popover",
+					"title": "Less Content Popover",
 					"content": {
 						"type": "Container",
 						"items": [
 							{
-								"type": "Input.Text",
-								"id": "inputInPopover2",
-								"label": "Please enter your phone(Input Required)",
-								"isRequired": true
-							},
-							{
-								"type": "ActionSet",
-								"actions": [
-									{
-										"type": "Action.Submit",
-										"title": "Submit",
-										"tooltip": "Click me",
-										"mode": "secondary"
-									}
-								]
+								"type": "TextBlock",
+								"text": "Less Content"
 							}
 						]
 					}
 				}
 			]
+		},
+		{
+			"type": "Container",
+			"showBorder": true,
+			"roundedCorners": true,
+			"style": "emphasis",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "This Container is clickable and will show a popover",
+					"wrap": true
+				}
+			],
+			"selectAction": {
+				"type": "Action.Popover",
+				"tooltip": "Click me to show a popover",
+				"content": {
+					"type": "TextBlock",
+					"text": "This is a popover"
+				}
+			}
+		},
+		{
+			"type": "Image",
+			"url": "https://adaptivecards.io/content/adaptive-card-50.png",
+			"selectAction": {
+				"type": "Action.Popover",
+				"tooltip": "Click me to show a popover",
+				"content": {
+					"type": "TextBlock",
+					"text": "This Popover is made with Adaptive Card elements, it supports actions and is fully accessible.",
+					"wrap": true
+				}
+			}
+		},
+		{
+			"type": "Icon",
+			"name": "AccessTime",
+			"size": "Large",
+			"horizontalAlignment": "Center",
+			"selectAction": {
+				"type": "Action.Popover",
+				"tooltip": "Click me to show a popover",
+				"content": {
+					"type": "TextBlock",
+					"text": "This Popover is made with Adaptive Card elements, it supports actions and is fully accessible.",
+					"wrap": true
+				}
+			}
+		},
+		{
+			"type": "CompoundButton",
+			"title": "I have a popover!",
+			"description": "Click me to display a popover",
+			"selectAction": {
+				"type": "Action.Popover",
+				"tooltip": "Click me to show a popover",
+				"content": {
+					"type": "TextBlock",
+					"text": "This is a popover"
+				}
+			}
 		},
 		{
 			"type": "ActionSet",
@@ -200,6 +249,37 @@
 			"actions": [
 				{
 					"type": "Action.Popover",
+					"title": "Add Number Popover",
+					"content": {
+						"type": "Container",
+						"items": [
+							{
+								"type": "Input.Text",
+								"id": "inputInPopover2",
+								"label": "Please enter your phone(Input Required)",
+								"isRequired": true
+							},
+							{
+								"type": "ActionSet",
+								"actions": [
+									{
+										"type": "Action.Submit",
+										"title": "Submit",
+										"tooltip": "Click me",
+										"mode": "secondary"
+									}
+								]
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Popover",
 					"title": "Menu Actions Popover",
 					"content": {
 						"type": "Container",
@@ -241,16 +321,113 @@
 					}
 				}
 			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.ShowCard",
+					"title": "ShowCard",
+					"iconUrl": "icon:Open,Filled",
+					"tooltip": "Tooltip for ShowCard",
+					"card": {
+						"type": "AdaptiveCard",
+						"body": [
+							{
+								"type": "TextBlock",
+								"text": "This is a show card"
+							},
+							{
+								"type": "Input.Text",
+								"id": "defaultInputIdShow",
+								"placeholder": "enter comment",
+								"maxLength": 500
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.ToggleVisibility",
+					"title": "ToggleVisibility",
+					"iconUrl": "icon:ToggleLeft,Filled",
+					"tooltip": "Tooltip for ToggleVisibility",
+					"style": "positive",
+					"targetElements": [
+						"outsidePopover1",
+						"outsidePopover2"
+					]
+				},
+				{
+					"type": "Action.OpenUrl",
+					"title": "OpenUrl",
+					"iconUrl": "icon:Open,Filled",
+					"tooltip": "Tooltip for OpenUrl",
+					"style": "positive",
+					"url": "https://www.microsoft.com"
+				}
+			]
+		},
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.ShowCard",
+					"title": "ShowCard",
+					"iconUrl": "icon:Open,Filled",
+					"card": {
+						"type": "AdaptiveCard",
+						"body": [
+							{
+								"type": "TextBlock",
+								"text": "This is a show card"
+							},
+							{
+								"type": "Input.Text",
+								"id": "defaultInputIdShow2",
+								"placeholder": "enter comment",
+								"maxLength": 500
+							}
+						]
+					},
+					"menuActions": [
+						{
+							"type": "Action.Submit",
+							"title": "Submit",
+							"iconUrl": "icon:Send,Filled"
+						},
+						{
+							"type": "Action.OpenUrl",
+							"title": "OpenUrl",
+							"iconUrl": "icon:Open,Filled",
+							"tooltip": "Tooltip for OpenUrl",
+							"style": "positive",
+							"url": "https://www.microsoft.com"
+						},
+						{
+							"type": "Action.ToggleVisibility",
+							"title": "ToggleVisibility",
+							"iconUrl": "icon:ToggleLeft,Filled",
+							"tooltip": "Tooltip for ToggleVisibility",
+							"style": "positive",
+							"targetElements": [
+								"outsidePopover1",
+								"outsidePopover2"
+							]
+						}
+					]
+				}
+			]
 		}
 	],
 	"actions": [
 		{
 			"type": "Action.Submit",
 			"title": "Submit"
-		},
-		{
-			"type": "Action.Execute",
-			"title": "Execute"
 		}
 	]
 }
