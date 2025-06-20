@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SwiftCardElementType: String, Codable {
+public enum SwiftCardElementType: String, Codable {
     case actionSet = "ActionSet"
     case adaptiveCard = "AdaptiveCard"
     case choiceSetInput = "Input.ChoiceSet"
@@ -40,7 +40,7 @@ enum SwiftCardElementType: String, Codable {
 // MARK: - CardElementType
 
 /// The test expects `.adaptiveCard` → "AdaptiveCard", etc.
-extension SwiftCardElementType {
+public extension SwiftCardElementType {
     static func toString(_ value: SwiftCardElementType) -> String {
         return value.rawValue
     }
@@ -50,11 +50,11 @@ extension SwiftCardElementType {
     }
 }
 
-enum SwiftMode: String, Codable {
+public enum SwiftMode: String, Codable {
     case primary, secondary
 }
 
-enum SwiftErrorStatusCode: String, Codable {
+public enum SwiftErrorStatusCode: String, Codable {
     case invalidJson, renderFailed, requiredPropertyMissing, invalidPropertyValue, unsupportedParserOverride, idCollision, customError, unknownElementType, serializationFailed
 }
 
@@ -65,7 +65,7 @@ public enum SwiftWarningStatusCode: String, Codable {
     case emptyLabelInRequiredInput, requiredPropertyMissing
 }
 
-enum SwiftHostWidth: String, Codable {
+public enum SwiftHostWidth: String, Codable {
     case `default`, veryNarrow, narrow, standard, wide
     static func < (lhs: SwiftHostWidth, rhs: SwiftHostWidth) -> Bool {
         return lhs.rawValue < rhs.rawValue
@@ -78,7 +78,7 @@ enum SwiftHostWidth: String, Codable {
     }
 }
 
-enum SwiftTargetWidthType: String, Codable {
+public enum SwiftTargetWidthType: String, Codable {
     case `default` = "Default", veryNarrow, narrow, standard, wide
     case atMostVeryNarrow, atMostNarrow, atMostStandard, atMostWide
     case atLeastVeryNarrow, atLeastNarrow, atLeastStandard, atLeastWide
@@ -86,7 +86,7 @@ enum SwiftTargetWidthType: String, Codable {
 
 // MARK: - TextSize
 
-enum SwiftTextSize: String, Codable {
+public enum SwiftTextSize: String, Codable {
     case defaultSize = "Default"
     case small = "Small"
     case medium = "Medium"
@@ -98,7 +98,7 @@ enum SwiftTextSize: String, Codable {
     }
 }
 
-extension SwiftTextSize {
+public extension SwiftTextSize {
     static func toString(_ value: SwiftTextSize) -> String {
         return value.rawValue
     }
@@ -129,7 +129,7 @@ extension SwiftTextSize {
         }
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         self = SwiftTextSize.caseInsensitiveValue(from: raw)
@@ -138,7 +138,7 @@ extension SwiftTextSize {
 
 // MARK: - TextWeight
 
-enum SwiftTextWeight: String, Codable {
+public enum SwiftTextWeight: String, Codable {
     case defaultWeight = "Default"
     case lighter = "Lighter"
     case bolder = "Bolder"
@@ -148,7 +148,7 @@ enum SwiftTextWeight: String, Codable {
     }
 }
 
-extension SwiftTextWeight {
+public extension SwiftTextWeight {
     static func toString(_ value: SwiftTextWeight) -> String {
         // Use rawValue for consistent capitalization
         return value.rawValue
@@ -175,7 +175,7 @@ extension SwiftTextWeight {
         }
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         self = SwiftTextWeight.caseInsensitiveValue(from: raw)
@@ -184,7 +184,7 @@ extension SwiftTextWeight {
 
 // MARK: - FontType
 
-enum SwiftFontType: String, Codable {
+public enum SwiftFontType: String, Codable {
     case defaultFont = "Default"
     case monospace = "Monospace"
     init(from rawValue: String) {
@@ -192,7 +192,7 @@ enum SwiftFontType: String, Codable {
     }
 }
 
-extension SwiftFontType {
+public extension SwiftFontType {
     static func toString(_ value: SwiftFontType) -> String {
         switch value {
         case .defaultFont: return "Default"
@@ -208,14 +208,14 @@ extension SwiftFontType {
         }
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         // Capitalize the string so that "monospace" becomes "Monospace"
         self = SwiftFontType(rawValue: raw.capitalized) ?? .defaultFont
     }
     
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.rawValue)
     }
@@ -223,7 +223,7 @@ extension SwiftFontType {
 
 // MARK: - ForegroundColor
 
-enum SwiftForegroundColor: String, Codable {
+public enum SwiftForegroundColor: String, Codable {
     case `default` = "Default"
     case dark = "Dark"
     case light = "Light"
@@ -248,7 +248,7 @@ enum SwiftForegroundColor: String, Codable {
 }
 
 // Rest of the extension remains the same
-extension SwiftForegroundColor {
+public extension SwiftForegroundColor {
     static func toString(_ value: SwiftForegroundColor) -> String {
         switch value {
         case .default: return "Default"
@@ -276,7 +276,7 @@ extension SwiftForegroundColor {
 }
 // MARK: - HorizontalAlignment
 
-enum SwiftHorizontalAlignment: String, Codable {
+public enum SwiftHorizontalAlignment: String, Codable {
     case left = "left"
     case center = "center"
     case right = "right"
@@ -286,7 +286,7 @@ enum SwiftHorizontalAlignment: String, Codable {
     }
 }
 
-extension SwiftHorizontalAlignment {
+public extension SwiftHorizontalAlignment {
     static func toString(_ value: SwiftHorizontalAlignment) -> String {
         return value.rawValue
     }
@@ -314,25 +314,25 @@ extension SwiftHorizontalAlignment {
 
 // MARK: - VerticalAlignment
 
-enum SwiftVerticalAlignment: String, Codable {
+public enum SwiftVerticalAlignment: String, Codable {
     case top = "top"
     case center = "center"
     case bottom = "bottom"
 }
 // Your test references a “VerticalContentAlignment” with `.center`.
 // If you really need that exact enum, define it:
-enum SwiftVerticalContentAlignment: String, Codable {
+public enum SwiftVerticalContentAlignment: String, Codable {
     case top = "Top"
     case center = "Center"
     case bottom = "Bottom"
 }
 
-extension SwiftVerticalContentAlignment {
+public extension SwiftVerticalContentAlignment {
     static func toString(_ value: SwiftVerticalContentAlignment) -> String {
         return value.rawValue
     }
     
-    static func fromString(_ string: String) -> SwiftVerticalContentAlignment {
+    static func fromString(_ string: String) -> SwiftVerticalContentAlignment? {
         // Handle case-insensitive matching for vertical content alignment
         let lowercased = string.lowercased()
         switch lowercased {
@@ -343,21 +343,21 @@ extension SwiftVerticalContentAlignment {
         case "bottom":
             return .bottom
         default:
-            // Fallback to original capitalization approach
+            // Try original capitalization approach
             let normalized = string.capitalized
-            return SwiftVerticalContentAlignment(rawValue: normalized) ?? .top
+            return SwiftVerticalContentAlignment(rawValue: normalized)
         }
     }
     
     // Create a caseInsensitiveValue function to use in our decoder
     static func caseInsensitiveValue(from string: String) -> SwiftVerticalContentAlignment {
-        return fromString(string)
+        return fromString(string) ?? .top
     }
 }
 
 // MARK: - ImageSize
 
-enum SwiftImageSize: String, Codable {
+public enum SwiftImageSize: String, Codable {
     case none = "None"
     case auto = "Auto"
     case large = "Large"
@@ -365,7 +365,7 @@ enum SwiftImageSize: String, Codable {
     case small = "Small"
     case stretch = "Stretch"
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         // Use the caseInsensitiveValue method for consistent handling
@@ -373,7 +373,7 @@ enum SwiftImageSize: String, Codable {
     }
 }
 
-extension SwiftImageSize {
+public extension SwiftImageSize {
     static func toString(_ value: SwiftImageSize) -> String {
         switch value {
         case .none: return "None"
@@ -412,7 +412,7 @@ extension SwiftImageSize {
         }
     }
     
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         // Encode using the rawValue (e.g. "Auto")
         try container.encode(self.rawValue)
@@ -421,13 +421,13 @@ extension SwiftImageSize {
 
 // MARK: - ImageStyle
 
-enum SwiftImageStyle: String, Codable {
+public enum SwiftImageStyle: String, Codable {
     case defaultImageStyle = "default"
     case person = "person"
     case roundedCorners = "roundedCorners"
 }
 
-extension SwiftImageStyle {
+public extension SwiftImageStyle {
     static func toString(_ value: SwiftImageStyle) -> String {
         switch value {
         case .defaultImageStyle: return "default"
@@ -444,7 +444,7 @@ extension SwiftImageStyle {
         }
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         if let value = SwiftImageStyle.fromString(raw) {
@@ -454,7 +454,7 @@ extension SwiftImageStyle {
         }
     }
     
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.rawValue)
     }
@@ -462,7 +462,7 @@ extension SwiftImageStyle {
 
 // MARK: - TextInputStyle
 
-enum SwiftTextInputStyle: String, Codable {
+public enum SwiftTextInputStyle: String, Codable {
     case text = "Text"
     case tel = "Tel"
     case url = "Url"
@@ -487,7 +487,7 @@ enum SwiftTextInputStyle: String, Codable {
     }
 }
 
-extension SwiftTextInputStyle {
+public extension SwiftTextInputStyle {
     static func toString(_ value: SwiftTextInputStyle) -> String {
         return value.rawValue // Now we can just use rawValue since it matches C++
     }
@@ -506,7 +506,7 @@ extension SwiftTextInputStyle {
 
 // MARK: - ActionType
 
-enum SwiftActionType: String, Codable {
+public enum SwiftActionType: String, Codable {
     case unsupported = "Unsupported"
     case execute = "Action.Execute"
     case openUrl = "Action.OpenUrl"
@@ -518,7 +518,7 @@ enum SwiftActionType: String, Codable {
     case overflow = "Overflow"
     
     // Mirror the C++ approach, but local to this enum.
-    static func toString(_ value: SwiftActionType) -> String {
+    public static func toString(_ value: SwiftActionType) -> String {
         // If missing, fallback to rawValue
         switch value {
         case .unsupported: return "Unsupported"
@@ -533,7 +533,7 @@ enum SwiftActionType: String, Codable {
         }
     }
 
-    static func fromString(_ s: String) -> SwiftActionType? {
+    public static func fromString(_ s: String) -> SwiftActionType? {
         // case-insensitive
         let lowered = s.lowercased()
         switch lowered {
@@ -553,11 +553,11 @@ enum SwiftActionType: String, Codable {
 
 // MARK: - ActionAlignment
 
-enum SwiftActionAlignment: String, Codable {
+public enum SwiftActionAlignment: String, Codable {
     case left, center, right, stretch
     
     // Add custom decoder for case-insensitive parsing
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         // Use caseInsensitiveValue for consistent handling
@@ -565,7 +565,7 @@ enum SwiftActionAlignment: String, Codable {
     }
 }
 
-extension SwiftActionAlignment {
+public extension SwiftActionAlignment {
     static func toString(_ value: SwiftActionAlignment) -> String {
         switch value {
         case .left: return "Left"
@@ -599,12 +599,12 @@ extension SwiftActionAlignment {
 
 // MARK: - ActionMode (the test references .popup)
 
-enum SwiftActionMode: String, Codable {
+public enum SwiftActionMode: String, Codable {
     case inline = "Inline"
     case popup = "Popup"
 }
 
-extension SwiftActionMode {
+public extension SwiftActionMode {
     static func toString(_ value: SwiftActionMode) -> String {
         switch value {
         case .inline: return "Inline"
@@ -622,11 +622,11 @@ extension SwiftActionMode {
 
 // MARK: - ActionsOrientation
 
-enum SwiftActionsOrientation: String, Codable {
+public enum SwiftActionsOrientation: String, Codable {
     case vertical, horizontal
 }
 
-extension SwiftActionsOrientation {
+public extension SwiftActionsOrientation {
     static func toString(_ value: SwiftActionsOrientation) -> String {
         switch value {
         case .vertical: return "Vertical"
@@ -642,12 +642,12 @@ extension SwiftActionsOrientation {
     }
 }
 
-enum SwiftChoiceSetStyle: String, Codable {
+public enum SwiftChoiceSetStyle: String, Codable {
     case compact = "Compact"
     case expanded = "Expanded"
     case filtered = "Filtered"
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         // Use case-insensitive comparison
@@ -661,14 +661,14 @@ enum SwiftChoiceSetStyle: String, Codable {
         }
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         // Use the rawValue which will preserve our defined casing
         try container.encode(self.rawValue)
     }
 }
 
-extension SwiftChoiceSetStyle {
+public extension SwiftChoiceSetStyle {
     static func toString(_ value: SwiftChoiceSetStyle) -> String {
         switch value {
         case .compact: return "Compact"
@@ -688,7 +688,7 @@ extension SwiftChoiceSetStyle {
 
 // MARK: - ContainerStyle
 
-enum SwiftContainerStyle: String, Codable {
+public enum SwiftContainerStyle: String, Codable {
     case none = "None"
     case `default` = "Default"
     case emphasis = "Emphasis"
@@ -698,19 +698,19 @@ enum SwiftContainerStyle: String, Codable {
     case accent = "Accent"
     
     // Add explicit encode method
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.rawValue) // Always use the raw value with proper capitalization
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         self = SwiftContainerStyle.caseInsensitiveValue(from: raw)
     }
 }
 
-extension SwiftContainerStyle {
+public extension SwiftContainerStyle {
     static func toString(_ value: SwiftContainerStyle) -> String {
         return value.rawValue  // Always return the properly capitalized raw value
     }
@@ -746,11 +746,11 @@ extension SwiftContainerStyle {
 
 // MARK: - Spacing
 
-enum SwiftSpacing: String, Codable {
+public enum SwiftSpacing: String, Codable {
     case `default`, none, small, medium, large, extraLarge, padding
 }
 
-extension SwiftSpacing {
+public extension SwiftSpacing {
     static func toString(_ value: SwiftSpacing) -> String {
         switch value {
         case .default: return "default"
@@ -778,12 +778,12 @@ extension SwiftSpacing {
 
 // MARK: - SeparatorThickness (the test references .thick)
 
-enum SwiftSeparatorThickness: String, Codable {
+public enum SwiftSeparatorThickness: String, Codable {
     case defaultThickness = "default"
     case thick = "thick"
 }
 
-extension SwiftSeparatorThickness {
+public extension SwiftSeparatorThickness {
     static func toString(_ value: SwiftSeparatorThickness) -> String {
         switch value {
         case .defaultThickness: return "default"
@@ -801,12 +801,12 @@ extension SwiftSeparatorThickness {
 
 // MARK: - HeightType (the test references .auto)
 
-enum SwiftHeightType: String, Codable {
+public enum SwiftHeightType: String, Codable {
     case auto = "auto"
     case stretch = "stretch"
 }
 
-extension SwiftHeightType {
+public extension SwiftHeightType {
     static func toString(_ value: SwiftHeightType) -> String {
         switch value {
         case .auto: return "Auto"
@@ -824,12 +824,12 @@ extension SwiftHeightType {
 
 // MARK: - IconPlacement (the test references .leftOfTitle)
 
-enum SwiftIconPlacement: String, Codable {
+public enum SwiftIconPlacement: String, Codable {
     case leftOfTitle = "LeftOfTitle"
     case aboveTitle = "AboveTitle"
 }
 
-extension SwiftIconPlacement {
+public extension SwiftIconPlacement {
     static func toString(_ value: SwiftIconPlacement) -> String {
         switch value {
         case .leftOfTitle: return "LeftOfTitle"
@@ -867,7 +867,7 @@ struct SwiftEnumHash<T: Hashable> {
 }
 
 // Enum mapping class for bidirectional enum <-> string conversion
-struct SwiftEnumMapping<T: Hashable & Codable>: Codable {
+public struct SwiftEnumMapping<T: Hashable & Codable>: Codable {
     private let enumToString: [T: String]
     private let stringToEnum: [String: T]
 
@@ -895,16 +895,16 @@ struct SwiftEnumMapping<T: Hashable & Codable>: Codable {
 }
 
 // Error handling for invalid enum values
-enum SwiftEnumMappingError: Error {
+public enum SwiftEnumMappingError: Error {
     case invalidValue(String)
 }
 
 // Protocol to allow enums to use the mapping
-protocol SwiftAdaptiveCardEnum: Codable, Hashable {
+public protocol SwiftAdaptiveCardEnum: Codable, Hashable {
     static var mappings: SwiftEnumMapping<Self> { get }
 }
 
-extension SwiftAdaptiveCardEnum {
+public extension SwiftAdaptiveCardEnum {
     func toString() -> String {
         return Self.mappings.toString(self)
     }
@@ -914,7 +914,7 @@ extension SwiftAdaptiveCardEnum {
 }
 
 // Define `AdaptiveCardSchemaKey` using EnumMapping
-enum SwiftAdaptiveCardSchemaKey: String, SwiftAdaptiveCardEnum {
+public enum SwiftAdaptiveCardSchemaKey: String, SwiftAdaptiveCardEnum {
     case accent, action, actionAlignment, actionMode, actionRole, actionSet, actionSetConfig
     case actions, actionsOrientation, adaptiveCard, allowCustomStyle, allowInlinePlayback
     case backgroundColor, backgroundImage, backgroundImageUrl, baseCardElement, baseContainerStyle
@@ -963,7 +963,7 @@ enum SwiftAdaptiveCardSchemaKey: String, SwiftAdaptiveCardEnum {
     case spacingDefinition
     case tokenExchangeResource
 
-    static let mappings = SwiftEnumMapping([
+    public static let mappings = SwiftEnumMapping([
         (SwiftAdaptiveCardSchemaKey.accent, "accent"),
         (SwiftAdaptiveCardSchemaKey.action, "action"),
         (SwiftAdaptiveCardSchemaKey.actionAlignment, "actionAlignment"),
@@ -1076,7 +1076,7 @@ enum SwiftAdaptiveCardSchemaKey: String, SwiftAdaptiveCardEnum {
     ])
 }
 
-extension SwiftAdaptiveCardSchemaKey {
+public extension SwiftAdaptiveCardSchemaKey {
     static func fromString(_ s: String) -> SwiftAdaptiveCardSchemaKey? {
         return try? mappings.fromString(s)
     }
@@ -1087,7 +1087,7 @@ extension SwiftAdaptiveCardSchemaKey {
 }
 
 /// The role of an action – originally defined in C++.
-enum SwiftActionRole: String, Codable {
+public enum SwiftActionRole: String, Codable {
     case button = "Button"
     case link = "Link"
     case tab = "Tab"
@@ -1095,7 +1095,7 @@ enum SwiftActionRole: String, Codable {
     case menuItem = "MenuItem"
 }
 
-enum SwiftAssociatedInputs: String, Codable {
+public enum SwiftAssociatedInputs: String, Codable {
     case auto = "Auto"
     case none = "None"
     
@@ -1118,14 +1118,14 @@ enum SwiftAssociatedInputs: String, Codable {
     }
 }
 
-enum SwiftImageFillMode: String, Codable {
+public enum SwiftImageFillMode: String, Codable {
     case cover = "cover"
     case repeatHorizontally = "repeatHorizontally"
     case repeatVertically = "repeatVertically"
     case `repeat` = "repeat"
 }
 
-enum SwiftIconSize: String, Codable {
+public enum SwiftIconSize: String, Codable {
     case xxSmall = "xxSmall"
     case xSmall = "xSmall"
     case small = "Small"
@@ -1136,12 +1136,12 @@ enum SwiftIconSize: String, Codable {
     case xxLarge = "xxLarge"
 }
 
-enum SwiftIconStyle: String, Codable {
+public enum SwiftIconStyle: String, Codable {
     case regular = "Regular"
     case filled = "Filled"
 }
 
-enum SwiftLayoutContainerType: String, Codable {
+public enum SwiftLayoutContainerType: String, Codable {
     case none = "Layout.None"
     case stack = "Layout.Stack"
     case flow = "Layout.Flow"
@@ -1149,7 +1149,7 @@ enum SwiftLayoutContainerType: String, Codable {
 }
 
 /// Minimal stubs for text-related enums.
-enum SwiftTextStyle: String, Codable {
+public enum SwiftTextStyle: String, Codable {
     case defaultStyle = "default"
     case heading = "heading"
     
@@ -1173,7 +1173,7 @@ enum SwiftValueChangedActionType: String, Codable {
     case resetInputs = "ResetInputs"
 }
 
-enum SwiftInlineElementType: String, Codable {
+public enum SwiftInlineElementType: String, Codable {
     case textRun = "TextRun"
 }
 
@@ -1197,23 +1197,27 @@ enum SwiftItemFit: String, Codable {
     case fill = "Fill"
 }
 
-struct SwiftContainerBleedDirection: OptionSet, Codable {
-    let rawValue: Int
+public struct SwiftContainerBleedDirection: OptionSet, Codable {
+    public let rawValue: Int
     
-    static let bleedRestricted    = SwiftContainerBleedDirection([])
-    static let bleedLeft          = SwiftContainerBleedDirection(rawValue: 0x0001)
-    static let bleedRight         = SwiftContainerBleedDirection(rawValue: 0x0010)
-    static let bleedUp            = SwiftContainerBleedDirection(rawValue: 0x0100)
-    static let bleedDown          = SwiftContainerBleedDirection(rawValue: 0x1000)
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    
+    public static let bleedRestricted    = SwiftContainerBleedDirection([])
+    public static let bleedLeft          = SwiftContainerBleedDirection(rawValue: 0x0001)
+    public static let bleedRight         = SwiftContainerBleedDirection(rawValue: 0x0010)
+    public static let bleedUp            = SwiftContainerBleedDirection(rawValue: 0x0100)
+    public static let bleedDown          = SwiftContainerBleedDirection(rawValue: 0x1000)
     
     // Composite directions
-    static let bleedLeftRight: SwiftContainerBleedDirection     = [.bleedLeft, .bleedRight]
-    static let bleedLeftUp: SwiftContainerBleedDirection        = [.bleedLeft, .bleedUp]
-    static let bleedRightUp: SwiftContainerBleedDirection       = [.bleedRight, .bleedUp]
-    static let bleedLeftRightUp: SwiftContainerBleedDirection   = [.bleedLeft, .bleedRight, .bleedUp]
-    static let bleedLeftDown: SwiftContainerBleedDirection      = [.bleedLeft, .bleedDown]
-    static let bleedRightDown: SwiftContainerBleedDirection     = [.bleedRight, .bleedDown]
-    static let bleedLeftRightDown: SwiftContainerBleedDirection = [.bleedLeft, .bleedRight, .bleedDown]
+    public static let bleedLeftRight: SwiftContainerBleedDirection     = [.bleedLeft, .bleedRight]
+    public static let bleedLeftUp: SwiftContainerBleedDirection        = [.bleedLeft, .bleedUp]
+    public static let bleedRightUp: SwiftContainerBleedDirection       = [.bleedRight, .bleedUp]
+    public static let bleedLeftRightUp: SwiftContainerBleedDirection   = [.bleedLeft, .bleedRight, .bleedUp]
+    public static let bleedLeftDown: SwiftContainerBleedDirection      = [.bleedLeft, .bleedDown]
+    public static let bleedRightDown: SwiftContainerBleedDirection     = [.bleedRight, .bleedDown]
+    public static let bleedLeftRightDown: SwiftContainerBleedDirection = [.bleedLeft, .bleedRight, .bleedDown]
     static let bleedUpDown: SwiftContainerBleedDirection        = [.bleedUp, .bleedDown]
     static let bleedLeftUpDown: SwiftContainerBleedDirection    = [.bleedLeft, .bleedUp, .bleedDown]
     static let bleedRightUpDown: SwiftContainerBleedDirection   = [.bleedRight, .bleedUp, .bleedDown]
@@ -1242,14 +1246,14 @@ struct SwiftRemoteResourceInformation: Codable {
 }
 
 /// Custom type to handle any JSON value (for additionalProperties)
-struct AnyCodable: Codable {
-    let value: Any
+public struct AnyCodable: Codable {
+    public let value: Any
 
     init(_ value: Any) {
         self.value = value
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let intValue = try? container.decode(Int.self) {
             value = intValue
@@ -1268,7 +1272,7 @@ struct AnyCodable: Codable {
         }
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         if let intValue = value as? Int {
             try container.encode(intValue)
@@ -1297,21 +1301,21 @@ struct DynamicCodingKeys: CodingKey {
 }
 
 extension SwiftBaseElement.CodingKeys: CaseIterable {
-    static var allCases: [SwiftBaseElement.CodingKeys] {
+    public static var allCases: [SwiftBaseElement.CodingKeys] {
         return [.typeString, .id, .internalId, .additionalProperties, .requires, .fallbackType, .fallbackContent, .canFallbackToAncestor, .fallback]
     }
 }
 
 /// Represents a semantic version with major, minor, build, and revision components.
-struct SwiftSemanticVersion: Codable, Comparable, CustomStringConvertible {
-    let major: UInt
-    let minor: UInt
-    let build: UInt
-    let revision: UInt
+public struct SwiftSemanticVersion: Codable, Comparable, CustomStringConvertible {
+    public let major: UInt
+    public let minor: UInt
+    public let build: UInt
+    public let revision: UInt
 
     /// Initializes a `SemanticVersion` from a version string.
     /// - Throws: `SemanticVersionError.invalidVersion` if the version format is incorrect.
-    init(_ version: String) throws {
+    public init(_ version: String) throws {
         let pattern = #"^(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:\.(\d+))?$"#
         let regex = try NSRegularExpression(pattern: pattern)
         let nsVersion = version as NSString
@@ -1342,38 +1346,38 @@ struct SwiftSemanticVersion: Codable, Comparable, CustomStringConvertible {
         self.revision = try extract(4)
     }
 
-    var description: String {
+    public var description: String {
         return "\(major).\(minor).\(build).\(revision)"
     }
 
     // MARK: - Comparable Implementation
-    static func == (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
+    public static func == (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
         return lhs.major == rhs.major &&
                lhs.minor == rhs.minor &&
                lhs.build == rhs.build &&
                lhs.revision == rhs.revision
     }
 
-    static func < (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
+    public static func < (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
         if lhs.major != rhs.major { return lhs.major < rhs.major }
         if lhs.minor != rhs.minor { return lhs.minor < rhs.minor }
         if lhs.build != rhs.build { return lhs.build < rhs.build }
         return lhs.revision < rhs.revision
     }
 
-    static func > (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
+    public static func > (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
         return rhs < lhs
     }
 
-    static func <= (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
+    public static func <= (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
         return !(lhs > rhs)
     }
 
-    static func >= (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
+    public static func >= (lhs: SwiftSemanticVersion, rhs: SwiftSemanticVersion) -> Bool {
         return !(lhs < rhs)
     }
     
-    func serializeToJsonValue() -> String {
+    public func serializeToJsonValue() -> String {
         return description
     }
 }

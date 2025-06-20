@@ -9,17 +9,17 @@ import Foundation
 
 /// Represents a base action in an Adaptive Card.
 /// This class is now decoupled from BaseCardElement.
-class SwiftBaseActionElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
+open class SwiftBaseActionElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
     // MARK: - Properties
-    let title: String
-    let iconUrl: String
-    let style: String
-    let tooltip: String
+    public let title: String
+    public let iconUrl: String
+    public let style: String
+    public let tooltip: String
     let mode: SwiftMode
-    let isEnabled: Bool
+    public let isEnabled: Bool
     let role: SwiftActionRole?
     
-    override var typeString: String {
+    override public var typeString: String {
         get { super.typeString }
         set { super.typeString = newValue }
     }
@@ -28,7 +28,7 @@ class SwiftBaseActionElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol
     
     /// Initializes a BaseActionElement using an ActionType.
     /// Default property values are provided so that the synthesized Codable methods can work without additional custom initializers.
-    init(type: SwiftActionType,
+    public init(type: SwiftActionType,
          id: String? = nil,
          title: String = "",
          iconUrl: String = "",
@@ -56,7 +56,7 @@ class SwiftBaseActionElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol
         case title, iconUrl, style, tooltip, mode, isEnabled, role
     }
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
         self.iconUrl = try container.decodeIfPresent(String.self, forKey: .iconUrl) ?? ""
@@ -75,7 +75,7 @@ class SwiftBaseActionElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol
         }
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(title, forKey: .title)
         try container.encode(iconUrl, forKey: .iconUrl)
@@ -145,10 +145,10 @@ extension Dictionary where Key == String, Value == Any {
 }
 
 /// Represents a Submit Action in an Adaptive Card.
-class SwiftSubmitAction: SwiftBaseActionElement {
+public class SwiftSubmitAction: SwiftBaseActionElement {
     // MARK: - Properties
-    var dataJson: Any?
-    var associatedInputs: SwiftAssociatedInputs
+    public var dataJson: Any?
+    public var associatedInputs: SwiftAssociatedInputs
     var conditionallyEnabled: Bool
     
     // Known properties to filter out extra keys.
@@ -202,7 +202,7 @@ class SwiftSubmitAction: SwiftBaseActionElement {
         }
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: SubmitActionCodingKeys.self)
         
@@ -235,9 +235,9 @@ class SwiftSubmitAction: SwiftBaseActionElement {
 }
  
 /// Represents an OpenUrl action element in an adaptive card.
-class SwiftOpenUrlAction: SwiftBaseActionElement {
+public class SwiftOpenUrlAction: SwiftBaseActionElement {
     // MARK: - Properties
-    let url: String
+    public let url: String
 
     // MARK: - Codable Implementation
 
@@ -253,7 +253,7 @@ class SwiftOpenUrlAction: SwiftBaseActionElement {
     }
 
     /// Encodes OpenUrlAction-specific properties after encoding the base properties.
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(url, forKey: .url)
@@ -276,9 +276,9 @@ class SwiftOpenUrlAction: SwiftBaseActionElement {
 }
 
 /// Represents an action that displays a card when triggered.
-class SwiftShowCardAction: SwiftBaseActionElement {
+public class SwiftShowCardAction: SwiftBaseActionElement {
     // MARK: - Properties
-    var card: SwiftAdaptiveCard?
+    public var card: SwiftAdaptiveCard?
 
     // MARK: - Initializers
 
@@ -298,7 +298,7 @@ class SwiftShowCardAction: SwiftBaseActionElement {
         }
     }
 
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(card, forKey: .card)
         try super.encode(to: encoder)
@@ -366,12 +366,12 @@ struct SwiftToggleVisibilityTarget: Codable {
 
 
 /// Represents the execute action element.
-final class SwiftExecuteAction: SwiftBaseActionElement {
+public final class SwiftExecuteAction: SwiftBaseActionElement {
     // MARK: - Properties
-    var dataJson: [String: AnyCodable]?
-    var verb: String
-    var associatedInputs: SwiftAssociatedInputs
-    var conditionallyEnabled: Bool
+    public var dataJson: [String: AnyCodable]?
+    public var verb: String
+    public var associatedInputs: SwiftAssociatedInputs
+    public var conditionallyEnabled: Bool
 
     enum CodingKeys: String, CodingKey {
         case dataJson = "data"
@@ -401,7 +401,7 @@ final class SwiftExecuteAction: SwiftBaseActionElement {
         }
     }
 
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(dataJson, forKey: .dataJson)
@@ -434,10 +434,10 @@ final class SwiftExecuteAction: SwiftBaseActionElement {
 }
 
 /// Represents a refresh action in an adaptive card.
-struct SwiftRefresh: Codable {
+public struct SwiftRefresh: Codable {
     // MARK: - Properties
-    let action: SwiftBaseActionElement?
-    let userIds: [String]
+    public let action: SwiftBaseActionElement?
+    public let userIds: [String]
     
     // MARK: - Codable Implementation
     
@@ -445,7 +445,7 @@ struct SwiftRefresh: Codable {
         case action, userIds
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Deserialize action if present
@@ -461,7 +461,7 @@ struct SwiftRefresh: Codable {
         userIds = try container.decodeIfPresent([String].self, forKey: .userIds) ?? []
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         // Encode action if present
@@ -522,11 +522,11 @@ struct SwiftValueChangedAction: Codable {
     }
 }
 
-final class SwiftUnknownAction: SwiftBaseActionElement {
+public final class SwiftUnknownAction: SwiftBaseActionElement {
     // Store the original type string from JSON.
     private var originalTypeString: String
 
-    override var typeString: String {
+    override public var typeString: String {
         get {
             // Special handling: if the original type is "Action.Invalid",
             // return the standardized unknown action type.
@@ -571,7 +571,7 @@ final class SwiftUnknownAction: SwiftBaseActionElement {
     }
     
     /// Encode additional properties using dynamic keys.
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: DynamicCodingKeys.self)
         if let additionalProperties = additionalProperties {
             for (key, value) in additionalProperties {

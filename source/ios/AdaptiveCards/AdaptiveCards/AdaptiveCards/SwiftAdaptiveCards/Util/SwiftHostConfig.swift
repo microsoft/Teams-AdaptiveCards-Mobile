@@ -53,14 +53,14 @@ extension SwiftTextWeight {
 // MARK: - Configuration Structures
 
 // 1. FontSizesConfig
-struct SwiftFontSizesConfig: Codable {
+public struct SwiftFontSizesConfig: Codable {
     var small: UInt?
     var `default`: UInt?
     var medium: UInt?
     var large: UInt?
     var extraLarge: UInt?
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftFontSizesConfig) -> SwiftFontSizesConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftFontSizesConfig) -> SwiftFontSizesConfig {
         return SwiftFontSizesConfig(
             small: json["small"] as? UInt ?? defaultValue.small,
             default: json["default"] as? UInt ?? defaultValue.default,
@@ -86,12 +86,12 @@ struct SwiftFontSizesConfig: Codable {
 }
 
 // 2. FontWeightsConfig
-struct SwiftFontWeightsConfig: Codable {
+public struct SwiftFontWeightsConfig: Codable {
     var lighter: UInt?
     var `default`: UInt?
     var bolder: UInt?
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftFontWeightsConfig) -> SwiftFontWeightsConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftFontWeightsConfig) -> SwiftFontWeightsConfig {
         return SwiftFontWeightsConfig(
             lighter: json["lighter"] as? UInt ?? defaultValue.lighter,
             default: json["default"] as? UInt ?? defaultValue.default,
@@ -113,12 +113,12 @@ struct SwiftFontWeightsConfig: Codable {
 }
 
 // 3. FontTypeDefinition
-struct SwiftFontTypeDefinition: Codable {
+public struct SwiftFontTypeDefinition: Codable {
     var fontFamily: String
     var fontSizes: SwiftFontSizesConfig
     var fontWeights: SwiftFontWeightsConfig
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftFontTypeDefinition) -> SwiftFontTypeDefinition {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftFontTypeDefinition) -> SwiftFontTypeDefinition {
         let fontFamilyValue = (json["fontFamily"] as? String) ?? ""
         let finalFontFamily = fontFamilyValue.isEmpty ? defaultValue.fontFamily : fontFamilyValue
         let sizes = SwiftFontSizesConfig.deserialize(from: json.nestedDictionary(forKey: "fontSizes"), defaultValue: defaultValue.fontSizes)
@@ -128,11 +128,11 @@ struct SwiftFontTypeDefinition: Codable {
 }
 
 // 4. FontTypesDefinition
-struct SwiftFontTypesDefinition: Codable {
+public struct SwiftFontTypesDefinition: Codable {
     var defaultFontType: SwiftFontTypeDefinition
     var monospaceFontType: SwiftFontTypeDefinition
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftFontTypesDefinition) -> SwiftFontTypesDefinition {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftFontTypesDefinition) -> SwiftFontTypesDefinition {
         let defaultFont = SwiftFontTypeDefinition.deserialize(from: json.nestedDictionary(forKey: "default"), defaultValue: defaultValue.defaultFontType)
         let monospaceFont = SwiftFontTypeDefinition.deserialize(from: json.nestedDictionary(forKey: "monospace"), defaultValue: defaultValue.monospaceFontType)
         return SwiftFontTypesDefinition(defaultFontType: defaultFont, monospaceFontType: monospaceFont)
@@ -140,11 +140,11 @@ struct SwiftFontTypesDefinition: Codable {
 }
 
 // 5. HighlightColorConfig
-struct SwiftHighlightColorConfig: Codable {
+public struct SwiftHighlightColorConfig: Codable {
     var defaultColor: String
     var subtleColor: String
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftHighlightColorConfig) -> SwiftHighlightColorConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftHighlightColorConfig) -> SwiftHighlightColorConfig {
         let defColor = (json["default"] as? String) ?? ""
         let finalDefault = defColor.isEmpty ? defaultValue.defaultColor : defColor
         let subColor = (json["subtle"] as? String) ?? ""
@@ -154,12 +154,12 @@ struct SwiftHighlightColorConfig: Codable {
 }
 
 // 6. ColorConfig
-struct SwiftColorConfig: Codable {
+public struct SwiftColorConfig: Codable {
     var defaultColor: String
     var subtleColor: String
     var highlightColors: SwiftHighlightColorConfig
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftColorConfig) -> SwiftColorConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftColorConfig) -> SwiftColorConfig {
         let defColor = (json["default"] as? String) ?? ""
         let finalDefault = defColor.isEmpty ? defaultValue.defaultColor : defColor
         let subColor = (json["subtle"] as? String) ?? ""
@@ -170,7 +170,7 @@ struct SwiftColorConfig: Codable {
 }
 
 // 7. ColorsConfig
-struct SwiftColorsConfig: Codable {
+public struct SwiftColorsConfig: Codable {
     var `default`: SwiftColorConfig
     var accent: SwiftColorConfig
     var dark: SwiftColorConfig
@@ -179,7 +179,7 @@ struct SwiftColorsConfig: Codable {
     var warning: SwiftColorConfig
     var attention: SwiftColorConfig
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftColorsConfig) -> SwiftColorsConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftColorsConfig) -> SwiftColorsConfig {
         return SwiftColorsConfig(
             default: SwiftColorConfig.deserialize(from: json.nestedDictionary(forKey: "default"), defaultValue: defaultValue.default),
             accent: SwiftColorConfig.deserialize(from: json.nestedDictionary(forKey: "accent"), defaultValue: defaultValue.accent),
@@ -193,14 +193,22 @@ struct SwiftColorsConfig: Codable {
 }
 
 // 8. TextStyleConfig
-struct SwiftTextStyleConfig: Codable, Equatable {
-    var weight: SwiftTextWeight
-    var size: SwiftTextSize
-    var isSubtle: Bool
-    var color: SwiftForegroundColor
-    var fontType: SwiftFontType
+public struct SwiftTextStyleConfig: Codable, Equatable {
+    public var weight: SwiftTextWeight
+    public var size: SwiftTextSize
+    public var isSubtle: Bool
+    public var color: SwiftForegroundColor
+    public var fontType: SwiftFontType
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftTextStyleConfig) -> SwiftTextStyleConfig {
+    public init(weight: SwiftTextWeight, size: SwiftTextSize, isSubtle: Bool, color: SwiftForegroundColor, fontType: SwiftFontType) {
+        self.weight = weight
+        self.size = size
+        self.isSubtle = isSubtle
+        self.color = color
+        self.fontType = fontType
+    }
+    
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftTextStyleConfig) -> SwiftTextStyleConfig {
         // Use the fromString methods (with capitalization if needed)
         let weightStr = json["weight"] as? String ?? defaultValue.weight.rawValue
         let weight = SwiftTextWeight.caseInsensitiveValue(from: weightStr)
@@ -221,7 +229,7 @@ struct SwiftTextStyleConfig: Codable, Equatable {
 }
 
 // 9. FactSetTextConfig
-struct SwiftFactSetTextConfig: Codable {
+public struct SwiftFactSetTextConfig: Codable {
     var weight: SwiftTextWeight
     var size: SwiftTextSize
     var isSubtle: Bool
@@ -230,7 +238,7 @@ struct SwiftFactSetTextConfig: Codable {
     var wrap: Bool
     var maxWidth: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftFactSetTextConfig) -> SwiftFactSetTextConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftFactSetTextConfig) -> SwiftFactSetTextConfig {
         let base = SwiftTextStyleConfig.deserialize(from: json, defaultValue: SwiftTextStyleConfig(weight: defaultValue.weight, size: defaultValue.size, isSubtle: defaultValue.isSubtle, color: defaultValue.color, fontType: defaultValue.fontType))
         let wrap = json["wrap"] as? Bool ?? defaultValue.wrap
         let maxWidth = json["maxWidth"] as? UInt ?? defaultValue.maxWidth
@@ -239,11 +247,11 @@ struct SwiftFactSetTextConfig: Codable {
 }
 
 // 10. RatingStarCofig
-struct SwiftRatingStarCofig: Codable {
+public struct SwiftRatingStarCofig: Codable {
     var marigoldColor: String
     var neutralColor: String
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftRatingStarCofig) -> SwiftRatingStarCofig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftRatingStarCofig) -> SwiftRatingStarCofig {
         let marigold = json["marigoldColor"] as? String ?? defaultValue.marigoldColor
         let neutral = json["neutralColor"] as? String ?? defaultValue.neutralColor
         return SwiftRatingStarCofig(marigoldColor: marigold, neutralColor: neutral)
@@ -251,13 +259,13 @@ struct SwiftRatingStarCofig: Codable {
 }
 
 // 11. RatingElementConfig
-struct SwiftRatingElementConfig: Codable {
+public struct SwiftRatingElementConfig: Codable {
     var filledStar: SwiftRatingStarCofig
     var emptyStar: SwiftRatingStarCofig
     var ratingTextColor: String
     var countTextColor: String
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftRatingElementConfig) -> SwiftRatingElementConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftRatingElementConfig) -> SwiftRatingElementConfig {
         let filled = SwiftRatingStarCofig.deserialize(from: json.nestedDictionary(forKey: "filledStar"), defaultValue: defaultValue.filledStar)
         let empty = SwiftRatingStarCofig.deserialize(from: json.nestedDictionary(forKey: "emptyStar"), defaultValue: defaultValue.emptyStar)
         let ratingTextColor = json["ratingTextColor"] as? String ?? defaultValue.ratingTextColor
@@ -267,11 +275,11 @@ struct SwiftRatingElementConfig: Codable {
 }
 
 // 12. TextStylesConfig
-struct SwiftTextStylesConfig: Codable {
-    var heading: SwiftTextStyleConfig
-    var columnHeader: SwiftTextStyleConfig
+public struct SwiftTextStylesConfig: Codable {
+    public var heading: SwiftTextStyleConfig
+    public var columnHeader: SwiftTextStyleConfig
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftTextStylesConfig) -> SwiftTextStylesConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftTextStylesConfig) -> SwiftTextStylesConfig {
         let heading = SwiftTextStyleConfig.deserialize(from: json.nestedDictionary(forKey: "heading"), defaultValue: defaultValue.heading)
         let columnHeader = SwiftTextStyleConfig.deserialize(from: json.nestedDictionary(forKey: "columnHeader"), defaultValue: defaultValue.columnHeader)
         return SwiftTextStylesConfig(heading: heading, columnHeader: columnHeader)
@@ -279,7 +287,7 @@ struct SwiftTextStylesConfig: Codable {
 }
 
 // 13. SpacingConfig
-struct SwiftSpacingConfig: Codable {
+public struct SwiftSpacingConfig: Codable {
     var smallSpacing: UInt
     var defaultSpacing: UInt
     var mediumSpacing: UInt
@@ -287,7 +295,7 @@ struct SwiftSpacingConfig: Codable {
     var extraLargeSpacing: UInt
     var paddingSpacing: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftSpacingConfig) -> SwiftSpacingConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftSpacingConfig) -> SwiftSpacingConfig {
         return SwiftSpacingConfig(
             smallSpacing: json["smallSpacing"] as? UInt ?? defaultValue.smallSpacing,
             defaultSpacing: json["defaultSpacing"] as? UInt ?? defaultValue.defaultSpacing,
@@ -300,11 +308,11 @@ struct SwiftSpacingConfig: Codable {
 }
 
 // 14. SeparatorConfig
-struct SwiftSeparatorConfig: Codable {
+public struct SwiftSeparatorConfig: Codable {
     var lineThickness: UInt
     var lineColor: String
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftSeparatorConfig) -> SwiftSeparatorConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftSeparatorConfig) -> SwiftSeparatorConfig {
         let thickness = json["lineThickness"] as? UInt ?? defaultValue.lineThickness
         let color = (json["lineColor"] as? String).flatMap { !$0.isEmpty ? $0 : defaultValue.lineColor } ?? defaultValue.lineColor
         return SwiftSeparatorConfig(lineThickness: thickness, lineColor: color)
@@ -312,12 +320,12 @@ struct SwiftSeparatorConfig: Codable {
 }
 
 // 15. ImageSizesConfig
-struct SwiftImageSizesConfig: Codable {
+public struct SwiftImageSizesConfig: Codable {
     var smallSize: UInt
     var mediumSize: UInt
     var largeSize: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftImageSizesConfig) -> SwiftImageSizesConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftImageSizesConfig) -> SwiftImageSizesConfig {
         return SwiftImageSizesConfig(
             smallSize: json["smallSize"] as? UInt ?? defaultValue.smallSize,
             mediumSize: json["mediumSize"] as? UInt ?? defaultValue.mediumSize,
@@ -327,11 +335,11 @@ struct SwiftImageSizesConfig: Codable {
 }
 
 // 16. ImageSetConfig
-struct SwiftImageSetConfig: Codable {
+public struct SwiftImageSetConfig: Codable {
     var imageSize: SwiftImageSize
     var maxImageHeight: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftImageSetConfig) -> SwiftImageSetConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftImageSetConfig) -> SwiftImageSetConfig {
         let imageSizeStr = json["imageSize"] as? String ?? defaultValue.imageSize.rawValue
         let imageSize = SwiftImageSize(rawValue: imageSizeStr) ?? defaultValue.imageSize
         let maxHeight = json["maxImageHeight"] as? UInt ?? defaultValue.maxImageHeight
@@ -340,10 +348,10 @@ struct SwiftImageSetConfig: Codable {
 }
 
 // 17. ImageConfig
-struct SwiftImageConfig: Codable {
+public struct SwiftImageConfig: Codable {
     var imageSize: SwiftImageSize
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftImageConfig) -> SwiftImageConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftImageConfig) -> SwiftImageConfig {
         let imageSizeStr = json["imageSize"] as? String ?? defaultValue.imageSize.rawValue
         let imageSize = SwiftImageSize(rawValue: imageSizeStr) ?? defaultValue.imageSize
         return SwiftImageConfig(imageSize: imageSize)
@@ -351,22 +359,22 @@ struct SwiftImageConfig: Codable {
 }
 
 // 18. AdaptiveCardConfig
-struct SwiftAdaptiveCardConfig: Codable {
+public struct SwiftAdaptiveCardConfig: Codable {
     var allowCustomStyle: Bool
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftAdaptiveCardConfig) -> SwiftAdaptiveCardConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftAdaptiveCardConfig) -> SwiftAdaptiveCardConfig {
         let allowStyle = json["allowCustomStyle"] as? Bool ?? defaultValue.allowCustomStyle
         return SwiftAdaptiveCardConfig(allowCustomStyle: allowStyle)
     }
 }
 
 // 19. FactSetConfig
-struct SwiftFactSetConfig: Codable {
+public struct SwiftFactSetConfig: Codable {
     var title: SwiftFactSetTextConfig
     var value: SwiftFactSetTextConfig
     var spacing: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftFactSetConfig) -> SwiftFactSetConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftFactSetConfig) -> SwiftFactSetConfig {
         let spacing = json["spacing"] as? UInt ?? defaultValue.spacing
         let title = SwiftFactSetTextConfig.deserialize(from: json.nestedDictionary(forKey: "title"), defaultValue: defaultValue.title)
         var valueConfig = SwiftFactSetTextConfig.deserialize(from: json.nestedDictionary(forKey: "value"), defaultValue: defaultValue.value)
@@ -377,12 +385,12 @@ struct SwiftFactSetConfig: Codable {
 }
 
 // 20. ContainerStyleDefinition
-struct SwiftContainerStyleDefinition: Codable {
+public struct SwiftContainerStyleDefinition: Codable {
     var backgroundColor: String
     var borderColor: String
     var foregroundColors: SwiftColorsConfig
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftContainerStyleDefinition) -> SwiftContainerStyleDefinition {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftContainerStyleDefinition) -> SwiftContainerStyleDefinition {
         let bg = (json["backgroundColor"] as? String).flatMap { !$0.isEmpty ? $0 : defaultValue.backgroundColor } ?? defaultValue.backgroundColor
         let border = (json["borderColor"] as? String).flatMap { !$0.isEmpty ? $0 : defaultValue.borderColor } ?? defaultValue.borderColor
         let foreground = SwiftColorsConfig.deserialize(from: json.nestedDictionary(forKey: "foregroundColors"), defaultValue: defaultValue.foregroundColors)
@@ -391,7 +399,7 @@ struct SwiftContainerStyleDefinition: Codable {
 }
 
 // 21. ContainerStylesDefinition
-struct SwiftContainerStylesDefinition: Codable {
+public struct SwiftContainerStylesDefinition: Codable {
     var defaultPalette: SwiftContainerStyleDefinition
     var emphasisPalette: SwiftContainerStyleDefinition
     var goodPalette: SwiftContainerStyleDefinition
@@ -399,7 +407,7 @@ struct SwiftContainerStylesDefinition: Codable {
     var warningPalette: SwiftContainerStyleDefinition
     var accentPalette: SwiftContainerStyleDefinition
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftContainerStylesDefinition) -> SwiftContainerStylesDefinition {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftContainerStylesDefinition) -> SwiftContainerStylesDefinition {
         return SwiftContainerStylesDefinition(
             defaultPalette: SwiftContainerStyleDefinition.deserialize(from: json.nestedDictionary(forKey: "default"), defaultValue: defaultValue.defaultPalette),
             emphasisPalette: SwiftContainerStyleDefinition.deserialize(from: json.nestedDictionary(forKey: "emphasis"), defaultValue: defaultValue.emphasisPalette),
@@ -412,12 +420,12 @@ struct SwiftContainerStylesDefinition: Codable {
 }
 
 // 22. ShowCardActionConfig
-struct SwiftShowCardActionConfig: Codable {
+public struct SwiftShowCardActionConfig: Codable {
     var actionMode: SwiftActionMode
     var style: SwiftContainerStyle
     var inlineTopMargin: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftShowCardActionConfig) -> SwiftShowCardActionConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftShowCardActionConfig) -> SwiftShowCardActionConfig {
         let modeStr = json["actionMode"] as? String ?? defaultValue.actionMode.rawValue
         let mode = SwiftActionMode(rawValue: modeStr) ?? defaultValue.actionMode
         let styleStr = json["style"] as? String ?? defaultValue.style.rawValue
@@ -428,7 +436,7 @@ struct SwiftShowCardActionConfig: Codable {
 }
 
 // 23. ActionsConfig
-struct SwiftActionsConfig: Codable {
+public struct SwiftActionsConfig: Codable {
     var showCard: SwiftShowCardActionConfig
     var actionsOrientation: SwiftActionsOrientation
     var actionAlignment: SwiftActionAlignment
@@ -438,7 +446,7 @@ struct SwiftActionsConfig: Codable {
     var iconPlacement: SwiftIconPlacement
     var iconSize: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftActionsConfig) -> SwiftActionsConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftActionsConfig) -> SwiftActionsConfig {
         let orientationStr = json["actionsOrientation"] as? String ?? defaultValue.actionsOrientation.rawValue
         let orientation = SwiftActionsOrientation(rawValue: orientationStr) ?? defaultValue.actionsOrientation
         let alignmentStr = json["actionAlignment"] as? String ?? defaultValue.actionAlignment.rawValue
@@ -456,14 +464,14 @@ struct SwiftActionsConfig: Codable {
 }
 
 // 24. InputLabelConfig
-struct SwiftInputLabelConfig: Codable {
+public struct SwiftInputLabelConfig: Codable {
     var color: SwiftForegroundColor
     var isSubtle: Bool
     var size: SwiftTextSize
     var suffix: String
     var weight: SwiftTextWeight
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftInputLabelConfig) -> SwiftInputLabelConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftInputLabelConfig) -> SwiftInputLabelConfig {
         let colorStr = json["color"] as? String ?? defaultValue.color.rawValue
         let color = SwiftForegroundColor(rawValue: colorStr) ?? defaultValue.color
         let isSubtle = json["isSubtle"] as? Bool ?? defaultValue.isSubtle
@@ -477,12 +485,12 @@ struct SwiftInputLabelConfig: Codable {
 }
 
 // 25. LabelConfig
-struct SwiftLabelConfig: Codable {
+public struct SwiftLabelConfig: Codable {
     var inputSpacing: SwiftSpacing
     var requiredInputs: SwiftInputLabelConfig
     var optionalInputs: SwiftInputLabelConfig
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftLabelConfig) -> SwiftLabelConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftLabelConfig) -> SwiftLabelConfig {
         let spacingStr = json["inputSpacing"] as? String ?? defaultValue.inputSpacing.rawValue
         let spacing = SwiftSpacing(rawValue: spacingStr) ?? defaultValue.inputSpacing
         let required = SwiftInputLabelConfig.deserialize(from: json.nestedDictionary(forKey: "requiredInputs"), defaultValue: defaultValue.requiredInputs)
@@ -492,12 +500,12 @@ struct SwiftLabelConfig: Codable {
 }
 
 // 26. ErrorMessageConfig
-struct SwiftErrorMessageConfig: Codable {
+public struct SwiftErrorMessageConfig: Codable {
     var size: SwiftTextSize
     var spacing: SwiftSpacing
     var weight: SwiftTextWeight
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftErrorMessageConfig) -> SwiftErrorMessageConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftErrorMessageConfig) -> SwiftErrorMessageConfig {
         let sizeStr = json["size"] as? String ?? defaultValue.size.rawValue
         let size = SwiftTextSize(rawValue: sizeStr) ?? defaultValue.size
         let spacingStr = json["spacing"] as? String ?? defaultValue.spacing.rawValue
@@ -509,11 +517,11 @@ struct SwiftErrorMessageConfig: Codable {
 }
 
 // 27. InputsConfig
-struct SwiftInputsConfig: Codable {
+public struct SwiftInputsConfig: Codable {
     var label: SwiftLabelConfig
     var errorMessage: SwiftErrorMessageConfig
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftInputsConfig) -> SwiftInputsConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftInputsConfig) -> SwiftInputsConfig {
         let errorMsg = SwiftErrorMessageConfig.deserialize(from: json.nestedDictionary(forKey: "errorMessage"), defaultValue: defaultValue.errorMessage)
         let label = SwiftLabelConfig.deserialize(from: json.nestedDictionary(forKey: "label"), defaultValue: defaultValue.label)
         return SwiftInputsConfig(label: label, errorMessage: errorMsg)
@@ -521,12 +529,12 @@ struct SwiftInputsConfig: Codable {
 }
 
 // 28. MediaConfig
-struct SwiftMediaConfig: Codable {
+public struct SwiftMediaConfig: Codable {
     var defaultPoster: String
     var playButton: String
     var allowInlinePlayback: Bool
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftMediaConfig) -> SwiftMediaConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftMediaConfig) -> SwiftMediaConfig {
         let poster = (json["defaultPoster"] as? String).flatMap { !$0.isEmpty ? $0 : defaultValue.defaultPoster } ?? defaultValue.defaultPoster
         let playButton = (json["playButton"] as? String).flatMap { !$0.isEmpty ? $0 : defaultValue.playButton } ?? defaultValue.playButton
         let inlinePlayback = json["allowInlinePlayback"] as? Bool ?? defaultValue.allowInlinePlayback
@@ -535,12 +543,12 @@ struct SwiftMediaConfig: Codable {
 }
 
 // 29. HostWidthConfig
-struct SwiftHostWidthConfig: Codable {
+public struct SwiftHostWidthConfig: Codable {
     var veryNarrow: UInt
     var narrow: UInt
     var standard: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftHostWidthConfig) -> SwiftHostWidthConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftHostWidthConfig) -> SwiftHostWidthConfig {
         return SwiftHostWidthConfig(
             veryNarrow: json["veryNarrow"] as? UInt ?? defaultValue.veryNarrow,
             narrow: json["narrow"] as? UInt ?? defaultValue.narrow,
@@ -550,10 +558,10 @@ struct SwiftHostWidthConfig: Codable {
 }
 
 // 30. TextBlockConfig
-struct SwiftTextBlockConfig: Codable {
+public struct SwiftTextBlockConfig: Codable {
     var headingLevel: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftTextBlockConfig) -> SwiftTextBlockConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftTextBlockConfig) -> SwiftTextBlockConfig {
         return SwiftTextBlockConfig(
             headingLevel: json["headingLevel"] as? UInt ?? defaultValue.headingLevel
         )
@@ -561,10 +569,10 @@ struct SwiftTextBlockConfig: Codable {
 }
 
 // 31. TableConfig
-struct SwiftTableConfig: Codable {
-    var cellSpacing: UInt
+public struct SwiftTableConfig: Codable {
+    public var cellSpacing: UInt
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftTableConfig) -> SwiftTableConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftTableConfig) -> SwiftTableConfig {
         return SwiftTableConfig(
             cellSpacing: json["cellSpacing"] as? UInt ?? defaultValue.cellSpacing
         )
@@ -572,21 +580,21 @@ struct SwiftTableConfig: Codable {
 }
 
 // 32. BadgeConfig
-struct SwiftBadgeConfig: Codable {
+public struct SwiftBadgeConfig: Codable {
     var backgroundColor: String
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftBadgeConfig) -> SwiftBadgeConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftBadgeConfig) -> SwiftBadgeConfig {
         let bg = json["backgroundColor"] as? String ?? defaultValue.backgroundColor
         return SwiftBadgeConfig(backgroundColor: bg)
     }
 }
 
 // 33. CompoundButtonConfig
-struct SwiftCompoundButtonConfig: Codable {
+public struct SwiftCompoundButtonConfig: Codable {
     var badgeConfig: SwiftBadgeConfig
     var borderColor: String
     
-    static func deserialize(from json: [String: Any], defaultValue: SwiftCompoundButtonConfig) -> SwiftCompoundButtonConfig {
+    static public func deserialize(from json: [String: Any], defaultValue: SwiftCompoundButtonConfig) -> SwiftCompoundButtonConfig {
         let badge = SwiftBadgeConfig.deserialize(from: json.nestedDictionary(forKey: "badge"), defaultValue: defaultValue.badgeConfig)
         let border = json["borderColor"] as? String ?? defaultValue.borderColor
         return SwiftCompoundButtonConfig(badgeConfig: badge, borderColor: border)
@@ -594,7 +602,7 @@ struct SwiftCompoundButtonConfig: Codable {
 }
 
 // 34. HostConfig
-struct SwiftHostConfig: Codable {
+public struct SwiftHostConfig: Codable {
     var fontFamily: String
     var supportsInteractivity: Bool
     var imageBaseUrl: String
@@ -614,10 +622,10 @@ struct SwiftHostConfig: Codable {
     var inputs: SwiftInputsConfig
     var hostWidth: SwiftHostWidthConfig
     var textBlock: SwiftTextBlockConfig
-    var textStyles: SwiftTextStylesConfig
+    public var textStyles: SwiftTextStylesConfig
     var ratingLabelConfig: SwiftRatingElementConfig
     var ratingInputConfig: SwiftRatingElementConfig
-    var table: SwiftTableConfig
+    public var table: SwiftTableConfig
     var borderWidth: [String: UInt]   // mapping from element type key to width
     var cornerRadius: [String: UInt]    // mapping from element type key to radius
     var compoundButtonConfig: SwiftCompoundButtonConfig
@@ -682,7 +690,7 @@ struct SwiftHostConfig: Codable {
         self.compoundButtonConfig = SwiftCompoundButtonConfig(badgeConfig: SwiftBadgeConfig(backgroundColor: "#5B5FC7"), borderColor: "#E1E1E1")
     }
     
-    static func deserialize(from json: [String: Any]) -> SwiftHostConfig {
+    static public func deserialize(from json: [String: Any]) -> SwiftHostConfig {
         var result = SwiftHostConfig()
         // Font Family
         if let fontFamily = json["fontFamily"] as? String, !fontFamily.isEmpty {
@@ -742,7 +750,7 @@ struct SwiftHostConfig: Codable {
         return result
     }
     
-    static func deserialize(from jsonString: String) -> SwiftHostConfig {
+    static public func deserialize(from jsonString: String) -> SwiftHostConfig {
         let data = jsonString.data(using: .utf8) ?? Data()
         let jsonObject = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] ?? [:]
         return SwiftHostConfig.deserialize(from: jsonObject)

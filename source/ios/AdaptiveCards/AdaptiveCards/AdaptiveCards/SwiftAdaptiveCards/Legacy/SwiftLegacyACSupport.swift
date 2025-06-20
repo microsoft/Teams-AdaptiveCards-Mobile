@@ -50,7 +50,7 @@ struct LegacySupport<T: Codable> {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a generic type T
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> T {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> T {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -58,7 +58,7 @@ struct LegacySupport<T: Codable> {
     }
     
     /// Deserializes string into a generic type T
-    static func deserialize(from jsonString: String) throws -> T {
+    static public func deserialize(from jsonString: String) throws -> T {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -157,7 +157,7 @@ struct GenericCardElementParser<T: SwiftAdaptiveCardElementProtocol & Codable> :
         self.expectedType = elementType
     }
     
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: expectedType)
         return try LegacySupport<T>.deserialize(from: value, context: context)
     }
@@ -166,7 +166,7 @@ struct GenericCardElementParser<T: SwiftAdaptiveCardElementProtocol & Codable> :
         return try LegacySupport<T>.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try LegacySupport<T>.deserialize(from: value)
     }
 }
@@ -260,7 +260,7 @@ extension SwiftImage: AdaptiveCardLegacySerializable {
 
 /// Parses Image elements in an Adaptive Card
 struct SwiftImageParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.image)
         return try LegacySupport<SwiftImage>.deserialize(from: value, context: context)
     }
@@ -269,7 +269,7 @@ struct SwiftImageParser: SwiftBaseCardElementParser {
         return try LegacySupport<SwiftImage>.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try LegacySupport<SwiftImage>.deserialize(from: value)
     }
 }

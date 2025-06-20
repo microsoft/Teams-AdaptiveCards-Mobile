@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import AdaptiveCards
+import AdaptiveCards
 
 /// Helper to skip tests when not running in the Pacific timezone.
 /// (Here we assume Pacific Standard Time is GMT–8, i.e. –28800 seconds.)

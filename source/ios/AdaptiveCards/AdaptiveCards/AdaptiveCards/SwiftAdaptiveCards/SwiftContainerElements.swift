@@ -42,34 +42,34 @@ extension SwiftBaseCardElement {
 }
 
 /// Represents a Table in an Adaptive Card.
-class SwiftTable: SwiftBaseCardElement, SwiftCollectionCoreElement {
+public class SwiftTable: SwiftBaseCardElement, SwiftCollectionCoreElement {
     // MARK: - Properties
     
     /// Column definitions for the table.
-    let columnDefinitions: [SwiftTableColumnDefinition]
+    public let columnDefinitions: [SwiftTableColumnDefinition]
     
     /// Rows in the table.
-    let rows: [SwiftTableRow]
+    public let rows: [SwiftTableRow]
     
     /// Whether grid lines should be shown.
-    let showGridLines: Bool
+    public let showGridLines: Bool
     
     /// Whether the first row should be used as headers.
-    let firstRowAsHeaders: Bool
+    public let firstRowAsHeaders: Bool
     
     /// Whether the table should have rounded corners.
-    let roundedCorners: Bool
+    public let roundedCorners: Bool
     
     /// The horizontal alignment of cell content.
-    let horizontalCellContentAlignment: SwiftHorizontalAlignment?
+    public let horizontalCellContentAlignment: SwiftHorizontalAlignment?
     
     /// The vertical alignment of cell content.
-    let verticalCellContentAlignment: SwiftVerticalContentAlignment?
+    public let verticalCellContentAlignment: SwiftVerticalContentAlignment?
     
     /// The grid style of the table.
-    let gridStyle: SwiftContainerStyle
+    public let gridStyle: SwiftContainerStyle
     
-    var columns: [SwiftTableColumnDefinition] {
+    public var columns: [SwiftTableColumnDefinition] {
         return self.columnDefinitions
     }
     
@@ -137,7 +137,7 @@ class SwiftTable: SwiftBaseCardElement, SwiftCollectionCoreElement {
     }
     
     /// Encodes a `Table` to JSON.
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -171,25 +171,25 @@ class SwiftTable: SwiftBaseCardElement, SwiftCollectionCoreElement {
 }
 
 /// Represents a TableRow in an Adaptive Card.
-class SwiftTableRow: SwiftBaseCardElement {
+public class SwiftTableRow: SwiftBaseCardElement {
     // MARK: - Properties
     
     /// The style of the row.
-    var style: SwiftContainerStyle
+    public var style: SwiftContainerStyle
     
     /// The horizontal alignment of cell content.
-    var horizontalCellContentAlignment: SwiftHorizontalAlignment?
+    public var horizontalCellContentAlignment: SwiftHorizontalAlignment?
     
     /// The vertical alignment of cell content.
-    var verticalCellContentAlignment: SwiftVerticalContentAlignment?
+    public var verticalCellContentAlignment: SwiftVerticalContentAlignment?
     
     /// The collection of table cells in the row.
-    var cells: [SwiftTableCell]
+    public var cells: [SwiftTableCell]
     
     /// Indicates if this row is not connected to a parent table.
     var isOrphaned: Bool = true
     
-    override var elementTypeVal: SwiftCardElementType {
+    public override var elementTypeVal: SwiftCardElementType {
         return isOrphaned ? .unknown : .tableRow
     }
     
@@ -240,7 +240,7 @@ class SwiftTableRow: SwiftBaseCardElement {
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -273,7 +273,7 @@ class SwiftTableRow: SwiftBaseCardElement {
 
 /// Represents a TableCell in an Adaptive Card.
 /// This class now subclasses our updated Container.
-class SwiftTableCell: SwiftContainer {
+public class SwiftTableCell: SwiftContainer {
     // MARK: - Properties
     
     var isOrphaned: Bool = true
@@ -299,7 +299,7 @@ class SwiftTableCell: SwiftContainer {
         }
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         // First encode the Container properties
         try super.encode(to: encoder)
         
@@ -326,7 +326,7 @@ class SwiftTableCell: SwiftContainer {
     // MARK: - Type Information
     
     /// Override to report .tableCell when not orphaned.
-    override var elementTypeVal: SwiftCardElementType {
+    public override var elementTypeVal: SwiftCardElementType {
         return isOrphaned ? .unknown : .tableCell
     }
     
@@ -343,20 +343,20 @@ class SwiftTableCell: SwiftContainer {
 /// A Swift port of the C++ TableColumnDefinition.
 /// This structure is Codable, uses value semantics, and enforces that
 /// setting a relative width resets an explicit pixel width and vice versa.
-struct SwiftTableColumnDefinition: Codable {
+public struct SwiftTableColumnDefinition: Codable {
     // MARK: - Properties
     
     /// Optional horizontal alignment for cell content.
     /// Defaults to `.left` in the default initializer.
-    var horizontalCellContentAlignment: SwiftHorizontalAlignment?
+    public var horizontalCellContentAlignment: SwiftHorizontalAlignment?
     
     /// Optional vertical alignment for cell content.
     /// Defaults to `.top` in the default initializer.
-    var verticalCellContentAlignment: SwiftVerticalContentAlignment?
+    public var verticalCellContentAlignment: SwiftVerticalContentAlignment?
     
     /// The relative width (e.g. "2") of the column.
     /// Setting this will reset `pixelWidth`.
-    var width: UInt? {
+    public var width: UInt? {
         didSet {
             if width != nil {
                 pixelWidth = nil
@@ -366,7 +366,7 @@ struct SwiftTableColumnDefinition: Codable {
     
     /// The explicit pixel width (e.g. "100px") of the column.
     /// Setting this will reset `width`.
-    var pixelWidth: UInt? {
+    public var pixelWidth: UInt? {
         didSet {
             if pixelWidth != nil {
                 width = nil
@@ -384,7 +384,7 @@ struct SwiftTableColumnDefinition: Codable {
     
     /// Custom initializer for decoding.
     /// Handles the "width" field, which can be either an unsigned integer or a string with a "px" suffix.
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Decode horizontal alignment with default
@@ -434,7 +434,7 @@ struct SwiftTableColumnDefinition: Codable {
     
     /// Custom encoding to handle the "width" field.
     /// If `pixelWidth` is set, it takes precedence over `width` and is encoded as a string with a "px" suffix.
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         // Encode the alignment values if present
@@ -463,18 +463,18 @@ struct SwiftTableColumnDefinition: Codable {
 }
 
 /// Represents the styled collection element base class.
-class SwiftStyledCollectionElement: SwiftBaseCardElement {
+public class SwiftStyledCollectionElement: SwiftBaseCardElement {
     // MARK: - Properties
-    var style: SwiftContainerStyle
+    public var style: SwiftContainerStyle
     var verticalContentAlignment: SwiftVerticalContentAlignment?
-    var bleedDirection: SwiftContainerBleedDirection
-    var minHeight: UInt
-    var hasPadding: Bool
-    var hasBleed: Bool
-    var showBorder: Bool
-    var roundedCorners: Bool
-    var backgroundImage: SwiftBackgroundImage?
-    var selectAction: SwiftBaseActionElement?
+    public var bleedDirection: SwiftContainerBleedDirection
+    public var minHeight: UInt
+    public var hasPadding: Bool
+    public var hasBleed: Bool
+    public var showBorder: Bool
+    public var roundedCorners: Bool
+    public var backgroundImage: SwiftBackgroundImage?
+    public var selectAction: SwiftBaseActionElement?
     
     // MARK: - Computed Properties
     open var padding: Bool {
@@ -596,7 +596,7 @@ class SwiftStyledCollectionElement: SwiftBaseCardElement {
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if style != .none {
             try container.encode(SwiftContainerStyle.toString(style), forKey: .style)
@@ -689,10 +689,10 @@ struct SwiftGridArea: Codable {
 }
 
 /// Represents a Container element in an Adaptive Card.
-class SwiftContainer: SwiftStyledCollectionElement {
-    var items: [SwiftBaseCardElement]
+public class SwiftContainer: SwiftStyledCollectionElement {
+    public var items: [SwiftBaseCardElement]
     var layouts: [SwiftLayout]
-    var rtl: Bool?
+    public var rtl: Bool?
 
     /// Designated initializer accepting a card element type.
     init(items: [SwiftBaseCardElement] = [],
@@ -826,7 +826,7 @@ class SwiftContainer: SwiftStyledCollectionElement {
         print("Container.configForContainerStyle - Complete, parentalId: \(String(describing: parentalId)), direction: \(bleedDirection)")
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(items, forKey: .items)
         try container.encode(layouts, forKey: .layouts)
@@ -849,19 +849,19 @@ class SwiftContainer: SwiftStyledCollectionElement {
 }
 
 // MARK: - Column & ColumnParser Implementation
-class SwiftColumn: SwiftStyledCollectionElement {
+public class SwiftColumn: SwiftStyledCollectionElement {
     // Flag that tracks whether the default value is still in effect.
     private var isDefaultWidth: Bool = true
     private var isUpdatingFromWidth: Bool = false
     private var isUpdatingWidth = false
     private var isUpdatingPixelWidth = false
-
-    override var canBleed: Bool {
+    
+    public override var canBleed: Bool {
         // Column can only bleed if it has padding AND hasBleed is true
         return hasPadding && hasBleed
     }
     
-    override var bleed: Bool {
+    public override var bleed: Bool {
         get { return hasBleed }
         set { hasBleed = newValue }
     }
@@ -876,11 +876,11 @@ class SwiftColumn: SwiftStyledCollectionElement {
         return columnSet.columns.last?.internalId == self.internalId
     }
     
-    var items: [SwiftBaseCardElement]
-    var rtl: Bool?
+    public var items: [SwiftBaseCardElement]
+    public var rtl: Bool?
     var layouts: [SwiftLayout]
 
-    var width: String {
+    public var width: String {
         didSet {
             if !isUpdatingWidth {
                 isUpdatingPixelWidth = true
@@ -910,7 +910,7 @@ class SwiftColumn: SwiftStyledCollectionElement {
         }
     }
     
-    var pixelWidth: Int {
+    public var pixelWidth: Int {
         didSet {
             if isUpdatingFromWidth {
                 // This update came from width’s didSet; reset the flag and do nothing.
@@ -927,7 +927,7 @@ class SwiftColumn: SwiftStyledCollectionElement {
     }
     
     // MARK: - Initializer
-    init(id: String? = nil) {
+    public init(id: String? = nil) {
         self.items = []
         self.layouts = []
         // Default width is capitalized "Auto"
@@ -1052,7 +1052,7 @@ class SwiftColumn: SwiftStyledCollectionElement {
         print("Column.configForContainerStyle - After config, bleedDirection: \(bleedDirection)")
     }
 
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(width, forKey: .width)
         try container.encode(pixelWidth, forKey: .pixelWidth)
@@ -1063,7 +1063,7 @@ class SwiftColumn: SwiftStyledCollectionElement {
     }
     
     // Custom serialization for the test – produces exactly three keys in order.
-    override func serialize() throws -> String {
+    public override func serialize() throws -> String {
         let jsonKeysInOrder = [
             "\"items\":[]",
             "\"type\":\"Column\"",
@@ -1076,9 +1076,9 @@ class SwiftColumn: SwiftStyledCollectionElement {
 
 /// Represents a column set element in an Adaptive Card.
 /// Inherits from StyledCollectionElement.
-class SwiftColumnSet: SwiftStyledCollectionElement {
+public class SwiftColumnSet: SwiftStyledCollectionElement {
     // MARK: - Properties
-    var columns: [SwiftColumn] = []
+    public var columns: [SwiftColumn] = []
     
     // MARK: - Codable Implementation
     private enum CodingKeys: String, CodingKey {
@@ -1130,7 +1130,7 @@ class SwiftColumnSet: SwiftStyledCollectionElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(columns, forKey: .columns)
         try super.encode(to: encoder)

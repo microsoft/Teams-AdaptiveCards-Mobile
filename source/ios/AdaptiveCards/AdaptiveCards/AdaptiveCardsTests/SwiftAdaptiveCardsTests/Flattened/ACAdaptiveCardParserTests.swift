@@ -7,7 +7,7 @@
 
 import Foundation
 import XCTest
-@testable import AdaptiveCards
+import AdaptiveCards
 
 class ACAdaptiveCardParserTests: XCTestCase {
     func testParseAdaptiveCard() throws {

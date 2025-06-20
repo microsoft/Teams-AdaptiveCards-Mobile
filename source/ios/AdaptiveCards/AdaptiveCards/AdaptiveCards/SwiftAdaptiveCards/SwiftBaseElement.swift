@@ -8,15 +8,15 @@
 import Foundation
 
 /// Represents a base element in an adaptive card.
-class SwiftBaseElement: Codable {
+open class SwiftBaseElement: Codable {
     // MARK: - Properties
     var typeString: String
-    var id: String?
-    let internalId: SwiftInternalId
-    var additionalProperties: [String: AnyCodable]?
+    public var id: String?
+    public let internalId: SwiftInternalId
+    public var additionalProperties: [String: AnyCodable]?
     let requires: [String: SwiftSemanticVersion]?
     var fallbackType: SwiftFallbackType?
-    var fallbackContent: SwiftBaseElement?
+    public var fallbackContent: SwiftBaseElement?
     var canFallbackToAncestor: Bool?
     
     // Add knownProperties for use in subclasses.
@@ -61,7 +61,7 @@ class SwiftBaseElement: Codable {
     }
     
     // MARK: - Codable Implementation
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         // First decode all keys using a dynamic container.
         let dynamicContainer = try decoder.container(keyedBy: DynamicCodingKeys.self)
         var rawDict = [String: AnyCodable]()
@@ -99,7 +99,7 @@ class SwiftBaseElement: Codable {
         additionalProperties = rawDict.isEmpty ? nil : rawDict
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         // Encode typeString using the key "type"
         try container.encode(typeString, forKey: .typeString)

@@ -20,29 +20,29 @@ enum SwiftFallbackType: String, Codable {
 
 /// Represents an Adaptive Card that contains UI elements and actions.
 public class SwiftAdaptiveCard: Codable {
-    var version: String
-    let fallbackText: String?
-    let backgroundImage: SwiftBackgroundImage?         // Defined in BackgroundImage.swift
-    let refresh: SwiftRefresh?                         // Defined in Refresh.swift
-    let authentication: SwiftAuthentication?           // Defined in Authentication.swift
-    let speak: String?
-    let style: SwiftContainerStyle                     // Defined in SwiftEnums.swift
-    let language: String?
-    let verticalContentAlignment: SwiftVerticalContentAlignment // See alias above
-    let height: SwiftHeightType
-    let minHeight: UInt
-    let rtl: Bool?
-    let body: [SwiftBaseCardElement]                   // Defined in BaseCardElement.swift
-    let actions: [SwiftBaseActionElement]              // Defined in BaseActionElement.swift
+    public var version: String
+    public let fallbackText: String?
+    public let backgroundImage: SwiftBackgroundImage?         // Defined in BackgroundImage.swift
+    public let refresh: SwiftRefresh?                         // Defined in Refresh.swift
+    public let authentication: SwiftAuthentication?           // Defined in Authentication.swift
+    public let speak: String?
+    public let style: SwiftContainerStyle                     // Defined in SwiftEnums.swift
+    public let language: String?
+    public let verticalContentAlignment: SwiftVerticalContentAlignment // See alias above
+    public let height: SwiftHeightType
+    public let minHeight: UInt
+    public let rtl: Bool?
+    public let body: [SwiftBaseCardElement]                   // Defined in BaseCardElement.swift
+    public let actions: [SwiftBaseActionElement]              // Defined in BaseActionElement.swift
     let layouts: [SwiftLayout]                         // Defined in Layout.swift
-    let selectAction: SwiftBaseActionElement?          // Defined in BaseActionElement.swift
+    public let selectAction: SwiftBaseActionElement?          // Defined in BaseActionElement.swift
     let requires: [String: SwiftSemanticVersion]       // Defined in SemanticVersion.swift
     let fallbackContent: SwiftBaseElement?             // Defined in BaseElement.swift
     let fallbackType: SwiftFallbackType
     
     public var additionalProperties: [String: Any] = [:]
     
-    var elementTypeVal: SwiftCardElementType {
+    public var elementTypeVal: SwiftCardElementType {
         return .adaptiveCard
     }
     
@@ -90,7 +90,7 @@ public class SwiftAdaptiveCard: Codable {
     }
     
     /// Serializes the card into a JSON dictionary.
-    func serializeToJsonValue() throws -> [String: Any] {
+    public func serializeToJsonValue() throws -> [String: Any] {
         var json = additionalProperties
         
         // Essential fields that should always be included
@@ -190,7 +190,7 @@ public class SwiftAdaptiveCard: Codable {
     }
     
     /// Converts the card into a JSON string.
-    func serialize() throws -> String {
+    public func serialize() throws -> String {
         return try SwiftParseUtil.jsonToString(serializeToJsonValue())
     }
 

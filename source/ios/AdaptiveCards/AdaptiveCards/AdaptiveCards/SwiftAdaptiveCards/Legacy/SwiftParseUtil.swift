@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct SwiftParseUtil {
+public struct SwiftParseUtil {
     
     // MARK: – Core JSON Conversion
     
-    static func jsonToString(_ json: [String: Any]) throws -> String {
+    public static func jsonToString(_ json: [String: Any]) throws -> String {
         let unwrapped = unwrapAnyCodable(from: json)
         let jsonData = try JSONSerialization.data(withJSONObject: unwrapped, options: [.sortedKeys])
         return "\(String(data: jsonData, encoding: .utf8) ?? "{}")\n"
@@ -33,7 +33,7 @@ struct SwiftParseUtil {
         }
     }
 
-    static func throwIfNotJsonObject(_ json: Any) throws {
+    public static func throwIfNotJsonObject(_ json: Any) throws {
         guard json is [String: Any] else {
             throw ParsingError.invalidType(expected: "JSON object", found: "\(type(of: json))")
         }
@@ -41,7 +41,7 @@ struct SwiftParseUtil {
     
     // MARK: – Type & Value Retrieval
     
-    static func getJsonValue(from string: String) -> [String: Any] {
+    public static func getJsonValue(from string: String) -> [String: Any] {
         guard let data = string.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
               let jsonDict = jsonObject as? [String: Any] else {
@@ -50,18 +50,18 @@ struct SwiftParseUtil {
         return jsonDict
     }
     
-    static func getTypeAsString(from json: [String: Any]) throws -> String {
+    public static func getTypeAsString(from json: [String: Any]) throws -> String {
         guard let type = json["type"] as? String else {
             throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: "type")
         }
         return type
     }
     
-    static func tryGetTypeAsString(from json: [String: Any]) -> String {
+    public static func tryGetTypeAsString(from json: [String: Any]) -> String {
         return (try? getTypeAsString(from: json)) ?? ""
     }
     
-    static func getString(from json: [String: Any], key: String, required: Bool = false) throws -> String {
+    public static func getString(from json: [String: Any], key: String, required: Bool = false) throws -> String {
         guard let value = json[key] as? String else {
             if required {
                 throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: key)
@@ -75,7 +75,7 @@ struct SwiftParseUtil {
         return json[key] as? String
     }
     
-    static func getBool(from json: [String: Any], key: String, defaultValue: Bool, required: Bool) throws -> Bool {
+    public static func getBool(from json: [String: Any], key: String, defaultValue: Bool, required: Bool) throws -> Bool {
         guard let value = json[key] as? Bool else {
             if required {
                 throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: key)
@@ -89,7 +89,7 @@ struct SwiftParseUtil {
         return json[key] as? Bool
     }
     
-    static func getInt(from json: [String: Any], key: String, defaultValue: Int, required: Bool) throws -> Int {
+    public static func getInt(from json: [String: Any], key: String, defaultValue: Int, required: Bool) throws -> Int {
         guard let value = json[key] as? Int else {
             if required {
                 throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: key)
@@ -99,11 +99,11 @@ struct SwiftParseUtil {
         return value
     }
     
-    static func getOptionalInt(from json: [String: Any], key: String) -> Int? {
+    public static func getOptionalInt(from json: [String: Any], key: String) -> Int? {
         return json[key] as? Int
     }
     
-    static func getUInt(from json: [String: Any], key: String, defaultValue: UInt, required: Bool) throws -> UInt {
+    public static func getUInt(from json: [String: Any], key: String, defaultValue: UInt, required: Bool) throws -> UInt {
         if let val = json[key] {
             // If the value is NSNull, treat it as missing.
             if val is NSNull {
@@ -137,7 +137,7 @@ struct SwiftParseUtil {
     
     // MARK: – JSON Dictionary & Value Extraction
     
-    static func getJsonDictionary(from jsonString: String) throws -> [String: Any] {
+    public static func getJsonDictionary(from jsonString: String) throws -> [String: Any] {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw SwiftAdaptiveCardParseException(statusCode: .invalidJson, message: "Invalid JSON string")
         }
@@ -148,11 +148,11 @@ struct SwiftParseUtil {
         return dict
     }
     
-    static func getJsonValueFromString(_ jsonString: String) throws -> [String: Any] {
+    public static func getJsonValueFromString(_ jsonString: String) throws -> [String: Any] {
         return try getJsonDictionary(from: jsonString)
     }
     
-    static func extractJsonValue(from json: [String: Any], key: String, required: Bool) throws -> Any? {
+    public static func extractJsonValue(from json: [String: Any], key: String, required: Bool) throws -> Any? {
         if let value = json[key] {
             return value
         } else {
@@ -190,7 +190,7 @@ struct SwiftParseUtil {
     
     // MARK: – Collection Helpers
     
-    static func getArray(from json: [String: Any], key: String, required: Bool = false) throws -> [[String: Any]] {
+    public static func getArray(from json: [String: Any], key: String, required: Bool = false) throws -> [[String: Any]] {
         // First, try to see if the value is already an array of dictionaries.
         if let arrayOfDicts = json[key] as? [[String: Any]] {
             if required && arrayOfDicts.isEmpty {
@@ -231,7 +231,7 @@ struct SwiftParseUtil {
         return try array.map { try SwiftBaseActionElement.deserializeAction(from: $0) }
     }
     
-    static func getAction(from json: [String: Any], key: String, context: SwiftParseContext) throws -> SwiftBaseActionElement? {
+    public static func getAction(from json: [String: Any], key: String, context: SwiftParseContext) throws -> SwiftBaseActionElement? {
         guard let actionJson = json[key] as? [String: Any] else {
             return nil
         }
@@ -281,7 +281,7 @@ struct SwiftParseUtil {
     
     // MARK: – Type Checking
     
-    static func expectTypeString(_ json: [String: Any], expected: SwiftCardElementType) throws {
+    public static func expectTypeString(_ json: [String: Any], expected: SwiftCardElementType) throws {
         let actual = try getTypeAsString(from: json)
         if actual != expected.rawValue {
             throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: "Expected type \(expected.rawValue) but found \(actual)")
@@ -292,7 +292,7 @@ struct SwiftParseUtil {
     
     /// Calls the provided callback on the JSON value associated with the given key.
     /// Throws if the key is nil, missing, or if the callback throws.
-    static func expectKeyAndValueType(_ json: [String: Any], _ key: String?, callback: (Any) throws -> Void) throws {
+    public static func expectKeyAndValueType(_ json: [String: Any], _ key: String?, callback: (Any) throws -> Void) throws {
         guard let key = key else {
             throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: "Key is nil")
         }
@@ -304,7 +304,7 @@ struct SwiftParseUtil {
     
     /// Converts the JSON value for the given key to a JSON string and appends a newline.
     /// For string values it adds quotes.
-    static func getJsonString(from json: [String: Any], key: String, required: Bool) throws -> String {
+    public static func getJsonString(from json: [String: Any], key: String, required: Bool) throws -> String {
         guard let value = json[key] else {
             if required {
                 throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: key)

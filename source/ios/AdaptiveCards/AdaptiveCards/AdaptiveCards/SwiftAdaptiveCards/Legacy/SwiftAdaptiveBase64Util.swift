@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SwiftAdaptiveBase64Util {
+public struct SwiftAdaptiveBase64Util {
     
     private static let base64EncodeTable: [Character] = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")
     
@@ -56,7 +56,7 @@ struct SwiftAdaptiveBase64Util {
         return base64DecodeTable[Int(asciiValue)]
     }
     
-    static func encode(_ input: [UInt8]) -> String {
+    public static func encode(_ input: [UInt8]) -> String {
         var output = ""
         var a3 = [UInt8](repeating: 0, count: 3)
         var a4 = [UInt8](repeating: 0, count: 4)
@@ -85,7 +85,7 @@ struct SwiftAdaptiveBase64Util {
         return output
     }
     
-    static func decode(_ input: String) -> [UInt8]? {
+    public static func decode(_ input: String) -> [UInt8]? {
         var output: [UInt8] = []
         let inputChars = Array(input)
         var index = 0

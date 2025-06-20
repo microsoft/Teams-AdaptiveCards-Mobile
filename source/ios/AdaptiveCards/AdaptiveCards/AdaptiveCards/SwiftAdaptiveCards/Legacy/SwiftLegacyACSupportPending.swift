@@ -16,7 +16,7 @@ enum SwiftIconLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftIcon
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftIcon {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftIcon {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -24,7 +24,7 @@ enum SwiftIconLegacySupport {
     }
     
     /// Deserializes string into a SwiftIcon
-    static func deserialize(from jsonString: String) throws -> SwiftIcon {
+    static public func deserialize(from jsonString: String) throws -> SwiftIcon {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -122,7 +122,7 @@ extension SwiftIcon: AdaptiveCardLegacySerializable {
 
 /// Parses Icon elements in an Adaptive Card
 struct SwiftIconParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.icon)
         return try LegacySupport<SwiftIcon>.deserialize(from: value, context: context)
     }
@@ -131,7 +131,7 @@ struct SwiftIconParser: SwiftBaseCardElementParser {
         return try LegacySupport<SwiftIcon>.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try LegacySupport<SwiftIcon>.deserialize(from: value)
     }
 }
@@ -183,7 +183,7 @@ enum SwiftUnknownElementLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftUnknownElement
-    static func deserialize(from value: [String: Any]) throws -> SwiftUnknownElement {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftUnknownElement {
         guard let typeString = value["type"] as? String else {
             throw AdaptiveCardParseError.invalidType
         }
@@ -195,7 +195,7 @@ enum SwiftUnknownElementLegacySupport {
     }
     
     /// Deserializes string into a SwiftUnknownElement
-    static func deserialize(from jsonString: String) throws -> SwiftUnknownElement {
+    static public func deserialize(from jsonString: String) throws -> SwiftUnknownElement {
         let json = try SwiftParseUtil.getJsonDictionary(from: jsonString)
         return try deserialize(from: json)
     }
@@ -223,7 +223,7 @@ enum SwiftUnknownElementLegacySupport {
 
 /// Parses unknown elements in an Adaptive Card
 struct SwiftUnknownElementParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftUnknownElementLegacySupport.deserialize(from: value)
     }
     
@@ -231,7 +231,7 @@ struct SwiftUnknownElementParser: SwiftBaseCardElementParser {
         return try SwiftUnknownElementLegacySupport.deserialize(from: value)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftUnknownElementLegacySupport.deserialize(from: value)
     }
 }
@@ -252,7 +252,7 @@ enum SwiftAuthenticationLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftAuthentication
-    static func deserialize(from json: [String: Any]) throws -> SwiftAuthentication {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftAuthentication {
         return SwiftAuthentication(
             text: json["text"] as? String ?? "",
             connectionName: json["connectionName"] as? String ?? "",
@@ -266,7 +266,7 @@ enum SwiftAuthenticationLegacySupport {
     }
     
     /// Deserializes string into a SwiftAuthentication
-    static func deserialize(from jsonString: String) -> SwiftAuthentication? {
+    static public func deserialize(from jsonString: String) -> SwiftAuthentication? {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonDict = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
             return nil
@@ -316,7 +316,7 @@ extension SwiftAuthentication {
     }
     
     // Static factory methods
-    static func deserialize(from json: [String: Any]) throws -> SwiftAuthentication {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftAuthentication {
         return try SwiftAuthenticationLegacySupport.deserialize(from: json)
     }
     
@@ -354,7 +354,7 @@ enum SwiftAuthCardButtonLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftAuthCardButton
-    static func deserialize(from json: [String: Any]) -> SwiftAuthCardButton {
+    static public func deserialize(from json: [String: Any]) -> SwiftAuthCardButton {
         return SwiftAuthCardButton(
             type: json["type"] as? String ?? "",
             title: json["title"] as? String ?? "",
@@ -364,7 +364,7 @@ enum SwiftAuthCardButtonLegacySupport {
     }
     
     /// Deserializes string into a SwiftAuthCardButton
-    static func deserialize(from jsonString: String) -> SwiftAuthCardButton? {
+    static public func deserialize(from jsonString: String) -> SwiftAuthCardButton? {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonDict = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
             return nil
@@ -438,7 +438,7 @@ extension SwiftAuthCardButton {
     }
     
     // Static factory methods
-    static func deserialize(from json: [String: Any]) -> SwiftAuthCardButton {
+    static public func deserialize(from json: [String: Any]) -> SwiftAuthCardButton {
         return SwiftAuthCardButtonLegacySupport.deserialize(from: json)
     }
 }
@@ -450,12 +450,12 @@ enum SwiftLayoutLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON data into a SwiftLayout
-    static func deserialize(from json: Data) throws -> SwiftLayout {
+    static public func deserialize(from json: Data) throws -> SwiftLayout {
         return try JSONDecoder().decode(SwiftLayout.self, from: json)
     }
     
     /// Deserializes JSON dictionary into a SwiftLayout
-    static func deserialize(from json: [String: Any]) -> SwiftLayout? {
+    static public func deserialize(from json: [String: Any]) -> SwiftLayout? {
         guard let data = try? JSONSerialization.data(withJSONObject: json, options: []) else {
             return nil
         }
@@ -595,7 +595,7 @@ enum SwiftAreaGridLayoutLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftAreaGridLayout
-    static func deserialize(from json: [String: Any]) -> SwiftAreaGridLayout {
+    static public func deserialize(from json: [String: Any]) -> SwiftAreaGridLayout {
         let instance = SwiftAreaGridLayout()
         
         if let columnArray = json["columns"] as? [String] {
@@ -629,7 +629,7 @@ enum SwiftAreaGridLayoutLegacySupport {
     }
     
     /// Deserializes string into a SwiftAreaGridLayout
-    static func deserialize(from jsonString: String) -> SwiftAreaGridLayout? {
+    static public func deserialize(from jsonString: String) -> SwiftAreaGridLayout? {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonDict = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
             return nil
@@ -660,7 +660,7 @@ enum SwiftAreaGridLayoutLegacySupport {
 
 extension SwiftAreaGridLayout {
     // Static factory methods
-    class func deserialize(from json: [String: Any]) -> SwiftAreaGridLayout {
+    class public func deserialize(from json: [String: Any]) -> SwiftAreaGridLayout {
         return SwiftAreaGridLayoutLegacySupport.deserialize(from: json)
     }
     
@@ -692,13 +692,13 @@ enum SwiftActionSetLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftActionSet
-    static func deserialize(from json: [String: Any]) throws -> SwiftActionSet {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftActionSet {
         let data = try JSONSerialization.data(withJSONObject: json)
         return try JSONDecoder().decode(SwiftActionSet.self, from: data)
     }
     
     /// Deserializes string into a SwiftActionSet
-    static func deserialize(from jsonString: String) throws -> SwiftActionSet {
+    static public func deserialize(from jsonString: String) throws -> SwiftActionSet {
         guard let data = jsonString.data(using: .utf8) else {
             throw AdaptiveCardParseError.invalidJson
         }
@@ -745,7 +745,7 @@ extension SwiftActionSet {
 
 /// Parses ActionSet elements in an Adaptive Card
 struct SwiftActionSetParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.actionSet)
         return try SwiftActionSetLegacySupport.deserialize(from: value)
     }
@@ -754,7 +754,7 @@ struct SwiftActionSetParser: SwiftBaseCardElementParser {
         return try SwiftActionSetLegacySupport.deserialize(from: value)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftActionSetLegacySupport.deserialize(from: value)
     }
 }
@@ -767,13 +767,13 @@ enum SwiftBackgroundImageLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftBackgroundImage using Codable
-    static func deserialize(from json: [String: Any]) throws -> SwiftBackgroundImage {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftBackgroundImage {
         let data = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftBackgroundImage.self, from: data)
     }
     
     /// Deserializes string into a SwiftBackgroundImage
-    static func deserialize(from jsonString: String) -> SwiftBackgroundImage? {
+    static public func deserialize(from jsonString: String) -> SwiftBackgroundImage? {
         guard let jsonData = jsonString.data(using: .utf8) else {
             return nil
         }
@@ -846,7 +846,7 @@ extension SwiftBackgroundImage {
     }
     
     // Static factory methods
-    static func deserialize(from json: [String: Any]) throws -> SwiftBackgroundImage {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftBackgroundImage {
         return try SwiftBackgroundImageLegacySupport.deserialize(from: json)
     }
 }
@@ -858,13 +858,13 @@ enum SwiftCaptionSourceLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftCaptionSource using Codable
-    static func deserialize(from json: [String: Any]) throws -> SwiftCaptionSource {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftCaptionSource {
         let jsonData = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftCaptionSource.self, from: jsonData)
     }
     
     /// Deserializes string into a SwiftCaptionSource
-    static func deserialize(from jsonString: String) throws -> SwiftCaptionSource {
+    static public func deserialize(from jsonString: String) throws -> SwiftCaptionSource {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw NSError(domain: "CaptionSource", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON string"])
         }
@@ -933,13 +933,13 @@ enum SwiftChoiceInputLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftChoiceInput using Codable
-    static func deserialize(from json: [String: Any]) throws -> SwiftChoiceInput {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftChoiceInput {
         let jsonData = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftChoiceInput.self, from: jsonData)
     }
     
     /// Deserializes string into a SwiftChoiceInput
-    static func deserialize(from jsonString: String) throws -> SwiftChoiceInput {
+    static public func deserialize(from jsonString: String) throws -> SwiftChoiceInput {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw NSError(domain: "ChoiceInput", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON string"])
         }
@@ -1008,13 +1008,13 @@ enum SwiftChoicesDataLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftChoicesData using Codable
-    static func deserialize(from json: [String: Any]) throws -> SwiftChoicesData {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftChoicesData {
         let jsonData = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftChoicesData.self, from: jsonData)
     }
     
     /// Deserializes string into a SwiftChoicesData
-    static func deserialize(from jsonString: String) throws -> SwiftChoicesData {
+    static public func deserialize(from jsonString: String) throws -> SwiftChoicesData {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw NSError(domain: "ChoicesData", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON string"])
         }
@@ -1083,7 +1083,7 @@ enum SwiftCompoundButtonLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftCompoundButton
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftCompoundButton {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftCompoundButton {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1091,7 +1091,7 @@ enum SwiftCompoundButtonLegacySupport {
     }
     
     /// Deserializes string into a SwiftCompoundButton
-    static func deserialize(from jsonString: String) throws -> SwiftCompoundButton {
+    static public func deserialize(from jsonString: String) throws -> SwiftCompoundButton {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1137,7 +1137,7 @@ enum SwiftCompoundButtonLegacySupport {
 
 /// Parses CompoundButton elements in an Adaptive Card
 struct SwiftCompoundButtonParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.compoundButton)
         return try SwiftCompoundButtonLegacySupport.deserialize(from: value, context: context)
     }
@@ -1146,7 +1146,7 @@ struct SwiftCompoundButtonParser: SwiftBaseCardElementParser {
         return try SwiftCompoundButtonLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftCompoundButtonLegacySupport.deserialize(from: value)
     }
 }
@@ -1176,14 +1176,14 @@ enum SwiftValueChangedActionLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftValueChangedAction
-    static func deserialize(from value: [String: Any]) throws -> SwiftValueChangedAction {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftValueChangedAction {
         // Convert dictionary to JSON data and let the decoder handle the validation
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
         return try decoder.decode(SwiftValueChangedAction.self, from: data)
     }
     /// Deserializes string into a SwiftValueChangedAction
-    static func deserialize(from jsonString: String) throws -> SwiftValueChangedAction {
+    static public func deserialize(from jsonString: String) throws -> SwiftValueChangedAction {
         guard let data = jsonString.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
@@ -1235,7 +1235,7 @@ enum SwiftBaseInputElementLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftBaseInputElement
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftBaseInputElement {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftBaseInputElement {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1243,7 +1243,7 @@ enum SwiftBaseInputElementLegacySupport {
     }
     
     /// Deserializes string into a SwiftBaseInputElement
-    static func deserialize(from jsonString: String) throws -> SwiftBaseInputElement {
+    static public func deserialize(from jsonString: String) throws -> SwiftBaseInputElement {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1309,7 +1309,7 @@ enum SwiftToggleInputLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftToggleInput
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftToggleInput {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftToggleInput {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1317,7 +1317,7 @@ enum SwiftToggleInputLegacySupport {
     }
     
     /// Deserializes string into a SwiftToggleInput
-    static func deserialize(from jsonString: String) throws -> SwiftToggleInput {
+    static public func deserialize(from jsonString: String) throws -> SwiftToggleInput {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1364,7 +1364,7 @@ enum SwiftToggleInputLegacySupport {
 
 /// Parses ToggleInput elements in an Adaptive Card
 struct SwiftToggleInputParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.toggleInput)
         return try SwiftToggleInputLegacySupport.deserialize(from: value, context: context)
     }
@@ -1373,7 +1373,7 @@ struct SwiftToggleInputParser: SwiftBaseCardElementParser {
         return try SwiftToggleInputLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftToggleInputLegacySupport.deserialize(from: value)
     }
 }
@@ -1385,7 +1385,7 @@ enum SwiftDateInputLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftDateInput
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftDateInput {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftDateInput {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1393,7 +1393,7 @@ enum SwiftDateInputLegacySupport {
     }
     
     /// Deserializes string into a SwiftDateInput
-    static func deserialize(from jsonString: String) throws -> SwiftDateInput {
+    static public func deserialize(from jsonString: String) throws -> SwiftDateInput {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1434,7 +1434,7 @@ enum SwiftDateInputLegacySupport {
 
 /// Parses DateInput elements in an Adaptive Card
 struct SwiftDateInputParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.dateInput)
         return try SwiftDateInputLegacySupport.deserialize(from: value, context: context)
     }
@@ -1443,7 +1443,7 @@ struct SwiftDateInputParser: SwiftBaseCardElementParser {
         return try SwiftDateInputLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftDateInputLegacySupport.deserialize(from: value)
     }
 }
@@ -1473,7 +1473,7 @@ enum SwiftNumberInputLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftNumberInput
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftNumberInput {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftNumberInput {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1481,7 +1481,7 @@ enum SwiftNumberInputLegacySupport {
     }
     
     /// Deserializes string into a SwiftNumberInput
-    static func deserialize(from jsonString: String) throws -> SwiftNumberInput {
+    static public func deserialize(from jsonString: String) throws -> SwiftNumberInput {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1533,7 +1533,7 @@ enum SwiftNumberInputLegacySupport {
 
 /// Parses NumberInput elements in an Adaptive Card
 struct SwiftNumberInputParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.numberInput)
         return try SwiftNumberInputLegacySupport.deserialize(from: value, context: context)
     }
@@ -1542,7 +1542,7 @@ struct SwiftNumberInputParser: SwiftBaseCardElementParser {
         return try SwiftNumberInputLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftNumberInputLegacySupport.deserialize(from: value)
     }
 }
@@ -1567,7 +1567,7 @@ enum SwiftTextInputLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftTextInput
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTextInput {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTextInput {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1587,7 +1587,7 @@ enum SwiftTextInputLegacySupport {
     }
     
     /// Deserializes string into a SwiftTextInput
-    static func deserialize(from jsonString: String) throws -> SwiftTextInput {
+    static public func deserialize(from jsonString: String) throws -> SwiftTextInput {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1688,7 +1688,7 @@ enum SwiftTextInputLegacySupport {
 
 /// Parses TextInput elements in an Adaptive Card
 struct SwiftTextInputParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.textInput)
         return try SwiftTextInputLegacySupport.deserialize(from: value, context: context)
     }
@@ -1697,7 +1697,7 @@ struct SwiftTextInputParser: SwiftBaseCardElementParser {
         return try SwiftTextInputLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftTextInputLegacySupport.deserialize(from: value)
     }
 }
@@ -1722,7 +1722,7 @@ enum SwiftTimeInputLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftTimeInput
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTimeInput {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTimeInput {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1730,7 +1730,7 @@ enum SwiftTimeInputLegacySupport {
     }
     
     /// Deserializes string into a SwiftTimeInput
-    static func deserialize(from jsonString: String) throws -> SwiftTimeInput {
+    static public func deserialize(from jsonString: String) throws -> SwiftTimeInput {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1771,7 +1771,7 @@ enum SwiftTimeInputLegacySupport {
 
 /// Parses TimeInput elements in an Adaptive Card
 struct SwiftTimeInputParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.timeInput)
         return try SwiftTimeInputLegacySupport.deserialize(from: value, context: context)
     }
@@ -1780,7 +1780,7 @@ struct SwiftTimeInputParser: SwiftBaseCardElementParser {
         return try SwiftTimeInputLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftTimeInputLegacySupport.deserialize(from: value)
     }
 }
@@ -1792,7 +1792,7 @@ enum SwiftChoiceSetInputLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftChoiceSetInput
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftChoiceSetInput {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftChoiceSetInput {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1800,7 +1800,7 @@ enum SwiftChoiceSetInputLegacySupport {
     }
     
     /// Deserializes string into a SwiftChoiceSetInput
-    static func deserialize(from jsonString: String) throws -> SwiftChoiceSetInput {
+    static public func deserialize(from jsonString: String) throws -> SwiftChoiceSetInput {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1818,7 +1818,7 @@ enum SwiftChoiceSetInputLegacySupport {
 
 /// Parses ChoiceSetInput elements in an Adaptive Card
 struct SwiftChoiceSetInputParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.choiceSetInput)
         return try SwiftChoiceSetInputLegacySupport.deserialize(from: value, context: context)
     }
@@ -1827,7 +1827,7 @@ struct SwiftChoiceSetInputParser: SwiftBaseCardElementParser {
         return try SwiftChoiceSetInputLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftChoiceSetInputLegacySupport.deserialize(from: value)
     }
 }
@@ -1852,7 +1852,7 @@ enum SwiftFactLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftFact
-    static func deserialize(from json: [String: Any]) -> SwiftFact? {
+    static public func deserialize(from json: [String: Any]) -> SwiftFact? {
         guard let title = json["title"] as? String,
               let value = json["value"] as? String else {
             return nil
@@ -1876,7 +1876,7 @@ enum SwiftFactLegacySupport {
     }
     
     /// Deserializes string into a SwiftFact
-    static func deserialize(from jsonString: String, context: SwiftParseContext? = nil) -> SwiftFact? {
+    static public func deserialize(from jsonString: String, context: SwiftParseContext? = nil) -> SwiftFact? {
         guard let data = jsonString.data(using: .utf8) else { return nil }
         do {
             return try JSONDecoder().decode(SwiftFact.self, from: data)
@@ -1930,7 +1930,7 @@ extension SwiftFact {
     // MARK: - Legacy Serialization Methods
     
     /// Serializes to a JSON string
-    func serialize() -> String {
+    public func serialize() -> String {
         return SwiftFactLegacySupport.serialize(self)
     }
     
@@ -1942,7 +1942,7 @@ extension SwiftFact {
     // MARK: - Static Deserialization Methods
     
     /// Deserializes from a JSON string
-    static func deserialize(fromString jsonString: String, context: SwiftParseContext) -> SwiftFact? {
+    static public func deserialize(fromString jsonString: String, context: SwiftParseContext) -> SwiftFact? {
         return SwiftFactLegacySupport.deserialize(from: jsonString)
     }
 }
@@ -1954,7 +1954,7 @@ enum SwiftFactSetLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftFactSet
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftFactSet {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftFactSet {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -1962,7 +1962,7 @@ enum SwiftFactSetLegacySupport {
     }
     
     /// Deserializes string into a SwiftFactSet
-    static func deserialize(from jsonString: String) throws -> SwiftFactSet {
+    static public func deserialize(from jsonString: String) throws -> SwiftFactSet {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -1991,7 +1991,7 @@ enum SwiftFactSetLegacySupport {
 
 /// Parses FactSet elements in an Adaptive Card
 struct SwiftFactSetParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.factSet)
         return try SwiftFactSetLegacySupport.deserialize(from: value, context: context)
     }
@@ -2000,7 +2000,7 @@ struct SwiftFactSetParser: SwiftBaseCardElementParser {
         return try SwiftFactSetLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftFactSetLegacySupport.deserialize(from: value)
     }
 }
@@ -2044,7 +2044,7 @@ enum SwiftGridAreaLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftGridArea
-    static func deserialize(from value: [String: Any]) throws -> SwiftGridArea {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftGridArea {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -2052,7 +2052,7 @@ enum SwiftGridAreaLegacySupport {
     }
     
     /// Deserializes string into a SwiftGridArea
-    static func deserialize(from jsonString: String) throws -> SwiftGridArea {
+    static public func deserialize(from jsonString: String) throws -> SwiftGridArea {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -2097,7 +2097,7 @@ extension SwiftGridArea {
     }
     
     // Legacy compatibility methods - direct replacements for original code
-    static func deserialize(from json: [String: Any]) -> SwiftGridArea {
+    static public func deserialize(from json: [String: Any]) -> SwiftGridArea {
         do {
             return try SwiftGridAreaLegacySupport.deserialize(from: json)
         } catch {
@@ -2114,7 +2114,7 @@ enum SwiftMediaLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftMedia
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftMedia {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftMedia {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -2122,7 +2122,7 @@ enum SwiftMediaLegacySupport {
     }
     
     /// Deserializes string into a SwiftMedia
-    static func deserialize(from jsonString: String) throws -> SwiftMedia {
+    static public func deserialize(from jsonString: String) throws -> SwiftMedia {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -2198,7 +2198,7 @@ enum SwiftMediaLegacySupport {
 
 /// Parses Media elements in an Adaptive Card
 struct SwiftMediaParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.media)
         return try SwiftMediaLegacySupport.deserialize(from: value, context: context)
     }
@@ -2207,7 +2207,7 @@ struct SwiftMediaParser: SwiftBaseCardElementParser {
         return try SwiftMediaLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftMediaLegacySupport.deserialize(from: value)
     }
 }
@@ -2254,7 +2254,7 @@ enum SwiftMediaSourceLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftMediaSource
-    static func deserialize(from value: [String: Any]) throws -> SwiftMediaSource {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftMediaSource {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -2262,7 +2262,7 @@ enum SwiftMediaSourceLegacySupport {
     }
     
     /// Deserializes string into a SwiftMediaSource
-    static func deserialize(from jsonString: String) throws -> SwiftMediaSource {
+    static public func deserialize(from jsonString: String) throws -> SwiftMediaSource {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -2310,7 +2310,7 @@ enum SwiftRatingInputLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftRatingInput
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftRatingInput {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftRatingInput {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -2318,7 +2318,7 @@ enum SwiftRatingInputLegacySupport {
     }
     
     /// Deserializes string into a SwiftRatingInput
-    static func deserialize(from jsonString: String) throws -> SwiftRatingInput {
+    static public func deserialize(from jsonString: String) throws -> SwiftRatingInput {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -2374,7 +2374,7 @@ enum SwiftRatingInputLegacySupport {
 
 /// Parses RatingInput elements in an Adaptive Card
 struct SwiftRatingInputParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.ratingInput)
         return try SwiftRatingInputLegacySupport.deserialize(from: value, context: context)
     }
@@ -2383,7 +2383,7 @@ struct SwiftRatingInputParser: SwiftBaseCardElementParser {
         return try SwiftRatingInputLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftRatingInputLegacySupport.deserialize(from: value)
     }
 }
@@ -2483,7 +2483,7 @@ enum SwiftRatingLabelLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftRatingLabel
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftRatingLabel {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftRatingLabel {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -2491,7 +2491,7 @@ enum SwiftRatingLabelLegacySupport {
     }
     
     /// Deserializes string into a SwiftRatingLabel
-    static func deserialize(from jsonString: String) throws -> SwiftRatingLabel {
+    static public func deserialize(from jsonString: String) throws -> SwiftRatingLabel {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -2555,7 +2555,7 @@ enum SwiftRatingLabelLegacySupport {
 
 /// Parses RatingLabel elements in an Adaptive Card
 struct SwiftRatingLabelParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.ratingLabel)
         return try SwiftRatingLabelLegacySupport.deserialize(from: value, context: context)
     }
@@ -2564,7 +2564,7 @@ struct SwiftRatingLabelParser: SwiftBaseCardElementParser {
         return try SwiftRatingLabelLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftRatingLabelLegacySupport.deserialize(from: value)
     }
 }
@@ -2670,14 +2670,14 @@ enum SwiftRefreshLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftRefresh
-    static func deserialize(from value: [String: Any]) throws -> SwiftRefresh {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftRefresh {
         let action: SwiftBaseActionElement? = try? SwiftBaseActionElement.deserializeAction(from: value["action"] as? [String: Any] ?? [:])
         let userIds = value["userIds"] as? [String] ?? []
         return SwiftRefresh(action: action, userIds: userIds)
     }
     
     /// Deserializes string into a SwiftRefresh
-    static func deserialize(from jsonString: String) throws -> SwiftRefresh {
+    static public func deserialize(from jsonString: String) throws -> SwiftRefresh {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -2732,7 +2732,7 @@ enum SwiftRefreshLegacySupport {
 
 extension SwiftRefresh {
     // Static factory methods for backward compatibility
-    static func deserialize(from json: [String: Any]) throws -> SwiftRefresh {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftRefresh {
         return try SwiftRefreshLegacySupport.deserialize(from: json)
     }
     
@@ -2759,7 +2759,7 @@ enum SwiftRichTextBlockLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftRichTextBlock
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftRichTextBlock {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftRichTextBlock {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -2767,7 +2767,7 @@ enum SwiftRichTextBlockLegacySupport {
     }
     
     /// Deserializes string into a SwiftRichTextBlock
-    static func deserialize(from jsonString: String) throws -> SwiftRichTextBlock {
+    static public func deserialize(from jsonString: String) throws -> SwiftRichTextBlock {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -2838,7 +2838,7 @@ enum SwiftRichTextBlockLegacySupport {
 
 /// Parses RichTextBlock elements in an Adaptive Card
 struct SwiftRichTextBlockParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.richTextBlock)
         return try SwiftRichTextBlockLegacySupport.deserialize(from: value, context: context)
     }
@@ -2847,7 +2847,7 @@ struct SwiftRichTextBlockParser: SwiftBaseCardElementParser {
         return try SwiftRichTextBlockLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftRichTextBlockLegacySupport.deserialize(from: value)
     }
 }
@@ -2869,7 +2869,7 @@ internal extension SwiftRichTextBlock {
 
 // Legacy static methods and factory method for backward compatibility
 extension SwiftRichTextBlock {
-    static func deserialize(fromString jsonString: String) throws -> SwiftRichTextBlock {
+    static public func deserialize(fromString jsonString: String) throws -> SwiftRichTextBlock {
         return try SwiftRichTextBlockLegacySupport.deserialize(from: jsonString)
     }
     
@@ -2932,7 +2932,7 @@ enum SwiftRichTextElementPropertiesLegacySupport {
     
     /// Deserializes JSON into a SwiftRichTextElementProperties
     /// Deserializes JSON into a SwiftRichTextElementProperties
-    static func deserialize(from value: [String: Any]) throws -> SwiftRichTextElementProperties {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftRichTextElementProperties {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -2942,7 +2942,7 @@ enum SwiftRichTextElementPropertiesLegacySupport {
     }
     
     /// Deserializes string into a SwiftRichTextElementProperties
-    static func deserialize(from jsonString: String) throws -> SwiftRichTextElementProperties {
+    static public func deserialize(from jsonString: String) throws -> SwiftRichTextElementProperties {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -3011,7 +3011,7 @@ enum SwiftSeparatorLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftSeparator
-    static func deserialize(from value: [String: Any]) throws -> SwiftSeparator {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftSeparator {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -3019,7 +3019,7 @@ enum SwiftSeparatorLegacySupport {
     }
     
     /// Deserializes string into a SwiftSeparator
-    static func deserialize(from jsonString: String) throws -> SwiftSeparator {
+    static public func deserialize(from jsonString: String) throws -> SwiftSeparator {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -3058,7 +3058,7 @@ enum SwiftTableLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftTable
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTable {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTable {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -3066,7 +3066,7 @@ enum SwiftTableLegacySupport {
     }
     
     /// Deserializes string into a SwiftTable
-    static func deserialize(from jsonString: String) throws -> SwiftTable {
+    static public func deserialize(from jsonString: String) throws -> SwiftTable {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -3120,8 +3120,10 @@ enum SwiftTableLegacySupport {
 // MARK: - Parser Implementation
 
 /// Parses Table elements in an Adaptive Card.
-struct SwiftTableParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+public struct SwiftTableParser: SwiftBaseCardElementParser {
+    public init() { }
+    
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         // Verify that the type is correct, using case-insensitive comparison
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.table)
         
@@ -3140,14 +3142,14 @@ struct SwiftTableParser: SwiftBaseCardElementParser {
         return table
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         let jsonDict = try SwiftParseUtil.getJsonDictionary(from: value)
         return try deserialize(context: context, value: jsonDict)
     }
 }
 
 extension SwiftTableParser {
-    func deserialize(from value: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(from value: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
         return try self.deserialize(fromString: context, value: value)
     }
 }
@@ -3186,7 +3188,7 @@ enum SwiftTableCellLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftTableCell
-    static func deserialize(from value: [String: Any], context: SwiftParseContext) throws -> SwiftTableCell {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext) throws -> SwiftTableCell {
         let idProperty = value[SwiftAdaptiveCardSchemaKey.id.rawValue] as? String ?? ""
         let internalId = SwiftInternalId.next()
         
@@ -3212,7 +3214,7 @@ enum SwiftTableCellLegacySupport {
     }
     
     /// Deserializes string into a SwiftTableCell
-    static func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableCell {
+    static public func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableCell {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []),
               let jsonDict = jsonObject as? [String: Any] else {
@@ -3250,7 +3252,7 @@ enum SwiftTableCellLegacySupport {
 
 /// Parses TableCell elements in an Adaptive Card.
 struct SwiftTableCellParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.tableCell)
         return try SwiftTableCellLegacySupport.deserialize(from: value, context: context)
     }
@@ -3259,7 +3261,7 @@ struct SwiftTableCellParser: SwiftBaseCardElementParser {
         return try SwiftTableCellLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftTableCellLegacySupport.deserialize(from: value, context: context)
     }
 }
@@ -3276,12 +3278,12 @@ internal extension SwiftTableCell {
     // MARK: - Static Factory Methods
     
     /// Deserializes a `TableCell` from a JSON dictionary.
-    static func deserialize(from json: [String: Any], context: SwiftParseContext) throws -> SwiftTableCell {
+    static public func deserialize(from json: [String: Any], context: SwiftParseContext) throws -> SwiftTableCell {
         return try SwiftTableCellLegacySupport.deserialize(from: json, context: context)
     }
     
     /// Deserializes a `TableCell` from a JSON string.
-    static func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableCell {
+    static public func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableCell {
         return try SwiftTableCellLegacySupport.deserialize(from: jsonString, context: context)
     }
 }
@@ -3301,7 +3303,7 @@ enum SwiftTableColumnDefinitionLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftTableColumnDefinition
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTableColumnDefinition {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTableColumnDefinition {
         // Check for potential warnings
         if let context = context,
            let widthValue = value["width"] as? String,
@@ -3319,13 +3321,13 @@ enum SwiftTableColumnDefinitionLegacySupport {
     }
     
     /// Deserializes Data into a SwiftTableColumnDefinition
-    static func deserialize(from data: Data) throws -> SwiftTableColumnDefinition {
+    static public func deserialize(from data: Data) throws -> SwiftTableColumnDefinition {
         let decoder = JSONDecoder()
         return try decoder.decode(SwiftTableColumnDefinition.self, from: data)
     }
     
     /// Deserializes string into a SwiftTableColumnDefinition
-    static func deserialize(from jsonString: String) throws -> SwiftTableColumnDefinition {
+    static public func deserialize(from jsonString: String) throws -> SwiftTableColumnDefinition {
         guard let data = jsonString.data(using: .utf8) else {
             throw SerializationError.stringDecodingFailed
         }
@@ -3333,7 +3335,7 @@ enum SwiftTableColumnDefinitionLegacySupport {
     }
     
     /// Deserializes string into a SwiftTableColumnDefinition with context
-    static func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableColumnDefinition {
+    static public func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableColumnDefinition {
         let dict = try SwiftParseUtil.getJsonDictionary(from: jsonString)
         return try deserialize(from: dict, context: context)
     }
@@ -3384,14 +3386,14 @@ extension SwiftTableColumnDefinition {
     /// Serializes the current instance into a JSON string.
     /// - Returns: A JSON string representing the instance.
     /// - Throws: An error if encoding fails.
-    func serialize() throws -> String {
+    public func serialize() throws -> String {
         return try SwiftTableColumnDefinitionLegacySupport.serializeToJsonString(self)
     }
     
     // Legacy static factory methods
     
     /// Deserializes from a JSON string with context
-    static func deserialize(context: SwiftParseContext, from jsonString: String) throws -> SwiftTableColumnDefinition {
+    static public func deserialize(context: SwiftParseContext, from jsonString: String) throws -> SwiftTableColumnDefinition {
         return try SwiftTableColumnDefinitionLegacySupport.deserialize(from: jsonString, context: context)
     }
 }
@@ -3403,7 +3405,7 @@ enum SwiftTableRowLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftTableRow
-    static func deserialize(from value: [String: Any], context: SwiftParseContext) throws -> SwiftTableRow {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext) throws -> SwiftTableRow {
         // Retrieve the id property using the expected key from AdaptiveCardSchemaKey.
         let idProperty = value[SwiftAdaptiveCardSchemaKey.id.rawValue] as? String ?? ""
         let internalId = SwiftInternalId.next()
@@ -3455,7 +3457,7 @@ enum SwiftTableRowLegacySupport {
     }
     
     /// Deserializes string into a SwiftTableRow
-    static func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableRow {
+    static public func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableRow {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []),
               let jsonDict = jsonObject as? [String: Any] else {
@@ -3496,7 +3498,7 @@ enum SwiftTableRowLegacySupport {
 
 /// Parses TableRow elements in an Adaptive Card.
 struct SwiftTableRowParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.tableRow)
         return try SwiftTableRowLegacySupport.deserialize(from: value, context: context)
     }
@@ -3505,14 +3507,14 @@ struct SwiftTableRowParser: SwiftBaseCardElementParser {
         return try SwiftTableRowLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftTableRowLegacySupport.deserialize(from: value, context: context)
     }
 }
 
 // MARK: - SwiftTableRow Extension
 
-internal extension SwiftTableRow {
+extension SwiftTableRow {
     /// Serializes to legacy JSON format
     func serializeToLegacyJsonFormat(superResult: [String: Any]) throws -> [String: Any] {
         return try SwiftTableRowLegacySupport.serializeToJson(self, baseJson: superResult)
@@ -3526,7 +3528,7 @@ internal extension SwiftTableRow {
     }
     
     /// Deserializes a `TableRow` from a JSON string.
-    static func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableRow {
+    public static func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftTableRow {
         return try SwiftTableRowLegacySupport.deserialize(from: jsonString, context: context)
     }
 }
@@ -3538,7 +3540,7 @@ enum TextBlockLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a TextBlock
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTextBlock {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftTextBlock {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -3546,7 +3548,7 @@ enum TextBlockLegacySupport {
     }
     
     /// Deserializes string into a TextBlock
-    static func deserialize(from jsonString: String) throws -> SwiftTextBlock {
+    static public func deserialize(from jsonString: String) throws -> SwiftTextBlock {
         guard let data = jsonString.data(using: .utf8) else {
             throw SerializationError.stringDecodingFailed
         }
@@ -3638,8 +3640,10 @@ enum TextBlockLegacySupport {
 // MARK: - Parser Implementation
 
 /// Parses TextBlock elements in an Adaptive Card.
-struct SwiftTextBlockParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+public struct SwiftTextBlockParser: SwiftBaseCardElementParser {
+    public init() { }
+    
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         // Verify the type
         try SwiftParseUtil.expectTypeString(value, expected: SwiftCardElementType.textBlock)
         return try TextBlockLegacySupport.deserialize(from: value, context: context)
@@ -3649,7 +3653,7 @@ struct SwiftTextBlockParser: SwiftBaseCardElementParser {
         return try TextBlockLegacySupport.deserialize(from: value)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         let jsonDict = try SwiftParseUtil.getJsonDictionary(from: value)
         return try deserialize(context: context, value: jsonDict)
     }
@@ -3710,12 +3714,12 @@ extension SwiftTextBlock {
 
 extension SwiftTextBlock {
     /// Sets the text after performing a single-pass HTML entity decode.
-    func setText(_ newText: String) {
+    public func setText(_ newText: String) {
         self.text = SwiftTextBlock.decodeHTMLEntities(newText)
     }
     
     /// Returns the (decoded) text.
-    func getText() -> String {
+    public func getText() -> String {
         return self.text
     }
 }
@@ -3727,7 +3731,7 @@ enum SwiftTextElementPropertiesLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftTextElementProperties
-    static func deserialize(from value: [String: Any]) throws -> SwiftTextElementProperties {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftTextElementProperties {
         guard value["text"] is String else {
             throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: "text")
         }
@@ -3738,7 +3742,7 @@ enum SwiftTextElementPropertiesLegacySupport {
     }
     
     /// Deserializes string into a SwiftTextElementProperties
-    static func deserialize(from jsonString: String) throws -> SwiftTextElementProperties {
+    static public func deserialize(from jsonString: String) throws -> SwiftTextElementProperties {
         guard let data = jsonString.data(using: .utf8) else {
             throw SerializationError.stringDecodingFailed
         }
@@ -3820,13 +3824,13 @@ enum SwiftTextRunLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftTextRun
-    static func deserialize(from value: [String: Any]) throws -> SwiftTextRun? {
+    static public func deserialize(from value: [String: Any]) throws -> SwiftTextRun? {
         // Use the existing deserialize method from SwiftTextRun
         return try SwiftTextRun.deserialize(from: value)
     }
     
     /// Deserializes string into a SwiftTextRun
-    static func deserialize(from jsonString: String) throws -> SwiftTextRun? {
+    static public func deserialize(from jsonString: String) throws -> SwiftTextRun? {
         guard let data = jsonString.data(using: .utf8),
               let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
@@ -3900,7 +3904,7 @@ enum SwiftTextRunLegacySupport {
 
 // MARK: - SwiftTextRun Extension for Deserialization
 
-extension SwiftTextRun {
+public extension SwiftTextRun {
     /// Static method to deserialize from a JSON dictionary
     static func deserialize(from json: [String: Any]) throws -> SwiftTextRun? {
         guard let text = json["text"] as? String else { return nil }
@@ -4001,7 +4005,7 @@ enum SwiftToggleVisibilityTargetLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes a `SwiftToggleVisibilityTarget` from a JSON dictionary.
-    static func deserialize(from json: [String: Any]) throws -> SwiftToggleVisibilityTarget {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftToggleVisibilityTarget {
         // Legacy support: if the JSON is a single string, treat it as the elementId with a default toggle state.
         if let elementId = json as? String {
             return SwiftToggleVisibilityTarget(elementId: elementId, isVisible: .toggle)
@@ -4018,7 +4022,7 @@ enum SwiftToggleVisibilityTargetLegacySupport {
     }
     
     /// Deserializes a `SwiftToggleVisibilityTarget` from a JSON string.
-    static func deserialize(from jsonString: String) throws -> SwiftToggleVisibilityTarget {
+    static public func deserialize(from jsonString: String) throws -> SwiftToggleVisibilityTarget {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []),
               let jsonDict = jsonObject as? [String: Any] else {
@@ -4097,13 +4101,13 @@ enum SwiftTokenExchangeResourceLegacySupport {
     }
     
     /// Deserializes a `SwiftTokenExchangeResource` from a JSON dictionary.
-    static func deserialize(from json: [String: Any]) throws -> SwiftTokenExchangeResource {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftTokenExchangeResource {
         let jsonData = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftTokenExchangeResource.self, from: jsonData)
     }
     
     /// Deserializes a `SwiftTokenExchangeResource` from a JSON string.
-    static func deserialize(from jsonString: String) throws -> SwiftTokenExchangeResource {
+    static public func deserialize(from jsonString: String) throws -> SwiftTokenExchangeResource {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw SwiftAdaptiveCardParseException(statusCode: .invalidJson, message: "Invalid JSON string")
         }
@@ -4332,12 +4336,12 @@ enum SwiftExecuteActionLegacySupport {
 }
 
 final class SwiftExecuteActionParser: SwiftActionElementParser {
-    func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         let data = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftExecuteAction.self, from: data)
     }
 
-    func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
         guard let jsonData = jsonString.data(using: .utf8),
               let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
             throw SwiftAdaptiveCardParseException(statusCode: .invalidJson, message: "Invalid JSON string")
@@ -4348,13 +4352,13 @@ final class SwiftExecuteActionParser: SwiftActionElementParser {
 
 enum SwiftShowCardActionLegacySupport {
     /// Deserializes a `SwiftShowCardAction` from a JSON dictionary.
-    static func deserialize(from json: [String: Any]) throws -> SwiftShowCardAction {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftShowCardAction {
         let data = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftShowCardAction.self, from: data)
     }
     
     /// Deserializes a `SwiftShowCardAction` from a JSON string.
-    static func deserialize(from jsonString: String) throws -> SwiftShowCardAction {
+    static public func deserialize(from jsonString: String) throws -> SwiftShowCardAction {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftAdaptiveCardParseException(statusCode: .invalidJson, message: "Invalid JSON string")
         }
@@ -4391,13 +4395,13 @@ enum SwiftShowCardActionLegacySupport {
 class SwiftShowCardActionParser: SwiftActionElementParser {
     
     /// Deserializes a `ShowCardAction` from a JSON dictionary.
-    func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         let data = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftShowCardAction.self, from: data)
     }
 
     /// Deserializes a `ShowCardAction` from a JSON string.
-    func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
         let json = try SwiftParseUtil.getJsonDictionary(from: jsonString)
         return try deserialize(context: context, from: json)
     }
@@ -4405,13 +4409,13 @@ class SwiftShowCardActionParser: SwiftActionElementParser {
 
 enum SwiftOpenUrlActionLegacySupport {
     /// Deserializes a `SwiftOpenUrlAction` from a JSON dictionary.
-    static func deserialize(from json: [String: Any]) throws -> SwiftOpenUrlAction {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftOpenUrlAction {
         let data = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftOpenUrlAction.self, from: data)
     }
     
     /// Deserializes a `SwiftOpenUrlAction` from a JSON string.
-    static func deserialize(from jsonString: String) throws -> SwiftOpenUrlAction {
+    static public func deserialize(from jsonString: String) throws -> SwiftOpenUrlAction {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftAdaptiveCardParseException(statusCode: .invalidJson, message: "Invalid JSON string")
         }
@@ -4420,11 +4424,11 @@ enum SwiftOpenUrlActionLegacySupport {
 }
 
 struct OpenUrlActionParser: SwiftActionElementParser {
-    func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftOpenUrlActionLegacySupport.deserialize(from: json)
     }
     
-    func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftOpenUrlActionLegacySupport.deserialize(from: jsonString)
     }
 }
@@ -4514,11 +4518,11 @@ enum SwiftSubmitActionLegacySupport {
 }
 
 class SubmitActionParser: SwiftActionElementParser {
-    func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftSubmitActionLegacySupport.make(from: json)
     }
     
-    func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []),
               let jsonDict = jsonObject as? [String: Any] else {
@@ -4531,7 +4535,7 @@ class SubmitActionParser: SwiftActionElementParser {
 extension SwiftSubmitAction {
     /// Creates a SubmitAction from a JSON dictionary.
     /// (Renamed from “deserialize(from:)” to avoid conflicting with BaseActionElement’s extension.)
-    static func make(from json: [String: Any]) throws -> SwiftSubmitAction {
+    public static func make(from json: [String: Any]) throws -> SwiftSubmitAction {
         let dataJson: Any?
         if let data = json[SwiftAdaptiveCardSchemaKey.data.rawValue] {
             if let dataDict = data as? [String: Any] {
@@ -4583,13 +4587,13 @@ extension SwiftSubmitAction {
 
 enum SwiftToggleVisibilityActionLegacySupport {
     /// Deserializes a SwiftToggleVisibilityAction from a JSON dictionary.
-    static func deserialize(from json: [String: Any], context: SwiftParseContext) throws -> SwiftToggleVisibilityAction {
+    static public func deserialize(from json: [String: Any], context: SwiftParseContext) throws -> SwiftToggleVisibilityAction {
         let data = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftToggleVisibilityAction.self, from: data)
     }
     
     /// Deserializes a SwiftToggleVisibilityAction from a JSON string.
-    static func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftToggleVisibilityAction {
+    static public func deserialize(from jsonString: String, context: SwiftParseContext) throws -> SwiftToggleVisibilityAction {
         guard let data = jsonString.data(using: .utf8) else {
             throw AdaptiveCardParseError.invalidJson
         }
@@ -4598,17 +4602,17 @@ enum SwiftToggleVisibilityActionLegacySupport {
 }
 
 class ToggleVisibilityActionParser: SwiftActionElementParser {
-    func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftToggleVisibilityActionLegacySupport.deserialize(from: json, context: context)
     }
     
-    func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftToggleVisibilityActionLegacySupport.deserialize(from: jsonString, context: context)
     }
 }
 
 final class UnknownActionParser: SwiftActionElementParser {
-    func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         guard let typeString = json["type"] as? String else {
             throw AdaptiveCardParseError.invalidType
         }
@@ -4620,7 +4624,7 @@ final class UnknownActionParser: SwiftActionElementParser {
         return unknownAction
     }
     
-    func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> any SwiftAdaptiveCardElementProtocol {
         let json = try SwiftParseUtil.getJsonDictionary(from: jsonString)
         return try deserialize(context: context, from: json)
     }
@@ -4664,12 +4668,12 @@ extension SwiftContentSource {
         return SwiftRemoteResourceInformation(url: url, mimeType: mimeType)
     }
 
-    static func deserialize(from json: [String: Any]) throws -> SwiftContentSource {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftContentSource {
         let jsonData = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftContentSource.self, from: jsonData)
     }
 
-    static func deserialize(from jsonString: String) throws -> SwiftContentSource {
+    static public func deserialize(from jsonString: String) throws -> SwiftContentSource {
         guard let jsonData = jsonString.data(using: .utf8) else {
             throw NSError(domain: "ContentSource", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON string"])
         }
@@ -4678,7 +4682,7 @@ extension SwiftContentSource {
 }
 
 extension SwiftFlowLayout {
-    class func deserialize(from json: [String: Any]) throws -> SwiftFlowLayout {
+    class public func deserialize(from json: [String: Any]) throws -> SwiftFlowLayout {
         let data = try JSONSerialization.data(withJSONObject: json, options: [])
         return try JSONDecoder().decode(SwiftFlowLayout.self, from: data)
     }
@@ -4691,7 +4695,7 @@ enum SwiftContainerLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftContainer
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftContainer {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftContainer {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -4699,7 +4703,7 @@ enum SwiftContainerLegacySupport {
     }
     
     /// Deserializes string into a SwiftContainer
-    static func deserialize(from jsonString: String) throws -> SwiftContainer {
+    static public func deserialize(from jsonString: String) throws -> SwiftContainer {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -4758,7 +4762,7 @@ enum SwiftContainerLegacySupport {
 
 /// Parses Container elements in an Adaptive Card
 struct SwiftContainerParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: .container)
         
         // Save current context
@@ -4787,7 +4791,7 @@ struct SwiftContainerParser: SwiftBaseCardElementParser {
         return try SwiftContainerLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         return try SwiftContainerLegacySupport.deserialize(from: value)
     }
 }
@@ -4873,7 +4877,7 @@ enum SwiftColumnLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftColumn
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftColumn {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftColumn {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -4881,7 +4885,7 @@ enum SwiftColumnLegacySupport {
     }
     
     /// Deserializes string into a SwiftColumn
-    static func deserialize(from jsonString: String) throws -> SwiftColumn {
+    static public func deserialize(from jsonString: String) throws -> SwiftColumn {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -4946,7 +4950,7 @@ enum SwiftColumnLegacySupport {
 
 /// Parses Column elements in an Adaptive Card
 struct SwiftColumnParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         guard let typeString = value["type"] as? String,
               typeString == SwiftCardElementType.column.rawValue else {
             throw SwiftAdaptiveCardParseException(statusCode: .requiredPropertyMissing, message: "Invalid type for Column")
@@ -5001,7 +5005,7 @@ struct SwiftColumnParser: SwiftBaseCardElementParser {
         return try SwiftColumnLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         let jsonDict = try SwiftParseUtil.getJsonDictionary(from: value)
         return try deserialize(context: context, value: jsonDict)
     }
@@ -5089,7 +5093,7 @@ enum SwiftColumnSetLegacySupport {
     // MARK: - Parsing Functions
     
     /// Deserializes JSON into a SwiftColumnSet
-    static func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftColumnSet {
+    static public func deserialize(from value: [String: Any], context: SwiftParseContext? = nil) throws -> SwiftColumnSet {
         // Convert dictionary to JSON data
         let data = try JSONSerialization.data(withJSONObject: value, options: [])
         let decoder = JSONDecoder()
@@ -5097,7 +5101,7 @@ enum SwiftColumnSetLegacySupport {
     }
     
     /// Deserializes string into a SwiftColumnSet
-    static func deserialize(from jsonString: String) throws -> SwiftColumnSet {
+    static public func deserialize(from jsonString: String) throws -> SwiftColumnSet {
         guard let data = jsonString.data(using: .utf8) else {
             throw SwiftJSONError.missingKey("Invalid JSON string")
         }
@@ -5146,7 +5150,7 @@ enum SwiftColumnSetLegacySupport {
 
 /// Parses ColumnSet elements in an Adaptive Card
 struct SwiftColumnSetParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: .columnSet)
         
         // Parse the columnset itself
@@ -5177,7 +5181,7 @@ struct SwiftColumnSetParser: SwiftBaseCardElementParser {
         return try SwiftColumnSetLegacySupport.deserialize(from: value, context: context)
     }
     
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         let jsonDict = try SwiftParseUtil.getJsonDictionary(from: value)
         return try deserialize(context: context, value: jsonDict)
     }
@@ -5337,7 +5341,7 @@ extension SwiftBaseCardElement {
     // MARK: - Deserialization Methods
     
     /// Parses a BaseCardElement from a JSON dictionary.
-    static func deserialize(from originalJson: [String: Any]) throws -> SwiftBaseCardElement {
+    static public func deserialize(from originalJson: [String: Any]) throws -> SwiftBaseCardElement {
         // 1) Unwrap first
         let unwrapped = SwiftParseUtil.unwrapAnyCodable(from: originalJson)
         guard let jsonDict = unwrapped as? [String: Any] else {
@@ -5421,7 +5425,7 @@ extension SwiftBaseCardElement {
     }
 
     /// Parses a BaseCardElement from a JSON string.
-    static func deserialize(from jsonString: String) throws -> SwiftBaseCardElement {
+    static public func deserialize(from jsonString: String) throws -> SwiftBaseCardElement {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []),
               let jsonDict = jsonObject as? [String: Any] else {
@@ -5476,12 +5480,12 @@ extension SwiftBaseCardElement {
     // MARK: - Type Properties
     
     /// Returns the type string (as originally decoded)
-    var elementTypeString: String {
+    public var elementTypeString: String {
         return self.typeString
     }
     
     /// A convenience "parse" method used in tests.
-    static func parse(json: [String: Any], context: SwiftParseContext) -> SwiftBaseCardElement? {
+    public static func parse(json: [String: Any], context: SwiftParseContext) -> SwiftBaseCardElement? {
         // We simply attempt to deserialize and return nil if an error is thrown.
         return try? SwiftBaseCardElement.deserialize(from: json)
     }
@@ -5493,7 +5497,7 @@ extension SwiftAdaptiveCard {
     // MARK: - Deserialization Methods
     
     /// Deserializes an AdaptiveCard from a JSON dictionary.
-    static func deserialize(from json: [String: Any]) throws -> SwiftAdaptiveCard {
+    static public func deserialize(from json: [String: Any]) throws -> SwiftAdaptiveCard {
         let version = json[SwiftAdaptiveCardSchemaKey.version.rawValue] as? String ?? "1.0"
         let fallbackText = json[SwiftAdaptiveCardSchemaKey.fallbackText.rawValue] as? String
         
@@ -5719,13 +5723,13 @@ extension SwiftAdaptiveCard {
     }
     
     /// Deserializes an AdaptiveCard from a JSON string.
-    static func deserialize(from jsonString: String) throws -> SwiftAdaptiveCard {
+    static public func deserialize(from jsonString: String) throws -> SwiftAdaptiveCard {
         let jsonDict = try SwiftParseUtil.getJsonDictionary(from: jsonString)
         return try deserialize(from: jsonDict)
     }
     
     /// Creates an AdaptiveCard that serves as a fallback, containing a single TextBlock with the provided text.
-    func makeFallbackTextCard(text: String, language: String, speak: String) -> SwiftAdaptiveCard? {
+    public func makeFallbackTextCard(text: String, language: String, speak: String) -> SwiftAdaptiveCard? {
         let fallbackTextBlock = SwiftTextBlock(
             text: text,
             textStyle: .heading,      // Use heading as expected

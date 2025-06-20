@@ -8,10 +8,10 @@
 import Foundation
 
 /// Represents the context during parsing of an Adaptive Card, tracking hierarchy and element state.
-class SwiftParseContext {
-    var elementParserRegistration: SwiftElementParserRegistration?
-    var actionParserRegistration: ActionParserRegistration?
-    var warnings: [SwiftAdaptiveCardParseWarning] = []
+public class SwiftParseContext {
+    public var elementParserRegistration: SwiftElementParserRegistration?
+    public var actionParserRegistration: ActionParserRegistration?
+    public var warnings: [SwiftAdaptiveCardParseWarning] = []
     
     /// Keeps track of seen elements to detect ID collisions.
     private var elementIds: [String: SwiftInternalId] = [:]
@@ -36,12 +36,12 @@ class SwiftParseContext {
 
     // MARK: - Initializers
     
-    init() {
+    public init() {
         // Create default element parser registration with built-in parsers
         self.elementParserRegistration = SwiftElementParserRegistration()
     }
     
-    init(elementParserRegistration: SwiftElementParserRegistration?, actionParserRegistration: ActionParserRegistration?) {
+    public init(elementParserRegistration: SwiftElementParserRegistration?, actionParserRegistration: ActionParserRegistration?) {
         self.elementParserRegistration = elementParserRegistration
         self.actionParserRegistration = actionParserRegistration
     }
@@ -141,10 +141,10 @@ class SwiftParseContext {
 }
 
 public struct SwiftAdaptiveCardParseWarning: Codable {
-    let statusCode: SwiftWarningStatusCode
-    let message: String
+    public let statusCode: SwiftWarningStatusCode
+    public let message: String
 
-    init(statusCode: SwiftWarningStatusCode, message: String) {
+    public init(statusCode: SwiftWarningStatusCode, message: String) {
         self.statusCode = statusCode
         self.message = message
     }
@@ -159,31 +159,31 @@ public struct SwiftAdaptiveCardParseWarning: Codable {
 }
 
 /// Represents an error encountered while parsing an Adaptive Card.
-struct SwiftAdaptiveCardParseException: Error {
-    let statusCode: SwiftErrorStatusCode
-    let message: String
+public struct SwiftAdaptiveCardParseException: Error {
+    public let statusCode: SwiftErrorStatusCode
+    public let message: String
     
-    init(statusCode: SwiftErrorStatusCode, message: String) {
+    public init(statusCode: SwiftErrorStatusCode, message: String) {
         self.statusCode = statusCode
         self.message = message
     }
     
     // Added to satisfy tests:
-    func what() -> String {
+    public func what() -> String {
         return message
     }
     
-    func getStatusCode() -> SwiftErrorStatusCode {
+    public func getStatusCode() -> SwiftErrorStatusCode {
         return statusCode
     }
     
-    func getReason() -> String {
+    public func getReason() -> String {
         return message
     }
 }
 
 extension SwiftAdaptiveCardParseException: LocalizedError {
-    var errorDescription: String? {
+    public var errorDescription: String? {
         return message
     }
 }

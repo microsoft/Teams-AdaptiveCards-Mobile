@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import AdaptiveCards
+import AdaptiveCards
 
 // The expected JSON – using a multiline string for readability.
 private let EVERYTHING_JSON = """

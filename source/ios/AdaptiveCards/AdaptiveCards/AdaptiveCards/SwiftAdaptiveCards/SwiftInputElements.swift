@@ -9,14 +9,14 @@ import Foundation
 
 /// Represents an input element in an Adaptive Card. This class inherits from BaseCardElement and adds additional
 /// properties specific to input elements.
-class SwiftBaseInputElement: SwiftBaseCardElement {
+public class SwiftBaseInputElement: SwiftBaseCardElement {
     // MARK: - Properties
     /// The text label for the input element.
-    let label: String?
+    public let label: String?
     /// Indicates whether a value is required.
-    let isRequired: Bool
+    public let isRequired: Bool
     /// The error message to display if the input is invalid.
-    let errorMessage: String?
+    public let errorMessage: String?
     /// An action to execute when the input's value changes.
     let valueChangedAction: SwiftValueChangedAction?
 
@@ -47,7 +47,7 @@ class SwiftBaseInputElement: SwiftBaseCardElement {
     }
 
     /// Encodes properties into the given encoder.
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(label, forKey: .label)
         // Only encode isRequired if it's true (non-default)
@@ -77,22 +77,22 @@ class SwiftBaseInputElement: SwiftBaseCardElement {
 
 
 /// Represents a toggle input field in an Adaptive Card.
-class SwiftToggleInput: SwiftBaseInputElement {
+public class SwiftToggleInput: SwiftBaseInputElement {
     // MARK: - Properties
     /// The display title for the toggle.
-    let title: String?
+    public let title: String?
     
     /// The default value of the toggle.
-    let value: String?
+    public let value: String?
     
     /// The value representing an "off" state.
-    let valueOff: String
+    public let valueOff: String
     
     /// The value representing an "on" state.
-    let valueOn: String
+    public let valueOn: String
     
     /// Whether the title should wrap.
-    let wrap: Bool
+    public let wrap: Bool
 
     // MARK: - Codable Implementation
     
@@ -123,7 +123,7 @@ class SwiftToggleInput: SwiftBaseInputElement {
     }
 
     /// Encodes a `ToggleInput` to JSON.
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(value, forKey: .value)
@@ -158,12 +158,12 @@ class SwiftToggleInput: SwiftBaseInputElement {
 }
 
 /// Represents a time input field in an Adaptive Card.
-class SwiftTimeInput: SwiftBaseInputElement {
+public class SwiftTimeInput: SwiftBaseInputElement {
     // MARK: - Properties
-    let max: String?
-    let min: String?
-    let placeholder: String?
-    let value: String?
+    public let max: String?
+    public let min: String?
+    public let placeholder: String?
+    public let value: String?
     
     // MARK: - Codable Implementation
     
@@ -187,7 +187,7 @@ class SwiftTimeInput: SwiftBaseInputElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(max, forKey: .max)
         try container.encodeIfPresent(min, forKey: .min)
@@ -212,15 +212,15 @@ class SwiftTimeInput: SwiftBaseInputElement {
 }
 
 /// Represents a ChoiceSetInput in an Adaptive Card.
-class SwiftChoiceSetInput: SwiftBaseInputElement {
+public class SwiftChoiceSetInput: SwiftBaseInputElement {
     // MARK: - Properties
-    let isMultiSelect: Bool
-    let choiceSetStyle: SwiftChoiceSetStyle
-    let choices: [SwiftChoiceInput]
-    let choicesData: SwiftChoicesData?
-    let value: String
-    let wrap: Bool
-    let placeholder: String
+    public let isMultiSelect: Bool
+    public let choiceSetStyle: SwiftChoiceSetStyle
+    public let choices: [SwiftChoiceInput]
+    public let choicesData: SwiftChoicesData?
+    public let value: String
+    public let wrap: Bool
+    public let placeholder: String
 
     // MARK: - Codable Implementation
     
@@ -253,7 +253,7 @@ class SwiftChoiceSetInput: SwiftBaseInputElement {
         populateKnownPropertiesSet()
     }
 
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(isMultiSelect, forKey: .isMultiSelect)
         try container.encode(choiceSetStyle, forKey: .choiceSetStyle)
@@ -288,12 +288,12 @@ class SwiftChoiceSetInput: SwiftBaseInputElement {
 }
 
 /// Represents a number input element in an Adaptive Card.
-class SwiftNumberInput: SwiftBaseInputElement {
+public class SwiftNumberInput: SwiftBaseInputElement {
     // MARK: - Properties
-    let placeholder: String?
-    let value: Double?
-    let min: Double?
-    let max: Double?
+    public let placeholder: String?
+    public let value: Double?
+    public let min: Double?
+    public let max: Double?
     
     // MARK: - Codable Implementation
     
@@ -343,7 +343,7 @@ class SwiftNumberInput: SwiftBaseInputElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(placeholder, forKey: .placeholder)
         try container.encodeIfPresent(value, forKey: .value)
@@ -368,28 +368,28 @@ class SwiftNumberInput: SwiftBaseInputElement {
 }
 
 /// Represents a text input element in an Adaptive Card.
-class SwiftTextInput: SwiftBaseInputElement {
+public class SwiftTextInput: SwiftBaseInputElement {
     // MARK: - Properties
     /// Placeholder text displayed when the input is empty.
-    let placeholder: String?
+    public let placeholder: String?
     
     /// The default value of the input field.
-    let value: String?
+    public let value: String?
     
     /// Whether the input field is multiline.
-    let isMultiline: Bool
+    public let isMultiline: Bool
     
     /// Maximum length of the input field.
-    let maxLength: UInt
+    public let maxLength: UInt
     
     /// Style of the text input.
-    let style: SwiftTextInputStyle?
+    public let style: SwiftTextInputStyle?
     
     /// Optional inline action associated with the input.
-    let inlineAction: SwiftBaseActionElement?
+    public let inlineAction: SwiftBaseActionElement?
     
     /// Regular expression for validation.
-    let regex: String?
+    public let regex: String?
     
     // MARK: - Codable Implementation
     
@@ -426,7 +426,7 @@ class SwiftTextInput: SwiftBaseInputElement {
     }
     
     /// Encodes a `TextInput` to JSON.
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(placeholder, forKey: .placeholder)
         try container.encodeIfPresent(value, forKey: .value)
@@ -467,12 +467,12 @@ class SwiftTextInput: SwiftBaseInputElement {
 }
 
 /// Represents a date input element in an Adaptive Card.
-class SwiftDateInput: SwiftBaseInputElement {
+public class SwiftDateInput: SwiftBaseInputElement {
     // MARK: - Properties
-    let max: String?
-    let min: String?
-    let placeholder: String?
-    let value: String?
+    public let max: String?
+    public let min: String?
+    public let placeholder: String?
+    public let value: String?
     
     // MARK: - Codable Implementation
     
@@ -496,7 +496,7 @@ class SwiftDateInput: SwiftBaseInputElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(max, forKey: .max)
         try container.encodeIfPresent(min, forKey: .min)
@@ -521,11 +521,11 @@ class SwiftDateInput: SwiftBaseInputElement {
 }
 
 /// Represents a choice input in an Adaptive Card.
-struct SwiftChoiceInput: Codable {
+public struct SwiftChoiceInput: Codable {
     // MARK: - Properties
-    let type: String?
-    let title: String
-    let value: String
+    public let type: String?
+    public let title: String
+    public let value: String
     
     init(title: String, value: String) {
         self.type = "Input.Choice"
@@ -533,14 +533,14 @@ struct SwiftChoiceInput: Codable {
         self.value = value
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "Input.Choice"
         self.title = try container.decode(String.self, forKey: .title)
         self.value = try container.decode(String.self, forKey: .value)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type ?? "Input.Choice", forKey: .type)
         try container.encode(title, forKey: .title)

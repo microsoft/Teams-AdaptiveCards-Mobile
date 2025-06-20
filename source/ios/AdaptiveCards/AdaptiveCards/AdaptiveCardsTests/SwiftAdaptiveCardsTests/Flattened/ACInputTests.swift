@@ -7,7 +7,7 @@
 
 import Foundation
 import XCTest
-@testable import AdaptiveCards
+import AdaptiveCards
 
 final class ACInputTests: XCTestCase {
     

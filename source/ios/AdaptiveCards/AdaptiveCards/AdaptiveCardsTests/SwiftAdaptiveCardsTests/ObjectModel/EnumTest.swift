@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import AdaptiveCards
+import AdaptiveCards
 
 /// Helper function for a basic enum test.
 func assertEnumConversion<T: Equatable>(

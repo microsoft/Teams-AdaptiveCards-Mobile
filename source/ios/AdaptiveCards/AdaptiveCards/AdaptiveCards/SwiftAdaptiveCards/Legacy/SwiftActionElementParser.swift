@@ -7,20 +7,20 @@
 
 import Foundation
 
-protocol SwiftActionElementParser {
+public protocol SwiftActionElementParser {
     func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> SwiftAdaptiveCardElementProtocol
     func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> SwiftAdaptiveCardElementProtocol
 }
 
-final class SwiftActionElementParserWrapper: SwiftActionElementParser {
+public final class SwiftActionElementParserWrapper: SwiftActionElementParser {
     private let parser: SwiftActionElementParser
-    var actualParser: SwiftActionElementParser { return parser }
+    public var actualParser: SwiftActionElementParser { return parser }
     
     init(parser: SwiftActionElementParser) {
         self.parser = parser
     }
     
-    func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> SwiftAdaptiveCardElementProtocol {
         guard let idProperty = json["id"] as? String else {
             throw SwiftAdaptiveCardParseException(
                 statusCode: .requiredPropertyMissing,
@@ -32,7 +32,7 @@ final class SwiftActionElementParserWrapper: SwiftActionElementParser {
         return element
     }
     
-    func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> SwiftAdaptiveCardElementProtocol {
         guard let jsonData = jsonString.data(using: .utf8),
               let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
             throw SwiftAdaptiveCardParseException(
@@ -43,11 +43,11 @@ final class SwiftActionElementParserWrapper: SwiftActionElementParser {
     }
 }
 
-final class ActionParserRegistration {
+public final class ActionParserRegistration {
     private var knownElements: Set<String> = []
     private var cardElementParsers: [String: SwiftActionElementParser] = [:]
 
-    init() {
+    public init() {
         let defaultParsers: [(String, SwiftActionElementParser)] = [
             (SwiftActionType.execute.rawValue, SwiftExecuteActionParser()),
             (SwiftActionType.openUrl.rawValue, OpenUrlActionParser()),
@@ -63,21 +63,21 @@ final class ActionParserRegistration {
         }
     }
 
-    func addParser(for elementType: String, parser: SwiftActionElementParser) throws {
+    public func addParser(for elementType: String, parser: SwiftActionElementParser) throws {
         guard !knownElements.contains(elementType) else {
             throw SwiftAdaptiveCardParseException(statusCode: .unsupportedParserOverride, message: "Overriding known action parsers is unsupported")
         }
         cardElementParsers[elementType] = parser
     }
 
-    func removeParser(for elementType: String) throws {
+    public func removeParser(for elementType: String) throws {
         guard !knownElements.contains(elementType) else {
             throw SwiftAdaptiveCardParseException(statusCode: .unsupportedParserOverride, message: "Removing known action parsers is unsupported")
         }
         cardElementParsers.removeValue(forKey: elementType)
     }
 
-    func getParser(for elementType: String) -> SwiftActionElementParser? {
+    public func getParser(for elementType: String) -> SwiftActionElementParser? {
         guard let parser = cardElementParsers[elementType] else {
             return nil
         }

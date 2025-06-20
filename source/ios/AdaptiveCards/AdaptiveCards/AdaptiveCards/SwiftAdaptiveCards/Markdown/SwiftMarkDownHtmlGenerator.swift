@@ -616,15 +616,15 @@ class SwiftMarkDownParsedResult {
 
 // MARK: - Main Parser
 
-class SwiftMarkDownParser {
+public class SwiftMarkDownParser {
     private let text: String
     private var parsedResult = SwiftMarkDownParsedResult()
     private var hasHTMLTag: Bool = false
     private var isEscaped: Bool = false
     
-    init(_ text: String) { self.text = text }
+    public init(_ text: String) { self.text = text }
     
-    func transformToHtml() -> String {
+    public func transformToHtml() -> String {
         if text.isEmpty { return "<p></p>" }
         parseBlock()
         parsedResult.translate()
@@ -633,9 +633,9 @@ class SwiftMarkDownParser {
         return parsedResult.generateHtmlString()
     }
     
-    func getRawText() -> String { return text }
-    func hasHtmlTags() -> Bool { return hasHTMLTag }
-    func isEscapedText() -> Bool { return isEscaped }
+    public func getRawText() -> String { return text }
+    public func hasHtmlTags() -> Bool { return hasHTMLTag }
+    public func isEscapedText() -> Bool { return isEscaped }
     
     private func parseBlock() {
         let escapedText = escapeText()

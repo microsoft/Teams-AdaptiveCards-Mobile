@@ -10,25 +10,25 @@ import Foundation
 // MARK: - TextBlock Implementation
 
 /// Represents a TextBlock element in an Adaptive Card.
-class SwiftTextBlock: SwiftBaseCardElement {
+public class SwiftTextBlock: SwiftBaseCardElement {
     // MARK: - Properties
     
-    var text: String
-    let textStyle: SwiftTextStyle?
-    let textSize: SwiftTextSize?
-    let textWeight: SwiftTextWeight?
-    var fontType: SwiftFontType?
-    let textColor: SwiftForegroundColor?
-    let isSubtle: Bool?
-    let wrap: Bool
-    let maxLines: UInt
-    let horizontalAlignment: SwiftHorizontalAlignment?
-    let language: String?
+    public var text: String
+    public let textStyle: SwiftTextStyle?
+    public let textSize: SwiftTextSize?
+    public let textWeight: SwiftTextWeight?
+    public var fontType: SwiftFontType?
+    public let textColor: SwiftForegroundColor?
+    public let isSubtle: Bool?
+    public let wrap: Bool
+    public let maxLines: UInt
+    public let horizontalAlignment: SwiftHorizontalAlignment?
+    public let language: String?
 
     // MARK: - Initializers
     
     /// Designated initializer.
-    init(
+    public init(
         text: String = "",
         textStyle: SwiftTextStyle? = .defaultStyle,
         textSize: SwiftTextSize? = nil,
@@ -120,7 +120,7 @@ class SwiftTextBlock: SwiftBaseCardElement {
     }
 
     /// Encodes the TextBlock to JSON.
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -148,7 +148,7 @@ class SwiftTextBlock: SwiftBaseCardElement {
     // MARK: - Helper Methods
     
     /// Returns a DateTimePreparser initialized with the current text.
-    func getTextForDateParsing() -> SwiftDateTimePreparser {
+    public func getTextForDateParsing() -> SwiftDateTimePreparser {
         return SwiftDateTimePreparser(input: self.text)
     }
     
@@ -178,10 +178,10 @@ class SwiftTextBlock: SwiftBaseCardElement {
 }
 
 /// Represents a rich text block with inline elements.
-class SwiftRichTextBlock: SwiftBaseCardElement {
+public class SwiftRichTextBlock: SwiftBaseCardElement {
     // MARK: - Properties
-    let horizontalAlignment: SwiftHorizontalAlignment?
-    let inlines: [Any] // Supports both TextRun and String
+    public let horizontalAlignment: SwiftHorizontalAlignment?
+    public let inlines: [Any] // Supports both TextRun and String
     
     // MARK: - Codable Implementation
     
@@ -227,7 +227,7 @@ class SwiftRichTextBlock: SwiftBaseCardElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         
@@ -253,17 +253,17 @@ class SwiftRichTextBlock: SwiftBaseCardElement {
 }
 
 /// Represents an image element in an Adaptive Card.
-class SwiftImage: SwiftBaseCardElement {
+public class SwiftImage: SwiftBaseCardElement {
     // MARK: - Properties
-    let url: String
-    let backgroundColor: String
-    let imageStyle: SwiftImageStyle
-    let imageSize: SwiftImageSize
-    var pixelWidth: UInt
-    let pixelHeight: UInt
-    let altText: String
-    let hAlignment: SwiftHorizontalAlignment?
-    let selectAction: SwiftBaseActionElement?
+    public let url: String
+    public let backgroundColor: String
+    public let imageStyle: SwiftImageStyle
+    public let imageSize: SwiftImageSize
+    public var pixelWidth: UInt
+    public let pixelHeight: UInt
+    public let altText: String
+    public let hAlignment: SwiftHorizontalAlignment?
+    public let selectAction: SwiftBaseActionElement?
     
     // MARK: - Codable Implementation
     
@@ -347,7 +347,7 @@ class SwiftImage: SwiftBaseCardElement {
         self.populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(url, forKey: .url)
         try container.encode(backgroundColor, forKey: .backgroundColor)
@@ -373,12 +373,12 @@ class SwiftImage: SwiftBaseCardElement {
 }
 
 /// Represents a media element containing sources and optional poster/alt text.
-class SwiftMedia: SwiftBaseCardElement {
+public class SwiftMedia: SwiftBaseCardElement {
     // MARK: - Properties
-    let poster: String?
-    let altText: String?
-    let sources: [SwiftMediaSource]
-    let captionSources: [SwiftCaptionSource]
+    public let poster: String?
+    public let altText: String?
+    public let sources: [SwiftMediaSource]
+    public let captionSources: [SwiftCaptionSource]
     
     // MARK: - Codable Implementation
     
@@ -402,7 +402,7 @@ class SwiftMedia: SwiftBaseCardElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(poster, forKey: .poster)
         try container.encodeIfPresent(altText, forKey: .altText)
@@ -419,10 +419,10 @@ class SwiftMedia: SwiftBaseCardElement {
 }
 
 /// Represents a media source, inheriting properties from `ContentSource`.
-struct SwiftMediaSource: Codable {
+public struct SwiftMediaSource: Codable {
     // MARK: - Properties
-    let url: String
-    let mimeType: String?
+    public let url: String
+    public let mimeType: String?
     
     // MARK: - Codable Implementation
     
@@ -430,14 +430,14 @@ struct SwiftMediaSource: Codable {
         case url, mimeType
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         url = try container.decode(String.self, forKey: .url)
         mimeType = try container.decodeIfPresent(String.self, forKey: .mimeType)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(url, forKey: .url)
         try container.encodeIfPresent(mimeType, forKey: .mimeType)
@@ -496,7 +496,7 @@ class SwiftIcon: SwiftBaseCardElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(name, forKey: .name)
         try container.encode(foregroundColor, forKey: .foregroundColor)
@@ -518,48 +518,48 @@ class SwiftIcon: SwiftBaseCardElement {
 }
 
 /// Represents a text run element in an Adaptive Card
-struct SwiftTextRun: Codable, SwiftInline {
+public struct SwiftTextRun: Codable, SwiftInline {
     // MARK: - Properties
-    let inlineType: SwiftInlineElementType = .textRun
+    public let inlineType: SwiftInlineElementType = .textRun
     
     /// The text content of the text run
-    let text: String
+    public let text: String
     
     /// Optional text size
-    let textSize: SwiftTextSize?
+    public let textSize: SwiftTextSize?
     
     /// Optional text weight
-    let textWeight: SwiftTextWeight?
+    public let textWeight: SwiftTextWeight?
     
     /// Optional font type
-    let fontType: SwiftFontType?
+    public let fontType: SwiftFontType?
     
     /// Optional text color
-    let textColor: SwiftForegroundColor?
+    public let textColor: SwiftForegroundColor?
     
     /// Optional subtle text flag
-    let isSubtle: Bool?
+    public let isSubtle: Bool?
     
     /// Italic text flag
-    let italic: Bool
+    public let italic: Bool
     
     /// Strikethrough text flag
-    let strikethrough: Bool
+    public let strikethrough: Bool
     
     /// Highlight text flag
-    let highlight: Bool
+    public let highlight: Bool
     
     /// Underline text flag
-    let underline: Bool
+    public let underline: Bool
     
     /// Optional language
-    let language: String?
+    public let language: String?
     
     /// Optional select action
-    let selectAction: SwiftBaseActionElement?
+    public let selectAction: SwiftBaseActionElement?
     
     /// Additional properties not explicitly defined
-    var additionalProperties: [String: AnyCodable] = [:]
+    public var additionalProperties: [String: AnyCodable] = [:]
     
     // MARK: - Computed Properties
     
@@ -614,7 +614,7 @@ struct SwiftTextRun: Codable, SwiftInline {
     
     // MARK: - Decoding
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Decode required properties
@@ -653,7 +653,7 @@ struct SwiftTextRun: Codable, SwiftInline {
     
     // MARK: - Encoding
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         // Encode required properties
@@ -684,9 +684,9 @@ struct SwiftTextRun: Codable, SwiftInline {
 }
 
 /// Represents a FactSet element in an Adaptive Card.
-class SwiftFactSet: SwiftBaseCardElement {
+public class SwiftFactSet: SwiftBaseCardElement {
     // MARK: - Properties
-    let facts: [SwiftFact]
+    public let facts: [SwiftFact]
     
     // MARK: - Codable Implementation
     
@@ -707,7 +707,7 @@ class SwiftFactSet: SwiftBaseCardElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(facts, forKey: .facts)
         try super.encode(to: encoder)
@@ -720,11 +720,17 @@ class SwiftFactSet: SwiftBaseCardElement {
     }
 }
 
-struct SwiftFact: Codable {
+public struct SwiftFact: Codable {
     // MARK: - Properties
-    var title: String
-    var value: String
-    let language: String?
+    public var title: String
+    public var value: String
+    public let language: String?
+    
+    public init() {
+        title = ""
+        value = ""
+        language = nil
+    }
 
     // MARK: - Codable Implementation
     
@@ -734,7 +740,7 @@ struct SwiftFact: Codable {
         case language
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
@@ -742,7 +748,7 @@ struct SwiftFact: Codable {
         language = try container.decodeIfPresent(String.self, forKey: .language)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(title, forKey: .title)
         try container.encode(value, forKey: .value)
@@ -756,10 +762,10 @@ struct SwiftFact: Codable {
 }
 
 /// Represents an image set element in an Adaptive Card.
-class SwiftImageSet: SwiftBaseCardElement {
+public class SwiftImageSet: SwiftBaseCardElement {
     // MARK: - Properties
-    var images: [SwiftImage] = []
-    var imageSize: SwiftImageSize = .auto
+    public var images: [SwiftImage] = []
+    public var imageSize: SwiftImageSize = .auto
     
     // MARK: - Initializer
     init(id: String? = nil) {
@@ -811,7 +817,7 @@ class SwiftImageSet: SwiftBaseCardElement {
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(images, forKey: .images)
         try container.encode(imageSize, forKey: .imageSize)
@@ -845,7 +851,7 @@ class SwiftImageSet: SwiftBaseCardElement {
 
 /// Parses ImageSet elements in an Adaptive Card.
 struct SwiftImageSetParser: SwiftBaseCardElementParser {
-    func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> any SwiftAdaptiveCardElementProtocol {
         try SwiftParseUtil.expectTypeString(value, expected: .imageSet)
         let imageSet = try SwiftBaseCardElement.deserialize(from: value) as! SwiftImageSet
         
@@ -875,7 +881,7 @@ struct SwiftImageSetParser: SwiftBaseCardElementParser {
         return imageSet
     }
 
-    func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
+    public func deserialize(fromString context: SwiftParseContext, value: String) throws -> any SwiftAdaptiveCardElementProtocol {
         let jsonDict = try SwiftParseUtil.getJsonDictionary(from: value)
         return try deserialize(context: context, value: jsonDict)
     }
@@ -896,7 +902,7 @@ extension SwiftInline {
         return json
     }
 
-    static func deserialize(from json: [String: Any]) -> SwiftInline? {
+    static public func deserialize(from json: [String: Any]) -> SwiftInline? {
         guard let typeString = json["type"] as? String,
               let type = SwiftInlineElementType(rawValue: typeString) else {
             return nil
@@ -910,9 +916,9 @@ extension SwiftInline {
 }
 
 /// Represents a set of actions in an Adaptive Card.
-class SwiftActionSet: SwiftBaseCardElement {
+public class SwiftActionSet: SwiftBaseCardElement {
     // MARK: - Properties
-    var actions: [SwiftBaseActionElement]
+    public var actions: [SwiftBaseActionElement]
     
     // MARK: - Codable Implementation
     private enum CodingKeys: String, CodingKey {
@@ -940,7 +946,7 @@ class SwiftActionSet: SwiftBaseCardElement {
         try super.init(from: decoder)
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(actions, forKey: .actions)
         try super.encode(to: encoder)
@@ -986,7 +992,7 @@ class SwiftRatingInput: SwiftBaseCardElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(value, forKey: .value)
         try container.encode(max, forKey: .max)
@@ -1012,7 +1018,7 @@ class SwiftRatingLabel: SwiftBaseCardElement {
     let horizontalAlignment: SwiftHorizontalAlignment?
     let size: SwiftRatingSize
     let color: SwiftRatingColor
-    let style: SwiftRatingStyle
+    public let style: SwiftRatingStyle
     
     // MARK: - Codable Implementation
     
@@ -1046,7 +1052,7 @@ class SwiftRatingLabel: SwiftBaseCardElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(value, forKey: .value)
         try container.encode(max, forKey: .max)
@@ -1119,7 +1125,7 @@ struct SwiftIconInfo: Codable {
 }
 
 /// Represents choices data in an Adaptive Card.
-struct SwiftChoicesData: Codable {
+public struct SwiftChoicesData: Codable {
     // MARK: - Properties
     let choicesDataType: String
     let dataset: String
@@ -1134,11 +1140,11 @@ struct SwiftChoicesData: Codable {
 }
 
 /// Represents a caption source in an Adaptive Card.
-struct SwiftCaptionSource: Codable {
+public struct SwiftCaptionSource: Codable {
     // MARK: - Properties
-    let mimeType: String?
-    let url: String?
-    let label: String?
+    public let mimeType: String?
+    public let url: String?
+    public let label: String?
     
     // MARK: - Codable Implementation
     private enum CodingKeys: String, CodingKey {
@@ -1148,28 +1154,28 @@ struct SwiftCaptionSource: Codable {
     }
 }
 
-struct SwiftAuthCardButton: Codable {
+public struct SwiftAuthCardButton: Codable {
     // MARK: - Properties
-    let type: String
-    let title: String
-    let image: String
-    let value: String
+    public let type: String
+    public let title: String
+    public let image: String
+    public let value: String
 }
 
-struct SwiftAuthentication: Codable {
-    let text: String
-    let connectionName: String
-    let tokenExchangeResource: SwiftTokenExchangeResource?
-    let buttons: [SwiftAuthCardButton]
+public struct SwiftAuthentication: Codable {
+    public let text: String
+    public let connectionName: String
+    public let tokenExchangeResource: SwiftTokenExchangeResource?
+    public let buttons: [SwiftAuthCardButton]
 }
 
 /// Represents a background image in an Adaptive Card.
-struct SwiftBackgroundImage: Codable {
+public struct SwiftBackgroundImage: Codable {
     // MARK: - Properties
-    let url: String
-    let fillMode: SwiftImageFillMode
-    let horizontalAlignment: SwiftHorizontalAlignment
-    let verticalAlignment: SwiftVerticalAlignment
+    public let url: String
+    public let fillMode: SwiftImageFillMode
+    public let horizontalAlignment: SwiftHorizontalAlignment
+    public let verticalAlignment: SwiftVerticalAlignment
     
     // MARK: - Initialization
     init(
@@ -1189,7 +1195,7 @@ struct SwiftBackgroundImage: Codable {
         case url, fillMode, horizontalAlignment, verticalAlignment
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Decode url with default
@@ -1215,7 +1221,7 @@ struct SwiftBackgroundImage: Codable {
         verticalAlignment = SwiftVerticalAlignment(rawValue: verticalStr) ?? .top
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(url, forKey: .url)
@@ -1352,11 +1358,11 @@ struct SwiftSeparator: Codable {
 }
 
 /// Represents an unknown element in an Adaptive Card.
-class SwiftUnknownElement: SwiftBaseCardElement {
+public class SwiftUnknownElement: SwiftBaseCardElement {
     // MARK: - Properties
     private let elementType: String
     
-    override var typeString: String {
+    override public var typeString: String {
         get { return elementType }
         set { /* Immutable property, setter required by protocol */ }
     }
@@ -1558,7 +1564,7 @@ class SwiftCompoundButton: SwiftBaseCardElement {
         populateKnownPropertiesSet()
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(badge, forKey: .badge)
         try container.encodeIfPresent(title, forKey: .title)
@@ -1651,7 +1657,7 @@ class SwiftFlowLayout: SwiftLayout {
         self.maxItemPixelWidth = SwiftFlowLayout.parseSizeToPixels(try container.decodeIfPresent(String.self, forKey: .maxItemWidth)) ?? -1
     }
 
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         if itemFit != .fit {
@@ -1714,7 +1720,7 @@ class SwiftAreaGridLayout: SwiftLayout {
         self.layoutContainerType = .areaGrid
     }
     
-    override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(columns, forKey: .columns)
         try container.encode(areas, forKey: .areas)
@@ -1725,13 +1731,13 @@ class SwiftAreaGridLayout: SwiftLayout {
 }
 
 /// Represents a token exchange resource in Adaptive Cards.
-struct SwiftTokenExchangeResource: Codable {
+public struct SwiftTokenExchangeResource: Codable {
     /// The unique identifier for the token exchange resource.
-    let id: String?
+    public let id: String?
     
     /// The URI associated with the resource.
-    let uri: String?
+    public let uri: String?
     
     /// The provider ID for the resource.
-    let providerId: String?
+    public let providerId: String?
 }

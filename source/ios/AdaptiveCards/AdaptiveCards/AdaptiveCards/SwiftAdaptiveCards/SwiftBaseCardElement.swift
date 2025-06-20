@@ -9,34 +9,34 @@ import Foundation
 
 /// A protocol that represents an adaptive card element.
 /// Both card and action elements must provide these basic properties.
-protocol SwiftAdaptiveCardElementProtocol: Codable {
+public protocol SwiftAdaptiveCardElementProtocol: Codable {
     var typeString: String { get set }
     var id: String? { get set }
 }
 
 /// Represents a base element in an Adaptive Card.
-class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
+public class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
     // MARK: - Properties
-    let type: SwiftCardElementType
-    var spacing: SwiftSpacing = .default
-    var height: SwiftHeightType = .auto
-    var targetWidth: SwiftTargetWidthType?
-    var separator: Bool?
-    var isVisible: Bool = true
-    var areaGridName: String?
-    var parentalId: SwiftInternalId?
+    public let type: SwiftCardElementType
+    public var spacing: SwiftSpacing = .default
+    public var height: SwiftHeightType = .auto
+    public var targetWidth: SwiftTargetWidthType?
+    public var separator: Bool?
+    public var isVisible: Bool = true
+    public var areaGridName: String?
+    public var parentalId: SwiftInternalId?
     
     /// Properties to track if values were explicitly set in JSON
     private var spacingWasExplicitlySet: Bool = false
     private var heightWasExplicitlySet: Bool = false
     
-    override var typeString: String {
+    override public var typeString: String {
         get { return type.rawValue }
         set { /* Optionally update type if needed */ }
     }
     
     /// Returns the element type as a CardElementType (or .unknown if it can't be parsed)
-    var elementTypeVal: SwiftCardElementType {
+    public var elementTypeVal: SwiftCardElementType {
         // Use the normal conversion
         let baseType = SwiftCardElementType.fromString(self.typeString) ?? .unknown
         // But if this is a TableRow or TableCell that came in as an orphan, return .unknown.
@@ -47,7 +47,7 @@ class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
     }
 
     // MARK: - Initializers
-    init(
+    public init(
         type: SwiftCardElementType,
         spacing: SwiftSpacing = .default,
         height: SwiftHeightType = .auto,
@@ -135,7 +135,7 @@ class SwiftBaseCardElement: SwiftBaseElement, SwiftAdaptiveCardElementProtocol {
     }
     
     /// Serializes the BaseCardElement into JSON.
-    override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(type.rawValue, forKey: .type)
         

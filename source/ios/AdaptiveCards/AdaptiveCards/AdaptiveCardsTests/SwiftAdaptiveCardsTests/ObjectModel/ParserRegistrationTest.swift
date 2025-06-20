@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import AdaptiveCards
+import AdaptiveCards
 
 class ParserRegistrationTests: XCTestCase {
     
@@ -35,11 +35,11 @@ class ParserRegistrationTests: XCTestCase {
     
     // Define a custom element parser.
     class TestCustomElementParser: SwiftBaseCardElementParser {
-        func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> SwiftAdaptiveCardElementProtocol {
+        public func deserialize(context: SwiftParseContext, value: [String: Any]) throws -> SwiftAdaptiveCardElementProtocol {
             return TestCustomElement(json: value)
         }
         
-        func deserialize(fromString context: SwiftParseContext, value: String) throws -> SwiftAdaptiveCardElementProtocol {
+        public func deserialize(fromString context: SwiftParseContext, value: String) throws -> SwiftAdaptiveCardElementProtocol {
             let jsonValue = SwiftParseUtil.getJsonValue(from: value)
             return try deserialize(context: context, value: jsonValue)
         }
@@ -47,11 +47,11 @@ class ParserRegistrationTests: XCTestCase {
     
     // Define a custom action parser.
     class TestCustomActionParser: SwiftActionElementParser {
-        func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> SwiftAdaptiveCardElementProtocol {
+        public func deserialize(context: SwiftParseContext, from json: [String: Any]) throws -> SwiftAdaptiveCardElementProtocol {
             return TestCustomElement(json: json)
         }
         
-        func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> SwiftAdaptiveCardElementProtocol {
+        public func deserialize(fromString jsonString: String, context: SwiftParseContext) throws -> SwiftAdaptiveCardElementProtocol {
             let jsonValue = SwiftParseUtil.getJsonValue(from: jsonString)
             return try deserialize(context: context, from: jsonValue)
         }

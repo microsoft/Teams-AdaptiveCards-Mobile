@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents a unique identifier for elements during deserialization.
-struct SwiftInternalId: Hashable, Codable {
+public struct SwiftInternalId: Hashable, Codable {
     private static var currentInternalId: UInt = 0
     private let internalId: UInt
 
@@ -32,11 +32,11 @@ struct SwiftInternalId: Hashable, Codable {
     }
 
     // MARK: - Equatable & Hashable
-    static func == (lhs: SwiftInternalId, rhs: SwiftInternalId) -> Bool {
+    public static func == (lhs: SwiftInternalId, rhs: SwiftInternalId) -> Bool {
         return lhs.internalId == rhs.internalId
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(internalId)
     }
 
