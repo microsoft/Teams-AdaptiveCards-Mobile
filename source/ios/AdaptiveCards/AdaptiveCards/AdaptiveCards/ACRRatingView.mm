@@ -176,7 +176,7 @@
         // Width and height constraints for each star
         [NSLayoutConstraint activateConstraints:@[
             [starImageView.widthAnchor constraintEqualToConstant:[self sizeOfStar].width + (padding * 2)],
-            [starImageView.heightAnchor constraintEqualToConstant:[self sizeOfStar].height + (padding *2)]
+            [starImageView.heightAnchor constraintEqualToConstant:[self sizeOfStar].height + (padding * 2)]
         ]];
         
         if (i == _starImageViews.count - 1)
@@ -328,7 +328,7 @@
         NSMutableAttributedString *ratingCountStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"%ld", (long)_count]];
         UIFont *ratingFont = [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
         NSDictionary *dotAttributes = @{
-            NSFontAttributeName: [UIFont systemFontOfSize:_ratingSize == ACRMedium ? 11 : 11 weight:UIFontWeightRegular],
+            NSFontAttributeName: [UIFont systemFontOfSize:11 weight:UIFontWeightRegular],
             NSForegroundColorAttributeName: countTextColor,
             NSBaselineOffsetAttributeName: @2
         };
@@ -339,7 +339,7 @@
         [ratingCountStr addAttribute:NSForegroundColorAttributeName
                                 value:countTextColor
                                 range:NSMakeRange(0, ratingCountStr.length)];
-        NSMutableAttributedString *dotStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@" • "] attributes:dotAttributes];
+        NSMutableAttributedString *dotStr = [[NSMutableAttributedString alloc] initWithString:@" • " attributes:dotAttributes];
         
         [ratingAttributedStr appendAttributedString:dotStr];
         [ratingAttributedStr appendAttributedString:ratingCountStr];
