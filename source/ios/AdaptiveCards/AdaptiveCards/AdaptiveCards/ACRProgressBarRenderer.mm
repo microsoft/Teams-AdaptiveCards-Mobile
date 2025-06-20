@@ -15,6 +15,11 @@
 
 @implementation ACRProgressBarRenderer
 
+static const NSString *Accent = @"Accent";
+static const NSString *Good = @"Good";
+static const NSString *Warning = @"Warning";
+static const NSString *Attention = @"Attention";
+
 + (ACRProgressBarRenderer *)getInstance
 {
     static ACRProgressBarRenderer *singletonInstance = [[self alloc] init];
@@ -37,23 +42,42 @@
     std::shared_ptr<ProgressBar> progressBar = std::dynamic_pointer_cast<ProgressBar>(elem);
     self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     self.progressView.layer.masksToBounds = YES;
-
-
+    
+    // Set colors for light theme - default values
+    NSDictionary *colors = @{
+        Accent: @"#0F6CBD",
+        Good: @"#107C10",
+        Warning: @"#835B00",
+        Attention: @"#C50F1F"
+    };
+    
+    // In case of dark theme use these colors
+    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+        colors = @{
+            Accent: @"#2886DE",
+            Good: @"#10893C",
+            Warning: @"#EAA300",
+            Attention: @"#B83746"
+        };
+    }
+    NSString *progressColor = @"";
     switch(progressBar->GetColor())
     {
         case AdaptiveCards::ProgressBarColor::Accent:
-            self.progressView.progressTintColor = [UIColor systemBlueColor];
+            progressColor = [colors objectForKey:Accent];
             break;
         case AdaptiveCards::ProgressBarColor::Warning:
-            self.progressView.progressTintColor = [UIColor systemOrangeColor];
+            progressColor = [colors objectForKey:Warning];
             break;
         case AdaptiveCards::ProgressBarColor::Good:
-            self.progressView.progressTintColor = [UIColor systemGreenColor];
+            progressColor = [colors objectForKey:Good];
             break;
         case AdaptiveCards::ProgressBarColor::Attention:
-            self.progressView.progressTintColor = [UIColor systemRedColor];
+            progressColor = [colors objectForKey:Attention];
             break;
     }
+    std::string color([progressColor UTF8String]);
+    self.progressView.progressTintColor = [ACOHostConfig convertHexColorCodeToUIColor:color];
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:self.progressView withAreaName:areaName];
     std::optional<double> progress = progressBar->GetValue();
@@ -63,6 +87,7 @@
     }
     else
     {
+        std::string color([[colors objectForKey:Accent] UTF8String]);
         CGFloat pulseWidth = 60;
         CGFloat barHeight = self.progressView.bounds.size.height;
         CGFloat barWidth = self.progressView.bounds.size.width;
@@ -71,7 +96,7 @@
         self.glowLayer.frame = CGRectMake(-pulseWidth, 0, pulseWidth, barHeight);
         self.glowLayer.colors = @[
             (__bridge id)[UIColor clearColor].CGColor,
-            (__bridge id)[UIColor systemBlueColor].CGColor,
+            (__bridge id)[ACOHostConfig convertHexColorCodeToUIColor:color].CGColor,
             (__bridge id)[UIColor clearColor].CGColor
         ];
         self.glowLayer.startPoint = CGPointMake(0, 0.5);
@@ -85,7 +110,6 @@
         animation.toValue = @( (barWidth + pulseWidth) * 2 );
         animation.duration = 4.0;
         animation.repeatCount = HUGE_VALF;
-        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
         [self.glowLayer addAnimation:animation forKey:@"glowSlide"];
 
     }
