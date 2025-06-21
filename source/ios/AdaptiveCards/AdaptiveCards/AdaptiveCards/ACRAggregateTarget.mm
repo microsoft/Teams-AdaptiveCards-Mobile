@@ -15,6 +15,7 @@
 #import "ExecuteAction.h"
 #import "SubmitAction.h"
 #import <UIKit/UIKit.h>
+#import "ACRPopoverPresenter.h"
 
 NSString *const ACRAggregateTargetActionType = @"actiontype";
 NSString *const ACRAggregateTargetSubmitAction = @"submit";
@@ -50,6 +51,11 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
     if (!_doValidation) {
         [[_view card] setInputs:@[]];
         [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
+        if (_actionElement.type == ACRPopover) {
+                [ACRPopoverPresenter presentSheetForAction:_actionElement
+                                                      card:[_view card]
+                                                      view:_view];
+        }
         return;
     }
     // dispatch and validate inputs
@@ -71,6 +77,11 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
         [[_view card] setInputs:results.gatheredInputs];
         // dispatch the card to the host app
         [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
+//        if (_actionElement.type == ACRPopover) {
+//                [ACRPopoverPresenter presentSheetForAction:_actionElement
+//                                                      card:[_view card]
+//                                                      view:_view];
+//        }
     }
 }
 
@@ -107,6 +118,13 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
 - (void)doSelectAction
 {
     [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
+    
+    if (_actionElement.type == ACRPopover) {
+            [ACRPopoverPresenter presentSheetForAction:_actionElement
+                                                  card:[_view card]
+                                                  view:_view];
+        return;
+    }
 }
 
 @end

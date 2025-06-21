@@ -256,6 +256,14 @@ UIColor* defaultButtonBackgroundColor;
     self.hostconfig = payload;
 }
 
+
+- (UIViewController *)presenterViewControllerForAction:(ACOBaseActionElement *)action
+                                               inCard:(ACOAdaptiveCard *)card
+{
+    return self;          // any other host returns its own VC
+}
+
+
 - (void)didFetchUserResponses:(ACOAdaptiveCard *)card action:(ACOBaseActionElement *)action
 {
     if (action.type == ACROpenUrl) {
@@ -269,12 +277,12 @@ UIColor* defaultButtonBackgroundColor;
             [fetchedInputList addObject:[[NSString alloc] initWithData:userInputsAsJson
                                                               encoding:NSUTF8StringEncoding]];
         }
-
+        
         NSString *data = [action data];
         if (data && data.length) {
             [fetchedInputList addObject:[NSString stringWithFormat:@"\"data\" : %@", data]];
         }
-
+        
         if (action.type == ACRExecute) {
             if (action.verb && action.verb.length) {
                 [fetchedInputList addObject:[NSString stringWithFormat:@"\"verb\" : %@", action.verb]];
@@ -283,7 +291,7 @@ UIColor* defaultButtonBackgroundColor;
             [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows];
         }
         NSString *str = [NSString stringWithFormat:@"{\n%@\n}", [fetchedInputList componentsJoinedByString:@",\n"]];
-
+        
         // if the app is being tested we set the result in the uilabel, otherwise
         // we show the label in a popup
         if ([self appIsBeingTested]) {
@@ -292,7 +300,7 @@ UIColor* defaultButtonBackgroundColor;
         } else {
             [self presentViewController:[self createAlertController:@"user response fetched" message:str] animated:YES completion:nil];
         }
-
+        
     } else if (action.type == ACRUnknownAction) {
         if ([action isKindOfClass:[CustomActionNewType class]]) {
             CustomActionNewType *newType = (CustomActionNewType *)action;
@@ -305,6 +313,7 @@ UIColor* defaultButtonBackgroundColor;
         [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows targetView:_targetView];
     }
 }
+
 
 - (UIAlertController *)createAlertController:(NSString *)title message:(NSString *)message
 {
