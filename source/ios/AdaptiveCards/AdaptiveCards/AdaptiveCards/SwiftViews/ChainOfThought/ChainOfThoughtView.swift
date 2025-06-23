@@ -5,6 +5,7 @@ import SwiftUI
 struct ChainOfThoughtView: View {
     let data: ChainOfThoughtData
     @State private var expandedSteps = Set<Int>()
+    var onHeightChange: (() -> Void)? = nil
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -36,6 +37,9 @@ struct ChainOfThoughtView: View {
                         isLast: index == data.entries.count - 1,
                         isExpanded: expandedSteps.contains(index),
                         onToggleExpanded: {
+                            // Notify immediately before animation
+                            onHeightChange?()
+                            
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 if expandedSteps.contains(index) {
                                     expandedSteps.remove(index)
@@ -55,10 +59,17 @@ struct ChainOfThoughtView: View {
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
         .frame(maxWidth: .infinity)
+        .fixedSize(horizontal: false, vertical: true)
         .onAppear {
             // Start with the first step expanded
             if !data.entries.isEmpty {
                 expandedSteps.insert(0)
+            }
+        }
+        .onChange(of: expandedSteps) { _ in
+            // Notify of layout changes when expansion state changes
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                onHeightChange?()
             }
         }
     }
@@ -72,6 +83,9 @@ struct ChainOfThoughtEntryView: View {
     let isLast: Bool
     let isExpanded: Bool
     let onToggleExpanded: () -> Void
+    
+    // Pre-calculate text height to prevent layout changes during animation
+    @State private var titleHeight: CGFloat = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -104,12 +118,33 @@ struct ChainOfThoughtEntryView: View {
                     // Header content
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(alignment: .center) {
+                            // Use overlay to measure text height and prevent reflow
                             Text(entry.header)
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
-                                .lineLimit(isExpanded ? nil : 2)
+                                .lineLimit(nil)
                                 .multilineTextAlignment(.leading)
                                 .foregroundColor(.primary)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(height: titleHeight > 0 ? titleHeight : nil, alignment: .top)
+                                .background(
+                                    // Hidden text for measuring
+                                    Text(entry.header)
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                        .lineLimit(nil)
+                                        .multilineTextAlignment(.leading)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .background(GeometryReader { geometry in
+                                            Color.clear
+                                                .onAppear {
+                                                    if titleHeight == 0 {
+                                                        titleHeight = geometry.size.height
+                                                    }
+                                                }
+                                        })
+                                        .hidden()
+                                )
                             
                             Spacer()
                             
@@ -170,9 +205,10 @@ struct ChainOfThoughtEntryView: View {
                         .padding(.bottom, 8)
                 }
                 .transition(.asymmetric(
-                    insertion: .opacity.combined(with: .move(edge: .top)),
-                    removal: .opacity.combined(with: .move(edge: .top))
+                    insertion: .opacity.combined(with: .move(edge: .top)).combined(with: .scale(scale: 0.98, anchor: .top)),
+                    removal: .opacity.combined(with: .move(edge: .top)).combined(with: .scale(scale: 0.98, anchor: .top))
                 ))
+                .animation(.easeInOut(duration: 0.3), value: isExpanded)
             }
         }
         .frame(maxWidth: .infinity)

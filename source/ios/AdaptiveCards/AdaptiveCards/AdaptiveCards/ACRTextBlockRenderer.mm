@@ -58,10 +58,17 @@
     if ([ChainOfThoughtViewFactory isChainOfThoughtContent:textContent]) {
         UIView *chainOfThoughtView = [ChainOfThoughtViewFactory createChainOfThoughtViewFromTextContent:textContent];
         if (chainOfThoughtView) {
-            // Set up the view for layout
+            // Set up the view for layout with proper priority settings
             chainOfThoughtView.translatesAutoresizingMaskIntoConstraints = NO;
             
-            // Add the Chain of Thought view instead of the regular text block
+            // Ensure proper content priorities for dynamic sizing
+            [chainOfThoughtView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+            [chainOfThoughtView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+            
+            // Prevent clipping by ensuring clipsToBounds is disabled up the chain
+            chainOfThoughtView.clipsToBounds = NO;
+            
+            // Add the Chain of Thought view instead of the regular text block  
             NSString *areaName = stringForCString(elem->GetAreaGridName());
             [viewGroup addArrangedSubview:chainOfThoughtView withAreaName:areaName];
             
