@@ -19,6 +19,7 @@
 #import "TextBlock.h"
 #import "UtiliOS.h"
 #import "ARCGridViewLayout.h"
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
 
 @implementation ACRTextBlockRenderer
 
@@ -45,6 +46,31 @@
 
     if (txtBlck->GetText().empty()) {
         return nil;
+    }
+
+    // Check if this is Chain of Thought content
+    NSString *textContent = [NSString stringWithCString:txtBlck->GetText().c_str() encoding:NSUTF8StringEncoding];
+    if ([ChainOfThoughtViewFactory isChainOfThoughtContent:textContent]) {
+        UIView *chainOfThoughtView = [ChainOfThoughtViewFactory createChainOfThoughtViewFromTextContent:textContent];
+        if (chainOfThoughtView) {
+            // Set up the view for layout
+            chainOfThoughtView.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            // Add the Chain of Thought view instead of the regular text block
+            NSString *areaName = stringForCString(elem->GetAreaGridName());
+            [viewGroup addArrangedSubview:chainOfThoughtView withAreaName:areaName];
+            
+            // If we have a hosting view, attach it to the root view controller
+            if ([chainOfThoughtView isKindOfClass:[ChainOfThoughtHostingView class]]) {
+                UIViewController *rootViewController = traverseResponderChainForUIViewController(rootView);
+                if (rootViewController) {
+                    ChainOfThoughtHostingView *hostingView = (ChainOfThoughtHostingView *)chainOfThoughtView;
+                    [hostingView attachToParentViewController:rootViewController];
+                }
+            }
+            
+            return chainOfThoughtView;
+        }
     }
 
     ACRUILabel *lab = [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];

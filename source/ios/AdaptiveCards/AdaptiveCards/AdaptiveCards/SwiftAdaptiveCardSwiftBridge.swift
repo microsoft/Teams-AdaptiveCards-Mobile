@@ -30,7 +30,7 @@ public class SwiftAdaptiveCardParseResult: NSObject {
 public class SwiftAdaptiveCardParser: NSObject {
     public static let main = SwiftAdaptiveCardParser()
     
-    private var swiftParserEnabled = false
+    private var swiftParserEnabled = true
     
     // Toggle by ECS flag
     public static func setSwiftParserEnabled(_ isEnabled: Bool) {

@@ -1,0 +1,22 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🛠️ Chain of Thought Demo",
+      "size": "Medium",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"entries\":[{\"header\":\"Getting tasks with\",\"content\":\"Starting to pull together relevant sources\",\"appInfo\":{\"name\":\"Asana\",\"icon\":\"https://res.cdn.office.net/teamsappdata/evergreen-assets/apps/f0e33e18-08fc-4511-a2a7-c6bdff367263_largeImage.png?v=1.2.3\"}},{\"header\":\"Understanding task details like title, assignee, and due date\",\"content\":\"The user provided a structured breakdown for a report on the Researcher agent within Microsoft 365 Copilot, outlining specific sub-questions and terms. I will need to search for relevant details, possibly using enterprise resources.\"},{\"header\":\"Identifying blocker, overdue tasks and unassigned items\",\"content\":\"Analyzing the current task status and identifying any blocking issues or overdue items that need immediate attention.\"},{\"header\":\"Organizing tasks by priority, due date, and assignee\",\"content\":\"Sorting and categorizing tasks based on their importance and timeline to provide a clear overview.\"},{\"header\":\"Generating ticket status summary...\",\"content\":\"Compiling the final summary based on all gathered information and presenting it in a structured format.\"}],\"state\":\"Thought for 1 min\",\"isDone\":true}"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Based on the analysis, here are the key findings:",
+      "wrap": true
+    }
+  ]
+}
