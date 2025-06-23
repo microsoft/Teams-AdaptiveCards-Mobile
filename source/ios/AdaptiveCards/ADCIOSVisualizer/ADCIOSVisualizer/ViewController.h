@@ -28,4 +28,6 @@
 
 @property UILabel *retrievedInputsTextView;
 
+- (IBAction)testSwiftAdaptiveCards:(id)sender;
+
 @end

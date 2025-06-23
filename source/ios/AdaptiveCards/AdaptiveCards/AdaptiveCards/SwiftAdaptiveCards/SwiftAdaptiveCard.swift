@@ -19,7 +19,9 @@ enum SwiftFallbackType: String, Codable {
 // MARK: - AdaptiveCard Model
 
 /// Represents an Adaptive Card that contains UI elements and actions.
-public class SwiftAdaptiveCard: Codable {
+public class SwiftAdaptiveCard: Codable, Identifiable {
+    public var id: String { return UUID().uuidString }
+    
     public var version: String
     public let fallbackText: String?
     public let backgroundImage: SwiftBackgroundImage?         // Defined in BackgroundImage.swift

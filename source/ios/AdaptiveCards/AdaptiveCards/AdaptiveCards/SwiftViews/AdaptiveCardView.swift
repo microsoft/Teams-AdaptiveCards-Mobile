@@ -2,21 +2,17 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct AdaptiveCardView: View {
-    let adaptiveCard: AdaptiveCard
-    @StateObject private var viewModel = AdaptiveCardViewModel()
+    let adaptiveCard: SwiftAdaptiveCard
+    @StateObject private var viewModel = SwiftAdaptiveCardViewModel()
 
     var body: some View {
         VStack {
-            if let body = adaptiveCard.body {
-                ForEach(body.indices, id: \.self) { index in
-                    AdaptiveCardElementView(element: body[index])
-                        .environmentObject(viewModel)
-                }
+            ForEach(adaptiveCard.body.indices, id: \.self) { index in
+                AdaptiveCardElementView(element: adaptiveCard.body[index])
+                    .environmentObject(viewModel)
             }
-            if let actions = adaptiveCard.actions {
-                ForEach(actions.indices, id: \.self) { index in
-                    actionButton(for: actions[index])
-                }
+            ForEach(adaptiveCard.actions.indices, id: \.self) { index in
+                actionButton(for: adaptiveCard.actions[index])
             }
         }
         .padding()
@@ -26,7 +22,7 @@ struct AdaptiveCardView: View {
     }
 
     @ViewBuilder
-    func actionButton(for action: Action) -> some View {
+    func actionButton(for action: SwiftBaseActionElement) -> some View {
         Button(action.title ?? "Action") {
             viewModel.handleAction(action)
         }

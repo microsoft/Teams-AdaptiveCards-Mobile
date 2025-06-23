@@ -2,8 +2,8 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct AdaptiveCardTableView: View {
-    let table: TableComponent
-    @EnvironmentObject var viewModel: AdaptiveCardViewModel
+    let table: SwiftTable
+    @EnvironmentObject var viewModel: SwiftAdaptiveCardViewModel
 
     var body: some View {
         VStack(spacing: 0) {
@@ -15,26 +15,23 @@ struct AdaptiveCardTableView: View {
     }
 
     @ViewBuilder
-    func tableRowView(_ row: TableRowComponent) -> some View {
+    func tableRowView(_ row: SwiftTableRow) -> some View {
         HStack(spacing: 0) {
-            ForEach(row.cells.indices, id: \.self) { cellIndex in
-                let cell = row.cells[cellIndex]
-                let columnWidth = table.columns.indices.contains(cellIndex) ? table.columns[cellIndex].width : nil
+            ForEach(Array(row.cells.enumerated()), id: \.offset) { cellIndex, cell in
+                let columnWidth = table.columns.indices.contains(cellIndex) ? table.columns[cellIndex].width?.description : nil
                 tableCellView(cell, columnWidth: columnWidth, row: row)
             }
         }
     }
 
     @ViewBuilder
-    func tableCellView(_ cell: TableCell, columnWidth: Double?, row: TableRowComponent) -> some View {
-        let horizontalAlignment = horizontalAlignmentFromString(
-            cell.horizontalContentAlignment ??
+    func tableCellView(_ cell: SwiftTableCell, columnWidth: String?, row: SwiftTableRow) -> some View {
+        let horizontalAlignment = horizontalAlignmentFromEnum(
             row.horizontalCellContentAlignment ??
             table.horizontalCellContentAlignment
         )
 
-        let verticalAlignment = verticalAlignmentFromString(
-            cell.verticalContentAlignment ??
+        let verticalAlignment = verticalAlignmentFromEnum(
             row.verticalCellContentAlignment ??
             table.verticalCellContentAlignment
         )
@@ -50,47 +47,50 @@ struct AdaptiveCardTableView: View {
         .frame(maxWidth: .infinity, alignment: alignment)
         .padding()
         .background(colorForStyle(cell.style ?? row.style ?? table.gridStyle))
-        .border((table.showGridLines ?? true) ? Color.gray : Color.clear, width: (table.showGridLines ?? true) ? 1 : 0)
+        .border((table.showGridLines) ? Color.gray : Color.clear, width: (table.showGridLines) ? 1 : 0)
     }
     
     // Helper functions
-    func horizontalAlignmentFromString(_ alignment: String?) -> HorizontalAlignment {
-        switch alignment?.lowercased() {
-        case "left":
+    func horizontalAlignmentFromEnum(_ alignment: SwiftHorizontalAlignment?) -> HorizontalAlignment {
+        guard let alignment = alignment else { return .leading }
+        switch alignment {
+        case .left:
             return .leading
-        case "center":
+        case .center:
             return .center
-        case "right":
+        case .right:
             return .trailing
-        default:
-            return .leading
         }
     }
 
-    func verticalAlignmentFromString(_ alignment: String?) -> VerticalAlignment {
-        switch alignment?.lowercased() {
-        case "top":
+    func verticalAlignmentFromEnum(_ alignment: SwiftVerticalContentAlignment?) -> VerticalAlignment {
+        guard let alignment = alignment else { return .center }
+        switch alignment {
+        case .top:
             return .top
-        case "center":
+        case .center:
             return .center
-        case "bottom":
+        case .bottom:
             return .bottom
-        default:
-            return .center
         }
     }
     
-    func colorForStyle(_ style: String?) -> Color {
-        switch style?.lowercased() {
-        case "accent":
+    func colorForStyle(_ style: SwiftContainerStyle?) -> Color {
+        guard let style = style else { return .clear }
+        switch style {
+        case .accent:
             return .blue.opacity(0.1)
-        case "good":
+        case .good:
             return .green.opacity(0.1)
-        case "warning":
+        case .warning:
             return .yellow.opacity(0.1)
-        case "attention":
+        case .attention:
             return .red.opacity(0.1)
-        default:
+        case .none:
+            return .clear
+        case .emphasis:
+            return .gray.opacity(0.1)
+        case .default:
             return .clear
         }
     }

@@ -601,6 +601,10 @@ UIColor* defaultButtonBackgroundColor;
     self.deleteAllRowsButton = [self buildButton:@"Delete All Cards" selector:@selector(deleteAllRows:)];
     [layout[0] addArrangedSubview:self.deleteAllRowsButton];
 
+    // SwiftAdaptiveCards test button
+    UIButton *swiftTestButton = [self buildButton:@"Test SwiftAdaptiveCards" selector:@selector(testSwiftAdaptiveCards:)];
+    [layout[0] addArrangedSubview:swiftTestButton];
+
     UIView *padding1 = [[UIView alloc] init];
     [layout[1] addArrangedSubview:padding1];
     // custom control switch
@@ -822,5 +826,53 @@ UIColor* defaultButtonBackgroundColor;
     // Update responsive layout's host card container when device orientation changes
     CGFloat cardWidthAfterTransition = size.width - 32.0f;
     [[ACRRegistration getInstance] registerHostCardContainer:cardWidthAfterTransition];
+}
+
+- (IBAction)testSwiftAdaptiveCards:(id)sender
+{
+    // Try to access the AdaptiveCardsSharedSwift framework
+    @try {
+        if (@available(iOS 15.0, *)) {
+            Class sharedSwiftClass = NSClassFromString(@"AdaptiveCardsSharedSwift");
+            if (sharedSwiftClass) {
+                id sharedSwift = [sharedSwiftClass performSelector:@selector(shared)];
+                if ([sharedSwift respondsToSelector:@selector(swiftAdaptiveCardsTestController)]) {
+                    UIViewController *testController = [sharedSwift performSelector:@selector(swiftAdaptiveCardsTestController)];
+                    if (testController) {
+                        [self presentViewController:testController animated:YES completion:nil];
+                        return;
+                    }
+                }
+                
+                // Fallback to the basic test controller
+                if ([sharedSwift respondsToSelector:@selector(testController)]) {
+                    UIViewController *testController = [sharedSwift performSelector:@selector(testController)];
+                    if (testController) {
+                        [self presentViewController:testController animated:YES completion:nil];
+                        return;
+                    }
+                }
+            }
+        } else {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unsupported iOS Version" 
+                                                                           message:@"SwiftAdaptiveCards requires iOS 15.0 or later" 
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception while accessing SwiftAdaptiveCards: %@", exception);
+    }
+    
+    // If we get here, show an error
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Feature Unavailable" 
+                                                                   message:@"SwiftAdaptiveCards framework is not available in this build" 
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 @end
