@@ -4,38 +4,42 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct ChainOfThoughtView: View {
     let data: ChainOfThoughtData
-    @State private var isExpanded = false
+    @State private var isExpanded = true  // Start expanded by default
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 0) {
             // Header with state and expand/collapse
-            HStack {
-                Image(systemName: "brain.head.profile")
-                    .foregroundColor(.blue)
-                
-                Text(data.state)
-                    .font(.headline)
-                    .fontWeight(.medium)
-                
-                Spacer()
-                
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        isExpanded.toggle()
-                    }
-                }) {
+            Button(action: {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    isExpanded.toggle()
+                }
+            }) {
+                HStack {
+                    Image(systemName: "brain.head.profile")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 16))
+                    
+                    Text(data.state)
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.primary)
+                    
+                    Spacer()
+                    
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                         .foregroundColor(.gray)
+                        .font(.system(size: 14))
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .buttonStyle(PlainButtonStyle())
             .background(Color(.systemGray6))
             .cornerRadius(8)
             
             // Chain of thought entries
             if isExpanded {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(data.entries.enumerated()), id: \.offset) { index, entry in
                         ChainOfThoughtEntryView(
                             entry: entry,
@@ -45,13 +49,18 @@ struct ChainOfThoughtView: View {
                     }
                 }
                 .padding(.horizontal, 8)
-                .transition(.opacity.combined(with: .move(edge: .top)))
+                .padding(.top, 8)
+                .transition(.asymmetric(
+                    insertion: .opacity.combined(with: .move(edge: .top)),
+                    removal: .opacity.combined(with: .move(edge: .top))
+                ))
             }
         }
         .padding(16)
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -64,7 +73,7 @@ struct ChainOfThoughtEntryView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Status indicator
-            VStack {
+            VStack(spacing: 0) {
                 Circle()
                     .fill(isCompleted ? Color.green : Color.orange)
                     .frame(width: 12, height: 12)
@@ -72,18 +81,20 @@ struct ChainOfThoughtEntryView: View {
                 if !isLast {
                     Rectangle()
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: 2)
-                        .frame(maxHeight: .infinity)
+                        .frame(width: 2, height: 32)
+                        .padding(.top, 4)
                 }
             }
-            .frame(height: isLast ? 12 : nil)
+            .frame(width: 12)
             
             VStack(alignment: .leading, spacing: 8) {
                 // Header with app info
-                HStack {
+                HStack(alignment: .center) {
                     Text(entry.header)
                         .font(.subheadline)
                         .fontWeight(.semibold)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
                     
                     Spacer()
                     
@@ -103,6 +114,7 @@ struct ChainOfThoughtEntryView: View {
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
+                        .layoutPriority(1)
                     }
                 }
                 
@@ -111,9 +123,12 @@ struct ChainOfThoughtEntryView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
     }
 }
 

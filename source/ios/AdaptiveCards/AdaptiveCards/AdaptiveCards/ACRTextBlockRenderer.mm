@@ -50,6 +50,11 @@
 
     // Check if this is Chain of Thought content
     NSString *textContent = [NSString stringWithCString:txtBlck->GetText().c_str() encoding:NSUTF8StringEncoding];
+    
+    // Debug: Log the text content to see what we're getting
+    NSLog(@"TextBlock content: %@", textContent);
+    
+    // Check for Chain of Thought integration
     if ([ChainOfThoughtViewFactory isChainOfThoughtContent:textContent]) {
         UIView *chainOfThoughtView = [ChainOfThoughtViewFactory createChainOfThoughtViewFromTextContent:textContent];
         if (chainOfThoughtView) {
