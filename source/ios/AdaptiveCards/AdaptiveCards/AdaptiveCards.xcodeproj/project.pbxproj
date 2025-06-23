@@ -366,6 +366,10 @@
 		901FEA052E04BE3D00CD77C6 /* MarkDownUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9E22E04BE3D00CD77C6 /* MarkDownUnitTest.swift */; };
 		901FEA062E04BE3D00CD77C6 /* AdaptiveCardParseExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9D42E04BE3D00CD77C6 /* AdaptiveCardParseExceptionTest.swift */; };
 		901FEA072E04BE3D00CD77C6 /* SemanticVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9E62E04BE3D00CD77C6 /* SemanticVersionTest.swift */; };
+		90A363CE2E09ACB3008E013F /* AdaptiveCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A363CD2E09ACB3008E013F /* AdaptiveCardView.swift */; };
+		90A363CF2E09ACB3008E013F /* AdaptiveCardElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A363CA2E09ACB3008E013F /* AdaptiveCardElementView.swift */; };
+		90A363D02E09ACB3008E013F /* AdaptiveCardsSharedSwiftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A363CB2E09ACB3008E013F /* AdaptiveCardsSharedSwiftModel.swift */; };
+		90A363D12E09ACB3008E013F /* AdaptiveCardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A363CC2E09ACB3008E013F /* AdaptiveCardTableView.swift */; };
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
 		B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */; };
@@ -973,6 +977,10 @@
 		901FE9E92E04BE3D00CD77C6 /* UnsupportedtypesParsingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsupportedtypesParsingTest.swift; sourceTree = "<group>"; };
 		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
 		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
+		90A363CA2E09ACB3008E013F /* AdaptiveCardElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardElementView.swift; sourceTree = "<group>"; };
+		90A363CB2E09ACB3008E013F /* AdaptiveCardsSharedSwiftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardsSharedSwiftModel.swift; sourceTree = "<group>"; };
+		90A363CC2E09ACB3008E013F /* AdaptiveCardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardTableView.swift; sourceTree = "<group>"; };
+		90A363CD2E09ACB3008E013F /* AdaptiveCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardView.swift; sourceTree = "<group>"; };
 		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
 		B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionValid.json; sourceTree = "<group>"; };
 		B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ValueChangedActionInvalid.json; sourceTree = "<group>"; };
@@ -1308,6 +1316,7 @@
 		6B92A71B266FE84F00CAE3BF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				90A363C92E09ACA7008E013F /* SwiftViews */,
 				901FE9C72E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.h */,
 				901FE9C82E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.mm */,
 				901FE9C92E04BDC800CD77C6 /* SwiftAdaptiveCardSwiftBridge.swift */,
@@ -1590,6 +1599,17 @@
 				901FE9EA2E04BE3D00CD77C6 /* ObjectModel */,
 			);
 			path = SwiftAdaptiveCardsTests;
+			sourceTree = "<group>";
+		};
+		90A363C92E09ACA7008E013F /* SwiftViews */ = {
+			isa = PBXGroup;
+			children = (
+				90A363CA2E09ACB3008E013F /* AdaptiveCardElementView.swift */,
+				90A363CB2E09ACB3008E013F /* AdaptiveCardsSharedSwiftModel.swift */,
+				90A363CC2E09ACB3008E013F /* AdaptiveCardTableView.swift */,
+				90A363CD2E09ACB3008E013F /* AdaptiveCardView.swift */,
+			);
+			path = SwiftViews;
 			sourceTree = "<group>";
 		};
 		CFF954CC29819A6B00F321C3 /* DynamicTypeahead */ = {
@@ -2668,6 +2688,10 @@
 				6B22425F21E80647000ACDA1 /* ACOParseContext.mm in Sources */,
 				F4071C7E1FCCBAEF00AF4FEA /* ActionParserRegistration.cpp in Sources */,
 				6B2242A72233442C000ACDA1 /* RichTextBlock.cpp in Sources */,
+				90A363CE2E09ACB3008E013F /* AdaptiveCardView.swift in Sources */,
+				90A363CF2E09ACB3008E013F /* AdaptiveCardElementView.swift in Sources */,
+				90A363D02E09ACB3008E013F /* AdaptiveCardsSharedSwiftModel.swift in Sources */,
+				90A363D12E09ACB3008E013F /* AdaptiveCardTableView.swift in Sources */,
 				F4FE456B1F196F3D0071D9E5 /* ACRContentStackView.mm in Sources */,
 				F429793F1F3155EF00E89914 /* ACRTextField.mm in Sources */,
 				F43A94191F20502D0001920B /* ACRInputToggleRenderer.mm in Sources */,
