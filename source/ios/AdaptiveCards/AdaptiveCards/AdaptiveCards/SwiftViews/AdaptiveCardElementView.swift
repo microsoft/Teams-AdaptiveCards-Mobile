@@ -450,19 +450,10 @@ struct AdaptiveCardElementView: View {
     @ViewBuilder
     private func mediaViewWithAVKit(_ media: SwiftMedia) -> some View {
         if let source = media.sources.first, let url = URL(string: source.url) {
-            let player = AVPlayer(url: url)
             if let mimeType = source.mimeType, mimeType.starts(with: "video/") {
-                VideoPlayer(player: player)
-                    .aspectRatio(contentMode: .fit)
-                    .overlay(
-                        Text(media.altText ?? "")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.black.opacity(0.7))
-                            .cornerRadius(8)
-                            .padding(),
-                        alignment: .bottomLeading
-                    )
+                // Use AVPlayerViewController wrapped in UIViewControllerRepresentable instead of VideoPlayer
+                AVPlayerViewWrapper(url: url, altText: media.altText)
+                    .aspectRatio(16/9, contentMode: .fit)
             } else if let mimeType = source.mimeType, mimeType.starts(with: "audio/") {
                 VStack {
                     if let posterUrl = media.poster, let imageUrl = URL(string: posterUrl) {
@@ -472,18 +463,7 @@ struct AdaptiveCardElementView: View {
                             ProgressView()
                         }
                     }
-                    HStack {
-                        Button(action: {
-                            player.play()
-                        }) {
-                            Text("Play")
-                        }
-                        Button(action: {
-                            player.pause()
-                        }) {
-                            Text("Pause")
-                        }
-                    }
+                    AVAudioPlayerWrapper(url: url)
                 }
             } else {
                 Text("Unsupported media type")
@@ -528,3 +508,57 @@ struct AdaptiveCardElementView: View {
         .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2) // Subtle shadow
     }
 }
+
+#if canImport(AVKit) && !ADAPTIVECARDS_DISABLE_AVKIT
+// Custom wrappers to avoid SwiftUI VideoPlayer linking issues
+struct AVPlayerViewWrapper: UIViewControllerRepresentable {
+    let url: URL
+    let altText: String?
+    
+    func makeUIViewController(context: Context) -> AVPlayerViewController {
+        let controller = AVPlayerViewController()
+        let player = AVPlayer(url: url)
+        controller.player = player
+        controller.showsPlaybackControls = true
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
+        // No updates needed for this implementation
+    }
+}
+
+struct AVAudioPlayerWrapper: View {
+    let url: URL
+    @State private var player: AVPlayer?
+    @State private var isPlaying = false
+    
+    var body: some View {
+        HStack {
+            Button(action: {
+                if isPlaying {
+                    player?.pause()
+                    isPlaying = false
+                } else {
+                    if player == nil {
+                        player = AVPlayer(url: url)
+                    }
+                    player?.play()
+                    isPlaying = true
+                }
+            }) {
+                Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.blue)
+                    .clipShape(Circle())
+            }
+            
+            Text(isPlaying ? "Playing..." : "Tap to play")
+                .foregroundColor(.primary)
+        }
+        .padding()
+    }
+}
+#endif
