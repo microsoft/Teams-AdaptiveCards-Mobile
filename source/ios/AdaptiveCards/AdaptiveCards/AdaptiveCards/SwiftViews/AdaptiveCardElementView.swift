@@ -2,9 +2,6 @@ import SwiftUI
 
 #if canImport(AVKit) && !ADAPTIVECARDS_DISABLE_AVKIT
 import AVKit
-private let isAVKitAvailable = true
-#else
-private let isAVKitAvailable = false
 #endif
 
 @available(iOS 15.0, *)
@@ -442,69 +439,78 @@ struct AdaptiveCardElementView: View {
     
     @ViewBuilder
     func mediaView(_ media: SwiftMedia) -> some View {
-        if isAVKitAvailable {
-            #if canImport(AVKit) && !ADAPTIVECARDS_DISABLE_AVKIT
-            if let source = media.sources.first, let url = URL(string: source.url) {
-                let player = AVPlayer(url: url)
-                if let mimeType = source.mimeType, mimeType.starts(with: "video/") {
-                    VideoPlayer(player: player)
-                        .aspectRatio(contentMode: .fit)
-                        .overlay(
-                            Text(media.altText ?? "")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.black.opacity(0.7))
-                                .cornerRadius(8)
-                                .padding(),
-                            alignment: .bottomLeading
-                        )
-                } else if let mimeType = source.mimeType, mimeType.starts(with: "audio/") {
-                    VStack {
-                        if let posterUrl = media.poster, let imageUrl = URL(string: posterUrl) {
-                            AsyncImage(url: imageUrl) { image in
-                                image.resizable().scaledToFit()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                        }
-                        HStack {
-                            Button(action: {
-                                player.play()
-                            }) {
-                                Text("Play")
-                            }
-                            Button(action: {
-                                player.pause()
-                            }) {
-                                Text("Pause")
-                            }
+        #if canImport(AVKit) && !ADAPTIVECARDS_DISABLE_AVKIT
+        mediaViewWithAVKit(media)
+        #else
+        mediaViewFallback(media)
+        #endif
+    }
+    
+    #if canImport(AVKit) && !ADAPTIVECARDS_DISABLE_AVKIT
+    @ViewBuilder
+    private func mediaViewWithAVKit(_ media: SwiftMedia) -> some View {
+        if let source = media.sources.first, let url = URL(string: source.url) {
+            let player = AVPlayer(url: url)
+            if let mimeType = source.mimeType, mimeType.starts(with: "video/") {
+                VideoPlayer(player: player)
+                    .aspectRatio(contentMode: .fit)
+                    .overlay(
+                        Text(media.altText ?? "")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black.opacity(0.7))
+                            .cornerRadius(8)
+                            .padding(),
+                        alignment: .bottomLeading
+                    )
+            } else if let mimeType = source.mimeType, mimeType.starts(with: "audio/") {
+                VStack {
+                    if let posterUrl = media.poster, let imageUrl = URL(string: posterUrl) {
+                        AsyncImage(url: imageUrl) { image in
+                            image.resizable().scaledToFit()
+                        } placeholder: {
+                            ProgressView()
                         }
                     }
-                } else {
-                    Text("Unsupported media type")
+                    HStack {
+                        Button(action: {
+                            player.play()
+                        }) {
+                            Text("Play")
+                        }
+                        Button(action: {
+                            player.pause()
+                        }) {
+                            Text("Pause")
+                        }
+                    }
                 }
             } else {
-                Text("No media source available")
+                Text("Unsupported media type")
             }
-            #endif
         } else {
-            // Fallback when AVKit is not available
-            VStack {
-                Text("Media Player Unavailable")
-                    .font(.headline)
-                    .foregroundColor(.secondary)
-                Text("AVKit framework not available")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                if let source = media.sources.first {
-                    Link("Open in External Player", destination: URL(string: source.url) ?? URL(string: "about:blank")!)
-                        .foregroundColor(.blue)
-                }
-            }
-            .padding()
-            .background(Color.gray.opacity(0.1))
-            .cornerRadius(8)
+            Text("No media source available")
         }
+    }
+    #endif
+    
+    @ViewBuilder
+    private func mediaViewFallback(_ media: SwiftMedia) -> some View {
+        VStack {
+            Text("Media Player Unavailable")
+                .font(.headline)
+                .foregroundColor(.secondary)
+            Text("AVKit framework not available")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            if let source = media.sources.first {
+                Link("Open in External Player", destination: URL(string: source.url) ?? URL(string: "about:blank")!)
+                    .foregroundColor(.blue)
+            }
+        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(8)
     }
 
     @ViewBuilder
