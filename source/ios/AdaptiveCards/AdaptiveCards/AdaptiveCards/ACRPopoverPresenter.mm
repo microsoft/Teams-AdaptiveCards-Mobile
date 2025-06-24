@@ -10,7 +10,8 @@
 #import <AdaptiveCards/AdaptiveCards.h>
 #import <AdaptiveCards/ACRView.h>
 #import <UIKit/UIViewController.h>
-#import "ACRPopoverSheetVC.h"
+#import "ACRBottomSheetViewController.h"
+#import "ACRBottomSheetConfiguration.h"
 
 @implementation ACRPopoverPresenter
 + (void)presentSheetForAction:(ACOBaseActionElement *)action
@@ -22,22 +23,35 @@
         }
     id<ACRActionDelegate> dlg = root.acrActionDelegate;
     if (![dlg respondsToSelector:@selector(presenterViewControllerForAction:inCard:)]) {
-        return;                                 // host forgot to implement -> do nothing
+        return;
     }
     
     UIViewController *host = [dlg presenterViewControllerForAction:action inCard:card];
     if (!host) {
-        return;                                 // defensive ‑ the host returned nil
+        return;                                 
     }
     
-    UIAlertController *alert =
-            [UIAlertController alertControllerWithTitle:@"ACRPopoverPresenter reached"
-                                                message:@"delegate + validation path is working"
-                                         preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK"
-                                                  style:UIAlertActionStyleDefault
-                                                handler:nil]];
-        [host presentViewController:alert animated:YES completion:nil];
+    UIStackView *stack = [[UIStackView alloc] init];
+        stack.axis = UILayoutConstraintAxisVertical;
+        stack.spacing = 12;
+        stack.translatesAutoresizingMaskIntoConstraints = NO;
+
+        // add 15 sample labels to exceed 2/3 screen; change the count to test
+        for (int i = 0; i < 2; ++i) {
+            UILabel *lbl = [[UILabel alloc] init];
+            lbl.text = [NSString stringWithFormat:@"Row %d", i+1];
+            lbl.font = [UIFont systemFontOfSize:17 weight:UIFontWeightMedium];
+            [stack addArrangedSubview:lbl];
+        }
+        CGFloat minMultiplier = 0.2;
+        CGFloat maxMultiplier = 0.66;
+        
+    
+        ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithMinMultiplier:minMultiplier maxMultiplier:maxMultiplier];
+        
+        ACRBottomSheetViewController *sheet =  [[ACRBottomSheetViewController alloc] initWithContent:stack
+                                                                   configuration:config];
+        [host presentViewController:sheet animated:YES completion:nil];
     
 }
 @end

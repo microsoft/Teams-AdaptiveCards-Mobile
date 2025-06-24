@@ -305,8 +305,12 @@
 		7A2D17572DFAE1B800E59055 /* ACRActionPopoverRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */; };
 		7AA81C1F2E01AB9600826DCD /* ACRPopoverPresenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AA81C1E2E01AB5500826DCD /* ACRPopoverPresenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7AA81C212E01AFD000826DCD /* ACRPopoverPresenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AA81C202E01AFCE00826DCD /* ACRPopoverPresenter.mm */; };
-		7AD18A8A2E028EC500A35DDD /* ACRPopoverSheetVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AD18A892E028EBF00A35DDD /* ACRPopoverSheetVC.h */; };
-		7AD18A8C2E028F2900A35DDD /* ACRPopoverSheetVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AD18A8B2E028F1500A35DDD /* ACRPopoverSheetVC.mm */; };
+		7AB4BE5B2E0A74B6007E39F3 /* ACRBottomSheetConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AB4BE5A2E0A749F007E39F3 /* ACRBottomSheetConfiguration.h */; };
+		7AB4BE5D2E0A74DA007E39F3 /* ACRBottomSheetConfiguration.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4BE5C2E0A74D9007E39F3 /* ACRBottomSheetConfiguration.mm */; };
+		7AB4BE5F2E0A7507007E39F3 /* ACRBottomSheetPresentationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AB4BE5E2E0A7503007E39F3 /* ACRBottomSheetPresentationController.h */; };
+		7AB4BE612E0A752B007E39F3 /* ACRBottomSheetPresentationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4BE602E0A752A007E39F3 /* ACRBottomSheetPresentationController.mm */; };
+		7AD18A8A2E028EC500A35DDD /* ACRBottomSheetViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AD18A892E028EBF00A35DDD /* ACRBottomSheetViewController.h */; };
+		7AD18A8C2E028F2900A35DDD /* ACRBottomSheetViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AD18A8B2E028F1500A35DDD /* ACRBottomSheetViewController.mm */; };
 		7AD18A8F2E0293DB00A35DDD /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AD18A8D2E0293DB00A35DDD /* FluentAssets.xcassets */; };
 		7ECFB640219A3940004727A9 /* ParseContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFB63E219A3940004727A9 /* ParseContext.cpp */; };
 		7ECFB641219A3940004727A9 /* ParseContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ECFB63F219A3940004727A9 /* ParseContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -864,8 +868,12 @@
 		7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRActionPopoverRenderer.mm; sourceTree = "<group>"; };
 		7AA81C1E2E01AB5500826DCD /* ACRPopoverPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRPopoverPresenter.h; sourceTree = "<group>"; };
 		7AA81C202E01AFCE00826DCD /* ACRPopoverPresenter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverPresenter.mm; sourceTree = "<group>"; };
-		7AD18A892E028EBF00A35DDD /* ACRPopoverSheetVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRPopoverSheetVC.h; sourceTree = "<group>"; };
-		7AD18A8B2E028F1500A35DDD /* ACRPopoverSheetVC.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverSheetVC.mm; sourceTree = "<group>"; };
+		7AB4BE5A2E0A749F007E39F3 /* ACRBottomSheetConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBottomSheetConfiguration.h; sourceTree = "<group>"; };
+		7AB4BE5C2E0A74D9007E39F3 /* ACRBottomSheetConfiguration.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBottomSheetConfiguration.mm; sourceTree = "<group>"; };
+		7AB4BE5E2E0A7503007E39F3 /* ACRBottomSheetPresentationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBottomSheetPresentationController.h; sourceTree = "<group>"; };
+		7AB4BE602E0A752A007E39F3 /* ACRBottomSheetPresentationController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBottomSheetPresentationController.mm; sourceTree = "<group>"; };
+		7AD18A892E028EBF00A35DDD /* ACRBottomSheetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBottomSheetViewController.h; sourceTree = "<group>"; };
+		7AD18A8B2E028F1500A35DDD /* ACRBottomSheetViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBottomSheetViewController.mm; sourceTree = "<group>"; };
 		7AD18A8D2E0293DB00A35DDD /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
 		7DC49373563AE22454C070D6 /* Pods-Fluent-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCards/Pods-Fluent-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		7ECFB63E219A3940004727A9 /* ParseContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParseContext.cpp; path = ../../../../shared/cpp/ObjectModel/ParseContext.cpp; sourceTree = "<group>"; };
@@ -1747,8 +1755,12 @@
 		F42979331F30079D00E89914 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				7AD18A8B2E028F1500A35DDD /* ACRPopoverSheetVC.mm */,
-				7AD18A892E028EBF00A35DDD /* ACRPopoverSheetVC.h */,
+				7AB4BE602E0A752A007E39F3 /* ACRBottomSheetPresentationController.mm */,
+				7AB4BE5E2E0A7503007E39F3 /* ACRBottomSheetPresentationController.h */,
+				7AB4BE5C2E0A74D9007E39F3 /* ACRBottomSheetConfiguration.mm */,
+				7AB4BE5A2E0A749F007E39F3 /* ACRBottomSheetConfiguration.h */,
+				7AD18A8B2E028F1500A35DDD /* ACRBottomSheetViewController.mm */,
+				7AD18A892E028EBF00A35DDD /* ACRBottomSheetViewController.h */,
 				7AA81C202E01AFCE00826DCD /* ACRPopoverPresenter.mm */,
 				7AA81C1E2E01AB5500826DCD /* ACRPopoverPresenter.h */,
 				7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */,
@@ -2033,7 +2045,7 @@
 				6B2242AE22334452000ACDA1 /* TextRun.h in Headers */,
 				6B22426D2203BE98000ACDA1 /* UnknownAction.h in Headers */,
 				F4071C7D1FCCBAEF00AF4FEA /* json.h in Headers */,
-				7AD18A8A2E028EC500A35DDD /* ACRPopoverSheetVC.h in Headers */,
+				7AD18A8A2E028EC500A35DDD /* ACRBottomSheetViewController.h in Headers */,
 				F4071C7C1FCCBAEF00AF4FEA /* json-forwards.h in Headers */,
 				6B2242A82233442C000ACDA1 /* RichTextBlock.h in Headers */,
 				463C4EDB2BDB666A00A95C4E /* ACRSVGImageView.h in Headers */,
@@ -2064,6 +2076,7 @@
 				F4C1F5E81F2ABB3C0018CB78 /* ACRIBaseActionElementRenderer.h in Headers */,
 				6BF430772190DDCA0068E432 /* ACRQuickReplyView.h in Headers */,
 				C8DEDF3A220CDEB00001AAED /* ActionSet.h in Headers */,
+				7AB4BE5B2E0A74B6007E39F3 /* ACRBottomSheetConfiguration.h in Headers */,
 				6BB211FF20FFF9C0009EA1BA /* ACRIMedia.h in Headers */,
 				6B7B1A9320B4D2AB00260731 /* MediaSource.h in Headers */,
 				7ECFB641219A3940004727A9 /* ParseContext.h in Headers */,
@@ -2076,6 +2089,7 @@
 				6BCE4B222108EB4E00021A62 /* ACRAVPlayerViewHoldingUIView.h in Headers */,
 				F4C1F5EB1F2ABD6B0018CB78 /* ACRBaseActionElementRenderer.h in Headers */,
 				6B1147D11F32E53A008846EC /* ACRActionDelegate.h in Headers */,
+				7AB4BE5F2E0A7507007E39F3 /* ACRBottomSheetPresentationController.h in Headers */,
 				6BFF99C725FFF53E0028069F /* Authentication.h in Headers */,
 				6BFF99C325FFF53E0028069F /* AuthCardButton.h in Headers */,
 				3714EB532DAFB30400EE15AA /* ThemedUrl.h in Headers */,
@@ -2420,6 +2434,7 @@
 				6BD859FC26F2CA7B0086F5BA /* ACOFillerSpaceManager.mm in Sources */,
 				F44873071EE2261F00FCAFAE /* DateInput.cpp in Sources */,
 				F43110461F357487001AAE30 /* ACOHostConfig.mm in Sources */,
+				7AB4BE612E0A752B007E39F3 /* ACRBottomSheetPresentationController.mm in Sources */,
 				F4F6BA2F204F18D8003741B6 /* ParseResult.cpp in Sources */,
 				F4C1F5F21F2BC6840018CB78 /* ACRButton.mm in Sources */,
 				F9A9E55126FE9FA000D13410 /* CollectionCoreElement.cpp in Sources */,
@@ -2458,6 +2473,7 @@
 				F44872FD1EE2261F00FCAFAE /* ChoiceInput.cpp in Sources */,
 				F42E51761FEC3840008F9642 /* MarkDownParsedResult.cpp in Sources */,
 				46DF37AE2C902F97001C254F /* Carousel.cpp in Sources */,
+				7AB4BE5D2E0A74DA007E39F3 /* ACRBottomSheetConfiguration.mm in Sources */,
 				F4D0694A205B27EA003645E4 /* ACRViewController.mm in Sources */,
 				F44872F51EE2261F00FCAFAE /* AdaptiveCardParseException.cpp in Sources */,
 				463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */,
@@ -2592,7 +2608,7 @@
 				F4D402141F7DAC2C00D0356B /* ACOHostConfigParseResult.mm in Sources */,
 				6BE8DFD4249C4C1B005EFE66 /* ACRToggleInputView.mm in Sources */,
 				46058FE12C64774800966E76 /* ACRLayoutHelper.mm in Sources */,
-				7AD18A8C2E028F2900A35DDD /* ACRPopoverSheetVC.mm in Sources */,
+				7AD18A8C2E028F2900A35DDD /* ACRBottomSheetViewController.mm in Sources */,
 				84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */,
 				F495FC0A2022A18F0093D4DE /* ACRChoiceSetViewDataSource.mm in Sources */,
 			);
