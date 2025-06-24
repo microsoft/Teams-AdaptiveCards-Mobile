@@ -1622,6 +1622,7 @@
 		90A363C92E09ACA7008E013F /* SwiftViews */ = {
 			isa = PBXGroup;
 			children = (
+				901FC81C2E09DADC00F10C8D /* ChainOfThought */,
 				901FC8172E09B69E00F10C8D /* SwiftAdaptiveCardViewModel.swift */,
 				90A363CA2E09ACB3008E013F /* AdaptiveCardElementView.swift */,
 				90A363CB2E09ACB3008E013F /* AdaptiveCardsSharedSwiftModel.swift */,
@@ -2644,6 +2645,9 @@
 				F9A9E55126FE9FA000D13410 /* CollectionCoreElement.cpp in Sources */,
 				6BFCA142264F54B500195CA7 /* ACRTableRow.mm in Sources */,
 				6BFCA145264F54B500195CA7 /* ACRTableCellView.mm in Sources */,
+				901FC81D2E09DADC00F10C8D /* ChainOfThoughtView.swift in Sources */,
+				901FC81E2E09DADC00F10C8D /* ChainOfThoughtHostingView.swift in Sources */,
+				901FC81F2E09DADC00F10C8D /* ChainOfThoughtModels.swift in Sources */,
 				24EDF0C02DCB7F8100558378 /* ACRProgressRingRenderer.mm in Sources */,
 				46DF37CF2C9034E6001C254F /* ACRCompoundButtonRenderer.mm in Sources */,
 				6BFF99FB26003EBA0028069F /* ACOAutoCardButton.mm in Sources */,
