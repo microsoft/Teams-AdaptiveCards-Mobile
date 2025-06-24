@@ -19,7 +19,13 @@
 #import "TextBlock.h"
 #import "UtiliOS.h"
 #import "ARCGridViewLayout.h"
+
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#define CHAIN_OF_THOUGHT_AVAILABLE 1
 #import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#define CHAIN_OF_THOUGHT_AVAILABLE 0
+#endif
 
 @implementation ACRTextBlockRenderer
 
@@ -51,9 +57,7 @@
     // Check if this is Chain of Thought content
     NSString *textContent = [NSString stringWithCString:txtBlck->GetText().c_str() encoding:NSUTF8StringEncoding];
     
-    // Debug: Log the text content to see what we're getting
-    NSLog(@"TextBlock content: %@", textContent);
-    
+#if CHAIN_OF_THOUGHT_AVAILABLE
     // Check for Chain of Thought integration
     if ([ChainOfThoughtViewFactory isChainOfThoughtContent:textContent]) {
         UIView *chainOfThoughtView = [ChainOfThoughtViewFactory createChainOfThoughtViewFromTextContent:textContent];
@@ -84,6 +88,7 @@
             return chainOfThoughtView;
         }
     }
+#endif
 
     ACRUILabel *lab = [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     lab.backgroundColor = [UIColor clearColor];
