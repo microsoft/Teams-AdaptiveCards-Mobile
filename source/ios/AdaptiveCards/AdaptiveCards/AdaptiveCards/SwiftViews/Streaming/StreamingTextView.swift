@@ -41,6 +41,7 @@ public struct StreamingTextView: View {
                 stopStreamingButton
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading) // Fill available width
         .fixedSize(horizontal: false, vertical: true) // Allow vertical expansion
         .onAppear {
             handleStreamingPhase()
@@ -54,6 +55,12 @@ public struct StreamingTextView: View {
         .onChange(of: displayedText) { _ in
             // Notify height change when displayed text changes
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+                onHeightChange?()
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+            // Handle orientation changes
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 onHeightChange?()
             }
         }
@@ -231,6 +238,11 @@ public struct StreamingTextView: View {
         
         displayedText = String(targetText[..<targetEndIndex])
         currentCharacterIndex = endIndex
+        
+        // Trigger height change notification during typing for better layout updates
+        DispatchQueue.main.async {
+            onHeightChange?()
+        }
     }
     
     private func stopStreaming() {

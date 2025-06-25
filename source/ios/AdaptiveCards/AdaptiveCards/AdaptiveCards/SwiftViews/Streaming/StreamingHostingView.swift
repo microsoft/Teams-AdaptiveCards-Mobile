@@ -46,61 +46,158 @@ public class StreamingHostingView: UIView {
         ])
         
         // Set content hugging and compression resistance priorities
-        hostingController.view.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
-        hostingController.view.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        hostingController.view.setContentHuggingPriority(.required, for: .vertical)
+        hostingController.view.setContentCompressionResistancePriority(.required, for: .vertical)
         
-        // Store reference to hosting controller
+        // Set priority for the hosting view itself
+        self.setContentHuggingPriority(.required, for: .vertical)
+        self.setContentCompressionResistancePriority(.required, for: .vertical)
+        
         self.hostingController = hostingController
         
-        // Force initial layout
-        setNeedsLayout()
-        layoutIfNeeded()
+        // Add observer for size changes to trigger layout updates
+        hostingController.view.addObserver(self, forKeyPath: "bounds", options: [.new, .old], context: nil)
+    }
+    
+    /// Call this method to properly set up the hosting controller with a parent view controller
+    @objc public func attachToParentViewController(_ parentViewController: UIViewController) {
+        guard let hostingController = self.hostingController else { return }
         
-        // Notify initial height
-        DispatchQueue.main.async { [weak self] in
-            self?.notifyHeightChange()
+        parentViewController.addChild(hostingController)
+        hostingController.didMove(toParent: parentViewController)
+    }
+    
+    /// Call this method when removing the view to clean up the hosting controller
+    @objc public func detachFromParentViewController() {
+        hostingController?.view.removeObserver(self, forKeyPath: "bounds")
+        hostingController?.willMove(toParent: nil)
+        hostingController?.removeFromParent()
+    }
+    
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "bounds" {
+            // Immediate size invalidation
+            invalidateIntrinsicContentSize()
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.notifyHeightChange()
+            }
         }
     }
     
     private func notifyHeightChange() {
-        // Calculate the intrinsic content size
-        let targetSize = CGSize(width: bounds.width > 0 ? bounds.width : UIView.noIntrinsicMetric,
-                               height: UIView.noIntrinsicMetric)
-        let newSize = hostingController?.view.systemLayoutSizeFitting(targetSize,
-                                                                       withHorizontalFittingPriority: .required,
-                                                                       verticalFittingPriority: .fittingSizeLevel) ?? .zero
+        let currentHeight = intrinsicContentSize.height
         
-        // Only notify if height changed significantly
-        if abs(newSize.height - lastReportedHeight) > 1.0 {
-            lastReportedHeight = newSize.height
-            invalidateIntrinsicContentSize()
+        // Only notify if height actually changed significantly (avoid redundant updates)
+        guard abs(currentHeight - lastReportedHeight) > 1.0 else { return }
+        lastReportedHeight = currentHeight
+        
+        // Invalidate our intrinsic content size first
+        invalidateIntrinsicContentSize()
+        
+        // Update the hosting controller's view constraints
+        if let hostingController = self.hostingController {
+            hostingController.view.invalidateIntrinsicContentSize()
+        }
+        
+        // Notify containers in the hierarchy
+        var view: UIView? = self.superview
+        while view != nil {
+            let className = NSStringFromClass(type(of: view!))
             
-            // Notify superview of layout change
-            if let superview = superview {
-                superview.setNeedsLayout()
+            if className.contains("ACRContentStackView") {
+                view?.invalidateIntrinsicContentSize()
+                view?.setNeedsLayout()
+                view?.layoutIfNeeded()
+                view?.superview?.invalidateIntrinsicContentSize()
+                view?.superview?.setNeedsLayout()
+                break
+            } else if className.contains("UIStackView") {
+                view?.invalidateIntrinsicContentSize()
+                view?.setNeedsLayout()
+                view?.layoutIfNeeded()
+            } else if let tableView = view as? UITableView {
+                tableView.beginUpdates()
+                tableView.endUpdates()
+                break
+            } else if let scrollView = view as? UIScrollView {
+                scrollView.invalidateIntrinsicContentSize()
+                scrollView.setNeedsLayout()
+                scrollView.layoutIfNeeded()
+            }
+            
+            view = view?.superview
+        }
+        
+        // Force a complete layout update with more aggressive timing
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.superview?.setNeedsLayout()
+            self.superview?.layoutIfNeeded()
+            
+            // Additional forced layout for Adaptive Card containers
+            var parentView: UIView? = self.superview
+            while parentView != nil {
+                if NSStringFromClass(type(of: parentView!)).contains("ACR") {
+                    parentView?.setNeedsLayout()
+                    parentView?.layoutIfNeeded()
+                }
+                parentView = parentView?.superview
             }
         }
     }
     
     public override var intrinsicContentSize: CGSize {
-        guard let hostingController = hostingController else {
-            return CGSize(width: UIView.noIntrinsicMetric, height: 44)
+        guard let hostingController = self.hostingController else {
+            return CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
         }
         
-        let targetSize = CGSize(width: bounds.width > 0 ? bounds.width : UIView.noIntrinsicMetric,
-                               height: UIView.noIntrinsicMetric)
-        let size = hostingController.view.systemLayoutSizeFitting(targetSize,
-                                                                   withHorizontalFittingPriority: .required,
-                                                                   verticalFittingPriority: .fittingSizeLevel)
-        return CGSize(width: UIView.noIntrinsicMetric, height: max(44, size.height))
+        // Get the current width constraint
+        let targetWidth = bounds.width > 0 ? bounds.width : 374.0 // Use a reasonable default
+        
+        // Create a temporary size to measure the content
+        let tempSize = CGSize(width: targetWidth, height: 1000) // Reasonable max height for measurement
+        
+        // Measure the SwiftUI content
+        let measuredSize = hostingController.sizeThatFits(in: tempSize)
+        
+        // Clamp the height to reasonable bounds
+        let clampedHeight = min(max(measuredSize.height, 50), 800) // Between 50 and 800 points
+        
+        let result = CGSize(
+            width: UIView.noIntrinsicMetric,
+            height: clampedHeight
+        )
+        
+        return result
     }
     
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        // Trigger height recalculation after layout
-        DispatchQueue.main.async { [weak self] in
-            self?.notifyHeightChange()
+    override public func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
+        guard let hostingController = self.hostingController else {
+            return CGSize(width: targetSize.width, height: 50)
         }
+        
+        // Use reasonable constraints for measurement
+        let constrainedSize = CGSize(
+            width: targetSize.width,
+            height: min(targetSize.height, 1000) // Cap at 1000 points
+        )
+        
+        let measuredSize = hostingController.sizeThatFits(in: constrainedSize)
+        let clampedHeight = min(max(measuredSize.height, 50), 800)
+        
+        return CGSize(
+            width: targetSize.width,
+            height: clampedHeight
+        )
+    }
+    
+    override public func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        return systemLayoutSizeFitting(targetSize)
+    }
+    
+    override public func sizeThatFits(_ size: CGSize) -> CGSize {
+        return systemLayoutSizeFitting(size)
     }
 }
 
