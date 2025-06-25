@@ -143,27 +143,36 @@ public struct StreamingTextView: View {
                 print("🔓 Setting isCollapsed = false")
             }
             
-            // If this was a "start" phase, transition to streaming when expanded
-            if streamingData.streamingPhase == .start && !streamingData.content.isEmpty {
-                print("🔓 Conditions met for starting animation: phase=start, content not empty")
+            // Only initialize animation on first expansion
+            if streamingData.streamingPhase == .start && !streamingData.content.isEmpty && !hasBeenManuallyExpanded {
+                print("🔓 First expansion - initializing animation")
                 hasBeenManuallyExpanded = true
                 
-                // Start the typing animation after expansion
+                // Start the typing animation after expansion (first time only)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                    print("🔓 Delayed action executing...")
+                    print("🔓 First expansion delayed action executing...")
                     internalStreamingPhase = .streaming
                     showProgressIndicator = false
                     showStopButton = true
                     
-                    // Reset the displayed text to ensure clean start
+                    // Fresh start on first expansion
                     displayedText = ""
                     currentCharacterIndex = 0
+                    print("🆕 Starting fresh typing animation - first expansion")
                     
-                    print("🎬 Starting typing animation after manual expansion...")
+                    print("🎬 Starting typing animation after first expansion...")
                     print("🔄 Internal phase changed to: \(internalStreamingPhase.rawValue)")
                     print("🎯 Target content: \(streamingData.content.prefix(50))...")
-                    print("🔄 Reset state - displayedText: '\(displayedText)', currentCharacterIndex: \(currentCharacterIndex)")
                     
+                    startTypingAnimation()
+                }
+            } else if hasBeenManuallyExpanded {
+                print("� Re-expansion - resuming from current state")
+                print("🔄 Current progress: displayedText=\(displayedText.count) chars, currentCharacterIndex=\(currentCharacterIndex)")
+                
+                // Just resume the animation if we're not at the end
+                if currentCharacterIndex < streamingData.content.count && !isTyping {
+                    print("🔄 Resuming typing animation from character \(currentCharacterIndex)")
                     startTypingAnimation()
                 }
             } else {
