@@ -1,0 +1,54 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🤖 Real-time AI Response",
+      "size": "Large",
+      "weight": "Bolder",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Question: How can I improve my productivity at work?",
+      "wrap": true,
+      "spacing": "Medium",
+      "color": "Dark"
+    },
+    {
+      "type": "TextBlock",
+      "id": "ai-response",
+      "text": "{\"messageID\":\"response-001\",\"phase\":\"streaming\",\"content\":\"Here are several evidence-based strategies to boost your productivity at work:\\n\\n**🎯 Time Management:**\\n• Use the Pomodoro Technique - work in 25-minute focused blocks with 5-minute breaks\\n• Prioritize tasks using the Eisenhower Matrix (urgent vs important)\\n• Time-block your calendar to dedicate specific periods for deep work\\n\\n**📱 Digital Organization:**\\n• Turn off non-essential notifications during focus time\\n• Use task management apps like Todoist or Notion to track progress\\n• Implement the 'two-minute rule' - if something takes less than 2 minutes, do it immediately\\n\\n**🧠 Mental Strategies:**\\n• Start with your most challenging task when your energy is highest\\n• Batch similar activities together (like answering emails)\\n• Practice saying 'no' to low-priority requests that don't align with your goals\\n\\n**🏢 Environment:**\\n• Keep your workspace clean and organized\\n• Use noise-canceling headphones if you're in a noisy environment\\n• Ensure proper lighting and ergonomics to reduce fatigue\\n\\nRemember, productivity isn't about working harder - it's about working smarter and maintaining sustainable habits that support your long-term success!\",\"isComplete\":false,\"typingSpeed\":35.0,\"showStopButton\":true,\"streamingEnabled\":true}",
+      "wrap": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "💡 This response was generated using streaming AI technology",
+      "size": "Small",
+      "color": "Accent",
+      "isSubtle": true,
+      "spacing": "Medium"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "👍 Helpful",
+      "data": {
+        "feedback": "positive",
+        "messageId": "response-001"
+      }
+    },
+    {
+      "type": "Action.Submit", 
+      "title": "Ask Follow-up",
+      "data": {
+        "action": "follow_up",
+        "messageId": "response-001"
+      }
+    }
+  ]
+}

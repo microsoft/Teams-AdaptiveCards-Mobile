@@ -1,0 +1,37 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🤖 AI Assistant",
+      "size": "Medium",
+      "weight": "Bolder",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-response",
+      "text": "{\"messageID\":\"msg-12345\",\"phase\":\"streaming\",\"content\":\"I'm analyzing your request and gathering the most relevant information. This process involves searching through multiple data sources, cross-referencing facts, and ensuring accuracy. Please wait while I compile a comprehensive response for you. The streaming text will appear gradually as I process your query.\",\"isComplete\":false,\"typingSpeed\":25.0,\"showStopButton\":true,\"showProgressIndicator\":false,\"streamingEnabled\":true}",
+      "spacing": "Medium",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Status: Processing your request...",
+      "size": "Small",
+      "color": "Good",
+      "wrap": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Ask Another Question",
+      "data": {
+        "action": "new_question"
+      }
+    }
+  ]
+}

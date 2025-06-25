@@ -88,6 +88,28 @@
             return chainOfThoughtView;
         }
     }
+    
+    // Check for Streaming integration
+    if ([StreamingViewFactory isStreamingContent:textContent]) {
+        UIView *streamingView = [StreamingViewFactory createStreamingViewFromTextContent:textContent];
+        if (streamingView) {
+            // Set up the view for layout with proper priority settings
+            streamingView.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            // Ensure proper content priorities for dynamic sizing
+            [streamingView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+            [streamingView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+            
+            // Prevent clipping by ensuring clipsToBounds is disabled up the chain
+            streamingView.clipsToBounds = NO;
+            
+            // Add the Streaming view instead of the regular text block  
+            NSString *areaName = stringForCString(elem->GetAreaGridName());
+            [viewGroup addArrangedSubview:streamingView withAreaName:areaName];
+            
+            return streamingView;
+        }
+    }
 #endif
 
     ACRUILabel *lab = [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];

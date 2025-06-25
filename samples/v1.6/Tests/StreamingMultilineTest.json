@@ -1,0 +1,87 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "📝 Multi-line Streaming Text Test",
+      "size": "Large",
+      "weight": "Bolder",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This test validates streaming text animation across multiple lines, paragraphs, and formatting elements.",
+      "wrap": true,
+      "spacing": "Small",
+      "color": "Dark",
+      "isSubtle": true
+    },
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "style": "emphasis",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "📖 Long-form Content Streaming Test",
+          "weight": "Bolder",
+          "size": "Medium",
+          "color": "Accent"
+        },
+        {
+          "type": "TextBlock",
+          "id": "multiline-streaming-test",
+          "text": "{\"messageID\":\"multiline-001\",\"phase\":\"streaming\",\"content\":\"## The Complete Guide to Software Development Excellence\\n\\nSoftware development is a complex discipline that requires mastery of multiple interconnected skills, methodologies, and tools. This comprehensive guide explores the fundamental principles and advanced techniques that separate exceptional developers from the rest.\\n\\n### 🏗️ Foundation Building\\n\\nEvery great developer starts with solid fundamentals:\\n\\n• **Algorithm Design**: Understanding time and space complexity, data structures, and problem-solving patterns\\n• **Code Quality**: Writing clean, readable, and maintainable code that follows established conventions\\n• **Version Control**: Mastering Git workflows, branching strategies, and collaborative development practices\\n• **Testing Methodology**: Implementing unit tests, integration tests, and end-to-end testing strategies\\n\\n### 🚀 Advanced Development Practices\\n\\nAs you progress in your career, these advanced concepts become crucial:\\n\\n**Architecture Patterns**\\nUnderstanding how to structure applications for scalability, maintainability, and performance. This includes:\\n- Microservices vs Monolithic architectures\\n- Event-driven design patterns\\n- Domain-driven development approaches\\n- SOLID principles and design patterns\\n\\n**Performance Optimization**\\nOptimizing applications requires deep understanding of:\\n- Memory management and garbage collection\\n- Database query optimization and indexing strategies\\n- Caching mechanisms (Redis, Memcached, CDNs)\\n- Profiling tools and performance monitoring\\n\\n**Security Best Practices**\\nSecurity should be built into every layer:\\n- Input validation and sanitization\\n- Authentication and authorization mechanisms\\n- Secure coding practices to prevent common vulnerabilities\\n- Regular security audits and penetration testing\\n\\n### 🔧 Modern Development Tools\\n\\n**Integrated Development Environments**\\nChoosing the right IDE can significantly boost productivity:\\n- VS Code with extensions ecosystem\\n- JetBrains suite for specific languages\\n- Vim/Neovim for terminal-based development\\n- Cloud-based IDEs for remote development\\n\\n**Containerization and Orchestration**\\nModern applications require containerization knowledge:\\n- Docker for application packaging\\n- Kubernetes for container orchestration\\n- Docker Compose for local development\\n- Container security and optimization\\n\\n### 🌐 Cloud-Native Development\\n\\nCloud platforms have revolutionized how we build and deploy applications:\\n\\n**Platform Selection**\\n- AWS, Azure, and Google Cloud Platform comparison\\n- Serverless computing with Lambda, Azure Functions\\n- Container-as-a-Service platforms\\n- Infrastructure-as-Code with Terraform and CloudFormation\\n\\n**Monitoring and Observability**\\n- Application Performance Monitoring (APM)\\n- Logging aggregation with ELK stack\\n- Distributed tracing for microservices\\n- Real-time alerting and incident response\\n\\n### 🤝 Team Collaboration\\n\\nSoftware development is rarely a solo endeavor:\\n\\n**Agile Methodologies**\\n- Scrum, Kanban, and hybrid approaches\\n- Sprint planning and retrospectives\\n- User story writing and acceptance criteria\\n- Continuous integration and deployment\\n\\n**Code Review Culture**\\n- Constructive feedback techniques\\n- Automated code quality checks\\n- Knowledge sharing through reviews\\n- Mentoring junior developers\\n\\n### 📈 Continuous Learning\\n\\nThe technology landscape evolves rapidly:\\n\\n**Staying Current**\\n- Following industry blogs and publications\\n- Attending conferences and meetups\\n- Contributing to open-source projects\\n- Building side projects to experiment with new technologies\\n\\n**Skill Development**\\n- Regular practice with coding challenges\\n- Learning new programming languages and paradigms\\n- Understanding emerging technologies and trends\\n- Building a portfolio of diverse projects\\n\\n### 🎯 Career Growth\\n\\nAdvancing your development career requires strategic thinking:\\n\\n**Technical Leadership**\\n- Mentoring other developers\\n- Making architectural decisions\\n- Leading technical discussions and planning\\n- Balancing technical debt with feature development\\n\\n**Communication Skills**\\n- Explaining technical concepts to non-technical stakeholders\\n- Writing clear documentation and technical specifications\\n- Presenting solutions and recommendations\\n- Facilitating cross-team collaboration\\n\\n### 🔮 Future Considerations\\n\\nThe field continues to evolve with emerging trends:\\n\\n**Artificial Intelligence Integration**\\n- AI-assisted coding tools\\n- Machine learning in application development\\n- Ethical considerations in AI development\\n- Understanding AI limitations and capabilities\\n\\n**Sustainability and Green Computing**\\n- Energy-efficient coding practices\\n- Sustainable architecture design\\n- Carbon footprint awareness\\n- Responsible resource usage\\n\\n---\\n\\n**Conclusion**\\n\\nMastering software development is a lifelong journey that requires dedication, continuous learning, and adaptability. The most successful developers combine technical expertise with strong communication skills, collaborative mindset, and genuine passion for solving complex problems.\\n\\nRemember that every expert was once a beginner. Focus on building solid fundamentals, embrace challenges as learning opportunities, and never stop exploring new technologies and methodologies. The field of software development offers endless possibilities for growth, creativity, and impact.\\n\\nWhether you're just starting your journey or looking to advance to the next level, the key is consistent practice, continuous learning, and building meaningful projects that demonstrate your growing expertise.\",\"isComplete\":false,\"typingSpeed\":25.0,\"showStopButton\":true,\"streamingEnabled\":true}",
+          "wrap": true,
+          "spacing": "Small"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "style": "good",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "🎯 Test Objectives",
+          "weight": "Bolder",
+          "size": "Medium"
+        },
+        {
+          "type": "TextBlock",
+          "text": "• Validate multi-line text streaming animation\n• Test paragraph breaks and formatting\n• Verify bullet point rendering during streaming\n• Ensure proper text wrapping and layout\n• Test performance with long content",
+          "wrap": true,
+          "spacing": "Small"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "🔄 Restart Streaming",
+      "data": {
+        "action": "restart_streaming_test",
+        "testType": "multiline"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "⏸️ Pause Test",  
+      "data": {
+        "action": "pause_streaming_test"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "📊 Performance Report",
+      "data": {
+        "action": "generate_performance_report",
+        "contentLength": "~4500_characters"
+      }
+    }
+  ]
+}

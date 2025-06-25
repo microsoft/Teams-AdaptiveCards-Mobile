@@ -1,0 +1,74 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🤖 Streaming AI Demo",
+      "size": "Large",
+      "weight": "Bolder",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Start Phase - Shows progress indicator only",
+      "size": "Medium",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-start",
+      "text": "{\"messageID\":\"start-demo\",\"phase\":\"start\",\"content\":\"\",\"isComplete\":false,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock", 
+      "text": "Informative Phase - Shows status message immediately",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-informative",
+      "text": "{\"messageID\":\"info-demo\",\"phase\":\"informative\",\"content\":\"🔍 Analyzing your request and gathering relevant information...\",\"isComplete\":false,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Streaming Phase - Text appears with typing animation",
+      "size": "Medium", 
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-active",
+      "text": "{\"messageID\":\"stream-demo\",\"phase\":\"streaming\",\"content\":\"This text will appear gradually with a realistic typing effect, simulating how an AI assistant streams its response in real-time. The animation creates an engaging user experience that shows the AI is actively processing and generating content. Users can stop the streaming at any time using the stop button that appears during this phase.\",\"isComplete\":false,\"typingSpeed\":30.0,\"showStopButton\":true,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Final Phase - Complete message displayed instantly",
+      "size": "Medium",
+      "weight": "Bolder", 
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-final",
+      "text": "{\"messageID\":\"final-demo\",\"phase\":\"final\",\"content\":\"✅ This is the final response that appears immediately without any animation. The streaming process is complete and the full content is displayed at once.\",\"isComplete\":true,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Reset Demo",
+      "data": {
+        "action": "reset_streaming_demo"
+      }
+    }
+  ]
+}

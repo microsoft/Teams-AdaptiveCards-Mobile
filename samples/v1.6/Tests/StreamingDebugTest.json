@@ -1,0 +1,46 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🧪 Simple Multi-line Streaming Debug Test",
+      "size": "Large",
+      "weight": "Bolder",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This simplified test focuses on basic multi-line streaming behavior.",
+      "wrap": true,
+      "spacing": "Small",
+      "color": "Dark",
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "id": "simple-multiline-test",
+      "text": "{\"messageID\":\"debug-001\",\"phase\":\"streaming\",\"content\":\"Line 1: This is the first line of text.\\n\\nLine 2: This is the second line with a paragraph break above.\\n\\nLine 3: Here are some bullet points:\\n• First bullet point\\n• Second bullet point\\n• Third bullet point\\n\\nLine 4: This is a longer paragraph that should wrap naturally when it exceeds the available width of the container. The text should continue flowing to the next line seamlessly.\\n\\nLine 5: Final line to complete the test.\",\"isComplete\":false,\"typingSpeed\":40.0,\"showStopButton\":true,\"streamingEnabled\":true}",
+      "wrap": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Expected behavior: Text should stream across multiple lines with proper line breaks.",
+      "size": "Small",
+      "color": "Attention",
+      "wrap": true,
+      "spacing": "Small"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "🔄 Restart Debug Test",
+      "data": {
+        "action": "restart_debug_test"
+      }
+    }
+  ]
+}
