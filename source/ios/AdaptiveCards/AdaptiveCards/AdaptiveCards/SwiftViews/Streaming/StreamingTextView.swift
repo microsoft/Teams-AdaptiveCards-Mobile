@@ -22,6 +22,10 @@ public struct StreamingTextView: View {
     // Collapse/Expand state
     @State private var isCollapsed: Bool = false
     
+    // Internal streaming state management (separate from streamingData.phase)
+    @State private var internalStreamingPhase: StreamingPhase = .start
+    @State private var hasBeenManuallyExpanded: Bool = false
+    
     // Animation configuration
     private let typingSpeed: TimeInterval = 0.03 // Faster typing speed (30ms per character)
     private let charactersPerChunk: Int = 1 // Single character for proper animation
@@ -38,13 +42,21 @@ public struct StreamingTextView: View {
             if isCollapsed {
                 // Collapsed view - shows "thinking" state
                 collapsedView
+                    .onAppear {
+                        print("🟦 COLLAPSED VIEW APPEARED - isCollapsed: \(isCollapsed)")
+                        print("🟦 Stream data: messageID=\(streamingData.messageID), phase=\(streamingData.streamingPhase?.rawValue ?? "nil")")
+                    }
             } else {
                 // Expanded view - shows full streaming content
                 expandedView
+                    .onAppear {
+                        print("🟩 EXPANDED VIEW APPEARED - isCollapsed: \(isCollapsed)")
+                    }
             }
         }
         .fixedSize(horizontal: false, vertical: true)
         .onAppear {
+            print("🟨 MAIN VIEW APPEARED - About to call handleStreamingPhase()")
             handleStreamingPhase()
         }
         .onChange(of: streamingData.content) { _ in
@@ -78,21 +90,16 @@ public struct StreamingTextView: View {
                 onHeightChange?()
             }
         }
+        .onChange(of: isCollapsed) { newValue in
+            print("🔄 isCollapsed changed to: \(newValue)")
+        }
     }
     
     // MARK: - View Components
     
     @ViewBuilder
     private var collapsedView: some View {
-        Button(action: {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                isCollapsed = false
-            }
-            // Trigger height update when expanding
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                onHeightChange?()
-            }
-        }) {
+        VStack {
             HStack(spacing: 12) {
                 // Thinking animation
                 HStack(spacing: 4) {
@@ -100,18 +107,11 @@ public struct StreamingTextView: View {
                         Circle()
                             .fill(Color.blue)
                             .frame(width: 6, height: 6)
-                            .scaleEffect(isTyping ? 1.2 : 0.8)
-                            .animation(
-                                .easeInOut(duration: 0.6)
-                                .repeatForever(autoreverses: true)
-                                .delay(Double(index) * 0.2),
-                                value: isTyping
-                            )
                     }
                 }
                 
                 // Thinking text
-                Text("Thinking...")
+                Text("Thinking... (Tap to expand)")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.blue)
                 
@@ -126,12 +126,57 @@ public struct StreamingTextView: View {
             .padding(.vertical, 12)
             .background(Color.blue.opacity(0.1))
             .cornerRadius(20)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.blue.opacity(0.3), lineWidth: 1)
-            )
         }
-        .buttonStyle(PlainButtonStyle())
+        .onAppear {
+            print("🟦 CollapsedView onAppear called - Creating tap target")
+        }
+        .onTapGesture {
+            print("🚨 BUTTON TAP DETECTED! 🚨")
+            print("🔓 Expanding collapsed card - Content length: \(streamingData.content.count)")
+            print("🔓 Content preview: '\(streamingData.content.prefix(50))...'")
+            print("🔓 Stream phase: \(streamingData.streamingPhase?.rawValue ?? "nil")")
+            print("🔓 Current isCollapsed: \(isCollapsed)")
+            print("🔓 Current hasBeenManuallyExpanded: \(hasBeenManuallyExpanded)")
+            
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isCollapsed = false
+                print("🔓 Setting isCollapsed = false")
+            }
+            
+            // If this was a "start" phase, transition to streaming when expanded
+            if streamingData.streamingPhase == .start && !streamingData.content.isEmpty {
+                print("🔓 Conditions met for starting animation: phase=start, content not empty")
+                hasBeenManuallyExpanded = true
+                
+                // Start the typing animation after expansion
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    print("🔓 Delayed action executing...")
+                    internalStreamingPhase = .streaming
+                    showProgressIndicator = false
+                    showStopButton = true
+                    
+                    // Reset the displayed text to ensure clean start
+                    displayedText = ""
+                    currentCharacterIndex = 0
+                    
+                    print("🎬 Starting typing animation after manual expansion...")
+                    print("🔄 Internal phase changed to: \(internalStreamingPhase.rawValue)")
+                    print("🎯 Target content: \(streamingData.content.prefix(50))...")
+                    print("🔄 Reset state - displayedText: '\(displayedText)', currentCharacterIndex: \(currentCharacterIndex)")
+                    
+                    startTypingAnimation()
+                }
+            } else {
+                print("🔓 Conditions NOT met - phase: \(streamingData.streamingPhase?.rawValue ?? "nil"), content empty: \(streamingData.content.isEmpty)")
+            }
+            
+            // Trigger height update when expanding
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                onHeightChange?()
+            }
+        }
+        .background(Color.red.opacity(0.1)) // Temporary debug background
+        .border(Color.red, width: 2) // Temporary debug border
     }
     
     @ViewBuilder
@@ -213,26 +258,39 @@ public struct StreamingTextView: View {
             HStack(alignment: .top, spacing: 4) {
                 // Use performance-optimized text view for long content
                 PerformantMultilineText(text: displayedText, isLongText: isPerformanceMode)
-                    .font(fontForPhase(streamingData.streamingPhase))
-                    .foregroundColor(colorForPhase(streamingData.streamingPhase))
+                    .font(fontForPhase(currentEffectivePhase()))
+                    .foregroundColor(colorForPhase(currentEffectivePhase()))
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .onAppear {
+                        print("📱 TextContentView appeared - displayedText: '\(displayedText.prefix(30))...' (length: \(displayedText.count))")
+                        print("📱 Current effective phase: \(currentEffectivePhase().rawValue)")
+                        print("📱 isTyping: \(isTyping)")
+                    }
+                    .onChange(of: displayedText) { newText in
+                        if newText.count <= 20 { // Only log for first few characters
+                            print("📝 displayedText changed to: '\(newText)' (length: \(newText.count))")
+                        }
+                    }
                 
-                // Show blinking cursor during streaming
-                if isTyping && streamingData.streamingPhase == .streaming {
+                // Show blinking cursor during streaming (use internal phase)
+                if isTyping && currentEffectivePhase() == .streaming {
                     Text("|")
-                        .font(fontForPhase(streamingData.streamingPhase))
-                        .foregroundColor(colorForPhase(streamingData.streamingPhase))
+                        .font(fontForPhase(currentEffectivePhase()))
+                        .foregroundColor(colorForPhase(currentEffectivePhase()))
                         .opacity(isTyping ? 1.0 : 0.0)
                         .animation(
                             .easeInOut(duration: 0.8).repeatForever(autoreverses: true),
                             value: isTyping
                         )
+                        .onAppear {
+                            print("👁️ Cursor appeared - isTyping: \(isTyping), phase: \(currentEffectivePhase().rawValue)")
+                        }
                 }
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(backgroundForPhase(streamingData.streamingPhase))
+        .background(backgroundForPhase(currentEffectivePhase()))
         .cornerRadius(12)
         .fixedSize(horizontal: false, vertical: true) // Allow vertical expansion
     }
@@ -260,7 +318,19 @@ public struct StreamingTextView: View {
     // MARK: - Streaming Logic
     
     private func handleStreamingPhase() {
-        guard let phase = streamingData.streamingPhase else { return }
+        print("🚨 handleStreamingPhase() called")
+        print("🚨 streamingData.streamingPhase: \(streamingData.streamingPhase?.rawValue ?? "nil")")
+        
+        guard let phase = streamingData.streamingPhase else { 
+            print("❌ No streaming phase found, returning early")
+            return 
+        }
+        
+        // Initialize internal phase if not manually managed
+        if !hasBeenManuallyExpanded {
+            internalStreamingPhase = phase
+            print("🔄 Set internalStreamingPhase to: \(internalStreamingPhase.rawValue)")
+        }
         
         // Check if we should enable performance mode for long text
         let oldPerformanceMode = isPerformanceMode
@@ -271,14 +341,18 @@ public struct StreamingTextView: View {
         }
         
         print("📋 StreamingTextView: Phase changed to \(phase.rawValue) - Content length: \(streamingData.content.count)")
+        print("🔄 Internal phase: \(internalStreamingPhase.rawValue), Manual expansion: \(hasBeenManuallyExpanded)")
+        print("🔄 Current isCollapsed: \(isCollapsed)")
         
         switch phase {
         case .start:
+            print("🟦 Processing .start phase")
             showProgressIndicator = true
             showStopButton = false
             displayedText = ""
             // Start in collapsed state
             isCollapsed = true
+            print("🟦 Set isCollapsed = true for start phase")
             
         case .informative:
             showProgressIndicator = true
@@ -310,6 +384,11 @@ public struct StreamingTextView: View {
                 forceHeightUpdate()
             }
         }
+    }
+    
+    // Helper function to get the current effective phase for styling
+    private func currentEffectivePhase() -> StreamingPhase {
+        return hasBeenManuallyExpanded ? internalStreamingPhase : (streamingData.streamingPhase ?? .start)
     }
     
     private func handleContentUpdate() {
