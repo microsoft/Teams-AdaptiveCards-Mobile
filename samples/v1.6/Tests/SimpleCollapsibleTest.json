@@ -1,0 +1,74 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🧪 Simple Collapsible Test",
+      "size": "Large",
+      "weight": "Bolder",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Two streaming views that start collapsed. Expand each one to see the typing animation.",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "📝 First Streaming Response",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Tap to expand and see typing animation:",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "id": "stream-1",
+      "text": "{\"messageID\":\"simple-1\",\"phase\":\"start\",\"content\":\"This is the first streaming response. It will type out character by character when you expand the view. You can collapse it again using the chevron button in the header.\",\"isComplete\":false,\"typingSpeed\":30.0,\"showStopButton\":true,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "📝 Second Streaming Response",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Another independent streaming view:",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "id": "stream-2",
+      "text": "{\"messageID\":\"simple-2\",\"phase\":\"start\",\"content\":\"This is the second streaming response. It operates completely independently from the first one. You can have one expanded while the other is collapsed, or both expanded at the same time.\",\"isComplete\":false,\"typingSpeed\":30.0,\"showStopButton\":true,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "**Test Instructions:**\\n1. Both views start collapsed (showing 'Thinking...' with animated dots)\\n2. Tap the first collapsed view to expand and start typing animation\\n3. Use the chevron button to collapse it again\\n4. Tap the second collapsed view to expand and start its typing\\n5. Try having both expanded simultaneously",
+      "wrap": true,
+      "spacing": "Medium",
+      "color": "Attention"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "🔄 Reset Test",
+      "data": {
+        "action": "reset_simple_test"
+      }
+    }
+  ]
+}

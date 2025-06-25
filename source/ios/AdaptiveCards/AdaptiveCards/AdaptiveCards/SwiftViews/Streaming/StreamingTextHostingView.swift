@@ -10,6 +10,8 @@ public class StreamingTextHostingView: UIView {
     private var hostingController: UIHostingController<StreamingTextView>?
     private let streamingData: StreamingContent
     private var lastReportedHeight: CGFloat = 0
+    private var heightUpdateCount = 0
+    private var lastHeightChangeTime = Date()
     
     init(streamingData: StreamingContent) {
         self.streamingData = streamingData
@@ -90,8 +92,20 @@ public class StreamingTextHostingView: UIView {
         let currentHeight = intrinsicContentSize.height
         
         // Only notify if height actually changed significantly (avoid redundant updates)
-        guard abs(currentHeight - lastReportedHeight) > 5.0 else { return }
+        guard abs(currentHeight - lastReportedHeight) > 10.0 else { return } // Increased threshold
+        
+        // Throttle notifications to avoid excessive updates
+        let now = Date()
+        guard now.timeIntervalSince(lastHeightChangeTime) >= 0.15 else { return } // Slower rate
+        
+        heightUpdateCount += 1
+        let previousHeight = lastReportedHeight
         lastReportedHeight = currentHeight
+        lastHeightChangeTime = now
+        
+        if heightUpdateCount % 3 == 0 { // Log every 3rd update to reduce noise
+            print("🔄 StreamingTextHostingView: Height update #\(heightUpdateCount) - \(previousHeight) → \(currentHeight)")
+        }
         
         // Invalidate our intrinsic content size first
         invalidateIntrinsicContentSize()
@@ -101,25 +115,63 @@ public class StreamingTextHostingView: UIView {
             hostingController.view.invalidateIntrinsicContentSize()
         }
         
-        // Notify containers in the hierarchy
+        // Find and update table view with multiple strategies
         var view: UIView? = self.superview
+        var foundTableView = false
+        var tableViewCells: [UITableViewCell] = []
+        
         while view != nil {
             let className = NSStringFromClass(type(of: view!))
+            print("🔍 StreamingTextHostingView: Checking parent view: \(className)")
+            
+            // Collect table view cells along the way
+            if let cell = view as? UITableViewCell {
+                tableViewCells.append(cell)
+                print("📱 StreamingTextHostingView: Found UITableViewCell")
+            }
             
             if className.contains("ACRContentStackView") {
+                print("📦 StreamingTextHostingView: Found ACRContentStackView, invalidating layout")
                 view?.invalidateIntrinsicContentSize()
                 view?.setNeedsLayout()
                 view?.layoutIfNeeded()
                 view?.superview?.invalidateIntrinsicContentSize()
                 view?.superview?.setNeedsLayout()
-                break
+                
+                // Continue searching for table view
             } else if className.contains("UIStackView") {
                 view?.invalidateIntrinsicContentSize()
                 view?.setNeedsLayout()
                 view?.layoutIfNeeded()
             } else if let tableView = view as? UITableView {
-                tableView.beginUpdates()
-                tableView.endUpdates()
+                print("📋 StreamingTextHostingView: Found UITableView, triggering updates")
+                foundTableView = true
+                
+                // Multiple strategies for table view updates
+                DispatchQueue.main.async {
+                    // Strategy 1: beginUpdates/endUpdates
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }
+                
+                // Strategy 2: If we have specific cells, reload them
+                if !tableViewCells.isEmpty {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        for cell in tableViewCells {
+                            if let indexPath = tableView.indexPath(for: cell) {
+                                print("🔄 StreamingTextHostingView: Reloading cell at indexPath: \(indexPath)")
+                                tableView.reloadRows(at: [indexPath], with: .none)
+                            }
+                        }
+                    }
+                }
+                
+                // Strategy 3: Force layout update
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+                    tableView.setNeedsLayout()
+                    tableView.layoutIfNeeded()
+                }
+                
                 break
             } else if let scrollView = view as? UIScrollView {
                 scrollView.invalidateIntrinsicContentSize()
@@ -128,6 +180,10 @@ public class StreamingTextHostingView: UIView {
             }
             
             view = view?.superview
+        }
+        
+        if !foundTableView {
+            print("⚠️ StreamingTextHostingView: No UITableView found in hierarchy - using fallback layout update")
         }
         
         // Force a complete layout update
@@ -140,26 +196,28 @@ public class StreamingTextHostingView: UIView {
     
     override public var intrinsicContentSize: CGSize {
         guard let hostingController = self.hostingController else {
+            print("📐 StreamingTextHostingView: No hosting controller, returning no intrinsic metric")
             return CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
         }
         
         // Get the current width constraint
         let targetWidth = bounds.width > 0 ? bounds.width : 374.0 // Use a reasonable default
         
-        // Create a temporary size to measure the content
-        let tempSize = CGSize(width: targetWidth, height: 1000) // Reasonable max height for measurement
+        // Create a temporary size to measure the content - removed artificial height limit
+        let tempSize = CGSize(width: targetWidth, height: CGFloat.greatestFiniteMagnitude)
         
         // Measure the SwiftUI content
         let measuredSize = hostingController.sizeThatFits(in: tempSize)
         
-        // Clamp the height to reasonable bounds
-        let clampedHeight = min(max(measuredSize.height, 50), 800) // Between 50 and 800 points
+        // Only enforce a minimum height, no maximum to prevent clipping
+        let clampedHeight = max(measuredSize.height, 50)
         
         let result = CGSize(
             width: UIView.noIntrinsicMetric,
             height: clampedHeight
         )
         
+        print("📐 StreamingTextHostingView: intrinsicContentSize calculated - width: \(targetWidth), measured: \(measuredSize), result: \(result)")
         return result
     }
     
@@ -168,19 +226,22 @@ public class StreamingTextHostingView: UIView {
             return CGSize(width: targetSize.width, height: 50)
         }
         
-        // Use reasonable constraints for measurement
+        // Use unconstrained height for measurement
         let constrainedSize = CGSize(
             width: targetSize.width,
-            height: min(targetSize.height, 1000) // Cap at 1000 points
+            height: CGFloat.greatestFiniteMagnitude
         )
         
         let measuredSize = hostingController.sizeThatFits(in: constrainedSize)
-        let clampedHeight = min(max(measuredSize.height, 50), 800)
+        let clampedHeight = max(measuredSize.height, 50)
         
-        return CGSize(
+        let result = CGSize(
             width: targetSize.width,
             height: clampedHeight
         )
+        
+        print("📐 StreamingTextHostingView: systemLayoutSizeFitting = \(result)")
+        return result
     }
     
     override public func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {

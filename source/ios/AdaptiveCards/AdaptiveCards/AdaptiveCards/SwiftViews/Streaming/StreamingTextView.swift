@@ -14,35 +14,36 @@ public struct StreamingTextView: View {
     @State private var showProgressIndicator: Bool = false
     @State private var currentCharacterIndex: Int = 0
     @State private var typingTimer: Timer?
+    @State private var lastHeightNotification: Date = Date()
+    @State private var isPerformanceMode: Bool = false
+    @State private var lastCharacterCountForHeightUpdate: Int = 0
+    @State private var heightUpdateCounter: Int = 0
+    
+    // Collapse/Expand state
+    @State private var isCollapsed: Bool = false
     
     // Animation configuration
-    private let typingSpeed: TimeInterval = 0.05
-    private let charactersPerChunk: Int = 3
+    private let typingSpeed: TimeInterval = 0.03 // Faster typing speed (30ms per character)
+    private let charactersPerChunk: Int = 1 // Single character for proper animation
     
-    // MARK: - Initializers
-    
-    public init(streamingData: StreamingContent, onHeightChange: (() -> Void)? = nil) {
-        self.streamingData = streamingData
-        self.onHeightChange = onHeightChange
-    }
+    // Performance optimization constants - VERY conservative
+    private let maxHeightNotificationFrequency: TimeInterval = 2.0 // Very infrequent height notifications
+    private let longTextThreshold: Int = 50000 // Much higher - disable performance mode
+    private let performanceModeChunkSize: Int = 3 // Small chunks in performance mode
+    private let veryLongTextThreshold: Int = 100000 // Extremely high threshold
+    private let maxHeightNotificationBuffer: Int = 1000 // More characters before notifying height change
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // Progress indicator for start/informative phases
-            if showProgressIndicator {
-                progressIndicatorView
-            }
-            
-            // Main text content
-            textContentView
-            
-            // Stop streaming button
-            if showStopButton {
-                stopStreamingButton
+        VStack(alignment: .leading, spacing: 8) {
+            if isCollapsed {
+                // Collapsed view - shows "thinking" state
+                collapsedView
+            } else {
+                // Expanded view - shows full streaming content
+                expandedView
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading) // Fill available width
-        .fixedSize(horizontal: false, vertical: true) // Allow vertical expansion
+        .fixedSize(horizontal: false, vertical: true)
         .onAppear {
             handleStreamingPhase()
         }
@@ -53,9 +54,22 @@ public struct StreamingTextView: View {
             handleStreamingPhase()
         }
         .onChange(of: displayedText) { _ in
-            // Notify height change when displayed text changes
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-                onHeightChange?()
+            // Smart height change notifications with logging
+            let now = Date()
+            let characterDifference = abs(displayedText.count - lastCharacterCountForHeightUpdate)
+            let shouldNotify = now.timeIntervalSince(lastHeightNotification) >= maxHeightNotificationFrequency ||
+                             characterDifference >= maxHeightNotificationBuffer
+            
+            if shouldNotify {
+                lastHeightNotification = now
+                lastCharacterCountForHeightUpdate = displayedText.count
+                heightUpdateCounter += 1
+                
+                print("📏 StreamingTextView: Height update #\(heightUpdateCounter) - Text length: \(displayedText.count), Performance mode: \(isPerformanceMode)")
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+                    onHeightChange?()
+                }
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
@@ -67,6 +81,111 @@ public struct StreamingTextView: View {
     }
     
     // MARK: - View Components
+    
+    @ViewBuilder
+    private var collapsedView: some View {
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isCollapsed = false
+            }
+            // Trigger height update when expanding
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                onHeightChange?()
+            }
+        }) {
+            HStack(spacing: 12) {
+                // Thinking animation
+                HStack(spacing: 4) {
+                    ForEach(0..<3, id: \.self) { index in
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: 6, height: 6)
+                            .scaleEffect(isTyping ? 1.2 : 0.8)
+                            .animation(
+                                .easeInOut(duration: 0.6)
+                                .repeatForever(autoreverses: true)
+                                .delay(Double(index) * 0.2),
+                                value: isTyping
+                            )
+                    }
+                }
+                
+                // Thinking text
+                Text("Thinking...")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.blue)
+                
+                Spacer()
+                
+                // Expand icon
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.blue)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(Color.blue.opacity(0.1))
+            .cornerRadius(20)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.blue.opacity(0.3), lineWidth: 1)
+            )
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+    
+    @ViewBuilder
+    private var expandedView: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Header with collapse button
+            HStack {
+                Text("AI Assistant")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.primary)
+                
+                Spacer()
+                
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        isCollapsed = true
+                    }
+                    // Trigger height update when collapsing
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                        onHeightChange?()
+                    }
+                }) {
+                    Image(systemName: "chevron.up")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.gray)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 8)
+            
+            // Progress indicator for start/informative phases
+            if showProgressIndicator {
+                progressIndicatorView
+                    .padding(.horizontal, 16)
+            }
+            
+            // Main text content
+            textContentView
+            
+            // Stop streaming button
+            if showStopButton {
+                stopStreamingButton
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+            }
+        }
+        .background(Color.gray.opacity(0.05))
+        .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+        )
+    }
     
     @ViewBuilder
     private var progressIndicatorView: some View {
@@ -92,8 +211,8 @@ public struct StreamingTextView: View {
     private var textContentView: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top, spacing: 4) {
-                // Use a custom text view that properly handles newlines
-                MultilineText(text: displayedText)
+                // Use performance-optimized text view for long content
+                PerformantMultilineText(text: displayedText, isLongText: isPerformanceMode)
                     .font(fontForPhase(streamingData.streamingPhase))
                     .foregroundColor(colorForPhase(streamingData.streamingPhase))
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -111,14 +230,10 @@ public struct StreamingTextView: View {
                 }
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
         .background(backgroundForPhase(streamingData.streamingPhase))
         .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(borderColorForPhase(streamingData.streamingPhase), lineWidth: 1)
-        )
         .fixedSize(horizontal: false, vertical: true) // Allow vertical expansion
     }
     
@@ -129,15 +244,15 @@ public struct StreamingTextView: View {
         }) {
             HStack(spacing: 8) {
                 Image(systemName: "stop.circle.fill")
-                    .font(.system(size: 16, weight: .medium))
+                    .font(.system(size: 14, weight: .medium))
                 Text("Stop")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(.system(size: 12, weight: .semibold))
             }
             .foregroundColor(.white)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
             .background(Color.red)
-            .cornerRadius(20)
+            .cornerRadius(16)
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -147,21 +262,41 @@ public struct StreamingTextView: View {
     private func handleStreamingPhase() {
         guard let phase = streamingData.streamingPhase else { return }
         
+        // Check if we should enable performance mode for long text
+        let oldPerformanceMode = isPerformanceMode
+        isPerformanceMode = streamingData.content.count > longTextThreshold
+        
+        if oldPerformanceMode != isPerformanceMode {
+            print("🚀 StreamingTextView: Performance mode \(isPerformanceMode ? "ENABLED" : "DISABLED") - Content length: \(streamingData.content.count)")
+        }
+        
+        print("📋 StreamingTextView: Phase changed to \(phase.rawValue) - Content length: \(streamingData.content.count)")
+        
         switch phase {
         case .start:
             showProgressIndicator = true
             showStopButton = false
             displayedText = ""
+            // Start in collapsed state
+            isCollapsed = true
             
         case .informative:
             showProgressIndicator = true
             showStopButton = true
             // Show informative text immediately (no typing effect)
             displayedText = streamingData.content
+            // Expand to show informative content
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isCollapsed = false
+            }
             
         case .streaming:
             showProgressIndicator = false
             showStopButton = true
+            // Expand to show streaming content
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isCollapsed = false
+            }
             startTypingAnimation()
             
         case .final:
@@ -169,6 +304,11 @@ public struct StreamingTextView: View {
             showStopButton = false
             stopTypingAnimation()
             displayedText = streamingData.content
+            // Keep expanded to show final content
+            // Force height update for final content
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                forceHeightUpdate()
+            }
         }
     }
     
@@ -193,6 +333,10 @@ public struct StreamingTextView: View {
             // Show final content immediately
             stopTypingAnimation()
             displayedText = streamingData.content
+            // Force height update for final content
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                forceHeightUpdate()
+            }
             
         default:
             break
@@ -221,6 +365,7 @@ public struct StreamingTextView: View {
         
         guard currentCharacterIndex < targetText.count else {
             // Finished typing current content
+            print("⏹️ StreamingTextView: Finished typing at \(currentCharacterIndex) characters")
             if streamingData.streamingPhase == .final {
                 stopTypingAnimation()
             } else {
@@ -232,29 +377,80 @@ public struct StreamingTextView: View {
             return
         }
         
-        // Add next chunk of characters
-        let endIndex = min(currentCharacterIndex + charactersPerChunk, targetText.count)
-        let targetEndIndex = targetText.index(targetText.startIndex, offsetBy: endIndex)
+        // Use larger chunks for very long text to improve performance
+        let chunkSize: Int
+        if targetText.count > veryLongTextThreshold {
+            chunkSize = performanceModeChunkSize * 2 // Even larger chunks for very long text
+        } else if isPerformanceMode {
+            chunkSize = performanceModeChunkSize
+        } else {
+            chunkSize = charactersPerChunk
+        }
         
-        displayedText = String(targetText[..<targetEndIndex])
+        // Add next chunk of characters - optimized for long strings
+        let endIndex = min(currentCharacterIndex + chunkSize, targetText.count)
+        
+        // More efficient string slicing for long text
+        if isPerformanceMode {
+            // For very long text, avoid expensive string indexing operations
+            let utf8View = targetText.utf8
+            let startIdx = utf8View.index(utf8View.startIndex, offsetBy: 0)
+            let endIdx = utf8View.index(utf8View.startIndex, offsetBy: endIndex)
+            displayedText = String(utf8View[startIdx..<endIdx]) ?? String(targetText.prefix(endIndex))
+        } else {
+            // Standard approach for shorter text
+            let targetEndIndex = targetText.index(targetText.startIndex, offsetBy: endIndex)
+            displayedText = String(targetText[..<targetEndIndex])
+        }
+        
         currentCharacterIndex = endIndex
         
-        // Trigger height change notification during typing for better layout updates
-        DispatchQueue.main.async {
-            onHeightChange?()
+        // Log every 1000 characters to track progress
+        if currentCharacterIndex % 1000 == 0 {
+            print("📝 StreamingTextView: Typed \(currentCharacterIndex)/\(targetText.count) characters")
+        }
+        
+        // Throttled height change notification during typing with smarter logic
+        let now = Date()
+        let shouldNotifyHeight = targetText.count > veryLongTextThreshold ?
+            (currentCharacterIndex % (performanceModeChunkSize * 4) == 0) : // Less frequent for very long text
+            (!isPerformanceMode || now.timeIntervalSince(lastHeightNotification) >= maxHeightNotificationFrequency)
+        
+        if shouldNotifyHeight {
+            lastHeightNotification = now
+            DispatchQueue.main.async {
+                onHeightChange?()
+            }
         }
     }
     
     private func stopStreaming() {
         // In a real implementation, this would trigger the stop streaming API call
         // For now, we'll just transition to final state
+        print("🛑 StreamingTextView: Stop streaming requested")
         stopTypingAnimation()
         showStopButton = false
         showProgressIndicator = false
         displayedText = streamingData.content
         
+        // Force a final height update
+        forceHeightUpdate()
+        
         // TODO: Implement actual stop streaming logic
         print("Stop streaming requested for message: \(streamingData.messageID)")
+    }
+    
+    private func forceHeightUpdate() {
+        print("🔄 StreamingTextView: Forcing height update - Text length: \(displayedText.count)")
+        DispatchQueue.main.async {
+            onHeightChange?()
+        }
+        
+        // Also try a delayed update in case the first one doesn't work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            print("🔄 StreamingTextView: Delayed height update")
+            onHeightChange?()
+        }
     }
     
     // MARK: - Style Helpers
@@ -308,36 +504,23 @@ public struct StreamingTextView: View {
     }
 }
 
-// MARK: - MultilineText Helper
+// MARK: - Performance-Optimized Text Views
 
-/// Custom text view that properly handles newline characters and multi-line text
+/// Custom text view that handles both short and long text efficiently
 @available(iOS 15.0, *)
-struct MultilineText: View {
+struct PerformantMultilineText: View {
     let text: String
+    let isLongText: Bool
     
     var body: some View {
-        // Split text by newlines and render each line separately
-        VStack(alignment: .leading, spacing: 4) {
-            ForEach(textLines, id: \.self) { line in
-                if line.isEmpty {
-                    // Empty line - add spacing
-                    Text(" ")
-                        .font(.caption)
-                        .frame(height: 4)
-                } else {
-                    Text(line)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
+        // Use a single Text view for all cases - simpler and more reliable
+        Text(text)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .onAppear {
+                let mode = isLongText ? "performance" : "standard"
+                print("📊 PerformantMultilineText: Using \(mode) mode for text (\(text.count) chars)")
             }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
-    private var textLines: [String] {
-        // Split by both \n and \r\n to handle different line endings
-        let lines = text.components(separatedBy: .newlines)
-        return lines
     }
 }
 
@@ -380,6 +563,15 @@ struct StreamingTextView_Previews: PreviewProvider {
                 phase: "final",
                 content: "This is the final message content that appears immediately.",
                 isComplete: true,
+                streamEndReason: nil
+            ))
+            
+            // Long text performance test
+            StreamingTextView(streamingData: StreamingContent(
+                messageID: "5",
+                phase: "streaming",
+                content: String(repeating: "This is a very long text that will test the performance optimizations. It contains many paragraphs and should remain responsive even when the content becomes extremely long. The system should automatically switch to performance mode when the text exceeds the threshold.\n\n", count: 50),
+                isComplete: false,
                 streamEndReason: nil
             ))
         }

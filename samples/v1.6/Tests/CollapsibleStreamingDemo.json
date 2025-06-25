@@ -1,0 +1,164 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🗂️ Collapsible Streaming Views Demo",
+      "size": "Large",
+      "weight": "Bolder",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This demo showcases multiple streaming text views with collapse/expand functionality - perfect for group chats with multiple AI responses.",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "🤔 Collapsed 'Thinking' State",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This view starts collapsed, showing only a 'Thinking...' indicator:",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-collapsed-1",
+      "text": "{\"messageID\":\"collapsed-1\",\"phase\":\"start\",\"content\":\"\",\"isComplete\":false,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "📢 Auto-Expanding Informative",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This view auto-expands to show informative content:",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-informative-auto",
+      "text": "{\"messageID\":\"info-auto\",\"phase\":\"informative\",\"content\":\"🔍 Processing your request across multiple knowledge domains. This may take a moment as I gather comprehensive information to provide you with the most accurate and helpful response.\",\"isComplete\":false,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "⌨️ Short Streaming Response",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This view expands and shows a short typing animation:",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-short",
+      "text": "{\"messageID\":\"short-stream\",\"phase\":\"streaming\",\"content\":\"Here's a concise response that demonstrates the collapsible interface. You can collapse this view using the chevron button to focus on other conversations.\",\"isComplete\":false,\"typingSpeed\":30.0,\"showStopButton\":true,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "🤔 Another Collapsed View",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Multiple conversations can be collapsed simultaneously:",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-collapsed-2",
+      "text": "{\"messageID\":\"collapsed-2\",\"phase\":\"start\",\"content\":\"\",\"isComplete\":false,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "📚 Long-form Streaming Content",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This demonstrates the collapsible interface with extensive content:",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-long",
+      "text": "{\"messageID\":\"long-stream\",\"phase\":\"streaming\",\"content\":\"# Comprehensive Guide to Collapsible UI Design\\n\\n## Introduction\\nThe collapsible streaming interface represents a significant advancement in conversational AI UX. By allowing users to collapse and expand individual responses, we create a more manageable and focused experience.\\n\\n## Key Benefits\\n\\n### 🎯 Focus Management\\n• **Reduced Cognitive Load**: Users can hide completed responses to focus on active conversations\\n• **Visual Clarity**: Less screen clutter leads to better comprehension\\n• **Context Switching**: Easy navigation between multiple AI responses\\n\\n### 📱 Mobile Optimization\\n• **Screen Real Estate**: Efficient use of limited mobile screen space\\n• **Touch Interaction**: Large, accessible collapse/expand buttons\\n• **Scroll Performance**: Reduced content means smoother scrolling\\n\\n### 👥 Group Chat Excellence\\n• **Multiple Conversations**: Handle several AI responses simultaneously\\n• **User Control**: Individual collapse state for each response\\n• **Status Visibility**: Clear indicators for thinking/active/complete states\\n\\n## Technical Implementation\\n\\n### State Management\\nEach streaming view maintains independent state:\\n- Collapse/expand status\\n- Streaming phase (start, informative, streaming, final)\\n- Content progression\\n- User interaction history\\n\\n### Animation System\\n- **Smooth Transitions**: 300ms ease-in-out animations\\n- **Height Calculations**: Dynamic height updates during expand/collapse\\n- **Performance**: Optimized for 60fps on mobile devices\\n\\n### Accessibility\\n- **Screen Reader Support**: Proper ARIA labels and descriptions\\n- **Keyboard Navigation**: Full keyboard accessibility\\n- **High Contrast**: Visible in all display modes\\n\\n## Best Practices\\n\\n1. **Auto-expand Important Content**: Informative phases should expand automatically\\n2. **Preserve User Choice**: Remember collapse state during session\\n3. **Clear Visual Hierarchy**: Distinguish between collapsed and expanded states\\n4. **Responsive Design**: Adapt to different screen sizes and orientations\\n\\nThis collapsible design pattern enhances the user experience by providing control and organization in complex conversational interfaces.\",\"isComplete\":false,\"typingSpeed\":25.0,\"showStopButton\":true,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "✅ Completed Response",
+      "size": "Medium",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This final response appears immediately without animation:",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "id": "streaming-final",
+      "text": "{\"messageID\":\"final-complete\",\"phase\":\"final\",\"content\":\"🎉 This is a completed response that demonstrates the final state of the collapsible streaming interface. No typing animation occurs, and the content is displayed instantly. Users can still collapse this view if needed to manage their conversation space.\",\"isComplete\":true,\"streamingEnabled\":true}",
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "💡 **Usage Tips:**\\n• Tap the chevron button to collapse/expand any response\\n• Use the 'Stop' button during streaming to halt the animation\\n• Collapsed views show a 'Thinking...' indicator with animated dots\\n• Multiple responses can be collapsed independently",
+      "wrap": true,
+      "spacing": "Medium",
+      "color": "Attention"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "🔄 Reset All Views",
+      "data": {
+        "action": "reset_collapsible_demo"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "▼ Collapse All",
+      "data": {
+        "action": "collapse_all_streams"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "▲ Expand All",
+      "data": {
+        "action": "expand_all_streams"
+      }
+    }
+  ]
+}
