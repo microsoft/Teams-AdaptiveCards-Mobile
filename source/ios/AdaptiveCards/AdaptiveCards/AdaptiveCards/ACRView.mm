@@ -666,8 +666,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     auto backgroundImage = [_adaptiveCard card]->GetBackgroundImage();
 
                     // remove observer early in case background image must be changed to handle mode = repeat
+                    observerRemoved = true;  // Set BEFORE removal to prevent race conditions
                     [self removeObserver:self forKeyPath:path onObject:object];
-                    observerRemoved = true;
                     renderBackgroundImage(self, backgroundImage.get(), imageView, image);
                 }
             }
