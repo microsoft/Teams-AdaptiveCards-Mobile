@@ -666,7 +666,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     auto backgroundImage = [_adaptiveCard card]->GetBackgroundImage();
 
                     // remove observer early in case background image must be changed to handle mode = repeat
-                    observerRemoved = true;  // Set BEFORE removal to prevent race conditions
+                    observerRemoved = true;
                     [self removeObserver:self forKeyPath:path onObject:object];
                     renderBackgroundImage(self, backgroundImage.get(), imageView, image);
                 }
@@ -693,12 +693,21 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 - (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)path onObject:(NSObject *)object
 {
-    // check that makes sure that there are subscribers, and the given observer is not one of the removed observers
-    if (_numberOfSubscribers && ![_setOfRemovedObservers containsObject:object]) {
-        _numberOfSubscribers--;
-        [object removeObserver:self forKeyPath:path];
-        [_setOfRemovedObservers addObject:object];
-        [self callDidLoadElementsIfNeeded];
+    // Thread-safe KVO observer removal with proper synchronization
+    @synchronized(self) {
+        // Check if observer was already removed before attempting removal
+        if (_numberOfSubscribers > 0 && ![_setOfRemovedObservers containsObject:object]) {
+            // Add to removed set BEFORE calling removeObserver to prevent race condition
+            [_setOfRemovedObservers addObject:object];
+            _numberOfSubscribers--;
+            
+            @try {
+                [object removeObserver:self forKeyPath:path];
+            } @catch (NSException *exception) {
+            }
+            
+            [self callDidLoadElementsIfNeeded];
+        }
     }
 }
 
@@ -793,16 +802,24 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 - (void)dealloc
 {
-    for (id key in _imageViewContextMap) {
-        id object = _imageViewContextMap[key];
+    @synchronized(self) {
+        for (id key in _imageViewContextMap) {
+            id object = _imageViewContextMap[key];
 
-        if ([object isKindOfClass:[ACRContentHoldingUIView class]]) {
-            object = ((UIView *)object).subviews[0];
-        }
+            if ([object isKindOfClass:[ACRContentHoldingUIView class]]) {
+                object = ((UIView *)object).subviews[0];
+            }
 
-        if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
-            [object removeObserver:self forKeyPath:@"image"];
+            if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
+                @try {
+                    [object removeObserver:self forKeyPath:@"image"];
+                } @catch (NSException *exception) {
+                }
+            }
         }
+        
+        // Clear the removed observers set on dealloc to prevent memory leaks
+        [_setOfRemovedObservers removeAllObjects];
     }
 }
 
