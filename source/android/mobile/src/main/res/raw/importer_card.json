@@ -16,6 +16,10 @@
                                 "type": "Input.ChoiceSet",
                                 "choices": [
 									{
+										"title": "DynamicProperties",
+										"value": "v1.5/Scenarios/DynamicProp.json"
+									},
+									{
 										"title": "AdaptiveCardFlowLayout",
 										"value": "v1.5/Scenarios/AdaptiveCardFlowLayout.json"
 									},

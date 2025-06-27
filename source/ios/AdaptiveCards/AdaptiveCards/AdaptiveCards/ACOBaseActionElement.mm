@@ -52,7 +52,6 @@ using namespace AdaptiveCards;
     } else {
         actionElement = [[ACOBaseActionElement alloc] initWithBaseActionElement:element];
     }
-
     if (type == ActionType::OpenUrl) {
         actionElement.accessibilityTraits |= UIAccessibilityTraitLink;
     } else if (type == ActionType::UnknownAction) {

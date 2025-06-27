@@ -79,7 +79,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
 
     // Used to load the 'adaptivecards-native-lib' library on application startup.
     static {
-        System.loadLibrary("adaptivecards-native-lib");
+        //System.loadLibrary("adaptivecards-native-lib");
     }
 
     private static String IS_CARD = "isCard";
@@ -387,11 +387,16 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
 
             ParseContext context = createParseContextForCustomElements();
             ParseResult parseResult = AdaptiveCardNativeParser.INSTANCE.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
+            //AdaptiveCardNativeParser.INSTANCE.compareWithNativeParsing(jsonText, AdaptiveCardRenderer.VERSION);
+            //AdaptiveCardNativeParser.INSTANCE.evalExpression();
+
             if (m_checkBox.isChecked()) {
                 try {
 
                     // get the all the warnings
-                    Set<String> warnings = AdaptiveCardNativeParser.INSTANCE.evaluateNativeParsingDiff(jsonText, AdaptiveCardRenderer.VERSION, parseResult);
+                   // AdaptiveCardNativeParser.INSTANCE.compareWithNativeParsing(jsonText, AdaptiveCardRenderer.VERSION);
+
+
 
                 } catch (Exception e) {
                     e.printStackTrace();

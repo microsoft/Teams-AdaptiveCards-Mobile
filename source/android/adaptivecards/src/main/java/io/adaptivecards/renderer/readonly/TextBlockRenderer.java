@@ -29,6 +29,7 @@ import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LifecycleCoroutineScope;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ import io.adaptivecards.objectmodel.TextBlock;
 import io.adaptivecards.objectmodel.TextSize;
 import io.adaptivecards.objectmodel.TextStyle;
 import io.adaptivecards.objectmodel.TextWeight;
+import io.adaptivecards.renderer.AdaptiveCardNativeParser;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
 import io.adaptivecards.renderer.RenderArgs;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
@@ -302,6 +304,7 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setOnTouchListener(new TouchTextView(new SpannableString(htmlString)));
 
+
         textView.setHorizontallyScrolling(false);
         applyTextFormat(textView, hostConfig, textBlock.GetStyle(), textBlock.GetFontType(), textBlock.GetTextWeight(), renderArgs);
         applyTextSize(textView, hostConfig, textBlock.GetStyle(), textBlock.GetFontType(), textBlock.GetTextSize(), renderArgs);
@@ -320,6 +323,9 @@ public class TextBlockRenderer extends BaseCardElementRenderer
             textView.setMaxLines(1);
         }
 
+        if (!textBlock.GetTextDynamic().isEmpty()) {
+            AdaptiveCardNativeParser.INSTANCE.evaluateAndSetText(textBlock.GetTextDynamic(), textView);
+        }
         viewGroup.addView(textView);
         return textView;
     }

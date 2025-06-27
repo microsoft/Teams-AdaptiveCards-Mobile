@@ -4,6 +4,8 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
+project(adaptivecards-native-lib)
+
 set(CMAKE_CXX_STANDARD 17)
 
 # Creates and names a library, sets it as either STATIC
@@ -112,6 +114,8 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/ProgressRing.cpp
              src/main/cpp/objectmodel_wrap.cpp
              )
+
+target_link_options(adaptivecards-native-lib PRIVATE "-Wl,-z,max-page-size=16384")
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because system libraries are included in the search path by

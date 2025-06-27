@@ -28,6 +28,7 @@ import io.adaptivecards.objectmodel.ForegroundColor;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IconPlacement;
 import io.adaptivecards.objectmodel.SubmitAction;
+import io.adaptivecards.renderer.AdaptiveCardNativeParser;
 import io.adaptivecards.renderer.BaseActionElementRenderer;
 import io.adaptivecards.renderer.IconUtils;
 import io.adaptivecards.renderer.RenderArgs;
@@ -173,6 +174,10 @@ public class ActionElementRenderer extends BaseActionElementRenderer
 
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
             button.setContentDescription(Util.getOpenUrlAnnouncement(context, baseActionElement.GetTitle()));
+        }
+
+        if(!baseActionElement.GetIsVisibleDynamic().isEmpty()) {
+            AdaptiveCardNativeParser.INSTANCE.evaluateAndSetVisible(baseActionElement.GetIsVisibleDynamic(), button);
         }
 
         viewGroup.addView(button);

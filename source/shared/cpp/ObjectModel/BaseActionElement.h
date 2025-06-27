@@ -55,9 +55,12 @@ public:
 
     bool GetIsEnabled() const;
     void SetIsEnabled(const bool isEnabled);
-    
+
     bool GetIsRtl() const;
     void SetIsRtl(const bool isRtl);
+
+    std::string GetIsVisibleDynamic() const;
+    void SetIsVisibleDynamic(std::string value);
 
     ActionRole GetRole() const;
     void SetRole(const ActionRole role);
@@ -110,6 +113,7 @@ private:
     std::string m_iconUrl;
     std::string m_style;
     std::string m_tooltip;
+    std::string m_isVisibleDynamic;
 
     bool m_isEnabled;
     bool m_isRtl;

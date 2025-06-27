@@ -60,12 +60,16 @@ public:
     void SetLanguage(const std::string& value);
     const std::string& GetLanguage() const;
 
+    void SetTextDynamic(const std::string& value);
+    const std::string& GetTextDynamic() const;
+
 private:
     bool m_wrap;
     unsigned int m_maxLines;
     std::optional<HorizontalAlignment> m_hAlignment;
     std::optional<TextStyle> m_textStyle;
     std::shared_ptr<TextElementProperties> m_textElementProperties;
+    std::string m_textDynamic;
     void PopulateKnownPropertiesSet();
 };
 

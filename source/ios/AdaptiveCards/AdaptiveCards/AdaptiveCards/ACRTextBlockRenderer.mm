@@ -49,6 +49,7 @@
 
     ACRUILabel *lab = [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     lab.backgroundColor = [UIColor clearColor];
+    txtBlck->GetTextDynamic();
 
     lab.style = [viewGroup style];
     NSMutableAttributedString *content = nil;

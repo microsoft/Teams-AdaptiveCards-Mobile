@@ -42,7 +42,6 @@
         self.textColor = _placeholderColor;
         _isShowingPlaceholder = YES;
     }
-
     self.isRequired = inputBlck->GetIsRequired();
     self.delegate = self;
     self.id = [NSString stringWithCString:inputBlck->GetId().c_str()

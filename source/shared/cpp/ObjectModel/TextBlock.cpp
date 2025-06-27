@@ -167,6 +167,16 @@ void TextBlock::SetLanguage(const std::string& value)
     m_textElementProperties->SetLanguage(value);
 }
 
+void TextBlock::SetTextDynamic(const std::string& value)
+{
+    m_textDynamic = value;
+}
+
+const std::string& TextBlock::GetTextDynamic() const
+{
+    return m_textDynamic;
+}
+
 std::shared_ptr<BaseCardElement> TextBlockParser::Deserialize(ParseContext& context, const Json::Value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::TextBlock);
@@ -179,6 +189,7 @@ std::shared_ptr<BaseCardElement> TextBlockParser::Deserialize(ParseContext& cont
     textBlock->SetMaxLines(ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::MaxLines, 0));
     textBlock->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
+    textBlock->SetTextDynamic(ParseUtil::GetString(json, AdaptiveCardSchemaKey::textDynamic, "", false));
 
     return textBlock;
 }

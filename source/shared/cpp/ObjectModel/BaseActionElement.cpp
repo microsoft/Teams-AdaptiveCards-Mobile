@@ -149,6 +149,16 @@ void AdaptiveCards::BaseActionElement::SetRole(const ActionRole role)
     m_role = role;
 }
 
+std::string BaseActionElement::GetIsVisibleDynamic() const
+{
+    return m_isVisibleDynamic;
+}
+
+void BaseActionElement::SetIsVisibleDynamic(std::string value)
+{
+    m_isVisibleDynamic = value;
+}
+
 Json::Value BaseActionElement::SerializeToJsonValue() const
 {
     Json::Value root = BaseElement::SerializeToJsonValue();
@@ -253,6 +263,7 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
     element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
     element->SetIsRtl(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Rtl, false));
+    element->SetIsVisibleDynamic(ParseUtil::GetString(json, AdaptiveCardSchemaKey::IsVisibleDynamic, "", false));
 
     auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedIconUrls, ThemedUrl::Deserialize, false);
     element->m_themedIconUrls = std::move(themedUrls);
