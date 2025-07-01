@@ -27,6 +27,7 @@
 		0D45F5A7261731E400EF03C5 /* ACRActionOverflowRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D45F5A6261731E400EF03C5 /* ACRActionOverflowRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */; };
 		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
+		241C67252E02DE5D0007EA18 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */; };
 		24EDF0BC2DCB7B2500558378 /* ACRProgressBarRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */; };
 		24EDF0BE2DCB7B6C00558378 /* ACRProgressBarRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */; };
 		24EDF0C02DCB7F8100558378 /* ACRProgressRingRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */; };
@@ -396,7 +397,6 @@
 		CFF95C0D2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0C2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm */; };
 		CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */; };
 		DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */; };
-		E28177DA2DD1BAA300DA3EA0 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28177D82DD1BAA300DA3EA0 /* FluentAssets.xcassets */; };
 		EC367F912F6036B68C5BBFDB /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
 		F401A8781F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = F401A8761F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm */; };
 		F401A87C1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = F401A87A1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm */; };
@@ -615,6 +615,7 @@
 		0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRLayoutHelper.mm; sourceTree = "<group>"; };
 		0E46B8FBE57A09301765F779 /* Pods-Fluent-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCardsTests/Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
+		241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
 		24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRProgressBarRenderer.h; sourceTree = "<group>"; };
 		24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressBarRenderer.mm; sourceTree = "<group>"; };
 		24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressRingRenderer.mm; sourceTree = "<group>"; };
@@ -1004,7 +1005,6 @@
 		CFF95C0A2982E38500F321C3 /* ACRChoiceSetCompactStyleViewTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACRChoiceSetCompactStyleViewTests.mm; sourceTree = "<group>"; };
 		CFF95C0C2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACOTypeaheadDynamicChoicesServiceTests.mm; sourceTree = "<group>"; };
 		CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACOTypeaheadDebouncerTests.mm; sourceTree = "<group>"; };
-		E28177D82DD1BAA300DA3EA0 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
 		E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards_AdaptiveCardsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED131801E4C2E2B662925ABF /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig"; sourceTree = "<group>"; };
 		F401A8761F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRImageSetUICollectionView.mm; sourceTree = "<group>"; };
@@ -1245,6 +1245,14 @@
 			);
 			name = Pods;
 			path = ../Pods;
+			sourceTree = "<group>";
+		};
+		241C67242E02DE5D0007EA18 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		6B124C9226B8AE3B007E9641 /* Mocks */ = {
@@ -1622,14 +1630,6 @@
 			path = DynamicTypeahead;
 			sourceTree = "<group>";
 		};
-		E28177D92DD1BAA300DA3EA0 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				E28177D82DD1BAA300DA3EA0 /* FluentAssets.xcassets */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		F4071C751FCCBAEF00AF4FEA /* json */ = {
 			isa = PBXGroup;
 			children = (
@@ -1663,6 +1663,7 @@
 		F423C0B71EE1FBA900905679 /* AdaptiveCards */ = {
 			isa = PBXGroup;
 			children = (
+				241C67242E02DE5D0007EA18 /* Resources */,
 				F42979331F30079D00E89914 /* Actions */,
 				6BFF24152714FA1D00183C59 /* AdaptiveCards.h */,
 				F423C0B91EE1FBAA00905679 /* Info.plist */,
@@ -2438,7 +2439,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E28177DA2DD1BAA300DA3EA0 /* FluentAssets.xcassets in Resources */,
+				241C67252E02DE5D0007EA18 /* FluentAssets.xcassets in Resources */,
 				84AE295927FFA26F00D01B82 /* CMakeLists.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
