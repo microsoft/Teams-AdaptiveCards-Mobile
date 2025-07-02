@@ -447,7 +447,7 @@ using namespace AdaptiveCards;
                 execute : [ACRAggregateTargetBuilder getInstance],
                 showcard : [ACRShowCardTargetBuilder getInstance],
                 toggle : [ACRToggleVisibilityTargetBuilder getInstance],
-                popover : [ACRAggregateTargetBuilder getInstance],
+                popover : [ACRPopoverTargetBuilder getInstance],
                 overflow : [ACROverflowActionTargetBuilder getInstance]
             };
             break;
@@ -457,7 +457,7 @@ using namespace AdaptiveCards;
                 submit : [ACRAggregateTargetBuilder getInstance],
                 execute : [ACRAggregateTargetBuilder getInstance],
                 toggle : [ACRToggleVisibilityTargetBuilder getInstance],
-                popover : [ACRAggregateTargetBuilder getInstance],
+                popover : [ACRPopoverTargetBuilder getInstance],
                 unknown : [ACRUnknownActionTargetBuilder getInstance]
             };
             break;

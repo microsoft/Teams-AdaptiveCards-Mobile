@@ -9,7 +9,11 @@
 #import "ACRTapGestureRecognizerEventHandler.h"
 #import <UIKit/UIKit.h>
 
+@class ACRPopoverTarget;
+
 @interface ACRBaseTarget : NSObject <ACRSelectActionDelegate>
+
+@property (nonatomic, weak) ACRPopoverTarget *parentPopoverTarget;
 
 - (void)addGestureRecognizer:(UIView *)view toolTipText:(NSString *)toolTipText;
 

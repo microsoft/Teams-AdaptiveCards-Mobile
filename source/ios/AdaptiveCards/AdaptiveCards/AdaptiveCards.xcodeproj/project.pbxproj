@@ -304,8 +304,8 @@
 		7773C2EA2CA5656100097C06 /* ACRPageControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7773C2E82CA5656100097C06 /* ACRPageControl.mm */; };
 		7A2D17552DFAE0CB00E59055 /* ACRActionPopoverRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A2D17542DFAE0BC00E59055 /* ACRActionPopoverRenderer.h */; };
 		7A2D17572DFAE1B800E59055 /* ACRActionPopoverRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */; };
-		7AA81C1F2E01AB9600826DCD /* ACRPopoverPresenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AA81C1E2E01AB5500826DCD /* ACRPopoverPresenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7AA81C212E01AFD000826DCD /* ACRPopoverPresenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AA81C202E01AFCE00826DCD /* ACRPopoverPresenter.mm */; };
+		7A9BD60C2E13A67800114A4F /* ACRPopoverTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A9BD60B2E13A66800114A4F /* ACRPopoverTarget.h */; };
+		7A9BD60E2E13A6CD00114A4F /* ACRPopoverTarget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A9BD60D2E13A6CC00114A4F /* ACRPopoverTarget.mm */; };
 		7AB4BE5B2E0A74B6007E39F3 /* ACRBottomSheetConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AB4BE5A2E0A749F007E39F3 /* ACRBottomSheetConfiguration.h */; };
 		7AB4BE5D2E0A74DA007E39F3 /* ACRBottomSheetConfiguration.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4BE5C2E0A74D9007E39F3 /* ACRBottomSheetConfiguration.mm */; };
 		7AB4BE5F2E0A7507007E39F3 /* ACRBottomSheetPresentationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7AB4BE5E2E0A7503007E39F3 /* ACRBottomSheetPresentationController.h */; };
@@ -867,8 +867,8 @@
 		777DD1173C03E3F4EC695141 /* Pods-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		7A2D17542DFAE0BC00E59055 /* ACRActionPopoverRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRActionPopoverRenderer.h; sourceTree = "<group>"; };
 		7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRActionPopoverRenderer.mm; sourceTree = "<group>"; };
-		7AA81C1E2E01AB5500826DCD /* ACRPopoverPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRPopoverPresenter.h; sourceTree = "<group>"; };
-		7AA81C202E01AFCE00826DCD /* ACRPopoverPresenter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverPresenter.mm; sourceTree = "<group>"; };
+		7A9BD60B2E13A66800114A4F /* ACRPopoverTarget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRPopoverTarget.h; sourceTree = "<group>"; };
+		7A9BD60D2E13A6CC00114A4F /* ACRPopoverTarget.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverTarget.mm; sourceTree = "<group>"; };
 		7AB4BE5A2E0A749F007E39F3 /* ACRBottomSheetConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBottomSheetConfiguration.h; sourceTree = "<group>"; };
 		7AB4BE5C2E0A74D9007E39F3 /* ACRBottomSheetConfiguration.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRBottomSheetConfiguration.mm; sourceTree = "<group>"; };
 		7AB4BE5E2E0A7503007E39F3 /* ACRBottomSheetPresentationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRBottomSheetPresentationController.h; sourceTree = "<group>"; };
@@ -1316,6 +1316,8 @@
 		6BDE5C4A26FEAB52003A1DDB /* Targets */ = {
 			isa = PBXGroup;
 			children = (
+				7A9BD60D2E13A6CC00114A4F /* ACRPopoverTarget.mm */,
+				7A9BD60B2E13A66800114A4F /* ACRPopoverTarget.h */,
 				6BDE5C3826FEA7C9003A1DDB /* ACRAggregateTarget.h */,
 				6BDE5C3F26FEA7DC003A1DDB /* ACRAggregateTarget.mm */,
 				6BDE5C3C26FEA7DB003A1DDB /* ACRBaseTarget.h */,
@@ -1414,17 +1416,9 @@
 		7A2D17532DFA9A2C00E59055 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				E28177D82DD1BAA300DA3EA0 /* FluentAssets.xcassets */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
-		7AD18A8E2E0293DB00A35DDD /* Resources */ = {
-			isa = PBXGroup;
-			children = (
 				7AD18A8D2E0293DB00A35DDD /* FluentAssets.xcassets */,
 			);
-			path = Resources;
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		CFF954CC29819A6B00F321C3 /* DynamicTypeahead */ = {
@@ -1769,8 +1763,6 @@
 				7AB4BE5A2E0A749F007E39F3 /* ACRBottomSheetConfiguration.h */,
 				7AD18A8B2E028F1500A35DDD /* ACRBottomSheetViewController.mm */,
 				7AD18A892E028EBF00A35DDD /* ACRBottomSheetViewController.h */,
-				7AA81C202E01AFCE00826DCD /* ACRPopoverPresenter.mm */,
-				7AA81C1E2E01AB5500826DCD /* ACRPopoverPresenter.h */,
 				7A2D17562DFAE1B500E59055 /* ACRActionPopoverRenderer.mm */,
 				7A2D17542DFAE0BC00E59055 /* ACRActionPopoverRenderer.h */,
 				0D3485EC26180E9900614EB9 /* ACOActionOverflow.h */,
@@ -2007,6 +1999,7 @@
 				F4F44B9B204A165F00A2F24C /* ACRIBaseInputHandler.h in Headers */,
 				F4F44B93204A155B00A2F24C /* ACRFactSetRenderer.h in Headers */,
 				F4F44B96204A15C500A2F24C /* ACRInputChoiceSetRenderer.h in Headers */,
+				7A9BD60C2E13A67800114A4F /* ACRPopoverTarget.h in Headers */,
 				F4F44B97204A15DF00A2F24C /* ACRInputDateRenderer.h in Headers */,
 				F4F44B98204A160B00A2F24C /* ACRInputRenderer.h in Headers */,
 				F4F44B95204A159A00A2F24C /* ACRImageSetRenderer.h in Headers */,
@@ -2141,7 +2134,6 @@
 				6BFF24102714E46300183C59 /* ACRImageSetUICollectionView.h in Headers */,
 				6BFF23F32714C0F000183C59 /* ACOHostConfigPrivate.h in Headers */,
 				6BFF24002714CA7600183C59 /* ACRChoiceSetViewDataSource.h in Headers */,
-				7AA81C1F2E01AB9600826DCD /* ACRPopoverPresenter.h in Headers */,
 				6BFF23FE2714C0F000183C59 /* ACOActionOverflowPrivate.h in Headers */,
 				24EDF0C22DCB7F9100558378 /* ACRProgressRingRenderer.h in Headers */,
 				463C3C0F2BD8F7D200A95C4E /* ACRIconRenderer.h in Headers */,
@@ -2429,6 +2421,7 @@
 				6BFF99C825FFF53E0028069F /* ExecuteAction.cpp in Sources */,
 				F42979431F322C3E00E89914 /* ACRErrors.mm in Sources */,
 				F44873251EE2261F00FCAFAE /* TextInput.cpp in Sources */,
+				7A9BD60E2E13A6CD00114A4F /* ACRPopoverTarget.mm in Sources */,
 				8404BA8F226697800091A0AD /* FeatureRegistration.cpp in Sources */,
 				F44873091EE2261F00FCAFAE /* Enums.cpp in Sources */,
 				6B8C765426449B09009548FA /* TableCell.cpp in Sources */,
@@ -2491,7 +2484,6 @@
 				6BAC0F2E228E2D7300E42DEB /* RichTextElementProperties.cpp in Sources */,
 				6BFF99CC25FFF53E0028069F /* Authentication.cpp in Sources */,
 				6B6840F91F25EC2D008A933F /* ACRInputChoiceSetRenderer.mm in Sources */,
-				7AA81C212E01AFD000826DCD /* ACRPopoverPresenter.mm in Sources */,
 				F42741131EF873A600399FBB /* ACRImageRenderer.mm in Sources */,
 				6B94F2DE24C7997D00E2B310 /* ACRTextInputHandler.mm in Sources */,
 				F448730B1EE2261F00FCAFAE /* Fact.cpp in Sources */,

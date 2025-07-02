@@ -8,7 +8,7 @@
 #import "ACRActionPopoverRenderer.h"
 #import "ACOBaseActionElementPrivate.h"
 #import "ACOHostConfigPrivate.h"
-#import "ACRAggregateTarget.h"
+#import "ACRPopoverTarget.h"
 #import "ACRBaseActionElementRenderer.h"
 #import "ACRButton.h"
 #import "ACRIContentHoldingView.h"
@@ -38,7 +38,7 @@
 
     UIButton *button = [ACRButton rootView:rootView baseActionElement:acoElem title:title andHostConfig:acoConfig];
     
-    ACRAggregateTarget *target;
+    ACRPopoverTarget *target;
     if (ACRRenderingStatus::ACROk == buildTargetForButton([rootView getActionsTargetBuilderDirector], acoElem, button, &target)) {
         [superview addTarget:target];
     }
