@@ -141,6 +141,7 @@
             if ([recognizer.delegate isKindOfClass:[ACRBaseTarget class]]) {
                 ACRBaseTarget *target = (ACRBaseTarget *)recognizer.delegate;
                 target.parentPopoverTarget = self;
+                [self filterActionTarget:target forView:subview];
             }
         }
         
@@ -152,6 +153,7 @@
                 if ([target isKindOfClass:[ACRBaseTarget class]]) {
                     ACRBaseTarget *baseTarget = (ACRBaseTarget *)target;
                     baseTarget.parentPopoverTarget = self;
+                    [self filterActionTarget:baseTarget forView:subview];
                 }
             }
         }
@@ -161,6 +163,22 @@
     }
 }
 
+- (void)filterActionTarget:(ACRBaseTarget *)target forView:(UIView *)view
+{
+    if ([target respondsToSelector:@selector(actionElement)]) {
+            ACOBaseActionElement *actionElement = [target performSelector:@selector(actionElement)];
+            if (actionElement) {
+                ACRActionType actionType = actionElement.type;
+                
+                // Hide forbidden actions in bottom sheet
+                if (actionType == ACRToggleVisibility ||
+                    actionType == ACRShowCard ||
+                    actionType == ACRPopover) {
+                    [view removeFromSuperview];
+                }
+            }
+        }
+}
 - (void)dismissBottomSheetAndClearCache
 {
     if (currentBottomSheet && currentBottomSheet.presentingViewController) {
