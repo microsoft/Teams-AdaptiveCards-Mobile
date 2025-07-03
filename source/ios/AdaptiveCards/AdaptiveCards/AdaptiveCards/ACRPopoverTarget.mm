@@ -176,6 +176,12 @@
                     actionType == ACRPopover) {
                     [view removeFromSuperview];
                 }
+                
+                if ((actionType == ACRSubmit || actionType == ACRExecute) &&
+                    actionElement.menuActions.count > 0) {
+                    actionElement.isActionFromSplitButtonBottomSheet = YES;   // just mark it
+                       
+                }
             }
         }
 }
