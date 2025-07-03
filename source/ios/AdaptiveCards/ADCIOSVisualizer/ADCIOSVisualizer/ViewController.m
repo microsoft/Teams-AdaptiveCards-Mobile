@@ -256,6 +256,12 @@ UIColor* defaultButtonBackgroundColor;
     self.hostconfig = payload;
 }
 
+- (UIViewController *)presenterViewControllerForAction:(ACOBaseActionElement *)action
+                                               inCard:(ACOAdaptiveCard *)card
+{
+    return self;          // any other host returns its own VC
+}
+
 - (void)didFetchUserResponses:(ACOAdaptiveCard *)card action:(ACOBaseActionElement *)action
 {
     NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
@@ -458,6 +464,11 @@ UIColor* defaultButtonBackgroundColor;
     //    [self presentViewController: alert];
 
     // [Option 2] client can prepare its own presentation by direclty employing menuItems
+    UIViewController *presentingController = self;
+    if (self.presentedViewController && [self.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")]) {
+            // Present the overflow menu on top of the bottom sheet
+            presentingController = self.presentedViewController;
+        }
     UIAlertController *myAlert = [UIAlertController alertControllerWithTitle:nil
                                                                      message:nil
                                                               preferredStyle:UIAlertControllerStyleAlert];
@@ -466,7 +477,13 @@ UIColor* defaultButtonBackgroundColor;
         UIAlertAction *action = [UIAlertAction actionWithTitle:item.title
                                                          style:UIAlertActionStyleDestructive
                                                        handler:^(UIAlertAction *_Nonnull action) {
-                                                           [item.target doSelectAction];
+            if (self.presentedViewController && [self.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")]) {
+                                                                           [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+                                                                               [item.target doSelectAction];
+                                                                           }];
+                                                                       } else {
+                                                                           [item.target doSelectAction];
+                                                                       }
                                                        }];
 
         [item loadIconImageWithSize:CGSizeMake(40, 40)
@@ -482,7 +499,7 @@ UIColor* defaultButtonBackgroundColor;
     [myAlert addAction:[UIAlertAction actionWithTitle:@"Cancel"
                                                 style:UIAlertActionStyleCancel
                                               handler:nil]];
-    [self presentViewController:myAlert animated:YES completion:nil];
+    [presentingController presentViewController:myAlert animated:YES completion:nil];
     return YES; // skip SDK defult display
 }
 

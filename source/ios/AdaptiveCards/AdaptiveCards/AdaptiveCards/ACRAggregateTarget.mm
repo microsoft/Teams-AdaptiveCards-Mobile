@@ -16,6 +16,7 @@
 #import "ExecuteAction.h"
 #import "SubmitAction.h"
 #import <UIKit/UIKit.h>
+#import "ACRPopoverTarget.h"
 
 NSString *const ACRAggregateTargetActionType = @"actiontype";
 NSString *const ACRAggregateTargetSubmitAction = @"submit";
@@ -48,6 +49,10 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
 // main entry point to the event handler, override each methods whithin it for custom behaviors
 - (IBAction)send:(UIButton *)sender
 {
+    // If this action is from a bottom sheet and is submit/execute, dismiss the sheet first
+        if (self.parentPopoverTarget && (_actionElement.type == ACRSubmit || _actionElement.type == ACRExecute)) {
+            [self.parentPopoverTarget dismissBottomSheetAndClearCache];
+        }
     NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
     BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
     isSplitButtonEnabled = isSplitButtonEnabled &&
@@ -137,6 +142,7 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
 
 - (void)doSelectAction
 {
+    
     [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
 }
 

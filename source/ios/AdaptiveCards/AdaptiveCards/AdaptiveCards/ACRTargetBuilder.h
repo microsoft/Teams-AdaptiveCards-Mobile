@@ -47,6 +47,9 @@ typedef NS_ENUM(NSInteger, ACRTargetCapability) {
 @interface ACROverflowActionTargetBuilder : ACRTargetBuilder
 @end
 
+@interface ACRPopoverTargetBuilder : ACRTargetBuilder
+@end
+
 // build target for unknown actions
 @interface ACRUnknownActionTargetBuilder : ACRTargetBuilder
 @end

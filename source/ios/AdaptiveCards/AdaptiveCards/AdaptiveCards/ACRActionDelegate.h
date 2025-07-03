@@ -24,6 +24,7 @@
 - (void)didChangeViewLayout:(CGRect)oldFrame newFrame:(CGRect)newFrame;
 - (void)didChangeViewLayout:(CGRect)oldFrame newFrame:(CGRect)newFrame properties:(NSDictionary *)properties;
 
+
 #pragma mark - callback for typeahead search (input.choiceset)
 
 /**
@@ -90,5 +91,11 @@
  Client needs to implement the below method to show bottom sheet with all possible buttons
  */
 - (void) showBottomSheetForSplitButton:(NSArray<ACOBaseActionElement *>*)menuActions completion:(void (^)(ACOBaseActionElement *acoElement))completion;
+
+/**
+  This callback is called when client needs to pass the view controller object to adaptive card sdk
+ */
+- (UIViewController *)presenterViewControllerForAction:(ACOBaseActionElement *)action
+                                               inCard:(ACOAdaptiveCard *)card;
 
 @end
