@@ -8,7 +8,9 @@
 
 #import "ACRBottomSheetPresentationController.h"
 
-@implementation ACRBottomSheetPresentationController
+@implementation ACRBottomSheetPresentationController{
+    UIView *dimmingView;
+}
 - (CGRect)frameOfPresentedViewInContainerView
 {
 
@@ -18,11 +20,35 @@
 
 - (void)containerViewWillLayoutSubviews
 {
+    dimmingView.frame = self.containerView.bounds;
     self.presentedView.frame        = [self frameOfPresentedViewInContainerView];
     self.presentedView.layer.cornerRadius = 12;
     self.presentedView.clipsToBounds      = YES;
 }
 
-- (void)presentationTransitionWillBegin {}
-- (void)dismissalTransitionWillBegin     {}
+- (void)presentationTransitionWillBegin {
+    dimmingView = [[UIView alloc] initWithFrame:self.containerView.bounds];
+    dimmingView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    dimmingView.alpha = 0.0;
+
+    [self.containerView insertSubview:dimmingView atIndex:0];
+    [UIView animateWithDuration:0.25 animations:^{
+        self->dimmingView.alpha = 1.0;
+        }];
+}
+
+- (void)dismissalTransitionWillBegin {
+  
+    [UIView animateWithDuration:0.25 animations:^{
+        self->dimmingView.alpha = 0.0;
+        }];
+}
+
+- (void)dismissalTransitionDidEnd:(BOOL)completed {
+    if (completed) {
+        [dimmingView removeFromSuperview];
+        dimmingView = nil;
+    }
+}
+
 @end
