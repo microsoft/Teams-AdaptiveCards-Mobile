@@ -19,7 +19,6 @@
 
 @property ACOBaseActionElement *actionElement;
 @property (weak) ACRView *rootView;
-@property (assign) BOOL isFromBottomSheet; // Mark if action originated from bottom sheet
 @property (strong) ACRContentStackView *cachedContentView;
 
 - (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView;
@@ -30,14 +29,11 @@
 // Main action method - presents the popover content in bottom sheet
 - (void)doSelectAction;
 
-// Present popover with content - can be called directly for any UI element
-- (void)presentPopover;
-
 // Dismiss popover if currently presented
-- (void)dismissBottomSheetAndClearCache;
+- (void)dismissBottomSheet;
 
-- (void)clearCachedContent;
+- (void)clearCachedContentView;
 
-
+- (void)detachBottomSheetInputsFromMainCard;
 
 @end

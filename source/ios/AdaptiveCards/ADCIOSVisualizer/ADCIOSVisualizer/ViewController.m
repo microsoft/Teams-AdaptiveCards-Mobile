@@ -479,7 +479,8 @@ UIColor* defaultButtonBackgroundColor;
                                                        handler:^(UIAlertAction *_Nonnull action) {
             if (self.presentedViewController && [self.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")]) {
                                                                            [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
-                                                                               [item.target doSelectAction];
+                                                                               [item.target performSelector:@selector(send:) withObject:item.target];
+
                                                                            }];
                                                                        } else {
                                                                            [item.target doSelectAction];

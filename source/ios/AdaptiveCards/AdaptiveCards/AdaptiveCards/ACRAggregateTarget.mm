@@ -49,10 +49,9 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
 // main entry point to the event handler, override each methods whithin it for custom behaviors
 - (IBAction)send:(UIButton *)sender
 {
-    // If this action is from a bottom sheet and is submit/execute, dismiss the sheet first
-        if (self.parentPopoverTarget && (_actionElement.type == ACRSubmit || _actionElement.type == ACRExecute)) {
-            [self.parentPopoverTarget dismissBottomSheetAndClearCache];
-        }
+    if (self.parentPopoverTarget && (_actionElement.type == ACRSubmit || _actionElement.type == ACRExecute)){
+        [self.parentPopoverTarget dismissBottomSheet];
+    }
     NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
     BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
     isSplitButtonEnabled = isSplitButtonEnabled &&
@@ -72,6 +71,10 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
             return;
         }
         // dispatch and validate inputs
+        if (self.parentPopoverTarget && (_actionElement.type == ACRSubmit || _actionElement.type == ACRExecute)) {
+            _currentShowcard = (ACRColumnView *)_view;
+        }
+
         ACOInputResults *result = [_view dispatchAndValidateInput:_currentShowcard];
         // update UI with the inputs
         [self updateInputUI:result button:sender];
@@ -106,6 +109,9 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
         // if a validation passes, gathered input is set in the adaptive card
         [[_view card] setInputs:results.gatheredInputs];
         // dispatch the card to the host app
+        if (self.parentPopoverTarget && (_actionElement.type == ACRSubmit || _actionElement.type == ACRExecute)) {
+                    [self.parentPopoverTarget detachBottomSheetInputsFromMainCard];
+                }
         [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
     }
 }

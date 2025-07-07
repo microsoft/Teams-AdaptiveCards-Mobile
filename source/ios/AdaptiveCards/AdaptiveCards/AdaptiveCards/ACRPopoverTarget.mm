@@ -18,8 +18,10 @@
 #import <AdaptiveCards/ACRRegistration.h>
 #import <AdaptiveCards/ACOBaseCardElement.h>
 #import <AdaptiveCards/ACRIBaseCardElementRenderer.h>
+#import "ACRIBaseInputHandler.h"
 #import "ACRView.h"
 #import <UIKit/UIKit.h>
+#import "ACRInputLabelView.h"
 
 @implementation ACRPopoverTarget {
     ACRBottomSheetViewController *currentBottomSheet;
@@ -31,7 +33,6 @@
     if (self) {
         _actionElement = actionElement;
         _rootView = rootView;
-        _isFromBottomSheet = NO;
         currentBottomSheet = nil;
         _cachedContentView = nil;
     }
@@ -69,12 +70,16 @@
     if (!_cachedContentView) {
         [self createCachedContentView];
     }
-    
-    if (!_cachedContentView) {
-        return; // Failed to create content
+    else{
+        [self markActionTargetsAsFromBottomSheet:_cachedContentView];
     }
     
-    // Configure bottom sheet appearance
+    if (!_cachedContentView) {
+        return;
+    }
+    
+    [self attachBottomSheetInputsToMainCard];
+    
     CGFloat minMultiplier = 0.2;
     CGFloat maxMultiplier = 0.66;
     
@@ -82,12 +87,24 @@
         initWithMinMultiplier:minMultiplier
         maxMultiplier:maxMultiplier];
     
-    // Create and present the bottom sheet with cached content
+    
         currentBottomSheet = [[ACRBottomSheetViewController alloc]
             initWithContent:_cachedContentView
             configuration:config];
+    
         
-        [host presentViewController:currentBottomSheet animated:YES completion:nil];
+    [host presentViewController:currentBottomSheet animated:YES completion:^{
+        UIButton *closeBtn = [self->currentBottomSheet valueForKey:@"closeBtn"];
+            [closeBtn addTarget:self
+                         action:@selector(bottomSheetCloseTapped)
+               forControlEvents:UIControlEventTouchUpInside];
+    }];
+}
+
+- (void)bottomSheetCloseTapped
+{
+    [self detachBottomSheetInputsFromMainCard];
+    
 }
 
 - (void)createCachedContentView
@@ -103,7 +120,6 @@
     
     ACOBaseCardElement *acoElement = [[ACOBaseCardElement alloc] initWithBaseCardElement:content];
     
-    // Get the appropriate renderer for the content
     ACRCardElementType elementType = (ACRCardElementType)content->GetElementType();
     NSNumber *key = @(elementType);
     ACRBaseCardElementRenderer *renderer = [[ACRRegistration getInstance] getRenderer:key];
@@ -136,7 +152,6 @@
 {
     // Traverse all subviews to find and mark action targets
     for (UIView *subview in containerView.subviews) {
-        // Check if this view has any gesture recognizers with ACRBaseTarget
         for (UIGestureRecognizer *recognizer in subview.gestureRecognizers) {
             if ([recognizer.delegate isKindOfClass:[ACRBaseTarget class]]) {
                 ACRBaseTarget *target = (ACRBaseTarget *)recognizer.delegate;
@@ -158,7 +173,6 @@
             }
         }
         
-        // Recursively process subviews
         [self markActionTargetsAsFromBottomSheet:subview];
     }
 }
@@ -179,25 +193,84 @@
                 
                 if ((actionType == ACRSubmit || actionType == ACRExecute) &&
                     actionElement.menuActions.count > 0) {
-                    actionElement.isActionFromSplitButtonBottomSheet = YES;   // just mark it
+                    actionElement.isActionFromSplitButtonBottomSheet = YES; 
                        
                 }
             }
         }
 }
-- (void)dismissBottomSheetAndClearCache
+
+- (void)dismissBottomSheet
 {
     if (currentBottomSheet && currentBottomSheet.presentingViewController) {
-        [currentBottomSheet dismissViewControllerAnimated:YES completion:^{
-            self->_cachedContentView = nil;
-        }];
-    } else {
-        _cachedContentView = nil;
+        [currentBottomSheet dismissViewControllerAnimated:YES completion:nil];
     }
-    currentBottomSheet = nil;
 }
-- (void)clearCachedContent
+
+- (void)attachBottomSheetInputsToMainCard
 {
-    _cachedContentView = nil;
+    if (!_cachedContentView || !_rootView) {
+            return;
+        }
+        
+    
+        NSMutableArray *bottomSheetInputs = [NSMutableArray array];
+        [self findInputHandlersInView:_cachedContentView inputs:bottomSheetInputs];
+    
+    
+        [_rootView.inputHandlers addObjectsFromArray:bottomSheetInputs];
 }
+
+
+- (void)findInputHandlersInView:(UIView *)view inputs:(NSMutableArray *)inputHandlers
+{
+    if ([view conformsToProtocol:@protocol(ACRIBaseInputHandler)]) {
+            id<ACRIBaseInputHandler> inputHandler = (id<ACRIBaseInputHandler>)view;
+            [inputHandlers addObject:inputHandler];
+            
+            if ([view isKindOfClass:[ACRInputLabelView class]]) {
+                ACRInputLabelView *labelView = (ACRInputLabelView *)view;
+                NSObject<ACRIBaseInputHandler> *underlyingHandler = [labelView getInputHandler];
+                if (underlyingHandler && underlyingHandler != labelView) {
+                    
+                    underlyingHandler.isRequired = NO;
+                }
+            }
+        }
+        
+        for (UIView *subview in view.subviews) {
+            [self findInputHandlersInView:subview inputs:inputHandlers];
+        }
+}
+
+- (void)detachBottomSheetInputsFromMainCard
+{
+    if (!_cachedContentView || !_rootView) {
+        return;
+    }
+    
+    NSMutableArray *bottomSheetInputs = [NSMutableArray array];
+    [self findInputHandlersInView:_cachedContentView inputs:bottomSheetInputs];
+    
+    for (id<ACRIBaseInputHandler> input in bottomSheetInputs) {
+        [_rootView.inputHandlers removeObject:input];
+    }
+    
+}
+
+- (void)clearCachedContentView
+{
+        // Always detach inputs first
+        [self detachBottomSheetInputsFromMainCard];
+        
+        if (currentBottomSheet && currentBottomSheet.presentingViewController) {
+            [currentBottomSheet dismissViewControllerAnimated:YES completion:^{
+                self->_cachedContentView = nil;
+            }];
+        } else {
+            _cachedContentView = nil;
+        }
+        currentBottomSheet = nil;
+}
+
 @end
