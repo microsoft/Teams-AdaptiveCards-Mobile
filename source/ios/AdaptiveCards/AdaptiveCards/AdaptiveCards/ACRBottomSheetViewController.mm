@@ -44,6 +44,14 @@
     [self setupConstraints];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    if (self.onDismissBlock) {
+        self.onDismissBlock();
+    }
+}
 
 - (void)setupCloseButton
 {

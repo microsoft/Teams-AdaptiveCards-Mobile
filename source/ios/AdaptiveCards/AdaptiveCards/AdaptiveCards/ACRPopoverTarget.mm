@@ -92,13 +92,15 @@
             initWithContent:_cachedContentView
             configuration:config];
     
-        
-    [host presentViewController:currentBottomSheet animated:YES completion:^{
-        UIButton *closeBtn = [self->currentBottomSheet valueForKey:@"closeBtn"];
-            [closeBtn addTarget:self
-                         action:@selector(bottomSheetCloseTapped)
-               forControlEvents:UIControlEventTouchUpInside];
-    }];
+    __weak typeof(self) weakSelf = self;
+        currentBottomSheet.onDismissBlock = ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf detachBottomSheetInputsFromMainCard];
+            }
+        };
+    [host presentViewController:currentBottomSheet animated:YES completion:nil];
+  
 }
 
 - (void)bottomSheetCloseTapped

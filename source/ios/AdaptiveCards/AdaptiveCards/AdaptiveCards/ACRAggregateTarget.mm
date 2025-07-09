@@ -109,9 +109,6 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
         // if a validation passes, gathered input is set in the adaptive card
         [[_view card] setInputs:results.gatheredInputs];
         // dispatch the card to the host app
-        if (self.parentPopoverTarget && (_actionElement.type == ACRSubmit || _actionElement.type == ACRExecute)) {
-                    [self.parentPopoverTarget detachBottomSheetInputsFromMainCard];
-                }
         [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
     }
 }

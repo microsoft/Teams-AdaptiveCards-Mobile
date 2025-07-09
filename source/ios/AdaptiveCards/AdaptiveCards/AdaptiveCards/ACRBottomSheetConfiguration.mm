@@ -19,7 +19,7 @@
         _borderHeight           = 0.5;
         _closeButtonTopInset    = 5;
         _closeButtonSideInset   = 12;
-        _closeButtonToScrollGap = 5;
+        _closeButtonToScrollGap = 20;
         _contentPadding         = 16;
         _closeButtonSize        = 28.0;
         
