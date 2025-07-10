@@ -92,13 +92,13 @@
             initWithContent:_cachedContentView
             configuration:config];
     
-    __weak typeof(self) weakSelf = self;
-        currentBottomSheet.onDismissBlock = ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                [strongSelf detachBottomSheetInputsFromMainCard];
-            }
-        };
+    __weak ACRPopoverTarget *weakSelf = self;
+            currentBottomSheet.onDismissBlock = ^{
+                __strong ACRPopoverTarget *strongSelf = weakSelf;
+                if (strongSelf) {
+                    [strongSelf detachBottomSheetInputsFromMainCard];
+                }
+            };
     [host presentViewController:currentBottomSheet animated:YES completion:nil];
   
 }
