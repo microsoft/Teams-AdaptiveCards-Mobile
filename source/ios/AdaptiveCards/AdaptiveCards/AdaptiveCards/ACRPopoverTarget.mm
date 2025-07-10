@@ -22,6 +22,7 @@
 #import "ACRView.h"
 #import <UIKit/UIKit.h>
 #import "ACRInputLabelView.h"
+#import "ACROverflowTarget.h"
 
 @implementation ACRPopoverTarget {
     ACRBottomSheetViewController *currentBottomSheet;
@@ -171,11 +172,26 @@
                     ACRBaseTarget *baseTarget = (ACRBaseTarget *)target;
                     baseTarget.parentPopoverTarget = self;
                     [self filterActionTarget:baseTarget forView:subview];
+                    if ([baseTarget isKindOfClass:[ACROverflowTarget class]]) {
+                        [self propagatePopoverContextToOverflowMenuItems:(ACROverflowTarget *)baseTarget];
+                    }
                 }
             }
         }
         
         [self markActionTargetsAsFromBottomSheet:subview];
+    }
+}
+
+- (void)propagatePopoverContextToOverflowMenuItems:(ACROverflowTarget *)overflowTarget
+{
+    NSArray<ACROverflowMenuItem *> *menuItems = overflowTarget.menuItems;
+    for (ACROverflowMenuItem *menuItem in menuItems) {
+        NSObject<ACRSelectActionDelegate> *itemTarget = menuItem.target;
+        if ([itemTarget isKindOfClass:[ACRBaseTarget class]]) {
+            ACRBaseTarget *baseTarget = (ACRBaseTarget *)itemTarget;
+            baseTarget.parentPopoverTarget = self;
+        }
     }
 }
 
@@ -262,9 +278,6 @@
 
 - (void)clearCachedContentView
 {
-        // Always detach inputs first
-        [self detachBottomSheetInputsFromMainCard];
-        
         if (currentBottomSheet && currentBottomSheet.presentingViewController) {
             [currentBottomSheet dismissViewControllerAnimated:YES completion:^{
                 self->_cachedContentView = nil;
