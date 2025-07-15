@@ -3,7 +3,7 @@
 package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.utils.GridArea
-import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
+import com.example.ac_sdk.objectmodel.utils.HorizontalItemsAlignment
 import com.example.ac_sdk.objectmodel.utils.ItemFit
 import com.example.ac_sdk.objectmodel.utils.Spacing
 import kotlinx.serialization.SerialName
@@ -24,7 +24,7 @@ sealed class LayoutElement {
         val itemMaxPixelWidth: Int = 0,
         val rowSpacing: Spacing = Spacing.DEFAULT,
         val columnSpacing: Spacing = Spacing.DEFAULT,
-        val horizontalAlignment: HorizontalAlignment = HorizontalAlignment.CENTER
+        val horizontalItemsAlignment: HorizontalItemsAlignment = HorizontalItemsAlignment.CENTER
     ): Layout()
 
     @Serializable

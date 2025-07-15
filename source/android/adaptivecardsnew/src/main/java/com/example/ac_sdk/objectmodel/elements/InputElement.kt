@@ -4,6 +4,7 @@ package com.example.ac_sdk.objectmodel.elements
 
 import com.example.ac_sdk.objectmodel.elements.models.Choice
 import com.example.ac_sdk.objectmodel.utils.AdaptiveCardSchemaKey
+import com.example.ac_sdk.objectmodel.utils.ChoiceSetStyle
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
 import com.example.ac_sdk.objectmodel.utils.TextInputStyle
 import kotlinx.serialization.*
@@ -111,7 +112,7 @@ sealed class InputElement {
         val value: String? = null,
         val valueOn: String? = null,
         val valueOff: String? = null,
-        val wrap: Boolean? = null
+        val wrap: Boolean = true
     ) : BaseInputElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
@@ -132,9 +133,10 @@ sealed class InputElement {
     @SerialName("Input.ChoiceSet")
     data class ChoiceSetInput(
         val isMultiSelect: Boolean? = null,
-        val style: String? = null,
+        val style: ChoiceSetStyle = ChoiceSetStyle.COMPACT,
         val value: String? = null,
-        val choices: List<Choice>
+        val choices: List<Choice>,
+        val wrap: Boolean = true
     ) : BaseInputElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
@@ -155,7 +157,7 @@ sealed class InputElement {
     data class RatingInput(
         val horizontalAlignment: HorizontalAlignment? = null,
         val value: Double = 0.0,
-        val max: Double = 0.0
+        val max: Double = 5.0
     ) : BaseInputElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {

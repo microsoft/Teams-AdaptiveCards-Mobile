@@ -9,8 +9,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 @SerialName("icon")
 data class IconInfo(
-    val iconStyle: IconStyle = IconStyle.REGULAR,
-    var iconSize: IconSize = IconSize.STANDARD,
-    var foregroundColor: ForegroundColor = ForegroundColor.DEFAULT,
+    val style: IconStyle = IconStyle.REGULAR,
+    var size: IconSize = IconSize.STANDARD,
+    var color: ForegroundColor = ForegroundColor.DEFAULT,
     var name: String = ""
 )

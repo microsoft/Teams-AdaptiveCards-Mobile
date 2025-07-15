@@ -17,7 +17,8 @@ sealed class CollectionElement {
         val items: List<BaseCardElement>? = null,
         val width: String? = null,
         val bleed: Boolean? = null,
-        val rtl: Boolean? = null
+        val rtl: Boolean? = null,
+        val layouts: List<Layout>? = null
     ) : StyledCollectionElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {
@@ -94,7 +95,8 @@ sealed class CollectionElement {
         val items: List<BaseCardElement>? = null,
         val width: String? = null,
         val bleed: Boolean? = null,
-        val rtl: Boolean? = null
+        val rtl: Boolean? = null,
+        val layouts: List<Layout>? = null
     ) : StyledCollectionElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {

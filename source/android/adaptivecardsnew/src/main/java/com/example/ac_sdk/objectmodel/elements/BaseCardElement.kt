@@ -14,7 +14,7 @@ import kotlinx.serialization.json.JsonObject
 
 @Serializable
 sealed class BaseCardElement: BaseElement() {
-    var spacing: Spacing? = null
+    var spacing: Spacing = Spacing.DEFAULT
     var separator: Boolean? = null
     @Serializable(with = HeightTypeSerializer::class)
     var height: HeightType? = null

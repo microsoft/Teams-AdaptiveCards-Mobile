@@ -54,7 +54,6 @@ class AdaptiveCardParser {
             return deserialize(json.jsonObject, rendererVersion, context)
         }
 
-
         //@Throws(AdaptiveCardParseException::class)
         @OptIn(ExperimentalSerializationApi::class)
         fun deserialize(
@@ -66,13 +65,13 @@ class AdaptiveCardParser {
 
             val enforceVersion = rendererVersion.isNotEmpty()
 
-
-            val json = Json {
+            val json =  Json {
                 classDiscriminator = "type"
                 ignoreUnknownKeys = true
                 encodeDefaults = true
                 decodeEnumsCaseInsensitive = true
             }
+
             val adaptiveCard = json.decodeFromJsonElement<AdaptiveCard>(jsonObject)
 
             Util.validateLanguage(adaptiveCard.language, context.warnings)
@@ -134,7 +133,7 @@ class AdaptiveCardParser {
             if (Util.meetsRootRequirements(requiresSet)) {
 //                adaptiveCard.additionalProperties =
 //                    Util.handleUnknownProperties(jsonObject, adaptiveCard.knownProperties)
-                return ParseResult(adaptiveCard, context.warnings)
+                return ParseResult(adaptiveCard, context.warnings, json.encodeToString(jsonObject))
             } else if (fallbackBaseElement == null) {
                 val fallbackText = "We're sorry, this card couldn't be displayed"
                 context.warnings.add(

@@ -32,6 +32,8 @@ sealed class BaseActionElement : BaseElement() {
     @SerialName("role")
     var role: ActionRole? = null
 
+    val rtl: Boolean = false
+
     override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
         return super.populateKnownPropertiesSet().apply {
             listOf(

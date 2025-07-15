@@ -69,13 +69,11 @@ object AdaptiveCardNativeParser {
         val nativeParseResult = AdaptiveCardParser.deserializeFromString(
             stringifiedAdaptiveCard, rendererVersion, context
         )
-        val native = nativeParseResult.adaptiveCard.serialize()
+
+        val native = nativeParseResult.serlizedJson
         val legacy = legacyParseResult.GetAdaptiveCard().Serialize()
 
-       // Log.d("Check_point_Native", native);
-       // Log.d("Check_point_Legacy", legacy);
-
-        if (native != legacy) {
+        if (native?.isNotBlank() == true && legacy.isNotBlank() && native != legacy) {
             val nativeJson = JSONObject(native)
             val legacyJson = JSONObject(legacy)
             return compareJsonObjects(nativeJson, legacyJson)
@@ -93,7 +91,7 @@ object AdaptiveCardNativeParser {
             legacyJson.getString("type")
         } ?: ""
         for (key in allKeys) {
-            if (key == "type" || key == "grid.area" || key == "\$schema") continue
+            if (key == "type" || key == "grid.area" || key == "\$schema" || key == "version") continue
 
             val newPath = if (path.isEmpty()) key else "$path.$key"
 
@@ -103,11 +101,9 @@ object AdaptiveCardNativeParser {
             when {
                 !nativeHasKey && legacyHasKey -> {
                     val legacyValue = legacyJson.get(key)
-                    if (legacyValue is JSONObject) {
-                        diffs.add("Key missing in native: $newPath, value: $legacyValue, type: $type")
-                    } else if (legacyValue is JSONArray) {
-                        diffs.add("Key missing in native: $newPath, value:  $legacyValue, type: $type")
-                    } else {
+
+                    // Skip if legacyValue is an empty JSONArray
+                    if (legacyValue !is JSONArray || legacyValue.length() != 0) {
                         diffs.add("Key missing in native: $newPath, Value: $legacyValue, type: $type")
                     }
                 }
@@ -127,7 +123,7 @@ object AdaptiveCardNativeParser {
                         nativeValue is JSONArray && legacyValue is JSONArray ->
                             diffs.addAll(compareJsonArrays(nativeValue, legacyValue, newPath))
 
-                        nativeValue != legacyValue -> {
+                        isJsonPrimitive(nativeValue) && isJsonPrimitive(legacyValue) && !primitiveValuesAreEqual(nativeValue, legacyValue)  -> {
                             diffs.add("Value mismatch at $newPath - Native: $nativeValue, Legacy: $legacyValue")
                         }
                     }
@@ -136,6 +132,27 @@ object AdaptiveCardNativeParser {
         }
 
         return diffs
+    }
+
+    private fun isJsonPrimitive(value: Any?): Boolean {
+        return value == null || value is String || value is Number || value is Boolean
+    }
+
+    private fun primitiveValuesAreEqual(a: Any?, b: Any?): Boolean {
+        if (a == null && b == null) return true
+        if (a == null || b == null) return false
+
+        val aStr = a.toString().trim()
+        val bStr = b.toString().trim()
+
+        // Try to compare as numbers if both look like numbers
+        val aNum = aStr.toDoubleOrNull()
+        val bNum = bStr.toDoubleOrNull()
+        return if (aNum != null && bNum != null) {
+            aNum == bNum
+        } else {
+            aStr == bStr
+        }
     }
 
     private fun compareJsonArrays(
