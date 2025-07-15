@@ -6,7 +6,7 @@ import com.example.ac_sdk.objectmodel.AdaptiveCard
 import com.example.ac_sdk.objectmodel.utils.ErrorStatusCode
 import com.example.ac_sdk.objectmodel.utils.WarningStatusCode
 
-data class ParseResult(val adaptiveCard: AdaptiveCard, val warnings: List<ParseWarning>?)
+data class ParseResult(val adaptiveCard: AdaptiveCard, val warnings: List<ParseWarning>?, val serlizedJson: String? = null)
 
 data class ParseWarning(
     val statusCode: WarningStatusCode,

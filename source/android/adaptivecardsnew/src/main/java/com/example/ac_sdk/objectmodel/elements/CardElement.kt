@@ -69,8 +69,7 @@ sealed class CardElement {
         val altText: String? = null,
         val backgroundColor: String? = "",
         val horizontalAlignment: HorizontalAlignment? = null,
-        @EncodeDefault
-        val size: ImageSize = ImageSize.AUTO,
+        val size: ImageSize = ImageSize.NONE,
         val style: ImageStyle = ImageStyle.DEFAULT,
         val pixelWidth: Int = 0,
         val pixelHeight: Int = 0,
@@ -136,9 +135,9 @@ sealed class CardElement {
     @Serializable
     @SerialName("Icon")
     data class Icon(
-        val foregroundColor: ForegroundColor? = null,
-        val iconStyle: IconStyle = IconStyle.REGULAR,
-        val iconSize: IconSize = IconSize.STANDARD,
+        val color: ForegroundColor? = null,
+        val style: IconStyle = IconStyle.REGULAR,
+        val size: IconSize = IconSize.STANDARD,
         val name: String,
         val selectAction: BaseActionElement? = null
     ) : BaseCardElement() {
@@ -311,8 +310,8 @@ sealed class CardElement {
     data class ProgressRing(
         val label: String = "",
         val labelPosition: LabelPosition = LabelPosition.ABOVE,
+        val horizontalAlignment: HorizontalAlignment = HorizontalAlignment.LEFT,
         val size: ProgressSize = ProgressSize.MEDIUM,
-        val horizontalAlignment: HorizontalAlignment = HorizontalAlignment.LEFT
     ) : BaseCardElement() {
         override fun populateKnownPropertiesSet(): MutableSet<AdaptiveCardSchemaKey> {
             return super.populateKnownPropertiesSet().apply {

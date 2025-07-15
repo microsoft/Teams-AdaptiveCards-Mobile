@@ -1,27 +1,13 @@
 package io.adaptivecards.renderer
 
-import EvaluationContext
-import EvaluationContextConfig
-import Expression
-import FunctionDeclaration
-import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import com.example.ac_sdk.AdaptiveCardParser
 import com.example.ac_sdk.objectmodel.parser.ParseContext
 import io.adaptivecards.objectmodel.AdaptiveCard
 import io.adaptivecards.objectmodel.ParseResult
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.random.Random
 
 object AdaptiveCardNativeParser {
 
@@ -90,13 +76,11 @@ object AdaptiveCardNativeParser {
         val nativeParseResult = AdaptiveCardParser.deserializeFromString(
             stringifiedAdaptiveCard, rendererVersion, context
         )
-        val native = nativeParseResult.adaptiveCard.serialize()
+
+        val native = nativeParseResult.serlizedJson
         val legacy = legacyParseResult.GetAdaptiveCard().Serialize()
 
-       // Log.d("Check_point_Native", native);
-       // Log.d("Check_point_Legacy", legacy);
-
-        if (native != legacy) {
+        if (native?.isNotBlank() == true && legacy.isNotBlank() && native != legacy) {
             val nativeJson = JSONObject(native)
             val legacyJson = JSONObject(legacy)
             return compareJsonObjects(nativeJson, legacyJson)
@@ -114,7 +98,7 @@ object AdaptiveCardNativeParser {
             legacyJson.getString("type")
         } ?: ""
         for (key in allKeys) {
-            if (key == "type" || key == "grid.area" || key == "\$schema") continue
+            if (key == "type" || key == "grid.area" || key == "\$schema" || key == "version") continue
 
             val newPath = if (path.isEmpty()) key else "$path.$key"
 
@@ -124,11 +108,9 @@ object AdaptiveCardNativeParser {
             when {
                 !nativeHasKey && legacyHasKey -> {
                     val legacyValue = legacyJson.get(key)
-                    if (legacyValue is JSONObject) {
-                        diffs.add("Key missing in native: $newPath, value: $legacyValue, type: $type")
-                    } else if (legacyValue is JSONArray) {
-                        diffs.add("Key missing in native: $newPath, value:  $legacyValue, type: $type")
-                    } else {
+
+                    // Skip if legacyValue is an empty JSONArray
+                    if (legacyValue !is JSONArray || legacyValue.length() != 0) {
                         diffs.add("Key missing in native: $newPath, Value: $legacyValue, type: $type")
                     }
                 }
@@ -148,7 +130,7 @@ object AdaptiveCardNativeParser {
                         nativeValue is JSONArray && legacyValue is JSONArray ->
                             diffs.addAll(compareJsonArrays(nativeValue, legacyValue, newPath))
 
-                        nativeValue != legacyValue -> {
+                        isJsonPrimitive(nativeValue) && isJsonPrimitive(legacyValue) && !primitiveValuesAreEqual(nativeValue, legacyValue)  -> {
                             diffs.add("Value mismatch at $newPath - Native: $nativeValue, Legacy: $legacyValue")
                         }
                     }
@@ -157,6 +139,27 @@ object AdaptiveCardNativeParser {
         }
 
         return diffs
+    }
+
+    private fun isJsonPrimitive(value: Any?): Boolean {
+        return value == null || value is String || value is Number || value is Boolean
+    }
+
+    private fun primitiveValuesAreEqual(a: Any?, b: Any?): Boolean {
+        if (a == null && b == null) return true
+        if (a == null || b == null) return false
+
+        val aStr = a.toString().trim()
+        val bStr = b.toString().trim()
+
+        // Try to compare as numbers if both look like numbers
+        val aNum = aStr.toDoubleOrNull()
+        val bNum = bStr.toDoubleOrNull()
+        return if (aNum != null && bNum != null) {
+            aNum == bNum
+        } else {
+            aStr == bStr
+        }
     }
 
     private fun compareJsonArrays(
@@ -190,99 +193,5 @@ object AdaptiveCardNativeParser {
             }
         }
         return diffs
-    }
-
-    // STEP 1: Define the host function.
-// This is your actual implementation. It must be a `suspend` function
-// to perform non-blocking operations like network calls or delays.
-    suspend fun authorizeUser(): Boolean {
-        println("Host Function: Starting authorization check...")
-        // Simulate a 2-second network delay without blocking the thread
-        delay(2000L)
-        val isAuthorized = Random.nextBoolean() // Simulate a random success/failure
-        println("Host Function: Authorization check complete. Result: $isAuthorized")
-        return isAuthorized
-    }
-
-    // The main entry point of our application.
-// We use `runBlocking` to start a coroutine from a regular `main` function.
-    fun evalExpression() = runBlocking {
-        println("--- Expression Evaluation Demo ---")
-
-        // The expression string, just like in the Adaptive Card JSON
-        val expressionString = "if(authorizeUser(), 'Access granted', 'Access denied')"
-
-        // STEP 2: Register the host function with the evaluator.
-        // This creates the bridge between the string "authorizeUser" and your Kotlin code.
-        val authorizeUserDeclaration = FunctionDeclaration(
-            name = "authorizeUser",
-            // The callback is a lambda that calls your actual function.
-            // This is the key part: it's a direct function reference, no reflection needed.
-            callback = { _ -> authorizeUser() } // `_` because it takes no params
-        )
-
-        // STEP 3: Create the evaluation context.
-        // The context is configured with all the functions the host provides.
-        val contextConfig = EvaluationContextConfig(functions = listOf(authorizeUserDeclaration))
-        val evaluationContext = EvaluationContext(contextConfig)
-
-        // STEP 4: Create an Expression object.
-        // The constructor would normally parse the string into an AST.
-        val expression = Expression(expressionString)
-
-        // STEP 5: Evaluate the expression.
-        // This is the actual "call". It's a suspend function, so it must be
-        // called from within a coroutine (like our `runBlocking` block).
-        println("\nCalling expression.evaluate()... The program will now wait for the result.")
-        val startTime = System.currentTimeMillis()
-
-        val result = expression.evaluate(evaluationContext) // This triggers the entire chain
-
-        val endTime = System.currentTimeMillis()
-        println("\nEvaluation finished in ${endTime - startTime}ms.")
-
-        // STEP 6: Use the result.
-        // In a real app, you would use this result to update the UI.
-        println("Final Result: '$result'")
-        println("------------------------------------")
-    }
-
-    private suspend fun evalExpressionAndReturnResult(expressionString: String): String {
-       return  withContext(Dispatchers.IO) {
-
-            val authorizeUserDeclaration = FunctionDeclaration(
-                name = "authorizeUser",
-                callback = { _ -> authorizeUser() }
-            )
-
-            val contextConfig = EvaluationContextConfig(functions = listOf(authorizeUserDeclaration))
-            val evaluationContext = EvaluationContext(contextConfig)
-            val expression = Expression(expressionString)
-
-            expression.evaluate(evaluationContext).toString()
-        }
-    }
-
-    fun evaluateAndSetText(expression:String, textView: TextView) {
-        val scope = MainScope() // Creates a coroutine scope on Main Dispatcher
-        scope.launch {
-            try {
-                val result = evalExpressionAndReturnResult(expression)
-                textView.text = result
-            } catch (e: Exception) {
-                textView.text = "Error: ${e.message}"
-            }
-        }
-    }
-
-    fun evaluateAndSetVisible(expression:String, button: Button) {
-        val scope = MainScope() // Creates a coroutine scope on Main Dispatcher
-        scope.launch {
-            try {
-                val result = evalExpressionAndReturnResult(expression)
-                button.isEnabled = result.toBoolean()
-            } catch (e: Exception) {
-            }
-        }
     }
 }

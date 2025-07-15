@@ -44,6 +44,7 @@ enum class AssociatedInputs() {
     @SerialName("none") NONE
 }
 
+@Serializable
 enum class ChoiceSetStyle {
     @SerialName("compact")
     COMPACT,
@@ -55,6 +56,7 @@ enum class ChoiceSetStyle {
     FILTERED
 }
 
+@Serializable
 enum class TextInputStyle {
     @SerialName("Email")
     MAIL,
@@ -414,7 +416,21 @@ enum class HorizontalAlignment {
 }
 
 @Serializable
+enum class HorizontalItemsAlignment {
+    @SerialName("Left")
+    LEFT,
+
+    @SerialName("Center")
+    CENTER,
+
+    @SerialName("Right")
+    RIGHT
+}
+
+@Serializable
 enum class ImageSize {
+    @SerialName("None")
+    NONE,
     @SerialName("Auto")
     AUTO,
     @SerialName("Stretch")
