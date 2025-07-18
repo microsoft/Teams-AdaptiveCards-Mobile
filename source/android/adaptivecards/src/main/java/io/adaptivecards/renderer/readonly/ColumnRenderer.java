@@ -131,11 +131,6 @@ public class ColumnRenderer extends BaseCardElementRenderer
         // Spacing between elements in a Layout.Flow is solely controlled by the columnSpacing and rowSpacing properties
         // provided by the flow layout. The spacing and separator properties on items are ignored.
         View separator = null;
-        boolean isFlowOrAreaLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow
-            || layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid;
-        if (!isFlowOrAreaLayout) {
-            separator = setSpacingAndSeparator(context, viewGroup, column.GetSpacing(), column.GetSeparator(), hostConfig, false);
-        }
 
         setVisibility(baseCardElement.GetIsVisible(), columnLayout);
 
@@ -149,6 +144,12 @@ public class ColumnRenderer extends BaseCardElementRenderer
         columnRenderArgs.setContainerStyle(styleForThis);
         columnRenderArgs.setHorizontalAlignment(HorizontalAlignment.Left);
         columnRenderArgs.setAncestorHasSelectAction(renderArgs.getAncestorHasSelectAction() || (column.GetSelectAction() != null));
+
+        boolean isFlowOrAreaLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow
+            || layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid;
+        if (!isFlowOrAreaLayout) {
+            separator = setSpacingAndSeparator(context, viewGroup, column.GetSpacing(), column.GetSeparator(), hostConfig, styleForThis, false);
+        }
         if (!column.GetItems().isEmpty())
         {
             try

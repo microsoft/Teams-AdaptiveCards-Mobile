@@ -592,6 +592,7 @@ public class CardRendererRegistration
                 cardElement.GetSpacing(),
                 cardElement.GetSeparator(),
                 hostConfig,
+                null,
                 isHorizontalSpacing,
                 false /* isImageSet */);
 
