@@ -65,7 +65,7 @@ object FluentIconsRenderer : BaseCardElementRenderer() {
         viewGroup.addView(container)
         view.tag = tagContent
 
-        ContainerRenderer.setSelectAction(renderedCard, icon.GetSelectAction(), view, cardActionHandler, renderArgs)
+        ContainerRenderer.setSelectAction(renderedCard, icon.GetSelectAction(), view, cardActionHandler, fragmentManager, hostConfig, renderArgs)
         setVisibility(baseCardElement.GetIsVisible(), view)
         return view
     }

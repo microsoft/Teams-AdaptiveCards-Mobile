@@ -103,7 +103,7 @@ public class ActionSetRenderer extends BaseCardElementRenderer
         return rootLayout;
     }
 
-    public BaseActionElementVector getActionElementsFilteredList(RenderArgs renderArgs, BaseActionElementVector baseActionElementList) {
+    public final BaseActionElementVector getActionElementsFilteredList(RenderArgs renderArgs, BaseActionElementVector baseActionElementList) {
         BaseActionElementVector baseActionElementFilteredList = new BaseActionElementVector();
         if (renderArgs.isPopoverContent()) {
             // remove actions which are not supposed to be rendered inside popover

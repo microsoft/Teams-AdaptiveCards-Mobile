@@ -85,22 +85,13 @@ public class APITest
     public static class CustomActionListener extends BaseActionElementRenderer.ActionOnClickListener
     {
         public CustomActionListener(RenderedAdaptiveCard renderedCard,
-                                    Context context,
-                                    FragmentManager fragmentManager,
-                                    ViewGroup viewGroup,
                                     BaseActionElement baseActionElement,
                                     ICardActionHandler cardActionHandler,
+                                    FragmentManager fragmentManager,
                                     HostConfig hostConfig,
                                     RenderArgs renderArgs)
         {
-            super(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs, false);
-        }
-
-        public CustomActionListener(RenderedAdaptiveCard renderedCard,
-                                    BaseActionElement baseActionElement,
-                                    ICardActionHandler cardActionHandler)
-        {
-            super(renderedCard, baseActionElement, cardActionHandler, false);
+            super(renderedCard, baseActionElement, cardActionHandler, fragmentManager, hostConfig, renderArgs, false);
         }
 
         @Override
@@ -163,7 +154,7 @@ public class APITest
                                                                                hostConfig,
                                                                                renderArgs);
 
-                blueAction.setOnClickListener(new CustomActionListener(renderedCard, baseActionElement, cardActionHandler));
+                blueAction.setOnClickListener(new CustomActionListener(renderedCard, baseActionElement, cardActionHandler, fragmentManager, hostConfig, renderArgs));
                 renderedCard.registerSubmitableAction(blueAction, renderArgs);
 
                 renderedButton = blueAction;
