@@ -1,6 +1,5 @@
 package io.adaptivecards.renderer
 
-import android.util.Log
 import com.example.ac_sdk.AdaptiveCardParser
 import com.example.ac_sdk.objectmodel.parser.ParseContext
 import io.adaptivecards.objectmodel.AdaptiveCard
