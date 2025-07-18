@@ -3,6 +3,7 @@ steps:
   displayName: 'Install Certificates'
   inputs:
     certSecureFile: 'Certificates.p12' 
+    certPwd: '$(P12password)'
 
 - task: InstallAppleProvisioningProfile@1
   displayName: 'Install Provisioning Profile'

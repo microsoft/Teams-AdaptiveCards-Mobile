@@ -180,7 +180,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
         EditText editText = null;
         TextInput textInput = Util.tryCastTo(baseInputElement, TextInput.class);
 
-        if (baseInputElement.GetIsRequired() || hasSpecificValidation)
+        if ((baseInputElement.GetIsRequired() || hasSpecificValidation))
         {
             editText = new ValidatedEditText(context, getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)));
         }
@@ -346,7 +346,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
 
         TextInput textInput = Util.castTo(baseCardElement, TextInput.class);
 
-        TextInputHandler textInputHandler = new TextInputHandler(textInput, renderedCard, renderArgs.getContainerCardId());
+        TextInputHandler textInputHandler = new TextInputHandler(textInput, renderedCard, renderArgs);
         TagContent tagContent = new TagContent(textInput, textInputHandler);
         final EditText editText = renderInternal(
                 renderedCard,
@@ -411,7 +411,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
                     View view = subViewGroup.getChildAt(index);
                     if (view instanceof Button || view instanceof ImageButton)
                     {
-                        view.setOnClickListener(new ActionElementRenderer.SelectActionOnClickListener(renderedCard, action, cardActionHandler));
+                        view.setOnClickListener(new ActionElementRenderer.SelectActionOnClickListener(renderedCard, action, cardActionHandler, fragmentManager, hostConfig, renderArgs));
                     }
                 }
             }

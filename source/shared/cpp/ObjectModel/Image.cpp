@@ -124,6 +124,18 @@ void Image::SetImageSize(const ImageSize value)
     m_imageSize = value;
 }
 
+const ImageFitMode Image::GetImageFitMode() const {
+    return m_imageFitMode;
+}
+
+const HorizontalContentAlignment Image::GetHorizontalContentAlignment() const {
+    return m_horizontalContentAlignment;
+}
+
+const VerticalContentAlignment Image::GetVerticalContentAlignment() const {
+    return m_verticalContentAlignment;
+}
+
 std::string Image::GetAltText() const
 {
     return m_altText;
@@ -195,6 +207,15 @@ std::shared_ptr<BaseCardElement> ImageParser::DeserializeWithoutCheckingType(Par
     image->SetAltText(ParseUtil::GetString(json, AdaptiveCardSchemaKey::AltText));
     image->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
+
+    image->m_imageFitMode = ParseUtil::GetEnumValue<ImageFitMode>(json, AdaptiveCardSchemaKey::ImageFitMode, DEFAULT_IMAGE_FIT_MODE, ImageFitModeFromString);
+    image->m_horizontalContentAlignment = ParseUtil::GetEnumValue<HorizontalContentAlignment>(json, AdaptiveCardSchemaKey::HorizontalContentAlignment, DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT, HorizontalContentAlignmentFromString);
+    image->m_verticalContentAlignment = ParseUtil::GetEnumValue<VerticalContentAlignment>(json, AdaptiveCardSchemaKey::VerticalContentAlignment, DEFAULT_VERTICAL_CONTENT_ALIGNMENT, VerticalContentAlignmentFromString);
+
+    // When fitMode is set to contain, the default style is always used
+    if (image->m_imageFitMode == ImageFitMode::Contain) {
+        image->SetImageStyle(ImageStyle::Default);
+    }
 
     const auto& widthDimension =
         ParseSizeForPixelSize(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Width), &context.warnings);

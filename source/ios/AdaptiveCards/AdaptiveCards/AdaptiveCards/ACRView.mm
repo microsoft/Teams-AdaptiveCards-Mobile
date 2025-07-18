@@ -49,7 +49,6 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 @implementation ACRView {
     ACOAdaptiveCard *_adaptiveCard;
-    ACOHostConfig *_hostConfig;
     NSMutableDictionary *_imageViewMap;
     NSMutableDictionary *_textMap;
     dispatch_queue_t _serial_queue;

@@ -374,6 +374,7 @@ public class ImageRenderer extends BaseCardElementRenderer
         }
 
         imageView.setTag(tagContent);
+        ImageRendererKt.setImageFitMode(image, imageView);
         setVisibility(baseCardElement.GetIsVisible(), imageView);
 
         if (image.GetImageStyle() == ImageStyle.RoundedCorners) {
@@ -392,7 +393,7 @@ public class ImageRenderer extends BaseCardElementRenderer
             imageView.setClipToOutline(true);
         }
 
-        ContainerRenderer.setSelectAction(renderedCard, image.GetSelectAction(), imageView, cardActionHandler, renderArgs);
+        ContainerRenderer.setSelectAction(renderedCard, image.GetSelectAction(), imageView, cardActionHandler, fragmentManager, hostConfig, renderArgs);
 
         return imageView;
     }

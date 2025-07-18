@@ -192,6 +192,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
     implementation "com.caverock:androidsvg-aar:$androidsvg"
     implementation project(':adaptivecardsnew')
+    implementation "com.google.android.material:material:$googleMaterialVersion"
 
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:${androidxViewPager2Version}"

@@ -121,6 +121,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return HorizontalAlignment.swigToEnum(AdaptiveCardObjectModelJNI.HorizontalAlignmentFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HorizontalContentAlignment_t getHorizontalContentAlignmentEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__HorizontalContentAlignment_t(AdaptiveCardObjectModelJNI.getHorizontalContentAlignmentEnum(), false);
+  }
+
+  public static String HorizontalContentAlignmentToString(HorizontalContentAlignment t) {
+    return AdaptiveCardObjectModelJNI.HorizontalContentAlignmentToString(t.swigValue());
+  }
+
+  public static HorizontalContentAlignment HorizontalContentAlignmentFromString(String t) {
+    return HorizontalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.HorizontalContentAlignmentFromString(t));
+  }
+
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__VerticalAlignment_t getVerticalAlignmentEnum() {
     return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__VerticalAlignment_t(AdaptiveCardObjectModelJNI.getVerticalAlignmentEnum(), false);
   }
@@ -131,6 +143,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
 
   public static VerticalAlignment VerticalAlignmentFromString(String t) {
     return VerticalAlignment.swigToEnum(AdaptiveCardObjectModelJNI.VerticalAlignmentFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__VerticalContentAlignment_t getVerticalContentAlignmentEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__VerticalContentAlignment_t(AdaptiveCardObjectModelJNI.getVerticalContentAlignmentEnum(), false);
+  }
+
+  public static String VerticalContentAlignmentToString(VerticalContentAlignment t) {
+    return AdaptiveCardObjectModelJNI.VerticalContentAlignmentToString(t.swigValue());
+  }
+
+  public static VerticalContentAlignment VerticalContentAlignmentFromString(String t) {
+    return VerticalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.VerticalContentAlignmentFromString(t));
   }
 
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__IconSize_t getIconSizeEnum() {
@@ -215,6 +239,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
 
   public static ImageSize ImageSizeFromString(String t) {
     return ImageSize.swigToEnum(AdaptiveCardObjectModelJNI.ImageSizeFromString(t));
+  }
+
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ImageFitMode_t getImageFitModeEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ImageFitMode_t(AdaptiveCardObjectModelJNI.getImageFitModeEnum(), false);
+  }
+
+  public static String ImageFitModeToString(ImageFitMode t) {
+    return AdaptiveCardObjectModelJNI.ImageFitModeToString(t.swigValue());
+  }
+
+  public static ImageFitMode ImageFitModeFromString(String t) {
+    return ImageFitMode.swigToEnum(AdaptiveCardObjectModelJNI.ImageFitModeFromString(t));
   }
 
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__TextInputStyle_t getTextInputStyleEnum() {
@@ -395,18 +431,6 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
 
   public static IconPlacement IconPlacementFromString(String t) {
     return IconPlacement.swigToEnum(AdaptiveCardObjectModelJNI.IconPlacementFromString(t));
-  }
-
-  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__VerticalContentAlignment_t getVerticalContentAlignmentEnum() {
-    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__VerticalContentAlignment_t(AdaptiveCardObjectModelJNI.getVerticalContentAlignmentEnum(), false);
-  }
-
-  public static String VerticalContentAlignmentToString(VerticalContentAlignment t) {
-    return AdaptiveCardObjectModelJNI.VerticalContentAlignmentToString(t.swigValue());
-  }
-
-  public static VerticalContentAlignment VerticalContentAlignmentFromString(String t) {
-    return VerticalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.VerticalContentAlignmentFromString(t));
   }
 
   public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__PageAnimation_t getPageAnimationEnum() {
@@ -599,6 +623,30 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
 
   public static String ToLowercase(String value) {
     return AdaptiveCardObjectModelJNI.ToLowercase(value);
+  }
+
+  public static void setDEFAULT_IMAGE_FIT_MODE(ImageFitMode value) {
+    AdaptiveCardObjectModelJNI.DEFAULT_IMAGE_FIT_MODE_set(value.swigValue());
+  }
+
+  public static ImageFitMode getDEFAULT_IMAGE_FIT_MODE() {
+    return ImageFitMode.swigToEnum(AdaptiveCardObjectModelJNI.DEFAULT_IMAGE_FIT_MODE_get());
+  }
+
+  public static void setDEFAULT_HORIZONTAL_CONTENT_ALIGNMENT(HorizontalContentAlignment value) {
+    AdaptiveCardObjectModelJNI.DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT_set(value.swigValue());
+  }
+
+  public static HorizontalContentAlignment getDEFAULT_HORIZONTAL_CONTENT_ALIGNMENT() {
+    return HorizontalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT_get());
+  }
+
+  public static void setDEFAULT_VERTICAL_CONTENT_ALIGNMENT(VerticalContentAlignment value) {
+    AdaptiveCardObjectModelJNI.DEFAULT_VERTICAL_CONTENT_ALIGNMENT_set(value.swigValue());
+  }
+
+  public static VerticalContentAlignment getDEFAULT_VERTICAL_CONTENT_ALIGNMENT() {
+    return VerticalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.DEFAULT_VERTICAL_CONTENT_ALIGNMENT_get());
   }
 
 }

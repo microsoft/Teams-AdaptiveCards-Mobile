@@ -5,6 +5,7 @@ package io.adaptivecards.renderer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.HashMap;
@@ -22,11 +24,9 @@ import io.adaptivecards.objectmodel.ActionMode;
 import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.AssociatedInputs;
 import io.adaptivecards.objectmodel.BaseActionElement;
-import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.ExecuteAction;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.IsVisible;
-import io.adaptivecards.objectmodel.LabelPosition;
 import io.adaptivecards.objectmodel.PopoverAction;
 import io.adaptivecards.objectmodel.ShowCardAction;
 import io.adaptivecards.objectmodel.SubmitAction;
@@ -54,9 +54,14 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
     public static class SelectActionOnClickListener extends ActionOnClickListener
     {
 
-        public SelectActionOnClickListener(RenderedAdaptiveCard renderedCard, BaseActionElement action, ICardActionHandler cardActionHandler)
+        public SelectActionOnClickListener(RenderedAdaptiveCard renderedCard,
+                                           BaseActionElement action,
+                                           ICardActionHandler cardActionHandler,
+                                           FragmentManager fragmentManager,
+                                           HostConfig hostConfig,
+                                           RenderArgs renderArgs)
         {
-            super(renderedCard, action, cardActionHandler, false);
+            super(renderedCard, action, cardActionHandler, fragmentManager, hostConfig, renderArgs, false);
 
             if (m_action.GetElementType() == ActionType.ShowCard)
             {
@@ -85,8 +90,11 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         public static ActionOnClickListener newInstance(
             RenderedAdaptiveCard renderedCard,
             BaseActionElement baseActionElement,
-            ICardActionHandler cardActionHandler) {
-            return new ActionOnClickListener(renderedCard,  baseActionElement, cardActionHandler, false);
+            ICardActionHandler cardActionHandler,
+            FragmentManager fragmentManager,
+            HostConfig hostConfig,
+            RenderArgs renderArgs) {
+            return new ActionOnClickListener(renderedCard,  baseActionElement, cardActionHandler, fragmentManager, hostConfig, renderArgs, false);
         }
 
         public static ActionOnClickListener newInstance(
@@ -139,6 +147,9 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             // comment added to avoid the warning
             this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
             m_isInlineShowCardAction = (baseActionElement.GetElementType() == ActionType.ShowCard) && (hostConfig.GetActions().getShowCard().getActionMode() == ActionMode.Inline);
+            m_fragmentManager = fragmentManager;
+            m_renderArgs = renderArgs;
+            m_hostConfig = hostConfig;
 
             // As SelectAction doesn't support ShowCard actions, then this line won't be executed
             if (m_isInlineShowCardAction)
@@ -148,13 +159,35 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         }
 
         /**
+         * Constructs an ActionOnClickListener. Use this constructor if you want to pass renderArgs also
+         * @param renderedCard
+         * @param baseActionElement
+         * @param cardActionHandler
+         * @param renderArgs
+         * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
+         */
+        protected ActionOnClickListener(RenderedAdaptiveCard renderedCard,
+                                        BaseActionElement baseActionElement,
+                                        ICardActionHandler cardActionHandler,
+                                        FragmentManager fragmentManager,
+                                        HostConfig hostConfig,
+                                        RenderArgs renderArgs,
+                                        boolean isMenuAction)
+        {
+            this(renderedCard, baseActionElement, cardActionHandler, isMenuAction);
+            m_renderArgs = renderArgs;
+            m_fragmentManager = fragmentManager;
+            m_hostConfig = hostConfig;
+        }
+
+        /**
          * Constructs an ActionOnClickListener. Use this constructor if you want to support any type of action except ShowCardAction
          * @param renderedCard
          * @param baseActionElement
          * @param cardActionHandler
          * @param isMenuAction - true if menu action(action in menuActions within another action), false otherwise
          */
-        protected ActionOnClickListener(
+        private ActionOnClickListener(
             RenderedAdaptiveCard renderedCard,
             BaseActionElement baseActionElement,
             ICardActionHandler cardActionHandler,
@@ -335,11 +368,27 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
         }
 
-        private void handlePopoverAction(@NonNull PopoverAction action) {
-            BaseCardElement content = action.GetContent();
-            boolean displayArrow = action.GetDisplayArrow();
-            String maxPopoverWidth = action.GetMaxPopoverWidth();
-            LabelPosition position = action.GetPosition();
+        private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
+            if (m_renderedAdaptiveCard == null || m_cardActionHandler == null || m_fragmentManager == null || m_hostConfig == null || m_renderArgs == null){
+                // Required parameters are null.
+                return;
+            }
+
+            PopoverBottomSheetDailogFragmentFactory factory = new PopoverBottomSheetDailogFragmentFactory(v.getContext(),
+                action,
+                m_renderedAdaptiveCard,
+                m_cardActionHandler,
+                m_hostConfig,
+                m_renderArgs
+            );
+            m_fragmentManager.setFragmentFactory(factory);
+
+            Fragment fragment = factory.instantiate(
+                ClassLoader.getSystemClassLoader(),
+                PopoverBottomSheetDailogFragment.class.getName()
+            );
+
+            ((PopoverBottomSheetDailogFragment) fragment).show(m_fragmentManager, "popover_bottom_sheet");
         }
 
         private void handleToggleVisibilityAction(View v)
@@ -427,7 +476,12 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
         @Override
         public void onClick(View view)
         {
-            if (areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
+            /*
+                1. menuActions not allowed inside popover
+                2. if menu actions are present inside the action
+                3. if hub is handling the menu actions, else go down
+             */
+            if (!isPopoverContent() && areMenuActionsPresent(m_action) && handleMenuActionsScenario(view, m_action)) {
                 return;
             }
 
@@ -446,12 +500,17 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             {
                 handleToggleVisibilityAction(view);
             } else if (m_action.GetElementType() == ActionType.Popover) {
-                handlePopoverAction(Util.castTo(m_action, PopoverAction.class));
+                PopoverAction action = Util.castTo(m_action, PopoverAction.class);
+                handlePopoverAction(action, view);
             }
             else
             {
                 if (m_action.GetElementType() == ActionType.Execute || m_action.GetElementType() == ActionType.Submit || m_renderedAdaptiveCard.isActionSubmitable(view))
                 {
+
+                    // dismiss popover on click of submit and execute
+                    dismissPopoverIfNeeded();
+
                     // Don't gather inputs or perform validation when AssociatedInputs is None
                     boolean gatherInputs = true;
                     try
@@ -469,7 +528,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                     {
                         // Custom action with Submit type will continue to gather inputs
                     }
-                    if (gatherInputs && !m_renderedAdaptiveCard.areInputsValid(Util.getViewId(view)))
+                    if (gatherInputs && !m_renderedAdaptiveCard.areInputsValid(Util.getViewId(view), m_renderArgs))
                     {
                         return;
                     }
@@ -478,6 +537,24 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 m_cardActionHandler.onAction(m_action, m_renderedAdaptiveCard);
             }
         }
+
+        private boolean isPopoverContent() {
+            return m_renderArgs != null && m_renderArgs.isPopoverContent();
+        }
+
+        private void dismissPopoverIfNeeded() {
+            if (m_renderArgs != null && m_renderArgs.isPopoverContent() && m_renderedAdaptiveCard.getPopoverDialog() != null) {
+                m_renderedAdaptiveCard.getPopoverDialog().dismiss();
+                m_renderedAdaptiveCard.setPopoverDialog(null);
+            }
+        }
+
+        @Nullable
+        protected FragmentManager m_fragmentManager;
+        @Nullable
+        protected HostConfig m_hostConfig;
+        @Nullable
+        protected RenderArgs m_renderArgs;
 
         protected BaseActionElement m_action;
         protected RenderedAdaptiveCard m_renderedAdaptiveCard;

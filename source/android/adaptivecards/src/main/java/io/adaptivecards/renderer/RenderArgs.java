@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.adaptivecards.objectmodel.ActionType;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 
@@ -25,6 +29,12 @@ public class RenderArgs {
         setColumnHeader(renderArgs.isColumnHeader());
         setHorizontalAlignment(renderArgs.getHorizontalAlignment());
         setAncestorHasSelectAction(renderArgs.getAncestorHasSelectAction());
+        this.popoverId = renderArgs.getPopoverId();
+    }
+
+    public RenderArgs(RenderArgs renderArgs, int popoverId) {
+        this(renderArgs);
+        this.popoverId = popoverId;
     }
 
     public boolean getAncestorHasFallback()
@@ -131,6 +141,14 @@ public class RenderArgs {
         m_ancestorHasSelectAction = ancestorHasSelectAction;
     }
 
+    public int getPopoverId() {
+        return popoverId;
+    }
+
+    public boolean isPopoverContent() {
+        return this.popoverId != -1;
+    }
+
     private boolean m_ancestorHasFallback;
     private ContainerStyle m_containerStyle = ContainerStyle.Default;
     private boolean m_isColumnHeader;
@@ -139,4 +157,5 @@ public class RenderArgs {
     private long m_containerCardId;
     private boolean m_isRootLevelActions;
     private boolean m_ancestorHasSelectAction = false;
+    private int popoverId = Constants.POPOVER_ID_DEFAULT;
 }

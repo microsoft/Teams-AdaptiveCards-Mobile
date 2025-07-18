@@ -95,6 +95,18 @@ public class Image extends BaseCardElement {
     AdaptiveCardObjectModelJNI.Image_SetImageSize(swigCPtr, this, value.swigValue());
   }
 
+  public ImageFitMode GetImageFitMode() {
+    return ImageFitMode.swigToEnum(AdaptiveCardObjectModelJNI.Image_GetImageFitMode(swigCPtr, this));
+  }
+
+  public HorizontalContentAlignment GetHorizontalContentAlignment() {
+    return HorizontalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.Image_GetHorizontalContentAlignment(swigCPtr, this));
+  }
+
+  public VerticalContentAlignment GetVerticalContentAlignment() {
+    return VerticalContentAlignment.swigToEnum(AdaptiveCardObjectModelJNI.Image_GetVerticalContentAlignment(swigCPtr, this));
+  }
+
   public String GetAltText() {
     return AdaptiveCardObjectModelJNI.Image_GetAltText(swigCPtr, this);
   }

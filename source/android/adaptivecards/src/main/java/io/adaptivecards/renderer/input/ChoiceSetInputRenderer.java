@@ -140,7 +140,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         String value = choiceSetInput.GetValue();
         Vector<String> defaults = new Vector<>();
         defaults.addAll(Arrays.asList(value.split(",")));
-        final CheckBoxSetInputHandler checkBoxSetInputHandler = new CheckBoxSetInputHandler(choiceSetInput, checkBoxList, renderedCard, renderArgs.getContainerCardId());
+        final CheckBoxSetInputHandler checkBoxSetInputHandler = new CheckBoxSetInputHandler(choiceSetInput, checkBoxList, renderedCard, renderArgs);
         checkBoxSetInputHandler.setView(checkBoxLayout);
 
         checkBoxLayout.setTag(new TagContent(choiceSetInput, checkBoxSetInputHandler));
@@ -187,7 +187,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         ValidatedRadioGroup radioGroup = new ValidatedRadioGroup(context,
                                                                  getColor(hostConfig.GetForegroundColor(ContainerStyle.Default, ForegroundColor.Attention, false)));
 
-        final RadioGroupInputHandler radioGroupInputHandler = new RadioGroupInputHandler(choiceSetInput, renderedCard, renderArgs.getContainerCardId());
+        final RadioGroupInputHandler radioGroupInputHandler = new RadioGroupInputHandler(choiceSetInput, renderedCard, renderArgs);
         radioGroupInputHandler.setView(radioGroup);
         radioGroup.setTag(new TagContent(choiceSetInput, radioGroupInputHandler));
 
@@ -271,7 +271,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         boolean usingCustomInputs = isUsingCustomInputs(context);
         final Spinner spinner = new ValidatedSpinner(context, usingCustomInputs);
 
-        final ComboBoxInputHandler comboBoxInputHandler = new ComboBoxInputHandler(choiceSetInput, renderedCard, renderArgs.getContainerCardId());
+        final ComboBoxInputHandler comboBoxInputHandler = new ComboBoxInputHandler(choiceSetInput, renderedCard, renderArgs);
 
         boolean isRequired = choiceSetInput.GetIsRequired();
         ValidatedInputLayout inputLayout = null;
@@ -406,7 +406,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         final AutoCompleteTextView autoCompleteTextView = new ValidatedAutoCompleteTextView(context, usingCustomInputs);
         autoCompleteTextView.setThreshold(0);
 
-        final AutoCompleteTextViewHandler autoCompleteTextInputHandler = new AutoCompleteTextViewHandler(choiceSetInput, renderedCard, renderArgs.getContainerCardId());
+        final AutoCompleteTextViewHandler autoCompleteTextInputHandler = new AutoCompleteTextViewHandler(choiceSetInput, renderedCard, renderArgs);
 
         boolean isRequired = choiceSetInput.GetIsRequired();
         ValidatedInputLayout inputLayout = null;
