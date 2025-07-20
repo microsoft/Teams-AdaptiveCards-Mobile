@@ -240,14 +240,12 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
     }
 
     [NSLayoutConstraint activateConstraints:constraints];
-    [self setImageFitModeFor:imageView image:image imageProps:imageProps];
 
     if (superview) {
         [superview update:imageProps];
     }
 
     [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
-    imageView.backgroundColor = UIColor.redColor;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setImageFitModeFor:imageView image:image imageProps:imageProps];
     });
