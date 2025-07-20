@@ -1045,6 +1045,42 @@ ACRHorizontalAlignment getACRHorizontalAlignment(HorizontalAlignment horizontalA
     }
 }
 
+ACRImageFitMode getACRImageFitMode(ImageFitMode fitMode)
+{
+    switch (fitMode) {
+        case ImageFitMode::Fill:
+            return ACRImageFitModeFill;
+        case ImageFitMode::Contain:
+            return ACRImageFitModeContain;
+        case ImageFitMode::Cover:
+            return ACRImageFitModeCover;
+    }
+}
+
+ACRHorizontalContentAlignment getACRHorizontalContentAlignment(HorizontalContentAlignment horizontalContentAlignment)
+{
+    switch (horizontalContentAlignment) {
+        case HorizontalContentAlignment::Left:
+            return ACRHorizontalContentAlignmentLeft;
+        case HorizontalContentAlignment::Right:
+            return ACRHorizontalContentAlignmentRight;
+        case HorizontalContentAlignment::Center:
+            return ACRHorizontalContentAlignmentCenter;
+    }
+}
+
+ACRVerticalContentAlignment getACRVerticalContentAlignment(VerticalContentAlignment verticalContentAlignment)
+{
+    switch (verticalContentAlignment) {
+        case VerticalContentAlignment::Top:
+            return ACRVerticalContentAlignmentTop;
+        case VerticalContentAlignment::Bottom:
+            return ACRVerticalContentAlignmentBottom;
+        case VerticalContentAlignment::Center:
+            return ACRVerticalContentAlignmentCenter;
+    }
+}
+
 ACRRatingSize getRatingSize(RatingSize ratingSize)
 {
     switch (ratingSize) {
