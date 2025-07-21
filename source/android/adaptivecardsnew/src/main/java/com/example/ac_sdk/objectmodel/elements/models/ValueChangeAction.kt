@@ -12,7 +12,7 @@ class ValueChangedAction(
     fun shouldSerialize(): Boolean = targetInputIds.isNotEmpty()
 
     fun serialize(): String? = try {
-        Json.encodeToString(this)
+        Json.encodeToString(ValueChangedAction.serializer(),this)
     } catch (e: Exception) {
         null
     }

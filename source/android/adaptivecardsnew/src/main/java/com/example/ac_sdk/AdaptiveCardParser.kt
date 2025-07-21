@@ -133,7 +133,7 @@ class AdaptiveCardParser {
             if (Util.meetsRootRequirements(requiresSet)) {
 //                adaptiveCard.additionalProperties =
 //                    Util.handleUnknownProperties(jsonObject, adaptiveCard.knownProperties)
-                return ParseResult(adaptiveCard, context.warnings, json.encodeToString(jsonObject))
+                return ParseResult(adaptiveCard, context.warnings, json.encodeToString(JsonObject.serializer(), jsonObject))
             } else if (fallbackBaseElement == null) {
                 val fallbackText = "We're sorry, this card couldn't be displayed"
                 context.warnings.add(

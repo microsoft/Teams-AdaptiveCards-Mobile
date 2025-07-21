@@ -15,11 +15,10 @@ sealed class Layout(
 
     fun shouldSerialize(): Boolean = true
 
-    companion object {
 
-        fun serialize(): String? {
+        override fun serialize(): String? {
             return try {
-                Json.encodeToString(this)
+                Json.encodeToString(Layout.serializer(), this)
             } catch (e: Exception) {
                 null
             }
@@ -40,5 +39,5 @@ sealed class Layout(
                 null
             }
         }
-    }
+
 }

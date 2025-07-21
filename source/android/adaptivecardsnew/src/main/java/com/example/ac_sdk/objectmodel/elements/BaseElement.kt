@@ -40,9 +40,9 @@ sealed class BaseElement(
         return mutableSetOf()
     }
 
-    fun serialize(): String {
+    open fun serialize(): String? {
         return try {
-            Json.encodeToString(this)
+            Json.encodeToString(serializer(), this)
         } catch (e: Exception) {
             ""
         }
