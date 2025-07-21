@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -404,7 +403,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
                 try {
 
                     // get the all the warnings
-                    Set<String> warnings = AdaptiveCardNativeParser.INSTANCE.evaluateNativeParsingDiff(jsonText, AdaptiveCardRenderer.VERSION, parseResult);
+                   // Set<String> warnings = AdaptiveCardNativeParser.INSTANCE.evaluateNativeParsingDiff(jsonText, AdaptiveCardRenderer.VERSION, parseResult);
 
                 } catch (Exception e) {
                     e.printStackTrace();
