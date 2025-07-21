@@ -4,6 +4,7 @@ import com.example.ac_sdk.objectmodel.Authentication
 import com.example.ac_sdk.objectmodel.BackgroundImage
 import com.example.ac_sdk.objectmodel.Refresh
 import com.example.ac_sdk.objectmodel.elements.ActionElement
+import com.example.ac_sdk.objectmodel.elements.BaseElement
 import com.example.ac_sdk.objectmodel.elements.CardElement
 import com.example.ac_sdk.objectmodel.elements.CollectionElement
 import com.example.ac_sdk.objectmodel.elements.InputElement
@@ -27,6 +28,7 @@ import com.example.ac_sdk.objectmodel.utils.TextSize
 import com.example.ac_sdk.objectmodel.utils.TextStyle
 import com.example.ac_sdk.objectmodel.utils.TextWeight
 import com.example.ac_sdk.objectmodel.utils.VerticalAlignment
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
@@ -647,7 +649,7 @@ class EverythingBagelTests {
         assertEquals(10, textInput.maxLength)
         assertEquals("Input.Text_placeholder", textInput.placeholder)
         assertEquals(Spacing.SMALL, textInput.spacing)
-        assertEquals(TextInputStyle.TEXT.toString().lowercase(), textInput.style)
+        assertEquals(TextInputStyle.TEXT, textInput.style)
         assertEquals("Input.Text_value", textInput.value)
         assertTrue(textInput.errorMessage.isNullOrEmpty())
         assertEquals("([A-Z])\\\\w+", textInput.regex)
@@ -711,7 +713,7 @@ class EverythingBagelTests {
 
     private fun validateInputChoiceSet(choiceSet: InputElement.ChoiceSetInput) {
         assertEquals("Input.ChoiceSet_id", choiceSet.id)
-        assertEquals(ChoiceSetStyle.COMPACT.toString().lowercase(), choiceSet.style)
+        assertEquals(ChoiceSetStyle.COMPACT, choiceSet.style)
         assertEquals("Input.Choice2,Input.Choice4", choiceSet.value)
         assertTrue(choiceSet.isMultiSelect == true)
         assertFalse(choiceSet.isRequired == true)

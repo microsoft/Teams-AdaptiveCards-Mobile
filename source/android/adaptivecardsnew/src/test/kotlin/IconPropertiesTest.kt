@@ -24,9 +24,9 @@ class IconPropertiesTest : BaseModelTest() {
 
         val icon = json.decodeFromString<CardElement.Icon>(jsonString)
 
-        assertEquals(ForegroundColor.DEFAULT, icon.foregroundColor)
-        assertEquals(IconStyle.REGULAR, icon.iconStyle)
-        assertEquals(IconSize.MEDIUM, icon.iconSize)
+        assertEquals(ForegroundColor.DEFAULT, icon.color)
+        assertEquals(IconStyle.REGULAR, icon.style)
+        assertEquals(IconSize.MEDIUM, icon.size)
         assertEquals("exampleIcon", icon.name)
         assertEquals(null, icon.selectAction)
     }

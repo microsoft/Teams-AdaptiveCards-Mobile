@@ -37,6 +37,6 @@ class FlowLayoutPropertiesTest : BaseModelTest() {
         assertEquals(200, flowLayout.itemMaxPixelWidth)
         assertEquals(Spacing.DEFAULT, flowLayout.rowSpacing)
         assertEquals(Spacing.DEFAULT, flowLayout.columnSpacing)
-        assertEquals(HorizontalAlignment.CENTER, flowLayout.horizontalAlignment)
+        assertEquals(HorizontalAlignment.CENTER, flowLayout.horizontalItemsAlignment)
     }
 }
