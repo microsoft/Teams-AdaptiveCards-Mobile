@@ -1,6 +1,7 @@
 package com.example.ac_sdk
 
 import com.example.ac_sdk.objectmodel.elements.InputElement
+import com.example.ac_sdk.objectmodel.utils.TextInputStyle
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -24,7 +25,7 @@ class TextInputPropertiesTest : BaseModelTest() {
         assertEquals(true, textInput.isMultiline)
         assertEquals(100, textInput.maxLength)
         assertEquals("Enter text", textInput.placeholder)
-        assertEquals("text", textInput.style)
+        assertEquals(TextInputStyle.TEXT, textInput.style)
         assertEquals("Sample text", textInput.value)
     }
 

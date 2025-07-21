@@ -14,9 +14,9 @@ class IconPropertiesTest : BaseModelTest() {
         val jsonString = """
             {
                 "type": "icon",
-                "foregroundColor": "Default",
-                "iconStyle": "Regular",
-                "iconSize": "Medium",
+                "color": "Default",
+                "style": "Regular",
+                "size": "Medium",
                 "name": "exampleIcon",
                 "selectAction": null
             }

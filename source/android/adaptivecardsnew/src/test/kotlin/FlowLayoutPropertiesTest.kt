@@ -1,6 +1,7 @@
 import com.example.ac_sdk.BaseModelTest
 import com.example.ac_sdk.objectmodel.elements.LayoutElement
 import com.example.ac_sdk.objectmodel.utils.HorizontalAlignment
+import com.example.ac_sdk.objectmodel.utils.HorizontalItemsAlignment
 import com.example.ac_sdk.objectmodel.utils.ItemFit
 import com.example.ac_sdk.objectmodel.utils.Spacing
 import org.junit.Assert.assertEquals
@@ -37,6 +38,6 @@ class FlowLayoutPropertiesTest : BaseModelTest() {
         assertEquals(200, flowLayout.itemMaxPixelWidth)
         assertEquals(Spacing.DEFAULT, flowLayout.rowSpacing)
         assertEquals(Spacing.DEFAULT, flowLayout.columnSpacing)
-        assertEquals(HorizontalAlignment.CENTER, flowLayout.horizontalItemsAlignment)
+        assertEquals(HorizontalItemsAlignment.CENTER, flowLayout.horizontalItemsAlignment)
     }
 }

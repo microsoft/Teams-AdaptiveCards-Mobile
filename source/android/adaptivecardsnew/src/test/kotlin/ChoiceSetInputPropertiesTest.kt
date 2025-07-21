@@ -1,6 +1,7 @@
 package com.example.ac_sdk
 
 import com.example.ac_sdk.objectmodel.elements.InputElement
+import com.example.ac_sdk.objectmodel.utils.ChoiceSetStyle
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -29,7 +30,7 @@ class ChoiceSetInputPropertiesTest : BaseModelTest() {
         val choiceSetInput = json.decodeFromString<InputElement.ChoiceSetInput>(jsonString)
 
         assertEquals(true, choiceSetInput.isMultiSelect)
-        assertEquals("expanded", choiceSetInput.style)
+        assertEquals(ChoiceSetStyle.EXPANDED, choiceSetInput.style)
         assertEquals("choice1", choiceSetInput.value)
         assertEquals(2, choiceSetInput.choices.size)
         assertEquals("Choice 1", choiceSetInput.choices[0].title)
