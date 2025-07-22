@@ -159,6 +159,12 @@ ACRHeightType GetACRHeight(HeightType adaptiveHeight);
 
 ACRVerticalContentAlignment GetACRVerticalContentAlignment(VerticalContentAlignment adaptiveVerticalContentAlignment);
 
+ACRImageFitMode getACRImageFitMode(ImageFitMode fitMode);
+
+ACRHorizontalContentAlignment getACRHorizontalContentAlignment(HorizontalContentAlignment horizontalContentAlignment);
+
+ACRVerticalContentAlignment getACRVerticalContentAlignment(VerticalContentAlignment verticalContentAlignment);
+
 void printSize(NSString *msg, CGSize size);
 
 NSData *JsonToNSData(const Json::Value &blob);
