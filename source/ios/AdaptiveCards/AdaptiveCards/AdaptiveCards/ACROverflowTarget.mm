@@ -139,11 +139,6 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
         // call buildTargetForButton since ACRShowCardTargetBuilder only responds to this callback
         // set nil button since the action is triggered from alert action not from a real button
         if (ACRRenderingStatus::ACROk == buildTargetForButton(director, action, nil, &target)) {
-            
-//            if ([target isKindOfClass:[ACRBaseTarget class]]) {
-//                            ACRBaseTarget *baseTarget = (ACRBaseTarget *)target;
-//                            baseTarget.parentPopoverTarget = self.parentPopoverTarget;
-//            }
             ACROverflowMenuItem *menuItem = [ACROverflowMenuItem initWithActionElement:action
                                                                                 target:target
                                                                               rootView:_rootView];

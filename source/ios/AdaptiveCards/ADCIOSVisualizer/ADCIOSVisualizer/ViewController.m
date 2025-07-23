@@ -256,12 +256,6 @@ UIColor* defaultButtonBackgroundColor;
     self.hostconfig = payload;
 }
 
-- (UIViewController *)presenterViewControllerForAction:(ACOBaseActionElement *)action
-                                               inCard:(ACOAdaptiveCard *)card
-{
-    return self;          // any other host returns its own VC
-}
-
 - (void)didFetchUserResponses:(ACOAdaptiveCard *)card action:(ACOBaseActionElement *)action
 {
     NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
@@ -378,6 +372,11 @@ UIColor* defaultButtonBackgroundColor;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil]];
     return alertController;
+}
+
+- (UIViewController *) activeViewController
+{
+    return self;
 }
 
 - (void)didChangeViewLayout:(CGRect)oldFrame newFrame:(CGRect)newFrame
@@ -499,7 +498,7 @@ UIColor* defaultButtonBackgroundColor;
                                                 style:UIAlertActionStyleCancel
                                               handler:nil]];
     [presentingController presentViewController:myAlert animated:YES completion:nil];
-    return YES; // skip SDK defult display
+    return YES; // skip SDK default display
 }
 
 - (void)onChoiceSetQueryChange:(NSDictionary *)searchRequest acoElem:(ACOBaseCardElement *)elem completion:(void (^)(NSDictionary *response, NSError *error))completion

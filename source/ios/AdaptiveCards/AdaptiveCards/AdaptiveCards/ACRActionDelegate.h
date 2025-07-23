@@ -24,7 +24,6 @@
 - (void)didChangeViewLayout:(CGRect)oldFrame newFrame:(CGRect)newFrame;
 - (void)didChangeViewLayout:(CGRect)oldFrame newFrame:(CGRect)newFrame properties:(NSDictionary *)properties;
 
-
 #pragma mark - callback for typeahead search (input.choiceset)
 
 /**
@@ -92,10 +91,10 @@
  */
 - (void) showBottomSheetForSplitButton:(NSArray<ACOBaseActionElement *>*)menuActions completion:(void (^)(ACOBaseActionElement *acoElement))completion;
 
+#pragma mark - callback to fetch current active viewcontroller
 /**
-  This callback is called when client needs to pass the view controller object to adaptive card sdk
+  This callback is called when AC SDK requires the current active viewcontroller
  */
-- (UIViewController *)presenterViewControllerForAction:(ACOBaseActionElement *)action
-                                               inCard:(ACOAdaptiveCard *)card;
+- (UIViewController *)activeViewController;
 
 @end

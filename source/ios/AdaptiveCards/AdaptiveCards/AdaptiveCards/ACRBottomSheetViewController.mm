@@ -14,9 +14,8 @@
 
 @interface ACRBottomSheetViewController ()
 @property (nonatomic) UIScrollView *scroll;
-@property (nonatomic) UIButton *closeBtn;
+@property (nonatomic) UIButton *dismissButton;
 @property (nonatomic) UIView *contentView;
-@property (nonatomic) UIView *topBorder;
 @property (nonatomic) ACRBottomSheetConfiguration *config;
 
 @end
@@ -47,7 +46,6 @@
     
     [self setupCloseButton];
     [self setupScrollView];
-    [self setupTopBorder];
     [self setupConstraints];
 }
 
@@ -62,7 +60,7 @@
 
 - (void)setupCloseButton
 {
-    self.closeBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
     NSString *dismissIcon = @"dismiss";
     NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
     CGSize iconSize = CGSizeMake(24, 24);
@@ -70,14 +68,14 @@
                                                   rtl:ACRRtlNone
                                              isFilled:false
                                                  size:iconSize
-                                            tintColor:self.closeBtn.currentTitleColor];
+                                            tintColor:self.dismissButton.currentTitleColor];
     view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.closeBtn addSubview:view];
-    [self.closeBtn addTarget:self
+    [self.dismissButton addSubview:view];
+    [self.dismissButton addTarget:self
                       action:@selector(closeAction)
             forControlEvents:UIControlEventTouchUpInside];
-    self.closeBtn.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.closeBtn];
+    self.dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.dismissButton];
 }
 
 - (void)setupScrollView
@@ -90,15 +88,6 @@
     [self.scroll addSubview:self.contentView];
 }
 
-- (void)setupTopBorder
-{
-    self.topBorder = [[UIView alloc] init];
-    self.topBorder.backgroundColor = [UIColor colorWithWhite:0.86 alpha:1.0];
-    self.topBorder.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.topBorder];
-}
-
-
 - (void)setupConstraints
 {
     CGFloat contentPad = self.config.contentPadding;
@@ -109,22 +98,17 @@
     
     
     [NSLayoutConstraint activateConstraints:@[
-        /* grey separator */
-        [self.topBorder.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [self.topBorder.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.topBorder.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [self.topBorder.heightAnchor constraintEqualToConstant:self.config.borderHeight],
         
-        /* ✕ button */
-        [self.closeBtn.topAnchor constraintEqualToAnchor:self.view.topAnchor constant: btnTopInset],
-        [self.closeBtn.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -btnSideInset],
-        [self.closeBtn.widthAnchor constraintEqualToConstant:closeBtnSize],
-        [self.closeBtn.heightAnchor constraintEqualToAnchor:self.closeBtn.widthAnchor],
+        /* Dismiss button constraints */
+        [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant: btnTopInset],
+        [self.dismissButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -btnSideInset],
+        [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
+        [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
         
         /* scroll container */
         [self.scroll.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [self.scroll.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [self.scroll.topAnchor constraintEqualToAnchor:self.closeBtn.bottomAnchor constant: scrollBtnGap],
+        [self.scroll.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant: scrollBtnGap],
         [self.scroll.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
         
         /* content inside scroll */

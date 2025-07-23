@@ -57,12 +57,12 @@
         return;
     }
     
-    id<ACRActionDelegate> dlg = _rootView.acrActionDelegate;
-    if (![dlg respondsToSelector:@selector(presenterViewControllerForAction:inCard:)]) {
+    id<ACRActionDelegate> actionDelegate = _rootView.acrActionDelegate;
+    if (![actionDelegate respondsToSelector:@selector(activeViewController)]) {
         return;
     }
     
-    UIViewController *host = [dlg presenterViewControllerForAction:_actionElement inCard:[_rootView card]];
+    UIViewController *host = [actionDelegate activeViewController];
     if (!host) {
         return;
     }

@@ -145,7 +145,6 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
 
 - (void)doSelectAction
 {
-    
     [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
 }
 
