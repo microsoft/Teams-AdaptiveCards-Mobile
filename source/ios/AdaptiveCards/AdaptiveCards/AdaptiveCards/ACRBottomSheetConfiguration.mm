@@ -17,7 +17,7 @@
         _maxHeightMultiplier = maxMultiplier;
         
         _borderHeight           = 0.5;
-        _closeButtonTopInset    = 5;
+        _closeButtonTopInset    = 16;
         _closeButtonSideInset   = 12;
         _closeButtonToScrollGap = 20;
         _contentPadding         = 16;

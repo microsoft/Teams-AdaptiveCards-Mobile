@@ -21,9 +21,9 @@
 - (void)containerViewWillLayoutSubviews
 {
     dimmingView.frame = self.containerView.bounds;
-    self.presentedView.frame        = [self frameOfPresentedViewInContainerView];
-    self.presentedView.layer.cornerRadius = 12;
-    self.presentedView.clipsToBounds      = YES;
+    self.presentedView.frame = [self frameOfPresentedViewInContainerView];
+    self.presentedView.layer.cornerRadius = 10;
+    self.presentedView.clipsToBounds = YES;
 }
 
 - (void)presentationTransitionWillBegin {
