@@ -35,21 +35,21 @@
     std::shared_ptr<PopoverAction> action = std::dynamic_pointer_cast<PopoverAction>(elem);
     
     NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
-
+    
     UIButton *button = [ACRButton rootView:rootView baseActionElement:acoElem title:title andHostConfig:acoConfig];
     
     ACRPopoverTarget *target;
     if (ACRRenderingStatus::ACROk == buildTargetForButton([rootView getActionsTargetBuilderDirector], acoElem, button, &target)) {
         [superview addTarget:target];
     }
-
+    
     button.accessibilityTraits |= UIAccessibilityTraitLink;
     button.accessibilityTraits &= ~UIAccessibilityTraitButton;
-
+    
     [button setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-
+    
     [button setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-
+    
     return button;
 }
 

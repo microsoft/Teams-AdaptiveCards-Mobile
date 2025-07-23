@@ -72,8 +72,8 @@
     view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.dismissButton addSubview:view];
     [self.dismissButton addTarget:self
-                      action:@selector(closeAction)
-            forControlEvents:UIControlEventTouchUpInside];
+                           action:@selector(closeAction)
+                 forControlEvents:UIControlEventTouchUpInside];
     self.dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.dismissButton];
 }
@@ -146,7 +146,7 @@
                                                           sourceViewController:(UIViewController *)source
 {
     return [[ACRBottomSheetPresentationController alloc] initWithPresentedViewController:presented
-                                                             presentingViewController:presenting];
+                                                                presentingViewController:presenting];
 }
 
 @end

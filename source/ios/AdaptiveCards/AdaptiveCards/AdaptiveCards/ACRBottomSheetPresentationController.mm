@@ -13,7 +13,7 @@
 }
 - (CGRect)frameOfPresentedViewInContainerView
 {
-
+    
     CGFloat want = self.presentedViewController.preferredContentSize.height;
     return CGRectMake(0, self.containerView.bounds.size.height - want, self.containerView.bounds.size.width, want);
 }
@@ -32,19 +32,19 @@
     dimmingView.alpha = 0.0;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDimmingViewTap:)];
-        [dimmingView addGestureRecognizer:tapGesture];
-
+    [dimmingView addGestureRecognizer:tapGesture];
+    
     [self.containerView insertSubview:dimmingView atIndex:0];
     [UIView animateWithDuration:0.25 animations:^{
         self->dimmingView.alpha = 1.0;
-        }];
+    }];
 }
 
 - (void)dismissalTransitionWillBegin {
-  
+    
     [UIView animateWithDuration:0.25 animations:^{
         self->dimmingView.alpha = 0.0;
-        }];
+    }];
 }
 
 - (void)dismissalTransitionDidEnd:(BOOL)completed {

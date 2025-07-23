@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ACRBottomSheetConfiguration : NSObject
+
 @property CGFloat minHeightMultiplier;
 @property CGFloat maxHeightMultiplier;
 
@@ -20,6 +21,6 @@
 @property CGFloat closeButtonSize;
 
 - (instancetype)initWithMinMultiplier:(CGFloat)minMultiplier
-                       maxMultiplier:(CGFloat)maxMultiplier;
+                        maxMultiplier:(CGFloat)maxMultiplier;
 
 @end

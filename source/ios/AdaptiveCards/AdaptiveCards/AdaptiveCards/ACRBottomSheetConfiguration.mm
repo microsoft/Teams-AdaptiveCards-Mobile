@@ -10,7 +10,7 @@
 
 @implementation ACRBottomSheetConfiguration
 - (instancetype)initWithMinMultiplier:(CGFloat)minMultiplier
-                       maxMultiplier:(CGFloat)maxMultiplier
+                        maxMultiplier:(CGFloat)maxMultiplier
 {
     if (self = [super init]) {
         _minHeightMultiplier = minMultiplier;

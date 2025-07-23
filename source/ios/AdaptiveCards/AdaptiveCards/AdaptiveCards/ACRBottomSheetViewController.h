@@ -13,6 +13,6 @@
 @property (nonatomic, copy) void (^onDismissBlock)(void);
 
 - (instancetype)initWithContent:(UIView *)content
-                      configuration:(ACRBottomSheetConfiguration *)configuration;
+                  configuration:(ACRBottomSheetConfiguration *)configuration;
 @end
 

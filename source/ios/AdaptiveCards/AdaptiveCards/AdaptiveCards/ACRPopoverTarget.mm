@@ -85,23 +85,23 @@
     CGFloat maxMultiplier = 0.66;
     
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc]
-        initWithMinMultiplier:minMultiplier
-        maxMultiplier:maxMultiplier];
+                                           initWithMinMultiplier:minMultiplier
+                                           maxMultiplier:maxMultiplier];
     
     
-        currentBottomSheet = [[ACRBottomSheetViewController alloc]
-            initWithContent:_cachedContentView
-            configuration:config];
+    currentBottomSheet = [[ACRBottomSheetViewController alloc]
+                          initWithContent:_cachedContentView
+                          configuration:config];
     
     __weak ACRPopoverTarget *weakSelf = self;
-            currentBottomSheet.onDismissBlock = ^{
-                __strong ACRPopoverTarget *strongSelf = weakSelf;
-                if (strongSelf) {
-                    [strongSelf detachBottomSheetInputsFromMainCard];
-                }
-            };
+    currentBottomSheet.onDismissBlock = ^{
+        __strong ACRPopoverTarget *strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf detachBottomSheetInputsFromMainCard];
+        }
+    };
     [host presentViewController:currentBottomSheet animated:YES completion:nil];
-  
+    
 }
 
 - (void)bottomSheetCloseTapped
@@ -137,19 +137,19 @@
         [[_rootView card] setInputs:sharedInputs];
     }
     _cachedContentView = [[ACRContentStackView alloc] initWithStyle:ACRDefault
-                                                         parentStyle:ACRDefault
-                                                          hostConfig:_rootView.hostConfig
-                                                           superview:_rootView];
+                                                        parentStyle:ACRDefault
+                                                         hostConfig:_rootView.hostConfig
+                                                          superview:_rootView];
     _rootView.shouldIgnoreMenuActions = YES;
-     // Render the content into the cached container
-     [renderer render:_cachedContentView
-             rootView:_rootView
-               inputs:sharedInputs
-      baseCardElement:acoElement
-           hostConfig:_rootView.hostConfig];
+    // Render the content into the cached container
+    [renderer render:_cachedContentView
+            rootView:_rootView
+              inputs:sharedInputs
+     baseCardElement:acoElement
+          hostConfig:_rootView.hostConfig];
     
     [self markActionTargetsAsFromBottomSheet:_cachedContentView];
- }
+}
 
 - (void)markActionTargetsAsFromBottomSheet:(UIView *)containerView
 {
@@ -198,24 +198,24 @@
 - (void)filterActionTarget:(ACRBaseTarget *)target forView:(UIView *)view
 {
     if ([target respondsToSelector:@selector(actionElement)]) {
-            ACOBaseActionElement *actionElement = [target performSelector:@selector(actionElement)];
-            if (actionElement) {
-                ACRActionType actionType = actionElement.type;
+        ACOBaseActionElement *actionElement = [target performSelector:@selector(actionElement)];
+        if (actionElement) {
+            ACRActionType actionType = actionElement.type;
+            
+            // Hide forbidden actions in bottom sheet
+            if (actionType == ACRToggleVisibility ||
+                actionType == ACRShowCard ||
+                actionType == ACRPopover) {
+                [view removeFromSuperview];
+            }
+            
+            if ((actionType == ACRSubmit || actionType == ACRExecute) &&
+                actionElement.menuActions.count > 0) {
+                actionElement.isActionFromSplitButtonBottomSheet = YES; 
                 
-                // Hide forbidden actions in bottom sheet
-                if (actionType == ACRToggleVisibility ||
-                    actionType == ACRShowCard ||
-                    actionType == ACRPopover) {
-                    [view removeFromSuperview];
-                }
-                
-                if ((actionType == ACRSubmit || actionType == ACRExecute) &&
-                    actionElement.menuActions.count > 0) {
-                    actionElement.isActionFromSplitButtonBottomSheet = YES; 
-                       
-                }
             }
         }
+    }
 }
 
 - (void)dismissBottomSheet
@@ -228,37 +228,37 @@
 - (void)attachBottomSheetInputsToMainCard
 {
     if (!_cachedContentView || !_rootView) {
-            return;
-        }
-        
-    
-        NSMutableArray *bottomSheetInputs = [NSMutableArray array];
-        [self findInputHandlersInView:_cachedContentView inputs:bottomSheetInputs];
+        return;
+    }
     
     
-        [_rootView.inputHandlers addObjectsFromArray:bottomSheetInputs];
+    NSMutableArray *bottomSheetInputs = [NSMutableArray array];
+    [self findInputHandlersInView:_cachedContentView inputs:bottomSheetInputs];
+    
+    
+    [_rootView.inputHandlers addObjectsFromArray:bottomSheetInputs];
 }
 
 
 - (void)findInputHandlersInView:(UIView *)view inputs:(NSMutableArray *)inputHandlers
 {
     if ([view conformsToProtocol:@protocol(ACRIBaseInputHandler)]) {
-            id<ACRIBaseInputHandler> inputHandler = (id<ACRIBaseInputHandler>)view;
-            [inputHandlers addObject:inputHandler];
-            
-            if ([view isKindOfClass:[ACRInputLabelView class]]) {
-                ACRInputLabelView *labelView = (ACRInputLabelView *)view;
-                NSObject<ACRIBaseInputHandler> *underlyingHandler = [labelView getInputHandler];
-                if (underlyingHandler && underlyingHandler != labelView) {
-                    
-                    underlyingHandler.isRequired = NO;
-                }
+        id<ACRIBaseInputHandler> inputHandler = (id<ACRIBaseInputHandler>)view;
+        [inputHandlers addObject:inputHandler];
+        
+        if ([view isKindOfClass:[ACRInputLabelView class]]) {
+            ACRInputLabelView *labelView = (ACRInputLabelView *)view;
+            NSObject<ACRIBaseInputHandler> *underlyingHandler = [labelView getInputHandler];
+            if (underlyingHandler && underlyingHandler != labelView) {
+                
+                underlyingHandler.isRequired = NO;
             }
         }
-        
-        for (UIView *subview in view.subviews) {
-            [self findInputHandlersInView:subview inputs:inputHandlers];
-        }
+    }
+    
+    for (UIView *subview in view.subviews) {
+        [self findInputHandlersInView:subview inputs:inputHandlers];
+    }
 }
 
 - (void)detachBottomSheetInputsFromMainCard
@@ -278,14 +278,14 @@
 
 - (void)clearCachedContentView
 {
-        if (currentBottomSheet && currentBottomSheet.presentingViewController) {
-            [currentBottomSheet dismissViewControllerAnimated:YES completion:^{
-                self->_cachedContentView = nil;
-            }];
-        } else {
-            _cachedContentView = nil;
-        }
-        currentBottomSheet = nil;
+    if (currentBottomSheet && currentBottomSheet.presentingViewController) {
+        [currentBottomSheet dismissViewControllerAnimated:YES completion:^{
+            self->_cachedContentView = nil;
+        }];
+    } else {
+        _cachedContentView = nil;
+    }
+    currentBottomSheet = nil;
 }
 
 @end
