@@ -35,6 +35,9 @@ typedef struct ACRAspectRatio ACRAspectRatio;
 @property ACRHeightType height;
 @property CGFloat pixelWidth;
 @property CGFloat pixelHeight;
+@property ACRImageFitMode acrImageFitMode;
+@property ACRHorizontalContentAlignment acrHorizontalContentAlignment;
+@property ACRVerticalContentAlignment acrVerticalContentAlignment;
 
 - (instancetype)init:(ACOBaseCardElement *)acoElem config:(ACOHostConfig *)acoConfig image:(UIImage *)image;
 

@@ -52,6 +52,10 @@
 
             self.acrHorizontalAlignment = getACRHorizontalAlignment(imgElem->GetHorizontalAlignment().value_or(HorizontalAlignment::Left));
             self.height = GetACRHeight(imgElem->GetHeight());
+            
+            self.acrHorizontalContentAlignment = getACRHorizontalContentAlignment(imgElem->GetHorizontalContentAlignment());
+            self.acrVerticalContentAlignment = getACRVerticalContentAlignment(imgElem->GetVerticalContentAlignment());
+            self.acrImageFitMode = getACRImageFitMode(imgElem->GetImageFitMode());
         }
     }
     return self;
