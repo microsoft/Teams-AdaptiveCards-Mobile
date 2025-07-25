@@ -43,9 +43,15 @@
 #import "CarouselPage.h"
 #import "Carousel.h"
 #import <AVFoundation/AVFoundation.h>
+#import <objc/runtime.h>
 
 using namespace AdaptiveCards;
 typedef UIImage * (^ImageLoadBlock)(NSURL *url);
+
+// Associated object keys for external UIImageView monitoring
+static const void *ACRImageViewKeyAssociationKey = &ACRImageViewKeyAssociationKey;
+static const void *ACRImageViewElementAssociationKey = &ACRImageViewElementAssociationKey;
+static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssociationKey;
 
 @implementation ACRView {
     ACOAdaptiveCard *_adaptiveCard;
@@ -254,15 +260,15 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             ObserverActionBlock observerAction =
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &element, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
+                    NSLog(@"ACR_COMPLETION_BLOCK: ObserverActionBlock called with view: %@, key: %@", view, key);
                     if (view) {
                         // check image already exists in the returned image view and register the image
                         [self registerImageFromUIImageView:view key:key];
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:element.get()];
+                        
+                        // Set up completion block for ANY UIImageView type (ACRUIImageView or regular UIImageView)
+                        [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)element.get()];
 
-                        // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
+                        // store the image view and image element for easy retrieval
                         [rootView setImageView:key view:view];
                         [rootView setImageContext:key context:element];
                     }
@@ -283,12 +289,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            
+                            // Set up completion block for ANY UIImageView type
+                            [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)element.get()];
 
-                            // store the image view and image set element for easy retrieval in ACRView::observeValueForKeyPath
+                            // store the image view and image set element for easy retrieval
                             [rootView setImageView:key view:view];
                             [rootView setImageContext:key context:element];
                         }
@@ -315,12 +320,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                             [self registerImageFromUIImageView:view key:key];
                             [contentholdingview addSubview:view];
                             contentholdingview.isMediaType = YES;
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                            
+                            // Set up completion block for ANY UIImageView type
+                            [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)imgElem.get()];
 
-                            // store the image view and media element for easy retrieval in ACRView::observeValueForKeyPath
+                            // store the image view and media element for easy retrieval
                             [rootView setImageView:key view:contentholdingview];
                             [rootView setImageContext:key context:elem];
                         }
@@ -335,11 +339,12 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:rootView
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:nil];
-                            // store the image view for easy retrieval in ACRView::observeValueForKeyPath
+                            
+                            // Create fake element since this is for play button (no actual element)
+                            std::shared_ptr<BaseCardElement> fakeElement = std::make_shared<Image>();
+                            [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)fakeElement.get()];
+                            
+                            // store the image view for easy retrieval
                             [rootView setImageView:key view:view];
                         }
                     };
@@ -360,12 +365,19 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            // Use completion block pattern instead of KVO
+                            if ([view isKindOfClass:[ACRUIImageView class]]) {
+                                ACRUIImageView *acrImageView = (ACRUIImageView *)view;
+                                __weak ACRView *weakSelf = self;
+                                __weak ACRUIImageView *weakView = acrImageView;
+                                acrImageView.imageSetCompletionBlock = ^(UIImageView *imageView) {
+                                    if (weakSelf && weakView) {
+                                        [weakSelf handleImageSetForView:weakView withKey:key context:element.get()];
+                                    }
+                                };
+                            }
 
-                            // store the image view for easy retrieval in ACRView::observeValueForKeyPath
+                            // store the image view for easy retrieval
                             [rootView setImageView:key view:view];
                         }
                     };
@@ -516,10 +528,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                     if (view) {
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:elem.get()];
+                        // Create fake BaseCardElement from BaseActionElement for completion block
+                        std::shared_ptr<BaseCardElement> fakeElement = std::make_shared<Image>();
+                        [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)fakeElement.get()];
                         [rootView setImageView:key view:view];
                     }
                 };
@@ -634,73 +645,18 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 }
 
 // notification is delivered from main (serial) queue, thus run in the main thread context
+// Note: Image KVO handling has been completely removed - using completion blocks exclusively
 - (void)observeValueForKeyPath:(NSString *)path ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([path isEqualToString:@"image"]) {
-        bool observerRemoved = false;
-        if (context) {
-            // image that was loaded
-            UIImage *image = [change objectForKey:NSKeyValueChangeNewKey];
-
-            NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)(context)];
-            NSString *key = [number stringValue];
-
-            ACOBaseCardElement *baseCardElement = _imageContextMap[key];
-            if (baseCardElement) {
-                ACRRegistration *reg = [ACRRegistration getInstance];
-                ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *renderer = (ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *)[reg getRenderer:[NSNumber numberWithInt:static_cast<int>(baseCardElement.type)]];
-                if (renderer && [[renderer class] conformsToProtocol:@protocol(ACRIKVONotificationHandler)]) {
-                    observerRemoved = true;
-                    NSMutableDictionary *imageViewMap = [self getImageMap];
-                    imageViewMap[key] = image;
-                    [renderer configUpdateForUIImageView:self acoElem:baseCardElement config:_hostConfig image:image imageView:(UIImageView *)object];
-                }
-            } else {
-                id view = _imageViewContextMap[key];
-                if ([view isKindOfClass:[ACRButton class]]) {
-                    ACRButton *button = (ACRButton *)view;
-                    [button setImageView:image withConfig:_hostConfig];
-                } else {
-                    // handle background image for adaptive card that uses resource resolver
-                    UIImageView *imageView = (UIImageView *)object;
-                    auto backgroundImage = [_adaptiveCard card]->GetBackgroundImage();
-
-                    // remove observer early in case background image must be changed to handle mode = repeat
-                    [self removeObserver:self forKeyPath:path onObject:object];
-                    observerRemoved = true;
-                    renderBackgroundImage(self, backgroundImage.get(), imageView, image);
-                }
-            }
-        }
-
-        if (!observerRemoved) {
-            [self removeObserver:self forKeyPath:path onObject:object];
-        }
-    } else if ([path isEqualToString:@"hidden"]) {
+    if ([path isEqualToString:@"hidden"]) {
         [super observeValueForKeyPath:path ofObject:object change:change context:context];
+    } else {
+        // All image KVO has been removed - this should not be called for images anymore
+        NSLog(@"ACR_COMPLETION_BLOCK: WARNING: Unexpected KVO notification for path: %@. All image KVO has been removed.", path);
     }
 }
 
-// remove observer from UIImageView
-- (void)removeObserverOnImageView:(NSString *)KeyPath onObject:(NSObject *)object keyToImageView:(NSString *)key
-{
-    if ([object isKindOfClass:[UIImageView class]]) {
-        if (_imageViewContextMap[key]) {
-            [self removeObserver:self forKeyPath:KeyPath onObject:object];
-        }
-    }
-}
-
-- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)path onObject:(NSObject *)object
-{
-    // check that makes sure that there are subscribers, and the given observer is not one of the removed observers
-    if (_numberOfSubscribers && ![_setOfRemovedObservers containsObject:object]) {
-        _numberOfSubscribers--;
-        [object removeObserver:self forKeyPath:path];
-        [_setOfRemovedObservers addObject:object];
-        [self callDidLoadElementsIfNeeded];
-    }
-}
+// KVO methods removed - using completion blocks exclusively now
 
 - (void)loadBackgroundImageAccordingToResourceResolverIF:(std::shared_ptr<BackgroundImage> const &)backgroundImage key:(NSString *)key observerAction:(ObserverActionBlock)observerAction
 {
@@ -793,17 +749,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 - (void)dealloc
 {
-    for (id key in _imageViewContextMap) {
-        id object = _imageViewContextMap[key];
-
-        if ([object isKindOfClass:[ACRContentHoldingUIView class]]) {
-            object = ((UIView *)object).subviews[0];
-        }
-
-        if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
-            [object removeObserver:self forKeyPath:@"image"];
-        }
-    }
+    // No KVO cleanup needed - using completion blocks exclusively
+    NSLog(@"ACR_COMPLETION_BLOCK: ACRView dealloc called, no KVO observers to remove");
 }
 
 - (void)updatePaddingMap:(std::shared_ptr<StyledCollectionElement> const &)collection view:(UIView *)view
@@ -915,10 +862,156 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     }
 }
 
+// Handle image set completion without KVO
+- (void)handleImageSetForView:(UIImageView *)imageView withKey:(NSString *)key context:(void *)context
+{
+    NSLog(@"ACR_COMPLETION_BLOCK: handleImageSetForView called with key: %@, context: %p, imageView: %@", key, context, imageView);
+    
+    if (context) {
+        // image that was loaded
+        UIImage *image = imageView.image;
+        NSLog(@"ACR_COMPLETION_BLOCK: Image loaded with size: %@", image ? NSStringFromCGSize(image.size) : @"nil");
+        
+        ACOBaseCardElement *baseCardElement = _imageContextMap[key];
+        if (baseCardElement) {
+            NSLog(@"ACR_COMPLETION_BLOCK: Found baseCardElement for key: %@", key);
+            ACRRegistration *reg = [ACRRegistration getInstance];
+            ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *renderer = (ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *)[reg getRenderer:[NSNumber numberWithInt:static_cast<int>(baseCardElement.type)]];
+            if (renderer && [[renderer class] conformsToProtocol:@protocol(ACRIKVONotificationHandler)]) {
+                NSLog(@"ACR_COMPLETION_BLOCK: Calling configUpdateForUIImageView on renderer");
+                NSMutableDictionary *imageViewMap = [self getImageMap];
+                imageViewMap[key] = image;
+                [renderer configUpdateForUIImageView:self acoElem:baseCardElement config:_hostConfig image:image imageView:imageView];
+                NSLog(@"ACR_COMPLETION_BLOCK: configUpdateForUIImageView completed");
+            } else {
+                NSLog(@"ACR_COMPLETION_BLOCK: No renderer found or renderer doesn't support KVO notification protocol");
+            }
+        } else {
+            NSLog(@"ACR_COMPLETION_BLOCK: No baseCardElement found, checking imageViewContextMap");
+            id view = _imageViewContextMap[key];
+            if ([view isKindOfClass:[ACRButton class]]) {
+                NSLog(@"ACR_COMPLETION_BLOCK: Handling ACRButton case");
+                ACRButton *button = (ACRButton *)view;
+                [button setImageView:image withConfig:_hostConfig];
+            } else {
+                NSLog(@"ACR_COMPLETION_BLOCK: Handling background image case");
+                // handle background image for adaptive card that uses resource resolver
+                auto backgroundImage = [_adaptiveCard card]->GetBackgroundImage();
+                renderBackgroundImage(self, backgroundImage.get(), imageView, image);
+            }
+        }
+    } else {
+        NSLog(@"ACR_COMPLETION_BLOCK: No context provided to handleImageSetForView");
+    }
+}
+
+// Simple helper method to set up completion handling for any UIImageView
+- (void)setupCompletionBlockForUIImageView:(UIImageView *)imageView withKey:(NSString *)key element:(id)elementWrapper
+{
+    NSLog(@"ACR_COMPLETION_BLOCK: Setting up completion block for UIImageView: %@ with key: %@", [imageView class], key);
+    
+    // Convert id back to BaseCardElement pointer for internal use
+    BaseCardElement *element = (__bridge BaseCardElement *)elementWrapper;
+    
+    if ([imageView isKindOfClass:[ACRUIImageView class]]) {
+        // Use the built-in completion block for ACRUIImageView
+        ACRUIImageView *acrImageView = (ACRUIImageView *)imageView;
+        __weak ACRView *weakSelf = self;
+        __weak ACRUIImageView *weakView = acrImageView;
+        acrImageView.imageSetCompletionBlock = ^(UIImageView *completionImageView) {
+            NSLog(@"ACR_COMPLETION_BLOCK: ACRUIImageView completion block triggered for key: %@", key);
+            if (weakSelf && weakView) {
+                [weakSelf handleImageSetForView:weakView withKey:key context:element];
+            }
+        };
+        NSLog(@"ACR_COMPLETION_BLOCK: Set completion block on ACRUIImageView: %p", acrImageView);
+    } else {
+        // For external UIImageViews, use synchronous monitoring with associated objects
+        NSLog(@"ACR_COMPLETION_BLOCK: External UIImageView detected: %@", [imageView class]);
+        
+        // Store completion data with the UIImageView for later triggering
+        [self attachCompletionDataToImageView:imageView withKey:key element:element];
+        
+        // Check if image is already set
+        if (imageView.image) {
+            NSLog(@"ACR_COMPLETION_BLOCK: Image already set on external UIImageView, calling completion immediately");
+            [self handleImageSetForView:imageView withKey:key context:element];
+        } else {
+            NSLog(@"ACR_COMPLETION_BLOCK: External UIImageView has no image yet, completion will be triggered when image is detected");
+            // Note: We'll check for image changes synchronously in the main rendering loop
+            [self scheduleImageCheckForView:imageView];
+        }
+    }
+}
+
+// Use associated objects to store completion data with external UIImageViews
+- (void)attachCompletionDataToImageView:(UIImageView *)imageView withKey:(NSString *)key element:(BaseCardElement *)element
+{
+    // Store key and element pointer as associated objects
+    objc_setAssociatedObject(imageView, ACRImageViewKeyAssociationKey, key, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(imageView, ACRImageViewElementAssociationKey, (__bridge id)element, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(imageView, ACRImageViewACRViewAssociationKey, self, OBJC_ASSOCIATION_ASSIGN);
+    
+    NSLog(@"ACR_COMPLETION_BLOCK: Attached completion data to UIImageView %p with key %@", imageView, key);
+}
+
+// Schedule a synchronous check for image changes (lightweight, no timer)
+- (void)scheduleImageCheckForView:(UIImageView *)imageView
+{
+    // Use a single dispatch_async to check once on the next run loop
+    // This is synchronous relative to the UI updates
+    __weak UIImageView *weakImageView = imageView;
+    __weak ACRView *weakSelf = self;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (weakImageView && weakSelf) {
+            [weakSelf checkAndHandleImageSetForView:weakImageView];
+        }
+    });
+}
+
+// Check if image is set and handle completion if so
+- (void)checkAndHandleImageSetForView:(UIImageView *)imageView
+{
+    if (imageView.image) {
+        // Get the stored completion data
+        NSString *key = objc_getAssociatedObject(imageView, ACRImageViewKeyAssociationKey);
+        BaseCardElement *element = (__bridge BaseCardElement *)objc_getAssociatedObject(imageView, ACRImageViewElementAssociationKey);
+        
+        if (key && element) {
+            NSLog(@"ACR_COMPLETION_BLOCK: External UIImageView %p now has image, calling completion for key %@", imageView, key);
+            [self handleImageSetForView:imageView withKey:key context:element];
+            
+            // Clean up associated objects to prevent multiple calls
+            objc_setAssociatedObject(imageView, ACRImageViewKeyAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
+            objc_setAssociatedObject(imageView, ACRImageViewElementAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
+            objc_setAssociatedObject(imageView, ACRImageViewACRViewAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
+        }
+    } else {
+        // Image not set yet, schedule another check
+        // This creates a synchronous polling approach that's much lighter than timers
+        [self scheduleImageCheckForView:imageView];
+    }
+}
+
 - (void)setContext:(ACORenderContext *)context
 {
     if (context) {
         _context = context;
+    }
+}
+
+// Class method for external resolvers to notify when they set an image
+// This provides a synchronous completion mechanism without requiring changes to external code
++ (void)notifyImageSetOnView:(UIImageView *)imageView
+{
+    if (!imageView) return;
+    
+    // Get the associated ACRView instance
+    ACRView *acrView = objc_getAssociatedObject(imageView, ACRImageViewACRViewAssociationKey);
+    if (acrView) {
+        NSLog(@"ACR_COMPLETION_BLOCK: External notification that image was set on UIImageView %p", imageView);
+        [acrView checkAndHandleImageSetForView:imageView];
     }
 }
 

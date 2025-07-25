@@ -10,6 +10,7 @@
 #import "ACOBaseActionElementPrivate.h"
 #import "ACRShowCardTarget.h"
 #import "ACRViewPrivate.h"
+#import "ACRUIImageView.h"
 #import "UtiliOS.h"
 
 NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
@@ -78,28 +79,52 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
             completion(view.image);
         } else {
             _onIconLoaded = completion;
-            [view addObserver:self
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:_action.get()];
+            // Use completion block pattern instead of KVO
+            if ([view isKindOfClass:[ACRUIImageView class]]) {
+                ACRUIImageView *acrImageView = (ACRUIImageView *)view;
+                __weak ACROverflowMenuItem *weakSelf = self;
+                acrImageView.imageSetCompletionBlock = ^(UIImageView *imageView) {
+                    ACROverflowMenuItem *strongSelf = weakSelf;
+                    if (strongSelf && strongSelf->_onIconLoaded) {
+                        strongSelf->_onIconLoaded(imageView.image);
+                    }
+                };
+            } else {
+                // For external UIImageViews, use timer-based monitoring
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self startMonitoringImageView:view];
+                });
+            }
         }
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)key
+- (void)startMonitoringImageView:(UIImageView *)imageView
 {
-    if ([keyPath isEqualToString:@"image"] && key == _action.get()) {
-        // image that was loaded
-        UIImage *image = [change objectForKey:NSKeyValueChangeNewKey];
-        if (_onIconLoaded) {
-            _onIconLoaded(image);
+    __weak ACROverflowMenuItem *weakSelf = self;
+    __weak UIImageView *weakImageView = imageView;
+    
+    // Check every 50ms for image to be set
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.05 repeats:YES block:^(NSTimer *timer) {
+        ACROverflowMenuItem *strongSelf = weakSelf;
+        UIImageView *strongImageView = weakImageView;
+        if (strongSelf && strongImageView) {
+            if (strongImageView.image && strongSelf->_onIconLoaded) {
+                strongSelf->_onIconLoaded(strongImageView.image);
+                [timer invalidate];
+            }
+        } else {
+            [timer invalidate];
         }
-        [object removeObserver:self forKeyPath:@"image"];
-    }
+    }];
+    
+    // Failsafe: stop monitoring after 10 seconds
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [timer invalidate];
+    });
 }
+
+// KVO method removed - using completion blocks exclusively
 @end
 
 @implementation ACROverflowTarget {

@@ -85,7 +85,7 @@
 
     if (!view) {
         // if poster is not availabl, create a 4:3 blank black backgroudn poster view; 16:9 won't provide enough height in case the media is 4:3
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, viewGroup.frame.size.width, viewGroup.frame.size.width * .75)];
+        view = [[ACRUIImageView alloc] initWithFrame:CGRectMake(0, 0, viewGroup.frame.size.width, viewGroup.frame.size.width * .75)];
         view.backgroundColor = UIColor.blackColor;
         contentholdingview = [[ACRContentHoldingUIView alloc] init];
         [contentholdingview addSubview:view];
@@ -187,7 +187,7 @@
     [imageView.heightAnchor constraintEqualToAnchor:imageView.widthAnchor multiplier:heightToWidthRatio].active = YES;
 
     [contentholdingview setNeedsLayout];
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // No need to remove KVO observers - using completion blocks exclusively
 }
 
 @end

@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
     if (!view && img) {
         CGSize cgsize = imageProps.contentSize;
         // if an UIImage is available, but UIImageView is missing, create one
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cgsize.width, cgsize.height)];
+        view = [[ACRUIImageView alloc] initWithFrame:CGRectMake(0, 0, cgsize.width, cgsize.height)];
         view.image = img;
     }
 
@@ -245,7 +245,7 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
         [superview update:imageProps];
     }
 
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // No need to remove KVO observers - using completion blocks exclusively
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setImageFitModeFor:imageView image:image imageProps:imageProps];
     });

@@ -52,4 +52,11 @@
 
 - (void)waitForAsyncTasksToFinish;
 
+- (void)setupCompletionBlockForUIImageView:(UIImageView *)imageView 
+                                   withKey:(NSString *)key 
+                                   element:(id)element;
+
+// Synchronous method for external resolvers to notify when they set an image
++ (void)notifyImageSetOnView:(UIImageView *)imageView;
+
 @end

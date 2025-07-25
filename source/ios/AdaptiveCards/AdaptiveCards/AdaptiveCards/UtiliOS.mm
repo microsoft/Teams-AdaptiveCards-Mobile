@@ -158,11 +158,11 @@ void renderBackgroundImage(ACRView *rootView, const BackgroundImage *backgroundI
         backgroundImageProperties->GetFillMode() == ImageFillMode::RepeatHorizontally ||
         backgroundImageProperties->GetFillMode() == ImageFillMode::RepeatVertically) {
         imageView.backgroundColor = [UIColor colorWithPatternImage:image];
-        [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+        // No need to remove KVO observers - using completion blocks exclusively
         imageView.image = nil;
     }
     applyBackgroundImageConstraints(backgroundImageProperties, imageView, image);
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // No need to remove KVO observers - using completion blocks exclusively
 }
 
 // apply contraints for 'Cover' fill mode
@@ -438,12 +438,10 @@ ObserverActionBlock generateBackgroundImageObserverAction(
             __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
         if (view) {
-            [view addObserver:observer
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:backgroundImageProperties.get()];
+            // Use completion block pattern instead of KVO
+            [rootView setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)context.get()];
 
-            // store the image view and column for easy retrieval in ACRView::observeValueForKeyPath
+            // store the image view and column for easy retrieval
             [rootView setImageView:key view:view];
             [rootView setImageContext:key context:context];
         }
