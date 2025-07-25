@@ -90,37 +90,53 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
                     }
                 };
             } else {
-                // For external UIImageViews, use timer-based monitoring
+                // For external UIImageViews, use dispatch-based monitoring (simpler approach)
+                __weak ACROverflowMenuItem *weakSelf = self;
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self startMonitoringImageView:view];
+                    ACROverflowMenuItem *strongSelf = weakSelf;
+                    if (strongSelf && strongSelf->_onIconLoaded) {
+                        [strongSelf checkImageViewForCompletion:view];
+                    }
                 });
             }
         }
     }
 }
 
-- (void)startMonitoringImageView:(UIImageView *)imageView
+- (void)checkImageViewForCompletion:(UIImageView *)imageView
 {
+    static int maxAttempts = 100; // 10 seconds at 100ms intervals
+    [self checkImageViewForCompletion:imageView attemptCount:0 maxAttempts:maxAttempts];
+}
+
+- (void)checkImageViewForCompletion:(UIImageView *)imageView attemptCount:(int)attemptCount maxAttempts:(int)maxAttempts
+{
+    if (imageView.image && _onIconLoaded) {
+        // Success - image loaded
+        _onIconLoaded(imageView.image);
+        return;
+    }
+    
+    if (attemptCount >= maxAttempts) {
+        // Give up after max attempts (prevents infinite loops)
+        NSLog(@"ACROverflowTarget: Gave up waiting for image after %d attempts", maxAttempts);
+        return;
+    }
+    
+    // Continue checking with exponential backoff for efficiency
     __weak ACROverflowMenuItem *weakSelf = self;
     __weak UIImageView *weakImageView = imageView;
     
-    // Check every 50ms for image to be set
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.05 repeats:YES block:^(NSTimer *timer) {
+    // Start with 50ms, gradually increase delay to reduce CPU usage for slow images
+    double delay = MIN(0.05 * (1 + attemptCount * 0.1), 0.5); // Cap at 500ms
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         ACROverflowMenuItem *strongSelf = weakSelf;
         UIImageView *strongImageView = weakImageView;
-        if (strongSelf && strongImageView) {
-            if (strongImageView.image && strongSelf->_onIconLoaded) {
-                strongSelf->_onIconLoaded(strongImageView.image);
-                [timer invalidate];
-            }
-        } else {
-            [timer invalidate];
+        
+        if (strongSelf && strongImageView && strongSelf->_onIconLoaded) {
+            [strongSelf checkImageViewForCompletion:strongImageView attemptCount:attemptCount + 1 maxAttempts:maxAttempts];
         }
-    }];
-    
-    // Failsafe: stop monitoring after 10 seconds
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [timer invalidate];
     });
 }
 
