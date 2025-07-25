@@ -17,7 +17,7 @@ public struct SwiftParseUtil {
         return "\(String(data: jsonData, encoding: .utf8) ?? "{}")\n"
     }
 
-    static func jsonToString(_ json: [String: AnyCodable]) throws -> String {
+    static func jsonToString(_ json: [String: SwiftAnyCodable]) throws -> String {
         return try jsonToString(json.mapValues { $0.value })
     }
     
@@ -329,7 +329,7 @@ public struct SwiftParseUtil {
     }
     
     static func unwrapAnyCodable(from object: Any) -> Any {
-        if let anyCodable = object as? AnyCodable {
+        if let anyCodable = object as? SwiftAnyCodable {
             // Recursively unwrap the inner value.
             return unwrapAnyCodable(from: anyCodable.value)
         } else if let array = object as? [Any] {
@@ -340,7 +340,7 @@ public struct SwiftParseUtil {
                 newDict[key] = unwrapAnyCodable(from: value)
             }
             return newDict
-        } else if let dict = object as? [String: AnyCodable] {
+        } else if let dict = object as? [String: SwiftAnyCodable] {
             var newDict = [String: Any]()
             for (key, value) in dict {
                 newDict[key] = unwrapAnyCodable(from: value)
