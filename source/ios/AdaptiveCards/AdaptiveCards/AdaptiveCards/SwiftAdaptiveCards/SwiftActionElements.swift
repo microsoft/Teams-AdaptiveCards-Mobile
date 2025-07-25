@@ -184,7 +184,7 @@ public class SwiftSubmitAction: SwiftBaseActionElement {
         // Try decoding "data" as a String first; if that fails, try decoding as a dictionary.
         if let dataString = try? container.decode(String.self, forKey: .dataJson) {
             self.dataJson = dataString
-        } else if let dataDict = try? container.decode([String: AnyCodable].self, forKey: .dataJson) {
+        } else if let dataDict = try? container.decode([String: SwiftAnyCodable].self, forKey: .dataJson) {
             self.dataJson = dataDict.mapValues { $0.value }
         } else {
             self.dataJson = nil
@@ -211,7 +211,7 @@ public class SwiftSubmitAction: SwiftBaseActionElement {
             if let stringData = dataJson as? String {
                 try container.encode(stringData, forKey: .dataJson)
             } else if let dictData = dataJson as? [String: Any] {
-                let encodableDict = dictData.mapValues { AnyCodable($0) }
+                let encodableDict = dictData.mapValues { SwiftAnyCodable($0) }
                 try container.encode(encodableDict, forKey: .dataJson)
             }
         }
@@ -431,7 +431,7 @@ struct SwiftToggleVisibilityTarget: Codable {
 /// Represents the execute action element.
 public final class SwiftExecuteAction: SwiftBaseActionElement {
     // MARK: - Properties
-    public var dataJson: [String: AnyCodable]?
+    public var dataJson: [String: SwiftAnyCodable]?
     public var verb: String
     public var associatedInputs: SwiftAssociatedInputs
     public var conditionallyEnabled: Bool
@@ -447,7 +447,7 @@ public final class SwiftExecuteAction: SwiftBaseActionElement {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.dataJson = try container.decodeIfPresent([String: AnyCodable].self, forKey: .dataJson)
+        self.dataJson = try container.decodeIfPresent([String: SwiftAnyCodable].self, forKey: .dataJson)
         self.verb = try container.decodeIfPresent(String.self, forKey: .verb) ?? ""
         self.associatedInputs = try container.decodeIfPresent(SwiftAssociatedInputs.self, forKey: .associatedInputs) ?? .auto
         self.conditionallyEnabled = try container.decodeIfPresent(Bool.self, forKey: .conditionallyEnabled) ?? false
@@ -513,7 +513,7 @@ public struct SwiftRefresh: Codable {
         
         // Deserialize action if present
         if container.contains(.action) {
-            let actionDict = try container.decode([String: AnyCodable].self, forKey: .action)
+            let actionDict = try container.decode([String: SwiftAnyCodable].self, forKey: .action)
             let dict = actionDict.mapValues { $0.value }
             action = try SwiftBaseActionElement.deserializeAction(from: dict)
         } else {
@@ -529,7 +529,7 @@ public struct SwiftRefresh: Codable {
         
         // Encode action if present
         if let action = action {
-            try container.encode(AnyCodable(action.toJSON()), forKey: .action)
+            try container.encode(SwiftAnyCodable(action.toJSON()), forKey: .action)
         }
         
         // Only encode userIds if not empty
@@ -624,9 +624,9 @@ public final class SwiftUnknownAction: SwiftBaseActionElement {
         self.originalTypeString = typeString
         
         // Decode all properties into a dictionary.
-        var properties = [String: AnyCodable]()
+        var properties = [String: SwiftAnyCodable]()
         for key in container.allKeys {
-            properties[key.stringValue] = try container.decode(AnyCodable.self, forKey: key)
+            properties[key.stringValue] = try container.decode(SwiftAnyCodable.self, forKey: key)
         }
         
         super.init(type: .unknownAction)
