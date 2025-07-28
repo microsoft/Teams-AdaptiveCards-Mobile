@@ -28,6 +28,13 @@
 
 using namespace AdaptiveCards;
 
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 1
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 0
+#endif
+
 // tolerance value for computing scaler for background cover size
 const CGFloat kACRScalerTolerance = 0.025f;
 NSString const *baseFluentIconCDNURL = @"https://res-1.cdn.office.net/assets/fluentui-react-icons/2.0.226/";
@@ -158,11 +165,11 @@ void renderBackgroundImage(ACRView *rootView, const BackgroundImage *backgroundI
         backgroundImageProperties->GetFillMode() == ImageFillMode::RepeatHorizontally ||
         backgroundImageProperties->GetFillMode() == ImageFillMode::RepeatVertically) {
         imageView.backgroundColor = [UIColor colorWithPatternImage:image];
-        [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+        // No need to remove KVO observers - Swift KVO helper handles cleanup automatically
         imageView.image = nil;
     }
     applyBackgroundImageConstraints(backgroundImageProperties, imageView, image);
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // No need to remove KVO observers - Swift KVO helper handles cleanup automatically
 }
 
 // apply contraints for 'Cover' fill mode
@@ -438,10 +445,10 @@ ObserverActionBlock generateBackgroundImageObserverAction(
             __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
         if (view) {
-            [view addObserver:observer
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:backgroundImageProperties.get()];
+            // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+            [[SwiftKVOHelper shared] observeImageOnView:view observer:observer element:backgroundImageProperties.get()];
+#endif
 
             // store the image view and column for easy retrieval in ACRView::observeValueForKeyPath
             [rootView setImageView:key view:view];

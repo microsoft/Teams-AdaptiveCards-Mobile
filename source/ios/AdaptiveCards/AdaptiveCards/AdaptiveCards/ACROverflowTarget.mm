@@ -10,7 +10,15 @@
 #import "ACOBaseActionElementPrivate.h"
 #import "ACRShowCardTarget.h"
 #import "ACRViewPrivate.h"
+#import "ACRUIImageView.h"
 #import "UtiliOS.h"
+
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 1
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 0
+#endif
 
 NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
 
@@ -78,28 +86,14 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
             completion(view.image);
         } else {
             _onIconLoaded = completion;
-            [view addObserver:self
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:_action.get()];
+            // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+            [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:_action.get()];
+#endif
         }
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)key
-{
-    if ([keyPath isEqualToString:@"image"] && key == _action.get()) {
-        // image that was loaded
-        UIImage *image = [change objectForKey:NSKeyValueChangeNewKey];
-        if (_onIconLoaded) {
-            _onIconLoaded(image);
-        }
-        [object removeObserver:self forKeyPath:@"image"];
-    }
-}
 @end
 
 @implementation ACROverflowTarget {

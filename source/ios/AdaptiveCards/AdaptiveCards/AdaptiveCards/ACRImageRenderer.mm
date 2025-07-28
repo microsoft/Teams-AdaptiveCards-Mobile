@@ -245,7 +245,7 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
         [superview update:imageProps];
     }
 
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // No need to remove KVO observers - Swift KVO helper handles cleanup automatically
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setImageFitModeFor:imageView image:image imageProps:imageProps];
     });

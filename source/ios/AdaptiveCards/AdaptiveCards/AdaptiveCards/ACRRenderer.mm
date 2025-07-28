@@ -30,6 +30,13 @@
 
 using namespace AdaptiveCards;
 
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 1
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 0
+#endif
+
 @implementation ACRRenderer
 
 - (instancetype)init
@@ -116,10 +123,10 @@ using namespace AdaptiveCards;
             ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *root) {
                 UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                 if (view) {
-                    [view addObserver:root
-                           forKeyPath:@"image"
-                              options:NSKeyValueObservingOptionNew
-                              context:backgroundImageProperties.get()];
+                    // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                    [[SwiftKVOHelper shared] observeImageOnView:view observer:root element:backgroundImageProperties.get()];
+#endif
 
                     // store the image view and card for easy retrieval in ACRView::observeValueForKeyPath
                     [root setImageView:key view:view];

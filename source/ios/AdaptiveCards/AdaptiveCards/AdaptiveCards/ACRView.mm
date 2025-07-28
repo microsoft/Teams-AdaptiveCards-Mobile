@@ -47,6 +47,14 @@
 using namespace AdaptiveCards;
 typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 1
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 0
+#endif
+typedef UIImage * (^ImageLoadBlock)(NSURL *url);
+
 @implementation ACRView {
     ACOAdaptiveCard *_adaptiveCard;
     NSMutableDictionary *_imageViewMap;
@@ -257,10 +265,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     if (view) {
                         // check image already exists in the returned image view and register the image
                         [self registerImageFromUIImageView:view key:key];
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:element.get()];
+                        
+                        // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                        [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:element.get()];
+#endif
 
                         // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
                         [rootView setImageView:key view:view];
@@ -283,10 +292,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            
+                            // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                            [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:element.get()];
+#endif
 
                             // store the image view and image set element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -315,10 +325,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                             [self registerImageFromUIImageView:view key:key];
                             [contentholdingview addSubview:view];
                             contentholdingview.isMediaType = YES;
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                            
+                            // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                            [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:elem.get()];
+#endif
 
                             // store the image view and media element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:contentholdingview];
@@ -335,10 +346,11 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:rootView
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:nil];
+                            
+                            // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                            [[SwiftKVOHelper shared] observeImageOnView:view observer:rootView element:nil];
+#endif
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
                         }
@@ -360,10 +372,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                            [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:element.get()];
+#endif
 
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -516,10 +528,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                     if (view) {
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:elem.get()];
+                        // Replace manual KVO with Swift KVO helper for thread safety
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                        [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:elem.get()];
+#endif
                         [rootView setImageView:key view:view];
                     }
                 };
@@ -793,17 +805,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 - (void)dealloc
 {
-    for (id key in _imageViewContextMap) {
-        id object = _imageViewContextMap[key];
-
-        if ([object isKindOfClass:[ACRContentHoldingUIView class]]) {
-            object = ((UIView *)object).subviews[0];
-        }
-
-        if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
-            [object removeObserver:self forKeyPath:@"image"];
-        }
-    }
+    // No KVO cleanup needed - Swift KVO helper handles cleanup automatically
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+    [[SwiftKVOHelper shared] removeAllObservations];
+#endif
 }
 
 - (void)updatePaddingMap:(std::shared_ptr<StyledCollectionElement> const &)collection view:(UIView *)view

@@ -298,7 +298,7 @@
             if (view.image) {
                 button.iconView = view;
                 [button addSubview:view];
-                [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
+                // No need to remove KVO observers - Swift KVO helper handles cleanup automatically
                 [button setImageView:view.image withConfig:config];
             } else {
                 button.iconView = view;

@@ -187,7 +187,7 @@
     [imageView.heightAnchor constraintEqualToAnchor:imageView.widthAnchor multiplier:heightToWidthRatio].active = YES;
 
     [contentholdingview setNeedsLayout];
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // No need to remove KVO observers - Swift KVO helper handles cleanup automatically
 }
 
 @end
