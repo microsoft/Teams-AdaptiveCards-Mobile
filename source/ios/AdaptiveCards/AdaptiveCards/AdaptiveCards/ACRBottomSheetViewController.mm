@@ -68,7 +68,7 @@
                                                   rtl:ACRRtlNone
                                              isFilled:false
                                                  size:iconSize
-                                            tintColor:self.dismissButton.currentTitleColor];
+                                            tintColor:nil];
     view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.dismissButton addSubview:view];
     [self.dismissButton addTarget:self
