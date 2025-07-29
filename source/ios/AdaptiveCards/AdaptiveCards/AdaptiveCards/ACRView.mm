@@ -50,8 +50,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 // Associated object keys for external UIImageView monitoring
 static const void *ACRImageViewKeyAssociationKey = &ACRImageViewKeyAssociationKey;
-static const void *ACRImageViewElementAssociationKey = &ACRImageViewElementAssociationKey;
 static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssociationKey;
+static const void *ACRImageViewTimerAssociationKey = &ACRImageViewTimerAssociationKey;
+static const void *ACRImageViewAttemptCountAssociationKey = &ACRImageViewAttemptCountAssociationKey;
 
 @implementation ACRView {
     ACOAdaptiveCard *_adaptiveCard;
@@ -266,7 +267,7 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
                         [self registerImageFromUIImageView:view key:key];
                         
                         // Set up completion block for ANY UIImageView type (ACRUIImageView or regular UIImageView)
-                        [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)element.get()];
+                        [self setupCompletionBlockForUIImageView:view withKey:key];
 
                         // store the image view and image element for easy retrieval
                         [rootView setImageView:key view:view];
@@ -291,7 +292,7 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
                             [self registerImageFromUIImageView:view key:key];
                             
                             // Set up completion block for ANY UIImageView type
-                            [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)element.get()];
+                            [self setupCompletionBlockForUIImageView:view withKey:key];
 
                             // store the image view and image set element for easy retrieval
                             [rootView setImageView:key view:view];
@@ -322,7 +323,7 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
                             contentholdingview.isMediaType = YES;
                             
                             // Set up completion block for ANY UIImageView type
-                            [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)imgElem.get()];
+                            [self setupCompletionBlockForUIImageView:view withKey:key];
 
                             // store the image view and media element for easy retrieval
                             [rootView setImageView:key view:contentholdingview];
@@ -340,9 +341,8 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
                             
-                            // Create fake element since this is for play button (no actual element)
-                            std::shared_ptr<BaseCardElement> fakeElement = std::make_shared<Image>();
-                            [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)fakeElement.get()];
+                            // Set up completion block for play button image
+                            [self setupCompletionBlockForUIImageView:view withKey:key];
                             
                             // store the image view for easy retrieval
                             [rootView setImageView:key view:view];
@@ -528,9 +528,8 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                     if (view) {
-                        // Create fake BaseCardElement from BaseActionElement for completion block
-                        std::shared_ptr<BaseCardElement> fakeElement = std::make_shared<Image>();
-                        [self setupCompletionBlockForUIImageView:view withKey:key element:(__bridge id)fakeElement.get()];
+                        // Set up completion block for action icon
+                        [self setupCompletionBlockForUIImageView:view withKey:key];
                         [rootView setImageView:key view:view];
                     }
                 };
@@ -749,8 +748,22 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
 
 - (void)dealloc
 {
-    // No KVO cleanup needed - using completion blocks exclusively
-    NSLog(@"ACR_COMPLETION_BLOCK: ACRView dealloc called, no KVO observers to remove");
+    // Clean up any active timers to prevent leaks
+    [self cleanupAllImageViewTimers];
+    NSLog(@"ACR_TIMER: ACRView dealloc called, cleaned up all timers");
+}
+
+// Clean up all timers when ACRView is deallocated
+- (void)cleanupAllImageViewTimers
+{
+    // Iterate through all image views in the map and clean up their timers
+    for (UIImageView *imageView in [_imageViewMap allValues]) {
+        if (imageView) {
+            [self stopTimerForImageView:imageView];
+        }
+    }
+    
+    NSLog(@"ACR_TIMER: Cleaned up timers for %lu image views", (unsigned long)[_imageViewMap count]);
 }
 
 - (void)updatePaddingMap:(std::shared_ptr<StyledCollectionElement> const &)collection view:(UIView *)view
@@ -905,23 +918,63 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
     }
 }
 
-// Simple helper method to set up completion handling for any UIImageView
-- (void)setupCompletionBlockForUIImageView:(UIImageView *)imageView withKey:(NSString *)key element:(id)elementWrapper
+// Safer version that looks up context by key instead of using raw pointers
+- (void)handleImageSetForViewUsingKey:(UIImageView *)imageView withKey:(NSString *)key
+{
+    NSLog(@"ACR_COMPLETION_BLOCK: handleImageSetForViewUsingKey called with key: %@, imageView: %@", key, imageView);
+    
+    // image that was loaded
+    UIImage *image = imageView.image;
+    NSLog(@"ACR_COMPLETION_BLOCK: Image loaded with size: %@", image ? NSStringFromCGSize(image.size) : @"nil");
+    
+    ACOBaseCardElement *baseCardElement = _imageContextMap[key];
+    if (baseCardElement) {
+        NSLog(@"ACR_COMPLETION_BLOCK: Found baseCardElement for key: %@", key);
+        ACRRegistration *reg = [ACRRegistration getInstance];
+        ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *renderer = (ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *)[reg getRenderer:[NSNumber numberWithInt:static_cast<int>(baseCardElement.type)]];
+        if (renderer && [[renderer class] conformsToProtocol:@protocol(ACRIKVONotificationHandler)]) {
+            NSLog(@"ACR_COMPLETION_BLOCK: Calling configUpdateForUIImageView on renderer");
+            NSMutableDictionary *imageViewMap = [self getImageMap];
+            imageViewMap[key] = image;
+            [renderer configUpdateForUIImageView:self acoElem:baseCardElement config:_hostConfig image:image imageView:imageView];
+            NSLog(@"ACR_COMPLETION_BLOCK: configUpdateForUIImageView completed");
+        } else {
+            NSLog(@"ACR_COMPLETION_BLOCK: No renderer found or renderer doesn't support KVO notification protocol");
+        }
+    } else {
+        NSLog(@"ACR_COMPLETION_BLOCK: No baseCardElement found, checking imageViewContextMap");
+        id view = _imageViewContextMap[key];
+        if ([view isKindOfClass:[ACRButton class]]) {
+            NSLog(@"ACR_COMPLETION_BLOCK: Handling ACRButton case");
+            ACRButton *button = (ACRButton *)view;
+            [button setImageView:image withConfig:_hostConfig];
+        } else {
+            NSLog(@"ACR_COMPLETION_BLOCK: Handling background image case");
+            // handle background image for adaptive card that uses resource resolver
+            auto backgroundImage = [_adaptiveCard card]->GetBackgroundImage();
+            renderBackgroundImage(self, backgroundImage.get(), imageView, image);
+        }
+    }
+}
+
+// Simple helper method to set up completion handling for any UIImageView (safer version without element parameter)
+- (void)setupCompletionBlockForUIImageView:(UIImageView *)imageView withKey:(NSString *)key
 {
     NSLog(@"ACR_COMPLETION_BLOCK: Setting up completion block for UIImageView: %@ with key: %@", [imageView class], key);
-    
-    // Convert id back to BaseCardElement pointer for internal use
-    BaseCardElement *element = (__bridge BaseCardElement *)elementWrapper;
     
     if ([imageView isKindOfClass:[ACRUIImageView class]]) {
         // Use the built-in completion block for ACRUIImageView
         ACRUIImageView *acrImageView = (ACRUIImageView *)imageView;
         __weak ACRView *weakSelf = self;
         __weak ACRUIImageView *weakView = acrImageView;
+        
+        // Capture the key in the block
+        NSString *capturedKey = [key copy];
         acrImageView.imageSetCompletionBlock = ^(UIImageView *completionImageView) {
-            NSLog(@"ACR_COMPLETION_BLOCK: ACRUIImageView completion block triggered for key: %@", key);
+            NSLog(@"ACR_COMPLETION_BLOCK: ACRUIImageView completion block triggered for key: %@", capturedKey);
             if (weakSelf && weakView) {
-                [weakSelf handleImageSetForView:weakView withKey:key context:element];
+                // Use the key to look up context from our stored maps
+                [weakSelf handleImageSetForViewUsingKey:weakView withKey:capturedKey];
             }
         };
         NSLog(@"ACR_COMPLETION_BLOCK: Set completion block on ACRUIImageView: %p", acrImageView);
@@ -930,66 +983,141 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
         NSLog(@"ACR_COMPLETION_BLOCK: External UIImageView detected: %@", [imageView class]);
         
         // Store completion data with the UIImageView for later triggering
-        [self attachCompletionDataToImageView:imageView withKey:key element:element];
+        [self attachCompletionDataToImageView:imageView withKey:key];
         
         // Check if image is already set
         if (imageView.image) {
             NSLog(@"ACR_COMPLETION_BLOCK: Image already set on external UIImageView, calling completion immediately");
-            [self handleImageSetForView:imageView withKey:key context:element];
+            [self handleImageSetForViewUsingKey:imageView withKey:key];
         } else {
             NSLog(@"ACR_COMPLETION_BLOCK: External UIImageView has no image yet, completion will be triggered when image is detected");
-            // Note: We'll check for image changes synchronously in the main rendering loop
             [self scheduleImageCheckForView:imageView];
         }
     }
 }
 
-// Use associated objects to store completion data with external UIImageViews
-- (void)attachCompletionDataToImageView:(UIImageView *)imageView withKey:(NSString *)key element:(BaseCardElement *)element
+// Use associated objects to store completion data with external UIImageViews (safer without raw pointers)
+- (void)attachCompletionDataToImageView:(UIImageView *)imageView withKey:(NSString *)key
 {
-    // Store key and element pointer as associated objects
+    // Store only the key and ACRView reference - avoid storing raw element pointers
     objc_setAssociatedObject(imageView, ACRImageViewKeyAssociationKey, key, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    objc_setAssociatedObject(imageView, ACRImageViewElementAssociationKey, (__bridge id)element, OBJC_ASSOCIATION_ASSIGN);
     objc_setAssociatedObject(imageView, ACRImageViewACRViewAssociationKey, self, OBJC_ASSOCIATION_ASSIGN);
     
     NSLog(@"ACR_COMPLETION_BLOCK: Attached completion data to UIImageView %p with key %@", imageView, key);
 }
 
-// Schedule a synchronous check for image changes (lightweight, no timer)
+// Schedule reliable timer-based monitoring for image changes (mimics KVO safely)
 - (void)scheduleImageCheckForView:(UIImageView *)imageView
 {
-    // Use a single dispatch_async to check once on the next run loop
-    // This is synchronous relative to the UI updates
+    // Clean up any existing timer first
+    [self stopTimerForImageView:imageView];
+    
+    // Reset attempt count
+    objc_setAssociatedObject(imageView, ACRImageViewAttemptCountAssociationKey, @0, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    // Start a reliable timer-based monitoring system
+    [self startTimerForImageView:imageView];
+}
+
+// Start thread-safe timer for monitoring image changes
+- (void)startTimerForImageView:(UIImageView *)imageView
+{
     __weak UIImageView *weakImageView = imageView;
     __weak ACRView *weakSelf = self;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (weakImageView && weakSelf) {
-            [weakSelf checkAndHandleImageSetForView:weakImageView];
+    // Use NSTimer on main queue for thread safety and reliability
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.05 // 50ms intervals
+                                                     repeats:YES
+                                                       block:^(NSTimer *timer) {
+        UIImageView *strongImageView = weakImageView;
+        ACRView *strongSelf = weakSelf;
+        
+        if (!strongImageView || !strongSelf) {
+            [timer invalidate];
+            return;
         }
-    });
+        
+        [strongSelf checkImageViewWithTimer:strongImageView timer:timer];
+    }];
+    
+    // Store timer with the image view for cleanup
+    objc_setAssociatedObject(imageView, ACRImageViewTimerAssociationKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    NSLog(@"ACR_TIMER: Started reliable timer for UIImageView %p", imageView);
 }
 
-// Check if image is set and handle completion if so
+// Thread-safe timer callback to check image status
+- (void)checkImageViewWithTimer:(UIImageView *)imageView timer:(NSTimer *)timer
+{
+    // This runs on main thread due to NSTimer, so it's thread-safe
+    NSNumber *attemptCountObj = objc_getAssociatedObject(imageView, ACRImageViewAttemptCountAssociationKey);
+    int attemptCount = attemptCountObj ? [attemptCountObj intValue] : 0;
+    
+    if (imageView.image) {
+        // Success - image loaded
+        NSLog(@"ACR_TIMER: Image detected on UIImageView %p after %d attempts", imageView, attemptCount);
+        [timer invalidate];
+        [self handleCompletionForImageView:imageView];
+        return;
+    }
+    
+    // Increment attempt count
+    attemptCount++;
+    objc_setAssociatedObject(imageView, ACRImageViewAttemptCountAssociationKey, @(attemptCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    // Failsafe: stop after reasonable time (10 seconds = 200 attempts at 50ms)
+    if (attemptCount >= 200) {
+        NSLog(@"ACR_TIMER: Timeout waiting for image on UIImageView %p after %d attempts", imageView, attemptCount);
+        [timer invalidate];
+        [self cleanupAssociatedObjectsForImageView:imageView];
+    }
+}
+
+// Handle successful image detection
+- (void)handleCompletionForImageView:(UIImageView *)imageView
+{
+    // Get the stored completion data
+    NSString *key = objc_getAssociatedObject(imageView, ACRImageViewKeyAssociationKey);
+    
+    if (key) {
+        NSLog(@"ACR_TIMER: Calling completion for UIImageView %p with key %@", imageView, key);
+        [self handleImageSetForViewUsingKey:imageView withKey:key];
+    }
+    
+    // Clean up all associated objects and timer
+    [self cleanupAssociatedObjectsForImageView:imageView];
+}
+
+// Clean up timer and associated objects
+- (void)stopTimerForImageView:(UIImageView *)imageView
+{
+    NSTimer *existingTimer = objc_getAssociatedObject(imageView, ACRImageViewTimerAssociationKey);
+    if (existingTimer && existingTimer.isValid) {
+        [existingTimer invalidate];
+        NSLog(@"ACR_TIMER: Stopped existing timer for UIImageView %p", imageView);
+    }
+}
+
+- (void)cleanupAssociatedObjectsForImageView:(UIImageView *)imageView
+{
+    [self stopTimerForImageView:imageView];
+    objc_setAssociatedObject(imageView, ACRImageViewKeyAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(imageView, ACRImageViewACRViewAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(imageView, ACRImageViewTimerAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(imageView, ACRImageViewAttemptCountAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
+}
+
+// Check if image is set and handle completion if so (used by external notification)
 - (void)checkAndHandleImageSetForView:(UIImageView *)imageView
 {
-    if (imageView.image) {
-        // Get the stored completion data
-        NSString *key = objc_getAssociatedObject(imageView, ACRImageViewKeyAssociationKey);
-        BaseCardElement *element = (__bridge BaseCardElement *)objc_getAssociatedObject(imageView, ACRImageViewElementAssociationKey);
-        
-        if (key && element) {
-            NSLog(@"ACR_COMPLETION_BLOCK: External UIImageView %p now has image, calling completion for key %@", imageView, key);
-            [self handleImageSetForView:imageView withKey:key context:element];
-            
-            // Clean up associated objects to prevent multiple calls
-            objc_setAssociatedObject(imageView, ACRImageViewKeyAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
-            objc_setAssociatedObject(imageView, ACRImageViewElementAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
-            objc_setAssociatedObject(imageView, ACRImageViewACRViewAssociationKey, nil, OBJC_ASSOCIATION_ASSIGN);
-        }
+    NSString *key = objc_getAssociatedObject(imageView, ACRImageViewKeyAssociationKey);
+    
+    if (imageView.image && key) {
+        // Image is ready - handle completion immediately
+        [self handleImageSetForViewUsingKey:imageView withKey:key];
+        [self cleanupAssociatedObjectsForImageView:imageView];
     } else {
-        // Image not set yet, schedule another check
-        // This creates a synchronous polling approach that's much lighter than timers
+        // Image not set yet, start reliable timer monitoring
         [self scheduleImageCheckForView:imageView];
     }
 }
@@ -1002,7 +1130,7 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
 }
 
 // Class method for external resolvers to notify when they set an image
-// This provides a synchronous completion mechanism without requiring changes to external code
+// This provides immediate completion without waiting for timer
 + (void)notifyImageSetOnView:(UIImageView *)imageView
 {
     if (!imageView) return;
@@ -1010,7 +1138,7 @@ static const void *ACRImageViewACRViewAssociationKey = &ACRImageViewACRViewAssoc
     // Get the associated ACRView instance
     ACRView *acrView = objc_getAssociatedObject(imageView, ACRImageViewACRViewAssociationKey);
     if (acrView) {
-        NSLog(@"ACR_COMPLETION_BLOCK: External notification that image was set on UIImageView %p", imageView);
+        NSLog(@"ACR_TIMER: External notification - stopping timer and handling completion immediately for UIImageView %p", imageView);
         [acrView checkAndHandleImageSetForView:imageView];
     }
 }
