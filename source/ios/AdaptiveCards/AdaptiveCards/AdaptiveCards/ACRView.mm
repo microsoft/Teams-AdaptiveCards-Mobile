@@ -122,7 +122,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
         self.acrActionDelegate = acrActionDelegate;
         self.theme = theme;
-        self.shouldIgnoreMenuActions = NO;
+        self.isBottomSheetRendering = NO;
         [self render];
     }
     // call to check if all resources are loaded

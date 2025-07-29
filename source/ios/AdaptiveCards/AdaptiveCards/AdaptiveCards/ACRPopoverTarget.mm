@@ -140,7 +140,7 @@
                                                         parentStyle:ACRDefault
                                                          hostConfig:_rootView.hostConfig
                                                           superview:_rootView];
-    _rootView.shouldIgnoreMenuActions = YES;
+    _rootView.isBottomSheetRendering = YES;
     // Render the content into the cached container
     [renderer render:_cachedContentView
             rootView:_rootView

@@ -149,27 +149,58 @@
     }
 
     if (!secondary.empty()) {
-        ++renderedBtnNum;
+        if (rootView.isBottomSheetRendering)
+        {
+            for (NSUInteger i = 0; i < secondary.size(); i++) {
+                const auto &elem = secondary.at(i);
+                ACRBaseActionElementRenderer *actionRenderer =
+                    [reg getActionRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];
 
-        ACRBaseActionElementRenderer *actionRenderer =
+                if (actionRenderer == nil) {
+                    NSLog(@"Unsupported card action type:%d\n", (int)elem->GetElementType());
+                    continue;
+                }
+
+                ACOBaseActionElement *acoElem = [[ACOBaseActionElement alloc] initWithBaseActionElement:elem];
+
+                [self renderButtonForElem:acoElem
+                           actionRenderer:actionRenderer
+                                childview:childview
+                               featureReg:featureReg
+                                 rootView:rootView
+                                   inputs:inputs
+                                superview:superview
+                               hostConfig:config
+                         accumulatedWidth:accumulatedWidth
+                        accumulatedHeight:accumulatedHeight
+                                 maxWidth:maxWidth
+                                maxHeight:maxHeight];
+            }
+        }
+        else
+        {
+            ++renderedBtnNum;
+            
+            ACRBaseActionElementRenderer *actionRenderer =
             [reg getActionRenderer:[ACOBaseActionElement getKey:(ACRActionType::ACROverflow)]];
-
-        ACOBaseActionElement *overflow =
+            
+            ACOBaseActionElement *overflow =
             [[ACOActionOverflow alloc] initWithBaseActionElements:secondary
                                                            atCard:rootView.card];
-
-        [self renderButtonForElem:overflow
-                   actionRenderer:actionRenderer
-                        childview:childview
-                       featureReg:featureReg
-                         rootView:rootView
-                           inputs:inputs
-                        superview:superview
-                       hostConfig:config
-                 accumulatedWidth:accumulatedWidth
-                accumulatedHeight:accumulatedHeight
-                         maxWidth:maxWidth
-                        maxHeight:maxHeight];
+            
+            [self renderButtonForElem:overflow
+                       actionRenderer:actionRenderer
+                            childview:childview
+                           featureReg:featureReg
+                             rootView:rootView
+                               inputs:inputs
+                            superview:superview
+                           hostConfig:config
+                     accumulatedWidth:accumulatedWidth
+                    accumulatedHeight:accumulatedHeight
+                             maxWidth:maxWidth
+                            maxHeight:maxHeight];
+        }
     }
 
     float contentWidth = accumulatedWidth;
