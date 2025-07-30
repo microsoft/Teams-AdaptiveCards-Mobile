@@ -268,7 +268,7 @@
     NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
     BOOL isSplitButtonEnabled = [featureFlagResolver boolForFlag:@"isSplitButtonEnabled"] ?: NO;
     isSplitButtonEnabled = isSplitButtonEnabled &&
-    !rootView.isRenderingInBottomSheet &&
+    !rootView.isRenderingInsideBottomSheet &&
     [rootView.acrActionDelegate respondsToSelector:@selector(showBottomSheetForSplitButton:completion:)];
     BOOL isSplitButton = action->GetIsSplitAction();
     

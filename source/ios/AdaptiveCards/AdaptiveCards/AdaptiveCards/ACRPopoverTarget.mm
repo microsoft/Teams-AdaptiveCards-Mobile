@@ -111,10 +111,9 @@
     
     __weak ACRPopoverTarget *weakSelf = self;
     currentBottomSheet.onDismissBlock = ^{
-        __strong ACRPopoverTarget *strongSelf = weakSelf;
-        if (strongSelf)
+        if (weakSelf)
         {
-            [strongSelf detachBottomSheetInputsFromMainCard];
+            [weakSelf detachBottomSheetInputsFromMainCard];
         }
     };
     [host presentViewController:currentBottomSheet animated:YES completion:nil];
@@ -160,7 +159,7 @@
                                                         parentStyle:ACRDefault
                                                          hostConfig:_rootView.hostConfig
                                                           superview:_rootView];
-    _rootView.isRenderingInBottomSheet = YES;
+    _rootView.isRenderingInsideBottomSheet = YES;
     // Render the content into the cached container
     [renderer render:_cachedContentView
             rootView:_rootView

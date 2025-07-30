@@ -45,8 +45,7 @@
     [self.containerView insertSubview:self.dimmingView atIndex:0];
     __weak __typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.25 animations:^{
-        __strong __typeof(self) strongSelf = weakSelf;
-        strongSelf.dimmingView.alpha = 1.0;
+        weakSelf.dimmingView.alpha = 1.0;
     }];
 }
 
@@ -54,8 +53,7 @@
 {
     __weak __typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.25 animations:^{
-        __strong __typeof(self) strongSelf = weakSelf;
-        strongSelf.dimmingView.alpha = 0.0;
+        weakSelf.dimmingView.alpha = 0.0;
     }];
 }
 
