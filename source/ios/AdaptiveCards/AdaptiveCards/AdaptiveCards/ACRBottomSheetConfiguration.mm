@@ -9,21 +9,29 @@
 #import "ACRBottomSheetConfiguration.h"
 
 @implementation ACRBottomSheetConfiguration
+
 - (instancetype)initWithMinMultiplier:(CGFloat)minMultiplier
                         maxMultiplier:(CGFloat)maxMultiplier
+                         borderHeight:(CGFloat)borderHeight
+                  closeButtonTopInset:(CGFloat)closeButtonTopInset
+                 closeButtonSideInset:(CGFloat)closeButtonSideInset
+               closeButtonToScrollGap:(CGFloat)closeButtonToScrollGap
+                       contentPadding:(CGFloat)contentPadding
+                      closeButtonSize:(CGFloat)closeButtonSize
 {
-    if (self = [super init]) {
-        _minHeightMultiplier = minMultiplier;
-        _maxHeightMultiplier = maxMultiplier;
-        
-        _borderHeight           = 0.5;
-        _closeButtonTopInset    = 16;
-        _closeButtonSideInset   = 12;
-        _closeButtonToScrollGap = 20;
-        _contentPadding         = 16;
-        _closeButtonSize        = 28.0;
-        
+    self = [super init];
+    if (self)
+    {
+        self.minHeightMultiplier = minMultiplier;
+        self.maxHeightMultiplier = maxMultiplier;
+        self.borderHeight = borderHeight;
+        self.closeButtonTopInset = closeButtonTopInset;
+        self.closeButtonSideInset = closeButtonSideInset;
+        self.closeButtonToScrollGap = closeButtonToScrollGap;
+        self.contentPadding = contentPadding;
+        self.closeButtonSize = closeButtonSize;
     }
     return self;
 }
+
 @end

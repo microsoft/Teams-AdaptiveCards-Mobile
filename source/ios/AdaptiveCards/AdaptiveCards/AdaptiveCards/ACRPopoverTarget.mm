@@ -24,14 +24,16 @@
 #import "ACRInputLabelView.h"
 #import "ACROverflowTarget.h"
 
-@implementation ACRPopoverTarget {
+@implementation ACRPopoverTarget
+{
     ACRBottomSheetViewController *currentBottomSheet;
 }
 
 - (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView
 {
     self = [super init];
-    if (self) {
+    if (self)
+    {
         _actionElement = actionElement;
         _rootView = rootView;
         currentBottomSheet = nil;
@@ -50,44 +52,58 @@
     [self presentPopover];
 }
 
-
 - (void)presentPopover
 {
-    if (!_actionElement || _actionElement.type != ACRPopover) {
+    if (!_actionElement || _actionElement.type != ACRPopover)
+    {
         return;
     }
     
     id<ACRActionDelegate> actionDelegate = _rootView.acrActionDelegate;
-    if (![actionDelegate respondsToSelector:@selector(activeViewController)]) {
+    if (![actionDelegate respondsToSelector:@selector(activeViewController)])
+    {
         return;
     }
     
     UIViewController *host = [actionDelegate activeViewController];
-    if (!host) {
+    if (!host)
+    {
         return;
     }
     
     // Create or reuse cached content view for input retention
-    if (!_cachedContentView) {
+    if (!_cachedContentView)
+    {
         [self createCachedContentView];
     }
-    else{
+    else
+    {
         [self markActionTargetsAsFromBottomSheet:_cachedContentView];
     }
     
-    if (!_cachedContentView) {
+    if (!_cachedContentView)
+    {
         return;
     }
-    
     [self attachBottomSheetInputsToMainCard];
     
     CGFloat minMultiplier = 0.2;
     CGFloat maxMultiplier = 0.66;
+    CGFloat borderHeight = 0.5;
+    CGFloat closeButtonTopInset = 16;
+    CGFloat closeButtonSideInset = 12;
+    CGFloat closeButtonToScrollGap = 20;
+    CGFloat contentPadding = 16;
+    CGFloat closeButtonSize = 28.0;
     
-    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc]
-                                           initWithMinMultiplier:minMultiplier
-                                           maxMultiplier:maxMultiplier];
-    
+    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithMinMultiplier:minMultiplier
+                                                                                       maxMultiplier:maxMultiplier
+                                                                                        borderHeight:borderHeight
+                                                                                 closeButtonTopInset:closeButtonTopInset
+                                                                                closeButtonSideInset:closeButtonSideInset
+                                                                              closeButtonToScrollGap:closeButtonToScrollGap
+                                                                                      contentPadding:contentPadding
+                                                                                     closeButtonSize:closeButtonSize];
     
     currentBottomSheet = [[ACRBottomSheetViewController alloc]
                           initWithContent:_cachedContentView
@@ -96,7 +112,8 @@
     __weak ACRPopoverTarget *weakSelf = self;
     currentBottomSheet.onDismissBlock = ^{
         __strong ACRPopoverTarget *strongSelf = weakSelf;
-        if (strongSelf) {
+        if (strongSelf)
+        {
             [strongSelf detachBottomSheetInputsFromMainCard];
         }
     };
@@ -117,7 +134,8 @@
     auto popoverAction = std::dynamic_pointer_cast<AdaptiveCards::PopoverAction>(base);
     std::shared_ptr<AdaptiveCards::BaseCardElement> content = popoverAction ? popoverAction->GetContent() : nullptr;
     
-    if (!content) {
+    if (!content)
+    {
         return;
     }
     
@@ -126,13 +144,15 @@
     ACRCardElementType elementType = (ACRCardElementType)content->GetElementType();
     NSNumber *key = @(elementType);
     ACRBaseCardElementRenderer *renderer = [[ACRRegistration getInstance] getRenderer:key];
-    if (!renderer) {
+    if (!renderer)
+    {
         return;
     }
     
     // Prepare shared inputs (shared with main card for state consistency)
     NSMutableArray *sharedInputs = (NSMutableArray *)[[_rootView card] getInputs];
-    if (!sharedInputs) {
+    if (!sharedInputs)
+    {
         sharedInputs = [NSMutableArray array];
         [[_rootView card] setInputs:sharedInputs];
     }
@@ -140,7 +160,7 @@
                                                         parentStyle:ACRDefault
                                                          hostConfig:_rootView.hostConfig
                                                           superview:_rootView];
-    _rootView.isBottomSheetRendering = YES;
+    _rootView.isRenderingInBottomSheet = YES;
     // Render the content into the cached container
     [renderer render:_cachedContentView
             rootView:_rootView
@@ -154,9 +174,12 @@
 - (void)markActionTargetsAsFromBottomSheet:(UIView *)containerView
 {
     // Traverse all subviews to find and mark action targets
-    for (UIView *subview in containerView.subviews) {
-        for (UIGestureRecognizer *recognizer in subview.gestureRecognizers) {
-            if ([recognizer.delegate isKindOfClass:[ACRBaseTarget class]]) {
+    for (UIView *subview in containerView.subviews)
+    {
+        for (UIGestureRecognizer *recognizer in subview.gestureRecognizers)
+        {
+            if ([recognizer.delegate isKindOfClass:[ACRBaseTarget class]])
+            {
                 ACRBaseTarget *target = (ACRBaseTarget *)recognizer.delegate;
                 target.parentPopoverTarget = self;
                 [self filterActionTarget:target forView:subview];
@@ -164,15 +187,19 @@
         }
         
         // Check if this view has any target-action connections with ACRBaseTarget
-        if ([subview isKindOfClass:[UIControl class]]) {
+        if ([subview isKindOfClass:[UIControl class]])
+        {
             UIControl *control = (UIControl *)subview;
             NSSet *targets = [control allTargets];
-            for (id target in targets) {
-                if ([target isKindOfClass:[ACRBaseTarget class]]) {
+            for (id target in targets)
+            {
+                if ([target isKindOfClass:[ACRBaseTarget class]])
+                {
                     ACRBaseTarget *baseTarget = (ACRBaseTarget *)target;
                     baseTarget.parentPopoverTarget = self;
                     [self filterActionTarget:baseTarget forView:subview];
-                    if ([baseTarget isKindOfClass:[ACROverflowTarget class]]) {
+                    if ([baseTarget isKindOfClass:[ACROverflowTarget class]])
+                    {
                         [self propagatePopoverContextToOverflowMenuItems:(ACROverflowTarget *)baseTarget];
                     }
                 }
@@ -186,9 +213,11 @@
 - (void)propagatePopoverContextToOverflowMenuItems:(ACROverflowTarget *)overflowTarget
 {
     NSArray<ACROverflowMenuItem *> *menuItems = overflowTarget.menuItems;
-    for (ACROverflowMenuItem *menuItem in menuItems) {
+    for (ACROverflowMenuItem *menuItem in menuItems)
+    {
         NSObject<ACRSelectActionDelegate> *itemTarget = menuItem.target;
-        if ([itemTarget isKindOfClass:[ACRBaseTarget class]]) {
+        if ([itemTarget isKindOfClass:[ACRBaseTarget class]])
+        {
             ACRBaseTarget *baseTarget = (ACRBaseTarget *)itemTarget;
             baseTarget.parentPopoverTarget = self;
         }
@@ -197,21 +226,25 @@
 
 - (void)filterActionTarget:(ACRBaseTarget *)target forView:(UIView *)view
 {
-    if ([target respondsToSelector:@selector(actionElement)]) {
+    if ([target respondsToSelector:@selector(actionElement)])
+    {
         ACOBaseActionElement *actionElement = [target performSelector:@selector(actionElement)];
-        if (actionElement) {
+        if (actionElement)
+        {
             ACRActionType actionType = actionElement.type;
             
             // Hide forbidden actions in bottom sheet
             if (actionType == ACRToggleVisibility ||
                 actionType == ACRShowCard ||
-                actionType == ACRPopover) {
+                actionType == ACRPopover)
+            {
                 [view removeFromSuperview];
             }
             
             if ((actionType == ACRSubmit || actionType == ACRExecute) &&
-                actionElement.menuActions.count > 0) {
-                actionElement.isActionFromSplitButtonBottomSheet = YES; 
+                actionElement.menuActions.count > 0)
+            {
+                actionElement.isActionFromSplitButtonBottomSheet = YES;
                 
             }
         }
@@ -220,21 +253,22 @@
 
 - (void)dismissBottomSheet
 {
-    if (currentBottomSheet && currentBottomSheet.presentingViewController) {
+    if (currentBottomSheet && currentBottomSheet.presentingViewController)
+    {
         [currentBottomSheet dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
 - (void)attachBottomSheetInputsToMainCard
 {
-    if (!_cachedContentView || !_rootView) {
+    if (!_cachedContentView || !_rootView)
+    {
         return;
     }
     
     
     NSMutableArray *bottomSheetInputs = [NSMutableArray array];
     [self findInputHandlersInView:_cachedContentView inputs:bottomSheetInputs];
-    
     
     [_rootView.inputHandlers addObjectsFromArray:bottomSheetInputs];
 }
@@ -242,50 +276,43 @@
 
 - (void)findInputHandlersInView:(UIView *)view inputs:(NSMutableArray *)inputHandlers
 {
-    if ([view conformsToProtocol:@protocol(ACRIBaseInputHandler)]) {
+    if ([view conformsToProtocol:@protocol(ACRIBaseInputHandler)])
+    {
         id<ACRIBaseInputHandler> inputHandler = (id<ACRIBaseInputHandler>)view;
         [inputHandlers addObject:inputHandler];
         
-        if ([view isKindOfClass:[ACRInputLabelView class]]) {
+        if ([view isKindOfClass:[ACRInputLabelView class]])
+        {
             ACRInputLabelView *labelView = (ACRInputLabelView *)view;
             NSObject<ACRIBaseInputHandler> *underlyingHandler = [labelView getInputHandler];
-            if (underlyingHandler && underlyingHandler != labelView) {
+            if (underlyingHandler && underlyingHandler != labelView)
+            {
                 
                 underlyingHandler.isRequired = NO;
             }
         }
     }
     
-    for (UIView *subview in view.subviews) {
+    for (UIView *subview in view.subviews)
+    {
         [self findInputHandlersInView:subview inputs:inputHandlers];
     }
 }
 
 - (void)detachBottomSheetInputsFromMainCard
 {
-    if (!_cachedContentView || !_rootView) {
+    if (!_cachedContentView || !_rootView)
+    {
         return;
     }
     
     NSMutableArray *bottomSheetInputs = [NSMutableArray array];
     [self findInputHandlersInView:_cachedContentView inputs:bottomSheetInputs];
     
-    for (id<ACRIBaseInputHandler> input in bottomSheetInputs) {
+    for (id<ACRIBaseInputHandler> input in bottomSheetInputs)
+    {
         [_rootView.inputHandlers removeObject:input];
     }
-    
-}
-
-- (void)clearCachedContentView
-{
-    if (currentBottomSheet && currentBottomSheet.presentingViewController) {
-        [currentBottomSheet dismissViewControllerAnimated:YES completion:^{
-            self->_cachedContentView = nil;
-        }];
-    } else {
-        _cachedContentView = nil;
-    }
-    currentBottomSheet = nil;
 }
 
 @end

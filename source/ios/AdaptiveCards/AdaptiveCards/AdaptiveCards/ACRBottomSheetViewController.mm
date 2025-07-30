@@ -13,7 +13,8 @@
 #import "UtiliOS.h"
 
 @interface ACRBottomSheetViewController ()
-@property (nonatomic) UIScrollView *scroll;
+
+@property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) UIButton *dismissButton;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) ACRBottomSheetConfiguration *config;
@@ -27,7 +28,8 @@
                   configuration:(ACRBottomSheetConfiguration *)config;
 
 {
-    if ((self = [super init])) {
+    if ((self = [super init]))
+    {
         _contentView = content;
         _config = config;
         
@@ -53,7 +55,8 @@
 {
     [super viewDidDisappear:animated];
     
-    if (self.onDismissBlock) {
+    if (self.onDismissBlock)
+    {
         self.onDismissBlock();
     }
 }
@@ -80,12 +83,12 @@
 
 - (void)setupScrollView
 {
-    self.scroll = [[UIScrollView alloc] init];
-    self.scroll.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.scroll];
+    self.scrollView = [[UIScrollView alloc] init];
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.scrollView];
     
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.scroll addSubview:self.contentView];
+    [self.scrollView addSubview:self.contentView];
 }
 
 - (void)setupConstraints
@@ -106,17 +109,17 @@
         [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
         
         /* scroll container */
-        [self.scroll.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.scroll.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [self.scroll.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant: scrollBtnGap],
-        [self.scroll.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
+        [self.scrollView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [self.scrollView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.scrollView.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant: scrollBtnGap],
+        [self.scrollView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
         
         /* content inside scroll */
-        [self.contentView.leadingAnchor  constraintEqualToAnchor:self.scroll.leadingAnchor constant: contentPad],
-        [self.contentView.trailingAnchor constraintEqualToAnchor:self.scroll.trailingAnchor constant: -contentPad],
-        [self.contentView.topAnchor constraintEqualToAnchor:self.scroll.topAnchor],
-        [self.contentView.bottomAnchor constraintEqualToAnchor:self.scroll.bottomAnchor],
-        [self.contentView.widthAnchor constraintEqualToAnchor:self.scroll.widthAnchor constant: -2 * contentPad],
+        [self.contentView.leadingAnchor  constraintEqualToAnchor:self.scrollView.leadingAnchor constant: contentPad],
+        [self.contentView.trailingAnchor constraintEqualToAnchor:self.scrollView.trailingAnchor constant: -contentPad],
+        [self.contentView.topAnchor constraintEqualToAnchor:self.scrollView.topAnchor],
+        [self.contentView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
+        [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant: -2 * contentPad],
     ]];
 }
 
@@ -124,14 +127,14 @@
 - (CGSize)preferredContentSize
 {
     [self.view layoutIfNeeded];
-    CGFloat header  = CGRectGetMinY(self.scroll.frame) + self.view.safeAreaInsets.bottom;
-    CGFloat natural = header + self.scroll.contentSize.height;
+    CGFloat header  = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
+    CGFloat natural = header + self.scrollView.contentSize.height;
     CGFloat presentingViewHeight = self.presentingViewController.view.bounds.size.height;
     CGFloat minH = self.config.minHeightMultiplier * presentingViewHeight;
     CGFloat maxH = self.config.maxHeightMultiplier * presentingViewHeight;
     CGFloat sheetH = MAX(minH, MIN(natural, maxH));
-    self.scroll.scrollEnabled = natural > sheetH;
-    self.scroll.alwaysBounceVertical = self.scroll.scrollEnabled;
+    self.scrollView.scrollEnabled = natural > sheetH;
+    self.scrollView.alwaysBounceVertical = self.scrollView.scrollEnabled;
     return CGSizeMake(natural, sheetH);
 }
 

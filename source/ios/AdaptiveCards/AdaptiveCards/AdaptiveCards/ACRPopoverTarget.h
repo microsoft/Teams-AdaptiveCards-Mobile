@@ -23,16 +23,7 @@
 
 - (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView;
 
-// Event handler when the popover action is triggered (button tap, image tap, etc.)
-- (IBAction)send:(UIButton *)sender;
-
-// Main action method - presents the popover content in bottom sheet
-- (void)doSelectAction;
-
-// Dismiss popover if currently presented
 - (void)dismissBottomSheet;
-
-- (void)clearCachedContentView;
 
 - (void)detachBottomSheetInputsFromMainCard;
 

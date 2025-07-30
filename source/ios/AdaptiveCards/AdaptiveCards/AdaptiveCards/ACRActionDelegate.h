@@ -93,7 +93,9 @@
 
 #pragma mark - callback to fetch current active viewcontroller
 /**
-  This callback is called when AC SDK requires the current active viewcontroller
+ This callback is called when AC SDK requires the current active viewcontroller.
+ Host's activeViewController is used in scenarios where we want to present or push viewController from AC SDK .
+ This is currently used by popover to present a bottomsheet.
  */
 - (UIViewController *)activeViewController;
 

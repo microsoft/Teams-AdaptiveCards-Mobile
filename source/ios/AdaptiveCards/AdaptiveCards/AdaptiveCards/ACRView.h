@@ -23,7 +23,7 @@
 @property (readonly) ACORenderContext *context;
 @property (readwrite)ACRTheme theme;
 @property (readonly) ACOHostConfig *hostConfig;
-@property (nonatomic, assign) BOOL isBottomSheetRendering;
+@property (nonatomic, assign) BOOL isRenderingInBottomSheet;
 
 - (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config widthConstraint:(float)width theme:(ACRTheme)theme;
 

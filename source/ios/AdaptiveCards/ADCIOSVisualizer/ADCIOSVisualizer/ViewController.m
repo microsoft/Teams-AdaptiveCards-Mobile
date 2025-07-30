@@ -464,33 +464,38 @@ UIColor* defaultButtonBackgroundColor;
 
     // [Option 2] client can prepare its own presentation by direclty employing menuItems
     UIViewController *presentingController = self;
-    if (self.presentedViewController && [self.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")]) {
-            // Present the overflow menu on top of the bottom sheet
-            presentingController = self.presentedViewController;
-        }
+    if (self.presentedViewController && [self.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")])
+    {
+        // Present the overflow menu on top of the bottom sheet
+        presentingController = self.presentedViewController;
+    }
     UIAlertController *myAlert = [UIAlertController alertControllerWithTitle:nil
                                                                      message:nil
                                                               preferredStyle:UIAlertControllerStyleAlert];
 
     for (ACROverflowMenuItem *item in menuItems) {
+        __weak __typeof(self) weakSelf = self;
         UIAlertAction *action = [UIAlertAction actionWithTitle:item.title
                                                          style:UIAlertActionStyleDestructive
                                                        handler:^(UIAlertAction *_Nonnull action) {
-            if (self.presentedViewController && [self.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")]) {
-
+            __strong __typeof(self) strongSelf = weakSelf;
+            if (strongSelf.presentedViewController && [strongSelf.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")])
+            {
                 [item.target performSelector:@selector(send:) withObject:item.target];
-            } else {
+            }
+            else
+            {
                 [item.target doSelectAction];
             }
         }];
 
         [item loadIconImageWithSize:CGSizeMake(40, 40)
                        onIconLoaded:^(UIImage *image) {
-                           if (image) {
-                               [action setValue:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                         forKey:@"image"];
-                           }
-                       }];
+            if (image) {
+                [action setValue:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                          forKey:@"image"];
+            }
+        }];
 
         [myAlert addAction:action];
     }

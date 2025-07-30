@@ -198,7 +198,8 @@
 - (NSObject *)build:(ACOBaseActionElement *)action
            director:(ACRTargetBuilderDirector *)director
 {
-    if (action && action.type == ACRPopover && director.rootView) {
+    if (action && action.type == ACRPopover && director.rootView)
+    {
         return [[ACRPopoverTarget alloc] initWithActionElement:action rootView:director.rootView];
     }
     return nil;

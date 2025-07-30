@@ -12,7 +12,6 @@
 
 @property CGFloat minHeightMultiplier;
 @property CGFloat maxHeightMultiplier;
-
 @property CGFloat borderHeight;
 @property CGFloat closeButtonTopInset;
 @property CGFloat closeButtonSideInset;
@@ -21,6 +20,12 @@
 @property CGFloat closeButtonSize;
 
 - (instancetype)initWithMinMultiplier:(CGFloat)minMultiplier
-                        maxMultiplier:(CGFloat)maxMultiplier;
+                        maxMultiplier:(CGFloat)maxMultiplier
+                         borderHeight:(CGFloat)borderHeight
+                  closeButtonTopInset:(CGFloat)closeButtonTopInset
+                 closeButtonSideInset:(CGFloat)closeButtonSideInset
+               closeButtonToScrollGap:(CGFloat)closeButtonToScrollGap
+                       contentPadding:(CGFloat)contentPadding
+                      closeButtonSize:(CGFloat)closeButtonSize;
 
 @end
