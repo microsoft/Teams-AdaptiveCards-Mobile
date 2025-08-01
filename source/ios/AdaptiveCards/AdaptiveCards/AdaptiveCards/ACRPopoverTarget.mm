@@ -117,13 +117,11 @@
         }
     };
     [host presentViewController:currentBottomSheet animated:YES completion:nil];
-    
 }
 
 - (void)bottomSheetCloseTapped
 {
     [self detachBottomSheetInputsFromMainCard];
-    
 }
 
 - (void)createCachedContentView
@@ -149,11 +147,11 @@
     }
     
     // Prepare shared inputs (shared with main card for state consistency)
-    NSMutableArray *sharedInputs = (NSMutableArray *)[[_rootView card] getInputs];
+    NSArray *sharedInputs = [[_rootView card] getInputs];
     if (!sharedInputs)
     {
-        sharedInputs = [NSMutableArray array];
-        [[_rootView card] setInputs:sharedInputs];
+        sharedInputs = [NSArray array];
+        [[_rootView card] setInputs:sharedInputs.copy];
     }
     _cachedContentView = [[ACRContentStackView alloc] initWithStyle:ACRDefault
                                                         parentStyle:ACRDefault
@@ -163,7 +161,7 @@
     // Render the content into the cached container
     [renderer render:_cachedContentView
             rootView:_rootView
-              inputs:sharedInputs
+              inputs:[sharedInputs mutableCopy]
      baseCardElement:acoElement
           hostConfig:_rootView.hostConfig];
     
@@ -204,7 +202,6 @@
                 }
             }
         }
-        
         [self markActionTargetsAsFromBottomSheet:subview];
     }
 }
@@ -232,7 +229,7 @@
         {
             ACRActionType actionType = actionElement.type;
             
-            // Hide forbidden actions in bottom sheet
+            // Filter elements in bottom sheet
             if (actionType == ACRToggleVisibility ||
                 actionType == ACRShowCard ||
                 actionType == ACRPopover)
@@ -244,7 +241,6 @@
                 actionElement.menuActions.count > 0)
             {
                 actionElement.isActionFromSplitButtonBottomSheet = YES;
-                
             }
         }
     }
@@ -265,36 +261,34 @@
         return;
     }
     
-    
-    NSMutableArray *bottomSheetInputs = [NSMutableArray array];
-    [self findInputHandlersInView:_cachedContentView inputs:bottomSheetInputs];
-    
+    NSArray<ACRIBaseInputHandler> *bottomSheetInputs = [self findInputHandlersInView:_cachedContentView];
     [_rootView.inputHandlers addObjectsFromArray:bottomSheetInputs];
 }
 
-
-- (void)findInputHandlersInView:(UIView *)view inputs:(NSMutableArray *)inputHandlers
+- (NSArray<ACRIBaseInputHandler> *)findInputHandlersInView:(UIView *)view
 {
-    if ([view conformsToProtocol:@protocol(ACRIBaseInputHandler)])
-    {
+    NSMutableArray<id<ACRIBaseInputHandler>> *collectedInputs = [NSMutableArray array];
+    [self collectInputHandlersInView:view intoArray:collectedInputs];
+    return [collectedInputs copy];
+}
+
+- (void)collectInputHandlersInView:(UIView *)view intoArray:(NSMutableArray<id<ACRIBaseInputHandler>> *)inputHandlers
+{
+    if ([view conformsToProtocol:@protocol(ACRIBaseInputHandler)]) {
         id<ACRIBaseInputHandler> inputHandler = (id<ACRIBaseInputHandler>)view;
         [inputHandlers addObject:inputHandler];
         
-        if ([view isKindOfClass:[ACRInputLabelView class]])
-        {
+        if ([view isKindOfClass:[ACRInputLabelView class]]) {
             ACRInputLabelView *labelView = (ACRInputLabelView *)view;
             NSObject<ACRIBaseInputHandler> *underlyingHandler = [labelView getInputHandler];
-            if (underlyingHandler && underlyingHandler != labelView)
-            {
-                
+            if (underlyingHandler && underlyingHandler != labelView) {
                 underlyingHandler.isRequired = NO;
             }
         }
     }
     
-    for (UIView *subview in view.subviews)
-    {
-        [self findInputHandlersInView:subview inputs:inputHandlers];
+    for (UIView *subview in view.subviews) {
+        [self collectInputHandlersInView:subview intoArray:inputHandlers];
     }
 }
 
@@ -305,9 +299,7 @@
         return;
     }
     
-    NSMutableArray *bottomSheetInputs = [NSMutableArray array];
-    [self findInputHandlersInView:_cachedContentView inputs:bottomSheetInputs];
-    
+    NSArray<ACRIBaseInputHandler> *bottomSheetInputs = [self findInputHandlersInView:_cachedContentView];
     for (id<ACRIBaseInputHandler> input in bottomSheetInputs)
     {
         [_rootView.inputHandlers removeObject:input];
