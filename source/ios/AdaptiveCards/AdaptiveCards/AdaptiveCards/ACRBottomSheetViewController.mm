@@ -63,13 +63,13 @@
     NSString *dismissIcon = @"dismiss";
     NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
     CGSize iconSize = CGSizeMake(24, 24);
-    UIImageView *view = [[ACRSVGImageView alloc] init:url
-                                                  rtl:ACRRtlNone
-                                             isFilled:false
-                                                 size:iconSize
-                                            tintColor:nil];
-    view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.dismissButton addSubview:view];
+    UIImageView *imageView = [[ACRSVGImageView alloc] init:url
+                                                       rtl:ACRRtlNone
+                                                  isFilled:false
+                                                      size:iconSize
+                                                 tintColor:nil];
+    imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.dismissButton addSubview:imageView];
     [self.dismissButton addTarget:self
                            action:@selector(closeAction)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -97,23 +97,23 @@
     [NSLayoutConstraint activateConstraints:@[
         
         /* Dismiss button constraints */
-        [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant: btnTopInset],
-        [self.dismissButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant: -btnSideInset],
+        [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnTopInset],
+        [self.dismissButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:(-btnSideInset)],
         [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
         [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
         
         /* scroll container */
         [self.scrollView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [self.scrollView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [self.scrollView.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant: scrollBtnGap],
+        [self.scrollView.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant:scrollBtnGap],
         [self.scrollView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
         
         /* content inside scroll */
-        [self.contentView.leadingAnchor  constraintEqualToAnchor:self.scrollView.leadingAnchor constant: contentPad],
-        [self.contentView.trailingAnchor constraintEqualToAnchor:self.scrollView.trailingAnchor constant: -contentPad],
+        [self.contentView.leadingAnchor constraintEqualToAnchor:self.scrollView.leadingAnchor constant:contentPad],
+        [self.contentView.trailingAnchor constraintEqualToAnchor:self.scrollView.trailingAnchor constant:(-contentPad)],
         [self.contentView.topAnchor constraintEqualToAnchor:self.scrollView.topAnchor],
         [self.contentView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
-        [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant: -2 * contentPad],
+        [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant:(-2 * contentPad)],
     ]];
 }
 

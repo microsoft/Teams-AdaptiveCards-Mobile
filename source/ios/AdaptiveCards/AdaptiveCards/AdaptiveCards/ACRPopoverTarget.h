@@ -18,8 +18,8 @@
 @interface ACRPopoverTarget : ACRBaseTarget
 
 @property ACOBaseActionElement *actionElement;
-@property (weak) ACRView *rootView;
-@property (strong) ACRContentStackView *cachedContentView;
+@property (nonatomic, weak) ACRView *rootView;
+@property (nonatomic, strong) ACRContentStackView *cachedContentView;
 
 - (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView;
 
