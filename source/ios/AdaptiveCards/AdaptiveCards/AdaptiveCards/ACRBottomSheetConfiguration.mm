@@ -18,6 +18,7 @@
                closeButtonToScrollGap:(CGFloat)closeButtonToScrollGap
                        contentPadding:(CGFloat)contentPadding
                       closeButtonSize:(CGFloat)closeButtonSize
+                        acoHostConfig:(ACOHostConfig *)hostConfig
 {
     self = [super init];
     if (self)
@@ -30,6 +31,7 @@
         self.closeButtonToScrollGap = closeButtonToScrollGap;
         self.contentPadding = contentPadding;
         self.closeButtonSize = closeButtonSize;
+        self.hostConfig = hostConfig;
     }
     return self;
 }

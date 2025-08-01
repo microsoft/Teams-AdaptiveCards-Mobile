@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ACOHostConfig.h"
 
 @interface ACRBottomSheetConfiguration : NSObject
 
@@ -18,6 +19,7 @@
 @property CGFloat closeButtonToScrollGap;
 @property CGFloat contentPadding;
 @property CGFloat closeButtonSize;
+@property ACOHostConfig *hostConfig;
 
 - (instancetype)initWithMinMultiplier:(CGFloat)minMultiplier
                         maxMultiplier:(CGFloat)maxMultiplier
@@ -26,6 +28,7 @@
                  closeButtonSideInset:(CGFloat)closeButtonSideInset
                closeButtonToScrollGap:(CGFloat)closeButtonToScrollGap
                        contentPadding:(CGFloat)contentPadding
-                      closeButtonSize:(CGFloat)closeButtonSize;
+                      closeButtonSize:(CGFloat)closeButtonSize
+                        acoHostConfig:(ACOHostConfig *)hostConfig;
 
 @end

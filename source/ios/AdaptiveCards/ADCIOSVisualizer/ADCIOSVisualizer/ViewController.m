@@ -478,8 +478,7 @@ UIColor* defaultButtonBackgroundColor;
         UIAlertAction *action = [UIAlertAction actionWithTitle:item.title
                                                          style:UIAlertActionStyleDestructive
                                                        handler:^(UIAlertAction *_Nonnull action) {
-            __strong __typeof(self) strongSelf = weakSelf;
-            if (strongSelf.presentedViewController && [strongSelf.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")])
+            if (weakSelf.presentedViewController && [weakSelf.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")])
             {
                 [item.target performSelector:@selector(send:) withObject:item.target];
             }

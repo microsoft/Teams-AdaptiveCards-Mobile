@@ -67,13 +67,13 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
             [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
             return;
         }
-        // dispatch and validate inputs
+        
         if (self.parentPopoverTarget)
         {
             _currentShowcard = (ACRColumnView *)_view;
             [self.parentPopoverTarget dismissBottomSheet];
         }
-
+        // dispatch and validate inputs
         ACOInputResults *result = [_view dispatchAndValidateInput:_currentShowcard];
         // update UI with the inputs
         [self updateInputUI:result button:sender];

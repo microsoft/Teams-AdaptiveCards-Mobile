@@ -6,6 +6,7 @@
 //  Copyright © 2025 Microsoft. All rights reserved.
 //
 
+#import "ACOHostConfigPrivate.h"
 #import "ACRSVGImageView.h"
 #import "ACRBottomSheetViewController.h"
 #import "ACRBottomSheetPresentationController.h"
@@ -21,14 +22,13 @@
 
 @end
 
-
 @implementation ACRBottomSheetViewController
 
 - (instancetype)initWithContent:(UIView *)content
                   configuration:(ACRBottomSheetConfiguration *)config;
 
 {
-    if ((self = [super init]))
+    if (self = [super init])
     {
         _contentView = content;
         _config = config;
@@ -39,13 +39,10 @@
     return self;
 }
 
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
-    
+    self.view.backgroundColor = [_config.hostConfig getBackgroundColorForContainerStyle:ACRDefault];
     [self setupCloseButton];
     [self setupScrollView];
     [self setupConstraints];
@@ -54,7 +51,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
     if (self.onDismissBlock)
     {
         self.onDismissBlock();
@@ -86,7 +82,6 @@
     self.scrollView = [[UIScrollView alloc] init];
     self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.scrollView];
-    
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.scrollView addSubview:self.contentView];
 }
@@ -98,7 +93,6 @@
     CGFloat btnSideInset = self.config.closeButtonSideInset;
     CGFloat scrollBtnGap = self.config.closeButtonToScrollGap;
     CGFloat closeBtnSize = self.config.closeButtonSize;
-    
     
     [NSLayoutConstraint activateConstraints:@[
         

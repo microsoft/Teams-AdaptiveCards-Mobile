@@ -103,7 +103,8 @@
                                                                                 closeButtonSideInset:closeButtonSideInset
                                                                               closeButtonToScrollGap:closeButtonToScrollGap
                                                                                       contentPadding:contentPadding
-                                                                                     closeButtonSize:closeButtonSize];
+                                                                                     closeButtonSize:closeButtonSize
+                                                                                       acoHostConfig:_rootView.hostConfig];
     
     currentBottomSheet = [[ACRBottomSheetViewController alloc]
                           initWithContent:_cachedContentView
