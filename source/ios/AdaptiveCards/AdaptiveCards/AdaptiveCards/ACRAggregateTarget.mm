@@ -68,10 +68,10 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
             return;
         }
         
-        if (self.parentPopoverTarget)
+        if (self.presentedViewController && self.presentedViewController.presentingViewController)
         {
             _currentShowcard = (ACRColumnView *)_view;
-            [self.parentPopoverTarget dismissBottomSheet];
+            [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
         }
         // dispatch and validate inputs
         ACOInputResults *result = [_view dispatchAndValidateInput:_currentShowcard];

@@ -15,9 +15,9 @@
 
 @interface ACRBottomSheetViewController ()
 
-@property (nonatomic) UIScrollView *scrollView;
-@property (nonatomic) UIButton *dismissButton;
-@property (nonatomic) UIView *contentView;
+@property (nonatomic, weak) UIScrollView *scrollView;
+@property (nonatomic, weak) UIButton *dismissButton;
+@property (nonatomic, weak) UIView *contentView;
 @property (nonatomic) ACRBottomSheetConfiguration *config;
 
 @end
@@ -59,7 +59,7 @@
 
 - (void)setupCloseButton
 {
-    self.dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
     NSString *dismissIcon = @"dismiss";
     NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
     CGSize iconSize = CGSizeMake(24, 24);
@@ -69,19 +69,21 @@
                                                       size:iconSize
                                                  tintColor:nil];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.dismissButton addSubview:imageView];
-    [self.dismissButton addTarget:self
-                           action:@selector(closeAction)
-                 forControlEvents:UIControlEventTouchUpInside];
-    self.dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.dismissButton];
+    [dismissButton addSubview:imageView];
+    [dismissButton addTarget:self
+                      action:@selector(closeAction)
+            forControlEvents:UIControlEventTouchUpInside];
+    dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:dismissButton];
+    self.dismissButton = dismissButton;
 }
 
 - (void)setupScrollView
 {
-    self.scrollView = [[UIScrollView alloc] init];
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.scrollView];
+    UIScrollView *scrollView = [[UIScrollView alloc] init];
+    scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:scrollView];
+    self.scrollView = scrollView;
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.scrollView addSubview:self.contentView];
 }
@@ -116,7 +118,6 @@
         [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant:(-2 * contentPad)],
     ]];
 }
-
 
 - (CGSize)preferredContentSize
 {

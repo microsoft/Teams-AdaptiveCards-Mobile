@@ -17,14 +17,6 @@
 
 @interface ACRPopoverTarget : ACRBaseTarget
 
-@property ACOBaseActionElement *actionElement;
-@property (nonatomic, weak) ACRView *rootView;
-@property (nonatomic, strong) ACRContentStackView *cachedContentView;
-
 - (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView;
-
-- (void)dismissBottomSheet;
-
-- (void)detachBottomSheetInputsFromMainCard;
 
 @end

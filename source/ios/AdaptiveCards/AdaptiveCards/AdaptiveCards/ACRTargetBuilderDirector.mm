@@ -210,7 +210,8 @@
           ForButton:(UIButton *)button
 {
     NSObject *target = [self build:action director:director];
-    if (target && button) {
+    if (target && button)
+    {
         [button addTarget:target
                    action:@selector(send:)
          forControlEvents:UIControlEventTouchUpInside];

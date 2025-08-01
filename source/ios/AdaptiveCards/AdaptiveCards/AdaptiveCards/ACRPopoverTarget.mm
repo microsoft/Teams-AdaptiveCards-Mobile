@@ -24,20 +24,26 @@
 #import "ACRInputLabelView.h"
 #import "ACROverflowTarget.h"
 
+@interface ACRPopoverTarget()
+
+@property ACRBottomSheetViewController *currentBottomSheet;
+@property ACOBaseActionElement *actionElement;
+@property (nonatomic, weak) ACRView *rootView;
+@property (nonatomic, strong) ACRContentStackView *cachedContentView;
+
+@end
+
 @implementation ACRPopoverTarget
-{
-    ACRBottomSheetViewController *currentBottomSheet;
-}
 
 - (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView
 {
     self = [super init];
     if (self)
     {
-        _actionElement = actionElement;
-        _rootView = rootView;
-        currentBottomSheet = nil;
-        _cachedContentView = nil;
+        self.actionElement = actionElement;
+        self.rootView = rootView;
+        self.currentBottomSheet = nil;
+        self.cachedContentView = nil;
     }
     return self;
 }
@@ -54,12 +60,12 @@
 
 - (void)presentPopover
 {
-    if (!_actionElement || _actionElement.type != ACRPopover)
+    if (!self.actionElement || self.actionElement.type != ACRPopover)
     {
         return;
     }
     
-    id<ACRActionDelegate> actionDelegate = _rootView.acrActionDelegate;
+    id<ACRActionDelegate> actionDelegate = self.rootView.acrActionDelegate;
     if (![actionDelegate respondsToSelector:@selector(activeViewController)])
     {
         return;
@@ -72,16 +78,12 @@
     }
     
     // Create or reuse cached content view for input retention
-    if (!_cachedContentView)
+    if (!self.cachedContentView)
     {
         [self createCachedContentView];
     }
-    else
-    {
-        [self markActionTargetsAsFromBottomSheet:_cachedContentView];
-    }
     
-    if (!_cachedContentView)
+    if (!self.cachedContentView)
     {
         return;
     }
@@ -104,20 +106,18 @@
                                                                               closeButtonToScrollGap:closeButtonToScrollGap
                                                                                       contentPadding:contentPadding
                                                                                      closeButtonSize:closeButtonSize
-                                                                                       acoHostConfig:_rootView.hostConfig];
+                                                                                       acoHostConfig:self.rootView.hostConfig];
     
-    currentBottomSheet = [[ACRBottomSheetViewController alloc]
-                          initWithContent:_cachedContentView
-                          configuration:config];
-    
+    self.currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:self.cachedContentView configuration:config];
+    [self markActionTargetsAsFromBottomSheet:self.cachedContentView];
     __weak ACRPopoverTarget *weakSelf = self;
-    currentBottomSheet.onDismissBlock = ^{
+    self.currentBottomSheet.onDismissBlock = ^{
         if (weakSelf)
         {
             [weakSelf detachBottomSheetInputsFromMainCard];
         }
     };
-    [host presentViewController:currentBottomSheet animated:YES completion:nil];
+    [host presentViewController:self.currentBottomSheet animated:YES completion:nil];
 }
 
 - (void)bottomSheetCloseTapped
@@ -128,7 +128,7 @@
 - (void)createCachedContentView
 {
     // Get the popover content from the action
-    std::shared_ptr<BaseActionElement> base = [_actionElement element];
+    std::shared_ptr<BaseActionElement> base = [self.actionElement element];
     auto popoverAction = std::dynamic_pointer_cast<AdaptiveCards::PopoverAction>(base);
     std::shared_ptr<AdaptiveCards::BaseCardElement> content = popoverAction ? popoverAction->GetContent() : nullptr;
     
@@ -148,25 +148,22 @@
     }
     
     // Prepare shared inputs (shared with main card for state consistency)
-    NSArray *sharedInputs = [[_rootView card] getInputs];
+    NSArray *sharedInputs = [[self.rootView card] getInputs];
     if (!sharedInputs)
     {
-        sharedInputs = [NSArray array];
-        [[_rootView card] setInputs:sharedInputs.copy];
+        [[self.rootView card] setInputs:[NSArray array]];
     }
-    _cachedContentView = [[ACRContentStackView alloc] initWithStyle:ACRDefault
+    self.cachedContentView = [[ACRContentStackView alloc] initWithStyle:ACRDefault
                                                         parentStyle:ACRDefault
-                                                         hostConfig:_rootView.hostConfig
-                                                          superview:_rootView];
-    _rootView.isRenderingInsideBottomSheet = YES;
+                                                         hostConfig:self.rootView.hostConfig
+                                                          superview:self.rootView];
+    self.rootView.isRenderingInsideBottomSheet = YES;
     // Render the content into the cached container
-    [renderer render:_cachedContentView
-            rootView:_rootView
+    [renderer render:self.cachedContentView
+            rootView:self.rootView
               inputs:[sharedInputs mutableCopy]
      baseCardElement:acoElement
-          hostConfig:_rootView.hostConfig];
-    
-    [self markActionTargetsAsFromBottomSheet:_cachedContentView];
+          hostConfig:self.rootView.hostConfig];
 }
 
 - (void)markActionTargetsAsFromBottomSheet:(UIView *)containerView
@@ -179,7 +176,7 @@
             if ([recognizer.delegate isKindOfClass:[ACRBaseTarget class]])
             {
                 ACRBaseTarget *target = (ACRBaseTarget *)recognizer.delegate;
-                target.parentPopoverTarget = self;
+                target.presentedViewController = self.currentBottomSheet;
                 [self filterActionTarget:target forView:subview];
             }
         }
@@ -194,7 +191,7 @@
                 if ([target isKindOfClass:[ACRBaseTarget class]])
                 {
                     ACRBaseTarget *baseTarget = (ACRBaseTarget *)target;
-                    baseTarget.parentPopoverTarget = self;
+                    baseTarget.presentedViewController = self.currentBottomSheet;
                     [self filterActionTarget:baseTarget forView:subview];
                     if ([baseTarget isKindOfClass:[ACROverflowTarget class]])
                     {
@@ -216,7 +213,7 @@
         if ([itemTarget isKindOfClass:[ACRBaseTarget class]])
         {
             ACRBaseTarget *baseTarget = (ACRBaseTarget *)itemTarget;
-            baseTarget.parentPopoverTarget = self;
+            baseTarget.presentedViewController = self.currentBottomSheet;
         }
     }
 }
@@ -249,21 +246,21 @@
 
 - (void)dismissBottomSheet
 {
-    if (currentBottomSheet && currentBottomSheet.presentingViewController)
+    if (self.currentBottomSheet && self.currentBottomSheet.presentingViewController)
     {
-        [currentBottomSheet dismissViewControllerAnimated:YES completion:nil];
+        [self.currentBottomSheet dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
 - (void)attachBottomSheetInputsToMainCard
 {
-    if (!_cachedContentView || !_rootView)
+    if (!self.cachedContentView || !self.rootView)
     {
         return;
     }
     
-    NSArray<ACRIBaseInputHandler> *bottomSheetInputs = [self findInputHandlersInView:_cachedContentView];
-    [_rootView.inputHandlers addObjectsFromArray:bottomSheetInputs];
+    NSArray<ACRIBaseInputHandler> *bottomSheetInputs = [self findInputHandlersInView:self.cachedContentView];
+    [self.rootView.inputHandlers addObjectsFromArray:bottomSheetInputs];
 }
 
 - (NSArray<ACRIBaseInputHandler> *)findInputHandlersInView:(UIView *)view
@@ -295,15 +292,15 @@
 
 - (void)detachBottomSheetInputsFromMainCard
 {
-    if (!_cachedContentView || !_rootView)
+    if (!self.cachedContentView || !self.rootView)
     {
         return;
     }
     
-    NSArray<ACRIBaseInputHandler> *bottomSheetInputs = [self findInputHandlersInView:_cachedContentView];
+    NSArray<ACRIBaseInputHandler> *bottomSheetInputs = [self findInputHandlersInView:self.cachedContentView];
     for (id<ACRIBaseInputHandler> input in bottomSheetInputs)
     {
-        [_rootView.inputHandlers removeObject:input];
+        [self.rootView.inputHandlers removeObject:input];
     }
 }
 
