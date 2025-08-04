@@ -38,8 +38,6 @@
     {
         [superview addTarget:target];
     }
-    button.accessibilityTraits |= UIAccessibilityTraitLink;
-    button.accessibilityTraits &= ~UIAccessibilityTraitButton;
     [button setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [button setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     

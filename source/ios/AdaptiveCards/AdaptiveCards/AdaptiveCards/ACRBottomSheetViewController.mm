@@ -60,6 +60,7 @@
 - (void)setupCloseButton
 {
     UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    dismissButton.accessibilityLabel = NSLocalizedString(@"Dismiss", nil);
     NSString *dismissIcon = @"dismiss";
     NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
     CGSize iconSize = CGSizeMake(24, 24);
