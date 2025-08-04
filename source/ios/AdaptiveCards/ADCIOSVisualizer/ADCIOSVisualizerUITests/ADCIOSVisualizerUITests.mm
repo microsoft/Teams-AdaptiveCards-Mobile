@@ -681,7 +681,6 @@
     XCTAssertNil(inputs);
 }
 
-
 - (void) testPopoverInput2SuccessfulSubmission
 {
     [self openCardForVersion:@"v1.5" forCardType:@"Elements" withCardName:@"Action.Popover.json"];
