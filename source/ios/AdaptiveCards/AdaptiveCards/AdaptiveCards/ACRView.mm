@@ -308,13 +308,13 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 NSLog(@"ACRView: Handling simple image case with direct frame setting approach");
                 
                 // For simple images, bypass Auto Layout complexity and use direct frame setting
-                // This avoids conflicts with any existing constraints
+                // This mimics what KVO did successfully without the hacky remove/re-add
                 if (image && image.size.width > 0 && image.size.height > 0) {
                     // Update the container's image properties with the actual image size
                     [containingView.imageProperties updateContentSize:image.size];
                     
-                    // DIRECT APPROACH: Set the imageView frame directly
-                    // This bypasses Auto Layout conflicts entirely
+                    // CLEAN APPROACH: Set the imageView frame directly (like KVO did)
+                    // No need to remove/re-add - just set frame and disable Auto Layout conflicts
                     CGSize imageSize = image.size;
                     CGFloat maxWidth = 400.0; // Match expected size
                     CGFloat maxHeight = 400.0;
@@ -323,28 +323,29 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     CGFloat scale = MIN(maxWidth / imageSize.width, maxHeight / imageSize.height);
                     CGSize scaledSize = CGSizeMake(imageSize.width * scale, imageSize.height * scale);
                     
-                    // Center the image in the container
-                    CGRect containerBounds = containingView.bounds;
+                    // Ensure container is properly sized first
+                    containingView.frame = CGRectMake(containingView.frame.origin.x, containingView.frame.origin.y, 
+                                                     maxWidth, maxHeight);
+                    
+                    // Center the image in the container (using container bounds, not containerBounds variable)
                     CGRect imageFrame = CGRectMake(
-                        (containerBounds.size.width - scaledSize.width) / 2.0,
-                        (containerBounds.size.height - scaledSize.height) / 2.0,
+                        (maxWidth - scaledSize.width) / 2.0,
+                        (maxHeight - scaledSize.height) / 2.0,
                         scaledSize.width,
                         scaledSize.height
                     );
                     
                     NSLog(@"ACRView: Setting imageView frame directly to: %@", NSStringFromCGRect(imageFrame));
                     
-                    // Remove any existing constraints on the imageView to avoid conflicts
-                    [imageView removeFromSuperview];
-                    [containingView addSubview:imageView];
+                    // Disable Auto Layout to avoid conflicts (this is what KVO implicitly did)
+                    imageView.translatesAutoresizingMaskIntoConstraints = YES;
                     
-                    // Set frame directly
+                    // Set frame directly (like KVO did)
                     imageView.frame = imageFrame;
                     imageView.contentMode = UIViewContentModeScaleAspectFit;
+                    imageView.clipsToBounds = NO; // Prevent clipping issues
                     
-                    // Update container size and trigger layout
-                    containingView.frame = CGRectMake(containingView.frame.origin.x, containingView.frame.origin.y, 
-                                                     maxWidth, maxHeight);
+                    // Update container properties and trigger layout
                     [containingView update:containingView.imageProperties];
                     
                     NSLog(@"ACRView: Direct frame set - imageView frame: %@, container frame: %@", 
