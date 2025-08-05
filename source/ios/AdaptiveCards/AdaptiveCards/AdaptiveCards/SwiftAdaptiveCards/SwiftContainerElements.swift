@@ -586,7 +586,7 @@ public class SwiftStyledCollectionElement: SwiftBaseCardElement {
         self.showBorder = try container.decodeIfPresent(Bool.self, forKey: .showBorder) ?? false
         self.roundedCorners = try container.decodeIfPresent(Bool.self, forKey: .roundedCorners) ?? false
         self.backgroundImage = try container.decodeIfPresent(SwiftBackgroundImage.self, forKey: .backgroundImage)
-        if let selectActionData = try container.decodeIfPresent([String: AnyCodable].self, forKey: .selectAction) {
+        if let selectActionData = try container.decodeIfPresent([String: SwiftAnyCodable].self, forKey: .selectAction) {
             let actionDict = selectActionData.mapValues { $0.value }
             self.selectAction = try SwiftBaseActionElement.deserializeAction(from: actionDict)
         } else {
@@ -739,7 +739,7 @@ public class SwiftContainer: SwiftStyledCollectionElement {
         self.configForContainerStyle(context)
         
         // Then decode items with context and style configuration
-        if let rawItems = try container.decodeIfPresent([[String: AnyCodable]].self, forKey: .items) {
+        if let rawItems = try container.decodeIfPresent([[String: SwiftAnyCodable]].self, forKey: .items) {
             // Save our style as parent for children
             context.saveContextForStyledCollectionElement(self)
             print("Container saving style to context: \(self.style)")
@@ -974,14 +974,14 @@ public class SwiftColumn: SwiftStyledCollectionElement {
         let decodedWidth: String
         if container.contains(.width) {
             // Use AnyCodable to decode without type errors, then convert to String
-            if let anyValue = try? container.decode(AnyCodable.self, forKey: .width) {
+            if let anyValue = try? container.decode(SwiftAnyCodable.self, forKey: .width) {
                 decodedWidth = convertToWidthString(anyValue.value)
             } else {
                 decodedWidth = "Auto"
             }
         } else if container.contains(.size) {
             // Fallback to "size" key with same robust decoding
-            if let anyValue = try? container.decode(AnyCodable.self, forKey: .size) {
+            if let anyValue = try? container.decode(SwiftAnyCodable.self, forKey: .size) {
                 decodedWidth = convertToWidthString(anyValue.value)
             } else {
                 decodedWidth = "Auto"
@@ -1005,7 +1005,7 @@ public class SwiftColumn: SwiftStyledCollectionElement {
             parentalId = parentId
         }
         
-        if let rawItems = try container.decodeIfPresent([[String: AnyCodable]].self, forKey: .items) {
+        if let rawItems = try container.decodeIfPresent([[String: SwiftAnyCodable]].self, forKey: .items) {
             context.saveContextForStyledCollectionElement(self)
             for rawDict in rawItems {
                 let unwrapped = SwiftParseUtil.unwrapAnyCodable(from: rawDict)
@@ -1099,7 +1099,7 @@ public class SwiftColumnSet: SwiftStyledCollectionElement {
         self.configForContainerStyle(context)
         
         // Decode the raw columns
-        if let rawColumns = try container.decodeIfPresent([[String: AnyCodable]].self, forKey: .columns) {
+        if let rawColumns = try container.decodeIfPresent([[String: SwiftAnyCodable]].self, forKey: .columns) {
             // Save our context for children
             context.saveContextForStyledCollectionElement(self)
             
