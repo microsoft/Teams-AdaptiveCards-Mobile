@@ -52,4 +52,16 @@
 
 - (void)waitForAsyncTasksToFinish;
 
+// Enable early KVO removal for a specific image view to prevent race condition crashes
+- (void)enableEarlyKVORemovalForImageView:(UIImageView *)imageView;
+
+// Check if early KVO removal is enabled for a specific image view (for testing)
+- (BOOL)isEarlyKVORemovalEnabledForImageView:(UIImageView *)imageView;
+
+// Schedule fallback image completion check when KVO is disabled
+- (void)scheduleImageCompletionCheckForView:(UIImageView *)imageView key:(NSString *)key;
+
+// Handle image loaded callback from resource resolver (alternative to KVO)
+- (void)handleImageLoadedForView:(UIImageView *)imageView key:(NSString *)key context:(void *)context;
+
 @end

@@ -70,6 +70,7 @@ using namespace AdaptiveCards;
                 if ([[layer name] isEqualToString:@"circle"] ||
                     [[layer name] isEqualToString:@"triangle"]) {
                     [shapes addObject:layer];
+
                 }
             }
 

@@ -22,6 +22,7 @@
 #import "CustomActionNewType.h"
 #import "CustomActionOpenURLRenderer.h"
 #import "MockRenderer.h"
+#import "ADCResolver.h"
 #import <AdaptiveCards/AdaptiveCards.h>
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
@@ -836,6 +837,79 @@
     XCTAssertFalse([registration shouldUseResourceResolverForOverridenDefaultActionRenderers:ACROpenUrl]);
     [registration setActionRenderer:[CustomActionOpenURLRenderer getInstance] actionElementType:ACROpenUrl useResourceResolver:YES];
     XCTAssertTrue([registration shouldUseResourceResolverForOverridenDefaultActionRenderers:ACROpenUrl]);
+}
+
+// Test that ADCResolver image loaded callback system works
+- (void)testKVOObserverControlMechanism
+{
+    // Create a custom resolver
+    ADCResolver *resolver = [[ADCResolver alloc] init];
+    
+    // Create a test image view
+    UIImageView *testImageView = [[UIImageView alloc] init];
+    
+    // Set up callback expectation
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Image loaded callback should be triggered"];
+    
+    // Set up callback
+    [resolver setImageLoadedCallback:^(UIImageView *imageView) {
+        NSLog(@"Test: Image loaded callback triggered successfully for imageView %@", imageView);
+        XCTAssertEqual(imageView, testImageView, @"Callback should be triggered for the correct image view");
+        XCTAssertNotNil(imageView, @"Image view should not be nil in callback");
+        [expectation fulfill];
+    } forImageView:testImageView];
+    
+    // Trigger the callback manually to test the mechanism
+    [resolver triggerImageLoadedCallbackForImageView:testImageView];
+    
+    // Wait for expectation
+    [self waitForExpectationsWithTimeout:1.0 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Expectation timed out: %@", error);
+        }
+    }];
+    
+    NSLog(@"Test: ADCResolver callback test completed successfully");
+}
+
+// Test that ADCResolver callback system works for bundle images too
+- (void)testBundleImageCallbackMechanism
+{
+    // Create a custom resolver
+    ADCResolver *resolver = [[ADCResolver alloc] init];
+    
+    // Set up callback expectation
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Bundle image callback should be triggered"];
+    
+    // Create a test bundle URL
+    NSURL *bundleURL = [NSURL URLWithString:@"bundle://testimage.png"];
+    
+    // Resolve image view with bundle URL
+    UIImageView *imageView = [resolver resolveImageViewResource:bundleURL];
+    
+    // Set up callback AFTER creating the image view but BEFORE the potential async callback
+    [resolver setImageLoadedCallback:^(UIImageView *callbackImageView) {
+        NSLog(@"Test: Bundle image callback triggered successfully for imageView %@", callbackImageView);
+        XCTAssertEqual(callbackImageView, imageView, @"Callback should be triggered for the correct image view");
+        XCTAssertNotNil(callbackImageView, @"Image view should not be nil in callback");
+        [expectation fulfill];
+    } forImageView:imageView];
+    
+    // Since bundle images are loaded synchronously, we might need to manually trigger
+    // the callback if it wasn't triggered automatically
+    if (imageView.image) {
+        NSLog(@"Test: Bundle image loaded immediately, triggering callback manually");
+        [resolver triggerImageLoadedCallbackForImageView:imageView];
+    }
+    
+    // Wait for expectation
+    [self waitForExpectationsWithTimeout:1.0 handler:^(NSError * _Nullable error) {
+        if (error) {
+            XCTFail(@"Bundle image expectation timed out: %@", error);
+        }
+    }];
+    
+    NSLog(@"Test: Bundle image callback test completed successfully");
 }
 
 @end

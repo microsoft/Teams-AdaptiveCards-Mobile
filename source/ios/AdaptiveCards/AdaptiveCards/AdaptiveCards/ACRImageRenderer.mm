@@ -175,19 +175,26 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
 
 - (void)configUpdateForUIImageView:(ACRView *)rootView acoElem:(ACOBaseCardElement *)acoElem config:(ACOHostConfig *)acoConfig image:(UIImage *)image imageView:(UIImageView *)imageView
 {
+    NSLog(@"ACRImageRenderer: configUpdateForUIImageView called with image size: %@, imageView: %@", NSStringFromCGSize(image.size), imageView);
+    
     ACRContentHoldingUIView *superview = nil;
     ACRImageProperties *imageProps = nil;
     if ([imageView.superview isKindOfClass:[ACRContentHoldingUIView class]]) {
         superview = (ACRContentHoldingUIView *)imageView.superview;
         imageProps = superview.imageProperties;
         [imageProps updateContentSize:image.size];
+        NSLog(@"ACRImageRenderer: Found ACRContentHoldingUIView superview with imageProperties");
+    } else {
+        NSLog(@"ACRImageRenderer: No ACRContentHoldingUIView superview found. Superview: %@", imageView.superview);
     }
 
     if (!imageProps) {
         imageProps = [[ACRImageProperties alloc] init:acoElem config:acoConfig image:image];
+        NSLog(@"ACRImageRenderer: Created new ACRImageProperties");
     }
 
     CGSize cgsize = imageProps.contentSize;
+    NSLog(@"ACRImageRenderer: Using content size: %@", NSStringFromCGSize(cgsize));
 
     UILayoutPriority priority = [ACRImageRenderer getImageUILayoutPriority:imageView.superview];
     NSMutableArray<NSLayoutConstraint *> *constraints = [[NSMutableArray alloc] init];
@@ -239,13 +246,23 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
         [constraints addObject:[imageView.widthAnchor constraintLessThanOrEqualToConstant:imageProps.contentSize.width]];
     }
 
+    NSLog(@"ACRImageRenderer: About to activate %lu constraints", (unsigned long)constraints.count);
+    for (NSLayoutConstraint *constraint in constraints) {
+        NSLog(@"ACRImageRenderer: Constraint: %@", constraint);
+    }
+    
     [NSLayoutConstraint activateConstraints:constraints];
+    NSLog(@"ACRImageRenderer: Constraints activated");
 
     if (superview) {
         [superview update:imageProps];
+        NSLog(@"ACRImageRenderer: Updated superview with imageProps");
+    } else {
+        NSLog(@"ACRImageRenderer: WARNING - No superview to update!");
     }
 
     [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    NSLog(@"ACRImageRenderer: Removed observer");
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setImageFitModeFor:imageView image:image imageProps:imageProps];
     });
