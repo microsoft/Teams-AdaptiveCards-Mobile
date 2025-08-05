@@ -43,7 +43,8 @@
         std::shared_ptr<BaseCardElement> elem = [acoElem element];
         std::shared_ptr<ProgressRing> progressRing = std::dynamic_pointer_cast<ProgressRing>(elem);
         UIActivityIndicatorViewStyle style;
-        switch (progressRing->GetSize()) {
+        switch (progressRing->GetSize())
+        {
             case AdaptiveCards::ProgressSize::Tiny:
             case AdaptiveCards::ProgressSize::Small:
                 style = UIActivityIndicatorViewStyleMedium;

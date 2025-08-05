@@ -11,6 +11,8 @@
 
 @interface ACRBaseTarget : NSObject <ACRSelectActionDelegate>
 
+@property (nonatomic, weak) UIViewController *presentedViewController;
+
 - (void)addGestureRecognizer:(UIView *)view toolTipText:(NSString *)toolTipText;
 
 - (void)setTooltip:(UIView *)view toolTipText:(NSString *)toolTipText;
