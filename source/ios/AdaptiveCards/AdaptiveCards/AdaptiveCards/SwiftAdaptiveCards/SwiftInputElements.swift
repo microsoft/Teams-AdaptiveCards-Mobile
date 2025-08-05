@@ -411,7 +411,7 @@ public class SwiftTextInput: SwiftBaseInputElement {
         
         // Handle inlineAction separately
         if container.contains(.inlineAction) {
-            let actionDict = try container.decode([String: AnyCodable].self, forKey: .inlineAction)
+            let actionDict = try container.decode([String: SwiftAnyCodable].self, forKey: .inlineAction)
             let dict = actionDict.mapValues { $0.value }
             inlineAction = try SwiftBaseActionElement.deserializeAction(from: dict)
         } else {
@@ -442,7 +442,7 @@ public class SwiftTextInput: SwiftBaseInputElement {
         try container.encodeIfPresent(regex, forKey: .regex)
         
         if let action = inlineAction {
-            try container.encode(AnyCodable(try action.serializeToJsonValue()), forKey: .inlineAction)
+            try container.encode(SwiftAnyCodable(try action.serializeToJsonValue()), forKey: .inlineAction)
         }
         
         try super.encode(to: encoder)
