@@ -1246,7 +1246,7 @@ struct SwiftRemoteResourceInformation: Codable {
 }
 
 /// Custom type to handle any JSON value (for additionalProperties)
-public struct AnyCodable: Codable {
+public struct SwiftAnyCodable: Codable {
     public let value: Any
 
     init(_ value: Any) {
@@ -1263,9 +1263,9 @@ public struct AnyCodable: Codable {
             value = stringValue
         } else if let boolValue = try? container.decode(Bool.self) {
             value = boolValue
-        } else if let arrayValue = try? container.decode([AnyCodable].self) {
+        } else if let arrayValue = try? container.decode([SwiftAnyCodable].self) {
             value = arrayValue
-        } else if let dictValue = try? container.decode([String: AnyCodable].self) {
+        } else if let dictValue = try? container.decode([String: SwiftAnyCodable].self) {
             value = dictValue
         } else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid JSON format")
@@ -1282,9 +1282,9 @@ public struct AnyCodable: Codable {
             try container.encode(stringValue)
         } else if let boolValue = value as? Bool {
             try container.encode(boolValue)
-        } else if let arrayValue = value as? [AnyCodable] {
+        } else if let arrayValue = value as? [SwiftAnyCodable] {
             try container.encode(arrayValue)
-        } else if let dictValue = value as? [String: AnyCodable] {
+        } else if let dictValue = value as? [String: SwiftAnyCodable] {
             try container.encode(dictValue)
         } else {
             throw EncodingError.invalidValue(value, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Invalid JSON format"))
