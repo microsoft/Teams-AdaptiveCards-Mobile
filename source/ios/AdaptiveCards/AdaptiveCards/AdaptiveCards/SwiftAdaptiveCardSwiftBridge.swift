@@ -19,6 +19,30 @@ extension Array where Element: Convertible {
     }
 }
 
+// MARK: - Debug Logger for ACRView
+@objcMembers
+public class ACRDebugLogger: NSObject {
+    
+    @objc public static func log(_ message: String) {
+        print("🐛 ACR Debug: \(message)")
+    }
+    
+    @objc public static func logKVO(_ message: String, imageView: AnyObject?) {
+        let imageViewDesc = imageView != nil ? String(describing: imageView!) : "nil"
+        print("🔍 KVO Debug: \(message) | ImageView: \(imageViewDesc)")
+    }
+    
+    @objc public static func logCallback(_ message: String, imageView: AnyObject?) {
+        let imageViewDesc = imageView != nil ? String(describing: imageView!) : "nil"
+        print("📞 Callback Debug: \(message) | ImageView: \(imageViewDesc)")
+    }
+    
+    @objc public static func logImageLoading(_ message: String, url: String?) {
+        let urlDesc = url ?? "nil"
+        print("🖼️ Image Loading: \(message) | URL: \(urlDesc)")
+    }
+}
+
 @objcMembers
 public class SwiftAdaptiveCardParseResult: NSObject {
     public var parseResult: SwiftParseResult?

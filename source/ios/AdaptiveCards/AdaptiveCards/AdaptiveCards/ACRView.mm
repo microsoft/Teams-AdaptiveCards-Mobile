@@ -19,6 +19,38 @@
 #import "ACRUILabel.h"
 #import "ACRViewPrivate.h"
 #import "ActionSet.h"
+
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 1
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 0
+#endif
+
+// Simple wrapper for Swift debug logging
+static inline void ACRDebugLog(NSString *message) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+    [ACRDebugLogger log:message];
+#else
+    NSLog(@"🐛 ACR Debug: %@", message);
+#endif
+}
+
+static inline void ACRDebugLogKVO(NSString *message, id imageView) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+    [ACRDebugLogger logKVO:message imageView:imageView];
+#else
+    NSLog(@"🔍 KVO Debug: %@ | ImageView: %@", message, imageView ?: @"nil");
+#endif
+}
+
+static inline void ACRDebugLogCallback(NSString *message, id imageView) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+    [ACRDebugLogger logCallback:message imageView:imageView];
+#else
+    NSLog(@"📞 Callback Debug: %@ | ImageView: %@", message, imageView ?: @"nil");
+#endif
+}
 #import "AdaptiveBase64Util.h"
 #import "BackgroundImage.h"
 #import "Column.h"
@@ -290,14 +322,14 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 
                 // Simple images have specific characteristics:
                 // 1. Not media type (complex cards have media types)
-                // 2. Not person style (avatars have person style)  
+                // 2. Not person style (avatars have person style)
                 // 3. Basic image properties without special sizing
-                isSimpleImageCase = (!containingView.isMediaType && 
+                isSimpleImageCase = (!containingView.isMediaType &&
                                    !containingView.isPersonStyle &&
                                    containingView.imageProperties != nil);
                 
-                NSLog(@"ACRView: Container analysis - isSimpleImageCase: %@, isMediaType: %@, isPersonStyle: %@", 
-                      isSimpleImageCase ? @"YES" : @"NO", 
+                NSLog(@"ACRView: Container analysis - isSimpleImageCase: %@, isMediaType: %@, isPersonStyle: %@",
+                      isSimpleImageCase ? @"YES" : @"NO",
                       containingView.isMediaType ? @"YES" : @"NO",
                       containingView.isPersonStyle ? @"YES" : @"NO");
             } else {
@@ -324,7 +356,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     CGSize scaledSize = CGSizeMake(imageSize.width * scale, imageSize.height * scale);
                     
                     // Ensure container is properly sized first
-                    containingView.frame = CGRectMake(containingView.frame.origin.x, containingView.frame.origin.y, 
+                    containingView.frame = CGRectMake(containingView.frame.origin.x, containingView.frame.origin.y,
                                                      maxWidth, maxHeight);
                     
                     // Center the image in the container (using container bounds, not containerBounds variable)
@@ -348,7 +380,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     // Update container properties and trigger layout
                     [containingView update:containingView.imageProperties];
                     
-                    NSLog(@"ACRView: Direct frame set - imageView frame: %@, container frame: %@", 
+                    NSLog(@"ACRView: Direct frame set - imageView frame: %@, container frame: %@",
                           NSStringFromCGRect(imageView.frame), NSStringFromCGRect(containingView.frame));
                 }
                 
@@ -356,14 +388,14 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 [self setNeedsLayout];
                 [self layoutIfNeeded];
                 
-                NSLog(@"ACRView: Simple image case handled - final imageView frame: %@", 
+                NSLog(@"ACRView: Simple image case handled - final imageView frame: %@",
                       NSStringFromCGRect(imageView.frame));
             } else {
                 NSLog(@"ACRView: Handling normal image with full renderer approach");
                 
                 // Get the appropriate renderer for normal images (complex cards or well-behaved simple images)
                 ACRRegistration *reg = [ACRRegistration getInstance];
-                ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *renderer = 
+                ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *renderer =
                     (ACRBaseCardElementRenderer<ACRIKVONotificationHandler> *)[reg getRenderer:[NSNumber numberWithInt:static_cast<int>(baseCardElement.type)]];
                 
                 if (renderer && [[renderer class] conformsToProtocol:@protocol(ACRIKVONotificationHandler)]) {
@@ -375,8 +407,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     // This prevents the crash when configUpdateForUIImageView tries to remove a non-existent observer
                     [_setOfRemovedObservers addObject:imageView];
                     
-                    NSLog(@"ACRView: Before renderer call - imageView frame: %@, image size: %@", 
-                          NSStringFromCGRect(imageView.frame), 
+                    NSLog(@"ACRView: Before renderer call - imageView frame: %@, image size: %@",
+                          NSStringFromCGRect(imageView.frame),
                           NSStringFromCGSize(image.size));
                     
                     // This is the key call that was missing - it handles proper Auto Layout constraints
@@ -506,6 +538,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
                             shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
                             NSLog(@"ACRView Image: Resource resolver shouldAddKVOObserverForImageView returned %@", shouldAddObserver ? @"YES" : @"NO");
+                            ACRDebugLog([NSString stringWithFormat:@"🎯 ACRView shouldAddKVOObserverForImageView returned: %@", shouldAddObserver ? @"YES" : @"NO"]);
                         }
                         
                         if (shouldAddObserver) {
@@ -513,27 +546,33 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
                                       context:element.get()];
+                            ACRDebugLogKVO(@"✅ KVO observer added for imageView", view);
                         } else {
-                            // If resource resolver says NO, enable early KVO removal as fallback
-                            [rootView enableEarlyKVORemovalForImageView:view];
+                            // If resource resolver says NO, set up callback mechanism instead of KVO
+                            ACRDebugLogKVO(@"❌ KVO disabled - setting up callback mechanism", view);
                             
                             // Set up callback mechanism for image loading notifications
                             if ([imageResourceResolver respondsToSelector:@selector(setImageLoadedCallback:forImageView:)]) {
                                 NSLog(@"ACRView Image: Setting up image loaded callback for non-KVO resolver");
+                                ACRDebugLogCallback(@"🎯 ACRView detected setImageLoadedCallback method - setting up callback", view);
                                 __weak ACRView *weakRootView = rootView;
                                 void (^imageLoadedCallback)(UIImageView *) = ^(UIImageView *imageView) {
                                     dispatch_async(dispatch_get_main_queue(), ^{
                                         ACRView *strongRootView = weakRootView;
                                         if (strongRootView && imageView) {
                                             NSLog(@"ACRView Image: Image loaded callback triggered for imageView: %@", imageView);
+                                            ACRDebugLogCallback(@"🔥 CALLBACK TRIGGERED! Image loaded callback fired", imageView);
                                             [strongRootView handleImageLoadedForView:imageView key:key context:element.get()];
                                         }
                                     });
                                 };
+                                ACRDebugLogCallback(@"🚀 About to call setImageLoadedCallback on resolver", view);
                                 [imageResourceResolver setImageLoadedCallback:imageLoadedCallback forImageView:view];
+                                ACRDebugLogCallback(@"✅ setImageLoadedCallback call completed", view);
                             } else {
                                 // Fallback to the polling mechanism if callback is not available
                                 [rootView scheduleImageCompletionCheckForView:view key:key];
+                                ACRDebugLogCallback(@"❌ setImageLoadedCallback NOT found - using polling fallback", view);
                             }
                         }
 
@@ -571,24 +610,29 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                        forKeyPath:@"image"
                                           options:NSKeyValueObservingOptionNew
                                           context:element.get()];
+                                ACRDebugLogKVO(@"✅ KVO observer added for ImageSet imageView", view);;
                             } else {
-                                // If resource resolver says NO, enable early KVO removal as fallback
-                                [rootView enableEarlyKVORemovalForImageView:view];
+                                // If resource resolver says NO, set up callback mechanism instead of KVO
+                                ACRDebugLogKVO(@"❌ KVO disabled for ImageSet - setting up callback mechanism", view);
                                 
                                 // Set up callback mechanism for image loading notifications
                                 if ([imageResourceResolver respondsToSelector:@selector(setImageLoadedCallback:forImageView:)]) {
                                     NSLog(@"ACRView ImageSet: Setting up image loaded callback for non-KVO resolver");
+                                    ACRDebugLogCallback(@"🎯 ACRView ImageSet detected setImageLoadedCallback method - setting up callback", view);
                                     __weak ACRView *weakRootView = rootView;
                                     void (^imageLoadedCallback)(UIImageView *) = ^(UIImageView *imageView) {
                                         dispatch_async(dispatch_get_main_queue(), ^{
                                             ACRView *strongRootView = weakRootView;
                                             if (strongRootView && imageView) {
                                                 NSLog(@"ACRView ImageSet: Image loaded callback triggered for imageView: %@", imageView);
+                                                ACRDebugLogCallback(@"🔥 IMAGESET CALLBACK TRIGGERED! Image loaded callback fired", imageView);
                                                 [strongRootView handleImageLoadedForView:imageView key:key context:element.get()];
                                             }
                                         });
                                     };
+                                    ACRDebugLogCallback(@"🚀 ImageSet about to call setImageLoadedCallback on resolver", view);
                                     [imageResourceResolver setImageLoadedCallback:imageLoadedCallback forImageView:view];
+                                    ACRDebugLogCallback(@"✅ ImageSet setImageLoadedCallback call completed", view);
                                 } else {
                                     // Fallback to the polling mechanism if callback is not available
                                     [rootView scheduleImageCompletionCheckForView:view key:key];
@@ -628,6 +672,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                             if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
                                 shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
                                 NSLog(@"ACRView Media: Resource resolver shouldAddKVOObserverForImageView returned %@", shouldAddObserver ? @"YES" : @"NO");
+                                ACRDebugLog([NSString stringWithFormat:@"🎯 ACRView Media shouldAddKVOObserverForImageView returned: %@", shouldAddObserver ? @"YES" : @"NO"]);
                             }
                             
                             if (shouldAddObserver) {
@@ -635,24 +680,29 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                        forKeyPath:@"image"
                                           options:NSKeyValueObservingOptionNew
                                           context:elem.get()];
+                                ACRDebugLogKVO(@"✅ KVO observer added for Media imageView", view);
                             } else {
-                                // If resource resolver says NO, enable early KVO removal as fallback
-                                [rootView enableEarlyKVORemovalForImageView:view];
+                                // If resource resolver says NO, set up callback mechanism instead of KVO
+                                ACRDebugLogKVO(@"❌ KVO disabled for Media - setting up callback mechanism", view);
                                 
                                 // Set up callback mechanism for image loading notifications
                                 if ([imageResourceResolver respondsToSelector:@selector(setImageLoadedCallback:forImageView:)]) {
                                     NSLog(@"ACRView Media: Setting up image loaded callback for non-KVO resolver");
+                                    ACRDebugLogCallback(@"🎯 ACRView Media detected setImageLoadedCallback method - setting up callback", view);
                                     __weak ACRView *weakRootView = rootView;
                                     void (^imageLoadedCallback)(UIImageView *) = ^(UIImageView *imageView) {
                                         dispatch_async(dispatch_get_main_queue(), ^{
                                             ACRView *strongRootView = weakRootView;
                                             if (strongRootView && imageView) {
                                                 NSLog(@"ACRView Media: Image loaded callback triggered for imageView: %@", imageView);
+                                                ACRDebugLogCallback(@"🔥 MEDIA CALLBACK TRIGGERED! Image loaded callback fired", imageView);
                                                 [strongRootView handleImageLoadedForView:imageView key:key context:elem.get()];
                                             }
                                         });
                                     };
+                                    ACRDebugLogCallback(@"🚀 Media about to call setImageLoadedCallback on resolver", view);
                                     [imageResourceResolver setImageLoadedCallback:imageLoadedCallback forImageView:view];
+                                    ACRDebugLogCallback(@"✅ Media setImageLoadedCallback call completed", view);
                                 } else {
                                     // Fallback to the polling mechanism if callback is not available
                                     [rootView scheduleImageCompletionCheckForView:view key:key];
@@ -1155,8 +1205,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             object = ((UIView *)object).subviews[0];
         }
 
-        if (![_setOfRemovedObservers containsObject:object] && 
-            ![self isEarlyKVORemovalEnabledForImageView:(UIImageView *)object] && 
+        if (![_setOfRemovedObservers containsObject:object] &&
+            ![self isEarlyKVORemovalEnabledForImageView:(UIImageView *)object] &&
             [object isKindOfClass:[UIImageView class]]) {
             [object removeObserver:self forKeyPath:@"image"];
         }
