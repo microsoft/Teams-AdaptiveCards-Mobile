@@ -189,7 +189,7 @@ enum SwiftUnknownElementLegacySupport {
         }
         
         // Include all properties
-        let properties = value.mapValues { AnyCodable($0) }
+        let properties = value.mapValues { SwiftAnyCodable($0) }
         
         return SwiftUnknownElement(elementType: typeString, additionalProperties: properties)
     }
@@ -3941,7 +3941,7 @@ public extension SwiftTextRun {
         // Handle selectAction
         let selectAction: SwiftBaseActionElement?
         if let actionData = json["selectAction"] {
-            if let dict = actionData as? [String: AnyCodable],
+            if let dict = actionData as? [String: SwiftAnyCodable],
                let typeAnyCodable = dict["type"],
                let typeString = typeAnyCodable.value as? String {
                 let actionDict: [String: Any] = ["type": typeString]
@@ -3982,7 +3982,7 @@ public extension SwiftTextRun {
             underline: underline,
             language: language ?? "en", // Default to "en" if nil
             selectAction: selectAction,
-            additionalProperties: additionalProperties.mapValues { AnyCodable($0) }
+            additionalProperties: additionalProperties.mapValues { SwiftAnyCodable($0) }
         )
     }
 }
@@ -4245,7 +4245,7 @@ extension SwiftBaseActionElement {
     /// Deserializes a BaseActionElement from a JSON dictionary.
     class func deepConvertToJSONSerializable(_ value: Any) -> Any {
         // Handle AnyCodable
-        if let anyCodable = value as? AnyCodable {
+        if let anyCodable = value as? SwiftAnyCodable {
             return deepConvertToJSONSerializable(anyCodable.value)
         }
         
@@ -4306,7 +4306,7 @@ enum SwiftExecuteActionLegacySupport {
             return
         }
         // Convert [String: Any] into [String: AnyCodable]
-        action.dataJson = jsonDict.mapValues { AnyCodable($0) }
+        action.dataJson = jsonDict.mapValues { SwiftAnyCodable($0) }
     }
 
     /// Serializes the action into a legacy JSON dictionary.
@@ -4480,7 +4480,7 @@ enum SwiftSubmitActionLegacySupport {
             }
         }
         if !additionalProps.isEmpty {
-            action.additionalProperties = additionalProps.mapValues { AnyCodable($0) }
+            action.additionalProperties = additionalProps.mapValues { SwiftAnyCodable($0) }
         }
         
         return action
@@ -4578,7 +4578,7 @@ extension SwiftSubmitAction {
             }
         }
         if !additionalProps.isEmpty {
-            action.additionalProperties = additionalProps.mapValues { AnyCodable($0) }
+            action.additionalProperties = additionalProps.mapValues { SwiftAnyCodable($0) }
         }
         
         return action
@@ -4620,7 +4620,7 @@ final class UnknownActionParser: SwiftActionElementParser {
         // Create an unknown action with the original type.
         let unknownAction = SwiftUnknownAction(type: typeString)
         // Store all JSON key–value pairs in additionalProperties.
-        unknownAction.additionalProperties = json.mapValues { AnyCodable($0) }
+        unknownAction.additionalProperties = json.mapValues { SwiftAnyCodable($0) }
         return unknownAction
     }
     
@@ -5443,9 +5443,9 @@ extension SwiftBaseCardElement {
     
     /// Set additional properties from a JSON dictionary
     func setAdditionalProperties(_ json: [String: Any]) {
-        var codableDict = [String: AnyCodable]()
+        var codableDict = [String: SwiftAnyCodable]()
         for (key, value) in json {
-            codableDict[key] = AnyCodable(value)
+            codableDict[key] = SwiftAnyCodable(value)
         }
         self.additionalProperties = codableDict
     }

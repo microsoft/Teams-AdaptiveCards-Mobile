@@ -91,10 +91,10 @@
         self.dataSource = dataSource;
 
         if (dataSource) {
-            dataSource.isRequired = inputBlck->GetIsRequired();
+            dataSource.isRequired = inputBlck->GetIsRequired() && !rootView.isRenderingInsideBottomSheet;
         }
 
-        if (inputBlck->GetIsRequired()) {
+        if (inputBlck->GetIsRequired() && !rootView.isRenderingInsideBottomSheet) {
             self.isRequired = YES;
             textElementProperties.SetTextSize(pLabelConfig->size);
             textElementProperties.SetTextWeight(pLabelConfig->weight);
