@@ -80,12 +80,22 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
         view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cgsize.width, cgsize.height)];
         view.image = img;
     }
+    
+    // CRITICAL FIX: Always create a UIImageView if one doesn't exist, even without an image
+    // This ensures the view hierarchy is complete for external KVO systems (like TeamsSpace)
+    if (!view) {
+        CGSize cgsize = imageProps.contentSize;
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cgsize.width, cgsize.height)];
+        // Store the newly created view in the map so concurrent processing can find it
+        [rootView setImageView:key view:view];
+        NSLog(@"ACRImageRenderer: Created placeholder UIImageView for external KVO management");
+    }
 
     ACRContentHoldingUIView *wrappingView = [[ACRContentHoldingUIView alloc] initWithImageProperties:imageProps imageView:view viewGroup:viewGroup];
 
-    if (!view || !wrappingView) {
-        [viewGroup addSubview:wrappingView];
-        return wrappingView;
+    if (!wrappingView) {
+        NSLog(@"ACRImageRenderer: ERROR - Failed to create wrapping view");
+        return nil;
     }
 
     configRtl(view, rootView.context);
