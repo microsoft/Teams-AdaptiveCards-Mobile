@@ -534,6 +534,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                     }
                 }
 
+                // on action task delegated
                 m_cardActionHandler.onAction(m_action, m_renderedAdaptiveCard);
             }
         }
