@@ -8,6 +8,30 @@
 
 import Foundation
 
+// MARK: - Debug Logger for KVO Testing
+@objc public class ADCDebugLogger: NSObject {
+    
+    @objc public static func logKVO(_ message: String) {
+        print("🎯 KVO: \(message)")
+    }
+    
+    @objc public static func logInfo(_ message: String) {
+        print("ℹ️ INFO: \(message)")
+    }
+    
+    @objc public static func logSuccess(_ message: String) {
+        print("✅ SUCCESS: \(message)")
+    }
+    
+    @objc public static func logError(_ message: String) {
+        print("❌ ERROR: \(message)")
+    }
+    
+    @objc public static func logImageView(_ message: String) {
+        print("🖼️ IMAGE: \(message)")
+    }
+}
+
 public protocol Convertible {
     associatedtype Target
     func convert() -> Target

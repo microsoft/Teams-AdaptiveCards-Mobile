@@ -254,34 +254,60 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
             ObserverActionBlock observerAction =
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseCardElement> const &element, NSURL *url, ACRView *rootView) {
-                    UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
-                    if (view) {
-                        // check image already exists in the returned image view and register the image
-                        [self registerImageFromUIImageView:view key:key];
-                        
-                        // Check if the resource resolver supports granular KVO observer control for Image elements
-                        BOOL shouldAddObserver = YES;
-                        
-                        // Check specific method first
-                        if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageElement:)]) {
-                            shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageElement:view];
-                            NSLog(@"🎯 ACR_IMAGE_ELEMENT: Using granular method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                    UIView *resolvedView = nil;
+                    UIImageView *imageView = nil;
+                    BOOL isGenericView = NO;
+                    
+                    // Try new generic view resolution first
+                    if ([imageResourceResolver respondsToSelector:@selector(resolveImageViewAsGenericView:)]) {
+                        resolvedView = [imageResourceResolver resolveImageViewAsGenericView:url];
+                        if (resolvedView) {
+                            isGenericView = YES;
+                            NSLog(@"🎯 ACR_IMAGE_ELEMENT: Using generic view resolution - resolved view: %@", NSStringFromClass([resolvedView class]));
                         }
-                        // Fall back to general method for backward compatibility
-                        else if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
-                            shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
-                            NSLog(@"🎯 ACR_IMAGE_ELEMENT: Using general method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
-                        }
-                        
-                        if (shouldAddObserver) {
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
-                        }
+                    }
+                    
+                    // Fall back to traditional UIImageView resolution
+                    if (!resolvedView) {
+                        imageView = [imageResourceResolver resolveImageViewResource:url];
+                        resolvedView = imageView; // For traditional resolution, these are the same
+                        NSLog(@"🎯 ACR_IMAGE_ELEMENT: Using traditional UIImageView resolution");
+                    }
+                    
+                    if (resolvedView) {
+                        // For traditional UIImageView resolution, handle KVO and image registration
+                        if (!isGenericView && imageView) {
+                            // check image already exists in the returned image view and register the image
+                            [self registerImageFromUIImageView:imageView key:key];
+                            
+                            // Check if the resource resolver supports granular KVO observer control for Image elements
+                            BOOL shouldAddObserver = YES;
+                            
+                            // Check specific method first
+                            if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageElement:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageElement:imageView];
+                                NSLog(@"🎯 ACR_IMAGE_ELEMENT: Using granular method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            // Fall back to general method for backward compatibility
+                            else if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:imageView];
+                                NSLog(@"🎯 ACR_IMAGE_ELEMENT: Using general method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            
+                            if (shouldAddObserver) {
+                                [imageView addObserver:self
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:element.get()];
+                            }
 
-                        // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
-                        [rootView setImageView:key view:view];
+                            // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
+                            [rootView setImageView:key view:imageView];
+                        } else {
+                            // For generic views, we don't manage KVO - the view handles its own image lifecycle
+                            NSLog(@"🎯 ACR_IMAGE_ELEMENT: Generic view will manage its own image loading and sizing");
+                        }
+                        
                         [rootView setImageContext:key context:element];
                     }
                 };

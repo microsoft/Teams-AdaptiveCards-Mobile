@@ -114,15 +114,40 @@ using namespace AdaptiveCards;
     if ((backgroundImageProperties != nullptr) && !(backgroundImageProperties->GetUrl(ACTheme(rootView.theme)).empty())) {
         ObserverActionBlock observerAction =
             ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *root) {
-                UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
-                if (view) {
-                    [view addObserver:root
-                           forKeyPath:@"image"
-                              options:NSKeyValueObservingOptionNew
-                              context:backgroundImageProperties.get()];
+                UIView *resolvedView = nil;
+                UIImageView *imageView = nil;
+                BOOL isGenericView = NO;
+                
+                // Try new generic view resolution first
+                if ([imageResourceResolver respondsToSelector:@selector(resolveBackgroundImageViewAsGenericView:hasStretch:)]) {
+                    resolvedView = [imageResourceResolver resolveBackgroundImageViewAsGenericView:url hasStretch:NO];
+                    if (resolvedView) {
+                        isGenericView = YES;
+                        NSLog(@"🎯 ACR_BACKGROUND_IMAGE: Using generic view resolution - resolved view: %@", NSStringFromClass([resolvedView class]));
+                    }
+                }
+                
+                // Fall back to traditional UIImageView resolution
+                if (!resolvedView) {
+                    imageView = [imageResourceResolver resolveImageViewResource:url];
+                    resolvedView = imageView; // For traditional resolution, these are the same
+                    NSLog(@"🎯 ACR_BACKGROUND_IMAGE: Using traditional UIImageView resolution");
+                }
+                
+                if (resolvedView) {
+                    // For traditional UIImageView resolution, handle KVO
+                    if (!isGenericView && imageView) {
+                        [imageView addObserver:root
+                               forKeyPath:@"image"
+                                  options:NSKeyValueObservingOptionNew
+                                  context:backgroundImageProperties.get()];
 
-                    // store the image view and card for easy retrieval in ACRView::observeValueForKeyPath
-                    [root setImageView:key view:view];
+                        // store the image view and card for easy retrieval in ACRView::observeValueForKeyPath
+                        [root setImageView:key view:imageView];
+                    } else {
+                        // For generic views, we don't manage KVO - the view handles its own image lifecycle
+                        NSLog(@"🎯 ACR_BACKGROUND_IMAGE: Generic view will manage its own image loading");
+                    }
                 }
             };
         [rootView loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:@"backgroundImage" observerAction:observerAction];

@@ -17,6 +17,18 @@
 
 - (UIImageView *)resolveBackgroundImageViewResource:(NSURL *)url hasStretch:(BOOL)hasStretch;
 
+// EXTENDED VIEW RESOLUTION - Support for composite views (like TeamsUI ImageView)
+// These methods allow returning generic UIViews instead of UIImageViews
+// The SDK will check for these methods first via respondsToSelector:
+// If implemented, these take precedence over the UIImageView methods above
+// The returned UIView should manage its own image loading and layout
+
+// Resolve to a generic view that manages its own image loading (e.g., composite views)
+- (UIView *)resolveImageViewAsGenericView:(NSURL *)url;
+
+// Resolve background image to a generic view that manages its own image loading
+- (UIView *)resolveBackgroundImageViewAsGenericView:(NSURL *)url hasStretch:(BOOL)hasStretch;
+
 // Granular KVO control methods - each can be implemented independently
 // Return NO if the consumer wants to manage KVO externally for that specific element type
 // Return YES or don't implement to use default SDK KVO behavior

@@ -5,7 +5,19 @@
 //  Copyright © 2018 Microsoft. All rights reserved.
 //
 #import "ACOResourceResolvers.h"
+#import "ACOIResourceResolver.h"
+#import "ACOAdaptiveCard.h"
+#import "ACOAdaptiveCardParseResult.h"
+#import "ACOHostConfig.h"
+#import "ACRView.h"
+#import "ACRRenderer.h"
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+// Forward declare classes to avoid circular imports
+// Note: TestCompositeImageView and MockSwiftKVOManager are now defined in ADCKVOTestResolver files
+@class TestCompositeImageView;
+@class MockSwiftKVOManager;
 
 @implementation ACOResourceResolvers {
     NSMutableDictionary<NSString *, NSObject<ACOIResourceResolver> *> *_resolvers;
@@ -48,3 +60,26 @@
 }
 
 @end
+
+/*
+// MARK: - Generic View Resolution Architecture
+
+// The new generic view resolution allows composite views (like TeamsUI ImageView) 
+// to be used instead of just UIImageViews.
+
+// Key Components:
+// 1. ACOIResourceResolver protocol extended with resolveImageViewAsGenericView and resolveBackgroundImageViewAsGenericView
+// 2. ACRView.mm and ACRRenderer.mm updated to check for generic methods first
+// 3. Test implementation in ADCKVOTestResolver files (TestGenericViewImageResolver, TestCompositeImageView, MockSwiftKVOManager)
+
+// Usage Example (in visualizer):
+// TestGenericViewImageResolver *resolver = [TestGenericViewImageResolver sharedResolver];
+// resolver.useGenericViewResolution = YES;
+// resolver.enableExternalKVO = YES;
+
+// For TeamsSpace Integration:
+// 1. Replace TestCompositeImageView with TeamsUI ImageView in your resolver
+// 2. Replace MockSwiftKVOManager with TeamsSpace KVO management
+// 3. Implement resolver that provides TeamsUI ImageViews via resolveImageViewAsGenericView
+// 4. The SDK will automatically use generic resolution when available, falling back to UIImageView
+*/
