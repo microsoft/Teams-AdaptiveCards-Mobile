@@ -17,15 +17,15 @@
 
 - (UIImageView *)resolveBackgroundImageViewResource:(NSURL *)url hasStretch:(BOOL)hasStretch;
 
-@optional
 // Granular KVO control methods - each can be implemented independently
 // Return NO if the consumer wants to manage KVO externally for that specific element type
 // Return YES or don't implement to use default SDK KVO behavior
+// These methods are checked with respondsToSelector: so implementation is optional
 
 // Control KVO for Image elements
 - (BOOL)shouldAddKVOObserverForImageElement:(UIImageView *)imageView;
 
-// Control KVO for ImageSet elements  
+// Control KVO for ImageSet elements
 - (BOOL)shouldAddKVOObserverForImageSetElement:(UIImageView *)imageView;
 
 // Control KVO for Media poster images
@@ -43,9 +43,4 @@
 // Backward compatibility - if implemented, overrides all specific methods above
 - (BOOL)shouldAddKVOObserverForImageView:(UIImageView *)imageView;
 
-@end
-
-// MARK: - Mock KVO Manager for Testing (accessible to visualizer)
-@interface MockSwiftKVOManager : NSObject
-+ (void)addKVOObserverForImageView:(UIImageView *)imageView acrView:(NSObject *)acrView;
 @end
