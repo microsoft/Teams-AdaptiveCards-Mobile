@@ -258,10 +258,27 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     if (view) {
                         // check image already exists in the returned image view and register the image
                         [self registerImageFromUIImageView:view key:key];
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:element.get()];
+                        
+                        // Check if the resource resolver supports granular KVO observer control for Image elements
+                        BOOL shouldAddObserver = YES;
+                        
+                        // Check specific method first
+                        if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageElement:)]) {
+                            shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageElement:view];
+                            NSLog(@"🎯 ACR_IMAGE_ELEMENT: Using granular method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                        }
+                        // Fall back to general method for backward compatibility
+                        else if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
+                            shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
+                            NSLog(@"🎯 ACR_IMAGE_ELEMENT: Using general method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                        }
+                        
+                        if (shouldAddObserver) {
+                            [view addObserver:self
+                                   forKeyPath:@"image"
+                                      options:NSKeyValueObservingOptionNew
+                                      context:element.get()];
+                        }
 
                         // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
                         [rootView setImageView:key view:view];
@@ -284,10 +301,27 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            
+                            // Check if the resource resolver supports granular KVO observer control for ImageSet elements
+                            BOOL shouldAddObserver = YES;
+                            
+                            // Check specific method first
+                            if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageSetElement:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageSetElement:view];
+                                NSLog(@"🎯 ACR_IMAGESET_ELEMENT: Using granular method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            // Fall back to general method for backward compatibility
+                            else if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
+                                NSLog(@"🎯 ACR_IMAGESET_ELEMENT: Using general method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            
+                            if (shouldAddObserver) {
+                                [view addObserver:self
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:element.get()];
+                            }
 
                             // store the image view and image set element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -316,10 +350,27 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                             [self registerImageFromUIImageView:view key:key];
                             [contentholdingview addSubview:view];
                             contentholdingview.isMediaType = YES;
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                            
+                            // Check if the resource resolver supports granular KVO observer control for Media elements
+                            BOOL shouldAddObserver = YES;
+                            
+                            // Check specific method first
+                            if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForMediaElement:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForMediaElement:view];
+                                NSLog(@"🎯 ACR_MEDIA_ELEMENT: Using granular method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            // Fall back to general method for backward compatibility
+                            else if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
+                                NSLog(@"🎯 ACR_MEDIA_ELEMENT: Using general method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            
+                            if (shouldAddObserver) {
+                                [view addObserver:self
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:elem.get()];
+                            }
 
                             // store the image view and media element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:contentholdingview];
@@ -336,10 +387,27 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:rootView
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:nil];
+                            
+                            // Check if the resource resolver supports granular KVO observer control for Media Play Button
+                            BOOL shouldAddObserver = YES;
+                            
+                            // Check specific method first
+                            if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForMediaPlayButton:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForMediaPlayButton:view];
+                                NSLog(@"🎯 ACR_MEDIA_PLAYBUTTON: Using granular method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            // Fall back to general method for backward compatibility
+                            else if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
+                                NSLog(@"🎯 ACR_MEDIA_PLAYBUTTON: Using general method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            
+                            if (shouldAddObserver) {
+                                [view addObserver:rootView
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:nil];
+                            }
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
                         }
@@ -361,10 +429,26 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            // Check if the resource resolver supports granular KVO observer control for TextInput Icon
+                            BOOL shouldAddObserver = YES;
+                            
+                            // Check specific method first
+                            if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForTextInputIcon:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForTextInputIcon:view];
+                                NSLog(@"🎯 ACR_TEXTINPUT_ICON: Using granular method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            // Fall back to general method for backward compatibility
+                            else if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
+                                shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
+                                NSLog(@"🎯 ACR_TEXTINPUT_ICON: Using general method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                            }
+                            
+                            if (shouldAddObserver) {
+                                [view addObserver:self
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:element.get()];
+                            }
 
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -517,10 +601,26 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                     if (view) {
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:elem.get()];
+                        // Check if the resource resolver supports granular KVO observer control for Action Icon
+                        BOOL shouldAddObserver = YES;
+                        
+                        // Check specific method first
+                        if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForActionIcon:)]) {
+                            shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForActionIcon:view];
+                            NSLog(@"🎯 ACR_ACTION_ICON: Using granular method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                        }
+                        // Fall back to general method for backward compatibility
+                        else if ([imageResourceResolver respondsToSelector:@selector(shouldAddKVOObserverForImageView:)]) {
+                            shouldAddObserver = [imageResourceResolver shouldAddKVOObserverForImageView:view];
+                            NSLog(@"🎯 ACR_ACTION_ICON: Using general method - shouldAddKVO: %@", shouldAddObserver ? @"YES" : @"NO");
+                        }
+                        
+                        if (shouldAddObserver) {
+                            [view addObserver:self
+                                   forKeyPath:@"image"
+                                      options:NSKeyValueObservingOptionNew
+                                      context:elem.get()];
+                        }
                         [rootView setImageView:key view:view];
                     }
                 };
