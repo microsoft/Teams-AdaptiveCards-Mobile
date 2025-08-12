@@ -136,7 +136,7 @@ using namespace AdaptiveCards;
             }
         }
     } else {
-        if (isImageSet || _imageView.image) {
+        if (isImageSet || ([_imageView isKindOfClass:[UIImageView class]] && ((UIImageView *)_imageView).image) || (![_imageView isKindOfClass:[UIImageView class]] && _imageView)) {
             BOOL bUpdate = NO;
             if (self.imageProperties.acrImageSize != ACRImageSizeExplicit && !heightConstraint) {
                 [self setHeightConstraint];

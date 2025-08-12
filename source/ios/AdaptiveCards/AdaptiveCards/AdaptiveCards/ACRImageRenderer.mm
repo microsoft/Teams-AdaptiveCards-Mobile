@@ -166,9 +166,13 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
         view.layer.cornerRadius = config->GetCornerRadius(imgElem->GetElementType());
     }
 
-    if (view && view.image) {
+    if (view && [view isKindOfClass:[UIImageView class]] && view.image) {
         // if we already have UIImageView and UIImage, configures the constraints and turn off the notification
-        [self configUpdateForUIImageView:rootView acoElem:acoElem config:acoConfig image:view.image imageView:view];
+        [self configUpdateForUIImageView:rootView acoElem:acoElem config:acoConfig image:view.image imageView:(UIImageView *)view];
+    } else if (view && ![view isKindOfClass:[UIImageView class]]) {
+        // For generic composite views, let them manage their own layout
+        NSLog(@"🎯 ACR_IMAGE_RENDERER: Skipping configUpdateForUIImageView for generic view: %@", NSStringFromClass([view class]));
+        NSLog(@"🎯 ACR_IMAGE_RENDERER: Generic view will handle its own layout and sizing");
     }
     return wrappingView;
 }

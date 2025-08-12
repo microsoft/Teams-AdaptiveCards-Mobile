@@ -306,6 +306,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         } else {
                             // For generic views, we don't manage KVO - the view handles its own image lifecycle
                             NSLog(@"🎯 ACR_IMAGE_ELEMENT: Generic view will manage its own image loading and sizing");
+                            
+                            // CRITICAL: Store the generic view so ACRImageRenderer can retrieve it
+                            [rootView setImageView:key view:resolvedView];
+                            NSLog(@"🎯 ACR_IMAGE_ELEMENT: Stored generic view for key: %@", key);
                         }
                         
                         [rootView setImageContext:key context:element];
