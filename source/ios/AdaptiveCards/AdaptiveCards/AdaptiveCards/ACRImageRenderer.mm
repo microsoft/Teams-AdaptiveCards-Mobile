@@ -248,6 +248,13 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
 
     if (superview) {
         [superview update:imageProps];
+        
+        // Only trigger layout updates for Swift KVO to fix timing issues
+        if ([rootView isUsingSwiftKVOForImageView:imageView]) {
+            if ([superview respondsToSelector:@selector(updateLayoutForSwiftKVO)]) {
+                [superview performSelector:@selector(updateLayoutForSwiftKVO)];
+            }
+        }
     }
 
     // Only remove observer if using traditional KVO

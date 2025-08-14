@@ -186,13 +186,22 @@ public class SwiftKVOHelper: NSObject {
                   let imageView = imageView else { return }
             
             // Use Swift KVO observe pattern - automatically thread-safe and cleans up properly
-            let observation = imageView.observe(\.image, options: [.new]) { [weak observer] observedImageView, change in
+            let observation = imageView.observe(\.image, options: [.new, .old]) { [weak observer] observedImageView, change in
                 DispatchQueue.main.async {
                     guard let observer = observer else { return }
                     
+                    // Extract actual image values from optionals-of-optionals
+                    let actualOldImage = change.oldValue ?? nil
+                    let actualNewImage = change.newValue ?? nil
+                    
+                    // Skip initial nil→nil observations to match traditional KVO behavior
+                    if actualOldImage == nil && actualNewImage == nil {
+                        return
+                    }
+                    
                     // Convert to the format expected by the existing observeValueForKeyPath implementation
                     var changeDict: [NSKeyValueChangeKey: Any] = [:]
-                    if let newImage = change.newValue {
+                    if let newImage = actualNewImage {
                         changeDict[.newKey] = newImage
                     }
                     
