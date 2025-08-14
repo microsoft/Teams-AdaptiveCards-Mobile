@@ -11,4 +11,7 @@
 
 @interface ADCResolver : NSObject <ACOIResourceResolver>
 
+// Property to toggle Swift KVO for testing
+@property (nonatomic, assign) BOOL enableSwiftKVO;
+
 @end

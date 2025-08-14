@@ -10,6 +10,20 @@
 
 @implementation ADCResolver
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        // Default to Swift KVO enabled for testing
+        _enableSwiftKVO = YES;
+    }
+    return self;
+}
+
+// Optional method from ACOIResourceResolver protocol to enable Swift KVO
+- (BOOL)useSwiftKVOForImages {
+    return _enableSwiftKVO;
+}
+
 
 - (UIImageView *)resolveImageViewResource:(NSURL *)url
 {

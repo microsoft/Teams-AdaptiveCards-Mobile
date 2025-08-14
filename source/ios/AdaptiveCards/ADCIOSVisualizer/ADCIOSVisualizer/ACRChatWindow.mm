@@ -17,6 +17,7 @@
     NSString *hostConfig;
     ACOResourceResolvers *resolvers;
     ACOAdaptiveCardParseResult *errorCard;
+    ADCResolver *adcResolver; // Store reference to our ADCResolver
 }
 
 - (instancetype)init
@@ -42,12 +43,12 @@
                                                   error:nil];
         #endif
         resolvers = [[ACOResourceResolvers alloc] init];
-        ADCResolver *resolver = [[ADCResolver alloc] init];
-        [resolvers setResourceResolver:resolver scheme:@"http"];
-        [resolvers setResourceResolver:resolver scheme:@"https"];
-        [resolvers setResourceResolver:resolver scheme:@"data"];
+        adcResolver = [[ADCResolver alloc] init];
+        [resolvers setResourceResolver:adcResolver scheme:@"http"];
+        [resolvers setResourceResolver:adcResolver scheme:@"https"];
+        [resolvers setResourceResolver:adcResolver scheme:@"data"];
         // register a custom scheme bundle with resolver
-        [resolvers setResourceResolver:resolver scheme:@"bundle"];
+        [resolvers setResourceResolver:adcResolver scheme:@"bundle"];
 
         NSString *errorMSG = @"{\"type\": \"AdaptiveCard\", \"$schema\": "
                              @"\"http://adaptivecards.io/schemas/adaptive-card.json\",\"version\": "
@@ -173,6 +174,11 @@
             adaptiveCardsViews[i] = [NSNull null];
         }
     }
+}
+
+- (NSObject<ACOIResourceResolver> *)getResourceResolver
+{
+    return adcResolver;
 }
 
 @end

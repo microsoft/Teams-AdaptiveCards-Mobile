@@ -20,6 +20,7 @@ extern NSString *identifier;
 - (void)insertView:(UIView *)view;
 - (void)deleteAllRows:(UITableView *)tableView;
 - (void)prepareForRedraw;
+- (NSObject<ACOIResourceResolver> *)getResourceResolver;
 
 @end
 

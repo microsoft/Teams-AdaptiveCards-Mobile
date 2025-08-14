@@ -144,32 +144,6 @@ public class SwiftKVOHelper: NSObject {
         super.init()
     }
     
-    /// Thread-safe Swift KVO using Apple's recommended observe(_:options:changeHandler:) pattern
-    /// This automatically handles cleanup when the observation is deallocated
-    /// Note: This is a generic method for non-UIImageView objects where we can't use typed key paths
-    @objc public func observeObject(_ object: NSObject,
-                                   keyPath: String,
-                                   observer: NSObject,
-                                   context: UnsafeRawPointer?,
-                                   changeHandler: @escaping (NSObject, Any?, UnsafeRawPointer?) -> Void) {
-        
-        // For generic objects, we still need to use the string-based KVO pattern
-        // but wrap it with proper Swift cleanup
-        observationQueue.async { [weak self, weak observer, weak object] in
-            guard let self = self,
-                  let observer = observer,
-                  let object = object else { return }
-            
-            DispatchQueue.main.async {
-                // Use traditional KVO for generic key paths, but with safer cleanup tracking
-                object.addObserver(observer, forKeyPath: keyPath, options: [.new], context: UnsafeMutableRawPointer(mutating: context))
-                
-                // Note: For generic string-based KVO, we still need manual cleanup
-                // This is a limitation when we can't use typed Swift key paths
-            }
-        }
-    }
-    
     /// Convenience method specifically for image observations using Swift KVO blocks
     /// This follows Apple's recommended pattern for thread-safe KVO
     @objc public func observeImageOnView(_ view: NSObject,
@@ -245,13 +219,6 @@ public class SwiftKVOHelper: NSObject {
             // Clear all observations - they will automatically clean up
             self.activeObservations.removeAll()
         }
-    }
-    
-    /// Clean up any observations that are no longer needed
-    /// Swift KVO observations with weak references automatically become invalid when targets deallocate
-    @objc public func cleanupInvalidObservers() {
-        // No manual cleanup needed with Swift KVO - observations automatically invalidate
-        // when their weak targets are deallocated
     }
     
     deinit {

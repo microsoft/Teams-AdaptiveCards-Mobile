@@ -84,6 +84,19 @@ UIColor* defaultButtonBackgroundColor;
     }
 }
 
+- (IBAction)toggleSwiftKVO:(UISwitch *)sender
+{
+    [self.view endEditing:YES];
+    
+    // Get the ADCResolver from the chat window data source
+    ADCResolver *resolver = (ADCResolver *)[_dataSource getResourceResolver];
+    
+    // Toggle the Swift KVO setting
+    resolver.enableSwiftKVO = sender.isOn;
+    
+    NSLog(@"Swift KVO %@", sender.isOn ? @"ENABLED" : @"DISABLED");
+}
+
 - (IBAction)applyText:(id)sender
 {
     [self.view endEditing:YES];
@@ -630,6 +643,16 @@ UIColor* defaultButtonBackgroundColor;
 
     [layout[1] addArrangedSubview:customControlLabel];
     [layout[1] addArrangedSubview:self.enableCustomRendererSwitch];
+
+    // Swift KVO switch
+    UILabel *swiftKVOLabel = [[UILabel alloc] init];
+    swiftKVOLabel.text = @"Enable Swift KVO";
+    self.enableSwiftKVOSwitch = [[UISwitch alloc] init];
+    self.enableSwiftKVOSwitch.on = YES; // Default to ON for testing
+    [self.enableSwiftKVOSwitch addTarget:self action:@selector(toggleSwiftKVO:) forControlEvents:UIControlEventValueChanged];
+
+    [layout[1] addArrangedSubview:swiftKVOLabel];
+    [layout[1] addArrangedSubview:self.enableSwiftKVOSwitch];
 
     return layout;
 }

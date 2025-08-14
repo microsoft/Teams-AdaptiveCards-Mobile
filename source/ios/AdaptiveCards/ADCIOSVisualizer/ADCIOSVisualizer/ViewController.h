@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UIStackView *buttonLayout;
 @property (strong, nonatomic) UIStackView *compositeFileBrowserView;
 @property (strong, nonatomic) UISwitch *enableCustomRendererSwitch;
+@property (strong, nonatomic) UISwitch *enableSwiftKVOSwitch;
 @property (strong, nonatomic) UIButton *deleteAllRowsButton;
 @property (strong, nonatomic) NSString *hostconfig;
 @property (strong, nonatomic) ACOHostConfig *config;
