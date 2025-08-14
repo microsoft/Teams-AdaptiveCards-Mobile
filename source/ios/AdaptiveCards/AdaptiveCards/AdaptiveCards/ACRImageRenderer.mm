@@ -193,6 +193,12 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
     }
 
     CGSize cgsize = imageProps.contentSize;
+    
+    // For Swift KVO, pre-set the frame to prevent animation from size changes
+    if ([rootView isUsingSwiftKVOForImageView:imageView]) {
+        CGRect currentFrame = imageView.frame;
+        imageView.frame = CGRectMake(currentFrame.origin.x, currentFrame.origin.y, cgsize.width, cgsize.height);
+    }
 
     UILayoutPriority priority = [ACRImageRenderer getImageUILayoutPriority:imageView.superview];
     NSMutableArray<NSLayoutConstraint *> *constraints = [[NSMutableArray alloc] init];
@@ -244,16 +250,25 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
         [constraints addObject:[imageView.widthAnchor constraintLessThanOrEqualToConstant:imageProps.contentSize.width]];
     }
 
+        // For Swift KVO, temporarily disable auto layout to prevent constraint animation
+    BOOL wasTranslatesAutoresizingMaskIntoConstraints = imageView.translatesAutoresizingMaskIntoConstraints;
+    if ([rootView isUsingSwiftKVOForImageView:imageView]) {
+        imageView.translatesAutoresizingMaskIntoConstraints = YES;
+    }
+
     [NSLayoutConstraint activateConstraints:constraints];
+    
+    // Re-enable auto layout after constraints are set
+    if ([rootView isUsingSwiftKVOForImageView:imageView]) {
+        imageView.translatesAutoresizingMaskIntoConstraints = wasTranslatesAutoresizingMaskIntoConstraints;
+    }
 
     if (superview) {
         [superview update:imageProps];
         
         // Only trigger layout updates for Swift KVO to fix timing issues
         if ([rootView isUsingSwiftKVOForImageView:imageView]) {
-            if ([superview respondsToSelector:@selector(updateLayoutForSwiftKVO)]) {
-                [superview performSelector:@selector(updateLayoutForSwiftKVO)];
-            }
+            [SwiftKVOHelper updateLayoutForSwiftKVO:superview];
         }
     }
 
@@ -261,6 +276,7 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
     if (![rootView isUsingSwiftKVOForImageView:imageView]) {
         [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
     }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setImageFitModeFor:imageView image:image imageProps:imageProps];
     });

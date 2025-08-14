@@ -161,11 +161,14 @@ public class SwiftKVOHelper: NSObject {
             
             // Check for existing image and trigger immediate layout update to prevent jitter
             if let existingImage = imageView.image {
-                var changeDict: [NSKeyValueChangeKey: Any] = [:]
-                changeDict[.newKey] = existingImage
-                
-                if observer.responds(to: #selector(NSObject.observeValue(forKeyPath:of:change:context:))) {
-                    observer.observeValue(forKeyPath: "image", of: view, change: changeDict, context: UnsafeMutableRawPointer(mutating: contextPointer))
+                // Prevent constraint animations during immediate setup
+                UIView.performWithoutAnimation {
+                    var changeDict: [NSKeyValueChangeKey: Any] = [:]
+                    changeDict[.newKey] = existingImage
+                    
+                    if observer.responds(to: #selector(NSObject.observeValue(forKeyPath:of:change:context:))) {
+                        observer.observeValue(forKeyPath: "image", of: view, change: changeDict, context: UnsafeMutableRawPointer(mutating: contextPointer))
+                    }
                 }
             }
         }
@@ -199,14 +202,17 @@ public class SwiftKVOHelper: NSObject {
                         return
                     }
                     
-                    // Convert to the format expected by the existing observeValueForKeyPath implementation
-                    var changeDict: [NSKeyValueChangeKey: Any] = [:]
-                    if let newImage = actualNewImage {
-                        changeDict[.newKey] = newImage
-                    }
-                    
-                    if observer.responds(to: #selector(NSObject.observeValue(forKeyPath:of:change:context:))) {
-                        observer.observeValue(forKeyPath: "image", of: observedImageView, change: changeDict, context: UnsafeMutableRawPointer(mutating: contextPointer))
+                    // Prevent constraint animations during image changes
+                    UIView.performWithoutAnimation {
+                        // Convert to the format expected by the existing observeValueForKeyPath implementation
+                        var changeDict: [NSKeyValueChangeKey: Any] = [:]
+                        if let newImage = actualNewImage {
+                            changeDict[.newKey] = newImage
+                        }
+                        
+                        if observer.responds(to: #selector(NSObject.observeValue(forKeyPath:of:change:context:))) {
+                            observer.observeValue(forKeyPath: "image", of: observedImageView, change: changeDict, context: UnsafeMutableRawPointer(mutating: contextPointer))
+                        }
                     }
                 }
             }
@@ -232,5 +238,130 @@ public class SwiftKVOHelper: NSObject {
     
     deinit {
         removeAllObservations()
+    }
+    
+    /// Static method for updating layout when using Swift KVO
+    /// This prevents animation issues and timing problems with image loading
+    @objc public static func updateLayoutForSwiftKVO(_ view: UIView) {
+        // Disable all layer animations during layout updates
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        
+        // Also prevent UIKit animations
+        UIView.performWithoutAnimation {
+            updateLayoutForSwiftKVOInternal(view)
+        }
+        
+        CATransaction.commit()
+    }
+    
+    private static func updateLayoutForSwiftKVOInternal(_ view: UIView) {
+        // Thread-safe recursion protection using a Set
+        struct RecursionGuard {
+            static var currentlyUpdatingViews: Set<UIView> = []
+            static let lock = NSLock()
+        }
+        
+        RecursionGuard.lock.lock()
+        defer { RecursionGuard.lock.unlock() }
+        
+        // Prevent infinite recursion
+        if RecursionGuard.currentlyUpdatingViews.contains(view) {
+            return
+        }
+        
+        RecursionGuard.currentlyUpdatingViews.insert(view)
+        
+        // Ensure we're on the main thread for UI updates
+        if !Thread.isMainThread {
+            DispatchQueue.main.async {
+                updateLayoutForSwiftKVO(view)
+            }
+            return
+        }
+        
+        // Disable animations on the entire view hierarchy
+        var currentView: UIView? = view
+        var originalAnimationEnabledStates: [(UIView, Bool)] = []
+        
+        // Walk up the hierarchy and disable animations
+        while let safeView = currentView {
+            let originalState = safeView.layer.allowsGroupOpacity
+            originalAnimationEnabledStates.append((safeView, originalState))
+            safeView.layer.allowsGroupOpacity = false
+            currentView = safeView.superview
+            
+            // Stop at table view or collection view level
+            if safeView is UITableView || safeView is UICollectionView {
+                break
+            }
+        }
+        
+        // Force intrinsic content size update
+        view.invalidateIntrinsicContentSize()
+        
+        // Walk up view hierarchy to invalidate parent intrinsic content sizes
+        currentView = view.superview
+        var depth = 0
+        let maxDepth = 10 // Prevent infinite loops in complex hierarchies
+        
+        while let safeCurrentView = currentView, depth < maxDepth {
+            safeCurrentView.invalidateIntrinsicContentSize()
+            
+            // Special handling for collection views and table views
+            if safeCurrentView is UITableViewCell || safeCurrentView is UICollectionViewCell {
+                safeCurrentView.setNeedsLayout()
+                
+                // Find and notify the parent collection/table view WITHOUT animations
+                var collectionCandidate = safeCurrentView.superview
+                while let candidate = collectionCandidate, depth < maxDepth {
+                    if let tableView = candidate as? UITableView {
+                        // Disable table view animations completely
+                        DispatchQueue.main.async {
+                            UIView.performWithoutAnimation {
+                                CATransaction.begin()
+                                CATransaction.setDisableActions(true)
+                                tableView.beginUpdates()
+                                tableView.endUpdates()
+                                CATransaction.commit()
+                            }
+                        }
+                        break
+                    } else if let collectionView = candidate as? UICollectionView {
+                        // Disable collection view animations completely
+                        DispatchQueue.main.async {
+                            UIView.performWithoutAnimation {
+                                CATransaction.begin()
+                                CATransaction.setDisableActions(true)
+                                collectionView.collectionViewLayout.invalidateLayout()
+                                CATransaction.commit()
+                            }
+                        }
+                        break
+                    }
+                    collectionCandidate = candidate.superview
+                    depth += 1
+                }
+                break
+            }
+            
+            currentView = safeCurrentView.superview
+            depth += 1
+        }
+        
+        // Force layout update on original view
+        view.setNeedsLayout()
+        
+        // Restore original animation states
+        for (viewToRestore, originalState) in originalAnimationEnabledStates {
+            viewToRestore.layer.allowsGroupOpacity = originalState
+        }
+        
+        // Remove from recursion protection after a brief delay
+        DispatchQueue.main.async {
+            RecursionGuard.lock.lock()
+            RecursionGuard.currentlyUpdatingViews.remove(view)
+            RecursionGuard.lock.unlock()
+        }
     }
 }

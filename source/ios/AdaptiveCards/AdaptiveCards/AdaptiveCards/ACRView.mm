@@ -726,7 +726,18 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     observerRemoved = true;
                     NSMutableDictionary *imageViewMap = [self getImageMap];
                     imageViewMap[key] = image;
-                    [renderer configUpdateForUIImageView:self acoElem:baseCardElement config:_hostConfig image:image imageView:(UIImageView *)object];
+                    
+                    // Disable all animations when called from Swift KVO
+                    if ([self isUsingSwiftKVOForImageView:(UIImageView *)object]) {
+                        [CATransaction begin];
+                        [CATransaction setDisableActions:YES];
+                        [UIView performWithoutAnimation:^{
+                            [renderer configUpdateForUIImageView:self acoElem:baseCardElement config:_hostConfig image:image imageView:(UIImageView *)object];
+                        }];
+                        [CATransaction commit];
+                    } else {
+                        [renderer configUpdateForUIImageView:self acoElem:baseCardElement config:_hostConfig image:image imageView:(UIImageView *)object];
+                    }
                 }
             } else {
                 id view = _imageViewContextMap[key];
