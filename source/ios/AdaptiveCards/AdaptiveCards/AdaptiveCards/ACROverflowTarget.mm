@@ -12,6 +12,10 @@
 #import "ACRViewPrivate.h"
 #import "UtiliOS.h"
 
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#endif
+
 NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
 
 @implementation ACROverflowMenuItem {
@@ -78,10 +82,13 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
             completion(view.image);
         } else {
             _onIconLoaded = completion;
-            [view addObserver:self
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:_action.get()];
+            // Only add traditional KVO observer if not already using Swift KVO
+            if (![_rootView isUsingSwiftKVOForImageView:view]) {
+                [view addObserver:self
+                       forKeyPath:@"image"
+                          options:NSKeyValueObservingOptionNew
+                          context:_action.get()];
+            }
         }
     }
 }
@@ -97,7 +104,13 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
         if (_onIconLoaded) {
             _onIconLoaded(image);
         }
-        [object removeObserver:self forKeyPath:@"image"];
+        // Only remove observer if using traditional KVO
+        if ([object isKindOfClass:[UIImageView class]]) {
+            UIImageView *imageView = (UIImageView *)object;
+            if (![_rootView isUsingSwiftKVOForImageView:imageView]) {
+                [object removeObserver:self forKeyPath:@"image"];
+            }
+        }
     }
 }
 @end

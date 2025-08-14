@@ -16,8 +16,13 @@
 #import "ACRTapGestureRecognizerFactory.h"
 #import "ACRUIImageView.h"
 #import "ACRView.h"
+#import "ACRViewPrivate.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#endif
 #import <AVKit/AVKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
@@ -187,7 +192,10 @@
     [imageView.heightAnchor constraintEqualToAnchor:imageView.widthAnchor multiplier:heightToWidthRatio].active = YES;
 
     [contentholdingview setNeedsLayout];
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // Only remove observer if using traditional KVO
+    if (rootView && ![rootView isUsingSwiftKVOForImageView:imageView]) {
+        [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    }
 }
 
 @end

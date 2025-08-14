@@ -44,6 +44,13 @@
 #import "Carousel.h"
 #import <AVFoundation/AVFoundation.h>
 
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 1
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#else
+#define SWIFT_ADAPTIVE_CARDS_AVAILABLE 0
+#endif
+
 using namespace AdaptiveCards;
 typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
@@ -63,6 +70,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     NSMutableDictionary *_elementWidthMap;
     NSMutableDictionary *_imageViewContextMap;
     NSMutableSet *_setOfRemovedObservers;
+    NSMutableSet *_swiftKVOObservers; // Track image views using Swift KVO
     NSMutableDictionary<NSString *, UIView *> *_paddingMap;
     ACRTargetBuilderDirector *_actionsTargetBuilderDirector;
     ACRTargetBuilderDirector *_selectActionsTargetBuilderDirector;
@@ -88,6 +96,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         _imageContextMap = [[NSMutableDictionary alloc] init];
         _imageViewContextMap = [[NSMutableDictionary alloc] init];
         _setOfRemovedObservers = [[NSMutableSet alloc] init];
+        _swiftKVOObservers = [[NSMutableSet alloc] init];
         _paddingMap = [[NSMutableDictionary alloc] init];
         _inputHandlerLookupTable = [[NSMapTable alloc] initWithKeyOptions:NSMapTableWeakMemory valueOptions:NSMapTableWeakMemory capacity:5];
         _showcards = [[NSMutableArray alloc] init];
@@ -258,10 +267,21 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     if (view) {
                         // check image already exists in the returned image view and register the image
                         [self registerImageFromUIImageView:view key:key];
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:element.get()];
+                        
+                        // Check if we should use Swift KVO
+                        if ([imageResourceResolver respondsToSelector:@selector(useSwiftKVOForImages)] && 
+                            [imageResourceResolver useSwiftKVOForImages]) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                            NSValue *contextValue = [NSValue valueWithPointer:element.get()];
+                            [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:contextValue];
+                            [self->_swiftKVOObservers addObject:view];
+#endif
+                        } else {
+                            [view addObserver:self
+                                   forKeyPath:@"image"
+                                      options:NSKeyValueObservingOptionNew
+                                      context:element.get()];
+                        }
 
                         // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
                         [rootView setImageView:key view:view];
@@ -284,10 +304,21 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            
+                            // Check if we should use Swift KVO
+                            if ([imageResourceResolver respondsToSelector:@selector(useSwiftKVOForImages)] && 
+                                [imageResourceResolver useSwiftKVOForImages]) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                                NSValue *contextValue = [NSValue valueWithPointer:element.get()];
+                                [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:contextValue];
+                                [self->_swiftKVOObservers addObject:view];
+#endif
+                            } else {
+                                [view addObserver:self
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:element.get()];
+                            }
 
                             // store the image view and image set element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -316,10 +347,21 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                             [self registerImageFromUIImageView:view key:key];
                             [contentholdingview addSubview:view];
                             contentholdingview.isMediaType = YES;
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                            
+                            // Check if we should use Swift KVO
+                            if ([imageResourceResolver respondsToSelector:@selector(useSwiftKVOForImages)] && 
+                                [imageResourceResolver useSwiftKVOForImages]) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                                NSValue *contextValue = [NSValue valueWithPointer:elem.get()];
+                                [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:contextValue];
+                                [self->_swiftKVOObservers addObject:view];
+#endif
+                            } else {
+                                [view addObserver:self
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:elem.get()];
+                            }
 
                             // store the image view and media element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:contentholdingview];
@@ -336,10 +378,20 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:rootView
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:nil];
+                            
+                            // Check if we should use Swift KVO (play button uses rootView as observer)
+                            if ([imageResourceResolver respondsToSelector:@selector(useSwiftKVOForImages)] && 
+                                [imageResourceResolver useSwiftKVOForImages]) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                                [[SwiftKVOHelper shared] observeImageOnView:view observer:rootView element:nil];
+                                [rootView addSwiftKVOObserver:view];
+#endif
+                            } else {
+                                [view addObserver:rootView
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:nil];
+                            }
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
                         }
@@ -361,10 +413,20 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            // Check if we should use Swift KVO
+                            if ([imageResourceResolver respondsToSelector:@selector(useSwiftKVOForImages)] && 
+                                [imageResourceResolver useSwiftKVOForImages]) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                                NSValue *contextValue = [NSValue valueWithPointer:element.get()];
+                                [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:contextValue];
+                                [self->_swiftKVOObservers addObject:view];
+#endif
+                            } else {
+                                [view addObserver:self
+                                       forKeyPath:@"image"
+                                          options:NSKeyValueObservingOptionNew
+                                          context:element.get()];
+                            }
 
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -517,10 +579,20 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                     if (view) {
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:elem.get()];
+                        // Check if we should use Swift KVO
+                        if ([imageResourceResolver respondsToSelector:@selector(useSwiftKVOForImages)] && 
+                            [imageResourceResolver useSwiftKVOForImages]) {
+#if SWIFT_ADAPTIVE_CARDS_AVAILABLE
+                            NSValue *contextValue = [NSValue valueWithPointer:elem.get()];
+                            [[SwiftKVOHelper shared] observeImageOnView:view observer:self element:contextValue];
+                            [self->_swiftKVOObservers addObject:view];
+#endif
+                        } else {
+                            [view addObserver:self
+                                   forKeyPath:@"image"
+                                      options:NSKeyValueObservingOptionNew
+                                      context:elem.get()];
+                        }
                         [rootView setImageView:key view:view];
                     }
                 };
@@ -667,7 +739,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     auto backgroundImage = [_adaptiveCard card]->GetBackgroundImage();
 
                     // remove observer early in case background image must be changed to handle mode = repeat
-                    [self removeObserver:self forKeyPath:path onObject:object];
+                    if (![_swiftKVOObservers containsObject:object]) {
+                        [self removeObserver:self forKeyPath:path onObject:object];
+                    }
                     observerRemoved = true;
                     renderBackgroundImage(self, backgroundImage.get(), imageView, image);
                 }
@@ -675,7 +749,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         }
 
         if (!observerRemoved) {
-            [self removeObserver:self forKeyPath:path onObject:object];
+            if (![_swiftKVOObservers containsObject:object]) {
+                [self removeObserver:self forKeyPath:path onObject:object];
+            }
         }
     } else if ([path isEqualToString:@"hidden"]) {
         [super observeValueForKeyPath:path ofObject:object change:change context:context];
@@ -686,7 +762,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 - (void)removeObserverOnImageView:(NSString *)KeyPath onObject:(NSObject *)object keyToImageView:(NSString *)key
 {
     if ([object isKindOfClass:[UIImageView class]]) {
-        if (_imageViewContextMap[key]) {
+        if (_imageViewContextMap[key] && ![_swiftKVOObservers containsObject:object]) {
             [self removeObserver:self forKeyPath:KeyPath onObject:object];
         }
     }
@@ -801,7 +877,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             object = ((UIView *)object).subviews[0];
         }
 
-        if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
+        if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]] && ![_swiftKVOObservers containsObject:object]) {
             [object removeObserver:self forKeyPath:@"image"];
         }
     }
@@ -921,6 +997,16 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     if (context) {
         _context = context;
     }
+}
+
+- (BOOL)isUsingSwiftKVOForImageView:(UIImageView *)imageView
+{
+    return [_swiftKVOObservers containsObject:imageView];
+}
+
+- (void)addSwiftKVOObserver:(UIImageView *)imageView
+{
+    [_swiftKVOObservers addObject:imageView];
 }
 
 @end

@@ -93,6 +93,10 @@ typedef void (^ObserverActionBlockForBaseAction)(NSObject<ACOIResourceResolver> 
 
 - (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)path onObject:(NSObject *)object;
 
+- (BOOL)isUsingSwiftKVOForImageView:(UIImageView *)imageView;
+
+- (void)addSwiftKVOObserver:(UIImageView *)imageView;
+
 - (void)setContext:(ACORenderContext *)context;
 
 @end

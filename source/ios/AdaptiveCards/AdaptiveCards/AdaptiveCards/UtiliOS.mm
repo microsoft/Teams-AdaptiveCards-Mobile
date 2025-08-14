@@ -26,6 +26,10 @@
 #import "TextRun.h"
 #import "ACRTapGestureRecognizerFactory.h"
 
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#endif
+
 using namespace AdaptiveCards;
 
 // tolerance value for computing scaler for background cover size
@@ -158,11 +162,17 @@ void renderBackgroundImage(ACRView *rootView, const BackgroundImage *backgroundI
         backgroundImageProperties->GetFillMode() == ImageFillMode::RepeatHorizontally ||
         backgroundImageProperties->GetFillMode() == ImageFillMode::RepeatVertically) {
         imageView.backgroundColor = [UIColor colorWithPatternImage:image];
-        [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+        // Only remove observer if using traditional KVO
+        if (![rootView isUsingSwiftKVOForImageView:imageView]) {
+            [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+        }
         imageView.image = nil;
     }
     applyBackgroundImageConstraints(backgroundImageProperties, imageView, image);
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // Only remove observer if using traditional KVO
+    if (![rootView isUsingSwiftKVOForImageView:imageView]) {
+        [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    }
 }
 
 // apply contraints for 'Cover' fill mode
@@ -438,10 +448,21 @@ ObserverActionBlock generateBackgroundImageObserverAction(
             __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
         if (view) {
-            [view addObserver:observer
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:backgroundImageProperties.get()];
+            // Check if the resource resolver supports Swift KVO for images
+            if ([imageResourceResolver respondsToSelector:@selector(useSwiftKVOForImages)] &&
+                [imageResourceResolver useSwiftKVOForImages]) {
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+                // Use Swift KVO helper
+                [[SwiftKVOHelper shared] observeImageOnView:view observer:observer element:nil];
+                [rootView addSwiftKVOObserver:view];
+#endif
+            } else {
+                // Use traditional KVO
+                [view addObserver:observer
+                       forKeyPath:@"image"
+                          options:NSKeyValueObservingOptionNew
+                          context:backgroundImageProperties.get()];
+            }
 
             // store the image view and column for easy retrieval in ACRView::observeValueForKeyPath
             [rootView setImageView:key view:view];

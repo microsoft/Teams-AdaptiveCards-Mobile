@@ -28,6 +28,10 @@
 #import "FlowLayout.h"
 #import "AreaGridLayout.h"
 
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#endif
+
 using namespace AdaptiveCards;
 
 @implementation ACRRenderer
@@ -116,10 +120,21 @@ using namespace AdaptiveCards;
             ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *root) {
                 UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                 if (view) {
-                    [view addObserver:root
-                           forKeyPath:@"image"
-                              options:NSKeyValueObservingOptionNew
-                              context:backgroundImageProperties.get()];
+                    // Check if the resource resolver supports Swift KVO for images
+                    if ([imageResourceResolver respondsToSelector:@selector(useSwiftKVOForImages)] &&
+                        [imageResourceResolver useSwiftKVOForImages]) {
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+                        // Use Swift KVO helper - pass background image as element context
+                        [[SwiftKVOHelper shared] observeImageOnView:view observer:root element:nil];
+                        [root addSwiftKVOObserver:view];
+#endif
+                    } else {
+                        // Use traditional KVO
+                        [view addObserver:root
+                               forKeyPath:@"image"
+                                  options:NSKeyValueObservingOptionNew
+                                  context:backgroundImageProperties.get()];
+                    }
 
                     // store the image view and card for easy retrieval in ACRView::observeValueForKeyPath
                     [root setImageView:key view:view];

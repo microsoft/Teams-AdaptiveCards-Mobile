@@ -16,11 +16,16 @@
 #import "ACRTapGestureRecognizerFactory.h"
 #import "ACRUIImageView.h"
 #import "ACRView.h"
+#import "ACRViewPrivate.h"
 #import "Enums.h"
 #import "Image.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
+
+#if __has_include(<AdaptiveCards/AdaptiveCards-Swift.h>)
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+#endif
 
 @implementation ACRImageRenderer
 
@@ -245,7 +250,10 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
         [superview update:imageProps];
     }
 
-    [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    // Only remove observer if using traditional KVO
+    if (![rootView isUsingSwiftKVOForImageView:imageView]) {
+        [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setImageFitModeFor:imageView image:image imageProps:imageProps];
     });
