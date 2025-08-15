@@ -82,6 +82,8 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
                    forKeyPath:@"image"
                       options:NSKeyValueObservingOptionNew
                       context:_action.get()];
+            // Track that this imageView has a KVO observer
+            [_rootView addImageViewToKVOTracking:view];
         }
     }
 }

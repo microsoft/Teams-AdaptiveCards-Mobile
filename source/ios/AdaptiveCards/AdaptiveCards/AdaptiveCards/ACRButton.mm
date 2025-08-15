@@ -299,7 +299,10 @@
             if (view.image) {
                 button.iconView = view;
                 [button addSubview:view];
-                [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
+                // Only remove observer if one was actually added for this imageView
+                if ([rootView hasKVOObserverForImageView:view]) {
+                    [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
+                }
                 [button setImageView:view.image withConfig:config];
             } else {
                 button.iconView = view;
