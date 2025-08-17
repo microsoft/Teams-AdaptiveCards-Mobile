@@ -374,6 +374,11 @@ UIColor* defaultButtonBackgroundColor;
     return alertController;
 }
 
+- (UIViewController *) activeViewController
+{
+    return self;
+}
+
 - (void)didChangeViewLayout:(CGRect)oldFrame newFrame:(CGRect)newFrame
 {
     [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows];
@@ -458,32 +463,46 @@ UIColor* defaultButtonBackgroundColor;
     //    [self presentViewController: alert];
 
     // [Option 2] client can prepare its own presentation by direclty employing menuItems
+    UIViewController *presentingController = self;
+    if (self.presentedViewController && [self.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")])
+    {
+        // Present the overflow menu on top of the bottom sheet
+        presentingController = self.presentedViewController;
+    }
     UIAlertController *myAlert = [UIAlertController alertControllerWithTitle:nil
                                                                      message:nil
                                                               preferredStyle:UIAlertControllerStyleAlert];
 
     for (ACROverflowMenuItem *item in menuItems) {
+        __weak __typeof(self) weakSelf = self;
         UIAlertAction *action = [UIAlertAction actionWithTitle:item.title
                                                          style:UIAlertActionStyleDestructive
                                                        handler:^(UIAlertAction *_Nonnull action) {
-                                                           [item.target doSelectAction];
-                                                       }];
+            if (weakSelf.presentedViewController && [weakSelf.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")])
+            {
+                [item.target performSelector:@selector(send:) withObject:item.target];
+            }
+            else
+            {
+                [item.target doSelectAction];
+            }
+        }];
 
         [item loadIconImageWithSize:CGSizeMake(40, 40)
                        onIconLoaded:^(UIImage *image) {
-                           if (image) {
-                               [action setValue:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                         forKey:@"image"];
-                           }
-                       }];
+            if (image) {
+                [action setValue:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                          forKey:@"image"];
+            }
+        }];
 
         [myAlert addAction:action];
     }
     [myAlert addAction:[UIAlertAction actionWithTitle:@"Cancel"
                                                 style:UIAlertActionStyleCancel
                                               handler:nil]];
-    [self presentViewController:myAlert animated:YES completion:nil];
-    return YES; // skip SDK defult display
+    [presentingController presentViewController:myAlert animated:YES completion:nil];
+    return YES; // skip SDK default display
 }
 
 - (void)onChoiceSetQueryChange:(NSDictionary *)searchRequest acoElem:(ACOBaseCardElement *)elem completion:(void (^)(NSDictionary *response, NSError *error))completion

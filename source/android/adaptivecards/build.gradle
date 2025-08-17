@@ -43,7 +43,7 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    ndkVersion '23.1.7779620'
+    ndkVersion '28.0.13004108'
     lint {
         abortOnError false
     }
@@ -191,6 +191,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:' + androidxKotlinCoreVersion
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
     implementation "com.caverock:androidsvg-aar:$androidsvg"
+    implementation project(':adaptivecardsnew')
     implementation "com.google.android.material:material:$googleMaterialVersion"
 
     //viewpager2

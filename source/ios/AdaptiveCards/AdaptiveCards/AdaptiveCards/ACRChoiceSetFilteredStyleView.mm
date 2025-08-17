@@ -63,7 +63,7 @@ using namespace AdaptiveCards;
         // configure AdaptiveCards input handler
         self.id = [NSString stringWithCString:choiceSet->GetId().c_str()
                                      encoding:NSUTF8StringEncoding];
-        self.isRequired = _validator.isRequired;
+        self.isRequired = _validator.isRequired && !rootView.isRenderingInsideBottomSheet;
         self.hasValidationProperties = self.isRequired;
         self.accessibilityTraits = UIAccessibilityTraitButton;
 

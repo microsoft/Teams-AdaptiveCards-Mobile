@@ -35,7 +35,7 @@
 
 {
     self = [super initWithFrame:CGRectZero];
-    if (self) 
+    if (self)
     {
         _max = max;
         _value = value;
@@ -60,7 +60,7 @@
                            hostConfig:(ACOHostConfig *)hostConfig
 {
     self = [super initWithFrame:CGRectZero];
-    if (self) 
+    if (self)
     {
         _max = max;
         _value = value;
@@ -88,6 +88,7 @@
     {
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
         starImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        starImageView.contentMode = UIViewContentModeCenter;
         [self addSubview:starImageView];
         [_starImageViews addObject:starImageView];
         starImageView.userInteractionEnabled = YES;
@@ -109,6 +110,7 @@
     {
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
         starImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        starImageView.contentMode = UIViewContentModeCenter;
         [self addSubview:starImageView];
         [_starImageViews addObject:starImageView];
     }
@@ -118,6 +120,7 @@
         {
             UIImageView *starImageView = [[UIImageView alloc] initWithImage:[self emptyStarImage]];
             starImageView.translatesAutoresizingMaskIntoConstraints = NO;
+            starImageView.contentMode = UIViewContentModeCenter;
             [self addSubview:starImageView];
             [_starImageViews addObject:starImageView];
         }
@@ -141,9 +144,9 @@
     [self updateStarImages];
 }
 
-- (void)setupConstraints 
+- (void)setupConstraints
 {
-    CGFloat gap = _readOnly ? 4 : 12;
+    CGFloat gap = _readOnly ? 2 : 0;
     for (NSUInteger i = 0; i < _starImageViews.count; i++)
     {
         UIImageView *starImageView = _starImageViews[i];
@@ -169,14 +172,14 @@
                 [starImageView.leadingAnchor constraintEqualToAnchor:previousStarImageView.trailingAnchor constant:gap]
             ]];
         }
-        
+        CGFloat padding = _readOnly ? 0 : (_ratingSize == ACRMedium) ? 8 : 6;
         // Width and height constraints for each star
         [NSLayoutConstraint activateConstraints:@[
-            [starImageView.widthAnchor constraintEqualToConstant:[self sizeOfStar].width],
-            [starImageView.heightAnchor constraintEqualToConstant:[self sizeOfStar].height]
+            [starImageView.widthAnchor constraintEqualToConstant:[self sizeOfStar].width + (padding * 2)],
+            [starImageView.heightAnchor constraintEqualToConstant:[self sizeOfStar].height + (padding * 2)]
         ]];
         
-        if (i == _starImageViews.count - 1) 
+        if (i == _starImageViews.count - 1)
         {
             // Trailing constraint for the last star
             if(_ratingLabel != nil)
@@ -188,7 +191,7 @@
                     [_ratingLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor]
                 ]];
                 [NSLayoutConstraint activateConstraints:@[
-                    [starImageView.trailingAnchor constraintEqualToAnchor:_ratingLabel.leadingAnchor constant:-(gap)]
+                    [starImageView.trailingAnchor constraintEqualToAnchor:_ratingLabel.leadingAnchor constant:-(_readOnly ? 4: gap)]
                 ]];
             }
             else
@@ -227,7 +230,7 @@
     return filledStarImage;
 }
 
-- (void)handleStarTap:(UITapGestureRecognizer *)gesture 
+- (void)handleStarTap:(UITapGestureRecognizer *)gesture
 {
     UIImageView *tappedStar = (UIImageView *)gesture.view;
     NSInteger index = [_starImageViews indexOfObject:tappedStar];
@@ -236,13 +239,13 @@
     [_ratingValueChangeDelegate didChangeValueTo:_value];
 }
 
-- (void)updateStarImages 
+- (void)updateStarImages
 {
     NSUInteger totalFilledStars = (NSUInteger)_value;
-    for (NSUInteger i = 0; i < _starImageViews.count; i++) 
+    for (NSUInteger i = 0; i < _starImageViews.count; i++)
     {
         UIImageView *starImageView = _starImageViews[i];
-        if (i < totalFilledStars) 
+        if (i < totalFilledStars)
         {
             starImageView.image = [self filledStarImage];
             starImageView.tintColor = [self colorForFilledStars];
@@ -291,16 +294,14 @@
 
 - (CGSize)sizeOfStar
 {
-    switch (_ratingSize) 
+    switch (_ratingSize)
     {
         case ACRMedium:
-            return _readOnly ? CGSizeMake(24, 24) : CGSizeMake(28, 28);
+            return _readOnly ? CGSizeMake(16, 16) : CGSizeMake(28, 28);
             
         case ACRLarge:
-            return _readOnly ? CGSizeMake(28, 28): CGSizeMake(32, 32);
-            
         default:
-            return CGSizeMake(28, 28);
+            return _readOnly ? CGSizeMake(20, 20): CGSizeMake(32, 32);
     }
 }
 
@@ -323,17 +324,24 @@
     
     if(_count != 0)
     {
-        NSMutableAttributedString *ratingCountStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"•%ld", (long)_count]];
+        UIColor *countTextColor = [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.ratingTextColor.c_str()];
+        NSMutableAttributedString *ratingCountStr = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"%ld", (long)_count]];
         UIFont *ratingFont = [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+        NSDictionary *dotAttributes = @{
+            NSFontAttributeName: [UIFont systemFontOfSize:11 weight:UIFontWeightRegular],
+            NSForegroundColorAttributeName: countTextColor,
+            NSBaselineOffsetAttributeName: @2
+        };
         [ratingCountStr addAttribute:NSFontAttributeName
                                 value:ratingFont
                                 range:NSMakeRange(0, ratingCountStr.length)];
-
-        UIColor *countTextColor = [ACOHostConfig convertHexColorCodeToUIColor: ratingElementConfig.ratingTextColor.c_str()];
-         [ratingCountStr addAttribute:NSForegroundColorAttributeName
+        
+        [ratingCountStr addAttribute:NSForegroundColorAttributeName
                                 value:countTextColor
                                 range:NSMakeRange(0, ratingCountStr.length)];
+        NSMutableAttributedString *dotStr = [[NSMutableAttributedString alloc] initWithString:@" • " attributes:dotAttributes];
         
+        [ratingAttributedStr appendAttributedString:dotStr];
         [ratingAttributedStr appendAttributedString:ratingCountStr];
     }
     
