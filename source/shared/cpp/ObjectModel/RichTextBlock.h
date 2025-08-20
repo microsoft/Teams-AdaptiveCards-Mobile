@@ -30,11 +30,14 @@ public:
     std::vector<std::shared_ptr<Inline>>& GetInlines();
     const std::vector<std::shared_ptr<Inline>>& GetInlines() const;
 
+    std::string GetLabelFor() const;
+
 private:
     std::optional<HorizontalAlignment> m_hAlignment;
     void PopulateKnownPropertiesSet();
 
     std::vector<std::shared_ptr<Inline>> m_inlines;
+    std::string m_labelFor;
 };
 
 class RichTextBlockParser : public BaseCardElementParser

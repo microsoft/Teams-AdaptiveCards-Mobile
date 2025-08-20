@@ -282,7 +282,8 @@ public enum AdaptiveCardSchemaKey {
   Position,
   Popover,
   ImageFitMode,
-  HorizontalContentAlignment;
+  HorizontalContentAlignment,
+  LabelFor;
 
   public final int swigValue() {
     return swigValue;
