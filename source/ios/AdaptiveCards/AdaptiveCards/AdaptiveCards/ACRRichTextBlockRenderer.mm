@@ -21,6 +21,7 @@
 #import "MarkDownParser.h"
 #import "RichTextBlock.h"
 #import "TextRun.h"
+#import "TextInput.h"
 #import "UtiliOS.h"
 
 @implementation ACRRichTextBlockRenderer
@@ -198,6 +199,14 @@
 
                 [content appendAttributedString:textRunContent];
             }
+        }
+        
+        if (!rTxtBlck->GetLabelFor().empty() && TextInput().getIsRequired(rTxtBlck->GetLabelFor()))
+        {
+            RichTextElementProperties redStarProperties;
+            redStarProperties.SetTextColor(ForegroundColor::Attention);
+            NSAttributedString *redStar = initAttributedText(acoConfig, " *", redStarProperties, [viewGroup style]);
+            [content appendAttributedString:redStar];
         }
     }
 

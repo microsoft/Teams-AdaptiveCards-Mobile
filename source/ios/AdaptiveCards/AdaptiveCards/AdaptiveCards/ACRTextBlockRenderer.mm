@@ -17,6 +17,7 @@
 #import "HostConfig.h"
 #import "MarkDownParser.h"
 #import "TextBlock.h"
+#import "TextInput.h"
 #import "UtiliOS.h"
 #import "ARCGridViewLayout.h"
 
@@ -113,6 +114,14 @@
             NSForegroundColorAttributeName : foregroundColor,
         }
                          range:NSMakeRange(0, content.length)];
+        
+        if (!txtBlck->GetLabelFor().empty() && TextInput().getIsRequired(txtBlck->GetLabelFor()))
+        {
+            RichTextElementProperties redStarProperties;
+            redStarProperties.SetTextColor(ForegroundColor::Attention);
+            NSAttributedString *redStar = initAttributedText(acoConfig, " *", redStarProperties, [viewGroup style]);
+            [content appendAttributedString:redStar];
+        }
 
         lab.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
         lab.attributedText = content;

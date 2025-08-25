@@ -12,6 +12,7 @@
 #import "ACRQuickReplyView.h"
 #import "UtiliOS.h"
 #import "ValueChangedAction.h"
+#import "TextInput.h"
 
 @implementation ACRInputLabelView
 
@@ -124,6 +125,13 @@
         } else if (!inputBlck->GetIsRequired()) {
             self.label.hidden = YES;
         }
+        // Remove - To be taken care in shared
+        // Desktop is also checking if id is matching with any of the labelFor values, if there's no match then they are showing original label
+        // Make that change in shared layer
+//        if (!inputBlck->GetLabelId().empty())
+//        {
+//            self.label.hidden = YES;
+//        }
 
         self.label.attributedText = attributedLabel;
         std::string errorMessage = inputBlck->GetErrorMessage();
@@ -147,7 +155,20 @@
         self.inputView = inputView;
         self.label.isAccessibilityElement = NO;
         self.isAccessibilityElement = NO;
-        inputView.accessibilityLabel = self.label.text;
+        std::string label = TextInput().getLabel(inputBlck->GetId());
+        if (!label.empty())
+        {
+            NSString *accessibilityString = [NSString stringWithUTF8String:label.c_str()];
+            if (inputBlck->GetIsRequired())
+            {
+                accessibilityString = [accessibilityString stringByAppendingString: NSLocalizedString(@"Required", nil)];
+            }
+            inputView.accessibilityLabel = accessibilityString;
+        }
+        else
+        {
+            inputView.accessibilityLabel = self.label.text;
+        }
         self.inputAccessibilityItem = inputView;
         self.inputAccessibilityItem.accessibilityIdentifier = [NSString stringWithUTF8String:inputBlck->GetId().c_str()];
         if (inputView != accessibilityItem) {
