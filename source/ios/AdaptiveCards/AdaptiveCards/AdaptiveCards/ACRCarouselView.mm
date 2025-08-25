@@ -242,7 +242,15 @@ static NSString * const ACRCarouselAccessibilityValueFormat = @"Page %ld of %ld"
     accessibilityContainerView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:accessibilityContainerView];
     
+    [NSLayoutConstraint activateConstraints:@[
+        [accessibilityContainerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [accessibilityContainerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        [accessibilityContainerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+        [accessibilityContainerView.topAnchor constraintEqualToAnchor:self.topAnchor]
+    ]];
+    
     accessibilityContainerView.isAccessibilityElement = YES;
+    accessibilityContainerView.userInteractionEnabled = NO;
     accessibilityContainerView.accessibilityLabel = NSLocalizedString(ACRCarouselAccessibilityLabel,null);
     accessibilityContainerView.accessibilityHint =  NSLocalizedString(ACRCarouselAccessibilityHint,null);
     NSString *accessibilityValue = [NSString stringWithFormat:ACRCarouselAccessibilityValueFormat,self.carouselPageViewIndex+1,self.carouselPageViewList.count];
