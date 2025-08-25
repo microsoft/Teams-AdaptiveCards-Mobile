@@ -32,16 +32,6 @@ void BaseInputElement::SetLabel(const std::string label)
     m_label = label;
 }
 
-//std::string BaseInputElement::GetLabelId() const
-//{
-//    return m_labelId;
-//}
-//
-//void BaseInputElement::SetLabelId(const std::string labelId)
-//{
-//    m_labelId = labelId;
-//}
-
 bool BaseInputElement::GetIsRequired() const
 {
     return m_isRequired;

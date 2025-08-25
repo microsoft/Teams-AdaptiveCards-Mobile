@@ -125,13 +125,6 @@
         } else if (!inputBlck->GetIsRequired()) {
             self.label.hidden = YES;
         }
-        // Remove - To be taken care in shared
-        // Desktop is also checking if id is matching with any of the labelFor values, if there's no match then they are showing original label
-        // Make that change in shared layer
-//        if (!inputBlck->GetLabelId().empty())
-//        {
-//            self.label.hidden = YES;
-//        }
 
         self.label.attributedText = attributedLabel;
         std::string errorMessage = inputBlck->GetErrorMessage();

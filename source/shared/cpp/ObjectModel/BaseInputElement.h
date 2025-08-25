@@ -23,9 +23,6 @@ public:
 
     std::string GetLabel() const;
     void SetLabel(const std::string label);
-    
-//    std::string GetLabelId() const;
-//    void SetLabelId(const std::string labelId);
 
     bool GetIsRequired() const;
     void SetIsRequired(const bool isRequired);
@@ -48,7 +45,6 @@ private:
     bool m_isRequired;
     std::string m_errorMessage;
     std::string m_label;
-    std::string m_labelId;
     std::shared_ptr<ValueChangedAction> m_valueChangedAction;
 };
 
