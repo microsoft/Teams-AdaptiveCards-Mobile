@@ -8,6 +8,7 @@ import io.adaptivecards.adaptivecardsv2.objectmodel.utils.AdaptiveCardSchemaKey
 import io.adaptivecards.adaptivecardsv2.objectmodel.utils.InternalId
 import io.adaptivecards.adaptivecardsv2.objectmodel.utils.SemanticVersion
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 

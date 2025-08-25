@@ -1,0 +1,43 @@
+package io.adaptivecardsV2
+
+import io.adaptivecards.adaptivecardsv2.objectmodel.elements.LayoutElement
+import io.adaptivecards.adaptivecardsv2.objectmodel.utils.HorizontalItemsAlignment
+import io.adaptivecards.adaptivecardsv2.objectmodel.utils.ItemFit
+import io.adaptivecards.adaptivecardsv2.objectmodel.utils.Spacing
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class FlowLayoutPropertiesTest : BaseModelTest() {
+
+    @Test
+    fun `test FlowLayout properties`() {
+        val jsonString = """
+            {
+                "type": "Layout.Flow",
+                "itemFit": "Fit",
+                "itemWidth": "100px",
+                "minItemWidth": "50px",
+                "maxItemWidth": "200px",
+                "pixelItemWidth": 100,
+                "itemMinPixelWidth": 50,
+                "itemMaxPixelWidth": 200,
+                "rowSpacing": "default",
+                "columnSpacing": "default",
+                "horizontalAlignment": "center"
+            }
+        """.trimIndent()
+
+        val flowLayout = json.decodeFromString<LayoutElement.FlowLayout>(jsonString)
+
+        assertEquals(ItemFit.Fit, flowLayout.itemFit)
+        assertEquals("100px", flowLayout.itemWidth)
+        assertEquals("50px", flowLayout.minItemWidth)
+        assertEquals("200px", flowLayout.maxItemWidth)
+        assertEquals(100, flowLayout.pixelItemWidth)
+        assertEquals(50, flowLayout.itemMinPixelWidth)
+        assertEquals(200, flowLayout.itemMaxPixelWidth)
+        assertEquals(Spacing.DEFAULT, flowLayout.rowSpacing)
+        assertEquals(Spacing.DEFAULT, flowLayout.columnSpacing)
+        assertEquals(HorizontalItemsAlignment.CENTER, flowLayout.horizontalItemsAlignment)
+    }
+}
