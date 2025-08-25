@@ -161,7 +161,7 @@
             NSString *accessibilityString = [NSString stringWithUTF8String:label.c_str()];
             if (inputBlck->GetIsRequired())
             {
-                accessibilityString = [accessibilityString stringByAppendingString: NSLocalizedString(@"Required", nil)];
+                accessibilityString = [accessibilityString stringByAppendingString: NSLocalizedString(@"\nRequired", nil)];
             }
             inputView.accessibilityLabel = accessibilityString;
         }
