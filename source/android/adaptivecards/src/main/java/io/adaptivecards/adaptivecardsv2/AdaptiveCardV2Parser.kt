@@ -1,7 +1,7 @@
 package io.adaptivecards.renderer
 
-import com.example.ac_sdk.AdaptiveCardParser
-import com.example.ac_sdk.objectmodel.parser.ParseContext
+import io.adaptivecards.adaptivecardsv2.AdaptiveCardParser
+import io.adaptivecards.adaptivecardsv2.objectmodel.parser.ParseContext
 import io.adaptivecards.objectmodel.AdaptiveCard
 import io.adaptivecards.objectmodel.ParseResult
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 
-object AdaptiveCardNativeParser {
+object AdaptiveCardV2Parser {
 
     /**
      * Suspend function to evaluate native parsing diff task.
