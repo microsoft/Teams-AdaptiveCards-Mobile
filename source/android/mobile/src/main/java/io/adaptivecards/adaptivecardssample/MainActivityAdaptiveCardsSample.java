@@ -69,7 +69,7 @@ import io.adaptivecards.objectmodel.ParseContext;
 import io.adaptivecards.objectmodel.ParseResult;
 import io.adaptivecards.objectmodel.ShowCardAction;
 import io.adaptivecards.objectmodel.SubmitAction;
-import io.adaptivecards.renderer.AdaptiveCardNativeParser;
+import io.adaptivecards.renderer.AdaptiveCardV2Parser;
 import io.adaptivecards.renderer.AdaptiveCardRenderer;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
@@ -398,7 +398,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             hostConfig.SetActions(actionsConfig);
 
             ParseContext context = createParseContextForCustomElements();
-            ParseResult parseResult = AdaptiveCardNativeParser.INSTANCE.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
+            ParseResult parseResult = AdaptiveCardV2Parser.INSTANCE.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
             if (m_checkBox.isChecked()) {
                 try {
 
