@@ -120,6 +120,8 @@ using namespace AdaptiveCards;
                            forKeyPath:@"image"
                               options:NSKeyValueObservingOptionNew
                               context:backgroundImageProperties.get()];
+                    // Track that this imageView has a KVO observer
+                    [root addImageViewToKVOTracking:view];
 
                     // store the image view and card for easy retrieval in ACRView::observeValueForKeyPath
                     [root setImageView:key view:view];
