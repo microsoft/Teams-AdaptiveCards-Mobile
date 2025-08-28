@@ -85,7 +85,7 @@ public class ActionLayoutRenderer implements IActionLayoutRenderer {
 
         Spacing spacing = hostConfig.GetActions().getSpacing();
         /* Passing false for separator since we do not have any configuration for separator in actionsConfig */
-        BaseCardElementRenderer.setSpacingAndSeparator(context, viewGroup, spacing, false, hostConfig, true /* Horizontal Line */);
+        BaseCardElementRenderer.setSpacingAndSeparator(context, viewGroup, spacing, false, renderArgs.getContainerStyle(), hostConfig, true /* Horizontal Line */);
 
         if (viewGroup != null)
         {
