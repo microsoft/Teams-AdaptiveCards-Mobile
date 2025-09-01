@@ -101,7 +101,7 @@
         
         /* Dismiss button constraints */
         [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnTopInset],
-        [self.dismissButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:(-btnSideInset)],
+        [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnSideInset],
         [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
         [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
         
