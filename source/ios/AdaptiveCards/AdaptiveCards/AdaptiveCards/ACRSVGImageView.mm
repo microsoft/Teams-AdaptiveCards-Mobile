@@ -46,9 +46,10 @@
 {
     __weak ACRSVGImageView *weakSelf = self;
     [ACRSVGImageView requestIcon:_svgPayloadURL
-                             filled:_isFilled
-                               size:_size
-                                rtl:_rtl
+                          filled:_isFilled
+                       tintColor:_svgTintColor
+                            size:_size
+                             rtl:_rtl
                       completion:^(UIImage *image) {
         ACRSVGImageView *strongSelf = weakSelf;
         strongSelf.contentMode = UIViewContentModeScaleAspectFit;
@@ -62,6 +63,7 @@
 
 + (void)requestIcon:(NSString *)iconURL
              filled:(BOOL)filled
+          tintColor:(UIColor *)tintColor
                size:(CGSize)size
                 rtl:(ACRRtl)rtl
          completion:(void (^)(UIImage *))completion
@@ -72,6 +74,7 @@
                                  if (dict != nil) {
                                      BOOL success = [ACRSVGImageView prepareImage:dict
                                                                            filled:filled
+                                                                        tintColor:tintColor
                                                                              size:size
                                                                               rtl:rtl
                                                                        completion:completion];
@@ -83,12 +86,14 @@
                                  // If we reach this point, we failed to load the icon from CDN.
                                  // Show fallback.
                                  [ACRSVGImageView requestFallbackWithSize:(CGSize)size
+                                                                tintColor:tintColor
                                                                       rtl:(ACRRtl)rtl
                                                                completion:completion];
                              }];
 }
 
 + (void)requestFallbackWithSize:(CGSize)size
+                      tintColor:(UIColor *)tintColor
                             rtl:(ACRRtl)rtl
                      completion:(void (^)(UIImage *))completion
 {
@@ -100,6 +105,7 @@
                                  if (dict != nil) {
                                      [ACRSVGImageView prepareImage:dict
                                                             filled:YES
+                                                         tintColor:tintColor
                                                               size:size
                                                                rtl:rtl
                                                         completion:completion];
@@ -150,6 +156,7 @@
 
 + (BOOL)prepareImage:(NSDictionary *)svgData
               filled:(BOOL)filled
+           tintColor:(UIColor *)tintColor
                 size:(CGSize)size
                  rtl:(ACRRtl)rtl
           completion:(void (^)(UIImage *))completion
@@ -170,7 +177,7 @@
             SVGKSource *svgSource = [[SVGKSource alloc] initWithInputSteam:stream];
             SVGKImage *document = [SVGKImage imageWithSource:svgSource];
             dispatch_async(dispatch_get_main_queue(), ^{
-                UIImage *image = [document.UIImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                UIImage *image = tintColor ? [document.UIImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : document.UIImage;
                 if (rtl == ACRRtlRTL && flipInRTL) {
                     // flip in right to left mode
                     completion([image imageWithHorizontallyFlippedOrientation]);
