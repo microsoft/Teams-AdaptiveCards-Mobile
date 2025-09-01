@@ -442,6 +442,10 @@ ObserverActionBlock generateBackgroundImageObserverAction(
                    forKeyPath:@"image"
                       options:NSKeyValueObservingOptionNew
                       context:backgroundImageProperties.get()];
+            // Track that this imageView has a KVO observer
+            if ([observer isKindOfClass:[ACRView class]]) {
+                [((ACRView *)observer) addImageViewToKVOTracking:view];
+            }
 
             // store the image view and column for easy retrieval in ACRView::observeValueForKeyPath
             [rootView setImageView:key view:view];

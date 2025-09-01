@@ -64,6 +64,9 @@ typedef void (^ObserverActionBlockForBaseAction)(NSObject<ACOIResourceResolver> 
 
 - (void)removeObserverOnImageView:(NSString *)KeyPath onObject:(NSObject *)object keyToImageView:(NSString *)key;
 
+// KVO observer tracking
+- (BOOL)hasKVOObserverForImageView:(UIImageView *)imageView;
+
 - (void)updatePaddingMap:(std::shared_ptr<StyledCollectionElement> const &)collection view:(UIView *)view;
 
 - (UIView *)getBleedTarget:(InternalId const &)internalId;
