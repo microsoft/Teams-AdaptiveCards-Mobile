@@ -47,6 +47,11 @@
 using namespace AdaptiveCards;
 typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
+@interface ACRView ()
+// KVO observer tracking property (internal use only)
+@property (nonatomic, strong) NSMutableSet<UIImageView *> *imageViewsWithKVOObservers;
+@end
+
 @implementation ACRView {
     ACOAdaptiveCard *_adaptiveCard;
     NSMutableDictionary *_imageViewMap;
@@ -88,6 +93,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         _imageContextMap = [[NSMutableDictionary alloc] init];
         _imageViewContextMap = [[NSMutableDictionary alloc] init];
         _setOfRemovedObservers = [[NSMutableSet alloc] init];
+        self.imageViewsWithKVOObservers = [[NSMutableSet alloc] init];
         _paddingMap = [[NSMutableDictionary alloc] init];
         _inputHandlerLookupTable = [[NSMapTable alloc] initWithKeyOptions:NSMapTableWeakMemory valueOptions:NSMapTableWeakMemory capacity:5];
         _showcards = [[NSMutableArray alloc] init];
@@ -262,6 +268,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                forKeyPath:@"image"
                                   options:NSKeyValueObservingOptionNew
                                   context:element.get()];
+                        // Track that this imageView has a KVO observer
+                        [self addImageViewToKVOTracking:view];
 
                         // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
                         [rootView setImageView:key view:view];
@@ -288,6 +296,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
                                       context:element.get()];
+                            // Track that this imageView has a KVO observer
+                            [rootView addImageViewToKVOTracking:view];
 
                             // store the image view and image set element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -320,6 +330,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
                                       context:elem.get()];
+                            // Track that this imageView has a KVO observer
+                            [rootView addImageViewToKVOTracking:view];
 
                             // store the image view and media element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:contentholdingview];
@@ -340,6 +352,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
                                       context:nil];
+                            // Track that this imageView has a KVO observer
+                            [rootView addImageViewToKVOTracking:view];
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
                         }
@@ -365,6 +379,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                    forKeyPath:@"image"
                                       options:NSKeyValueObservingOptionNew
                                       context:element.get()];
+                            // Track that this imageView has a KVO observer
+                            [rootView addImageViewToKVOTracking:view];
 
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -521,6 +537,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                                forKeyPath:@"image"
                                   options:NSKeyValueObservingOptionNew
                                   context:elem.get()];
+                        // Track that this imageView has a KVO observer
+                        [rootView addImageViewToKVOTracking:view];
                         [rootView setImageView:key view:view];
                     }
                 };
@@ -703,6 +721,20 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     }
 }
 
+// KVO observer tracking
+- (BOOL)hasKVOObserverForImageView:(UIImageView *)imageView
+{
+    return [self.imageViewsWithKVOObservers containsObject:imageView];
+}
+
+- (void)addImageViewToKVOTracking:(UIImageView *)imageView
+{
+    if (imageView && [imageView isKindOfClass:[UIImageView class]] && ![self hasKVOObserverForImageView:imageView])
+    {
+        [self.imageViewsWithKVOObservers addObject:imageView];
+    }
+}
+
 - (void)loadBackgroundImageAccordingToResourceResolverIF:(std::shared_ptr<BackgroundImage> const &)backgroundImage key:(NSString *)key observerAction:(ObserverActionBlock)observerAction
 {
     NSNumber *number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)(backgroundImage.get())];
@@ -805,6 +837,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             [object removeObserver:self forKeyPath:@"image"];
         }
     }
+    
+    // Clean up KVO tracking set
+    [self.imageViewsWithKVOObservers removeAllObjects];
+    self.imageViewsWithKVOObservers = nil;
 }
 
 - (void)updatePaddingMap:(std::shared_ptr<StyledCollectionElement> const &)collection view:(UIView *)view
