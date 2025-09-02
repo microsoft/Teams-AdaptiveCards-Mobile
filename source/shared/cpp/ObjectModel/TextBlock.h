@@ -59,10 +59,13 @@ public:
 
     void SetLanguage(const std::string& value);
     const std::string& GetLanguage() const;
+    
+    std::string GetLabelFor() const;
 
 private:
     bool m_wrap;
     unsigned int m_maxLines;
+    std::string m_labelFor;
     std::optional<HorizontalAlignment> m_hAlignment;
     std::optional<TextStyle> m_textStyle;
     std::shared_ptr<TextElementProperties> m_textElementProperties;

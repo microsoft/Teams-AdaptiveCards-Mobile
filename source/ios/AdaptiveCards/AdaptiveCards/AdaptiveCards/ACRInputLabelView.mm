@@ -12,6 +12,7 @@
 #import "ACRQuickReplyView.h"
 #import "UtiliOS.h"
 #import "ValueChangedAction.h"
+#import "TextInput.h"
 
 @implementation ACRInputLabelView
 
@@ -147,6 +148,20 @@
         self.inputView = inputView;
         self.label.isAccessibilityElement = NO;
         self.isAccessibilityElement = NO;
+        std::string label = TextInput().getLabel(inputBlck->GetId());
+        if (!label.empty())
+        {
+            NSString *accessibilityString = [NSString stringWithUTF8String:label.c_str()];
+            if (inputBlck->GetIsRequired())
+            {
+                accessibilityString = [accessibilityString stringByAppendingString: NSLocalizedString(@"\nRequired", nil)];
+            }
+            inputView.accessibilityLabel = accessibilityString;
+        }
+        else
+        {
+            inputView.accessibilityLabel = self.label.text;
+        }
         inputView.accessibilityLabel = self.label.text;
         self.inputAccessibilityItem = inputView;
         self.inputAccessibilityItem.accessibilityIdentifier = [NSString stringWithUTF8String:inputBlck->GetId().c_str()];
