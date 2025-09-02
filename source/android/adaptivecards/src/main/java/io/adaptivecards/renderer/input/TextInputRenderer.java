@@ -210,6 +210,14 @@ public class TextInputRenderer extends BaseCardElementRenderer
         {
             editText.setHint(placeHolder);
         }
+
+        String label = TextInput.getLabel(baseInputElement.GetId());
+        if (!label.isEmpty()) {
+            editText.setContentDescription(label);
+            // Todo visual indicator for testing
+            // editText.setHint(label);
+        }
+
         InputUtils.updateInputHandlerInputWatcher(textInputHandler);
         LinearLayout textInputViewGroup = null;
 

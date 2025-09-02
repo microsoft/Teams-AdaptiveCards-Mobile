@@ -9,6 +9,7 @@
 #include "TextBlock.h"
 #include "DateTimePreparser.h"
 #include "ParseUtil.h"
+#include "TextInput.h"
 #include "Util.h"
 
 using namespace AdaptiveCards;
@@ -167,6 +168,10 @@ void TextBlock::SetLanguage(const std::string& value)
     m_textElementProperties->SetLanguage(value);
 }
 
+std::string TextBlock::GetLabelFor() const {
+    return m_labelFor;
+}
+
 std::shared_ptr<BaseCardElement> TextBlockParser::Deserialize(ParseContext& context, const Json::Value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::TextBlock);
@@ -179,6 +184,12 @@ std::shared_ptr<BaseCardElement> TextBlockParser::Deserialize(ParseContext& cont
     textBlock->SetMaxLines(ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::MaxLines, 0));
     textBlock->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
+    textBlock->m_labelFor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LabelFor, "", false);
+
+    if (!textBlock->m_labelFor.empty() && !textBlock->GetText().empty()) {
+        // Add label for corresponding ChoiceSetInput
+        TextInput::addLabel(textBlock->m_labelFor, textBlock->GetText());
+    }
 
     return textBlock;
 }
