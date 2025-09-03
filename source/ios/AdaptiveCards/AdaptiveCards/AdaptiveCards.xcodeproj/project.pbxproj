@@ -593,6 +593,39 @@
 		F9A9E55226FE9FA000D13410 /* CollectionCoreElement.h in Headers */ = {isa = PBXBuildFile; fileRef = F9A9E55026FE9FA000D13410 /* CollectionCoreElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F9A9E55526FE9FE400D13410 /* StyledCollectionElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9A9E55326FE9FE400D13410 /* StyledCollectionElement.cpp */; };
 		F9A9E55626FE9FE400D13410 /* StyledCollectionElement.h in Headers */ = {isa = PBXBuildFile; fileRef = F9A9E55426FE9FE400D13410 /* StyledCollectionElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FA110BC42E656C9A0004EDCC /* TSExpressionObjCBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = FA110BC32E656C9A0004EDCC /* TSExpressionObjCBridge.m */; };
+		FA110BC52E656C9A0004EDCC /* TSExpressionObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = FA110BC22E656C9A0004EDCC /* TSExpressionObjCBridge.h */; };
+		FA2972412E67685B00898E03 /* FunctionCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29723E2E67685B00898E03 /* FunctionCache.swift */; };
+		FA2972422E67685B00898E03 /* BinaryOperatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972312E67685B00898E03 /* BinaryOperatorNode.swift */; };
+		FA2972432E67685B00898E03 /* ExpressionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972382E67685B00898E03 /* ExpressionHelpers.swift */; };
+		FA2972442E67685B00898E03 /* ExpressionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29723B2E67685B00898E03 /* ExpressionParser.swift */; };
+		FA2972452E67685B00898E03 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29723F2E67685B00898E03 /* Tokenizer.swift */; };
+		FA2972462E67685B00898E03 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972352E67685B00898E03 /* Expression.swift */; };
+		FA2972472E67685B00898E03 /* ExpressionUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29723D2E67685B00898E03 /* ExpressionUtilities.swift */; };
+		FA2972482E67685B00898E03 /* ExpressionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972362E67685B00898E03 /* ExpressionEngine.swift */; };
+		FA2972492E67685B00898E03 /* ExpressionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972392E67685B00898E03 /* ExpressionModels.swift */; };
+		FA29724A2E67685B00898E03 /* ExpressionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972372E67685B00898E03 /* ExpressionErrors.swift */; };
+		FA29724B2E67685B00898E03 /* ExpressionNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29723A2E67685B00898E03 /* ExpressionNodes.swift */; };
+		FA29724C2E67685B00898E03 /* ExpressionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29723C2E67685B00898E03 /* ExpressionTypes.swift */; };
+		FA29724D2E67685B00898E03 /* BuiltInFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972332E67685B00898E03 /* BuiltInFunctions.swift */; };
+		FA29724E2E67685B00898E03 /* EvaluationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972342E67685B00898E03 /* EvaluationContext.swift */; };
+		FA29724F2E67685B00898E03 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2972322E67685B00898E03 /* Binding.swift */; };
+		FA62E7F02E67E5D400A1EC45 /* AllExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7DF2E67E5D400A1EC45 /* AllExpressionTests.swift */; };
+		FA62E7F12E67E5D400A1EC45 /* FunctionCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E62E67E5D400A1EC45 /* FunctionCacheTests.swift */; };
+		FA62E7F22E67E5D400A1EC45 /* BindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E02E67E5D400A1EC45 /* BindingTests.swift */; };
+		FA62E7F32E67E5D400A1EC45 /* ObjCExpressionEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7EA2E67E5D400A1EC45 /* ObjCExpressionEvaluatorTests.swift */; };
+		FA62E7F42E67E5D400A1EC45 /* ExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E52E67E5D400A1EC45 /* ExpressionTests.swift */; };
+		FA62E7F52E67E5D400A1EC45 /* DateFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E32E67E5D400A1EC45 /* DateFunctionsTests.swift */; };
+		FA62E7F62E67E5D400A1EC45 /* BuiltInFunctionIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E12E67E5D400A1EC45 /* BuiltInFunctionIntegrationTests.swift */; };
+		FA62E7F72E67E5D400A1EC45 /* MathFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E92E67E5D400A1EC45 /* MathFunctionsTests.swift */; };
+		FA62E7F82E67E5D400A1EC45 /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E82E67E5D400A1EC45 /* IntegrationTests.swift */; };
+		FA62E7F92E67E5D400A1EC45 /* TestExpressionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7EC2E67E5D400A1EC45 /* TestExpressionsTests.swift */; };
+		FA62E7FA2E67E5D400A1EC45 /* CustomFunctionCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E22E67E5D400A1EC45 /* CustomFunctionCategoryTests.swift */; };
+		FA62E7FB2E67E5D400A1EC45 /* FunctionRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E72E67E5D400A1EC45 /* FunctionRegistryTests.swift */; };
+		FA62E7FC2E67E5D400A1EC45 /* UtilityFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7EE2E67E5D400A1EC45 /* UtilityFunctionsTests.swift */; };
+		FA62E7FD2E67E5D400A1EC45 /* StringFunctionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7EB2E67E5D400A1EC45 /* StringFunctionTests.swift */; };
+		FA62E7FE2E67E5D400A1EC45 /* ErrorHandlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7E42E67E5D400A1EC45 /* ErrorHandlingTests.swift */; };
+		FA62E7FF2E67E5D400A1EC45 /* TokenizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62E7ED2E67E5D400A1EC45 /* TokenizerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1217,6 +1250,39 @@
 		F9A9E55026FE9FA000D13410 /* CollectionCoreElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionCoreElement.h; path = ../../../../shared/cpp/ObjectModel/CollectionCoreElement.h; sourceTree = "<group>"; };
 		F9A9E55326FE9FE400D13410 /* StyledCollectionElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StyledCollectionElement.cpp; path = ../../../../shared/cpp/ObjectModel/StyledCollectionElement.cpp; sourceTree = "<group>"; };
 		F9A9E55426FE9FE400D13410 /* StyledCollectionElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StyledCollectionElement.h; path = ../../../../shared/cpp/ObjectModel/StyledCollectionElement.h; sourceTree = "<group>"; };
+		FA110BC22E656C9A0004EDCC /* TSExpressionObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSExpressionObjCBridge.h; sourceTree = "<group>"; };
+		FA110BC32E656C9A0004EDCC /* TSExpressionObjCBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSExpressionObjCBridge.m; sourceTree = "<group>"; };
+		FA2972312E67685B00898E03 /* BinaryOperatorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryOperatorNode.swift; sourceTree = "<group>"; };
+		FA2972322E67685B00898E03 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		FA2972332E67685B00898E03 /* BuiltInFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInFunctions.swift; sourceTree = "<group>"; };
+		FA2972342E67685B00898E03 /* EvaluationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationContext.swift; sourceTree = "<group>"; };
+		FA2972352E67685B00898E03 /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
+		FA2972362E67685B00898E03 /* ExpressionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionEngine.swift; sourceTree = "<group>"; };
+		FA2972372E67685B00898E03 /* ExpressionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionErrors.swift; sourceTree = "<group>"; };
+		FA2972382E67685B00898E03 /* ExpressionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionHelpers.swift; sourceTree = "<group>"; };
+		FA2972392E67685B00898E03 /* ExpressionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionModels.swift; sourceTree = "<group>"; };
+		FA29723A2E67685B00898E03 /* ExpressionNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionNodes.swift; sourceTree = "<group>"; };
+		FA29723B2E67685B00898E03 /* ExpressionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionParser.swift; sourceTree = "<group>"; };
+		FA29723C2E67685B00898E03 /* ExpressionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionTypes.swift; sourceTree = "<group>"; };
+		FA29723D2E67685B00898E03 /* ExpressionUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionUtilities.swift; sourceTree = "<group>"; };
+		FA29723E2E67685B00898E03 /* FunctionCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCache.swift; sourceTree = "<group>"; };
+		FA29723F2E67685B00898E03 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
+		FA62E7DF2E67E5D400A1EC45 /* AllExpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExpressionTests.swift; sourceTree = "<group>"; };
+		FA62E7E02E67E5D400A1EC45 /* BindingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingTests.swift; sourceTree = "<group>"; };
+		FA62E7E12E67E5D400A1EC45 /* BuiltInFunctionIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInFunctionIntegrationTests.swift; sourceTree = "<group>"; };
+		FA62E7E22E67E5D400A1EC45 /* CustomFunctionCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFunctionCategoryTests.swift; sourceTree = "<group>"; };
+		FA62E7E32E67E5D400A1EC45 /* DateFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFunctionsTests.swift; sourceTree = "<group>"; };
+		FA62E7E42E67E5D400A1EC45 /* ErrorHandlingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingTests.swift; sourceTree = "<group>"; };
+		FA62E7E52E67E5D400A1EC45 /* ExpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionTests.swift; sourceTree = "<group>"; };
+		FA62E7E62E67E5D400A1EC45 /* FunctionCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCacheTests.swift; sourceTree = "<group>"; };
+		FA62E7E72E67E5D400A1EC45 /* FunctionRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionRegistryTests.swift; sourceTree = "<group>"; };
+		FA62E7E82E67E5D400A1EC45 /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
+		FA62E7E92E67E5D400A1EC45 /* MathFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFunctionsTests.swift; sourceTree = "<group>"; };
+		FA62E7EA2E67E5D400A1EC45 /* ObjCExpressionEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjCExpressionEvaluatorTests.swift; sourceTree = "<group>"; };
+		FA62E7EB2E67E5D400A1EC45 /* StringFunctionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFunctionTests.swift; sourceTree = "<group>"; };
+		FA62E7EC2E67E5D400A1EC45 /* TestExpressionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestExpressionsTests.swift; sourceTree = "<group>"; };
+		FA62E7ED2E67E5D400A1EC45 /* TokenizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenizerTests.swift; sourceTree = "<group>"; };
+		FA62E7EE2E67E5D400A1EC45 /* UtilityFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctionsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1674,7 +1740,7 @@
 				F45A07191EF4BC44007C6503 /* Frameworks */,
 				F423C0B61EE1FBA900905679 /* Products */,
 				1779FD9986EE958A93BD0A28 /* Pods */,
-				7A2D17532DFA9A2C00E59055 /* Recovered References */,
+				FA10461E2E6565D300F96494 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1690,6 +1756,7 @@
 		F423C0B71EE1FBA900905679 /* AdaptiveCards */ = {
 			isa = PBXGroup;
 			children = (
+				FA2972402E67685B00898E03 /* AdaptiveCardExpressions */,
 				241C67242E02DE5D0007EA18 /* Resources */,
 				F42979331F30079D00E89914 /* Actions */,
 				6BFF24152714FA1D00183C59 /* AdaptiveCards.h */,
@@ -1706,6 +1773,7 @@
 		F423C0C21EE1FBAA00905679 /* AdaptiveCardsTests */ = {
 			isa = PBXGroup;
 			children = (
+				FA62E7EF2E67E5D400A1EC45 /* AdaptiveCardExpressionsTests */,
 				901FE9EB2E04BE3D00CD77C6 /* SwiftAdaptiveCardsTests */,
 				CFF95C052982E2CB00F321C3 /* DynamicTypeahead */,
 				6B4C05BE27864B0800882387 /* ACRImagePropertiesTests.mm */,
@@ -2125,6 +2193,61 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FA10461E2E6565D300F96494 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				7AD18A8D2E0293DB00A35DDD /* FluentAssets.xcassets */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		FA2972402E67685B00898E03 /* AdaptiveCardExpressions */ = {
+			isa = PBXGroup;
+			children = (
+				FA2972312E67685B00898E03 /* BinaryOperatorNode.swift */,
+				FA2972322E67685B00898E03 /* Binding.swift */,
+				FA2972332E67685B00898E03 /* BuiltInFunctions.swift */,
+				FA2972342E67685B00898E03 /* EvaluationContext.swift */,
+				FA2972352E67685B00898E03 /* Expression.swift */,
+				FA2972362E67685B00898E03 /* ExpressionEngine.swift */,
+				FA2972372E67685B00898E03 /* ExpressionErrors.swift */,
+				FA2972382E67685B00898E03 /* ExpressionHelpers.swift */,
+				FA2972392E67685B00898E03 /* ExpressionModels.swift */,
+				FA29723A2E67685B00898E03 /* ExpressionNodes.swift */,
+				FA29723B2E67685B00898E03 /* ExpressionParser.swift */,
+				FA29723C2E67685B00898E03 /* ExpressionTypes.swift */,
+				FA29723D2E67685B00898E03 /* ExpressionUtilities.swift */,
+				FA29723E2E67685B00898E03 /* FunctionCache.swift */,
+				FA29723F2E67685B00898E03 /* Tokenizer.swift */,
+				FA110BC22E656C9A0004EDCC /* TSExpressionObjCBridge.h */,
+				FA110BC32E656C9A0004EDCC /* TSExpressionObjCBridge.m */,
+			);
+			path = AdaptiveCardExpressions;
+			sourceTree = "<group>";
+		};
+		FA62E7EF2E67E5D400A1EC45 /* AdaptiveCardExpressionsTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA62E7DF2E67E5D400A1EC45 /* AllExpressionTests.swift */,
+				FA62E7E02E67E5D400A1EC45 /* BindingTests.swift */,
+				FA62E7E12E67E5D400A1EC45 /* BuiltInFunctionIntegrationTests.swift */,
+				FA62E7E22E67E5D400A1EC45 /* CustomFunctionCategoryTests.swift */,
+				FA62E7E32E67E5D400A1EC45 /* DateFunctionsTests.swift */,
+				FA62E7E42E67E5D400A1EC45 /* ErrorHandlingTests.swift */,
+				FA62E7E52E67E5D400A1EC45 /* ExpressionTests.swift */,
+				FA62E7E62E67E5D400A1EC45 /* FunctionCacheTests.swift */,
+				FA62E7E72E67E5D400A1EC45 /* FunctionRegistryTests.swift */,
+				FA62E7E82E67E5D400A1EC45 /* IntegrationTests.swift */,
+				FA62E7E92E67E5D400A1EC45 /* MathFunctionsTests.swift */,
+				FA62E7EA2E67E5D400A1EC45 /* ObjCExpressionEvaluatorTests.swift */,
+				FA62E7EB2E67E5D400A1EC45 /* StringFunctionTests.swift */,
+				FA62E7EC2E67E5D400A1EC45 /* TestExpressionsTests.swift */,
+				FA62E7ED2E67E5D400A1EC45 /* TokenizerTests.swift */,
+				FA62E7EE2E67E5D400A1EC45 /* UtilityFunctionsTests.swift */,
+			);
+			path = AdaptiveCardExpressionsTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2330,6 +2453,7 @@
 				6B377284260194000024E527 /* ACRActionExecuteRenderer.h in Headers */,
 				46CBB63F2C22BA4D008FC5D5 /* ACRCompoundButtonRenderer.h in Headers */,
 				7751C0792CAC0F0B00C876DD /* ACRCarouselPageContainerView.h in Headers */,
+				FA110BC52E656C9A0004EDCC /* TSExpressionObjCBridge.h in Headers */,
 				6B8C765526449B09009548FA /* TableColumnDefinition.h in Headers */,
 				6B8C765326449B09009548FA /* Table.h in Headers */,
 				6BFCA141264F54B500195CA7 /* ACRTableView.h in Headers */,
@@ -2464,6 +2588,8 @@
 				Base,
 			);
 			mainGroup = F423C0AB1EE1FBA900905679;
+			packageReferences = (
+			);
 			productRefGroup = F423C0B61EE1FBA900905679 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2628,6 +2754,7 @@
 				F9A9E55526FE9FE400D13410 /* StyledCollectionElement.cpp in Sources */,
 				6BFF99C825FFF53E0028069F /* ExecuteAction.cpp in Sources */,
 				F42979431F322C3E00E89914 /* ACRErrors.mm in Sources */,
+				FA110BC42E656C9A0004EDCC /* TSExpressionObjCBridge.m in Sources */,
 				F44873251EE2261F00FCAFAE /* TextInput.cpp in Sources */,
 				7A9BD60E2E13A6CD00114A4F /* ACRPopoverTarget.mm in Sources */,
 				8404BA8F226697800091A0AD /* FeatureRegistration.cpp in Sources */,
@@ -2832,6 +2959,21 @@
 				6B9AB31120DD82A2005C8E15 /* ACRTextView.mm in Sources */,
 				7773C2EA2CA5656100097C06 /* ACRPageControl.mm in Sources */,
 				6B92A7E42677DC8B00CAE3BF /* ACRChoiceSetCompactStyleView.mm in Sources */,
+				FA2972412E67685B00898E03 /* FunctionCache.swift in Sources */,
+				FA2972422E67685B00898E03 /* BinaryOperatorNode.swift in Sources */,
+				FA2972432E67685B00898E03 /* ExpressionHelpers.swift in Sources */,
+				FA2972442E67685B00898E03 /* ExpressionParser.swift in Sources */,
+				FA2972452E67685B00898E03 /* Tokenizer.swift in Sources */,
+				FA2972462E67685B00898E03 /* Expression.swift in Sources */,
+				FA2972472E67685B00898E03 /* ExpressionUtilities.swift in Sources */,
+				FA2972482E67685B00898E03 /* ExpressionEngine.swift in Sources */,
+				FA2972492E67685B00898E03 /* ExpressionModels.swift in Sources */,
+				FA29724A2E67685B00898E03 /* ExpressionErrors.swift in Sources */,
+				FA29724B2E67685B00898E03 /* ExpressionNodes.swift in Sources */,
+				FA29724C2E67685B00898E03 /* ExpressionTypes.swift in Sources */,
+				FA29724D2E67685B00898E03 /* BuiltInFunctions.swift in Sources */,
+				FA29724E2E67685B00898E03 /* EvaluationContext.swift in Sources */,
+				FA29724F2E67685B00898E03 /* Binding.swift in Sources */,
 				F4F6BA32204F18D8003741B6 /* AdaptiveCardParseWarning.cpp in Sources */,
 				F4C1F5E41F2A62190018CB78 /* ACRActionOpenURLRenderer.mm in Sources */,
 				F4071C7F1FCCBAEF00AF4FEA /* ElementParserRegistration.cpp in Sources */,
@@ -2870,6 +3012,22 @@
 				901FE9F72E04BE3D00CD77C6 /* FallBackTests.swift in Sources */,
 				901FE9F82E04BE3D00CD77C6 /* HostConfigTest.swift in Sources */,
 				901FE9F92E04BE3D00CD77C6 /* TableTests.swift in Sources */,
+				FA62E7F02E67E5D400A1EC45 /* AllExpressionTests.swift in Sources */,
+				FA62E7F12E67E5D400A1EC45 /* FunctionCacheTests.swift in Sources */,
+				FA62E7F22E67E5D400A1EC45 /* BindingTests.swift in Sources */,
+				FA62E7F32E67E5D400A1EC45 /* ObjCExpressionEvaluatorTests.swift in Sources */,
+				FA62E7F42E67E5D400A1EC45 /* ExpressionTests.swift in Sources */,
+				FA62E7F52E67E5D400A1EC45 /* DateFunctionsTests.swift in Sources */,
+				FA62E7F62E67E5D400A1EC45 /* BuiltInFunctionIntegrationTests.swift in Sources */,
+				FA62E7F72E67E5D400A1EC45 /* MathFunctionsTests.swift in Sources */,
+				FA62E7F82E67E5D400A1EC45 /* IntegrationTests.swift in Sources */,
+				FA62E7F92E67E5D400A1EC45 /* TestExpressionsTests.swift in Sources */,
+				FA62E7FA2E67E5D400A1EC45 /* CustomFunctionCategoryTests.swift in Sources */,
+				FA62E7FB2E67E5D400A1EC45 /* FunctionRegistryTests.swift in Sources */,
+				FA62E7FC2E67E5D400A1EC45 /* UtilityFunctionsTests.swift in Sources */,
+				FA62E7FD2E67E5D400A1EC45 /* StringFunctionTests.swift in Sources */,
+				FA62E7FE2E67E5D400A1EC45 /* ErrorHandlingTests.swift in Sources */,
+				FA62E7FF2E67E5D400A1EC45 /* TokenizerTests.swift in Sources */,
 				901FE9FA2E04BE3D00CD77C6 /* EnumTest.swift in Sources */,
 				901FE9FB2E04BE3D00CD77C6 /* ExplicitDimensionTest.swift in Sources */,
 				901FE9FC2E04BE3D00CD77C6 /* ImageBackgroundColorTest.swift in Sources */,
