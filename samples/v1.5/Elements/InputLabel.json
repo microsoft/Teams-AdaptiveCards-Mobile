@@ -1,0 +1,186 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+	{
+	  "type": "ColumnSet",
+	  "columns": [
+		{
+		  "type": "Column",
+		  "verticalContentAlignment": "center",
+		  "items": [
+			{
+			  "type": "RichTextBlock",
+			  "labelFor": "textInputId1",
+			  "inlines": [
+				{
+				  "type": "TextRun",
+				  "text": "This is the first text run. "
+				},
+				{
+				  "type": "TextRun",
+				  "text": "This is the second text run. "
+				},
+				{
+				  "type": "TextRun",
+				  "text": "Click here for action.",
+				  "selectAction": {
+					"type": "Action.OpenUrl",
+					"title": "Open URL",
+					"url": "https://example.com"
+				  }
+				},
+				{
+				  "type": "TextRun",
+				  "text": "This is the fourth text run. "
+				},
+				{
+				  "type": "TextRun",
+				  "text": "This is the fifth text run."
+				}
+			  ]
+			}
+		  ],
+		  "width": "stretch"
+		},
+		{
+		  "type": "Column",
+		  "verticalContentAlignment": "center",
+		  "items": [
+			{
+			  "type": "Input.Text",
+			  "id": "textInputId1",
+			  "placeholder": "Enter text here",
+			  "isRequired": true,
+			  "label": "R Label"
+			}
+		  ],
+		  "width": "stretch"
+		}
+	  ]
+	},
+	{
+	  "type": "ColumnSet",
+	  "columns": [
+		{
+		  "type": "Column",
+		  "width": "stretch",
+		  "verticalContentAlignment": "center",
+		  "items": [
+			{
+			  "type": "TextBlock",
+			  "text": "Testing",
+			  "wrap": true,
+			  "labelFor": "textinputid2"
+			}
+		  ]
+		},
+		{
+		  "type": "Column",
+		  "width": "stretch",
+		  "verticalContentAlignment": "center",
+		  "items": [
+			{
+			  "type": "Input.Text",
+			  "placeholder": "Placeholder text",
+			  "id": "textinputid2",
+			  "isRequired": true,
+			  "label": "Label"
+			}
+		  ]
+		}
+	  ]
+	},
+	{
+	  "type": "ColumnSet",
+	  "columns": [
+		{
+		  "type": "Column",
+		  "verticalContentAlignment": "center",
+		  "items": [
+			{
+			  "type": "RichTextBlock",
+			  "labelFor": "textInputId3",
+			  "id": "RichTextBlockId",
+			  "inlines": [
+				{
+				  "type": "TextRun",
+				  "text": "This is the first text run. "
+				},
+				{
+				  "type": "TextRun",
+				  "text": "This is the second text run. "
+				},
+				{
+				  "type": "TextRun",
+				  "text": "Click here for action.",
+				  "selectAction": {
+					"type": "Action.OpenUrl",
+					"title": "Open URL",
+					"url": "https://example.com"
+				  }
+				},
+				{
+				  "type": "TextRun",
+				  "text": "This is the fourth text run. "
+				},
+				{
+				  "type": "TextRun",
+				  "text": "This is the fifth text run."
+				}
+			  ]
+			}
+		  ],
+		  "width": "stretch"
+		},
+		{
+		  "type": "Column",
+		  "verticalContentAlignment": "center",
+		  "items": [
+			{
+			  "type": "Input.Text",
+			  "id": "textInputId",
+			  "placeholder": "Enter text here",
+			  "isRequired": true,
+			  "label": "R Label"
+			}
+		  ],
+		  "width": "stretch"
+		}
+	  ]
+	},
+	{
+	  "type": "ColumnSet",
+	  "columns": [
+		{
+		  "type": "Column",
+		  "width": "stretch",
+		  "verticalContentAlignment": "center",
+		  "items": [
+			{
+			  "type": "TextBlock",
+			  "text": "Testing",
+			  "wrap": true,
+			  "labelFor": "textinputid4"
+			}
+		  ]
+		},
+		{
+		  "type": "Column",
+		  "width": "stretch",
+		  "verticalContentAlignment": "center",
+		  "items": [
+			{
+			  "type": "Input.Text",
+			  "placeholder": "Placeholder text",
+			  "id": "textinputid",
+			  "isRequired": true,
+			  "label": "Label"
+			}
+		  ]
+		}
+	  ]
+	}
+  ]
+}
+ 
