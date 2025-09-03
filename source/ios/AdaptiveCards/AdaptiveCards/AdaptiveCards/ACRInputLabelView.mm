@@ -162,7 +162,6 @@
         {
             inputView.accessibilityLabel = self.label.text;
         }
-        inputView.accessibilityLabel = self.label.text;
         self.inputAccessibilityItem = inputView;
         self.inputAccessibilityItem.accessibilityIdentifier = [NSString stringWithUTF8String:inputBlck->GetId().c_str()];
         if (inputView != accessibilityItem) {
