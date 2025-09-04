@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "BaseInputElement.h"
 #include "ParseUtil.h"
+#import "TextInput.h"
 
 using namespace AdaptiveCards;
 
@@ -29,7 +30,8 @@ std::string BaseInputElement::GetLabel() const
 
 void BaseInputElement::SetLabel(const std::string label)
 {
-    m_label = label;
+    std::string inputLabel = TextInput().getLabel(GetId());
+    m_label = inputLabel.empty() ? label : "";
 }
 
 bool BaseInputElement::GetIsRequired() const

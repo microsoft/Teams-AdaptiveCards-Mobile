@@ -857,8 +857,6 @@ void TexStylesToRichTextElementProperties(const std::shared_ptr<TextBlock> &text
 {
     textProp.SetText(textBlock->GetText());
     textProp.SetLanguage(textBlock->GetLanguage());
-    textProp.SetText(textBlock->GetText());
-    textProp.SetLanguage(textBlock->GetLanguage());
     textProp.SetTextSize(textBlock->GetTextSize().value_or(textStyleConfig.size));
     textProp.SetTextWeight(textBlock->GetTextWeight().value_or(textStyleConfig.weight));
     textProp.SetFontType(textBlock->GetFontType().value_or(textStyleConfig.fontType));
