@@ -189,7 +189,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 - (void)evaluateDynamicProperties:(NSString * _Nullable)textDynamic
                             label:(ACRUILabel *)label
 {
-    if ( textDynamic && [textDynamic length] > 0)
+    if (textDynamic && [textDynamic length] > 0)
     {
         [self evaluateExpression:textDynamic completion:^(id value, NSError *error)
          {
