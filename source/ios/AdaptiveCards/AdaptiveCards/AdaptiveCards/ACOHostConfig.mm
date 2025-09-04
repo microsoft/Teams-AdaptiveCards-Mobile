@@ -442,4 +442,17 @@ using namespace AdaptiveCards;
 {
     [_iconPlacements setObject:[NSNumber numberWithBool:placement] forKey:internalId];
 }
+
+- (UIColor *)getPopoverTintColor
+{
+    std::string hexColorCode = _config->GetActions().popover.tintColor;
+    return [ACOHostConfig convertHexColorCodeToUIColor:hexColorCode];
+}
+
+- (UIColor *)getPopoverBackgroundColor
+{
+    std::string hexColorCode = _config->GetActions().popover.backgroundColor;
+    return [ACOHostConfig convertHexColorCodeToUIColor:hexColorCode];
+}
+
 @end

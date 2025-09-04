@@ -74,4 +74,8 @@ using namespace AdaptiveCards;
 
 - (void)setIconPlacement:(NSNumber *)internalId placement:(BOOL)placement;
 
+- (UIColor *) getPopoverTintColor;
+
+- (UIColor *) getPopoverBackgroundColor;
+
 @end
