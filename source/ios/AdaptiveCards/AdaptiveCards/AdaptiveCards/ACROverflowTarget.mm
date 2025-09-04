@@ -99,7 +99,7 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
             return;
         }
 
-        // Remove just the any observation from the array
+        // Remove the first observation from the array
         ACRStringBasedKeyValueObservation *_Nullable stringBasedKeyValueObservation = [objectObservations firstObject];
         if (stringBasedKeyValueObservation) {
             [objectObservations removeObject:stringBasedKeyValueObservation];
