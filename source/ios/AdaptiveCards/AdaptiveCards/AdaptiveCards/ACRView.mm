@@ -750,7 +750,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
             return;
         }
 
-        // Remove just the any observation from the array
+        // Remove just the first observation from the array
         ACRStringBasedKeyValueObservation *_Nullable stringBasedKeyValueObservation = [objectObservations firstObject];
         if (stringBasedKeyValueObservation) {
             [objectObservations removeObject:stringBasedKeyValueObservation];
