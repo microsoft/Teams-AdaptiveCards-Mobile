@@ -112,7 +112,7 @@ void renderBackgroundImage(const std::shared_ptr<AdaptiveCards::BackgroundImage>
     if ([key length]) {
         UIImageView *imgView = nil;
         UIImage *img = [rootView getImageMap][key];
-        if (img) {
+        if (img && [img isKindOfClass:[UIImage class]]) {
             switch (backgroundImage->GetFillMode()) {
                 case ImageFillMode::Repeat:
                 case ImageFillMode::RepeatHorizontally:
@@ -150,7 +150,7 @@ void renderBackgroundImage(const std::shared_ptr<AdaptiveCards::BackgroundImage>
 void renderBackgroundImage(ACRView *rootView, const BackgroundImage *backgroundImageProperties, UIImageView *imageView,
                            UIImage *image)
 {
-    if (rootView == nil || backgroundImageProperties == nullptr || imageView == nullptr || image == nullptr) {
+    if (rootView == nil || backgroundImageProperties == nullptr || imageView == nullptr || image == nullptr || ![image isKindOfClass:[UIImage class]]) {
         return;
     }
 
