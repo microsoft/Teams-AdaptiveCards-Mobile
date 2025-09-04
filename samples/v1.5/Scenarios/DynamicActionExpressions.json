@@ -13,42 +13,42 @@
             "type": "Action.Submit",
             "title": "Action Submit",
             "isEnabled": true,
-            "isEnabled.dynamic": "authorizeUser()",
-            "title.dynamic": "if(authorizeUser(), \"Action Submit enabled\", \"Action Submit disabled\")"
+            "isEnabled.dynamic": "defaultHandler()",
+            "title.dynamic": "if(defaultHandler(), \"Action Submit enabled\", \"Action Submit disabled\")"
         },
         {
             "type": "Action.Submit",
             "title": "Action Submit should Hide",
 			"isEnabled": true,
-            "isVisible.dynamic": "authorizeUser()"
+            "isVisible.dynamic": "defaultHandler()"
         },
         {
             "type": "Action.Execute",
             "title": "Action Execute",
             "isEnabled": true,
-            "isEnabled.dynamic": "authorizeUser()",
-            "title.dynamic": "if(authorizeUser(), \"Action Execute enabled\", \"Action Execute disabled\")"
+            "isEnabled.dynamic": "defaultHandler()",
+            "title.dynamic": "if(defaultHandler(), \"Action Execute enabled\", \"Action Execute disabled\")"
         },
         {
             "type": "Action.Execute",
             "title": "Action Execute should Hide",
 			"isEnabled": true,
-            "isVisible.dynamic": "authorizeUser()"
+            "isVisible.dynamic": "defaultHandler()"
         },
         {
             "type": "Action.OpenUrl",
             "title": "Action.OpenUrl",
 			"url": "https://adaptivecards.io",
             "isEnabled": true,
-            "isEnabled.dynamic": "authorizeUser()",
-            "title.dynamic": "if(authorizeUser(), \"Action.OpenUrl enabled\", \"Action Execute disabled\")"
+            "isEnabled.dynamic": "defaultHandler()",
+            "title.dynamic": "if(defaultHandler(), \"Action.OpenUrl enabled\", \"Action Execute disabled\")"
         },
         {
             "type": "Action.OpenUrl",
             "title": "Action.OpenUrl should Hide",
 			"isEnabled": true,
 			"url": "https://adaptivecards.io",
-            "isVisible.dynamic": "authorizeUser()"
+            "isVisible.dynamic": "defaultHandler()"
         }
     ]
 }

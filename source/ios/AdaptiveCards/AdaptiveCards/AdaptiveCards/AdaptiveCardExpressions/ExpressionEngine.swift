@@ -111,7 +111,7 @@ public class ExpressionEngine: ExpressionEngineProtocol {
         let config = EvaluationContextConfig(
             groupId: "default",
             root: data,
-            functions: [authorizeUserFunctionDeclaration()]
+            functions: [defaultDeclaration()]
         )
         return await EvaluationContext(config: config)
     }
@@ -132,23 +132,23 @@ public class ExpressionEngine: ExpressionEngineProtocol {
     // MARK: - Helper Functions
     
     /// Sample async authorization function
-    private func authorizeUser() async -> Bool {
+    private func defaultHandler() async -> Bool {
         do {
             try await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
         } catch {
             return false
         }
-        let isAuthorized = false
-        return isAuthorized
+        let val = false
+        return val
     }
     
     /// Create function declaration for authorization
-    private func authorizeUserFunctionDeclaration() -> FunctionDeclaration {
+    private func defaultDeclaration() -> FunctionDeclaration {
         return FunctionDeclaration(
-            name: "authorizeUser",
+            name: "defaultHandler",
             cacheResultFor: nil,
             callback: { _ in
-                return await self.authorizeUser()
+                return await self.defaultHandler()
             }
         )
     }
@@ -175,7 +175,6 @@ public struct ExpressionEngineFactory {
     
     /// Create an engine instance with custom configuration
     public static func createEngine(with configuration: EngineConfiguration) -> ExpressionEngineProtocol {
-        // TODO: Implement support for configuration.getDefaultTimeout() and configuration.getCustomFunctions()
         // Currently only enableCaching is implemented
         
         if configuration.isEnableCaching() {

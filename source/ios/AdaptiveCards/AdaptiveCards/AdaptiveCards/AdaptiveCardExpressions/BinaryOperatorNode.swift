@@ -105,7 +105,7 @@ public class BinaryOperatorNode: EvaluationNode {
                 throw EvaluationError.invalidOperand("Left operand for operator '\(operatorType.rawValue)' is not comparable: '\(String(describing: left))'")
             }
             guard right != nil else {
-                throw EvaluationError.invalidOperand("Cannot compare '\(String(describing: left))' with nil for operator '\(operatorType.rawValue)'")
+                throw EvaluationError.invalidOperand("Left operand for operator '\(operatorType.rawValue)' is not comparable: '\(String(describing: right))'")
             }
             
             // Try to compare as numbers first (most common case)

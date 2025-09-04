@@ -1773,7 +1773,7 @@
 		F423C0C21EE1FBAA00905679 /* AdaptiveCardsTests */ = {
 			isa = PBXGroup;
 			children = (
-				FA62E7EF2E67E5D400A1EC45 /* AdaptiveCardExpressionsTests */,
+				FA62E7EF2E67E5D400A1EC45 /* AdaptiveCardExpressionTests */,
 				901FE9EB2E04BE3D00CD77C6 /* SwiftAdaptiveCardsTests */,
 				CFF95C052982E2CB00F321C3 /* DynamicTypeahead */,
 				6B4C05BE27864B0800882387 /* ACRImagePropertiesTests.mm */,
@@ -2225,7 +2225,7 @@
 			path = AdaptiveCardExpressions;
 			sourceTree = "<group>";
 		};
-		FA62E7EF2E67E5D400A1EC45 /* AdaptiveCardExpressionsTests */ = {
+		FA62E7EF2E67E5D400A1EC45 /* AdaptiveCardExpressionTests */ = {
 			isa = PBXGroup;
 			children = (
 				FA62E7DF2E67E5D400A1EC45 /* AllExpressionTests.swift */,
@@ -2245,7 +2245,7 @@
 				FA62E7ED2E67E5D400A1EC45 /* TokenizerTests.swift */,
 				FA62E7EE2E67E5D400A1EC45 /* UtilityFunctionsTests.swift */,
 			);
-			path = AdaptiveCardExpressionsTests;
+			path = AdaptiveCardExpressionTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2588,8 +2588,6 @@
 				Base,
 			);
 			mainGroup = F423C0AB1EE1FBA900905679;
-			packageReferences = (
-			);
 			productRefGroup = F423C0B61EE1FBA900905679 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

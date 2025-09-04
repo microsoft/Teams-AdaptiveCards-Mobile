@@ -3,8 +3,6 @@
 //  AdaptiveCards
 //
 //  Created by Rahul Pinjani on 8/12/25.
-//  Copyright © Microsoft Corporation. All rights reserved.
-//  Design Document: { Include link here }
 //
 
 import Foundation
@@ -44,7 +42,6 @@ internal actor CachedFunctionCall {
         return params
     }
     
-    // Add missing methods for the new architecture
     internal func getCachedResult() -> EvaluationResult? {
         return cachedResult
     }
@@ -84,11 +81,6 @@ internal actor CachedFunctionCall {
             }
         }
         return true
-    }
-    
-    // Legacy execute method - now simplified since coordination moved to cache level
-    internal func execute() async -> EvaluationResult {
-        return cachedResult ?? nil
     }
 }
 
@@ -216,15 +208,11 @@ public actor FunctionCallCache {
 // MARK: - Thread-Safe Cache Manager implementing CacheManaging
 
 public actor CacheManager: CacheManaging {
-    // Remove singleton - now instances can be created as needed
     private let functionCache = FunctionCallCache()
     private var cacheConfigurations: [String: CacheConfiguration] = [:]
     
     // AsyncStream for cache events
     private let (cacheEventsStream, cacheEventsContinuation) = AsyncStream<CacheEvent>.makeStream()
-    
-    // Public initializer for dependency injection
-    public init() {}
     
     public func callFunction(declaration: FunctionDeclaration, params: [EvaluationResult]?) async -> EvaluationResult {
         let result = await functionCache.callFunction(declaration: declaration, params: params)
