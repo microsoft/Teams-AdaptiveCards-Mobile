@@ -317,6 +317,7 @@ ShowCardActionConfig ShowCardActionConfig::Deserialize(const Json::Value& json, 
 PopoverConfig PopoverConfig::Deserialize(const Json::Value& json, const PopoverConfig& defaultValue) {
     PopoverConfig result;
     result.backgroundColor = ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::BackgroundColor).value_or(defaultValue.backgroundColor);
+    result.tintColor = ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::TintColor).value_or(defaultValue.tintColor);
     return result;
 }
 

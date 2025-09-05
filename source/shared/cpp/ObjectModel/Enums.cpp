@@ -208,6 +208,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TextConfig, "textConfig"},
             {AdaptiveCardSchemaKey::TextInput, "textInput"},
             {AdaptiveCardSchemaKey::TextStyles, "textStyles"},
+            {AdaptiveCardSchemaKey::TintColor, "tintColor"},
             {AdaptiveCardSchemaKey::MarigoldColor, "marigoldColor"},
             {AdaptiveCardSchemaKey::NeutralColor, "neutralColor"},
             {AdaptiveCardSchemaKey::FilledStar, "filledStar"},

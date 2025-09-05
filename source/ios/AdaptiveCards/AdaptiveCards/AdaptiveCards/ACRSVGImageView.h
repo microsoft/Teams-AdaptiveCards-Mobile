@@ -25,7 +25,6 @@
 
 + (void)requestIcon:(NSString *)iconURL
              filled:(BOOL)filled
-          tintColor:(UIColor *)tintColor
                size:(CGSize)size
                 rtl:(ACRRtl)rtl
          completion:(void (^)(UIImage *))completion;
