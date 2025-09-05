@@ -274,6 +274,7 @@ enum class AdaptiveCardSchemaKey
     ThemedIconUrls,
     ThemedUrls,
     Theme,
+    TintColor,
     LabelPosition,
     Content,
     DisplayArrow,
