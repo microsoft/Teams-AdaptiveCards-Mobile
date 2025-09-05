@@ -42,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [_config.hostConfig getBackgroundColorForContainerStyle:ACRDefault];
+    self.view.backgroundColor = [_config.hostConfig getPopoverBackgroundColor];
     [self setupCloseButton];
     [self setupScrollView];
     [self setupConstraints];
@@ -64,11 +64,12 @@
     NSString *dismissIcon = @"dismiss";
     NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
     CGSize iconSize = CGSizeMake(24, 24);
+    UIColor *tintColor = [self.config.hostConfig getPopoverTintColor];
     UIImageView *imageView = [[ACRSVGImageView alloc] init:url
                                                        rtl:ACRRtlNone
                                                   isFilled:false
                                                       size:iconSize
-                                                 tintColor:nil];
+                                                 tintColor:tintColor];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
     [dismissButton addSubview:imageView];
     [dismissButton addTarget:self
@@ -101,7 +102,7 @@
         
         /* Dismiss button constraints */
         [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnTopInset],
-        [self.dismissButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:(-btnSideInset)],
+        [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnSideInset],
         [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
         [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
         

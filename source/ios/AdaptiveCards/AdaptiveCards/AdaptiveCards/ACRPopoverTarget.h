@@ -19,4 +19,6 @@
 
 - (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement rootView:(ACRView *)rootView;
 
+- (IBAction)send:(UIButton *)sender;
+
 @end

@@ -328,7 +328,8 @@ struct ShowCardActionConfig
 };
 
 struct PopoverConfig {
-    std::string backgroundColor = "#000000";
+    std::string backgroundColor = "#FFFFFF";
+    std::string tintColor = "#000000";
 
     static PopoverConfig Deserialize(const Json::Value& json, const PopoverConfig& defaultValue);
 };
