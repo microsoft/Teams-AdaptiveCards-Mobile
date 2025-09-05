@@ -409,6 +409,8 @@
 		CFF95C0D2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0C2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm */; };
 		CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */; };
 		DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */; };
+		E67241702E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m in Sources */ = {isa = PBXBuildFile; fileRef = E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */; };
+		E67241712E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h in Headers */ = {isa = PBXBuildFile; fileRef = E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */; };
 		EC367F912F6036B68C5BBFDB /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
 		F401A8781F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = F401A8761F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm */; };
 		F401A87C1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = F401A87A1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm */; };
@@ -1030,6 +1032,8 @@
 		CFF95C0C2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACOTypeaheadDynamicChoicesServiceTests.mm; sourceTree = "<group>"; };
 		CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = ACOTypeaheadDebouncerTests.mm; sourceTree = "<group>"; };
 		E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards_AdaptiveCardsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRStringBasedKeyValueObservation.h; sourceTree = "<group>"; };
+		E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRStringBasedKeyValueObservation.m; sourceTree = "<group>"; };
 		ED131801E4C2E2B662925ABF /* Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.apprelease.xcconfig"; sourceTree = "<group>"; };
 		F401A8761F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRImageSetUICollectionView.mm; sourceTree = "<group>"; };
 		F401A8791F0DCBC8006D7AF2 /* ACRImageSetRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRImageSetRenderer.h; sourceTree = "<group>"; };
@@ -1340,6 +1344,8 @@
 		6B92A71B266FE84F00CAE3BF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */,
+				E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */,
 				901FE9C72E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.h */,
 				901FE9C82E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.mm */,
 				901FE9C92E04BDC800CD77C6 /* SwiftAdaptiveCardSwiftBridge.swift */,
@@ -1656,6 +1662,14 @@
 			path = DynamicTypeahead;
 			sourceTree = "<group>";
 		};
+		E672416D2E6768B5000ECCE4 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				7AD18A8D2E0293DB00A35DDD /* FluentAssets.xcassets */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		F4071C751FCCBAEF00AF4FEA /* json */ = {
 			isa = PBXGroup;
 			children = (
@@ -1674,7 +1688,7 @@
 				F45A07191EF4BC44007C6503 /* Frameworks */,
 				F423C0B61EE1FBA900905679 /* Products */,
 				1779FD9986EE958A93BD0A28 /* Pods */,
-				7A2D17532DFA9A2C00E59055 /* Recovered References */,
+				E672416D2E6768B5000ECCE4 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2325,6 +2339,7 @@
 				CFF954D92981AF5800F321C3 /* ACRChoiceSetFilteredStyleView.h in Headers */,
 				6BFF240A2714E33000183C59 /* ACRToggleVisibilityTarget.h in Headers */,
 				6BFF23F22714C0F000183C59 /* ACORemoteResourceInformationPrivate.h in Headers */,
+				E67241712E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h in Headers */,
 				6BFF23F82714C0F000183C59 /* ACRParseWarningPrivate.h in Headers */,
 				6BFF24062714E26900183C59 /* ACRToggleInputDataSource.h in Headers */,
 				6B377284260194000024E527 /* ACRActionExecuteRenderer.h in Headers */,
@@ -2823,6 +2838,7 @@
 				6B224278220BAC8B000ACDA1 /* BaseElement.cpp in Sources */,
 				6BDE5C4126FEA7DC003A1DDB /* ACROverflowTarget.mm in Sources */,
 				6B9D650F21095CBF00BB5C7B /* ACRMediaTarget.mm in Sources */,
+				E67241702E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m in Sources */,
 				6B8C765626449B09009548FA /* Table.cpp in Sources */,
 				4621E12E2BF35784004F03F3 /* RatingLabel.cpp in Sources */,
 				6B2242AF22334452000ACDA1 /* TextRun.cpp in Sources */,

@@ -55,6 +55,4 @@
 
 - (BOOL)hasKVOObserverForImageView:(UIImageView *)imageView;
 
-- (void)addImageViewToKVOTracking:(UIImageView *)imageView;
-
 @end
