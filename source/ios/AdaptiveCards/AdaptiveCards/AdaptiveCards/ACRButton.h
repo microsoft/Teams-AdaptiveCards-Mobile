@@ -35,6 +35,7 @@
 
 - (void)setImageView:(UIImage *)image withConfig:(ACOHostConfig *)config;
 - (void)setImageView:(UIImage *)image withConfig:(ACOHostConfig *)config widthToHeightRatio:(float)widthToHeightRatio;
-
++ (void)handleExpressionEvaluationForButton:(ACRButton *)button
+                          baseActionElement:(ACOBaseActionElement *)acoElem;
 - (void)applySentimentStyling;
 @end

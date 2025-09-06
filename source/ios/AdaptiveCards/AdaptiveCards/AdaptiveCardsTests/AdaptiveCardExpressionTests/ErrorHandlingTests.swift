@@ -1,0 +1,23 @@
+//
+//  ErrorHandlingTests.swift
+//  AdaptiveCards
+//
+//  Created by Rahul Pinjani on 8/12/25.
+//
+
+import XCTest
+import AdaptiveCards
+
+class ErrorHandlingTests: XCTestCase {
+    
+    func testFunctionErrorDescriptions() {
+        let error1 = FunctionError.invalidParameterCount(expected: 2, actual: 1)
+        XCTAssertEqual(error1.description, "Expected 2 parameters, got 1")
+        
+        let error2 = FunctionError.invalidParameterType(parameter: 0, expected: "String", actual: "Number")
+        XCTAssertEqual(error2.description, "Parameter 0: expected String, got Number")
+        
+        let error3 = FunctionError.executionError("Test error")
+        XCTAssertEqual(error3.description, "Execution error: Test error")
+    }
+}
