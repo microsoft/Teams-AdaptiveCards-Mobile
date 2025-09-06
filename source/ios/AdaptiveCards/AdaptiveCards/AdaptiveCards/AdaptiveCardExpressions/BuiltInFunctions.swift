@@ -17,13 +17,13 @@ public protocol FunctionCategory {
 
 // MARK: - Error Handling
 
-enum FunctionError: Error, CustomStringConvertible {
+public enum FunctionError: Error, CustomStringConvertible {
     case invalidParameterCount(expected: Int, actual: Int)
     case invalidParameterType(parameter: Int, expected: String, actual: String)
     case executionError(String)
     case functionNotFound(String)
 
-    var description: String {
+   public var description: String {
         switch self {
         case .invalidParameterCount(let expected, let actual):
             return "Expected \(expected) parameters, got \(actual)"
@@ -39,20 +39,23 @@ enum FunctionError: Error, CustomStringConvertible {
 
 // MARK: - Parameter Validation
 
-struct ParameterValidator {
-    static func validateCount(_ params: [Any?], expected: Int) throws {
+public struct ParameterValidator {
+    
+    public init() {}
+    
+   public static func validateCount(_ params: [Any?], expected: Int) throws {
         guard params.count == expected else {
             throw FunctionError.invalidParameterCount(expected: expected, actual: params.count)
         }
     }
     
-    static func validateMinCount(_ params: [Any?], minimum: Int) throws {
+    public static func validateMinCount(_ params: [Any?], minimum: Int) throws {
         guard params.count >= minimum else {
             throw FunctionError.invalidParameterCount(expected: minimum, actual: params.count)
         }
     }
     
-    static func extractNumber(_ param: Any?, at index: Int) throws -> Double {
+    public static func extractNumber(_ param: Any?, at index: Int) throws -> Double {
         guard let number = param as? NSNumber else {
             throw FunctionError.invalidParameterType(
                 parameter: index,
@@ -63,7 +66,7 @@ struct ParameterValidator {
         return number.doubleValue
     }
     
-    static func extractString(_ param: Any?, at index: Int) throws -> String {
+    public static func extractString(_ param: Any?, at index: Int) throws -> String {
         guard let string = param as? String else {
             throw FunctionError.invalidParameterType(
                 parameter: index,
@@ -74,7 +77,7 @@ struct ParameterValidator {
         return string
     }
     
-    static func extractInt(_ param: Any?, at index: Int) throws -> Int {
+    public static func extractInt(_ param: Any?, at index: Int) throws -> Int {
         guard let number = param as? NSNumber else {
             throw FunctionError.invalidParameterType(
                 parameter: index,
@@ -88,10 +91,12 @@ struct ParameterValidator {
 
 // MARK: - Math Functions
 
-class MathFunctions: FunctionCategory {
-    let categoryName = "Math"
+public class MathFunctions: FunctionCategory {
+    public let categoryName = "Math"
     
-    var functions: [String: FunctionDeclaration] {
+    public init() {}
+    
+    public var functions: [String: FunctionDeclaration] {
         return [
             "round": FunctionDeclaration(name: "round", callback: roundFunction),
             "ceil": FunctionDeclaration(name: "ceil", callback: ceilFunction),
@@ -120,10 +125,12 @@ class MathFunctions: FunctionCategory {
 
 // MARK: - String Functions
 
-class StringFunctions: FunctionCategory {
-    let categoryName = "String"
+public class StringFunctions: FunctionCategory {
+    public let categoryName = "String"
     
-    var functions: [String: FunctionDeclaration] {
+    public init() {}
+    
+    public var functions: [String: FunctionDeclaration] {
         return [
             "toUpper": FunctionDeclaration(name: "toUpper", callback: toUpperFunction),
             "toLower": FunctionDeclaration(name: "toLower", callback: toLowerFunction),
@@ -173,10 +180,12 @@ class StringFunctions: FunctionCategory {
 
 // MARK: - Conversion Functions
 
-class ConversionFunctions: FunctionCategory {
-    let categoryName = "Conversion"
+public class ConversionFunctions: FunctionCategory {
+    public let categoryName = "Conversion"
     
-    var functions: [String: FunctionDeclaration] {
+    public init() {}
+    
+    public var functions: [String: FunctionDeclaration] {
         return [
             "parseFloat": FunctionDeclaration(name: "parseFloat", callback: parseFloatFunction),
             "parseInt": FunctionDeclaration(name: "parseInt", callback: parseIntFunction),
@@ -240,10 +249,12 @@ class ConversionFunctions: FunctionCategory {
 
 // MARK: - Utility Functions
 
-class UtilityFunctions: FunctionCategory {
-    let categoryName = "Utility"
+public class UtilityFunctions: FunctionCategory {
+    public let categoryName = "Utility"
     
-    var functions: [String: FunctionDeclaration] {
+    public init() {}
+    
+    public var functions: [String: FunctionDeclaration] {
         return [
             "if": FunctionDeclaration(name: "if", callback: ifFunction),
             "length": FunctionDeclaration(name: "length", callback: lengthFunction)
@@ -275,10 +286,12 @@ class UtilityFunctions: FunctionCategory {
 
 // MARK: - Date Functions
 
-class DateFunctions: FunctionCategory {
-    let categoryName = "Date"
+public class DateFunctions: FunctionCategory {
+    public let categoryName = "Date"
     
-    var functions: [String: FunctionDeclaration] {
+    public init() {}
+    
+    public var functions: [String: FunctionDeclaration] {
         return [
             "Date.format": FunctionDeclaration(name: "Date.format", callback: formatDateFunction),
             "Time.format": FunctionDeclaration(name: "Time.format", callback: formatTimeFunction)
@@ -338,7 +351,7 @@ class DateFunctions: FunctionCategory {
 
 // MARK: - Function Registry
 
-class FunctionRegistry {
+public class FunctionRegistry {
     private let categories: [FunctionCategory]
     private lazy var allFunctions: [String: FunctionDeclaration] = {
         return categories.reduce(into: [:]) { result, category in
@@ -346,7 +359,7 @@ class FunctionRegistry {
         }
     }()
     
-    init(categories: [FunctionCategory] = [
+    public init(categories: [FunctionCategory] = [
         MathFunctions(),
         StringFunctions(),
         ConversionFunctions(),
@@ -356,19 +369,19 @@ class FunctionRegistry {
         self.categories = categories
     }
     
-    func getFunction(name: String) -> FunctionDeclaration? {
+    public func getFunction(name: String) -> FunctionDeclaration? {
         return allFunctions[name]
     }
     
-    func getAllFunctions() -> [String: FunctionDeclaration] {
+    public func getAllFunctions() -> [String: FunctionDeclaration] {
         return allFunctions
     }
     
-    func getFunctionsByCategory(_ categoryName: String) -> [String: FunctionDeclaration] {
+    public func getFunctionsByCategory(_ categoryName: String) -> [String: FunctionDeclaration] {
         return categories.first { $0.categoryName == categoryName }?.functions ?? [:]
     }
     
-    func getAllCategories() -> [String] {
+    public func getAllCategories() -> [String] {
         return categories.map { $0.categoryName }
     }
 }

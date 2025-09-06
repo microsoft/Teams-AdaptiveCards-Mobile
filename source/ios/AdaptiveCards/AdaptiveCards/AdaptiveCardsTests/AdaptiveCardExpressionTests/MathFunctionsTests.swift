@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import AdaptiveCards
+import AdaptiveCards
 
 class MathFunctionsTests: XCTestCase {
     private var category: MathFunctions!

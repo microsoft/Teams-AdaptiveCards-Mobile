@@ -6,7 +6,8 @@
 //
 
 import XCTest
-@testable import AdaptiveCards
+import AdaptiveCards
+
 class ExpressionTests: XCTestCase {
     
     func testBasicArithmeticExpression() async throws {

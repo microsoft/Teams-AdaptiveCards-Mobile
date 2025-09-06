@@ -6,8 +6,8 @@
 //
 
 import XCTest
+import AdaptiveCards
 
-@testable import AdaptiveCards
 class TestExpressionsTests: XCTestCase {
     
     // MARK: - Test Data Structure
