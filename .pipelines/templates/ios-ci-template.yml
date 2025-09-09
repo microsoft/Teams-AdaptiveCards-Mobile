@@ -14,7 +14,7 @@ steps:
     xcodeVersion: 'default'
     packageApp: false
     signingOption: 'default'
-    sdk: 'iphonesimulator17.5'
+    sdk: 'iphonesimulator18.5'
     destinationPlatformOption: 'iOS'
     destinationSimulators: 'iPhone 15 Pro'
 
@@ -27,6 +27,6 @@ steps:
     xcodeVersion: 'default'
     packageApp: false
     signingOption: 'default'
-    sdk: 'iphonesimulator17.5'
+    sdk: 'iphonesimulator18.5'
     destinationPlatformOption: 'iOS'
     destinationSimulators: 'iPhone 15 Pro'
