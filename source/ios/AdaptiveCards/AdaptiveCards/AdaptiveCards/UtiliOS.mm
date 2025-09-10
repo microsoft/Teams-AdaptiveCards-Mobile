@@ -112,7 +112,7 @@ void renderBackgroundImage(const std::shared_ptr<AdaptiveCards::BackgroundImage>
     if ([key length]) {
         UIImageView *imgView = nil;
         UIImage *img = [rootView getImageMap][key];
-        if (img) {
+        if (img && [img isKindOfClass:[UIImage class]]) {
             switch (backgroundImage->GetFillMode()) {
                 case ImageFillMode::Repeat:
                 case ImageFillMode::RepeatHorizontally:
@@ -150,7 +150,7 @@ void renderBackgroundImage(const std::shared_ptr<AdaptiveCards::BackgroundImage>
 void renderBackgroundImage(ACRView *rootView, const BackgroundImage *backgroundImageProperties, UIImageView *imageView,
                            UIImage *image)
 {
-    if (rootView == nil || backgroundImageProperties == nullptr || imageView == nullptr || image == nullptr) {
+    if (rootView == nil || backgroundImageProperties == nullptr || imageView == nullptr || image == nullptr || ![image isKindOfClass:[UIImage class]]) {
         return;
     }
 
@@ -438,14 +438,11 @@ ObserverActionBlock generateBackgroundImageObserverAction(
             __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
         if (view) {
-            [view addObserver:observer
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:backgroundImageProperties.get()];
-            // Track that this imageView has a KVO observer
-            if ([observer isKindOfClass:[ACRView class]]) {
-                [((ACRView *)observer) addImageViewToKVOTracking:view];
-            }
+            // Use the new safe KVO method
+            [observer startObserving:view
+                             keyPath:@"image"
+                             options:NSKeyValueObservingOptionNew
+                             context:backgroundImageProperties.get()];
 
             // store the image view and column for easy retrieval in ACRView::observeValueForKeyPath
             [rootView setImageView:key view:view];

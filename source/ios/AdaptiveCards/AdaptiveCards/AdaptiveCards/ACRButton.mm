@@ -312,7 +312,7 @@ NSString * const DYNAMIC_VISIBLE_PROP = @"isVisible.dynamic";
                 [button addSubview:view];
                 // Only remove observer if one was actually added for this imageView
                 if ([rootView hasKVOObserverForImageView:view]) {
-                    [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
+                    [rootView removeObserverOnImageViewForKeyPath:@"image" onObject:view keyToImageView:key];
                 }
                 [button setImageView:view.image withConfig:config];
             } else {
