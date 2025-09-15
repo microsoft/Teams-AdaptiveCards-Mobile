@@ -71,12 +71,12 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
         }
 
         // Create the bridge that will call our observeValueForKeyPath method
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self) weakSelf = self;
         ACRStringBasedKeyValueObservation *stringBasedKeyValueObservation = [[ACRStringBasedKeyValueObservation alloc] initWithObservableObject:object
                                                                                                                                 observedKeyPath:keyPath
                                                                                                                                         options:options
                                                                                                                                        callback:^(NSString * _Nullable keyPath, NSObject * _Nullable object, NSDictionary<NSKeyValueChangeKey,id> * _Nullable change) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
             // Call the original observeValueForKeyPath method
             [strongSelf observeValueForKeyPath:keyPath
                                       ofObject:object
