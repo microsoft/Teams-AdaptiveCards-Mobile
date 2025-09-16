@@ -24,7 +24,7 @@ Pod::Spec.new do |spec|
   }
 
   spec.subspec 'AdaptiveCardsCore' do | sspec |
-    sspec.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/*.{h,m,mm,swift}'
+    sspec.source_files = 'source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/**/*.{h,m,mm,swift}'
     sspec.resource_bundles = {'AdaptiveCards' => ['source/ios/AdaptiveCards/AdaptiveCards/AdaptiveCards/Resources/**/*']}
     sspec.dependency 'AdaptiveCards/AdaptiveCardsPrivate'
     sspec.dependency 'AdaptiveCards/ObjectModel'
