@@ -6,6 +6,7 @@
 //
 
 #import "ACRBaseCardElementRenderer.h"
+@class TSExpressionObjCBridge;
 
 @interface ACRTextBlockRenderer : ACRBaseCardElementRenderer
 

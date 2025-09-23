@@ -20,7 +20,6 @@
 #import "TextInput.h"
 #import "UtiliOS.h"
 #import "ARCGridViewLayout.h"
-#import <AdaptiveCards/AdaptiveCards-Swift.h>
 #import "TSExpressionObjCBridge.h"
 
 @implementation ACRTextBlockRenderer

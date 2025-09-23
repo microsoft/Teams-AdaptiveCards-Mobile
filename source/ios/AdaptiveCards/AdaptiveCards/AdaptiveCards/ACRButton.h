@@ -7,7 +7,7 @@
 
 #import "ACRView.h"
 #import <UIKit/UIKit.h>
-
+@class TSExpressionObjCBridge;
 @interface ACRButton : UIButton
 
 @property BOOL positiveUseDefault;

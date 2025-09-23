@@ -23,7 +23,7 @@
 #import <Foundation/Foundation.h>
 
 @class SwiftAdaptiveCardParseResult;
-
+@class TSExpressionObjCBridge;
 @interface ACOAdaptiveCard : NSObject
 
 @property ACORefresh *refresh;
