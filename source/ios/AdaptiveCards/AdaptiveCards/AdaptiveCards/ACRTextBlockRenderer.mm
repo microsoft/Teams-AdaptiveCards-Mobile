@@ -20,11 +20,8 @@
 #import "TextInput.h"
 #import "UtiliOS.h"
 #import "ARCGridViewLayout.h"
-#import <AdaptiveCards/AdaptiveCards-Swift.h>
-#import "TSExpressionObjCBridge.h"
 
 @implementation ACRTextBlockRenderer
-NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 
 + (ACRTextBlockRenderer *)getInstance
 {
@@ -162,67 +159,11 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     }
     
     configRtl(lab, rootView.context);
-    //  Expression evaluation for dynamic text property
-    if ([TSExpressionObjCBridge isExpressionEvalEnabled])
-    {
-        [self handleExpressionEvaluationForTextBlock:lab rootView:rootView baseCardElement:acoElem];
-    }
     
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:lab withAreaName:areaName];
 
     return lab;
-}
-
-#pragma mark - Expression Evaluation Helper
-- (void)handleExpressionEvaluationForTextBlock:(ACRUILabel *)label
-                                      rootView:(ACRView *)rootView
-                               baseCardElement:(ACOBaseCardElement *)acoElem
-{
-    NSData *jsonData = [acoElem additionalProperty];
-    NSError *jsonError = nil;
-    NSDictionary *additionalProperties = nil;
-    if (jsonData)
-    {
-        additionalProperties = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&jsonError];
-        if (additionalProperties && [additionalProperties isKindOfClass:[NSDictionary class]])
-        {
-            NSString *titleDynamic = additionalProperties[DYNAMIC_TEXT_PROP];
-            
-            [self evaluateDynamicProperties:titleDynamic
-                                      label:label];
-        }
-    }
-}
-    
-- (void)evaluateDynamicProperties:(NSString * _Nullable)textDynamic
-                            label:(ACRUILabel *)label
-{
-    if (textDynamic && [textDynamic length] > 0)
-    {
-        [self evaluateExpression:textDynamic completion:^(id value, NSError *error)
-         {
-            if ([value isKindOfClass:[NSString class]] && [((NSString *)value) length] > 0)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [label setText:value];
-                });
-            }
-        }];
-    }
-}
-
-/// Evaluates an expression string using the Swift ObjCExpressionEvaluator bridge.
-/// Calls the completion block with success/failure and result/error.
-- (void)evaluateExpression:(NSString *)expression completion:(void (^)(id _Nullable result, NSError * _Nullable error))completion
-{
-    [TSExpressionObjCBridge evaluateExpression:expression withData:nil completion:^(NSObject * _Nullable evalResult, NSError * _Nullable evalError)
-     {
-        if (completion)
-        {
-            completion(evalResult, evalError);
-        }
-    }];
 }
 
 @end
