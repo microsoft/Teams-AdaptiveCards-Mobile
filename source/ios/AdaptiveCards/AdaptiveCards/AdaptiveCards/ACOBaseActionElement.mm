@@ -61,7 +61,6 @@ using namespace AdaptiveCards;
     } else {
         actionElement.accessibilityTraits |= UIAccessibilityTraitButton;
     }
-    
     return actionElement;
 }
 
