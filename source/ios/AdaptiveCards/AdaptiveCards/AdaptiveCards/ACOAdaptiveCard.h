@@ -41,4 +41,12 @@
 - (SwiftAdaptiveCardParseResult *)swiftParseResult;
 + (BOOL)isSwiftParserEnabled;
 + (void)setSwiftParserEnabled:(BOOL)enabled;
+
+/// Expression Engine Adaptive Card Bridge 
++ (BOOL)isExpressionEvalEnabled;
++ (void)setExpressionEvalEnabled:(BOOL)enabled;
++ (void)evaluateExpression:(NSString * _Nonnull)expression
+                  withData:(NSDictionary * _Nullable)data
+                completion:(void (^_Nullable)(id _Nullable result, NSError * _Nullable error))completion;
+
 @end
