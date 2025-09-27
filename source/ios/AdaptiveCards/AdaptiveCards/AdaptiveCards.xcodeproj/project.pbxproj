@@ -595,6 +595,38 @@
 		F9A9E55226FE9FA000D13410 /* CollectionCoreElement.h in Headers */ = {isa = PBXBuildFile; fileRef = F9A9E55026FE9FA000D13410 /* CollectionCoreElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F9A9E55526FE9FE400D13410 /* StyledCollectionElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9A9E55326FE9FE400D13410 /* StyledCollectionElement.cpp */; };
 		F9A9E55626FE9FE400D13410 /* StyledCollectionElement.h in Headers */ = {isa = PBXBuildFile; fileRef = F9A9E55426FE9FE400D13410 /* StyledCollectionElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FA7F18F62E884B950052B2C6 /* TokenizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18F42E884B950052B2C6 /* TokenizerTests.swift */; };
+		FA7F18F72E884B950052B2C6 /* FunctionCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18ED2E884B950052B2C6 /* FunctionCacheTests.swift */; };
+		FA7F18F82E884B950052B2C6 /* BindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18E72E884B950052B2C6 /* BindingTests.swift */; };
+		FA7F18F92E884B950052B2C6 /* DateFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18EA2E884B950052B2C6 /* DateFunctionsTests.swift */; };
+		FA7F18FA2E884B950052B2C6 /* ExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18EC2E884B950052B2C6 /* ExpressionTests.swift */; };
+		FA7F18FB2E884B950052B2C6 /* AllExpressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18E62E884B950052B2C6 /* AllExpressionTests.swift */; };
+		FA7F18FC2E884B950052B2C6 /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18EF2E884B950052B2C6 /* IntegrationTests.swift */; };
+		FA7F18FD2E884B950052B2C6 /* MathFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18F02E884B950052B2C6 /* MathFunctionsTests.swift */; };
+		FA7F18FE2E884B950052B2C6 /* FunctionRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18EE2E884B950052B2C6 /* FunctionRegistryTests.swift */; };
+		FA7F18FF2E884B950052B2C6 /* ErrorHandlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18EB2E884B950052B2C6 /* ErrorHandlingTests.swift */; };
+		FA7F19002E884B950052B2C6 /* ObjCExpressionEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18F12E884B950052B2C6 /* ObjCExpressionEvaluatorTests.swift */; };
+		FA7F19012E884B950052B2C6 /* StringFunctionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18F22E884B950052B2C6 /* StringFunctionTests.swift */; };
+		FA7F19022E884B950052B2C6 /* BuiltInFunctionIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18E82E884B950052B2C6 /* BuiltInFunctionIntegrationTests.swift */; };
+		FA7F19042E884B950052B2C6 /* UtilityFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18F52E884B950052B2C6 /* UtilityFunctionsTests.swift */; };
+		FA7F19052E884B950052B2C6 /* CustomFunctionCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F18E92E884B950052B2C6 /* CustomFunctionCategoryTests.swift */; };
+		FA7F19152E884BB10052B2C6 /* ExpressionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F190E2E884BB10052B2C6 /* ExpressionModels.swift */; };
+		FA7F19162E884BB10052B2C6 /* ExpressionNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F190F2E884BB10052B2C6 /* ExpressionNodes.swift */; };
+		FA7F19172E884BB10052B2C6 /* BinaryOperatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19062E884BB10052B2C6 /* BinaryOperatorNode.swift */; };
+		FA7F19182E884BB10052B2C6 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19072E884BB10052B2C6 /* Binding.swift */; };
+		FA7F19192E884BB10052B2C6 /* ExpressionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19102E884BB10052B2C6 /* ExpressionParser.swift */; };
+		FA7F191A2E884BB10052B2C6 /* EvaluationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19092E884BB10052B2C6 /* EvaluationContext.swift */; };
+		FA7F191B2E884BB10052B2C6 /* ExpressionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19112E884BB10052B2C6 /* ExpressionTypes.swift */; };
+		FA7F191C2E884BB10052B2C6 /* ExpressionUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19122E884BB10052B2C6 /* ExpressionUtilities.swift */; };
+		FA7F191D2E884BB10052B2C6 /* ExpressionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F190C2E884BB10052B2C6 /* ExpressionErrors.swift */; };
+		FA7F191E2E884BB10052B2C6 /* FunctionCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19132E884BB10052B2C6 /* FunctionCache.swift */; };
+		FA7F191F2E884BB10052B2C6 /* ExpressionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F190D2E884BB10052B2C6 /* ExpressionHelpers.swift */; };
+		FA7F19202E884BB10052B2C6 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19142E884BB10052B2C6 /* Tokenizer.swift */; };
+		FA7F19212E884BB10052B2C6 /* ExpressionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F190B2E884BB10052B2C6 /* ExpressionEngine.swift */; };
+		FA7F19222E884BB10052B2C6 /* BuiltInFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19082E884BB10052B2C6 /* BuiltInFunctions.swift */; };
+		FA7F19232E884BB10052B2C6 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F190A2E884BB10052B2C6 /* Expression.swift */; };
+		FA7F19252E884D7D0052B2C6 /* TSExpressionObjCBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19242E884D7D0052B2C6 /* TSExpressionObjCBridge.m */; };
+		FA7F19272E884DD60052B2C6 /* TSExpressionObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = FA7F19262E884DD60052B2C6 /* TSExpressionObjCBridge.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1221,6 +1253,38 @@
 		F9A9E55026FE9FA000D13410 /* CollectionCoreElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionCoreElement.h; path = ../../../../shared/cpp/ObjectModel/CollectionCoreElement.h; sourceTree = "<group>"; };
 		F9A9E55326FE9FE400D13410 /* StyledCollectionElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StyledCollectionElement.cpp; path = ../../../../shared/cpp/ObjectModel/StyledCollectionElement.cpp; sourceTree = "<group>"; };
 		F9A9E55426FE9FE400D13410 /* StyledCollectionElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StyledCollectionElement.h; path = ../../../../shared/cpp/ObjectModel/StyledCollectionElement.h; sourceTree = "<group>"; };
+		FA7F18E62E884B950052B2C6 /* AllExpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExpressionTests.swift; sourceTree = "<group>"; };
+		FA7F18E72E884B950052B2C6 /* BindingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingTests.swift; sourceTree = "<group>"; };
+		FA7F18E82E884B950052B2C6 /* BuiltInFunctionIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInFunctionIntegrationTests.swift; sourceTree = "<group>"; };
+		FA7F18E92E884B950052B2C6 /* CustomFunctionCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFunctionCategoryTests.swift; sourceTree = "<group>"; };
+		FA7F18EA2E884B950052B2C6 /* DateFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFunctionsTests.swift; sourceTree = "<group>"; };
+		FA7F18EB2E884B950052B2C6 /* ErrorHandlingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingTests.swift; sourceTree = "<group>"; };
+		FA7F18EC2E884B950052B2C6 /* ExpressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionTests.swift; sourceTree = "<group>"; };
+		FA7F18ED2E884B950052B2C6 /* FunctionCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCacheTests.swift; sourceTree = "<group>"; };
+		FA7F18EE2E884B950052B2C6 /* FunctionRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionRegistryTests.swift; sourceTree = "<group>"; };
+		FA7F18EF2E884B950052B2C6 /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
+		FA7F18F02E884B950052B2C6 /* MathFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFunctionsTests.swift; sourceTree = "<group>"; };
+		FA7F18F12E884B950052B2C6 /* ObjCExpressionEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjCExpressionEvaluatorTests.swift; sourceTree = "<group>"; };
+		FA7F18F22E884B950052B2C6 /* StringFunctionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFunctionTests.swift; sourceTree = "<group>"; };
+		FA7F18F42E884B950052B2C6 /* TokenizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenizerTests.swift; sourceTree = "<group>"; };
+		FA7F18F52E884B950052B2C6 /* UtilityFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctionsTests.swift; sourceTree = "<group>"; };
+		FA7F19062E884BB10052B2C6 /* BinaryOperatorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryOperatorNode.swift; sourceTree = "<group>"; };
+		FA7F19072E884BB10052B2C6 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		FA7F19082E884BB10052B2C6 /* BuiltInFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInFunctions.swift; sourceTree = "<group>"; };
+		FA7F19092E884BB10052B2C6 /* EvaluationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationContext.swift; sourceTree = "<group>"; };
+		FA7F190A2E884BB10052B2C6 /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
+		FA7F190B2E884BB10052B2C6 /* ExpressionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionEngine.swift; sourceTree = "<group>"; };
+		FA7F190C2E884BB10052B2C6 /* ExpressionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionErrors.swift; sourceTree = "<group>"; };
+		FA7F190D2E884BB10052B2C6 /* ExpressionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionHelpers.swift; sourceTree = "<group>"; };
+		FA7F190E2E884BB10052B2C6 /* ExpressionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionModels.swift; sourceTree = "<group>"; };
+		FA7F190F2E884BB10052B2C6 /* ExpressionNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionNodes.swift; sourceTree = "<group>"; };
+		FA7F19102E884BB10052B2C6 /* ExpressionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionParser.swift; sourceTree = "<group>"; };
+		FA7F19112E884BB10052B2C6 /* ExpressionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionTypes.swift; sourceTree = "<group>"; };
+		FA7F19122E884BB10052B2C6 /* ExpressionUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionUtilities.swift; sourceTree = "<group>"; };
+		FA7F19132E884BB10052B2C6 /* FunctionCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionCache.swift; sourceTree = "<group>"; };
+		FA7F19142E884BB10052B2C6 /* Tokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokenizer.swift; sourceTree = "<group>"; };
+		FA7F19242E884D7D0052B2C6 /* TSExpressionObjCBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSExpressionObjCBridge.m; sourceTree = "<group>"; };
+		FA7F19262E884DD60052B2C6 /* TSExpressionObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSExpressionObjCBridge.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1344,6 +1408,8 @@
 		6B92A71B266FE84F00CAE3BF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FA7F19262E884DD60052B2C6 /* TSExpressionObjCBridge.h */,
+				FA7F19242E884D7D0052B2C6 /* TSExpressionObjCBridge.m */,
 				E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */,
 				E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */,
 				901FE9C72E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.h */,
@@ -1567,6 +1633,7 @@
 		901FE9A92E04BD9800CD77C6 /* SwiftAdaptiveCards */ = {
 			isa = PBXGroup;
 			children = (
+				FA7F18E32E884AC60052B2C6 /* ExpressionEngine */,
 				901FE98F2E04BD9800CD77C6 /* Legacy */,
 				901FE9912E04BD9800CD77C6 /* Markdown */,
 				901FE9992E04BD9800CD77C6 /* Util */,
@@ -1626,6 +1693,7 @@
 		901FE9EB2E04BE3D00CD77C6 /* SwiftAdaptiveCardsTests */ = {
 			isa = PBXGroup;
 			children = (
+				FA7F18E52E884B400052B2C6 /* ExpressionEngineTests */,
 				901FE9D32E04BE3D00CD77C6 /* Flattened */,
 				901FE9EA2E04BE3D00CD77C6 /* ObjectModel */,
 			);
@@ -1662,14 +1730,6 @@
 			path = DynamicTypeahead;
 			sourceTree = "<group>";
 		};
-		E672416D2E6768B5000ECCE4 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				7AD18A8D2E0293DB00A35DDD /* FluentAssets.xcassets */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		F4071C751FCCBAEF00AF4FEA /* json */ = {
 			isa = PBXGroup;
 			children = (
@@ -1688,7 +1748,7 @@
 				F45A07191EF4BC44007C6503 /* Frameworks */,
 				F423C0B61EE1FBA900905679 /* Products */,
 				1779FD9986EE958A93BD0A28 /* Pods */,
-				7A2D17532DFA9A2C00E59055 /* Recovered References */,
+				FA7F18E22E884A140052B2C6 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2139,6 +2199,58 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FA7F18E22E884A140052B2C6 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				7AD18A8D2E0293DB00A35DDD /* FluentAssets.xcassets */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		FA7F18E32E884AC60052B2C6 /* ExpressionEngine */ = {
+			isa = PBXGroup;
+			children = (
+				FA7F19062E884BB10052B2C6 /* BinaryOperatorNode.swift */,
+				FA7F19072E884BB10052B2C6 /* Binding.swift */,
+				FA7F19082E884BB10052B2C6 /* BuiltInFunctions.swift */,
+				FA7F19092E884BB10052B2C6 /* EvaluationContext.swift */,
+				FA7F190A2E884BB10052B2C6 /* Expression.swift */,
+				FA7F190B2E884BB10052B2C6 /* ExpressionEngine.swift */,
+				FA7F190C2E884BB10052B2C6 /* ExpressionErrors.swift */,
+				FA7F190D2E884BB10052B2C6 /* ExpressionHelpers.swift */,
+				FA7F190E2E884BB10052B2C6 /* ExpressionModels.swift */,
+				FA7F190F2E884BB10052B2C6 /* ExpressionNodes.swift */,
+				FA7F19102E884BB10052B2C6 /* ExpressionParser.swift */,
+				FA7F19112E884BB10052B2C6 /* ExpressionTypes.swift */,
+				FA7F19122E884BB10052B2C6 /* ExpressionUtilities.swift */,
+				FA7F19132E884BB10052B2C6 /* FunctionCache.swift */,
+				FA7F19142E884BB10052B2C6 /* Tokenizer.swift */,
+			);
+			path = ExpressionEngine;
+			sourceTree = "<group>";
+		};
+		FA7F18E52E884B400052B2C6 /* ExpressionEngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA7F18E62E884B950052B2C6 /* AllExpressionTests.swift */,
+				FA7F18E72E884B950052B2C6 /* BindingTests.swift */,
+				FA7F18E82E884B950052B2C6 /* BuiltInFunctionIntegrationTests.swift */,
+				FA7F18E92E884B950052B2C6 /* CustomFunctionCategoryTests.swift */,
+				FA7F18EA2E884B950052B2C6 /* DateFunctionsTests.swift */,
+				FA7F18EB2E884B950052B2C6 /* ErrorHandlingTests.swift */,
+				FA7F18EC2E884B950052B2C6 /* ExpressionTests.swift */,
+				FA7F18ED2E884B950052B2C6 /* FunctionCacheTests.swift */,
+				FA7F18EE2E884B950052B2C6 /* FunctionRegistryTests.swift */,
+				FA7F18EF2E884B950052B2C6 /* IntegrationTests.swift */,
+				FA7F18F02E884B950052B2C6 /* MathFunctionsTests.swift */,
+				FA7F18F12E884B950052B2C6 /* ObjCExpressionEvaluatorTests.swift */,
+				FA7F18F22E884B950052B2C6 /* StringFunctionTests.swift */,
+				FA7F18F42E884B950052B2C6 /* TokenizerTests.swift */,
+				FA7F18F52E884B950052B2C6 /* UtilityFunctionsTests.swift */,
+			);
+			path = ExpressionEngineTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2314,6 +2426,7 @@
 				6B1147D11F32E53A008846EC /* ACRActionDelegate.h in Headers */,
 				7AB4BE5F2E0A7507007E39F3 /* ACRBottomSheetPresentationController.h in Headers */,
 				6BFF99C725FFF53E0028069F /* Authentication.h in Headers */,
+				FA7F19272E884DD60052B2C6 /* TSExpressionObjCBridge.h in Headers */,
 				6BFF99C325FFF53E0028069F /* AuthCardButton.h in Headers */,
 				3714EB532DAFB30400EE15AA /* ThemedUrl.h in Headers */,
 				6BFF99C425FFF53E0028069F /* ExecuteAction.h in Headers */,
@@ -2783,6 +2896,7 @@
 				F44873051EE2261F00FCAFAE /* Container.cpp in Sources */,
 				6BC30F7921E6E49E00B9FAAE /* ACRCustomActionRenderer.mm in Sources */,
 				6B22427A220BAC8B000ACDA1 /* pch.cpp in Sources */,
+				FA7F19252E884D7D0052B2C6 /* TSExpressionObjCBridge.m in Sources */,
 				46DF37BE2C903377001C254F /* ACRCompoundButtonRenderer.mm in Sources */,
 				0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */,
 				F44873181EE2261F00FCAFAE /* NumberInput.cpp in Sources */,
@@ -2799,6 +2913,21 @@
 				F4CAE7831F75AB9000545555 /* ACOAdaptiveCard.mm in Sources */,
 				F42C2F4A20351954008787B0 /* (null) in Sources */,
 				F4CA74A02016B3B9002041DF /* ACRTapGestureRecognizerEventHandler.mm in Sources */,
+				FA7F19152E884BB10052B2C6 /* ExpressionModels.swift in Sources */,
+				FA7F19162E884BB10052B2C6 /* ExpressionNodes.swift in Sources */,
+				FA7F19172E884BB10052B2C6 /* BinaryOperatorNode.swift in Sources */,
+				FA7F19182E884BB10052B2C6 /* Binding.swift in Sources */,
+				FA7F19192E884BB10052B2C6 /* ExpressionParser.swift in Sources */,
+				FA7F191A2E884BB10052B2C6 /* EvaluationContext.swift in Sources */,
+				FA7F191B2E884BB10052B2C6 /* ExpressionTypes.swift in Sources */,
+				FA7F191C2E884BB10052B2C6 /* ExpressionUtilities.swift in Sources */,
+				FA7F191D2E884BB10052B2C6 /* ExpressionErrors.swift in Sources */,
+				FA7F191E2E884BB10052B2C6 /* FunctionCache.swift in Sources */,
+				FA7F191F2E884BB10052B2C6 /* ExpressionHelpers.swift in Sources */,
+				FA7F19202E884BB10052B2C6 /* Tokenizer.swift in Sources */,
+				FA7F19212E884BB10052B2C6 /* ExpressionEngine.swift in Sources */,
+				FA7F19222E884BB10052B2C6 /* BuiltInFunctions.swift in Sources */,
+				FA7F19232E884BB10052B2C6 /* Expression.swift in Sources */,
 				F42741171EF895AB00399FBB /* ACRTextBlockRenderer.mm in Sources */,
 				6BDE5C4626FEA7DC003A1DDB /* ACRShowCardTarget.mm in Sources */,
 				7ECFB640219A3940004727A9 /* ParseContext.cpp in Sources */,
@@ -2894,6 +3023,21 @@
 				901FE9FF2E04BE3D00CD77C6 /* ACCardActionsTests.swift in Sources */,
 				901FEA002E04BE3D00CD77C6 /* DateAndTimeUnitTest.swift in Sources */,
 				901FEA012E04BE3D00CD77C6 /* ACFallBackTests.swift in Sources */,
+				FA7F18F62E884B950052B2C6 /* TokenizerTests.swift in Sources */,
+				FA7F18F72E884B950052B2C6 /* FunctionCacheTests.swift in Sources */,
+				FA7F18F82E884B950052B2C6 /* BindingTests.swift in Sources */,
+				FA7F18F92E884B950052B2C6 /* DateFunctionsTests.swift in Sources */,
+				FA7F18FA2E884B950052B2C6 /* ExpressionTests.swift in Sources */,
+				FA7F18FB2E884B950052B2C6 /* AllExpressionTests.swift in Sources */,
+				FA7F18FC2E884B950052B2C6 /* IntegrationTests.swift in Sources */,
+				FA7F18FD2E884B950052B2C6 /* MathFunctionsTests.swift in Sources */,
+				FA7F18FE2E884B950052B2C6 /* FunctionRegistryTests.swift in Sources */,
+				FA7F18FF2E884B950052B2C6 /* ErrorHandlingTests.swift in Sources */,
+				FA7F19002E884B950052B2C6 /* ObjCExpressionEvaluatorTests.swift in Sources */,
+				FA7F19012E884B950052B2C6 /* StringFunctionTests.swift in Sources */,
+				FA7F19022E884B950052B2C6 /* BuiltInFunctionIntegrationTests.swift in Sources */,
+				FA7F19042E884B950052B2C6 /* UtilityFunctionsTests.swift in Sources */,
+				FA7F19052E884B950052B2C6 /* CustomFunctionCategoryTests.swift in Sources */,
 				901FEA022E04BE3D00CD77C6 /* UnsupportedtypesParsingTest.swift in Sources */,
 				901FEA032E04BE3D00CD77C6 /* FontStylesUnitTest.swift in Sources */,
 				901FEA042E04BE3D00CD77C6 /* EverythingBagelTest.swift in Sources */,
