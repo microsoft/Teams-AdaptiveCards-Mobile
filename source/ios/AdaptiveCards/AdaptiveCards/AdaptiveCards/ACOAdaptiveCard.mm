@@ -20,6 +20,7 @@
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
 #import "SwiftAdaptiveCardObjcBridge.h"
+#import "TSExpressionObjCBridge.h"
 
 using namespace AdaptiveCards;
 
@@ -235,6 +236,23 @@ using namespace AdaptiveCards;
         return JsonToNSData(blob);
     }
     return nil;
+}
+
++ (BOOL)isExpressionEvalEnabled
+{
+    return [TSExpressionObjCBridge isExpressionEvalEnabled];
+}
+
++ (void)setExpressionEvalEnabled:(BOOL)enabled
+{
+    [TSExpressionObjCBridge setExpressionEvalEnabled:enabled];
+}
+
++ (void)evaluateExpression:(NSString *)expression
+                  withData:(NSDictionary * _Nullable)data
+                completion:(void (^_Nullable)(id _Nullable result, NSError * _Nullable error))completion
+{
+    [TSExpressionObjCBridge evaluateExpression:expression withData:data completion:completion];
 }
 
 @end

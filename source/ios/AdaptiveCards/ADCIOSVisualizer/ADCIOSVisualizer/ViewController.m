@@ -227,7 +227,10 @@ UIColor* defaultButtonBackgroundColor;
     }
 
     [ViewController applyConstraints:visualFormats variables:viewMap];
-
+    
+    // Enable Expression Engine
+    [ACOAdaptiveCard setExpressionEvalEnabled:YES];
+    
     ACOFeatureRegistration *featureReg = [ACOFeatureRegistration getInstance];
     [featureReg addFeature:@"acTest" featureVersion:@"1.0"];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleVoiceOverEvent:) name:UIAccessibilityElementFocusedNotification object:nil];
