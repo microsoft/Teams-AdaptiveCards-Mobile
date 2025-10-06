@@ -283,7 +283,10 @@ enum class AdaptiveCardSchemaKey
     Popover,
     ImageFitMode,
     HorizontalContentAlignment,
-    LabelFor
+    LabelFor,
+    Abstract,
+    Keywords,
+    References
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -841,5 +844,11 @@ enum class ProgressBarColor {
     Warning
 };
 DECLARE_ADAPTIVECARD_ENUM(ProgressBarColor);
+
+enum class ReferenceType {
+    AdaptiveCard,
+    Document
+};
+DECLARE_ADAPTIVECARD_ENUM(ReferenceType);
 }
 // namespace AdaptiveCards

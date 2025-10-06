@@ -281,7 +281,10 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Popover, "popover"},
             {AdaptiveCardSchemaKey::ImageFitMode, "fitMode"},
             {AdaptiveCardSchemaKey::HorizontalContentAlignment, "horizontalContentAlignment"},
-            {AdaptiveCardSchemaKey::LabelFor, "labelFor"}});
+            {AdaptiveCardSchemaKey::LabelFor, "labelFor"},
+            {AdaptiveCardSchemaKey::Abstract, "abstract"},
+            {AdaptiveCardSchemaKey::Keywords, "keywords"},
+            {AdaptiveCardSchemaKey::References, "references"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -606,4 +609,8 @@ namespace AdaptiveCards
         {LabelPosition::Below, "Below"},
         {LabelPosition::Before, "Before"},
         {LabelPosition::After, "After"}})
+
+    DEFINE_ADAPTIVECARD_ENUM(ReferenceType, {
+        {ReferenceType::AdaptiveCard, "AdaptiveCardReference"},
+        {ReferenceType::Document, "DocumentReference"}})
 }

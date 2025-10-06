@@ -12,6 +12,7 @@
 #include "BackgroundImage.h"
 #include "FlowLayout.h"
 #include "AreaGridLayout.h"
+#include "References.h"
 
 using namespace AdaptiveCards;
 
@@ -318,6 +319,9 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
     FallbackType fallbackType = FallbackType::None;
     ParseUtil::ParseFallback<BaseCardElement>(context, json, fallbackType, fallbackBaseElement, "rootFallbackId", InternalId::Current());
 
+    // Parse optional references
+    auto references = ParseUtil::GetElementCollectionOfSingleType<References>(context, json, AdaptiveCardSchemaKey::References, References::Deserialize, false);
+
     if (MeetsRootRequirements(requiresSet))
     {
         // Parse body
@@ -329,6 +333,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
             version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, body, actions, requiresSet, fallbackBaseElement, fallbackType);
         result->SetLanguage(language);
         result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
+        result->m_references = std::move(references);
 
         // Parse optional selectAction
         result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
@@ -357,6 +362,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
             version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, fallbackVector, actions);
         result->SetLanguage(language);
         result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
+        result->m_references = references;
 
         // Parse optional selectAction
         result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
@@ -492,6 +498,13 @@ Json::Value AdaptiveCard::SerializeToJsonValue() const
     for (const auto& action : GetActions())
     {
         root[actionsPropertyName].append(action->SerializeToJsonValue());
+    }
+
+    if (!m_references.empty()) {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::References)] = Json::Value(Json::arrayValue);
+        for (const auto& reference : GetReferences()) {
+            root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::References)].append(reference->SerializeToJsonValue());
+        }
     }
 
     return root;
@@ -650,6 +663,10 @@ std::vector<std::shared_ptr<BaseActionElement>>& AdaptiveCard::GetActions()
 const std::vector<std::shared_ptr<BaseActionElement>>& AdaptiveCard::GetActions() const
 {
     return m_actions;
+}
+
+const std::vector<std::shared_ptr<References>>& AdaptiveCard::GetReferences() const {
+    return m_references;
 }
 
 std::shared_ptr<BaseActionElement> AdaptiveCard::GetSelectAction() const

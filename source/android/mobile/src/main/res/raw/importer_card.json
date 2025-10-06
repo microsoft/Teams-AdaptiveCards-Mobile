@@ -264,6 +264,10 @@
 										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
 									},
 									{
+										"title": "Citations",
+										"value": "v1.5/Elements/Citations.json"
+									},
+									{
 										"title": "Image FitMode Contain",
 										"value": "v1.5/Elements/Image.FitMode.Contain.json"
 									},
