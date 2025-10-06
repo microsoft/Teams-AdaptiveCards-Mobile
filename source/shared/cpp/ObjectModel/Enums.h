@@ -281,7 +281,11 @@ enum class AdaptiveCardSchemaKey
     Position,
     Popover,
     ImageFitMode,
-    HorizontalContentAlignment
+    HorizontalContentAlignment,
+    Resources,
+    Strings,
+    DefaultValue,
+    LocalizedValues
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
