@@ -283,7 +283,10 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Resources, "resources"},
             {AdaptiveCardSchemaKey::Strings, "strings"},
             {AdaptiveCardSchemaKey::DefaultValue, "defaultValue"},
-            {AdaptiveCardSchemaKey::LocalizedValues, "localizedValues"}});
+            {AdaptiveCardSchemaKey::LocalizedValues, "localizedValues"},
+            {AdaptiveCardSchemaKey::Abstract, "abstract"},
+            {AdaptiveCardSchemaKey::Keywords, "keywords"},
+            {AdaptiveCardSchemaKey::References, "references"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -608,4 +611,8 @@ namespace AdaptiveCards
         {LabelPosition::Below, "Below"},
         {LabelPosition::Before, "Before"},
         {LabelPosition::After, "After"}})
+
+    DEFINE_ADAPTIVECARD_ENUM(ReferenceType, {
+        {ReferenceType::AdaptiveCard, "AdaptiveCardReference"},
+        {ReferenceType::Document, "DocumentReference"}})
 }

@@ -285,7 +285,10 @@ enum class AdaptiveCardSchemaKey
     Resources,
     Strings,
     DefaultValue,
-    LocalizedValues
+    LocalizedValues,
+    Abstract,
+    Keywords,
+    References
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -843,5 +846,11 @@ enum class ProgressBarColor {
     Warning
 };
 DECLARE_ADAPTIVECARD_ENUM(ProgressBarColor);
+
+enum class ReferenceType {
+    AdaptiveCard,
+    Document
+};
+DECLARE_ADAPTIVECARD_ENUM(ReferenceType);
 }
 // namespace AdaptiveCards

@@ -85,6 +85,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/RatingInput.cpp
              ../../shared/cpp/ObjectModel/RatingLabel.cpp
              ../../shared/cpp/ObjectModel/SemanticVersion.cpp
+             ../../shared/cpp/ObjectModel/References.cpp
              ../../shared/cpp/ObjectModel/SharedAdaptiveCard.cpp
              ../../shared/cpp/ObjectModel/ShowCardAction.cpp
              ../../shared/cpp/ObjectModel/StringResource.cpp

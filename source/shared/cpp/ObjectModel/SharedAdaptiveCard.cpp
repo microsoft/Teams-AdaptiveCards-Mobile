@@ -12,6 +12,7 @@
 #include "BackgroundImage.h"
 #include "FlowLayout.h"
 #include "AreaGridLayout.h"
+#include "References.h"
 #include "Resources.h"
 
 using namespace AdaptiveCards;
@@ -370,6 +371,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
 
     // Parse optional resources
     auto resources = ParseUtil::DeserializeValue<Resources>(context, json, AdaptiveCardSchemaKey::Resources, Resources::Deserialize,false);
+    auto references = ParseUtil::GetElementCollectionOfSingleType<References>(context, json, AdaptiveCardSchemaKey::References, References::Deserialize, false);
 
     if (MeetsRootRequirements(requiresSet))
     {
@@ -383,6 +385,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
         result->SetLanguage(language);
         result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
         result->m_resources = resources;
+        result->m_references = std::move(references);
 
         // Parse optional selectAction
         result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
@@ -412,6 +415,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
         result->SetLanguage(language);
         result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
         result->m_resources = resources;
+        result->m_references = references;
 
         // Parse optional selectAction
         result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
@@ -547,6 +551,13 @@ Json::Value AdaptiveCard::SerializeToJsonValue() const
     for (const auto& action : GetActions())
     {
         root[actionsPropertyName].append(action->SerializeToJsonValue());
+    }
+
+    if (!m_references.empty()) {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::References)] = Json::Value(Json::arrayValue);
+        for (const auto& reference : GetReferences()) {
+            root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::References)].append(reference->SerializeToJsonValue());
+        }
     }
 
     if (m_resources != nullptr) {
@@ -711,6 +722,14 @@ const std::vector<std::shared_ptr<BaseActionElement>>& AdaptiveCard::GetActions(
     return m_actions;
 }
 
+const std::vector<std::shared_ptr<References>>& AdaptiveCard::GetReferences() const {
+    return m_references;
+}
+
+std::shared_ptr<Resources> AdaptiveCard::GetResources() const {
+    return m_resources;
+}
+
 std::shared_ptr<BaseActionElement> AdaptiveCard::GetSelectAction() const
 {
     return m_selectAction;
@@ -719,10 +738,6 @@ std::shared_ptr<BaseActionElement> AdaptiveCard::GetSelectAction() const
 void AdaptiveCard::SetSelectAction(const std::shared_ptr<BaseActionElement> action)
 {
     m_selectAction = action;
-}
-
-std::shared_ptr<Resources> AdaptiveCard::GetResources() const {
-    return m_resources;
 }
 
 VerticalContentAlignment AdaptiveCard::GetVerticalContentAlignment() const
