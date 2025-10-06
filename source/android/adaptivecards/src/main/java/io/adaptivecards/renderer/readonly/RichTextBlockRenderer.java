@@ -140,6 +140,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 }
                 DateTimeParser parser = new DateTimeParser(textRun.GetLanguage());
                 String formattedText = parser.GenerateString(textRun.GetTextForDateParsing());
+                formattedText = renderedCard.replaceStringResources(formattedText);
 
                 paragraph.append(formattedText);
 

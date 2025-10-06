@@ -294,6 +294,7 @@ public class TextBlockRenderer extends BaseCardElementRenderer
 
         DateTimeParser parser = new DateTimeParser(textBlock.GetLanguage());
         String textWithFormattedDates = parser.GenerateString(textBlock.GetTextForDateParsing());
+        textWithFormattedDates = renderedCard.replaceStringResources(textWithFormattedDates);
 
         RendererUtil.SpecialTextHandleResult textHandleResult = RendererUtil.handleSpecialTextAndQueryLinks(textWithFormattedDates);
         CharSequence htmlString = textHandleResult.getHtmlString();

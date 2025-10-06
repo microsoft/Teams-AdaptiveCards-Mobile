@@ -22,6 +22,7 @@ import io.adaptivecards.renderer.inputhandler.IInputHandler;
 public class RenderedAdaptiveCard {
 
     private final ACTheme theme;
+    private final @NonNull String languageTag;
     private View view;
     private Vector<AdaptiveWarning> warnings;
     private Vector<IInputHandler> handlers;
@@ -43,6 +44,7 @@ public class RenderedAdaptiveCard {
     private BottomSheetDialog popoverDialog;
 
     protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull ACTheme theme) {
+        this.languageTag = "fr-FR";
         this.warnings = new Vector<>();
         this.handlers = new Vector<>();
         this.adaptiveCard = adaptiveCard;
@@ -261,5 +263,10 @@ public class RenderedAdaptiveCard {
 
     public void setPopoverDialog(@Nullable BottomSheetDialog popoverDialog) {
         this.popoverDialog = popoverDialog;
+    }
+
+    @NonNull
+    public String replaceStringResources(@NonNull String input) {
+        return AdaptiveCard.ReplaceStringResources(input, getAdaptiveCard().GetResources(), languageTag);
     }
 }
