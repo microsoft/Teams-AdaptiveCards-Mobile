@@ -12,6 +12,7 @@
 #include "BackgroundImage.h"
 #include "FlowLayout.h"
 #include "AreaGridLayout.h"
+#include "Resources.h"
 
 using namespace AdaptiveCards;
 
@@ -180,6 +181,54 @@ std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromFile(const std::string
     return AdaptiveCard::Deserialize(root, rendererVersion, context);
 }
 
+// Replace all occurrences of ${rs:key} with value from the map
+std::string AdaptiveCard::ReplaceStringResources(
+        const std::string& input,
+        std::shared_ptr<AdaptiveCards::Resources> resources,
+        const std::string& locale) {
+
+    // Add validation checks to skip replacement & return the same string
+    if (!_IsStringResourcePresent(input) || resources == nullptr || locale.empty()) {
+        return input;
+    }
+
+    std::regex pattern(R"(\$\{rs:([^}]+)\})");  // Matches ${rs:key}
+    std::string result;
+    std::sregex_iterator it(input.begin(), input.end(), pattern);
+    std::sregex_iterator end;
+
+    size_t lastPos = 0;
+
+    for (; it != end; ++it) {
+        const std::smatch& match = *it;
+        std::string fullMatch = match.str(); // e.g., ${rs:catImageURL}
+        std::string key = match[1].str(); // e.g., catImageURL
+        size_t matchPos = match.position();
+
+        // Append text before match
+        result += input.substr(lastPos, matchPos - lastPos);
+        auto strings = resources->GetStrings();
+        auto pair = strings.find(key);
+        if (pair != strings.end()) {
+            auto stringResource = pair->second;
+            result += stringResource->GetDefaultValue(locale);
+        } else {
+            result += fullMatch; // Leave it unchanged if not found
+        }
+
+        lastPos = matchPos + fullMatch.length();
+    }
+    // Append any remaining text after the last match
+    result += input.substr(lastPos);
+    return result;
+}
+
+bool AdaptiveCard::_IsStringResourcePresent(const std::string& input) {
+    // Regular expression to match pattern ${rs:key}
+    std::regex pattern(R"(\$\{rs:[^}]+\})");
+    return std::regex_search(input, pattern);
+}
+
 void AdaptiveCard::_ValidateLanguage(const std::string& language, std::vector<std::shared_ptr<AdaptiveCardParseWarning>>& warnings)
 {
     try
@@ -318,6 +367,9 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
     FallbackType fallbackType = FallbackType::None;
     ParseUtil::ParseFallback<BaseCardElement>(context, json, fallbackType, fallbackBaseElement, "rootFallbackId", InternalId::Current());
 
+    // Parse optional resources
+    auto resources = ParseUtil::DeserializeValue<Resources>(context, json, AdaptiveCardSchemaKey::Resources, Resources::Deserialize,false);
+
     if (MeetsRootRequirements(requiresSet))
     {
         // Parse body
@@ -329,6 +381,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
             version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, body, actions, requiresSet, fallbackBaseElement, fallbackType);
         result->SetLanguage(language);
         result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
+        result->m_resources = resources;
 
         // Parse optional selectAction
         result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
@@ -357,6 +410,7 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
             version, fallbackText, backgroundImage, refresh, authentication, style, speak, language, verticalContentAlignment, height, minHeight, fallbackVector, actions);
         result->SetLanguage(language);
         result->SetRtl(ParseUtil::GetOptionalBool(json, AdaptiveCardSchemaKey::Rtl));
+        result->m_resources = resources;
 
         // Parse optional selectAction
         result->SetSelectAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::SelectAction, false));
@@ -492,6 +546,10 @@ Json::Value AdaptiveCard::SerializeToJsonValue() const
     for (const auto& action : GetActions())
     {
         root[actionsPropertyName].append(action->SerializeToJsonValue());
+    }
+
+    if (m_resources != nullptr) {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Resources)] = m_resources->SerializeToJsonValue();
     }
 
     return root;
@@ -660,6 +718,10 @@ std::shared_ptr<BaseActionElement> AdaptiveCard::GetSelectAction() const
 void AdaptiveCard::SetSelectAction(const std::shared_ptr<BaseActionElement> action)
 {
     m_selectAction = action;
+}
+
+std::shared_ptr<Resources> AdaptiveCard::GetResources() const {
+    return m_resources;
 }
 
 VerticalContentAlignment AdaptiveCard::GetVerticalContentAlignment() const
