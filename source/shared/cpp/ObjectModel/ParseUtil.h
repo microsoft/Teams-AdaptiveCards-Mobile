@@ -136,6 +136,43 @@ namespace ParseUtil
 
     void GetParsedRequiresSet(const Json::Value& json, std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& requiresSet);
 
+    std::unordered_map<std::string, Json::Value> GetJsonMap(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
+
+    std::unordered_map<std::string, std::string> GetStringMap(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
+
+    template <typename T>
+    std::unordered_map<std::string, std::shared_ptr<T>> GetGenericMap(
+            ParseContext& context,
+            const Json::Value& json,
+            AdaptiveCardSchemaKey key,
+            DeserializeFn<T>& deserializer,
+            bool isRequired = false) {
+        const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
+        Json::Value mapValue = json.get(propertyName, Json::Value());
+
+        if (!mapValue.isNull() && !mapValue.isObject()) {
+            throw AdaptiveCardParseException(
+                    ErrorStatusCode::InvalidPropertyValue,
+                    "Could not parse specified key: " + propertyName + ". It was not an object (map)");
+        }
+
+        if (isRequired && mapValue.isNull()) {
+            throw AdaptiveCardParseException(
+                    ErrorStatusCode::RequiredPropertyMissing,
+                    "Could not parse required key: " + propertyName + ". It was not found");
+        }
+
+        std::unordered_map<std::string, std::shared_ptr<T>> result;
+
+        if (!mapValue.isNull()) {
+            for (const auto& key : mapValue.getMemberNames()) {
+                result[key] = deserializer(context, mapValue[key]);
+            }
+        }
+
+        return result;
+    }
+
 }; // namespace ParseUtil
 
 template <typename T, typename Fn>
