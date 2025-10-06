@@ -286,7 +286,10 @@ public enum AdaptiveCardSchemaKey {
   Resources,
   Strings,
   DefaultValue,
-  LocalizedValues;
+  LocalizedValues,
+  Abstract,
+  Keywords,
+  References;
 
   public final int swigValue() {
     return swigValue;
