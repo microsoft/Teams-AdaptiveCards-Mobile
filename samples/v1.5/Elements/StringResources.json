@@ -1,0 +1,86 @@
+{
+	"type": "AdaptiveCard",
+	"$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+	"version": "1.5",
+	"body": [
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "${rs:hello} ${rs:john} ${rs:world}",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "${rs:john} ${rs:wick}",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "${rs:catImageURL}",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "${rs:catImageURL",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "${rs:catImageURL}are",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "prefix${rs:catImageURL}",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "{rs:catImageURL}",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "${rscatImageURL}",
+					"wrap": true
+				}
+			],
+			"style": "accent",
+			"showBorder": true,
+			"roundedCorners": true
+		}
+	],
+	"resources": {
+		"strings": {
+			"info": {
+				"defaultValue": "This feature helps reduce card payload size.",
+				"localizedValues": {
+					"en-US": "This feature helps reduce card payload size.",
+					"fr-FR": "Cette fonctionnalité aide à réduire la taille de la charge utile de la carte.",
+					"sp-SP": "Esta función ayuda a reducir el tamaño de la carga útil de la tarjeta."
+				}
+			},
+			"catImageURL": {
+				"defaultValue": "https://adaptivecards.io/content/cats/1.png"
+			},
+			"hello": {
+				"defaultValue": "Hello",
+				"localizedValues": {
+					"en-US": "Hello",
+					"fr-FR": "Bonjour",
+					"sp-SP": "Hola"
+				}
+			},
+			"world": {
+				"defaultValue": "World",
+				"localizedValues": {
+					"en-US": "World",
+					"fr-FR": "Monde",
+					"sp-SP": "BumBum"
+				}
+			}
+		}
+	}
+}

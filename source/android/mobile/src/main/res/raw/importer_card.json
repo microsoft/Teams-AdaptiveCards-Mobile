@@ -284,6 +284,10 @@
 										"value": "v1.5/Elements/ProgressRing.json"
 									},
 									{
+										"title": "String Resources",
+										"value": "v1.5/Scenarios/StringResources.json"
+									},
+									{
 										"title": "Spacing Sample",
 										"value": "v1.5/Scenarios/spacing_sample.json"
 									},
