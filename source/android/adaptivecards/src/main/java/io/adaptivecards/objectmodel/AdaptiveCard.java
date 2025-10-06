@@ -188,6 +188,10 @@ public class AdaptiveCard {
     return new BaseActionElementVector(AdaptiveCardObjectModelJNI.AdaptiveCard_GetActions__SWIG_0(swigCPtr, this), false);
   }
 
+  public ReferencesVector GetReferences() {
+    return new ReferencesVector(AdaptiveCardObjectModelJNI.AdaptiveCard_GetReferences(swigCPtr, this), false);
+  }
+
   public LayoutVector GetLayouts() {
     return new LayoutVector(AdaptiveCardObjectModelJNI.AdaptiveCard_GetLayouts__SWIG_0(swigCPtr, this), false);
   }
