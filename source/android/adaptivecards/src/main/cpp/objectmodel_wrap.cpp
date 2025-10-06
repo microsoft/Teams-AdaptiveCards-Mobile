@@ -20130,21 +20130,36 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
 }
 
 
-SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Image_1GetUrl_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_Image_1GetUrl_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3, jobject jarg3_, jstring jarg4) {
   jstring jresult = 0 ;
   AdaptiveCards::Image *arg1 = (AdaptiveCards::Image *) 0 ;
   AdaptiveCards::ACTheme arg2 ;
+  std::shared_ptr< AdaptiveCards::Resources > arg3 ;
+  std::string *arg4 = 0 ;
   std::shared_ptr< AdaptiveCards::Image const > *smartarg1 = 0 ;
+  std::shared_ptr< AdaptiveCards::Resources > *argp3 ;
   std::string *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
+  (void)jarg3_;
   
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::Image > **)&jarg1;
   arg1 = (AdaptiveCards::Image *)(smartarg1 ? smartarg1->get() : 0); 
   arg2 = (AdaptiveCards::ACTheme)jarg2; 
-  result = (std::string *) &((AdaptiveCards::Image const *)arg1)->GetUrl(arg2);
+  argp3 = *(std::shared_ptr< AdaptiveCards::Resources > **)&jarg3;
+  if (argp3) arg3 = *argp3; 
+  if(!jarg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  }
+  const char *arg4_pstr = (const char *)jenv->GetStringUTFChars(jarg4, 0); 
+  if (!arg4_pstr) return 0;
+  std::string arg4_str(arg4_pstr);
+  arg4 = &arg4_str;
+  jenv->ReleaseStringUTFChars(jarg4, arg4_pstr); 
+  result = (std::string *) &((AdaptiveCards::Image const *)arg1)->GetUrl(arg2,arg3,(std::string const &)*arg4);
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }

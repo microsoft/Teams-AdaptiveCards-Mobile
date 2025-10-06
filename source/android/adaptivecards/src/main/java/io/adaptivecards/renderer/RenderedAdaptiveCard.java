@@ -266,6 +266,11 @@ public class RenderedAdaptiveCard {
     }
 
     @NonNull
+    public String getLanguageTag() {
+        return languageTag;
+    }
+
+    @NonNull
     public String replaceStringResources(@NonNull String input) {
         return AdaptiveCard.ReplaceStringResources(input, getAdaptiveCard().GetResources(), languageTag);
     }

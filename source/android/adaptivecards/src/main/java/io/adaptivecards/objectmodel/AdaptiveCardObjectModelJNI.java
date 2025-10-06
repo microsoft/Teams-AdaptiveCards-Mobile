@@ -962,7 +962,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_Image(long jarg1);
   public final static native long new_Image__SWIG_3(String jarg1);
   public final static native long Image_SerializeToJsonValue(long jarg1, Image jarg1_);
-  public final static native String Image_GetUrl__SWIG_0(long jarg1, Image jarg1_, int jarg2);
+  public final static native String Image_GetUrl__SWIG_0(long jarg1, Image jarg1_, int jarg2, long jarg3, Resources jarg3_, String jarg4);
   public final static native String Image_GetUrl__SWIG_1(long jarg1, Image jarg1_);
   public final static native void Image_SetUrl(long jarg1, Image jarg1_, String jarg2);
   public final static native String Image_GetBackgroundColor(long jarg1, Image jarg1_);

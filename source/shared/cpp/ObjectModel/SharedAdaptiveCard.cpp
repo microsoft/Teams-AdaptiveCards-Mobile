@@ -187,8 +187,9 @@ std::string AdaptiveCard::ReplaceStringResources(
         std::shared_ptr<AdaptiveCards::Resources> resources,
         const std::string& locale) {
 
+    auto strings = resources->GetStrings();
     // Add validation checks to skip replacement & return the same string
-    if (!_IsStringResourcePresent(input) || resources == nullptr || locale.empty()) {
+    if (!_IsStringResourcePresent(input) || !resources || locale.empty() || strings.empty()) {
         return input;
     }
 
@@ -207,7 +208,7 @@ std::string AdaptiveCard::ReplaceStringResources(
 
         // Append text before match
         result += input.substr(lastPos, matchPos - lastPos);
-        auto strings = resources->GetStrings();
+
         auto pair = strings.find(key);
         if (pair != strings.end()) {
             auto stringResource = pair->second;
