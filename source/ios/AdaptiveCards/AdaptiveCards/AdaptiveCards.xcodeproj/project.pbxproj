@@ -314,6 +314,10 @@
 		84AE295A27FFA26F00D01B82 /* ContentSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295527FFA26F00D01B82 /* ContentSource.h */; };
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
+		9003A4442E99F3B600722657 /* StreamingHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A43F2E99F3B600722657 /* StreamingHostingView.swift */; };
+		9003A4452E99F3B600722657 /* StreamingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4402E99F3B600722657 /* StreamingModels.swift */; };
+		9003A4462E99F3B600722657 /* StreamingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4422E99F3B600722657 /* StreamingTextView.swift */; };
+		9003A4472E99F3B600722657 /* StreamingTextHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4412E99F3B600722657 /* StreamingTextHostingView.swift */; };
 		901FC8182E09B69E00F10C8D /* SwiftAdaptiveCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FC8172E09B69E00F10C8D /* SwiftAdaptiveCardViewModel.swift */; };
 		901FC81D2E09DADC00F10C8D /* ChainOfThoughtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FC81B2E09DADC00F10C8D /* ChainOfThoughtView.swift */; };
 		901FC81E2E09DADC00F10C8D /* ChainOfThoughtHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FC8192E09DADC00F10C8D /* ChainOfThoughtHostingView.swift */; };
@@ -927,6 +931,10 @@
 		84AE295527FFA26F00D01B82 /* ContentSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContentSource.h; path = ../../../../shared/cpp/ObjectModel/ContentSource.h; sourceTree = "<group>"; };
 		84AE295627FFA26F00D01B82 /* CaptionSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptionSource.h; path = ../../../../shared/cpp/ObjectModel/CaptionSource.h; sourceTree = "<group>"; };
 		84AE295727FFA26F00D01B82 /* CaptionSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CaptionSource.cpp; path = ../../../../shared/cpp/ObjectModel/CaptionSource.cpp; sourceTree = "<group>"; };
+		9003A43F2E99F3B600722657 /* StreamingHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingHostingView.swift; sourceTree = "<group>"; };
+		9003A4402E99F3B600722657 /* StreamingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingModels.swift; sourceTree = "<group>"; };
+		9003A4412E99F3B600722657 /* StreamingTextHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingTextHostingView.swift; sourceTree = "<group>"; };
+		9003A4422E99F3B600722657 /* StreamingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingTextView.swift; sourceTree = "<group>"; };
 		901FC8172E09B69E00F10C8D /* SwiftAdaptiveCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAdaptiveCardViewModel.swift; sourceTree = "<group>"; };
 		901FC8192E09DADC00F10C8D /* ChainOfThoughtHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainOfThoughtHostingView.swift; sourceTree = "<group>"; };
 		901FC81A2E09DADC00F10C8D /* ChainOfThoughtModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainOfThoughtModels.swift; sourceTree = "<group>"; };
@@ -1506,6 +1514,17 @@
 			name = Action.Execute;
 			sourceTree = "<group>";
 		};
+		9003A4432E99F3B600722657 /* Streaming */ = {
+			isa = PBXGroup;
+			children = (
+				9003A43F2E99F3B600722657 /* StreamingHostingView.swift */,
+				9003A4402E99F3B600722657 /* StreamingModels.swift */,
+				9003A4412E99F3B600722657 /* StreamingTextHostingView.swift */,
+				9003A4422E99F3B600722657 /* StreamingTextView.swift */,
+			);
+			path = Streaming;
+			sourceTree = "<group>";
+		};
 		901FC81C2E09DADC00F10C8D /* ChainOfThought */ = {
 			isa = PBXGroup;
 			children = (
@@ -1622,6 +1641,7 @@
 		90A363C92E09ACA7008E013F /* SwiftViews */ = {
 			isa = PBXGroup;
 			children = (
+				9003A4432E99F3B600722657 /* Streaming */,
 				901FC81C2E09DADC00F10C8D /* ChainOfThought */,
 				901FC8172E09B69E00F10C8D /* SwiftAdaptiveCardViewModel.swift */,
 				90A363CA2E09ACB3008E013F /* AdaptiveCardElementView.swift */,
@@ -2703,6 +2723,10 @@
 				F4F44B7D20478C5C00A2F24C /* DateTimePreparser.cpp in Sources */,
 				F4F44BA0204CED2400A2F24C /* ACRCustomRenderer.mm in Sources */,
 				F452CD581F68CD6F005394B2 /* HostConfig.cpp in Sources */,
+				9003A4442E99F3B600722657 /* StreamingHostingView.swift in Sources */,
+				9003A4452E99F3B600722657 /* StreamingModels.swift in Sources */,
+				9003A4462E99F3B600722657 /* StreamingTextView.swift in Sources */,
+				9003A4472E99F3B600722657 /* StreamingTextHostingView.swift in Sources */,
 				6B696CD923202B1B00E1D607 /* ACRTargetBuilderDirector.mm in Sources */,
 				F974C53A2800B8EA00C1B3C7 /* ContentSource.cpp in Sources */,
 				0D3485F126180F8F00614EB9 /* ACOActionOverflow.mm in Sources */,
