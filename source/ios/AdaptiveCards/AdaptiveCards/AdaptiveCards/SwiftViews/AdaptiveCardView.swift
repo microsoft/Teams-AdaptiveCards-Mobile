@@ -23,7 +23,7 @@ struct AdaptiveCardView: View {
 
     @ViewBuilder
     func actionButton(for action: SwiftBaseActionElement) -> some View {
-        Button(action.title ?? "Action") {
+        Button(action.title) {
             viewModel.handleAction(action)
         }
         .frame(maxWidth: .infinity) // Make the button take the full width of its container

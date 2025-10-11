@@ -327,6 +327,18 @@
 		84AE295A27FFA26F00D01B82 /* ContentSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295527FFA26F00D01B82 /* ContentSource.h */; };
 		84AE295B27FFA26F00D01B82 /* CaptionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AE295627FFA26F00D01B82 /* CaptionSource.h */; };
 		84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AE295727FFA26F00D01B82 /* CaptionSource.cpp */; };
+		9003A4572E99F70D00722657 /* ChainOfThoughtModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4492E99F70D00722657 /* ChainOfThoughtModels.swift */; };
+		9003A4582E99F70D00722657 /* AdaptiveCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4542E99F70D00722657 /* AdaptiveCardView.swift */; };
+		9003A4592E99F70D00722657 /* StreamingHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A44C2E99F70D00722657 /* StreamingHostingView.swift */; };
+		9003A45A2E99F70D00722657 /* StreamingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A44F2E99F70D00722657 /* StreamingTextView.swift */; };
+		9003A45B2E99F70D00722657 /* StreamingTextHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A44E2E99F70D00722657 /* StreamingTextHostingView.swift */; };
+		9003A45C2E99F70D00722657 /* AdaptiveCardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4532E99F70D00722657 /* AdaptiveCardTableView.swift */; };
+		9003A45D2E99F70D00722657 /* StreamingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A44D2E99F70D00722657 /* StreamingModels.swift */; };
+		9003A45E2E99F70D00722657 /* AdaptiveCardElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4512E99F70D00722657 /* AdaptiveCardElementView.swift */; };
+		9003A45F2E99F70D00722657 /* AdaptiveCardsSharedSwiftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4522E99F70D00722657 /* AdaptiveCardsSharedSwiftModel.swift */; };
+		9003A4602E99F70D00722657 /* ChainOfThoughtHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4482E99F70D00722657 /* ChainOfThoughtHostingView.swift */; };
+		9003A4612E99F70D00722657 /* ChainOfThoughtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A44A2E99F70D00722657 /* ChainOfThoughtView.swift */; };
+		9003A4622E99F70D00722657 /* SwiftAdaptiveCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9003A4552E99F70D00722657 /* SwiftAdaptiveCardViewModel.swift */; };
 		901FE9AA2E04BD9800CD77C6 /* SwiftParseContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9972E04BD9800CD77C6 /* SwiftParseContext.swift */; };
 		901FE9AB2E04BD9800CD77C6 /* SwiftMarkDownHtmlGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9902E04BD9800CD77C6 /* SwiftMarkDownHtmlGenerator.swift */; };
 		901FE9AC2E04BD9800CD77C6 /* SwiftActionElementParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9892E04BD9800CD77C6 /* SwiftActionElementParser.swift */; };
@@ -978,6 +990,18 @@
 		84AE295527FFA26F00D01B82 /* ContentSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContentSource.h; path = ../../../../shared/cpp/ObjectModel/ContentSource.h; sourceTree = "<group>"; };
 		84AE295627FFA26F00D01B82 /* CaptionSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptionSource.h; path = ../../../../shared/cpp/ObjectModel/CaptionSource.h; sourceTree = "<group>"; };
 		84AE295727FFA26F00D01B82 /* CaptionSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CaptionSource.cpp; path = ../../../../shared/cpp/ObjectModel/CaptionSource.cpp; sourceTree = "<group>"; };
+		9003A4482E99F70D00722657 /* ChainOfThoughtHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainOfThoughtHostingView.swift; sourceTree = "<group>"; };
+		9003A4492E99F70D00722657 /* ChainOfThoughtModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainOfThoughtModels.swift; sourceTree = "<group>"; };
+		9003A44A2E99F70D00722657 /* ChainOfThoughtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainOfThoughtView.swift; sourceTree = "<group>"; };
+		9003A44C2E99F70D00722657 /* StreamingHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingHostingView.swift; sourceTree = "<group>"; };
+		9003A44D2E99F70D00722657 /* StreamingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingModels.swift; sourceTree = "<group>"; };
+		9003A44E2E99F70D00722657 /* StreamingTextHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingTextHostingView.swift; sourceTree = "<group>"; };
+		9003A44F2E99F70D00722657 /* StreamingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingTextView.swift; sourceTree = "<group>"; };
+		9003A4512E99F70D00722657 /* AdaptiveCardElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardElementView.swift; sourceTree = "<group>"; };
+		9003A4522E99F70D00722657 /* AdaptiveCardsSharedSwiftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardsSharedSwiftModel.swift; sourceTree = "<group>"; };
+		9003A4532E99F70D00722657 /* AdaptiveCardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardTableView.swift; sourceTree = "<group>"; };
+		9003A4542E99F70D00722657 /* AdaptiveCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCardView.swift; sourceTree = "<group>"; };
+		9003A4552E99F70D00722657 /* SwiftAdaptiveCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAdaptiveCardViewModel.swift; sourceTree = "<group>"; };
 		901FE9892E04BD9800CD77C6 /* SwiftActionElementParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftActionElementParser.swift; sourceTree = "<group>"; };
 		901FE98A2E04BD9800CD77C6 /* SwiftAdaptiveBase64Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAdaptiveBase64Util.swift; sourceTree = "<group>"; };
 		901FE98B2E04BD9800CD77C6 /* SwiftElementParserRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftElementParserRegistration.swift; sourceTree = "<group>"; };
@@ -1415,6 +1439,7 @@
 				901FE9C72E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.h */,
 				901FE9C82E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.mm */,
 				901FE9C92E04BDC800CD77C6 /* SwiftAdaptiveCardSwiftBridge.swift */,
+				9003A4562E99F70D00722657 /* SwiftViews */,
 				901FE9A92E04BD9800CD77C6 /* SwiftAdaptiveCards */,
 				F4CAE77F1F75AB9000545555 /* ACOAdaptiveCard.h */,
 				F4CAE7801F75AB9000545555 /* ACOAdaptiveCard.mm */,
@@ -1593,6 +1618,41 @@
 				6B377283260194000024E527 /* ACRActionExecuteRenderer.mm */,
 			);
 			name = Action.Execute;
+			sourceTree = "<group>";
+		};
+		9003A44B2E99F70D00722657 /* ChainOfThought */ = {
+			isa = PBXGroup;
+			children = (
+				9003A4482E99F70D00722657 /* ChainOfThoughtHostingView.swift */,
+				9003A4492E99F70D00722657 /* ChainOfThoughtModels.swift */,
+				9003A44A2E99F70D00722657 /* ChainOfThoughtView.swift */,
+			);
+			path = ChainOfThought;
+			sourceTree = "<group>";
+		};
+		9003A4502E99F70D00722657 /* Streaming */ = {
+			isa = PBXGroup;
+			children = (
+				9003A44C2E99F70D00722657 /* StreamingHostingView.swift */,
+				9003A44D2E99F70D00722657 /* StreamingModels.swift */,
+				9003A44E2E99F70D00722657 /* StreamingTextHostingView.swift */,
+				9003A44F2E99F70D00722657 /* StreamingTextView.swift */,
+			);
+			path = Streaming;
+			sourceTree = "<group>";
+		};
+		9003A4562E99F70D00722657 /* SwiftViews */ = {
+			isa = PBXGroup;
+			children = (
+				9003A44B2E99F70D00722657 /* ChainOfThought */,
+				9003A4502E99F70D00722657 /* Streaming */,
+				9003A4512E99F70D00722657 /* AdaptiveCardElementView.swift */,
+				9003A4522E99F70D00722657 /* AdaptiveCardsSharedSwiftModel.swift */,
+				9003A4532E99F70D00722657 /* AdaptiveCardTableView.swift */,
+				9003A4542E99F70D00722657 /* AdaptiveCardView.swift */,
+				9003A4552E99F70D00722657 /* SwiftAdaptiveCardViewModel.swift */,
+			);
+			path = SwiftViews;
 			sourceTree = "<group>";
 		};
 		901FE98F2E04BD9800CD77C6 /* Legacy */ = {
@@ -2952,6 +3012,18 @@
 				6B2242A32233439E000ACDA1 /* TextElementProperties.cpp in Sources */,
 				F42741251EFB274C00399FBB /* ACRColumnRenderer.mm in Sources */,
 				F4F255701F98247600A80D39 /* ACOBaseActionElement.mm in Sources */,
+				9003A4572E99F70D00722657 /* ChainOfThoughtModels.swift in Sources */,
+				9003A4582E99F70D00722657 /* AdaptiveCardView.swift in Sources */,
+				9003A4592E99F70D00722657 /* StreamingHostingView.swift in Sources */,
+				9003A45A2E99F70D00722657 /* StreamingTextView.swift in Sources */,
+				9003A45B2E99F70D00722657 /* StreamingTextHostingView.swift in Sources */,
+				9003A45C2E99F70D00722657 /* AdaptiveCardTableView.swift in Sources */,
+				9003A45D2E99F70D00722657 /* StreamingModels.swift in Sources */,
+				9003A45E2E99F70D00722657 /* AdaptiveCardElementView.swift in Sources */,
+				9003A45F2E99F70D00722657 /* AdaptiveCardsSharedSwiftModel.swift in Sources */,
+				9003A4602E99F70D00722657 /* ChainOfThoughtHostingView.swift in Sources */,
+				9003A4612E99F70D00722657 /* ChainOfThoughtView.swift in Sources */,
+				9003A4622E99F70D00722657 /* SwiftAdaptiveCardViewModel.swift in Sources */,
 				46DF37BC2C903377001C254F /* ACRCarouselViewRenderer.mm in Sources */,
 				6BFF99C525FFF53E0028069F /* AuthCardButton.cpp in Sources */,
 				4608EE8E2BF5C1B800543095 /* ACRRatingInputRenderer.mm in Sources */,

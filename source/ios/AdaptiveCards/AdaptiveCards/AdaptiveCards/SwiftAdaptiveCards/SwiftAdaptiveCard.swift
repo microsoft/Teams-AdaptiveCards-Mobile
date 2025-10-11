@@ -310,3 +310,11 @@ public class SwiftAdaptiveCard: Codable {
         }
     }
 }
+
+// MARK: - Identifiable Conformance
+@available(iOS 15.0, *)
+extension SwiftAdaptiveCard: Identifiable {
+    public var id: ObjectIdentifier {
+        return ObjectIdentifier(self)
+    }
+}

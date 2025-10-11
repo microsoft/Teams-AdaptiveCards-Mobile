@@ -8,8 +8,8 @@ class SwiftAdaptiveCardViewModel: ObservableObject {
     @Published var showModalCard: SwiftAdaptiveCard?
     
     /// Binding for text input elements
-    func bindingForInput(_ id: String, defaultValue: String = "") -> Binding<String> {
-        return Binding(
+    func bindingForInput(_ id: String, defaultValue: String = "") -> SwiftUI.Binding<String> {
+        return SwiftUI.Binding(
             get: { [weak self] in
                 return self?.inputValues[id] as? String ?? defaultValue
             },
@@ -20,8 +20,8 @@ class SwiftAdaptiveCardViewModel: ObservableObject {
     }
     
     /// Binding for number input elements
-    func bindingForNumberInput(_ id: String, defaultValue: Double = 0) -> Binding<String> {
-        return Binding(
+    func bindingForNumberInput(_ id: String, defaultValue: Double = 0) -> SwiftUI.Binding<String> {
+        return SwiftUI.Binding(
             get: { [weak self] in
                 if let number = self?.inputValues[id] as? Double {
                     return String(number)
@@ -39,8 +39,8 @@ class SwiftAdaptiveCardViewModel: ObservableObject {
     }
     
     /// Binding for toggle input elements
-    func bindingForToggleInput(_ id: String, defaultValue: Bool = false) -> Binding<Bool> {
-        return Binding(
+    func bindingForToggleInput(_ id: String, defaultValue: Bool = false) -> SwiftUI.Binding<Bool> {
+        return SwiftUI.Binding(
             get: { [weak self] in
                 return self?.inputValues[id] as? Bool ?? defaultValue
             },
@@ -51,8 +51,8 @@ class SwiftAdaptiveCardViewModel: ObservableObject {
     }
     
     /// Binding for date input elements
-    func bindingForDateInput(_ id: String, defaultValue: Date? = nil) -> Binding<Date> {
-        return Binding(
+    func bindingForDateInput(_ id: String, defaultValue: Date? = nil) -> SwiftUI.Binding<Date> {
+        return SwiftUI.Binding(
             get: { [weak self] in
                 if let dateString = self?.inputValues[id] as? String,
                    let date = ISO8601DateFormatter().date(from: dateString) {
