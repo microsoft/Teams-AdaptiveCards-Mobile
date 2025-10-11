@@ -37,6 +37,7 @@
 #import "ACRRegistration.h"
 #import "ACRShowCardTarget.h"
 #import "ACRToggleVisibilityTarget.h"
+#import "ACRPopoverTarget.h"
 #import "UtiliOS.h"
 
 @implementation ACRTargetBuilder
@@ -182,6 +183,40 @@
         return target;
     }
     return nil;
+}
+
+@end
+
+@implementation ACRPopoverTargetBuilder
+
++ (ACRPopoverTargetBuilder *)getInstance
+{
+    static ACRPopoverTargetBuilder *singletonInstance = [[self alloc] init];
+    return singletonInstance;
+}
+
+- (NSObject *)build:(ACOBaseActionElement *)action
+           director:(ACRTargetBuilderDirector *)director
+{
+    if (action && action.type == ACRPopover && director.rootView)
+    {
+        return [[ACRPopoverTarget alloc] initWithActionElement:action rootView:director.rootView];
+    }
+    return nil;
+}
+
+- (NSObject *)build:(ACOBaseActionElement *)action
+           director:(ACRTargetBuilderDirector *)director
+          ForButton:(UIButton *)button
+{
+    NSObject *target = [self build:action director:director];
+    if (target && button)
+    {
+        [button addTarget:target
+                   action:@selector(send:)
+         forControlEvents:UIControlEventTouchUpInside];
+    }
+    return target;
 }
 
 @end

@@ -19,9 +19,7 @@ enum SwiftFallbackType: String, Codable {
 // MARK: - AdaptiveCard Model
 
 /// Represents an Adaptive Card that contains UI elements and actions.
-public class SwiftAdaptiveCard: Codable, Identifiable {
-    public var id: String { return UUID().uuidString }
-    
+public class SwiftAdaptiveCard: Codable {
     public var version: String
     public let fallbackText: String?
     public let backgroundImage: SwiftBackgroundImage?         // Defined in BackgroundImage.swift
@@ -239,14 +237,14 @@ public class SwiftAdaptiveCard: Codable, Identifiable {
         let authentication = try container.decodeIfPresent(SwiftAuthentication.self, forKey: .authentication)
         
         // Decode body by reading an array of dictionaries, then using your factory.
-        let rawBody = try container.decodeIfPresent([[String: AnyCodable]].self, forKey: .body) ?? []
+        let rawBody = try container.decodeIfPresent([[String: SwiftAnyCodable]].self, forKey: .body) ?? []
         let body = try rawBody.map { rawElement in
             let dict = rawElement.mapValues { $0.value }
             return try SwiftBaseCardElement.deserialize(from: dict)
         }
         
         // Decode actions.
-        let rawActions = try container.decodeIfPresent([[String: AnyCodable]].self, forKey: .actions) ?? []
+        let rawActions = try container.decodeIfPresent([[String: SwiftAnyCodable]].self, forKey: .actions) ?? []
         let actions = try rawActions.map { rawAction -> SwiftBaseActionElement in
             let dict = rawAction.mapValues { $0.value }
             return try SwiftBaseActionElement.deserializeAction(from: dict)

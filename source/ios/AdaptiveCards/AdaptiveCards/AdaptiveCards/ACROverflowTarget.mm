@@ -11,8 +11,14 @@
 #import "ACRShowCardTarget.h"
 #import "ACRViewPrivate.h"
 #import "UtiliOS.h"
+#import "ACRStringBasedKeyValueObservation.h"
 
 NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
+
+@interface ACROverflowMenuItem ()
+/// KeyValueObservation tracking using NSMapTable with weak references to UIImageViews
+@property (nonatomic, strong, nonnull) NSMapTable<NSObject *, NSMutableArray<ACRStringBasedKeyValueObservation*> *> *observationsByObserver;
+@end
 
 @implementation ACROverflowMenuItem {
     __weak ACRView *_rootView;
@@ -21,15 +27,89 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
     void (^_onIconLoaded)(UIImage *);
 }
 
-+ (instancetype)initWithActionElement:(ACOBaseActionElement *)actionElement
-                               target:(NSObject<ACRSelectActionDelegate> *)target
-                             rootView:(ACRView *)rootView
++ (instancetype)overflowMenuItemWithActionElement:(ACOBaseActionElement *)actionElement
+                                           target:(NSObject<ACRSelectActionDelegate> *)target
+                                         rootView:(ACRView *)rootView
 {
     ACROverflowMenuItem *item = [[ACROverflowMenuItem alloc] init];
     item->_action = actionElement.element;
     item->_target = target;
     item->_rootView = rootView;
     return item;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _observationsByObserver = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsWeakMemory
+                                                        valueOptions:NSPointerFunctionsStrongMemory];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    // Clean up using safe KVO observation management
+    @synchronized(self.observationsByObserver) {
+        [self.observationsByObserver removeAllObjects];
+    }
+}
+
+// Safe KVO observation management
+- (void)startObserving:(nonnull NSObject *)object
+               keyPath:(nonnull NSString *)keyPath
+               options:(NSKeyValueObservingOptions)options
+               context:(nullable void *)context
+{
+    @synchronized(self.observationsByObserver) {
+        // Get or create the array of observations for this object
+        NSMutableArray<ACRStringBasedKeyValueObservation *> *objectObservations = [self.observationsByObserver objectForKey:object];
+        if (!objectObservations) {
+            objectObservations = [NSMutableArray array];
+            [self.observationsByObserver setObject:objectObservations forKey:object];
+        }
+
+        // Create the bridge that will call our observeValueForKeyPath method
+        __weak __typeof(self) weakSelf = self;
+        ACRStringBasedKeyValueObservation *stringBasedKeyValueObservation = [[ACRStringBasedKeyValueObservation alloc] initWithObservableObject:object
+                                                                                                                                observedKeyPath:keyPath
+                                                                                                                                        options:options
+                                                                                                                                       callback:^(NSString * _Nullable keyPath, NSObject * _Nullable object, NSDictionary<NSKeyValueChangeKey,id> * _Nullable change) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            // Call the original observeValueForKeyPath method
+            [strongSelf observeValueForKeyPath:keyPath
+                                      ofObject:object
+                                        change:change
+                                       context:context];
+        }];
+
+        [objectObservations addObject:stringBasedKeyValueObservation];
+    }
+}
+
+- (void)stopObserving:(nullable NSObject *)object {
+    if (!object) {
+        return;
+    }
+
+    @synchronized(self.observationsByObserver) {
+        NSMutableArray<ACRStringBasedKeyValueObservation *> *objectObservations = [self.observationsByObserver objectForKey:object];
+        if (!objectObservations || objectObservations.count == 0) {
+            return;
+        }
+
+        // Remove the first observation from the array
+        ACRStringBasedKeyValueObservation *_Nullable stringBasedKeyValueObservation = [objectObservations firstObject];
+        if (stringBasedKeyValueObservation) {
+            [objectObservations removeObject:stringBasedKeyValueObservation];
+        }
+
+        // If no more observations for this object, remove the entry entirely
+        if (objectObservations.count == 0) {
+            [self.observationsByObserver removeObjectForKey:object];
+        }
+    }
 }
 
 - (NSString *)title
@@ -78,10 +158,10 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
             completion(view.image);
         } else {
             _onIconLoaded = completion;
-            [view addObserver:self
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:_action.get()];
+            [self startObserving:view
+                         keyPath:@"image"
+                         options:NSKeyValueObservingOptionNew
+                         context:_action.get()];
         }
     }
 }
@@ -97,7 +177,7 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
         if (_onIconLoaded) {
             _onIconLoaded(image);
         }
-        [object removeObserver:self forKeyPath:@"image"];
+        [self stopObserving:object];
     }
 }
 @end
@@ -139,9 +219,9 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
         // call buildTargetForButton since ACRShowCardTargetBuilder only responds to this callback
         // set nil button since the action is triggered from alert action not from a real button
         if (ACRRenderingStatus::ACROk == buildTargetForButton(director, action, nil, &target)) {
-            ACROverflowMenuItem *menuItem = [ACROverflowMenuItem initWithActionElement:action
-                                                                                target:target
-                                                                              rootView:_rootView];
+            ACROverflowMenuItem *menuItem = [ACROverflowMenuItem overflowMenuItemWithActionElement:action
+                                                                                            target:target
+                                                                                          rootView:_rootView];
             [_menuItems addObject:menuItem];
             UIAlertAction *menuAction = [UIAlertAction actionWithTitle:title
                                                                  style:UIAlertActionStyleDefault

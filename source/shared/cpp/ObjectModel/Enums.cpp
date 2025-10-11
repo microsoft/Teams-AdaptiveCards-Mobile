@@ -208,6 +208,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TextConfig, "textConfig"},
             {AdaptiveCardSchemaKey::TextInput, "textInput"},
             {AdaptiveCardSchemaKey::TextStyles, "textStyles"},
+            {AdaptiveCardSchemaKey::TintColor, "tintColor"},
             {AdaptiveCardSchemaKey::MarigoldColor, "marigoldColor"},
             {AdaptiveCardSchemaKey::NeutralColor, "neutralColor"},
             {AdaptiveCardSchemaKey::FilledStar, "filledStar"},
@@ -278,8 +279,9 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
             {AdaptiveCardSchemaKey::Position, "position"},
             {AdaptiveCardSchemaKey::Popover, "popover"},
-        {AdaptiveCardSchemaKey::ImageFitMode, "fitMode"},
-        {AdaptiveCardSchemaKey::HorizontalContentAlignment, "horizontalContentAlignment"}});
+            {AdaptiveCardSchemaKey::ImageFitMode, "fitMode"},
+            {AdaptiveCardSchemaKey::HorizontalContentAlignment, "horizontalContentAlignment"},
+            {AdaptiveCardSchemaKey::LabelFor, "labelFor"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},

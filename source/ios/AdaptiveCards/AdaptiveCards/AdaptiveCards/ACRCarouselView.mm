@@ -250,6 +250,7 @@ static NSString * const ACRCarouselAccessibilityValueFormat = @"Page %ld of %ld"
     ]];
     
     accessibilityContainerView.isAccessibilityElement = YES;
+    accessibilityContainerView.userInteractionEnabled = NO;
     accessibilityContainerView.accessibilityLabel = NSLocalizedString(ACRCarouselAccessibilityLabel,null);
     accessibilityContainerView.accessibilityHint =  NSLocalizedString(ACRCarouselAccessibilityHint,null);
     NSString *accessibilityValue = [NSString stringWithFormat:ACRCarouselAccessibilityValueFormat,self.carouselPageViewIndex+1,self.carouselPageViewList.count];
