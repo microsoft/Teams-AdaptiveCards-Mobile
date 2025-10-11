@@ -422,7 +422,7 @@
 		CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */; };
 		DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */; };
 		E67241702E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m in Sources */ = {isa = PBXBuildFile; fileRef = E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */; };
-		E67241712E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h in Headers */ = {isa = PBXBuildFile; fileRef = E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */; };
+		E67241712E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h in Headers */ = {isa = PBXBuildFile; fileRef = E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC367F912F6036B68C5BBFDB /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
 		F401A8781F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = F401A8761F0DB69B006D7AF2 /* ACRImageSetUICollectionView.mm */; };
 		F401A87C1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = F401A87A1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm */; };
@@ -638,7 +638,7 @@
 		FA7F19222E884BB10052B2C6 /* BuiltInFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19082E884BB10052B2C6 /* BuiltInFunctions.swift */; };
 		FA7F19232E884BB10052B2C6 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F190A2E884BB10052B2C6 /* Expression.swift */; };
 		FA7F19252E884D7D0052B2C6 /* TSExpressionObjCBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = FA7F19242E884D7D0052B2C6 /* TSExpressionObjCBridge.m */; };
-		FA7F19272E884DD60052B2C6 /* TSExpressionObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = FA7F19262E884DD60052B2C6 /* TSExpressionObjCBridge.h */; };
+		FA7F19272E884DD60052B2C6 /* TSExpressionObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = FA7F19262E884DD60052B2C6 /* TSExpressionObjCBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
