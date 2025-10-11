@@ -26,10 +26,10 @@
 
 @interface ACOAdaptiveCard : NSObject
 
-@property ACORefresh *refresh;
-@property ACOAuthentication *authentication;
+@property (nullable, nonatomic, strong) ACORefresh *refresh;
+@property (nullable, nonatomic, strong) ACOAuthentication *authentication;
 
-+ (ACOAdaptiveCardParseResult *)fromJson:(NSString *)payload;
++ (nullable ACOAdaptiveCardParseResult *)fromJson:(nonnull NSString *)payload;
 - (NSData *)inputs;
 - (NSArray<ACRIBaseInputHandler> *)getInputs;
 - (void)setInputs:(NSArray *)inputs;
