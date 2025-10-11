@@ -1439,7 +1439,6 @@
 				901FE9C72E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.h */,
 				901FE9C82E04BDC800CD77C6 /* SwiftAdaptiveCardObjcBridge.mm */,
 				901FE9C92E04BDC800CD77C6 /* SwiftAdaptiveCardSwiftBridge.swift */,
-				9003A4562E99F70D00722657 /* SwiftViews */,
 				901FE9A92E04BD9800CD77C6 /* SwiftAdaptiveCards */,
 				F4CAE77F1F75AB9000545555 /* ACOAdaptiveCard.h */,
 				F4CAE7801F75AB9000545555 /* ACOAdaptiveCard.mm */,
@@ -1693,6 +1692,7 @@
 		901FE9A92E04BD9800CD77C6 /* SwiftAdaptiveCards */ = {
 			isa = PBXGroup;
 			children = (
+				9003A4562E99F70D00722657 /* SwiftViews */,
 				FA7F18E32E884AC60052B2C6 /* ExpressionEngine */,
 				901FE98F2E04BD9800CD77C6 /* Legacy */,
 				901FE9912E04BD9800CD77C6 /* Markdown */,
