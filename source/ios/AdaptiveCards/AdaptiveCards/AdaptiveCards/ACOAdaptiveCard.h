@@ -29,7 +29,7 @@
 @property (nullable, nonatomic, strong) ACORefresh *refresh;
 @property (nullable, nonatomic, strong) ACOAuthentication *authentication;
 
-+ (nonnull ACOAdaptiveCardParseResult *)fromJson:(nonnull NSString *)payload;
++ (nonnull ACOAdaptiveCardParseResult *)fromJson:(nullable NSString *)payload;
 - (nullable NSData *)inputs;
 - (nullable NSArray<ACRIBaseInputHandler> *)getInputs;
 - (void)setInputs:(nonnull NSArray *)inputs;
