@@ -30,15 +30,15 @@
 @property (nullable, nonatomic, strong) ACOAuthentication *authentication;
 
 + (nullable ACOAdaptiveCardParseResult *)fromJson:(nonnull NSString *)payload;
-- (NSData *)inputs;
-- (NSArray<ACRIBaseInputHandler> *)getInputs;
-- (void)setInputs:(NSArray *)inputs;
-- (void)appendInputs:(NSArray *)inputs;
-- (NSArray<ACORemoteResourceInformation *> *)remoteResourceInformation;
-- (NSData *)additionalProperty;
+- (nonnull NSData *)inputs;
+- (nonnull NSArray<ACRIBaseInputHandler> *)getInputs;
+- (void)setInputs:(nonnull NSArray *)inputs;
+- (void)appendInputs:(nonnull NSArray *)inputs;
+- (nonnull NSArray<ACORemoteResourceInformation *> *)remoteResourceInformation;
+- (nonnull NSData *)additionalProperty;
 
 /// Swift Adaptive Card Bridge Layer
-- (SwiftAdaptiveCardParseResult *)swiftParseResult;
+- (nullable SwiftAdaptiveCardParseResult *)swiftParseResult;
 + (BOOL)isSwiftParserEnabled;
 + (void)setSwiftParserEnabled:(BOOL)enabled;
 
