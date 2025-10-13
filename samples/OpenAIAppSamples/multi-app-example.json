@@ -1,0 +1,48 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Marketing Campaign Options",
+      "size": "Large",
+      "weight": "Bolder",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "We've prepared two design options for the upcoming marketing campaign. Please review both and let us know which direction you prefer.",
+      "wrap": true,
+      "spacing": "Small"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Select Option A"
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Select Option B"
+    }
+  ],
+  "metadata": {
+    "openAIApps": [
+      {
+        "appId": "figma-option-a",
+        "appName": "Figma - Option A",
+        "appIconUrl": "https://logo.clearbit.com/figma.com",
+        "embedUrl": "https://www.figma.com/embed/option-a",
+        "renderMode": "inline"
+      },
+      {
+        "appId": "canva-option-b",
+        "appName": "Canva - Option B",
+        "appIconUrl": "https://logo.clearbit.com/canva.com",
+        "embedUrl": "https://www.canva.com/embed/option-b",
+        "renderMode": "inline"
+      }
+    ]
+  }
+}

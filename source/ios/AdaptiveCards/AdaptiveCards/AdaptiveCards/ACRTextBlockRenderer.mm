@@ -114,6 +114,35 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
             return streamingView;
         }
     }
+    
+    // Check for OpenAI App integration
+    if ([OpenAIAppViewFactory isOpenAIAppContent:textContent]) {
+        [ACDiagnosticLogger logMessage:@"Detected OpenAI App content in TextBlock" category:@"OpenAIApp"];
+        
+        UIView *openAIAppView = [OpenAIAppViewFactory createOpenAIAppViewFromTextContent:textContent];
+        if (openAIAppView) {
+            [ACDiagnosticLogger logMessage:@"Successfully created OpenAI App view, adding to view hierarchy" category:@"Rendering"];
+            
+            // Set up the view for layout with proper priority settings
+            openAIAppView.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            // Ensure proper content priorities for dynamic sizing
+            [openAIAppView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+            [openAIAppView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+            
+            // Prevent clipping by ensuring clipsToBounds is disabled up the chain
+            openAIAppView.clipsToBounds = NO;
+            
+            // Add the OpenAI App view instead of the regular text block  
+            NSString *areaName = stringForCString(elem->GetAreaGridName());
+            [viewGroup addArrangedSubview:openAIAppView withAreaName:areaName];
+            
+            [ACDiagnosticLogger logMessage:@"OpenAI App view added to card successfully" category:@"Success"];
+            return openAIAppView;
+        } else {
+            [ACDiagnosticLogger logMessage:@"Failed to create OpenAI App view from content" category:@"Error"];
+        }
+    }
 #endif
 
     ACRUILabel *lab = [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];

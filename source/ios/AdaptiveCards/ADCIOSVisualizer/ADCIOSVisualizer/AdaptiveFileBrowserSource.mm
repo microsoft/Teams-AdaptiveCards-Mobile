@@ -13,6 +13,14 @@
 #import <AdaptiveCards/FactSet.h>
 #import <AdaptiveCards/SharedAdaptiveCard.h>
 #import <AdaptiveCards/SubmitAction.h>
+#import <AdaptiveCards/AdaptiveCards-Swift.h>
+
+// ⚙️ AUTO-LOAD CONFIGURATION
+// Set to a filename to automatically load that card on startup
+// Can be a specific file: @"OpenAIAppSamples/figma-textblock.json"
+// Or a directory (will auto-select first .json): @"OpenAIAppSamples"
+// Set to nil to use normal file browser
+static NSString *const kAutoLoadCard = @"OpenAIAppSamples";
 
 using namespace std;
 using namespace AdaptiveCards;
@@ -65,6 +73,44 @@ bool compare(shared_ptr<BaseActionElement> const &a, shared_ptr<BaseActionElemen
     self = [self initWithFrame:frame];
     if (self) {
         _tableFetchDataDelegate = delegate;
+        
+        // Auto-load card if configured
+        if (kAutoLoadCard) {
+            NSString *cardPath = [_rootPath stringByAppendingPathComponent:kAutoLoadCard];
+            BOOL isDirectory = NO;
+            
+            if ([_fileManager fileExistsAtPath:cardPath isDirectory:&isDirectory]) {
+                if (isDirectory) {
+                    // It's a directory - show it and auto-select first .json file
+                    [ACDiagnosticLogger logMessage:[NSString stringWithFormat:@"Auto-loading directory: %@", kAutoLoadCard] category:@"Lifecycle"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self updateAdaptiveViewWithNewPath:cardPath];
+                        
+                        // Find first .json file and auto-select it
+                        NSError *error;
+                        NSArray *contents = [_fileManager contentsOfDirectoryAtPath:cardPath error:&error];
+                        for (NSString *file in contents) {
+                            if ([file hasSuffix:@".json"]) {
+                                NSString *jsonPath = [cardPath stringByAppendingPathComponent:file];
+                                [ACDiagnosticLogger logMessage:[NSString stringWithFormat:@"Auto-selecting first JSON: %@", file] category:@"Lifecycle"];
+                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    [self updateAdaptiveViewWithNewPath:jsonPath];
+                                });
+                                break;
+                            }
+                        }
+                    });
+                } else {
+                    // It's a file - load it directly
+                    [ACDiagnosticLogger logMessage:[NSString stringWithFormat:@"Auto-loading card file: %@", kAutoLoadCard] category:@"Lifecycle"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self updateAdaptiveViewWithNewPath:cardPath];
+                    });
+                }
+            } else {
+                [ACDiagnosticLogger logMessage:[NSString stringWithFormat:@"Auto-load path not found: %@", cardPath] category:@"Warning"];
+            }
+        }
     }
     return self;
 }

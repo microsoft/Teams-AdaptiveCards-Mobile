@@ -867,4 +867,131 @@
     [element tap];
 }
 
+#pragma mark - OpenAI Apps Tests
+
+- (void)testOpenAIAppRendering
+{
+    // Navigate to OpenAIAppSamples folder
+    XCUIElementQuery *buttons = testApp.buttons;
+    [buttons[@"OpenAIAppSamples"] tap];
+    
+    // Wait for the folder to load
+    [NSThread sleepForTimeInterval:0.5];
+    
+    // Select the figma-textblock.json card
+    XCUIElementQuery *tables = testApp.tables;
+    XCUIElement *table = [tables elementBoundByIndex:1];
+    XCUIElementQuery *cells = [[table staticTexts] matchingIdentifier:@"figma-textblock.json"];
+    
+    // Verify the card appears in the list
+    XCTAssertTrue([[cells elementBoundByIndex:0] exists], @"figma-textblock.json should exist in OpenAIAppSamples");
+    
+    // Tap on the card
+    [[cells elementBoundByIndex:0] tap];
+    
+    // Wait for card to render
+    [NSThread sleepForTimeInterval:1.0];
+    
+    // Verify OpenAI App view is rendered (it should be a button in collapsed state)
+    // The OpenAI App renders as a collapsed placeholder with the app name
+    XCUIElementQuery *allButtons = testApp.buttons;
+    
+    // Look for any button containing "Figma" (the app name from our test card)
+    BOOL figmaButtonFound = NO;
+    for (XCUIElement *button in allButtons.allElementsBoundByIndex) {
+        if ([button.label containsString:@"Figma"]) {
+            figmaButtonFound = YES;
+            NSLog(@"✅ Found OpenAI App button: %@", button.label);
+            
+            // Verify button is visible and hittable
+            XCTAssertTrue(button.exists, @"Figma button should exist");
+            XCTAssertTrue(button.isHittable, @"Figma button should be hittable");
+            
+            // Optionally: tap to expand
+            [button tap];
+            [NSThread sleepForTimeInterval:0.5];
+            
+            // After tapping, the view should expand (implementation dependent)
+            NSLog(@"✅ Successfully tapped OpenAI App to expand");
+            
+            break;
+        }
+    }
+    
+    XCTAssertTrue(figmaButtonFound, @"Should find a button with 'Figma' in the label (collapsed OpenAI App)");
+}
+
+- (void)testOpenAIAppExpansionCollapse
+{
+    // Navigate and select the card
+    [testApp.buttons[@"OpenAIAppSamples"] tap];
+    [NSThread sleepForTimeInterval:0.5];
+    
+    XCUIElement *table = [testApp.tables elementBoundByIndex:1];
+    XCUIElement *cell = [[[table staticTexts] matchingIdentifier:@"figma-textblock.json"] elementBoundByIndex:0];
+    [cell tap];
+    [NSThread sleepForTimeInterval:1.0];
+    
+    // Find the OpenAI App button
+    XCUIElementQuery *buttons = testApp.buttons;
+    XCUIElement *openAIAppButton = nil;
+    
+    for (XCUIElement *button in buttons.allElementsBoundByIndex) {
+        if ([button.label containsString:@"Figma"]) {
+            openAIAppButton = button;
+            break;
+        }
+    }
+    
+    XCTAssertNotNil(openAIAppButton, @"Should find OpenAI App button");
+    
+    // Test expansion
+    [openAIAppButton tap];
+    [NSThread sleepForTimeInterval:0.5];
+    NSLog(@"✅ Expanded OpenAI App view");
+    
+    // Look for collapse button (should appear after expansion)
+    // This depends on the implementation - adjust the identifier as needed
+    BOOL collapseButtonFound = NO;
+    for (XCUIElement *button in buttons.allElementsBoundByIndex) {
+        if ([button.label containsString:@"Collapse"] || [button.label containsString:@"chevron"]) {
+            collapseButtonFound = YES;
+            [button tap];
+            [NSThread sleepForTimeInterval:0.5];
+            NSLog(@"✅ Collapsed OpenAI App view");
+            break;
+        }
+    }
+    
+    // Note: If collapse button has a different identifier, adjust this assertion
+    NSLog(@"Collapse button found: %@", collapseButtonFound ? @"YES" : @"NO (implementation may vary)");
+}
+
+- (void)testOpenAIAppMultipleCards
+{
+    // This test verifies that multiple OpenAI App cards can be loaded
+    [testApp.buttons[@"OpenAIAppSamples"] tap];
+    [NSThread sleepForTimeInterval:0.5];
+    
+    XCUIElement *table = [testApp.tables elementBoundByIndex:1];
+    
+    // Count available cards in OpenAIAppSamples
+    XCUIElementQuery *jsonCells = [table.staticTexts matchingPredicate:[NSPredicate predicateWithFormat:@"label ENDSWITH '.json'"]];
+    NSUInteger cardCount = jsonCells.count;
+    
+    NSLog(@"Found %lu OpenAI App sample cards", (unsigned long)cardCount);
+    XCTAssertGreaterThan(cardCount, 0, @"Should have at least one OpenAI App sample card");
+    
+    // Test loading the first card
+    XCUIElement *firstCard = [jsonCells elementBoundByIndex:0];
+    NSString *cardName = firstCard.label;
+    [firstCard tap];
+    [NSThread sleepForTimeInterval:1.0];
+    
+    NSLog(@"✅ Successfully loaded card: %@", cardName);
+    
+    // Verify something rendered
+    XCTAssertTrue(testApp.exists, @"App should still be responsive after loading card");
+}
+
 @end

@@ -1,0 +1,19 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "# Figma Design Embed",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"openAIApp\":{\"appId\":\"figma\",\"appName\":\"Figma\",\"appIconUrl\":\"https://cdn.example.com/figma-icon.png\",\"embedUrl\":\"https://www.figma.com/embed?embed_host=astra&url=https://www.figma.com/design/hEJRxzbX2dnBwEQXEGeLuE/Material-Design-2-web-starter-kit--Community-?node-id=0-1\",\"renderMode\":\"inline\"}}",
+      "wrap": true
+    }
+  ]
+}

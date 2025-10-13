@@ -1,0 +1,57 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Design Review",
+      "size": "Large",
+      "weight": "Bolder",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Here's the latest Figma design for the new login screen. Please review and provide feedback.",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "FactSet",
+      "facts": [
+        {
+          "title": "Designer:",
+          "value": "Alice Johnson"
+        },
+        {
+          "title": "Status:",
+          "value": "Ready for Review"
+        },
+        {
+          "title": "Last Updated:",
+          "value": "Oct 12, 2025"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Open in Figma",
+      "url": "https://www.figma.com"
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Approve Design"
+    }
+  ],
+  "metadata": {
+    "openAIApp": {
+      "appId": "figma-design-001",
+      "appName": "Figma",
+      "appIconUrl": "https://logo.clearbit.com/figma.com",
+      "embedUrl": "https://www.figma.com/embed?embed_host=adaptive-cards-demo",
+      "renderMode": "inline"
+    }
+  }
+}

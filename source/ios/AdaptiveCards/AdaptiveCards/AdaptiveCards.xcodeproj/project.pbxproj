@@ -391,6 +391,11 @@
 		901FEA052E04BE3D00CD77C6 /* MarkDownUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9E22E04BE3D00CD77C6 /* MarkDownUnitTest.swift */; };
 		901FEA062E04BE3D00CD77C6 /* AdaptiveCardParseExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9D42E04BE3D00CD77C6 /* AdaptiveCardParseExceptionTest.swift */; };
 		901FEA072E04BE3D00CD77C6 /* SemanticVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901FE9E62E04BE3D00CD77C6 /* SemanticVersionTest.swift */; };
+		907D60DE2E9CA7F90098818B /* OpenAIAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D60DB2E9CA7F90098818B /* OpenAIAppView.swift */; };
+		907D60DF2E9CA7F90098818B /* WebViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D60DC2E9CA7F90098818B /* WebViewContainer.swift */; };
+		907D60E02E9CA7F90098818B /* OpenAIAppModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D60DA2E9CA7F90098818B /* OpenAIAppModels.swift */; };
+		907D60E12E9CA7F90098818B /* OpenAIAppHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D60D92E9CA7F90098818B /* OpenAIAppHostingView.swift */; };
+		907D60E42E9CAEA10098818B /* ACOAdaptiveCard+OpenAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907D60E22E9CAEA10098818B /* ACOAdaptiveCard+OpenAIApp.swift */; };
 		B35633222C060D7900F1C999 /* ValueChangedActionTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */; };
 		B35633242C060EEF00F1C999 /* ValueChangedActionValid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633232C060EEF00F1C999 /* ValueChangedActionValid.json */; };
 		B35633272C06E4FC00F1C999 /* ValueChangedActionInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = B35633262C06E4FC00F1C999 /* ValueChangedActionInvalid.json */; };
@@ -1054,6 +1059,11 @@
 		901FE9E72E04BE3D00CD77C6 /* TableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTests.swift; sourceTree = "<group>"; };
 		901FE9E82E04BE3D00CD77C6 /* TextParsingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextParsingTest.swift; sourceTree = "<group>"; };
 		901FE9E92E04BE3D00CD77C6 /* UnsupportedtypesParsingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsupportedtypesParsingTest.swift; sourceTree = "<group>"; };
+		907D60D92E9CA7F90098818B /* OpenAIAppHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAppHostingView.swift; sourceTree = "<group>"; };
+		907D60DA2E9CA7F90098818B /* OpenAIAppModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAppModels.swift; sourceTree = "<group>"; };
+		907D60DB2E9CA7F90098818B /* OpenAIAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAppView.swift; sourceTree = "<group>"; };
+		907D60DC2E9CA7F90098818B /* WebViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewContainer.swift; sourceTree = "<group>"; };
+		907D60E22E9CAEA10098818B /* ACOAdaptiveCard+OpenAIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACOAdaptiveCard+OpenAIApp.swift"; sourceTree = "<group>"; };
 		9240A5BA903EB4E235296A01 /* Pods-AdaptiveCards.apprelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards.apprelease.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards/Pods-AdaptiveCards.apprelease.xcconfig"; sourceTree = "<group>"; };
 		92C9540BDB87B09349BF0018 /* Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; path = "Target Support Files/Pods-AdaptiveCards-AdaptiveCardsTests/Pods-AdaptiveCards-AdaptiveCardsTests.release.xcconfig"; sourceTree = "<group>"; };
 		B35633212C060D7900F1C999 /* ValueChangedActionTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ValueChangedActionTests.mm; sourceTree = "<group>"; };
@@ -1643,6 +1653,7 @@
 		9003A4562E99F70D00722657 /* SwiftViews */ = {
 			isa = PBXGroup;
 			children = (
+				907D60DD2E9CA7F90098818B /* OpenAIApp */,
 				9003A44B2E99F70D00722657 /* ChainOfThought */,
 				9003A4502E99F70D00722657 /* Streaming */,
 				9003A4512E99F70D00722657 /* AdaptiveCardElementView.swift */,
@@ -1758,6 +1769,26 @@
 				901FE9EA2E04BE3D00CD77C6 /* ObjectModel */,
 			);
 			path = SwiftAdaptiveCardsTests;
+			sourceTree = "<group>";
+		};
+		907D60DD2E9CA7F90098818B /* OpenAIApp */ = {
+			isa = PBXGroup;
+			children = (
+				907D60E32E9CAEA10098818B /* Extensions */,
+				907D60D92E9CA7F90098818B /* OpenAIAppHostingView.swift */,
+				907D60DA2E9CA7F90098818B /* OpenAIAppModels.swift */,
+				907D60DB2E9CA7F90098818B /* OpenAIAppView.swift */,
+				907D60DC2E9CA7F90098818B /* WebViewContainer.swift */,
+			);
+			path = OpenAIApp;
+			sourceTree = "<group>";
+		};
+		907D60E32E9CAEA10098818B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				907D60E22E9CAEA10098818B /* ACOAdaptiveCard+OpenAIApp.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		CFF954CC29819A6B00F321C3 /* DynamicTypeahead */ = {
@@ -2867,6 +2898,10 @@
 				F448730D1EE2261F00FCAFAE /* FactSet.cpp in Sources */,
 				F44873031EE2261F00FCAFAE /* ColumnSet.cpp in Sources */,
 				F4FE456F1F1985200071D9E5 /* ACRColumnSetView.mm in Sources */,
+				907D60DE2E9CA7F90098818B /* OpenAIAppView.swift in Sources */,
+				907D60DF2E9CA7F90098818B /* WebViewContainer.swift in Sources */,
+				907D60E02E9CA7F90098818B /* OpenAIAppModels.swift in Sources */,
+				907D60E12E9CA7F90098818B /* OpenAIAppHostingView.swift in Sources */,
 				F44872FD1EE2261F00FCAFAE /* ChoiceInput.cpp in Sources */,
 				F42E51761FEC3840008F9642 /* MarkDownParsedResult.cpp in Sources */,
 				46DF37AE2C902F97001C254F /* Carousel.cpp in Sources */,
@@ -3023,6 +3058,7 @@
 				9003A45F2E99F70D00722657 /* AdaptiveCardsSharedSwiftModel.swift in Sources */,
 				9003A4602E99F70D00722657 /* ChainOfThoughtHostingView.swift in Sources */,
 				9003A4612E99F70D00722657 /* ChainOfThoughtView.swift in Sources */,
+				907D60E42E9CAEA10098818B /* ACOAdaptiveCard+OpenAIApp.swift in Sources */,
 				9003A4622E99F70D00722657 /* SwiftAdaptiveCardViewModel.swift in Sources */,
 				46DF37BC2C903377001C254F /* ACRCarouselViewRenderer.mm in Sources */,
 				6BFF99C525FFF53E0028069F /* AuthCardButton.cpp in Sources */,
