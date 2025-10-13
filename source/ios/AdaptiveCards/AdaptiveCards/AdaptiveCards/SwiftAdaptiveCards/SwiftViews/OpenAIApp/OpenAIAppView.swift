@@ -24,14 +24,22 @@ struct OpenAIAppView: View {
     /// Loading state
     @State private var isLoading: Bool = false
     
-    /// Current content height for inline view
-    @State private var contentHeight: CGFloat = 300
+    /// Current content height for inline view (initialized to preferredHeight if available)
+    @State private var contentHeight: CGFloat
     
     /// Full screen modal presentation
     @State private var showFullScreen: Bool = false
     
     /// Error state
     @State private var loadError: String? = nil
+    
+    /// Initialize with app data
+    init(appData: OpenAIAppData, onHeightChange: (() -> Void)? = nil) {
+        self.appData = appData
+        self.onHeightChange = onHeightChange
+        // Initialize contentHeight to preferredHeight if set, otherwise use 300 as default
+        _contentHeight = State(initialValue: appData.preferredHeight ?? 300)
+    }
     
     var body: some View {
         Group {
@@ -50,8 +58,10 @@ struct OpenAIAppView: View {
         }
         .onChange(of: isCollapsed) { newValue in
             ACDiagnosticLogger.log("State changed - isCollapsed: \(newValue)", category: "Lifecycle")
-            // Trigger height recalculation
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            // Trigger height recalculation immediately (for UITableView)
+            onHeightChange?()
+            // And again after animation completes
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                 onHeightChange?()
             }
         }
@@ -230,16 +240,19 @@ struct OpenAIAppView: View {
     
     @ViewBuilder
     private var inlineWebContent: some View {
+        let targetHeight = appData.preferredHeight ?? contentHeight
         WebViewContainer(
             url: appData.embedUrl,
             authToken: appData.authToken,
             initialData: appData.initialData,
             contentHeight: $contentHeight,
             isLoading: $isLoading,
-            onHeightChange: onHeightChange
+            onHeightChange: onHeightChange,
+            preferredHeight: appData.preferredHeight
         )
         .frame(maxWidth: .infinity)
-        .frame(height: contentHeight)
+        .frame(height: targetHeight)
+        .frame(minHeight: targetHeight, maxHeight: targetHeight) // Enforce exact height
         .clipped()
         .cornerRadius(8)
         .background(

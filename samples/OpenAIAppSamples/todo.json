@@ -1,0 +1,25 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "# Todo List",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Interactive task manager with drag-and-drop reordering and date picker",
+      "wrap": true,
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"openAIApp\":{\"appId\":\"todo\",\"appName\":\"Todo List\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/2387/2387635.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/todo-0038.html\",\"renderMode\":\"inline\",\"preferredHeight\":500}}",
+      "wrap": true
+    }
+  ]
+}

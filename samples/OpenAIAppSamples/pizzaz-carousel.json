@@ -1,0 +1,25 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "# Pizza Carousel",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Browse through SF's top pizzerias in a beautiful carousel",
+      "wrap": true,
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"openAIApp\":{\"appId\":\"pizza-carousel\",\"appName\":\"Pizza Carousel\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/3595/3595455.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/pizzaz-carousel-0038.html\",\"renderMode\":\"inline\",\"preferredHeight\":300}}",
+      "wrap": true
+    }
+  ]
+}

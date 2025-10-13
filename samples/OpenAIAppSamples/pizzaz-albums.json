@@ -1,0 +1,25 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "# Pizza Photo Album",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "A collection of beautiful pizza photography",
+      "wrap": true,
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"openAIApp\":{\"appId\":\"pizza-albums\",\"appName\":\"Pizza Albums\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/3595/3595455.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/pizzaz-albums-0038.html\",\"renderMode\":\"inline\"}}",
+      "wrap": true
+    }
+  ]
+}

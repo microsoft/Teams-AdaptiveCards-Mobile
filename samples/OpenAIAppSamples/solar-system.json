@@ -1,0 +1,25 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "# Solar System Explorer",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Interactive 3D visualization of our solar system with detailed planet information",
+      "wrap": true,
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"openAIApp\":{\"appId\":\"solar-system\",\"appName\":\"Solar System\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/2949/2949825.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/solar-system-0038.html\",\"renderMode\":\"inline\",\"preferredHeight\":480}}",
+      "wrap": true
+    }
+  ]
+}

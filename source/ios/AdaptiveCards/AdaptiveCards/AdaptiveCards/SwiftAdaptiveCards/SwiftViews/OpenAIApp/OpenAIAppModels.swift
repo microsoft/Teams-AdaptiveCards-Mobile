@@ -33,6 +33,9 @@ public struct OpenAIAppData {
     /// Rendering mode for the app
     let renderMode: RenderMode
     
+    /// Optional preferred height in points for inline mode (nil = auto-size)
+    let preferredHeight: CGFloat?
+    
     /// Rendering mode options for OpenAI apps
     enum RenderMode: String, Codable {
         /// Embedded inline within the message bubble
@@ -56,7 +59,8 @@ public struct OpenAIAppData {
         embedUrl: URL,
         authToken: String? = nil,
         initialData: [String: Any]? = nil,
-        renderMode: RenderMode = .inline
+        renderMode: RenderMode = .inline,
+        preferredHeight: CGFloat? = nil
     ) {
         self.appId = appId
         self.appName = appName
@@ -65,6 +69,7 @@ public struct OpenAIAppData {
         self.authToken = authToken
         self.initialData = initialData
         self.renderMode = renderMode
+        self.preferredHeight = preferredHeight
     }
 }
 
@@ -89,6 +94,7 @@ extension OpenAIAppData {
         let appIconUrl = dict["appIconUrl"] as? String
         let authToken = dict["authToken"] as? String
         let initialData = dict["initialData"] as? [String: Any]
+        let preferredHeight = dict["preferredHeight"] as? CGFloat
         
         // Parse render mode with fallback to default
         let renderMode: RenderMode
@@ -106,7 +112,8 @@ extension OpenAIAppData {
             embedUrl: embedUrl,
             authToken: authToken,
             initialData: initialData,
-            renderMode: renderMode
+            renderMode: renderMode,
+            preferredHeight: preferredHeight
         )
     }
 }

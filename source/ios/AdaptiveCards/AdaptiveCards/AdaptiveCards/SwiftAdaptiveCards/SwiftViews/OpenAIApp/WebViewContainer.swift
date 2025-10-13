@@ -31,6 +31,9 @@ struct WebViewContainer: UIViewRepresentable {
     /// Callback when height changes
     var onHeightChange: (() -> Void)?
     
+    /// Optional preferred height (overrides auto-sizing)
+    let preferredHeight: CGFloat?
+    
     /// Maximum height cap to prevent excessive growth
     private let maxHeight: CGFloat = 600.0
     
@@ -105,14 +108,53 @@ struct WebViewContainer: UIViewRepresentable {
     private func injectHeightObserverScript(into webView: WKWebView, coordinator: Coordinator) {
         let heightScript = """
         (function() {
+            console.log('🚀 AdaptiveCards: Height observer script starting');
+            
+            // Set viewport for mobile rendering
+            let viewport = document.querySelector('meta[name="viewport"]');
+            if (!viewport) {
+                viewport = document.createElement('meta');
+                viewport.name = 'viewport';
+                viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                document.head.appendChild(viewport);
+                console.log('📱 AdaptiveCards: Added mobile viewport meta tag');
+            } else {
+                console.log('📱 AdaptiveCards: Viewport already exists:', viewport.content);
+            }
+            
+            // Inject global OpenAI-compatible object
+            window.oai = window.oai || {};
+            window.oai.widget = window.oai.widget || {};
+            
+            // Set maxHeight if preferred height is provided
+            \(preferredHeight != nil ? "window.oai.maxHeight = \(preferredHeight!);" : "")
+            \(preferredHeight != nil ? "console.log('📐 AdaptiveCards: Injected maxHeight =', window.oai.maxHeight);" : "console.log('📐 AdaptiveCards: No preferred height specified');")
+            
+            // Set display mode
+            window.oai.displayMode = 'inline';
+            console.log('🎨 AdaptiveCards: Set displayMode =', window.oai.displayMode);
+            
+            // Log the full window.oai object
+            console.log('🔍 AdaptiveCards: window.oai =', JSON.stringify(window.oai, null, 2));
+            
             // Function to measure and report height
             function updateHeight() {
-                const height = Math.max(
-                    document.documentElement.scrollHeight,
-                    document.documentElement.offsetHeight,
-                    document.body.scrollHeight,
-                    document.body.offsetHeight
-                );
+                let height;
+                
+                // If maxHeight is set, use it (we're in constrained mode)
+                if (window.oai.maxHeight) {
+                    height = window.oai.maxHeight;
+                    console.log('📏 AdaptiveCards: Using preferred height =', height);
+                } else {
+                    // Otherwise measure natural content height
+                    height = Math.max(
+                        document.documentElement.scrollHeight,
+                        document.documentElement.offsetHeight,
+                        document.body.scrollHeight,
+                        document.body.offsetHeight
+                    );
+                    console.log('📏 AdaptiveCards: Measured natural height =', height);
+                }
                 
                 window.webkit.messageHandlers.heightChanged.postMessage({
                     height: height,
@@ -154,7 +196,28 @@ struct WebViewContainer: UIViewRepresentable {
                 }
             }, 1000);
             
-            console.log('OpenAI App: Height observer initialized');
+            console.log('OpenAI App: Height observer initialized, maxHeight:', window.oai.maxHeight);
+            
+            // Apply height styling if maxHeight is set
+            \(preferredHeight != nil ? """
+            (function applyHeightStyle() {
+                const style = document.createElement('style');
+                style.textContent = `
+                    html, body {
+                        height: \(preferredHeight!)px !important;
+                        overflow: hidden !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                    }
+                    body > div:first-child {
+                        height: 100% !important;
+                        overflow: auto !important;
+                    }
+                `;
+                document.head.appendChild(style);
+                console.log('OpenAI App: Applied simplified height style:', '\(preferredHeight!)px');
+            })();
+            """ : "")
         })();
         """
         
@@ -166,6 +229,52 @@ struct WebViewContainer: UIViewRepresentable {
         
         webView.configuration.userContentController.addUserScript(userScript)
         webView.configuration.userContentController.add(coordinator, name: "heightChanged")
+        
+        // Add console.log capture for debugging
+        let consoleScript = """
+        (function() {
+            const originalLog = console.log;
+            console.log = function(...args) {
+                originalLog.apply(console, args);
+                try {
+                    window.webkit.messageHandlers.consoleLog.postMessage(
+                        args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : String(arg)).join(' ')
+                    );
+                } catch(e) {
+                    originalLog('Failed to send log to native:', e);
+                }
+            };
+            
+            const originalWarn = console.warn;
+            console.warn = function(...args) {
+                originalWarn.apply(console, args);
+                try {
+                    window.webkit.messageHandlers.consoleLog.postMessage(
+                        '⚠️ ' + args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : String(arg)).join(' ')
+                    );
+                } catch(e) {}
+            };
+            
+            const originalError = console.error;
+            console.error = function(...args) {
+                originalError.apply(console, args);
+                try {
+                    window.webkit.messageHandlers.consoleLog.postMessage(
+                        '❌ ' + args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : String(arg)).join(' ')
+                    );
+                } catch(e) {}
+            };
+        })();
+        """
+        
+        let consoleUserScript = WKUserScript(
+            source: consoleScript,
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: true
+        )
+        
+        webView.configuration.userContentController.addUserScript(consoleUserScript)
+        webView.configuration.userContentController.add(coordinator, name: "consoleLog")
     }
     
     /// Inject initial data into the web view
@@ -226,6 +335,41 @@ struct WebViewContainer: UIViewRepresentable {
                         self.updateHeight(height)
                     }
                 }
+                
+                // Debug: Check window.oai state after React components mount
+                let debugScript = """
+                console.log('🔍 AdaptiveCards: Post-load window.oai check');
+                console.log('  window.oai:', JSON.stringify(window.oai, null, 2));
+                console.log('  window.oai.maxHeight:', window.oai?.maxHeight);
+                console.log('  window.oai.displayMode:', window.oai?.displayMode);
+                console.log('  Document ready state:', document.readyState);
+                console.log('  Body height:', document.body.scrollHeight);
+                console.log('  Root div:', document.querySelector('body > div:first-child')?.getBoundingClientRect());
+                
+                // Check computed styles
+                const rootDiv = document.querySelector('body > div:first-child');
+                if (rootDiv) {
+                    const styles = window.getComputedStyle(rootDiv);
+                    console.log('  Root div computed styles:');
+                    console.log('    height:', styles.height);
+                    console.log('    max-height:', styles.maxHeight);
+                    console.log('    overflow:', styles.overflow);
+                    console.log('    display:', styles.display);
+                    console.log('    flex:', styles.flex);
+                }
+                
+                // Check carousel container
+                const carousel = document.querySelector('.antialiased');
+                if (carousel) {
+                    const carouselRect = carousel.getBoundingClientRect();
+                    const carouselStyles = window.getComputedStyle(carousel);
+                    console.log('  Carousel container:');
+                    console.log('    rect:', carouselRect);
+                    console.log('    overflow-y:', carouselStyles.overflowY);
+                    console.log('    flex:', carouselStyles.flex);
+                }
+                """
+                webView.evaluateJavaScript(debugScript, completionHandler: nil)
             }
         }
         
@@ -249,33 +393,44 @@ struct WebViewContainer: UIViewRepresentable {
             _ userContentController: WKUserContentController,
             didReceive message: WKScriptMessage
         ) {
-            guard message.name == "heightChanged" else { return }
-            
-            if let messageBody = message.body as? [String: Any],
-               let height = messageBody["height"] as? CGFloat {
-                updateHeight(height)
-            } else if let height = message.body as? CGFloat {
-                updateHeight(height)
+            if message.name == "heightChanged" {
+                if let messageBody = message.body as? [String: Any],
+                   let height = messageBody["height"] as? CGFloat {
+                    updateHeight(height)
+                } else if let height = message.body as? CGFloat {
+                    updateHeight(height)
+                }
+            } else if message.name == "consoleLog" {
+                if let logMessage = message.body as? String {
+                    print("🌐 JS Console: \(logMessage)")
+                }
             }
         }
         
         // MARK: Height Management
         
         private func updateHeight(_ newHeight: CGFloat) {
-            // Apply bounds
-            let boundedHeight = min(max(newHeight, parent.minHeight), parent.maxHeight)
+            // If preferred height is set, use it instead of dynamic height
+            let targetHeight: CGFloat
+            if let preferred = parent.preferredHeight {
+                targetHeight = preferred
+            } else {
+                // Apply bounds for dynamic height
+                targetHeight = min(max(newHeight, parent.minHeight), parent.maxHeight)
+            }
             
             // Only update if changed significantly (avoid jitter)
-            let heightDifference = abs(boundedHeight - lastReportedHeight)
+            let heightDifference = abs(targetHeight - lastReportedHeight)
             guard heightDifference > 5.0 else { return }
             
             heightUpdateCount += 1
-            lastReportedHeight = boundedHeight
+            lastReportedHeight = targetHeight
             
-            print("📏 WebViewContainer: Height update #\(heightUpdateCount) - \(Int(boundedHeight))pt (raw: \(Int(newHeight))pt)")
+            let heightType = parent.preferredHeight != nil ? "preferred" : "dynamic"
+            print("📏 WebViewContainer: Height update #\(heightUpdateCount) - \(Int(targetHeight))pt (\(heightType), raw: \(Int(newHeight))pt)")
             
             DispatchQueue.main.async {
-                self.parent.contentHeight = boundedHeight
+                self.parent.contentHeight = targetHeight
                 
                 // Notify parent of height change after a brief delay
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
@@ -310,7 +465,66 @@ struct FullScreenWebView: UIViewRepresentable {
         webView.scrollView.isScrollEnabled = true // Allow scrolling in full screen
         webView.backgroundColor = .systemBackground
         
+        // Add viewport and console logging injection for fullscreen
+        injectFullscreenScripts(into: webView, coordinator: context.coordinator)
+        
         return webView
+    }
+    
+    /// Inject viewport meta tag and console logging for fullscreen
+    private func injectFullscreenScripts(into webView: WKWebView, coordinator: Coordinator) {
+        let fullscreenScript = """
+        (function() {
+            console.log('🚀 AdaptiveCards Fullscreen: Initializing');
+            
+            // Set viewport for mobile rendering
+            let viewport = document.querySelector('meta[name="viewport"]');
+            if (!viewport) {
+                viewport = document.createElement('meta');
+                viewport.name = 'viewport';
+                viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes';
+                document.head.appendChild(viewport);
+                console.log('📱 AdaptiveCards Fullscreen: Added mobile viewport meta tag');
+            }
+            
+            // Set OpenAI globals for fullscreen mode
+            window.oai = window.oai || {};
+            window.oai.displayMode = 'fullscreen';
+            console.log('🎨 AdaptiveCards Fullscreen: Set displayMode = fullscreen');
+        })();
+        """
+        
+        let userScript = WKUserScript(
+            source: fullscreenScript,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        )
+        
+        webView.configuration.userContentController.addUserScript(userScript)
+        
+        // Add console.log capture
+        let consoleScript = """
+        (function() {
+            const originalLog = console.log;
+            console.log = function(...args) {
+                originalLog.apply(console, args);
+                try {
+                    window.webkit.messageHandlers.consoleLog.postMessage(
+                        args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : String(arg)).join(' ')
+                    );
+                } catch(e) {}
+            };
+        })();
+        """
+        
+        let consoleUserScript = WKUserScript(
+            source: consoleScript,
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: true
+        )
+        
+        webView.configuration.userContentController.addUserScript(consoleUserScript)
+        webView.configuration.userContentController.add(coordinator, name: "consoleLog")
     }
     
     func updateUIView(_ webView: WKWebView, context: Context) {
@@ -342,7 +556,7 @@ struct FullScreenWebView: UIViewRepresentable {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject, WKNavigationDelegate {
+    class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
         var parent: FullScreenWebView
         var hasLoadedInitialURL: Bool = false
         
@@ -369,6 +583,19 @@ struct FullScreenWebView: UIViewRepresentable {
             }
             print("❌ FullScreenWebView: Failed - \(error.localizedDescription)")
         }
+        
+        // MARK: WKScriptMessageHandler
+        
+        func userContentController(
+            _ userContentController: WKUserContentController,
+            didReceive message: WKScriptMessage
+        ) {
+            if message.name == "consoleLog" {
+                if let logMessage = message.body as? String {
+                    print("🌐 Fullscreen JS Console: \(logMessage)")
+                }
+            }
+        }
     }
 }
 
@@ -387,7 +614,8 @@ struct WebViewContainer_Previews: PreviewProvider {
                 authToken: nil,
                 initialData: nil,
                 contentHeight: .constant(400),
-                isLoading: .constant(false)
+                isLoading: .constant(false),
+                preferredHeight: nil
             )
             .frame(height: 400)
             .border(Color.gray, width: 1)

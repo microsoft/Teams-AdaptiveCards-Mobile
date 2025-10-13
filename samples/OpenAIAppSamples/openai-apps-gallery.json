@@ -1,0 +1,25 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "# OpenAI Apps Gallery",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Complete collection of interactive components from OpenAI's SDK examples",
+      "wrap": true,
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"openAIApps\":[{\"appId\":\"solar-system\",\"appName\":\"Solar System\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/2949/2949825.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/solar-system-0038.html\",\"renderMode\":\"inline\"},{\"appId\":\"todo\",\"appName\":\"Todo List\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/2387/2387635.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/todo-0038.html\",\"renderMode\":\"inline\"},{\"appId\":\"pizza-map\",\"appName\":\"Map\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/854/854878.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/pizzaz-map-demo.html\",\"renderMode\":\"inline\"},{\"appId\":\"figma\",\"appName\":\"Figma\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/5968/5968705.png\",\"embedUrl\":\"https://www.figma.com/embed?embed_host=astra&url=https://www.figma.com/design/hEJRxzbX2dnBwEQXEGeLuE/Material-Design-2-web-starter-kit--Community-?node-id=0-1\",\"renderMode\":\"inline\"}]}",
+      "wrap": true
+    }
+  ]
+}

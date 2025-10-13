@@ -21,14 +21,28 @@ OpenAI Apps are embedded in **TextBlock elements** as JSON, following the same p
 
 ## Sample Files
 
-### figma-textblock.json
-Simple single-app example using TextBlock pattern. **Use this for testing!**
+### Figma Examples
+- **figma-textblock.json** - Material Design starter kit embed. **Great for testing layouts!**
+- **figma-single-app.json** - Legacy example using metadata (not currently supported)
 
-### figma-single-app.json
-Legacy example using metadata (not currently supported - for future reference)
+### OpenAI SDK Examples
 
-### multi-app-example.json
-Legacy multi-app example using metadata (not currently supported - for future reference)
+#### Pizzaz Demo Suite
+Based on OpenAI's official Pizzaz demo showcasing different UI component patterns:
+
+- **pizzaz-map.json** - Interactive map showing pizzerias with markers and routing
+- **pizzaz-carousel.json** - Touch-friendly gallery carousel with navigation (300pt height)
+- **pizzaz-list.json** - Scrollable ranked list with hero summary (500pt height)
+- **pizzaz-video.json** - Video player with transcript and state sync
+- **pizzaz-albums.json** - Photo album collection view
+- **pizzaz-multi-app.json** - Multi-app switcher showing all components
+
+#### Interactive Demos
+- **solar-system.json** - 3D solar system visualization with planet details (480pt height)
+- **todo.json** - Task manager with drag-and-drop reordering and date picker (500pt height)
+
+### Legacy Examples
+- **multi-app-example.json** - Legacy multi-app using metadata (not currently supported)
 
 ## JSON Format
 
@@ -75,14 +89,23 @@ Legacy multi-app example using metadata (not currently supported - for future re
 | `authToken` | ❌ | Bearer token for Authorization header |
 | `renderMode` | ❌ | "inline" (default), "fullscreen", or "popup" |
 | `initialData` | ❌ | JSON object passed to app on load |
+| `preferredHeight` | ❌ | Fixed height in points (overrides auto-sizing) |
 
 ## Render Modes
 
 ### inline (default)
 - Appears within card body
 - Collapsible placeholder with expand button
-- Height auto-adjusts (min: 200pt, max: 600pt)
+- Height auto-adjusts (min: 200pt, max: 600pt) or uses `preferredHeight`
 - Full screen button available
+
+**Height Optimization:**
+- **Auto-sizing**: Omit `preferredHeight` for dynamic height based on content
+- **Fixed height**: Set `preferredHeight` (e.g., 300 for carousel, 500 for lists)
+- **Use cases**: 
+  - Carousels work best with fixed heights (~300pt)
+  - Scrollable lists benefit from taller fixed heights (~500pt)
+  - Maps and interactive content can use auto-sizing
 
 ### fullscreen
 - Opens directly in modal
@@ -92,6 +115,90 @@ Legacy multi-app example using metadata (not currently supported - for future re
 ### popup (future)
 - Floating window overlay
 - Not yet implemented
+
+## Pizzaz Demo Components
+
+The Pizzaz samples are based on OpenAI's official demo suite showcasing different UI patterns for embedded applications:
+
+### 🗺️ Pizza Map (`pizzaz-map.json`)
+- **Component**: Interactive Mapbox-powered map
+- **Features**: 
+  - Marker placement for 10 SF pizzerias
+  - Click markers to view details
+  - Sidebar with place listings
+  - Inspector panel with reviews (fullscreen mode)
+  - Responsive layout (mobile carousel, desktop sidebar)
+- **Use Case**: Location-based data visualization
+
+### 🎠 Pizza Carousel (`pizzaz-carousel.json`)
+- **Component**: Horizontal scrolling gallery
+- **Features**:
+  - Touch-friendly embla-carousel
+  - Arrow navigation buttons
+  - Edge fade gradients
+  - Card-based layout with images
+- **Use Case**: Content browsing, product galleries
+
+### 📋 Pizza List (`pizzaz-list.json`)
+- **Component**: Ranked list with hero section
+- **Features**:
+  - Hero summary card
+  - Scrollable ranked items
+  - Rating display
+  - Save list action
+- **Use Case**: Rankings, itineraries, reports
+
+### 🎥 Pizza Video (`pizzaz-video.json`)
+- **Component**: Video player with transcript
+- **Features**:
+  - Playback controls
+  - Transcript with timestamps
+  - Summary/transcript tabs (fullscreen)
+  - State sync to ChatGPT
+  - PiP and fullscreen modes
+- **Use Case**: Media presentations, tutorials
+
+### 📸 Pizza Albums (`pizzaz-albums.json`)
+- **Component**: Photo album viewer
+- **Features**:
+  - Grid or gallery layout
+  - Lightbox viewing
+  - Photo metadata
+- **Use Case**: Image collections, portfolios
+
+### 🎛️ Multi-App Switcher (`pizzaz-multi-app.json`)
+- **Component**: Horizontal app selector
+- **Features**:
+  - Tab-based switching between apps
+  - Different icon per app
+  - Maintains state per app
+- **Use Case**: Multi-tool interfaces
+
+## Interactive Demo Components
+
+### 🌌 Solar System (`solar-system.json`)
+- **Component**: 3D solar system visualization
+- **Features**:
+  - Interactive Three.js 3D rendering
+  - Navigate between 8 planets
+  - Orbit controls and zoom
+  - Planet information cards
+  - Smooth camera transitions
+  - Bloom effects and post-processing
+- **Use Case**: Educational content, data visualization, 3D presentations
+- **Height**: 480pt (optimal for 3D viewport)
+
+### ✅ Todo List (`todo.json`)
+- **Component**: Task management interface
+- **Features**:
+  - Drag-and-drop reordering (Framer Motion)
+  - Add/edit/delete tasks
+  - Date picker integration
+  - Task filtering and sorting
+  - Persistent state
+  - Responsive design
+- **Use Case**: Task tracking, project management, checklists
+- **Height**: 500pt (optimal for scrollable list)
 
 ## Testing URLs
 

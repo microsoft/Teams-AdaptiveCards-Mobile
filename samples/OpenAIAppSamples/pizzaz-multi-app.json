@@ -1,0 +1,25 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "# Pizzaz Demo Suite",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Browse multiple interactive pizza components",
+      "wrap": true,
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"openAIApps\":[{\"appId\":\"pizza-map\",\"appName\":\"Map\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/854/854878.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/pizzaz-map-demo.html\",\"renderMode\":\"inline\"},{\"appId\":\"pizza-carousel\",\"appName\":\"Carousel\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/2936/2936719.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/pizzaz-carousel-0038.html\",\"renderMode\":\"inline\"},{\"appId\":\"pizza-list\",\"appName\":\"List\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/2540/2540651.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/pizzaz-list-0038.html\",\"renderMode\":\"inline\"},{\"appId\":\"pizza-video\",\"appName\":\"Video\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/1384/1384060.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/pizzaz-video-0038.html\",\"renderMode\":\"inline\"}]}",
+      "wrap": true
+    }
+  ]
+}

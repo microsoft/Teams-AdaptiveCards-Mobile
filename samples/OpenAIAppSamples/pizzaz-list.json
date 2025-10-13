@@ -1,0 +1,25 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "# National Best Pizza List",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "A ranking of the best pizzerias in San Francisco",
+      "wrap": true,
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "{\"openAIApp\":{\"appId\":\"pizza-list\",\"appName\":\"Pizza List\",\"appIconUrl\":\"https://cdn-icons-png.flaticon.com/512/3595/3595455.png\",\"embedUrl\":\"https://persistent.oaistatic.com/ecosystem-built-assets/pizzaz-list-0038.html\",\"renderMode\":\"inline\",\"preferredHeight\":500}}",
+      "wrap": true
+    }
+  ]
+}

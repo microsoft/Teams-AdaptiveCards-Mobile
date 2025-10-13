@@ -183,13 +183,10 @@ import SwiftUI
             return CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
         }
         
-        // Get the current width constraint
+        // Always measure the SwiftUI content dynamically
+        // (preferredHeight is used inside WebViewContainer to constrain web content)
         let targetWidth = bounds.width > 0 ? bounds.width : 374.0 // Reasonable default
-        
-        // Create a temporary size to measure the content
         let tempSize = CGSize(width: targetWidth, height: 1000) // Reasonable max height
-        
-        // Measure the SwiftUI content
         let measuredSize = hostingController.sizeThatFits(in: tempSize)
         
         // Clamp the height to reasonable bounds
