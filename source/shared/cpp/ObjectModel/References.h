@@ -7,6 +7,7 @@
 
 #include "pch.h"
 #include "BaseActionElement.h"
+#include "SharedAdaptiveCard.h"
 
 namespace AdaptiveCards {
 
@@ -19,8 +20,9 @@ namespace AdaptiveCards {
                 std::string abstract,
                 std::string title,
                 std::string url,
-                std::vector<std::string> keywords) :
-                m_type(type), m_abstract(abstract), m_title(title), m_url(url), m_keywords(std::move(keywords)) {
+                std::vector<std::string> keywords,
+                std::shared_ptr<AdaptiveCard> content) :
+                m_type(type), m_abstract(abstract), m_title(title), m_url(url), m_keywords(std::move(keywords)), m_content(content) {
         }
 
         bool ShouldSerialize() const;
@@ -32,6 +34,7 @@ namespace AdaptiveCards {
         const std::string GetTitle() const;
         const std::string GetUrl() const;
         const std::vector<std::string> GetKeywords() const;
+        std::optional<std::shared_ptr<AdaptiveCards::AdaptiveCard>> GetContent() const;
 
         static std::shared_ptr<References> Deserialize(ParseContext& context, const Json::Value& json);
         static std::shared_ptr<References> DeserializeFromString(ParseContext& context, const std::string& jsonString);
@@ -42,5 +45,6 @@ namespace AdaptiveCards {
         std::string m_title;
         std::string m_url;
         std::vector<std::string> m_keywords;
+        std::optional<std::shared_ptr<AdaptiveCard>> m_content;
     };
 } // namespace AdaptiveCards
