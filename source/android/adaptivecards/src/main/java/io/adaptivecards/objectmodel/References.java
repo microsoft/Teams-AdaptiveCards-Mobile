@@ -48,6 +48,10 @@ public class References {
     this(AdaptiveCardObjectModelJNI.new_References__SWIG_1(type.swigValue(), _abstract, title, url, StringVector.getCPtr(keywords), keywords), true);
   }
 
+  public References(ReferenceType type, String _abstract, String title, String url, StringVector keywords, AdaptiveCard content) {
+    this(AdaptiveCardObjectModelJNI.new_References__SWIG_2(type.swigValue(), _abstract, title, url, StringVector.getCPtr(keywords), keywords, AdaptiveCard.getCPtr(content), content), true);
+  }
+
   public boolean ShouldSerialize() {
     return AdaptiveCardObjectModelJNI.References_ShouldSerialize(swigCPtr, this);
   }
@@ -78,6 +82,10 @@ public class References {
 
   public StringVector GetKeywords() {
     return new StringVector(AdaptiveCardObjectModelJNI.References_GetKeywords(swigCPtr, this), true);
+  }
+
+  public SWIGTYPE_p_std__optionalT_std__shared_ptrT_AdaptiveCards__AdaptiveCard_t_t GetContent() {
+    return new SWIGTYPE_p_std__optionalT_std__shared_ptrT_AdaptiveCards__AdaptiveCard_t_t(AdaptiveCardObjectModelJNI.References_GetContent(swigCPtr, this), true);
   }
 
   public static References Deserialize(ParseContext context, JsonValue json) {

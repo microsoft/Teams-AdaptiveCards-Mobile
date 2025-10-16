@@ -1447,6 +1447,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_ParseResult(long jarg1);
   public final static native long new_References__SWIG_0();
   public final static native long new_References__SWIG_1(int jarg1, String jarg2, String jarg3, String jarg4, long jarg5, StringVector jarg5_);
+  public final static native long new_References__SWIG_2(int jarg1, String jarg2, String jarg3, String jarg4, long jarg5, StringVector jarg5_, long jarg6, AdaptiveCard jarg6_);
   public final static native boolean References_ShouldSerialize(long jarg1, References jarg1_);
   public final static native String References_Serialize(long jarg1, References jarg1_);
   public final static native long References_SerializeToJsonValue(long jarg1, References jarg1_);
@@ -1455,6 +1456,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native String References_GetTitle(long jarg1, References jarg1_);
   public final static native String References_GetUrl(long jarg1, References jarg1_);
   public final static native long References_GetKeywords(long jarg1, References jarg1_);
+  public final static native long References_GetContent(long jarg1, References jarg1_);
   public final static native long References_Deserialize(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native long References_DeserializeFromString(long jarg1, ParseContext jarg1_, String jarg2);
   public final static native void delete_References(long jarg1);
@@ -1494,6 +1496,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long AdaptiveCard_GetBody__SWIG_0(long jarg1, AdaptiveCard jarg1_);
   public final static native long AdaptiveCard_GetActions__SWIG_0(long jarg1, AdaptiveCard jarg1_);
   public final static native long AdaptiveCard_GetReferences(long jarg1, AdaptiveCard jarg1_);
+  public final static native long AdaptiveCard_GetReference(long jarg1, AdaptiveCard jarg1_, int jarg2);
   public final static native long AdaptiveCard_GetResources(long jarg1, AdaptiveCard jarg1_);
   public final static native long AdaptiveCard_GetLayouts__SWIG_0(long jarg1, AdaptiveCard jarg1_);
   public final static native void AdaptiveCard_SetLayouts(long jarg1, AdaptiveCard jarg1_, long jarg2, LayoutVector jarg2_);
@@ -2219,6 +2222,15 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_RichTextBlockParser(long jarg1);
   public final static native long RichTextBlockParser_Deserialize(long jarg1, RichTextBlockParser jarg1_, long jarg2, ParseContext jarg2_, long jarg3, JsonValue jarg3_);
   public final static native long RichTextBlockParser_DeserializeFromString(long jarg1, RichTextBlockParser jarg1_, long jarg2, ParseContext jarg2_, String jarg3);
+  public final static native long new_CitationRun__SWIG_0();
+  public final static native long new_CitationRun__SWIG_1(long jarg1, CitationRun jarg1_);
+  public final static native void delete_CitationRun(long jarg1);
+  public final static native long CitationRun_SerializeToJsonValue(long jarg1, CitationRun jarg1_);
+  public final static native int CitationRun_GetReferenceIndex(long jarg1, CitationRun jarg1_);
+  public final static native String CitationRun_GetText(long jarg1, CitationRun jarg1_);
+  public final static native long CitationRun_GetTextForDateParsing(long jarg1, CitationRun jarg1_);
+  public final static native long CitationRun_Deserialize(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
+  public final static native long CitationRun_dynamic_cast(long jarg1, Inline jarg1_);
   public final static native long new_TextRun__SWIG_0();
   public final static native long new_TextRun__SWIG_1(long jarg1, TextRun jarg1_);
   public final static native void delete_TextRun(long jarg1);
@@ -2481,6 +2493,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long UnknownActionParser_SWIGSmartPtrUpcast(long jarg1);
   public final static native long RichTextBlock_SWIGSmartPtrUpcast(long jarg1);
   public final static native long RichTextBlockParser_SWIGSmartPtrUpcast(long jarg1);
+  public final static native long CitationRun_SWIGSmartPtrUpcast(long jarg1);
   public final static native long TextRun_SWIGSmartPtrUpcast(long jarg1);
   public final static native long RichTextElementProperties_SWIGSmartPtrUpcast(long jarg1);
   public final static native long CompoundButton_SWIGSmartPtrUpcast(long jarg1);

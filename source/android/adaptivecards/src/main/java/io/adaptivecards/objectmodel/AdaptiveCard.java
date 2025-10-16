@@ -192,6 +192,10 @@ public class AdaptiveCard {
     return new ReferencesVector(AdaptiveCardObjectModelJNI.AdaptiveCard_GetReferences(swigCPtr, this), false);
   }
 
+  public SWIGTYPE_p_std__optionalT_std__shared_ptrT_AdaptiveCards__References_t_t GetReference(int index) {
+    return new SWIGTYPE_p_std__optionalT_std__shared_ptrT_AdaptiveCards__References_t_t(AdaptiveCardObjectModelJNI.AdaptiveCard_GetReference(swigCPtr, this, index), true);
+  }
+
   public Resources GetResources() {
     long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_GetResources(swigCPtr, this);
     return (cPtr == 0) ? null : new Resources(cPtr, true);
