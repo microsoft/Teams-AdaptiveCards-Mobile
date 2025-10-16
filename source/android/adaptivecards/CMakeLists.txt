@@ -97,6 +97,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/TextBlock.cpp
              ../../shared/cpp/ObjectModel/TextElementProperties.cpp
              ../../shared/cpp/ObjectModel/TextInput.cpp
+             ../../shared/cpp/ObjectModel/CitationRun.cpp
              ../../shared/cpp/ObjectModel/TextRun.cpp
              ../../shared/cpp/ObjectModel/TimeInput.cpp
              ../../shared/cpp/ObjectModel/ToggleInput.cpp
