@@ -27,6 +27,10 @@ const std::vector<std::string> References::GetKeywords() const {
     return m_keywords;
 }
 
+std::optional<std::shared_ptr<AdaptiveCards::AdaptiveCard>> References::GetContent() const {
+    return m_content;
+}
+
 // Indicates non-default values have been set. If false, serialization can be safely skipped.
 bool References::ShouldSerialize() const {
     return true;
@@ -49,6 +53,10 @@ Json::Value References::SerializeToJsonValue() const {
         for (const auto& keyword : m_keywords) {
             root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Keywords)].append(keyword);
         }
+    }
+
+    if (m_content.has_value()) {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content)] = m_content->get()->SerializeToJsonValue();
     }
 
     return root;

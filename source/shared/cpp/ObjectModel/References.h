@@ -20,6 +20,15 @@ namespace AdaptiveCards {
                 std::string abstract,
                 std::string title,
                 std::string url,
+                std::vector<std::string> keywords) :
+                m_type(type), m_abstract(abstract), m_title(title), m_url(url), m_keywords(std::move(keywords)) {
+        }
+
+        References(
+                ReferenceType type,
+                std::string abstract,
+                std::string title,
+                std::string url,
                 std::vector<std::string> keywords,
                 std::shared_ptr<AdaptiveCard> content) :
                 m_type(type), m_abstract(abstract), m_title(title), m_url(url), m_keywords(std::move(keywords)), m_content(content) {
