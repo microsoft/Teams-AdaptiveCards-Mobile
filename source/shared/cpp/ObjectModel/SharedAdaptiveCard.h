@@ -17,6 +17,7 @@ namespace AdaptiveCards
 {
 class Container;
 class BackgroundImage;
+class References;
 
 class AdaptiveCard
 {
@@ -137,6 +138,7 @@ public:
     std::vector<std::shared_ptr<BaseActionElement>>& GetActions();
     const std::vector<std::shared_ptr<BaseActionElement>>& GetActions() const;
     const std::vector<std::shared_ptr<References>>& GetReferences() const;
+    const std::optional<std::shared_ptr<References>> GetReference(int index) const;
     std::shared_ptr<AdaptiveCards::Resources> GetResources() const;
 
     std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts();

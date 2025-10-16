@@ -726,6 +726,13 @@ const std::vector<std::shared_ptr<References>>& AdaptiveCard::GetReferences() co
     return m_references;
 }
 
+const std::optional<std::shared_ptr<References>> AdaptiveCard::GetReference(int index) const {
+    if (index < 0 || index >= static_cast<int>(m_references.size())) {
+        return std::nullopt;
+    }
+    return m_references[index];
+}
+
 std::shared_ptr<Resources> AdaptiveCard::GetResources() const {
     return m_resources;
 }
