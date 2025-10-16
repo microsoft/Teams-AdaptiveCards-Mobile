@@ -285,7 +285,8 @@ public enum AdaptiveCardSchemaKey {
   HorizontalContentAlignment,
   Abstract,
   Keywords,
-  References;
+  References,
+  ReferenceIndex;
 
   public final int swigValue() {
     return swigValue;
