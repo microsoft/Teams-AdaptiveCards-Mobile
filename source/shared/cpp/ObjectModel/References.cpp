@@ -61,11 +61,23 @@ std::shared_ptr<References> References::DeserializeFromString(ParseContext& cont
 std::shared_ptr<References> References::Deserialize(ParseContext& context, const Json::Value& json) {
     std::shared_ptr<References> references = std::make_shared<References>();
 
-    references->m_type = ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::Type, ReferenceType::Document,ReferenceTypeFromString, false);
+    references->m_type = ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::Type, ReferenceType::Document,ReferenceTypeFromString,true);
     references->m_title = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title, true);
-    references->m_url = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Url, true);
     references->m_abstract = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Abstract, true);
-    references->m_keywords = ParseUtil::GetStringArray(json, AdaptiveCardSchemaKey::Keywords, true);
+    references->m_url = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Url, false);
+    auto keywords = ParseUtil::GetStringArray(json, AdaptiveCardSchemaKey::Keywords, true);
+    // Truncate to at most 3 elements
+    if (keywords.size() > 3) {
+        keywords.resize(3);
+    }
+    references->m_keywords = std::move(keywords);
+
+    if (references->m_type == ReferenceType::AdaptiveCard && json.isMember(AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content))) {
+        auto parseResult = AdaptiveCard::Deserialize(json.get(AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content), Json::Value()), "", context);
+        auto showCardWarnings = parseResult->GetWarnings();
+        context.warnings.insert(context.warnings.end(), showCardWarnings.begin(), showCardWarnings.end());
+        references->m_content = parseResult->GetAdaptiveCard();
+    }
 
     return references;
 }
