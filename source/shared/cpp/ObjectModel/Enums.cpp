@@ -286,7 +286,8 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::LocalizedValues, "localizedValues"},
             {AdaptiveCardSchemaKey::Abstract, "abstract"},
             {AdaptiveCardSchemaKey::Keywords, "keywords"},
-            {AdaptiveCardSchemaKey::References, "references"}});
+            {AdaptiveCardSchemaKey::References, "references"},
+            {AdaptiveCardSchemaKey::ReferenceIndex, "referenceIndex"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -530,7 +531,10 @@ namespace AdaptiveCards
             {PageAnimation::None,"None"}});
 
     DEFINE_ADAPTIVECARD_ENUM(InlineElementType, {
-            {InlineElementType::TextRun, "TextRun"}});
+            {InlineElementType::TextRun, "TextRun"},
+            {InlineElementType::CitationRun, "CitationRun"},
+            {InlineElementType::IconRun, "IconRun"},
+            {InlineElementType::ImageRun, "ImageRun"}});
 
     DEFINE_ADAPTIVECARD_ENUM(Mode, {
             {Mode::Primary, "primary"},

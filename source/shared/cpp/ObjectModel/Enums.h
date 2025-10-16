@@ -288,7 +288,8 @@ enum class AdaptiveCardSchemaKey
     LocalizedValues,
     Abstract,
     Keywords,
-    References
+    References,
+    ReferenceIndex
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -334,7 +335,10 @@ DECLARE_ADAPTIVECARD_ENUM(CardElementType);
 
 enum class InlineElementType
 {
-    TextRun = 0
+    TextRun = 0,
+    CitationRun,
+    IconRun,
+    ImageRun
 };
 DECLARE_ADAPTIVECARD_ENUM(InlineElementType);
 
