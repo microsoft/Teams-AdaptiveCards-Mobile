@@ -29,6 +29,10 @@
 		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
 		241C67252E02DE5D0007EA18 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */; };
 		246485662E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */; };
+		248772662EA28B0C003EB15B /* CitationRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248772632EA28B0C003EB15B /* CitationRun.cpp */; };
+		248772672EA28B0C003EB15B /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248772652EA28B0C003EB15B /* References.cpp */; };
+		248772682EA28B0C003EB15B /* CitationRun.h in Headers */ = {isa = PBXBuildFile; fileRef = 248772622EA28B0C003EB15B /* CitationRun.h */; };
+		248772692EA28B0C003EB15B /* References.h in Headers */ = {isa = PBXBuildFile; fileRef = 248772642EA28B0C003EB15B /* References.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24EDF0BC2DCB7B2500558378 /* ACRProgressBarRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */; };
 		24EDF0BE2DCB7B6C00558378 /* ACRProgressBarRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */; };
 		24EDF0C02DCB7F8100558378 /* ACRProgressRingRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */; };
@@ -663,6 +667,10 @@
 		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
 		246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverTargetTests.mm; sourceTree = "<group>"; };
+		248772622EA28B0C003EB15B /* CitationRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CitationRun.h; sourceTree = "<group>"; };
+		248772632EA28B0C003EB15B /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CitationRun.cpp; sourceTree = "<group>"; };
+		248772642EA28B0C003EB15B /* References.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = References.h; sourceTree = "<group>"; };
+		248772652EA28B0C003EB15B /* References.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = References.cpp; sourceTree = "<group>"; };
 		24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRProgressBarRenderer.h; sourceTree = "<group>"; };
 		24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressBarRenderer.mm; sourceTree = "<group>"; };
 		24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressRingRenderer.mm; sourceTree = "<group>"; };
@@ -1803,6 +1811,10 @@
 		F423C0D71EE1FF2F00905679 /* SharedLib */ = {
 			isa = PBXGroup;
 			children = (
+				248772622EA28B0C003EB15B /* CitationRun.h */,
+				248772632EA28B0C003EB15B /* CitationRun.cpp */,
+				248772642EA28B0C003EB15B /* References.h */,
+				248772652EA28B0C003EB15B /* References.cpp */,
 				37CC40EB2DBA1BD9004D5C66 /* PopoverAction.h */,
 				37CC40EC2DBA1BD9004D5C66 /* PopoverAction.cpp */,
 				37A8DF4E2DB79C8800F3A23F /* ProgressBar.h */,
@@ -2258,6 +2270,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				248772692EA28B0C003EB15B /* References.h in Headers */,
 				CFF954DD2981B2A700F321C3 /* ACRTypeaheadSearchParameters.h in Headers */,
 				6B27CD6624BD52D600C0F90F /* ACRInputLabelView.h in Headers */,
 				6BBE841923CD184D00ECA586 /* ACREnums.h in Headers */,
@@ -2351,6 +2364,7 @@
 				F4D402111F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.h in Headers */,
 				F42741071EF8624F00399FBB /* ACRIBaseCardElementRenderer.h in Headers */,
 				F4D402131F7DAC2C00D0356B /* ACOHostConfigParseResult.h in Headers */,
+				248772682EA28B0C003EB15B /* CitationRun.h in Headers */,
 				F43110451F357487001AAE30 /* ACOHostConfig.h in Headers */,
 				F4F2556C1F98246000A80D39 /* ACOBaseActionElement.h in Headers */,
 				F427410A1EF864A900399FBB /* ACRBaseCardElementRenderer.h in Headers */,
@@ -2963,6 +2977,8 @@
 				463C4EDD2BDB66C600A95C4E /* ACRSVGImageView.mm in Sources */,
 				6BFCA14D265452E100195CA7 /* ACRTableRenderer.mm in Sources */,
 				F4D402121F7DAC2C00D0356B /* ACOAdaptiveCardParseResult.mm in Sources */,
+				248772662EA28B0C003EB15B /* CitationRun.cpp in Sources */,
+				248772672EA28B0C003EB15B /* References.cpp in Sources */,
 				6B22426E2203BE98000ACDA1 /* UnknownAction.cpp in Sources */,
 				6B224278220BAC8B000ACDA1 /* BaseElement.cpp in Sources */,
 				6BDE5C4126FEA7DC003A1DDB /* ACROverflowTarget.mm in Sources */,
