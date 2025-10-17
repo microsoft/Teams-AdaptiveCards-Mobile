@@ -5,6 +5,7 @@
 //  Copyright © 2017 Microsoft. All rights reserved.
 //
 
+#import "ACOAdaptiveCardPrivate.h"
 #import "ACOParseContext.h"
 #import "ACRImageRenderer.h"
 #import "ACOBaseCardElementPrivate.h"
@@ -47,7 +48,8 @@
     // makes parts for building a key to UIImage, there are different interfaces for loading the images
     // we list all the parts that are needed in building the key.
     NSString *number = [[NSNumber numberWithUnsignedLongLong:(unsigned long long)(elem.get())] stringValue];
-    NSString *urlString = [NSString stringWithCString:imgElem->GetUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
+    std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
+        NSString *urlString = [NSString stringWithCString:imgElem->GetUrl(ACTheme(rootView.theme), card->GetResources(), "").c_str() encoding:[NSString defaultCStringEncoding]];
     NSDictionary *pieces = @{
         @"number" : number,
         @"url" : urlString

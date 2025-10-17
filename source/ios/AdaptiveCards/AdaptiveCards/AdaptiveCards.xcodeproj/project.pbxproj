@@ -27,6 +27,14 @@
 		0D45F5A7261731E400EF03C5 /* ACRActionOverflowRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D45F5A6261731E400EF03C5 /* ACRActionOverflowRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */; };
 		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
+		2419253D2EA13EBF00F075B9 /* StringResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 2419253B2EA13EBF00F075B9 /* StringResource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2419253E2EA13EBF00F075B9 /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 241925392EA13EBF00F075B9 /* Resources.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2419253F2EA13EBF00F075B9 /* CitationRun.h in Headers */ = {isa = PBXBuildFile; fileRef = 241925352EA13EBF00F075B9 /* CitationRun.h */; };
+		241925402EA13EBF00F075B9 /* References.h in Headers */ = {isa = PBXBuildFile; fileRef = 241925372EA13EBF00F075B9 /* References.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		241925412EA13EBF00F075B9 /* StringResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2419253C2EA13EBF00F075B9 /* StringResource.cpp */; };
+		241925422EA13EBF00F075B9 /* CitationRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 241925362EA13EBF00F075B9 /* CitationRun.cpp */; };
+		241925432EA13EBF00F075B9 /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 241925382EA13EBF00F075B9 /* References.cpp */; };
+		241925442EA13EBF00F075B9 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2419253A2EA13EBF00F075B9 /* Resources.cpp */; };
 		24EDF0BC2DCB7B2500558378 /* ACRProgressBarRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */; };
 		24EDF0BE2DCB7B6C00558378 /* ACRProgressBarRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */; };
 		24EDF0C02DCB7F8100558378 /* ACRProgressRingRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */; };
@@ -563,6 +571,14 @@
 		0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRLayoutHelper.mm; sourceTree = "<group>"; };
 		0E46B8FBE57A09301765F779 /* Pods-Fluent-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCardsTests/Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
+		241925352EA13EBF00F075B9 /* CitationRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CitationRun.h; sourceTree = "<group>"; };
+		241925362EA13EBF00F075B9 /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CitationRun.cpp; sourceTree = "<group>"; };
+		241925372EA13EBF00F075B9 /* References.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = References.h; sourceTree = "<group>"; };
+		241925382EA13EBF00F075B9 /* References.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = References.cpp; sourceTree = "<group>"; };
+		241925392EA13EBF00F075B9 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
+		2419253A2EA13EBF00F075B9 /* Resources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Resources.cpp; sourceTree = "<group>"; };
+		2419253B2EA13EBF00F075B9 /* StringResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringResource.h; sourceTree = "<group>"; };
+		2419253C2EA13EBF00F075B9 /* StringResource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StringResource.cpp; sourceTree = "<group>"; };
 		24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRProgressBarRenderer.h; sourceTree = "<group>"; };
 		24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressBarRenderer.mm; sourceTree = "<group>"; };
 		24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressRingRenderer.mm; sourceTree = "<group>"; };
@@ -1143,6 +1159,14 @@
 			path = ../Pods;
 			sourceTree = "<group>";
 		};
+		241925342EA13BDE00F075B9 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				E28177D82DD1BAA300DA3EA0 /* FluentAssets.xcassets */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		6B124C9226B8AE3B007E9641 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1411,14 +1435,6 @@
 			path = DynamicTypeahead;
 			sourceTree = "<group>";
 		};
-		E28177D92DD1BAA300DA3EA0 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				E28177D82DD1BAA300DA3EA0 /* FluentAssets.xcassets */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		F4071C751FCCBAEF00AF4FEA /* json */ = {
 			isa = PBXGroup;
 			children = (
@@ -1437,6 +1453,7 @@
 				F45A07191EF4BC44007C6503 /* Frameworks */,
 				F423C0B61EE1FBA900905679 /* Products */,
 				1779FD9986EE958A93BD0A28 /* Pods */,
+				241925342EA13BDE00F075B9 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1488,6 +1505,14 @@
 		F423C0D71EE1FF2F00905679 /* SharedLib */ = {
 			isa = PBXGroup;
 			children = (
+				241925352EA13EBF00F075B9 /* CitationRun.h */,
+				241925362EA13EBF00F075B9 /* CitationRun.cpp */,
+				241925372EA13EBF00F075B9 /* References.h */,
+				241925382EA13EBF00F075B9 /* References.cpp */,
+				241925392EA13EBF00F075B9 /* Resources.h */,
+				2419253A2EA13EBF00F075B9 /* Resources.cpp */,
+				2419253B2EA13EBF00F075B9 /* StringResource.h */,
+				2419253C2EA13EBF00F075B9 /* StringResource.cpp */,
 				37CC40EB2DBA1BD9004D5C66 /* PopoverAction.h */,
 				37CC40EC2DBA1BD9004D5C66 /* PopoverAction.cpp */,
 				37A8DF4E2DB79C8800F3A23F /* ProgressBar.h */,
@@ -1883,11 +1908,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				241925402EA13EBF00F075B9 /* References.h in Headers */,
 				CFF954DD2981B2A700F321C3 /* ACRTypeaheadSearchParameters.h in Headers */,
 				6B27CD6624BD52D600C0F90F /* ACRInputLabelView.h in Headers */,
 				6BBE841923CD184D00ECA586 /* ACREnums.h in Headers */,
 				6BBE841F23CE60E300ECA586 /* ACRMediaRenderer.h in Headers */,
 				6B74403925BA71B60051F2A1 /* ACRImageProperties.h in Headers */,
+				2419253E2EA13EBF00F075B9 /* Resources.h in Headers */,
+				2419253D2EA13EBF00F075B9 /* StringResource.h in Headers */,
 				6BBE841B23CD184D00ECA586 /* ACOWarning.h in Headers */,
 				37A8DF542DB79C8800F3A23F /* ProgressRing.h in Headers */,
 				37A8DF552DB79C8800F3A23F /* ProgressBar.h in Headers */,
@@ -2008,6 +2036,7 @@
 				463C4EDB2BDB666A00A95C4E /* ACRSVGImageView.h in Headers */,
 				6B096D4E225431D0006CC034 /* ACRRichTextBlockRenderer.h in Headers */,
 				300ECB64219A12D100371DC5 /* AdaptiveBase64Util.h in Headers */,
+				2419253F2EA13EBF00F075B9 /* CitationRun.h in Headers */,
 				6B616C4321CB20D2003E29CE /* ACRActionToggleVisibilityRenderer.h in Headers */,
 				F4CA74A12016B3B9002041DF /* ACRTapGestureRecognizerEventHandler.h in Headers */,
 				46F6F7812BFF1C8200D31C47 /* ValueChangedAction.h in Headers */,
@@ -2403,6 +2432,10 @@
 				6B616C4021CB1878003E29CE /* ACRToggleVisibilityTarget.mm in Sources */,
 				CA1218C821C4509400152EA8 /* ToggleVisibilityTarget.cpp in Sources */,
 				F429793B1F31458800E89914 /* ACRActionSubmitRenderer.mm in Sources */,
+				241925412EA13EBF00F075B9 /* StringResource.cpp in Sources */,
+				241925422EA13EBF00F075B9 /* CitationRun.cpp in Sources */,
+				241925432EA13EBF00F075B9 /* References.cpp in Sources */,
+				241925442EA13EBF00F075B9 /* Resources.cpp in Sources */,
 				6B74403A25BA71B70051F2A1 /* ACRImageProperties.mm in Sources */,
 				6BFF99C925FFF53E0028069F /* Refresh.cpp in Sources */,
 				F4D33EA51F06F41B00941E44 /* ACRSeparator.mm in Sources */,
