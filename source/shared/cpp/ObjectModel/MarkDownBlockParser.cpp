@@ -373,12 +373,17 @@ void EmphasisParser::CaptureEmphasisToken(const int ch, std::string& currentToke
 
 void LinkParser::Match(std::stringstream& stream)
 {
+    std::string citationPrefix = "cite:";
     // link syntax check, match keyword at each stage
     bool capturedLink = (MatchAtLinkInit(stream) && MatchAtLinkTextRun(stream) && MatchAtLinkTextEnd(stream));
     if (capturedLink && MatchAtLinkDestinationStart(stream) && MatchAtLinkDestinationRun(stream))
     {
-        /// Link is in correct syntax, capture it as link
-        CaptureLinkToken();
+        // check for cite prefix here and skip next step if present
+        if (!(m_parsedResult.GenerateHtmlString().compare(0, citationPrefix.size(), citationPrefix) == 0))
+        {
+            /// Link is in correct syntax, capture it as link
+            CaptureLinkToken();
+        }
     }
 }
 
