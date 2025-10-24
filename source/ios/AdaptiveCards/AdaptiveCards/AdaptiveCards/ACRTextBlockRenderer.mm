@@ -245,9 +245,8 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     button.backgroundColor = [UIColor clearColor];
     button.layer.borderWidth = 1.0;
     button.layer.cornerRadius = 4.0;
-    button.layer.borderColor = [UIColor darkGrayColor].CGColor;
     button.layer.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1].CGColor;
-    button.layer.backgroundColor = [UIColor colorWithRed:0.878 green:0.878 blue:0.878 alpha:1].CGColor;
+    button.layer.borderColor = [UIColor colorWithRed:0.878 green:0.878 blue:0.878 alpha:1].CGColor;
     // Set button title font to regular size 14
     button.titleLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
     
@@ -262,10 +261,12 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 
 - (ACRViewTextAttachment *)createCitationButtonAttachmentWithText:(NSString *)text {
     CGSize size = CGSizeMake(17, 17);
+    
     // Create a UIButton with citation styling
     UIButton *citationButton = [self createButtonWithTitle:text size: size];
+    CGFloat newWidth = MAX(citationButton.titleLabel.intrinsicContentSize.width + 8.0, size.width);
     // Create the ACRViewTextAttachment with the button
-    ACRViewTextAttachment *attachment = [[ACRViewTextAttachment alloc] initWithView:citationButton size:size];
+    ACRViewTextAttachment *attachment = [[ACRViewTextAttachment alloc] initWithView:citationButton size:CGSizeMake(newWidth, size.height)];
     
     return attachment;
 }

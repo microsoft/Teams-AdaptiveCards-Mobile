@@ -17,6 +17,11 @@
 			"wrap": true
 		},
 		{
+			"text": "Third Text block citation [A3 Long Link](cite:3)",
+			"type": "TextBlock",
+			"wrap": true
+		},
+		{
 			"type": "RichTextBlock",
 			"inlines": [
 				{
@@ -60,6 +65,18 @@
 				"Citations",
 				"Adaptive cards",
 				"updated 1 day ago"
+			]
+		},
+		{
+			"type": "DocumentReference",
+			"title": "You clicked on long citation",
+			"icon": "image",
+			"url": "https://adaptivecards.io",
+			"abstract": "fsdfsdfsf ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"keywords": [
+				"keyword f1",
+				"keyword f2",
+				"keyword f3"
 			]
 		}
 	]
