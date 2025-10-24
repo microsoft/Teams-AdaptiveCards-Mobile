@@ -21,6 +21,8 @@
 #import "UtiliOS.h"
 #import "ARCGridViewLayout.h"
 #import "TSExpressionObjCBridge.h"
+#import "ACRViewTextAttachment.h"
+#import "ACRViewAttachingTextView.h"
 
 @implementation ACRTextBlockRenderer
 
@@ -51,7 +53,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         return nil;
     }
     
-    ACRUILabel *lab = [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    ACRViewAttachingTextView *lab = [[ACRViewAttachingTextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     lab.backgroundColor = [UIColor clearColor];
     
     lab.style = [viewGroup style];
@@ -96,8 +98,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         lab.selectable = YES;
         lab.userInteractionEnabled = YES;
         
-        content = [self processCitationsInString:content.string];
-        [self setupTapOnLabel:lab];
+        content = [self processCitationsInStringWithButtons:content.string];
         
         lab.textContainer.lineFragmentPadding = 0;
         lab.textContainerInset = UIEdgeInsetsZero;
@@ -182,7 +183,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 
 
 #pragma mark - Expression Evaluation Helper
-- (void)handleExpressionEvaluationForTextBlock:(ACRUILabel *)label
+- (void)handleExpressionEvaluationForTextBlock:(ACRViewAttachingTextView *)label
                                       rootView:(ACRView *)rootView
                                baseCardElement:(ACOBaseCardElement *)acoElem
 {
@@ -203,7 +204,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 }
 
 - (void)evaluateDynamicProperties:(NSString * _Nullable)textDynamic
-                            label:(ACRUILabel *)label
+                            label:(ACRViewAttachingTextView *)label
 {
     if (textDynamic && [textDynamic length] > 0)
     {
@@ -234,35 +235,42 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 
 #pragma mark - Citations Helper methods
 
-- (NSTextAttachment *)createRoundedBoxAttachmentWithText:(NSString *)text backgroundColor:(UIColor *)bgColor
-{
-    UILabel *badge = [[UILabel alloc] init];
-    badge.text = text;
-    badge.font = [UIFont systemFontOfSize:12 weight:UIFontWeightSemibold];
-    badge.textColor = UIColor.whiteColor;
-    badge.backgroundColor = bgColor;
-    badge.textAlignment = NSTextAlignmentCenter;
-    badge.layer.cornerRadius = 5.0;
-    badge.layer.masksToBounds = YES;
+- (UIButton *)createButtonWithTitle:(NSString *)title size:(CGSize)size {
 
-    CGSize textSize = [badge.text sizeWithAttributes:@{NSFontAttributeName: badge.font}];
-    CGFloat paddingX = 6.0;
-    CGFloat paddingY = 2.0;
-    badge.frame = CGRectMake(0, 0, textSize.width + paddingX * 2, textSize.height + paddingY * 2);
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    
+    button.backgroundColor = [UIColor clearColor];
+    button.layer.borderWidth = 1.0;
+    button.layer.cornerRadius = 4.0;
+    button.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    button.layer.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1].CGColor;
+    button.layer.backgroundColor = [UIColor colorWithRed:0.878 green:0.878 blue:0.878 alpha:1].CGColor;
+    // Set button title font to regular size 14
+    button.titleLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+    
+    // Ensure button can receive touches
+    button.userInteractionEnabled = YES;
+    
+    // Add target for button tap
+    [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return button;
+}
 
-    UIGraphicsBeginImageContextWithOptions(badge.bounds.size, NO, 0.0);
-    [badge.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *badgeImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-    attachment.image = badgeImage;
-    attachment.bounds = CGRectMake(0, -2, badge.bounds.size.width, badge.bounds.size.height);
+- (ACRViewTextAttachment *)createCitationButtonAttachmentWithText:(NSString *)text {
+    CGSize size = CGSizeMake(17, 17);
+    // Create a UIButton with citation styling
+    UIButton *citationButton = [self createButtonWithTitle:text size: size];
+    // Create the ACRViewTextAttachment with the button
+    ACRViewTextAttachment *attachment = [[ACRViewTextAttachment alloc] initWithView:citationButton size:size];
     
     return attachment;
 }
 
-- (NSMutableAttributedString *)processCitationsInString:(NSString *)input {
+- (NSMutableAttributedString *)processCitationsInStringWithButtons:(NSString *)input {
     NSMutableAttributedString *attributed =
         [[NSMutableAttributedString alloc] initWithString:input];
 
@@ -275,79 +283,69 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     NSArray<NSTextCheckingResult *> *matches =
         [regex matchesInString:input options:0 range:NSMakeRange(0, input.length)];
 
+    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@" "];
+
     for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
         if (match.numberOfRanges == 3) {
             NSString *displayText = [input substringWithRange:[match rangeAtIndex:1]];
-            NSString *citeValue   = [input substringWithRange:[match rangeAtIndex:2]];
+//            NSString *citeValue   = [input substringWithRange:[match rangeAtIndex:2]];
 
-            NSTextAttachment *attachment = [self createRoundedBoxAttachmentWithText:displayText backgroundColor:[UIColor colorWithRed:0.2 green:0.4 blue:0.9 alpha:1.0]];
-            NSAttributedString *attachmentString =
-                [NSAttributedString attributedStringWithAttachment:attachment];
+            // Use the new button-based attachment instead of the image-based one
+            ACRViewTextAttachment *attachment = [self createCitationButtonAttachmentWithText:displayText];
+            NSMutableAttributedString *attachmentString = [NSMutableAttributedString attributedStringWithAttachment:attachment];
+            [attachmentString appendAttributedString:spacer];
 
+            // Replace the [10](cite:1) text with button (don't append, just replace)
             NSRange fullMatchRange = match.range;
-
-            // Replace the [10](cite:1) text with badge
-            [attributed replaceCharactersInRange:fullMatchRange
-                             withAttributedString:attachmentString];
-
-            // Add custom attributes to store citeValue and displayText
-            NSRange replacedRange = NSMakeRange(fullMatchRange.location, 1);
-            [attributed addAttribute:@"CiteValueAttribute"
-                               value:citeValue
-                               range:replacedRange];
-
-            [attributed addAttribute:@"CiteDisplayTextAttribute"
-                               value:displayText
-                               range:replacedRange];
+            [attributed replaceCharactersInRange:fullMatchRange withAttributedString:attachmentString];
         }
     }
     return attributed;
 }
 
-- (void)highlightCitationInLabel:(ACRUILabel *)label atRange:(NSRange)range highlighted:(BOOL)highlighted {
-    NSMutableAttributedString *attributed = [label.attributedText mutableCopy];
-    NSTextAttachment *attachment = [attributed attribute:NSAttachmentAttributeName atIndex:range.location effectiveRange:nil];
-
-    if ([attachment isKindOfClass:[NSTextAttachment class]]) {
-        // Retrieve the original display text
-        NSString *text = [attributed attribute:@"CiteDisplayTextAttribute" atIndex:range.location effectiveRange:nil];
-        if (!text) return;
-
-        UIColor *color = highlighted ? [UIColor redColor] : [UIColor colorWithRed:0.2 green:0.4 blue:0.9 alpha:1.0];
-        NSTextAttachment *newAttachment = [self createRoundedBoxAttachmentWithText:text backgroundColor:color];
-
-        NSAttributedString *newAttr = [NSAttributedString attributedStringWithAttachment:newAttachment];
-        [attributed replaceCharactersInRange:range withAttributedString:newAttr];
-
-        // Preserve attributes
-        NSString *citeValue = [attributed attribute:@"CiteValueAttribute" atIndex:range.location effectiveRange:nil];
-        [attributed addAttribute:@"CiteValueAttribute" value:citeValue range:NSMakeRange(range.location, 1)];
-        [attributed addAttribute:@"CiteDisplayTextAttribute" value:text range:NSMakeRange(range.location, 1)];
-
-        label.attributedText = attributed;
+- (void)buttonTapped:(id)sender {
+    UIButton *button = nil;
+    NSString *buttonText = @"Unknown";
+    
+    if ([sender isKindOfClass:[UIButton class]]) {
+        button = (UIButton *)sender;
+        buttonText = button.titleLabel.text ?: @"No Title";
+    } else if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
+        UITapGestureRecognizer *gesture = (UITapGestureRecognizer *)sender;
+        if ([gesture.view isKindOfClass:[UIButton class]]) {
+            button = (UIButton *)gesture.view;
+            buttonText = button.titleLabel.text ?: @"No Title";
+        }
+    }
+    
+    // Handle button tap - you can access the button's properties here
+    NSLog(@"Citation button tapped: %@", buttonText);
+    
+    // Show alert with citation information
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Citation Tapped"
+                                                                   message:[NSString stringWithFormat:@"Citation button '%@' was tapped!", buttonText]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" 
+                                                       style:UIAlertActionStyleDefault 
+                                                     handler:nil];
+    [alert addAction:okAction];
+    
+    // Get the top-most view controller to present the alert
+    UIViewController *topViewController = [self topMostViewController];
+    if (topViewController) {
+        [topViewController presentViewController:alert animated:YES completion:nil];
     }
 }
 
-- (void)setupTapOnLabel:(ACRUILabel *)label
-{
-    label.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapOnLabel:)];
-    [label addGestureRecognizer:tap];
-}
-
-- (void)handleTapOnLabel:(UITapGestureRecognizer *)gesture
-{
-    UILabel *label = (UILabel *)gesture.view;
-    CGPoint tapLocation = [gesture locationInView:label];
+- (UIViewController *)topMostViewController {
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
-    // Setup text layout system
-    NSTextStorage *textStorage =
-    [[NSTextStorage alloc] initWithAttributedString:label.attributedText]; NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init]; NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:label.bounds.size]; textContainer.lineFragmentPadding = 0; textContainer.maximumNumberOfLines = label.numberOfLines; textContainer.lineBreakMode = label.lineBreakMode; [layoutManager addTextContainer:textContainer]; [textStorage addLayoutManager:layoutManager]; NSUInteger glyphIndex = [layoutManager glyphIndexForPoint:tapLocation inTextContainer:textContainer fractionOfDistanceThroughGlyph:nil];
-    // Check if this glyph has our custom attribute
-    NSRange effectiveRange = NSMakeRange(0, 0); NSString *citeValue = [textStorage attribute:@"CiteValueAttribute" atIndex:glyphIndex effectiveRange:&effectiveRange]; if (citeValue) {
-        // Highlight badge
-        [self highlightCitationInLabel:(ACRUILabel *)label atRange:effectiveRange highlighted:YES]; dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [self highlightCitationInLabel:(ACRUILabel *)label atRange:effectiveRange highlighted:NO]; });
-        // Show alert
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert" message:[NSString stringWithFormat:@"Citation tapped: %@", citeValue] preferredStyle:UIAlertControllerStyleAlert]; [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]]; UIViewController *root = UIApplication.sharedApplication.keyWindow.rootViewController; [root presentViewController:alert animated:YES completion:nil]; } }
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
+}
 
 @end
