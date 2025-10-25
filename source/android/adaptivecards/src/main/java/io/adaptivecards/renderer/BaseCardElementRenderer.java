@@ -7,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import androidx.annotation.Nullable;
-
 import com.google.android.flexbox.FlexboxLayout;
-
 import java.util.Set;
+import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.Spacing;
 import io.adaptivecards.objectmodel.SpacingConfig;
@@ -70,6 +68,7 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
     public static @Nullable View setSpacingAndSeparator(Context context,
                                                         ViewGroup viewGroup,
                                                         Spacing spacing,
+                                                        ContainerStyle style,
                                                         boolean separator,
                                                         HostConfig hostConfig,
                                                         boolean isHorizontalSpacing,
@@ -82,7 +81,7 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
         }
         int spacingSize = Util.dpToPixels(context, getSpacingSize(spacing, hostConfig.GetSpacing()));
         int separatorThickness = Util.dpToPixels(context, hostConfig.GetSeparator().getLineThickness());
-        int separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColor());
+        int separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparatorColor(style, hostConfig.GetSeparator()));
 
         View view = new ImageView(context);
 
@@ -142,14 +141,15 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
     }
 
     public static View setSpacingAndSeparator(
-            Context context,
-            ViewGroup viewGroup,
-            Spacing spacing,
-            boolean separator,
-            HostConfig hostConfig,
-            boolean horizontalLine)
+        Context context,
+        ViewGroup viewGroup,
+        Spacing spacing,
+        ContainerStyle style,
+        boolean separator,
+        HostConfig hostConfig,
+        boolean horizontalLine)
     {
-        return setSpacingAndSeparator(context, viewGroup, spacing, separator, hostConfig, horizontalLine, false /* isImageSet */);
+        return setSpacingAndSeparator(context, viewGroup, spacing, style, separator, hostConfig, horizontalLine, false /* isImageSet */);
     }
 
     /**

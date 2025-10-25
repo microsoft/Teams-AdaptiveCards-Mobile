@@ -134,7 +134,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
         boolean isFlowOrAreaLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow
             || layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid;
         if (!isFlowOrAreaLayout) {
-            separator = setSpacingAndSeparator(context, viewGroup, column.GetSpacing(), column.GetSeparator(), hostConfig, false);
+            separator = setSpacingAndSeparator(context, viewGroup, column.GetSpacing(), renderArgs.getContainerStyle(), column.GetSeparator(), hostConfig, false);
         }
 
         setVisibility(baseCardElement.GetIsVisible(), columnLayout);
