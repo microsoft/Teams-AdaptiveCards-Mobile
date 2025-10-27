@@ -71,6 +71,10 @@ public class RichTextBlock extends BaseCardElement {
     return new InlineVector(AdaptiveCardObjectModelJNI.RichTextBlock_GetInlines__SWIG_0(swigCPtr, this), false);
   }
 
+  public String GetLabelFor() {
+    return AdaptiveCardObjectModelJNI.RichTextBlock_GetLabelFor(swigCPtr, this);
+  }
+
   public static RichTextBlock dynamic_cast(BaseCardElement baseCardElement) {
     long cPtr = AdaptiveCardObjectModelJNI.RichTextBlock_dynamic_cast(BaseCardElement.getCPtr(baseCardElement), baseCardElement);
     return (cPtr == 0) ? null : new RichTextBlock(cPtr, true);
