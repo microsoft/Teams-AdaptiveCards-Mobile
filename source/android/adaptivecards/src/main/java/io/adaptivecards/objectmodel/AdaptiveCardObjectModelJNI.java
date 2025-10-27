@@ -1142,6 +1142,9 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void TextInput_SetInlineAction(long jarg1, TextInput jarg1_, long jarg2, BaseActionElement jarg2_);
   public final static native String TextInput_GetRegex(long jarg1, TextInput jarg1_);
   public final static native void TextInput_SetRegex(long jarg1, TextInput jarg1_, String jarg2);
+  public final static native void TextInput_addLabel(String jarg1, String jarg2);
+  public final static native String TextInput_getLabel(String jarg1);
+  public final static native boolean TextInput_getIsRequired(String jarg1);
   public final static native long TextInput_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_TextInputParser__SWIG_0();
   public final static native long new_TextInputParser__SWIG_1(long jarg1, TextInputParser jarg1_);
@@ -1706,6 +1709,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_ShowCardActionConfig(long jarg1);
   public final static native void PopoverConfig_backgroundColor_set(long jarg1, PopoverConfig jarg1_, String jarg2);
   public final static native String PopoverConfig_backgroundColor_get(long jarg1, PopoverConfig jarg1_);
+  public final static native void PopoverConfig_tintColor_set(long jarg1, PopoverConfig jarg1_, String jarg2);
+  public final static native String PopoverConfig_tintColor_get(long jarg1, PopoverConfig jarg1_);
   public final static native long PopoverConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, PopoverConfig jarg2_);
   public final static native long new_PopoverConfig();
   public final static native void delete_PopoverConfig(long jarg1);
@@ -2050,6 +2055,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void TextBlock_SetHorizontalAlignment(long jarg1, TextBlock jarg1_, long jarg2, StdOptionalHorizontalAlignment jarg2_);
   public final static native void TextBlock_SetLanguage(long jarg1, TextBlock jarg1_, String jarg2);
   public final static native String TextBlock_GetLanguage(long jarg1, TextBlock jarg1_);
+  public final static native String TextBlock_GetLabelFor(long jarg1, TextBlock jarg1_);
   public final static native long TextBlock_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_TextBlockParser__SWIG_0();
   public final static native long new_TextBlockParser__SWIG_1(long jarg1, TextBlockParser jarg1_);
@@ -2182,6 +2188,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long RichTextBlock_GetHorizontalAlignment(long jarg1, RichTextBlock jarg1_);
   public final static native void RichTextBlock_SetHorizontalAlignment(long jarg1, RichTextBlock jarg1_, long jarg2, StdOptionalHorizontalAlignment jarg2_);
   public final static native long RichTextBlock_GetInlines__SWIG_0(long jarg1, RichTextBlock jarg1_);
+  public final static native String RichTextBlock_GetLabelFor(long jarg1, RichTextBlock jarg1_);
   public final static native long RichTextBlock_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_RichTextBlockParser__SWIG_0();
   public final static native long new_RichTextBlockParser__SWIG_1(long jarg1, RichTextBlockParser jarg1_);

@@ -155,7 +155,7 @@ std::shared_ptr<BaseCardElement> TextInputParser::Deserialize(ParseContext& cont
 
     textInput->SetInlineAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::InlineAction, false));
     textInput->SetRegex(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Regex));
-    
+
     if (textInput->GetIsRequired())
     {
         // If the ChoiceSetInput is required, add its ID to the set of required inputs

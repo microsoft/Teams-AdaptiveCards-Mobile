@@ -41,14 +41,14 @@ public:
 
     std::string GetRegex() const;
     void SetRegex(const std::string& value);
-    
+
     static void addLabel(const std::string& labelId, const std::string& label)
     {
         if (!labelId.empty() && !label.empty()) {
             inputIdToLabelMap[labelId] = label;
         }
     }
-    
+
     static std::string getLabel(const std::string& labelId)
     {
         if (inputIdToLabelMap.find(labelId) != inputIdToLabelMap.end())
@@ -57,7 +57,7 @@ public:
         }
         return "";
     }
-    
+
     static bool getIsRequired(const std::string& labelId)
     {
         return requiredInputIdSet.find(labelId) != requiredInputIdSet.end();

@@ -112,6 +112,18 @@ public class TextInput extends BaseInputElement {
     AdaptiveCardObjectModelJNI.TextInput_SetRegex(swigCPtr, this, value);
   }
 
+  public static void addLabel(String labelId, String label) {
+    AdaptiveCardObjectModelJNI.TextInput_addLabel(labelId, label);
+  }
+
+  public static String getLabel(String labelId) {
+    return AdaptiveCardObjectModelJNI.TextInput_getLabel(labelId);
+  }
+
+  public static boolean getIsRequired(String labelId) {
+    return AdaptiveCardObjectModelJNI.TextInput_getIsRequired(labelId);
+  }
+
   public static TextInput dynamic_cast(BaseCardElement baseCardElement) {
     long cPtr = AdaptiveCardObjectModelJNI.TextInput_dynamic_cast(BaseCardElement.getCPtr(baseCardElement), baseCardElement);
     return (cPtr == 0) ? null : new TextInput(cPtr, true);
