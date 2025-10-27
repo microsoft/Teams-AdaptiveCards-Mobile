@@ -14,6 +14,7 @@
 #import "ACRViewPrivate.h"
 #import "BaseActionElement.h"
 #import "ACRToggleVisibilityTarget.h"
+#import "ACRAggregateTarget.h"
 #import "UtiliOS.h"
 #import <UIKit/UIKit.h>
 
@@ -67,7 +68,6 @@
                                  context:_rootView
                           containingView:adcView
                               hostconfig:_config];
-    [_rootView popCurrentShowcard];
 
     ContainerStyle containerStyle = ([_config getHostConfig]->GetAdaptiveCard().allowCustomStyle) ? _adaptiveCard->GetStyle() : [_config getHostConfig]->GetActions().showCard.style;
 
@@ -164,6 +164,12 @@
             {
                 ACRToggleVisibilityTarget *toggleVisibility = [[ACRToggleVisibilityTarget alloc] initWithActionElement:acoElement config:strongSelf->_config rootView:strongSelf->_rootView];
                 [toggleVisibility doSelectAction];
+            }
+            if (acoElement.type == ACRSubmit || acoElement.type == ACRExecute)
+            {
+                ACRAggregateTarget *target = [[ACRAggregateTarget alloc] initWithActionElement:acoElement rootView:strongSelf->_rootView];
+                [target send:strongSelf->_button];
+                return;
             }
             [strongSelf->_rootView.acrActionDelegate didFetchUserResponses:[strongSelf->_rootView card] action:acoElement];
         }];

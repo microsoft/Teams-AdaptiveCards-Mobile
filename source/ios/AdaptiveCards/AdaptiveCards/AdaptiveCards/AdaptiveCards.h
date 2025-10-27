@@ -78,6 +78,8 @@ FOUNDATION_EXPORT const unsigned char AdaptiveCarsFrameworkVersionString[];
 #import "ACRTextView.h"
 #import "ACRToggleInputView.h"
 #import "ACRView.h"
+#import "ACRStringBasedKeyValueObservation.h"
+#import "TSExpressionObjCBridge.h"
 #else
 /// Cocoapods Imports
 #import <AdaptiveCards/ACOActionOverflow.h>
@@ -143,5 +145,7 @@ FOUNDATION_EXPORT const unsigned char AdaptiveCarsFrameworkVersionString[];
 #import <AdaptiveCards/ACRTextView.h>
 #import <AdaptiveCards/ACRToggleInputView.h>
 #import <AdaptiveCards/ACRView.h>
+#import <AdaptiveCards/ACRStringBasedKeyValueObservation.h>
+#import <AdaptiveCards/TSExpressionObjCBridge.h>
 
 #endif

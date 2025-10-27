@@ -10,6 +10,7 @@ namespace AdaptiveCards
 {
 class TextInput : public BaseInputElement
 {
+    friend class TextInputParser;
 public:
     TextInput();
     TextInput(const TextInput&) = default;
@@ -40,8 +41,31 @@ public:
 
     std::string GetRegex() const;
     void SetRegex(const std::string& value);
+    
+    static void addLabel(const std::string& labelId, const std::string& label)
+    {
+        if (!labelId.empty() && !label.empty()) {
+            inputIdToLabelMap[labelId] = label;
+        }
+    }
+    
+    static std::string getLabel(const std::string& labelId)
+    {
+        if (inputIdToLabelMap.find(labelId) != inputIdToLabelMap.end())
+        {
+            return inputIdToLabelMap[labelId];
+        }
+        return "";
+    }
+    
+    static bool getIsRequired(const std::string& labelId)
+    {
+        return requiredInputIdSet.find(labelId) != requiredInputIdSet.end();
+    }
 
 private:
+    static std::unordered_map<std::string, std::string> inputIdToLabelMap;
+    static std::unordered_set<std::string> requiredInputIdSet;
     void PopulateKnownPropertiesSet();
 
     std::string m_placeholder;

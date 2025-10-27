@@ -150,14 +150,14 @@
 
     if (!secondary.empty()) {
         ++renderedBtnNum;
-
+        
         ACRBaseActionElementRenderer *actionRenderer =
-            [reg getActionRenderer:[ACOBaseActionElement getKey:(ACRActionType::ACROverflow)]];
-
+        [reg getActionRenderer:[ACOBaseActionElement getKey:(ACRActionType::ACROverflow)]];
+        
         ACOBaseActionElement *overflow =
-            [[ACOActionOverflow alloc] initWithBaseActionElements:secondary
-                                                           atCard:rootView.card];
-
+        [[ACOActionOverflow alloc] initWithBaseActionElements:secondary
+                                                       atCard:rootView.card];
+        
         [self renderButtonForElem:overflow
                    actionRenderer:actionRenderer
                         childview:childview

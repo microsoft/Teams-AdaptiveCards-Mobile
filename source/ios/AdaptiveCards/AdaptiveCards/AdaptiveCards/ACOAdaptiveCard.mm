@@ -19,12 +19,30 @@
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
+#import "SwiftAdaptiveCardObjcBridge.h"
+#import "TSExpressionObjCBridge.h"
 
 using namespace AdaptiveCards;
 
 @implementation ACOAdaptiveCard {
     std::shared_ptr<AdaptiveCard> _adaptiveCard;
     NSMutableArray<ACRIBaseInputHandler> *_inputs;
+    SwiftAdaptiveCardParseResult * _adaptiveCardParseResult;
+}
+
+- (SwiftAdaptiveCardParseResult *)swiftParseResult
+{
+    return _adaptiveCardParseResult;
+}
+
++ (BOOL)isSwiftParserEnabled
+{
+    return [SwiftAdaptiveCardObjcBridge isSwiftParserEnabled];
+}
+
++ (void)setSwiftParserEnabled:(BOOL)enabled
+{
+    [SwiftAdaptiveCardObjcBridge setSwiftParserEnabled:enabled];
 }
 
 - (void)setInputs:(NSArray *)inputs
@@ -35,6 +53,10 @@ using namespace AdaptiveCards;
 - (void)appendInputs:(NSArray *)inputs
 {
     [_inputs addObjectsFromArray:inputs];
+}
+
+- (void)setAdaptiveCardParseResult:(SwiftAdaptiveCardParseResult *)parseResult {
+    _adaptiveCardParseResult = parseResult;
 }
 
 - (NSData *)inputs
@@ -132,17 +154,25 @@ using namespace AdaptiveCards;
             // Update payload to the corrected version
             payload = processedPayload;
         }
-
+        
         // Use the already validated JSON object without re-serialization
         try {
             ACOAdaptiveCard *card = [[ACOAdaptiveCard alloc] init];
-            std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
+            SwiftAdaptiveCardParseResult *swiftResult = nil;
             NSMutableArray *acrParseWarnings = [[NSMutableArray alloc] init];
-            std::vector<std::shared_ptr<AdaptiveCardParseWarning>> parseWarnings = parseResult->GetWarnings();
-            for (const auto &warning : parseWarnings) {
-                ACRParseWarning *acrParseWarning = [[ACRParseWarning alloc] initWithParseWarning:warning];
-                [acrParseWarnings addObject:acrParseWarning];
+            std::shared_ptr<ParseResult> parseResult = AdaptiveCard::DeserializeFromString(std::string([payload UTF8String]), g_version);
+            
+            BOOL useSwiftParser = [SwiftAdaptiveCardObjcBridge isSwiftParserEnabled];
+            if (useSwiftParser) {
+                swiftResult = [SwiftAdaptiveCardObjcBridge parseWithPayload:payload];
+                // Always set the result so consumers can access errors if they exist
+                [card setAdaptiveCardParseResult:swiftResult];
+                acrParseWarnings = [SwiftAdaptiveCardObjcBridge getWarningsFromParseResult:swiftResult useSwift:YES];
+            } else {
+                NSValue *pointerValue = [NSValue valueWithPointer:&parseResult];
+                acrParseWarnings = [SwiftAdaptiveCardObjcBridge getWarningsFromParseResult:pointerValue useSwift:NO];
             }
+            
             card->_adaptiveCard = parseResult->GetAdaptiveCard();
             if (card && card->_adaptiveCard) {
                 card->_refresh = [[ACORefresh alloc] init:card->_adaptiveCard->GetRefresh()];
@@ -206,6 +236,23 @@ using namespace AdaptiveCards;
         return JsonToNSData(blob);
     }
     return nil;
+}
+
++ (BOOL)isExpressionEvalEnabled
+{
+    return [TSExpressionObjCBridge isExpressionEvalEnabled];
+}
+
++ (void)setExpressionEvalEnabled:(BOOL)enabled
+{
+    [TSExpressionObjCBridge setExpressionEvalEnabled:enabled];
+}
+
++ (void)evaluateExpression:(NSString *)expression
+                  withData:(NSDictionary * _Nullable)data
+                completion:(void (^_Nullable)(id _Nullable result, NSError * _Nullable error))completion
+{
+    [TSExpressionObjCBridge evaluateExpression:expression withData:data completion:completion];
 }
 
 @end
