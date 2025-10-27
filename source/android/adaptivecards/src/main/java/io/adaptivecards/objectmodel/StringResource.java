@@ -64,8 +64,8 @@ public class StringResource {
     return AdaptiveCardObjectModelJNI.StringResource_GetDefaultValue__SWIG_0(swigCPtr, this);
   }
 
-  public String GetDefaultValue(String locale) {
-    return AdaptiveCardObjectModelJNI.StringResource_GetDefaultValue__SWIG_1(swigCPtr, this, locale);
+  public String GetDefaultValue(String locale, String fallback) {
+    return AdaptiveCardObjectModelJNI.StringResource_GetDefaultValue__SWIG_1(swigCPtr, this, locale, fallback);
   }
 
   public SWIGTYPE_p_std__unordered_mapT_std__string_std__string_t GetLocalizedValue() {

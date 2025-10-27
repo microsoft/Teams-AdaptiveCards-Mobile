@@ -21,7 +21,7 @@ namespace AdaptiveCards {
         Json::Value SerializeToJsonValue() const;
 
         std::string GetDefaultValue() const;
-        std::string GetDefaultValue(const std::string& locale) const;
+        std::string GetDefaultValue(const std::string& locale, const std::string& fallback) const;
         std::unordered_map<std::string, std::string> GetLocalizedValue() const;
 
         static std::shared_ptr<StringResource> Deserialize(ParseContext& context, const Json::Value& json);

@@ -212,7 +212,7 @@ std::string AdaptiveCard::ReplaceStringResources(
         auto pair = strings.find(key);
         if (pair != strings.end()) {
             auto stringResource = pair->second;
-            result += stringResource->GetDefaultValue(locale);
+            result += stringResource->GetDefaultValue(locale, fullMatch);
         } else {
             result += fullMatch; // Leave it unchanged if not found
         }

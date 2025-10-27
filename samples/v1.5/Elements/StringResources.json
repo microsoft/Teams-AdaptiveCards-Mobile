@@ -200,6 +200,192 @@
 			]
 		},
 		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.ShowCard",
+					"title": "See References",
+					"card": {
+						"$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+						"type": "AdaptiveCard",
+						"version": "1.5",
+						"body": [
+							{
+								"type": "Container",
+								"items": [
+									{
+										"type": "Container",
+										"items": [
+											{
+												"type": "TextBlock",
+												"text": "References for info1",
+												"wrap": true,
+												"size": "Large"
+											},
+											{
+												"type": "TextBlock",
+												"text": "defaultValue: By default this feature helps reduce card payload size.",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "en-US: This feature helps reduce card payload size.",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "fr-FR: Cette fonctionnalité aide à réduire la taille de la charge utile de la carte.",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "sp-SP: Esta función ayuda a reducir el tamaño de la carga útil de la tarjeta.",
+												"wrap": true
+											}
+										],
+										"style": "attention",
+										"showBorder": true,
+										"roundedCorners": true
+									},
+									{
+										"type": "Container",
+										"items": [
+											{
+												"type": "TextBlock",
+												"text": "References for info2",
+												"wrap": true,
+												"size": "Large"
+											},
+											{
+												"type": "TextBlock",
+												"text": "defaultValue: By default String resources also work in inline cards",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "en-US: String resources also work in inline cards",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "fr-FR: Les ressources de chaînes fonctionnent également dans les cartes intégrées",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "sp-SP: Los recursos de cadena también funcionan en tarjetas en línea",
+												"wrap": true
+											}
+										],
+										"style": "attention",
+										"showBorder": true,
+										"roundedCorners": true
+									},
+									{
+										"type": "Container",
+										"items": [
+											{
+												"type": "TextBlock",
+												"text": "References for hello",
+												"wrap": true,
+												"size": "Large"
+											},
+											{
+												"type": "TextBlock",
+												"text": "defaultValue: By default Hello",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "en-US: Hello",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "fr-FR: Bonjour",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "sp-SP: Hola",
+												"wrap": true
+											}
+										],
+										"style": "attention",
+										"showBorder": true,
+										"roundedCorners": true
+									},
+									{
+										"type": "Container",
+										"items": [
+											{
+												"type": "TextBlock",
+												"text": "References for World",
+												"wrap": true,
+												"size": "Large"
+											},
+											{
+												"type": "TextBlock",
+												"text": "defaultValue: By default World",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "en-US: World",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "fr-FR: Monde",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "sp-SP: Mundo",
+												"wrap": true
+											}
+										],
+										"style": "attention",
+										"showBorder": true,
+										"roundedCorners": true
+									},
+									{
+										"type": "Container",
+										"items": [
+											{
+												"type": "TextBlock",
+												"text": "References for noDefaultValue",
+												"wrap": true,
+												"size": "Large"
+											},
+											{
+												"type": "TextBlock",
+												"text": "en-US: MS United States",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "fr-FR: MS France",
+												"wrap": true
+											},
+											{
+												"type": "TextBlock",
+												"text": "sp-SP: MS Spain",
+												"wrap": true
+											}
+										],
+										"style": "attention",
+										"showBorder": true,
+										"roundedCorners": true
+									}
+								]
+							}
+						]
+					}
+				}
+			]
+		},
+		{
 			"type": "TextBlock",
 			"text": "Resource strings can be clubbed with theme based images",
 			"wrap": true,
@@ -224,49 +410,49 @@
 	"resources": {
 		"strings": {
 			"info1": {
-				"defaultValue": "This feature helps reduce card payload size.",
+				"defaultValue": "By default this feature helps reduce card payload size.",
 				"localizedValues": {
 					"en-US": "This feature helps reduce card payload size.",
 					"fr-FR": "Cette fonctionnalité aide à réduire la taille de la charge utile de la carte.",
 					"sp-SP": "Esta función ayuda a reducir el tamaño de la carga útil de la tarjeta."
 				}
 			},
-			"catImageURL": {
-				"defaultValue": "https://adaptivecards.io/content/cats/1.png"
-			},
-			"hello": {
-				"defaultValue": "Hello",
-				"localizedValues": {
-					"en-US": "Hello",
-					"fr-FR": "Bonjour",
-					"sp-SP": "Hola"
-				}
-			},
-			"world": {
-				"defaultValue": "World",
-				"localizedValues": {
-					"en-US": "World",
-					"fr-FR": "Monde",
-					"sp-SP": "Mundo"
-				}
-			},
 			"info2": {
-				"defaultValue": "String resources also work in inline cards",
+				"defaultValue": "By default String resources also work in inline cards",
 				"localizedValues": {
 					"en-US": "String resources also work in inline cards",
 					"fr-FR": "Les ressources de chaînes fonctionnent également dans les cartes intégrées",
 					"sp-SP": "Los recursos de cadena también funcionan en tarjetas en línea"
 				}
 			},
-			"Lighttheme": {
-				"defaultValue": "plus.unsplash.com"
+			"hello": {
+				"defaultValue": "By default Hello",
+				"localizedValues": {
+					"en-US": "Hello",
+					"sp-SP": "Hola",
+					"fr-FR": "Bonjour"
+				}
 			},
-			"noDefaultValue":{
+			"world": {
+				"defaultValue": "By default World",
 				"localizedValues": {
 					"en-US": "World",
 					"fr-FR": "Monde",
 					"sp-SP": "Mundo"
 				}
+			},
+			"noDefaultValue":{
+				"localizedValues": {
+					"en-US": "MS United States",
+					"fr-FR": "MS France",
+					"sp-SP": "MS Spain"
+				}
+			},
+			"Lighttheme": {
+				"defaultValue": "plus.unsplash.com"
+			},
+			"catImageURL": {
+				"defaultValue": "https://adaptivecards.io/content/cats/1.png"
 			}
 		}
 	}

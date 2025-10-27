@@ -2361,7 +2361,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native String StringResource_Serialize(long jarg1, StringResource jarg1_);
   public final static native long StringResource_SerializeToJsonValue(long jarg1, StringResource jarg1_);
   public final static native String StringResource_GetDefaultValue__SWIG_0(long jarg1, StringResource jarg1_);
-  public final static native String StringResource_GetDefaultValue__SWIG_1(long jarg1, StringResource jarg1_, String jarg2);
+  public final static native String StringResource_GetDefaultValue__SWIG_1(long jarg1, StringResource jarg1_, String jarg2, String jarg3);
   public final static native long StringResource_GetLocalizedValue(long jarg1, StringResource jarg1_);
   public final static native long StringResource_Deserialize(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
   public final static native long StringResource_DeserializeFromString(long jarg1, ParseContext jarg1_, String jarg2);

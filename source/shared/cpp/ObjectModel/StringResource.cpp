@@ -30,12 +30,15 @@ std::string AdaptiveCards::StringResource::GetDefaultValue() const {
     return m_defaultValue;
 }
 
-std::string AdaptiveCards::StringResource::GetDefaultValue(const std::string &locale) const {
+std::string AdaptiveCards::StringResource::GetDefaultValue(const std::string &locale, const std::string& fallback) const {
     auto value = m_localizedValues.find(locale);
     if (value != m_localizedValues.end()) {
         return value->second;
     }
-    return m_defaultValue;
+    if (!m_defaultValue.empty()) {
+        return m_defaultValue;
+    }
+    return fallback;
 }
 
 std::unordered_map<std::string, std::string> StringResource::GetLocalizedValue() const {
@@ -44,7 +47,7 @@ std::unordered_map<std::string, std::string> StringResource::GetLocalizedValue()
 
 std::shared_ptr<StringResource> StringResource::Deserialize(ParseContext& context, const Json::Value& json) {
     std::shared_ptr<StringResource> stringResource = std::make_shared<StringResource>();
-    stringResource->m_defaultValue = ParseUtil::GetString(json, AdaptiveCardSchemaKey::DefaultValue, true);
+    stringResource->m_defaultValue = ParseUtil::GetString(json, AdaptiveCardSchemaKey::DefaultValue, false);
     stringResource->m_localizedValues = ParseUtil::GetStringMap(json, AdaptiveCardSchemaKey::LocalizedValues, false);
     return stringResource;
 }
