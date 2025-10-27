@@ -168,7 +168,8 @@ void TextBlock::SetLanguage(const std::string& value)
     m_textElementProperties->SetLanguage(value);
 }
 
-std::string TextBlock::GetLabelFor() const {
+std::string TextBlock::GetLabelFor() const
+{
     return m_labelFor;
 }
 
@@ -185,8 +186,8 @@ std::shared_ptr<BaseCardElement> TextBlockParser::Deserialize(ParseContext& cont
     textBlock->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
     textBlock->m_labelFor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LabelFor, "", false);
-
-    if (!textBlock->m_labelFor.empty() && !textBlock->GetText().empty()) {
+    if (!textBlock->m_labelFor.empty() && !textBlock->GetText().empty())
+    {
         // Add label for corresponding ChoiceSetInput
         TextInput::addLabel(textBlock->m_labelFor, textBlock->GetText());
     }

@@ -60,7 +60,8 @@ const std::vector<std::shared_ptr<Inline>>& RichTextBlock::GetInlines() const
     return m_inlines;
 }
 
-std::string RichTextBlock::GetLabelFor() const {
+std::string RichTextBlock::GetLabelFor() const
+{
     return m_labelFor;
 }
 
@@ -75,19 +76,22 @@ std::shared_ptr<BaseCardElement> RichTextBlockParser::Deserialize(ParseContext& 
     auto inlines = ParseUtil::GetElementCollectionOfSingleType<Inline>(
         context, json, AdaptiveCardSchemaKey::Inlines, Inline::Deserialize, false);
     richTextBlock->m_inlines = std::move(inlines);
-
     richTextBlock->m_labelFor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LabelFor, "", false);
 
-    if (!richTextBlock->m_labelFor.empty() && !richTextBlock->m_inlines.empty()) {
+    if (!richTextBlock->m_labelFor.empty() && !richTextBlock->m_inlines.empty())
+    {
         std::string label;
-        for (const auto &item: richTextBlock->m_inlines) {
-            if (item->GetInlineType() == InlineElementType::TextRun) {
+        for (const auto &item: richTextBlock->m_inlines)
+        {
+            if (item->GetInlineType() == InlineElementType::TextRun)
+            {
                 auto textRun = std::static_pointer_cast<TextRun>(item);
                 label += textRun->GetText() + " ";
             }
         }
 
-        if (!label.empty()) {
+        if (!label.empty())
+        {
             // Add label for corresponding ChoiceSetInput
             TextInput::addLabel(richTextBlock->m_labelFor, label);
         }

@@ -13,8 +13,14 @@
 #import "ACRUIImageView.h"
 #import "ACRViewPrivate.h"
 #import "UtiliOS.h"
+#import "TSExpressionObjCBridge.h"
+#import <Foundation/Foundation.h>
 
 @implementation ACRButton
+
+NSString * const DYNAMIC_TITLE_PROP = @"title.dynamic";
+NSString * const DYNAMIC_ENABLE_PROP = @"isEnabled.dynamic";
+NSString * const DYNAMIC_VISIBLE_PROP = @"isVisible.dynamic";
 
 - (instancetype)initWithExpandable:(BOOL)expandable
 {
@@ -252,6 +258,12 @@
     button.accessibilityLabel = title;
     button.enabled = [acoAction isEnabled];
     
+    // Handle dynamic properties if expression evaluation is enabled
+    if ([TSExpressionObjCBridge isExpressionEvalEnabled])
+    {
+        [ACRButton handleExpressionEvaluationForButton:button baseActionElement:acoAction];
+    }
+    
     button.sentiment = acoAction.sentiment;
     button.actionType = acoAction.type;
     
@@ -301,7 +313,7 @@
                 [button addSubview:view];
                 // Only remove observer if one was actually added for this imageView
                 if ([rootView hasKVOObserverForImageView:view]) {
-                    [rootView removeObserverOnImageView:@"image" onObject:view keyToImageView:key];
+                    [rootView removeObserverOnImageViewForKeyPath:@"image" onObject:view keyToImageView:key];
                 }
                 [button setImageView:view.image withConfig:config];
             } else {
@@ -422,6 +434,88 @@
 
     self.heightConstraint = [self.heightAnchor constraintGreaterThanOrEqualToAnchor:self.titleLabel.heightAnchor constant:self.contentEdgeInsets.top + self.contentEdgeInsets.bottom];
     self.heightConstraint.active = YES;
+}
+
+#pragma mark - Expression Evaluation Helper
+    
++ (void)evaluateDynamicProperties:(NSString * _Nullable)titleDynamic
+                 isVisibleDynamic:(NSString * _Nullable)isVisibleDynamic
+                 isEnabledDynamic:(NSString * _Nullable)isEnabledDynamic
+                           button:(ACRButton *)button
+    {
+        
+        if (titleDynamic && [titleDynamic isKindOfClass:[NSString class]] && titleDynamic.length > 0)
+        {
+            [self evaluateExpression:titleDynamic completion:^(id value, NSError *error)
+             {
+                if ([value isKindOfClass:[NSString class]] && [((NSString *)value) length] > 0)
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [button setTitle:(NSString *)value forState:UIControlStateNormal];
+                    });
+                }
+            }];
+        }
+        if (isVisibleDynamic && [isVisibleDynamic isKindOfClass:[NSString class]] && isVisibleDynamic.length > 0)
+        {
+            [self evaluateExpression:isVisibleDynamic completion:^(id value, NSError *error)
+             {
+                if ([value isKindOfClass:[NSNumber class]])
+                {
+                    BOOL visible = [(NSNumber *)value boolValue];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        button.hidden = !visible;
+                    });
+                }
+            }];
+        }
+        
+        if (isEnabledDynamic && [isEnabledDynamic isKindOfClass:[NSString class]] && isEnabledDynamic.length > 0)
+        {
+            [self evaluateExpression:isEnabledDynamic completion:^(id value, NSError *error)
+             {
+                if ([value isKindOfClass:[NSNumber class]])
+                {
+                    BOOL enabled = [(NSNumber *)value boolValue];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        button.enabled = enabled;
+                    });
+                }
+            }];
+        }
+    }
+
++ (void)handleExpressionEvaluationForButton:(ACRButton *)button
+                          baseActionElement:(ACOBaseActionElement *)acoElem
+{
+   
+    NSData *additionalProperty = [acoElem additionalProperty];
+    if (additionalProperty)
+    {
+        NSDictionary *additionalProperties = [NSJSONSerialization JSONObjectWithData:additionalProperty
+                                                                             options:NSJSONReadingMutableLeaves
+                                                                               error:nil];
+        NSString * _Nullable titleDynamic = additionalProperties[DYNAMIC_TITLE_PROP];
+        NSString * _Nullable isEnabledDynamic = additionalProperties[DYNAMIC_ENABLE_PROP];
+        NSString * _Nullable isVisibleDynamic = additionalProperties[DYNAMIC_VISIBLE_PROP];
+        [self evaluateDynamicProperties:titleDynamic
+                       isVisibleDynamic:isVisibleDynamic
+                       isEnabledDynamic:isEnabledDynamic
+                                 button:button];
+    }
+
+}
+
+/// Evaluates an expression string using the Swift ObjCExpressionEvaluator bridge.
+/// Calls the completion block with success/failure and result/error.
++ (void)evaluateExpression:(NSString *)expression completion:(void (^)(id _Nullable result, NSError * _Nullable error))completion {
+    [TSExpressionObjCBridge evaluateExpression:expression withData:nil completion:^(NSObject * _Nullable evalResult, NSError * _Nullable evalError)
+     {
+        if (completion)
+        {
+            completion(evalResult, evalError);
+        }
+    }];
 }
 
 @end
