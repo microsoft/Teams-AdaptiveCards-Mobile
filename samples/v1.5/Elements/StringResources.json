@@ -131,49 +131,6 @@
 			"weight": "Bolder"
 		},
 		{
-			"type": "Container",
-			"items": [
-				{
-					"type": "ImageSet",
-					"images": [
-						{
-							"type": "Image",
-							"url": "${rs:catImageURL}",
-							"altText": "Cat"
-						},
-						{
-							"type": "Image",
-							"url": "${rs:catImageURL}",
-							"altText": "Cat"
-						},
-						{
-							"type": "Image",
-							"url": "${rs:catImageURL}",
-							"altText": "Cat"
-						},
-						{
-							"type": "Image",
-							"url": "${rs:catImageURL}",
-							"altText": "Cat"
-						},
-						{
-							"type": "Image",
-							"url": "${rs:catImageURL}",
-							"altText": "Cat"
-						},
-						{
-							"type": "Image",
-							"url": "${rs:catImageURL}",
-							"altText": "Cat"
-						}
-					]
-				}
-			],
-			"style": "accent",
-			"showBorder": true,
-			"roundedCorners": true
-		},
-		{
 			"type": "TextBlock",
 			"wrap": true,
 			"text": "${rs:info2}"
@@ -384,6 +341,49 @@
 					}
 				}
 			]
+		},
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "ImageSet",
+					"images": [
+						{
+							"type": "Image",
+							"url": "${rs:catImageURL}",
+							"altText": "Cat"
+						},
+						{
+							"type": "Image",
+							"url": "${rs:catImageURL}",
+							"altText": "Cat"
+						},
+						{
+							"type": "Image",
+							"url": "${rs:catImageURL}",
+							"altText": "Cat"
+						},
+						{
+							"type": "Image",
+							"url": "${rs:catImageURL}",
+							"altText": "Cat"
+						},
+						{
+							"type": "Image",
+							"url": "${rs:catImageURL}",
+							"altText": "Cat"
+						},
+						{
+							"type": "Image",
+							"url": "${rs:catImageURL}",
+							"altText": "Cat"
+						}
+					]
+				}
+			],
+			"style": "accent",
+			"showBorder": true,
+			"roundedCorners": true
 		},
 		{
 			"type": "TextBlock",
