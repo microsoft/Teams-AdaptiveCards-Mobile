@@ -43,8 +43,10 @@ public class RenderedAdaptiveCard {
     @Nullable
     private BottomSheetDialog popoverDialog;
 
-    protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull ACTheme theme) {
-        this.languageTag = "fr-FR";
+    protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard,
+                                   @NonNull ACTheme theme,
+                                   @NonNull String languageTag) {
+        this.languageTag = languageTag;
         this.warnings = new Vector<>();
         this.handlers = new Vector<>();
         this.adaptiveCard = adaptiveCard;

@@ -331,6 +331,15 @@ public class CardRendererRegistration
         mTheme = theme;
     }
 
+    @NonNull
+    public String getLanguageTag() {
+        return mLanguageTag;
+    }
+
+    public void setLanguageTag(@NonNull String languageTag) {
+        mLanguageTag = languageTag;
+    }
+
     public View renderElements(RenderedAdaptiveCard renderedCard,
                                Context context,
                                FragmentManager fragmentManager,
@@ -774,4 +783,5 @@ public class CardRendererRegistration
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
     private boolean mIsSplitActionEnabled = false;
     private ACTheme mTheme = ACTheme.None;
+    private String mLanguageTag = "";
 }
