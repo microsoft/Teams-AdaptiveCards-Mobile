@@ -189,7 +189,7 @@ std::string AdaptiveCard::ReplaceStringResources(
 
     auto strings = resources->GetStrings();
     // Add validation checks to skip replacement & return the same string
-    if (!_IsStringResourcePresent(input) || !resources || locale.empty() || strings.empty()) {
+    if (!_IsStringResourcePresent(input) || !resources || strings.empty()) {
         return input;
     }
 

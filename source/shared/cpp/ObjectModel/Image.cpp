@@ -85,9 +85,9 @@ const std::string& Image::GetUrl(
         const ACTheme theme,
         std::shared_ptr<AdaptiveCards::Resources> resources,
         const std::string& locale) const {
-    auto themedUrl = ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
-    return themedUrl;
-    //return AdaptiveCard::ReplaceStringResources(themedUrl, resources, locale);
+    return ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
+//    auto themedUrl = ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
+//    return AdaptiveCard::ReplaceStringResources(themedUrl, resources, locale);
 }
 
 std::string Image::GetUrl() const
