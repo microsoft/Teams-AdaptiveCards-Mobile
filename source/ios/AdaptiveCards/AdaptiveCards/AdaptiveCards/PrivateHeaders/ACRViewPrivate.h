@@ -32,6 +32,11 @@
 #import <AdaptiveCards/StyledCollectionElement.h>
 #endif
 
+// Remove the following warning suppression and wrap the header content with NS_ASSUME_NONNULL_BEGIN/END
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
+void RemoveMeAfterAddingMissingNullabilityAnnotationsInThisHeader(void * _Nullable);
+
 using namespace AdaptiveCards;
 
 @interface ACRView ()
@@ -62,7 +67,13 @@ typedef void (^ObserverActionBlockForBaseAction)(NSObject<ACOIResourceResolver> 
                                            key:(NSString *)key
                                 observerAction:(ObserverActionBlock)observerAction;
 
-- (void)removeObserverOnImageView:(NSString *)KeyPath onObject:(NSObject *)object keyToImageView:(NSString *)key;
+- (void)removeObserverOnImageViewForKeyPath:(NSString *)KeyPath onObject:(UIImageView *)object keyToImageView:(NSString *)key;
+
+// Safe KVO observation management
+- (void)startObserving:(nonnull NSObject *)object keyPath:(nonnull NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(nullable void *)context;
+
+// KVO observer tracking
+- (BOOL)hasKVOObserverForImageView:(UIImageView *)imageView;
 
 - (void)updatePaddingMap:(std::shared_ptr<StyledCollectionElement> const &)collection view:(UIView *)view;
 
@@ -96,3 +107,5 @@ typedef void (^ObserverActionBlockForBaseAction)(NSObject<ACOIResourceResolver> 
 - (void)setContext:(ACORenderContext *)context;
 
 @end
+
+#pragma clang diagnostic pop

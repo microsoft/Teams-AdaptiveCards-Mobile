@@ -99,6 +99,18 @@ typedef NS_ENUM(NSUInteger, ACRHorizontalAlignment) {
     ACRRight
 };
 
+typedef NS_ENUM(NSUInteger, ACRHorizontalContentAlignment) {
+    ACRHorizontalContentAlignmentLeft = 0,
+    ACRHorizontalContentAlignmentCenter,
+    ACRHorizontalContentAlignmentRight
+};
+
+typedef NS_ENUM(NSUInteger, ACRImageFitMode) {
+    ACRImageFitModeFill,
+    ACRImageFitModeContain,
+    ACRImageFitModeCover
+};
+
 typedef NS_ENUM(NSUInteger, ACRRatingSize) {
     ACRMedium = 0,
     ACRLarge

@@ -16,6 +16,7 @@
 #import "ExecuteAction.h"
 #import "SubmitAction.h"
 #import <UIKit/UIKit.h>
+#import "ACRPopoverTarget.h"
 
 NSString *const ACRAggregateTargetActionType = @"actiontype";
 NSString *const ACRAggregateTargetSubmitAction = @"submit";
@@ -65,6 +66,12 @@ NSString *const ACRAggregateTargetFirstResponder = @"firstResponder";
             [[_view card] setInputs:@[]];
             [_view.acrActionDelegate didFetchUserResponses:[_view card] action:_actionElement];
             return;
+        }
+        
+        if (self.presentedViewController && self.presentedViewController.presentingViewController)
+        {
+            _currentShowcard = (ACRColumnView *)_view;
+            [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
         }
         // dispatch and validate inputs
         ACOInputResults *result = [_view dispatchAndValidateInput:_currentShowcard];

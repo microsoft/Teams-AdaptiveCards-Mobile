@@ -117,6 +117,13 @@
     XCTAssertTrue([expectedValue isEqualToString:inputValue], @"Input Id: %@ has value: %@ for expected value: %@", inputId, inputValue, expectedValue);
 }
 
+- (void)verifyNumberInput:(NSString *)inputId matchesExpectedValue:(NSString *)expectedValue inInputSet:(NSDictionary *)inputDictionary
+{
+    id inputValue = [[inputDictionary objectForKey:inputId] stringValue];
+
+    XCTAssertTrue([expectedValue isEqualToString:inputValue], @"Input Id: %@ has value: %@ for expected value: %@", inputId, inputValue, expectedValue);
+}
+
 - (void)setDateOnInputDateWithId:(NSString *)Id andLabel:(NSString *)label forYear:(NSString *)year month:(NSString *)month day:(NSString *)day
 {
     [self tapOnButtonWithText:Id];
@@ -440,6 +447,424 @@
     resultsDictionary = [self parseJsonToDictionary:resultsString];
     inputs = [self getInputsFromResultsDictionary:resultsDictionary];
     [self verifyInput:@"choiceset1" matchesExpectedValue:@"Hosting and startup abstractions for applications." inInputSet:inputs];
+}
+
+- (void) testPopoverInput1SuccessfulSubmission
+{
+    [self openCardForVersion:@"v1.5" forCardType:@"Elements" withCardName:@"Action.Popover.json"];
+    
+    // Type in "Outside Popover Input Required *"
+    XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
+    XCTAssertTrue(outsideRequired.exists);
+    [outsideRequired tap];
+    [outsideRequired typeText:@"text outside popover required"];
+    
+    // Type in "Outside Popover Input"
+    XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
+    XCTAssertTrue(outsideInput.exists);
+    [outsideInput tap];
+    [outsideInput typeText:@"text outside popover Input"];
+    
+    // Dismiss the keyboard
+    XCUIElement *returnKey = testApp.keyboards.buttons[@"return"];
+    if (returnKey.exists && returnKey.isHittable) {
+        [returnKey tap];
+    }
+    
+    // Scroll to and tap the "Add Name Popover" button
+    XCUIElement *popoverButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Add Name Popover"]];
+    XCTAssertTrue(popoverButton.exists);
+    
+    int maxScrolls = 5;
+    int scrolls = 0;
+    while (!popoverButton.hittable && scrolls < maxScrolls) {
+        [testApp swipeUp];
+        sleep(1);
+        scrolls++;
+    }
+    XCTAssertTrue(popoverButton.hittable, @"Popover button should be hittable after scrolling");
+    [popoverButton tap];
+    
+    // Type in the popover input
+    XCUIElement *textField = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"inputInPopover1"]];
+    XCTAssertTrue(textField.exists, @"Popover text field should exist after tapping and swiping if needed");
+    [self checkAndTap:textField];
+    [textField typeText:@"Input inside popover\n"];
+    
+    // Click on overflow button
+    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
+    XCTAssertTrue(overflowButton.exists);
+    [overflowButton tap];
+    
+    // Click on submit in the alert (popover/bottom sheet)
+    XCUIElement *alert = testApp.alerts.element;
+    XCUIElement *submitButton = [alert.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Submit"]];
+    XCTAssertTrue(submitButton.exists && submitButton.isHittable, @"Submit button in alert should exist and be hittable");
+    [submitButton tap];
+    
+    // Verify all inputs
+    NSString *resultsString = [self getInputsString];
+    NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
+    NSDictionary *inputs = [self getInputsFromResultsDictionary:resultsDictionary];
+    [self verifyInput:@"outsidePopover1" matchesExpectedValue:@"text outside popover required" inInputSet:inputs];
+    [self verifyInput:@"outsidePopover2" matchesExpectedValue:@"text outside popover Input" inInputSet:inputs];
+    [self verifyInput:@"inputInPopover1" matchesExpectedValue:@"Input inside popover" inInputSet:inputs];
+    
+    // After clicking submit and before/after parsing the results:
+    XCUIElement *resultsText = [testApp.staticTexts elementMatchingType:XCUIElementTypeAny identifier:@"SubmitActionRetrievedResults"];
+    XCTAssertTrue(resultsText.exists, @"SubmitActionRetrievedResults static text should exist");
+    
+    // Build the expected label string (make sure to match the actual output format)
+    // The actual label ends with an extra newline, so match that
+    NSString *expectedLabel = @"{ \t\"inputs\":{   \"outsidePopover2\" : \"text outside popover Input\",   \"inputInPopover1\" : \"Input inside popover\",   \"outsidePopover1\" : \"text outside popover required\" }, \"data\" : null\n}\n";
+    
+    NSCharacterSet *whitespaceAndNewline = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    
+    NSString *cleanExpected = [[expectedLabel componentsSeparatedByCharactersInSet:whitespaceAndNewline] componentsJoinedByString:@""];
+    NSString *cleanActual = [[resultsText.label componentsSeparatedByCharactersInSet:whitespaceAndNewline] componentsJoinedByString:@""];
+    
+    XCTAssertEqualObjects(cleanActual, cleanExpected, @"SubmitActionRetrievedResults label should match expected JSON ignoring whitespace");
+}
+
+- (void) testPopoverInput1Submission
+{
+    [self openCardForVersion:@"v1.5" forCardType:@"Elements" withCardName:@"Action.Popover.json"];
+    
+    // Scroll to and tap the "Add Name Popover" button
+    XCUIElement *popoverButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Add Name Popover"]];
+    XCTAssertTrue(popoverButton.exists);
+    
+    int maxScrolls = 5;
+    int scrolls = 0;
+    while (!popoverButton.hittable && scrolls < maxScrolls) {
+        [testApp swipeUp];
+        sleep(1);
+        scrolls++;
+    }
+    XCTAssertTrue(popoverButton.hittable, @"Popover button should be hittable after scrolling");
+    [popoverButton tap];
+    
+    // Type in the popover input
+    XCUIElement *textField = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"inputInPopover1"]];
+    XCTAssertTrue(textField.exists, @"Popover text field should exist after tapping and swiping if needed");
+    [self checkAndTap:textField];
+    [textField typeText:@"Input inside popover\n"];
+    
+    // Click on overflow button
+    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
+    XCTAssertTrue(overflowButton.exists);
+    [overflowButton tap];
+    
+    // Click on submit in the alert (popover/bottom sheet)
+    XCUIElement *alert = testApp.alerts.element;
+    XCUIElement *submitButton = [alert.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Submit"]];
+    XCTAssertTrue(submitButton.exists && submitButton.isHittable, @"Submit button in alert should exist and be hittable");
+    [submitButton tap];
+    
+    // Verify all inputs
+    NSString *resultsString = [self getInputsString];
+    NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
+    NSDictionary *inputs = [self getInputsFromResultsDictionary:resultsDictionary];
+    XCTAssertNil(inputs);
+}
+
+- (void) testPopoverRatingSuccessfulSubmission
+{
+    [self openCardForVersion:@"v1.5" forCardType:@"Elements" withCardName:@"Action.Popover.json"];
+    // Type in "Outside Popover Input Required *"
+    XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
+    XCTAssertTrue(outsideRequired.exists);
+    [outsideRequired tap];
+    [outsideRequired typeText:@"text outside popover required"];
+    
+    // Type in "Outside Popover Input"
+    XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
+    XCTAssertTrue(outsideInput.exists);
+    [outsideInput tap];
+    [outsideInput typeText:@"text outside popover Input"];
+    
+    // Dismiss the keyboard
+    XCUIElement *returnKey = testApp.keyboards.buttons[@"return"];
+    if (returnKey.exists && returnKey.isHittable) {
+        [returnKey tap];
+    }
+    XCUIElement *popoverButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Select rating Popover"]];
+    XCTAssertTrue(popoverButton.exists, @"Popover Button - Select rating popover should exist after tapping and swiping if needed");
+    [self checkAndTap:popoverButton];
+
+    // Adjust this to select a rating (e.g., tap the 4th star for rating=4)
+    // Tap the 4th star for rating=4
+    XCUIElement *fourthStar = [testApp.images elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Rate 4 Star"]];
+    XCTAssertTrue(fourthStar.exists && fourthStar.isHittable, @"The 4th star should exist and be hittable");
+    [fourthStar tap];
+
+    // Click on submit in the alert (popover/bottom sheet)
+    XCUIElement *alert = testApp.alerts.element;
+    XCUIElement *submitButton = [alert.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Submit"]];
+    
+    if (!submitButton.exists)
+    {
+        XCUIElementQuery *submitButtons = [testApp.buttons matchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Submit"]];
+        submitButton = nil;
+        for (NSUInteger i = 0; i < submitButtons.count; i++) {
+            XCUIElement *button = [submitButtons elementBoundByIndex:i];
+            if (button.exists && button.isHittable) {
+                submitButton = button;
+                break;
+            }
+        }
+    }
+    XCTAssertTrue(submitButton.exists && submitButton.isHittable, @"Submit button in alert should exist and be hittable");
+    [submitButton tap];
+
+    // Verify all inputs
+    NSString *resultsString = [self getInputsString];
+    NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
+    NSDictionary *inputs = [self getInputsFromResultsDictionary:resultsDictionary];
+    [self verifyNumberInput:@"rating1" matchesExpectedValue:@"4" inInputSet:inputs];
+
+    // After clicking submit and before/after parsing the results:
+    XCUIElement *resultsText = [testApp.staticTexts elementMatchingType:XCUIElementTypeAny identifier:@"SubmitActionRetrievedResults"];
+    XCTAssertTrue(resultsText.exists, @"SubmitActionRetrievedResults static text should exist");
+
+    NSString *expectedLabel = @"{ \
+    \"inputs\":{ \
+    \"outsidePopover2\":\"textoutsidepopoverInput\", \
+    \"rating1\":4, \
+    \"outsidePopover1\":\"textoutsidepopoverrequired\" \
+    }, \
+    \"data\":null \
+    }";
+    
+    NSCharacterSet *whitespaceAndNewline = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSString *cleanExpected = [[expectedLabel componentsSeparatedByCharactersInSet:whitespaceAndNewline] componentsJoinedByString:@""];
+    NSString *cleanActual = [[resultsText.label componentsSeparatedByCharactersInSet:whitespaceAndNewline] componentsJoinedByString:@""];
+    XCTAssertEqualObjects(cleanActual, cleanExpected, @"SubmitActionRetrievedResults label should match expected JSON ignoring whitespace");
+}
+
+- (void) testPopoverRatingSubmission
+{
+    [self openCardForVersion:@"v1.5" forCardType:@"Elements" withCardName:@"Action.Popover.json"];
+    XCUIElement *popoverButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Select rating Popover"]];
+    XCTAssertTrue(popoverButton.exists, @"Popover button - Select rating popover should exist after tapping and swiping if needed");
+    [self checkAndTap:popoverButton];
+
+    // Adjust this to select a rating (e.g., tap the 4th star for rating=4)
+    // Tap the 4th star for rating=4
+    XCUIElement *fourthStar = [testApp.images elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Rate 4 Star"]];
+    XCTAssertTrue(fourthStar.exists && fourthStar.isHittable, @"The 4th star should exist and be hittable");
+    [fourthStar tap];
+
+    // Click on submit in the alert (popover/bottom sheet)
+    XCUIElement *alert = testApp.alerts.element;
+    XCUIElement *submitButton = [alert.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Submit"]];
+    
+    if (!submitButton.exists)
+    {
+        XCUIElementQuery *submitButtons = [testApp.buttons matchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Submit"]];
+        submitButton = nil;
+        for (NSUInteger i = 0; i < submitButtons.count; i++) {
+            XCUIElement *button = [submitButtons elementBoundByIndex:i];
+            if (button.exists && button.isHittable) {
+                submitButton = button;
+                break;
+            }
+        }
+    }
+    XCTAssertTrue(submitButton.exists && submitButton.isHittable, @"Submit button in alert should exist and be hittable");
+    [submitButton tap];
+
+    // Verify all inputs
+    NSString *resultsString = [self getInputsString];
+    NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
+    NSDictionary *inputs = [self getInputsFromResultsDictionary:resultsDictionary];
+    XCTAssertNil(inputs);
+}
+
+- (void) testPopoverInput2SuccessfulSubmission
+{
+    [self openCardForVersion:@"v1.5" forCardType:@"Elements" withCardName:@"Action.Popover.json"];
+    
+    // Type in "Outside Popover Input Required *"
+    XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
+    XCTAssertTrue(outsideRequired.exists);
+    [outsideRequired tap];
+    [outsideRequired typeText:@"text outside popover required"];
+    
+    // Type in "Outside Popover Input"
+    XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
+    XCTAssertTrue(outsideInput.exists);
+    [outsideInput tap];
+    [outsideInput typeText:@"text outside popover Input"];
+    
+    // Dismiss the keyboard
+    XCUIElement *returnKey = testApp.keyboards.buttons[@"return"];
+    if (returnKey.exists && returnKey.isHittable) {
+        [returnKey tap];
+    }
+    
+    // Scroll to and tap the "Add Name Popover" button
+    XCUIElement *popoverButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Add Number Popover"]];
+    XCTAssertTrue(popoverButton.exists);
+    
+    int maxScrolls = 5;
+    int scrolls = 0;
+    while (!popoverButton.hittable && scrolls < maxScrolls) {
+        [testApp swipeUp];
+        sleep(1);
+        scrolls++;
+    }
+    XCTAssertTrue(popoverButton.hittable, @"Popover button should be hittable after scrolling");
+    [popoverButton tap];
+    
+    // Type in the popover input
+    XCUIElement *textField = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"inputInPopover2"]];
+    XCTAssertTrue(textField.exists, @"Popover text field should exist after tapping and swiping if needed");
+    [self checkAndTap:textField];
+    [textField typeText:@"1234\n"];
+    
+    // Click on overflow button
+    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
+    XCTAssertTrue(overflowButton.exists);
+    [overflowButton tap];
+    
+    // Click on submit in the alert (popover/bottom sheet)
+    XCUIElement *alert = testApp.alerts.element;
+    XCUIElement *submitButton = [alert.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Submit"]];
+    XCTAssertTrue(submitButton.exists && submitButton.isHittable, @"Submit button in alert should exist and be hittable");
+    [submitButton tap];
+    
+    // Verify all inputs
+    NSString *resultsString = [self getInputsString];
+    NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
+    NSDictionary *inputs = [self getInputsFromResultsDictionary:resultsDictionary];
+    [self verifyInput:@"outsidePopover1" matchesExpectedValue:@"text outside popover required" inInputSet:inputs];
+    [self verifyInput:@"outsidePopover2" matchesExpectedValue:@"text outside popover Input" inInputSet:inputs];
+    [self verifyNumberInput:@"inputInPopover2" matchesExpectedValue:@"1234" inInputSet:inputs];
+    
+    // After clicking submit and before/after parsing the results:
+    XCUIElement *resultsText = [testApp.staticTexts elementMatchingType:XCUIElementTypeAny identifier:@"SubmitActionRetrievedResults"];
+    XCTAssertTrue(resultsText.exists, @"SubmitActionRetrievedResults static text should exist");
+    
+    // Build the expected label string (make sure to match the actual output format)
+    // The actual label ends with an extra newline, so match that
+    NSString *expectedLabel = @"{ \
+    \"inputs\":{ \
+    \"outsidePopover2\":\"textoutsidepopoverInput\", \
+    \"inputInPopover2\":\"1234\", \
+    \"outsidePopover1\":\"textoutsidepopoverrequired\" \
+    }, \
+    \"data\":null \
+    }";
+    
+    NSCharacterSet *whitespaceAndNewline = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    
+    NSString *cleanExpected = [[expectedLabel componentsSeparatedByCharactersInSet:whitespaceAndNewline] componentsJoinedByString:@""];
+    NSString *cleanActual = [[resultsText.label componentsSeparatedByCharactersInSet:whitespaceAndNewline] componentsJoinedByString:@""];
+    
+    XCTAssertEqualObjects(cleanActual, cleanExpected, @"SubmitActionRetrievedResults label should match expected JSON ignoring whitespace");
+}
+
+- (void) testPopoverInput2Submission
+{
+    [self openCardForVersion:@"v1.5" forCardType:@"Elements" withCardName:@"Action.Popover.json"];
+    
+    // Scroll to and tap the "Add Name Popover" button
+    XCUIElement *popoverButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Add Number Popover"]];
+    XCTAssertTrue(popoverButton.exists);
+    
+    int maxScrolls = 5;
+    int scrolls = 0;
+    while (!popoverButton.hittable && scrolls < maxScrolls) {
+        [testApp swipeUp];
+        sleep(1);
+        scrolls++;
+    }
+    XCTAssertTrue(popoverButton.hittable, @"Popover button should be hittable after scrolling");
+    [popoverButton tap];
+    
+    // Type in the popover input
+    XCUIElement *textField = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"inputInPopover2"]];
+    XCTAssertTrue(textField.exists, @"Popover text field should exist after tapping and swiping if needed");
+    [self checkAndTap:textField];
+    [textField typeText:@"1234\n"];
+    
+    // Click on overflow button
+    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
+    XCTAssertTrue(overflowButton.exists);
+    [overflowButton tap];
+    
+    // Click on submit in the alert (popover/bottom sheet)
+    XCUIElement *alert = testApp.alerts.element;
+    XCUIElement *submitButton = [alert.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Submit"]];
+    XCTAssertTrue(submitButton.exists && submitButton.isHittable, @"Submit button in alert should exist and be hittable");
+    [submitButton tap];
+    
+    // Verify all inputs
+    NSString *resultsString = [self getInputsString];
+    NSDictionary *resultsDictionary = [self parseJsonToDictionary:resultsString];
+    NSDictionary *inputs = [self getInputsFromResultsDictionary:resultsDictionary];
+    XCTAssertNil(inputs);
+}
+
+- (void) testPopoverRendering
+{
+    [self openCardForVersion:@"v1.5" forCardType:@"Elements" withCardName:@"Action.Popover.json"];
+    XCUIElement *popoverButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"Less Content Popover"]];
+    XCTAssertTrue(popoverButton.exists);
+    [popoverButton tap];
+
+    XCUIElement *lessContentTextView = [testApp.textViews elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Less Content"]];
+    XCTAssertTrue(lessContentTextView.exists, @"'Less Content' TextView should exist");
+    [self dismissPopoverBottomSheet];
+    XCUIElement *containerButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"This Container is clickable and will show a popover"]];
+    XCTAssertTrue(containerButton.exists && containerButton.isHittable, @"'This Container is clickable and will show a popover' button should exist and be hittable");
+    [containerButton tap];
+    XCUIElement *popoverTextView = [testApp.textViews elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"This is a popover"]];
+    XCTAssertTrue(popoverTextView.exists, @"'This is a popover' TextView should exist");
+    [self dismissPopoverBottomSheet];
+    XCUIElement *popoverIcon = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @", Click me to show a popover"]];
+    XCTAssertTrue(popoverIcon.exists && popoverIcon.isHittable, @"Button ', Click me to show a popover' should exist and be hittable");
+    [popoverIcon tap];
+    popoverTextView = [testApp.textViews elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"This Popover is made with Adaptive Card elements, it supports actions and is fully accessible."]];
+    XCTAssertTrue(popoverTextView.exists, @"The icon popover TextView with the expected label should exist");
+    [self dismissPopoverBottomSheet];
+    
+    XCUIElement *progressBarButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Progress Bar"]];
+    XCTAssertTrue(progressBarButton.exists, @"'Progress Bar' button should exist and be hittable");
+    [self checkAndTap:progressBarButton];
+    NSArray<NSString *> *labels = @[
+        @"Progress in Accent",
+        @"Progress in Attention",
+        @"Progress in Good",
+        @"Progress in Warning",
+        @"No Progress"
+    ];
+
+    for (NSString *label in labels) {
+        XCUIElement *textView = [testApp.textViews elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", label]];
+        XCTAssertTrue(textView.exists, "%s", [[NSString stringWithFormat:@"TextView with label '%@' should exist", label] UTF8String]);
+    }
+    [self dismissPopoverBottomSheet];
+}
+
+- (void) dismissPopoverBottomSheet
+{
+    XCUIElement *dismissButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Dismiss"]];
+    XCTAssertTrue(dismissButton.exists && dismissButton.isHittable, @"'Dismiss' button should exist and be hittable");
+    [dismissButton tap];
+
+}
+
+- (void) checkAndTap:(XCUIElement *)element
+{
+    int maxSwipes = 5, swipes = 0;
+    while (!element.isHittable && swipes < maxSwipes)
+    {
+        [testApp swipeUp];
+        swipes++;
+    }
+    [element tap];
 }
 
 @end

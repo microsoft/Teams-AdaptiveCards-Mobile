@@ -42,10 +42,16 @@
 #import "UtiliOS.h"
 #import "CarouselPage.h"
 #import "Carousel.h"
+#import "ACRStringBasedKeyValueObservation.h"
 #import <AVFoundation/AVFoundation.h>
 
 using namespace AdaptiveCards;
 typedef UIImage * (^ImageLoadBlock)(NSURL *url);
+
+@interface ACRView ()
+/// KeyValueObservation tracking using NSMapTable with weak references to UIImageView
+@property (nonatomic, strong, nonnull) NSMapTable<NSObject *, NSMutableArray<ACRStringBasedKeyValueObservation*> *> *observationsByObserver;
+@end
 
 @implementation ACRView {
     ACOAdaptiveCard *_adaptiveCard;
@@ -88,6 +94,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         _imageContextMap = [[NSMutableDictionary alloc] init];
         _imageViewContextMap = [[NSMutableDictionary alloc] init];
         _setOfRemovedObservers = [[NSMutableSet alloc] init];
+        _observationsByObserver = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsWeakMemory
+                                                        valueOptions:NSPointerFunctionsStrongMemory];
         _paddingMap = [[NSMutableDictionary alloc] init];
         _inputHandlerLookupTable = [[NSMapTable alloc] initWithKeyOptions:NSMapTableWeakMemory valueOptions:NSMapTableWeakMemory capacity:5];
         _showcards = [[NSMutableArray alloc] init];
@@ -122,6 +130,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
         self.acrActionDelegate = acrActionDelegate;
         self.theme = theme;
+        self.isRenderingInsideBottomSheet = NO;
         [self render];
     }
     // call to check if all resources are loaded
@@ -169,7 +178,14 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 - (void)callDidLoadElementsIfNeeded
 {
-    // Call back app with didLoadElements
+    // Call back app with didLoadElements - check if all observations are completed
+    NSUInteger totalObservations = 0;
+    @synchronized(self.observationsByObserver) {
+        for (NSMutableArray *observations in [self.observationsByObserver objectEnumerator]) {
+            totalObservations += observations.count;
+        }
+    }
+
     if ([[self acrActionDelegate] respondsToSelector:@selector(didLoadElements)] && !_numberOfSubscribers && !_hasCalled) {
         _hasCalled = YES;
         [[self acrActionDelegate] didLoadElements];
@@ -257,10 +273,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     if (view) {
                         // check image already exists in the returned image view and register the image
                         [self registerImageFromUIImageView:view key:key];
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:element.get()];
+                        [self startObserving:view
+                                     keyPath:@"image"
+                                     options:NSKeyValueObservingOptionNew
+                                     context:element.get()];
 
                         // store the image view and image element for easy retrieval in ACRView::observeValueForKeyPath
                         [rootView setImageView:key view:view];
@@ -283,10 +299,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            [self startObserving:view
+                                         keyPath:@"image"
+                                         options:NSKeyValueObservingOptionNew
+                                         context:element.get()];
 
                             // store the image view and image set element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -315,10 +331,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                             [self registerImageFromUIImageView:view key:key];
                             [contentholdingview addSubview:view];
                             contentholdingview.isMediaType = YES;
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:elem.get()];
+                            [self startObserving:view
+                                         keyPath:@"image"
+                                         options:NSKeyValueObservingOptionNew
+                                         context:elem.get()];
 
                             // store the image view and media element for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:contentholdingview];
@@ -335,10 +351,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                         if (view) {
                             // check image already exists in the returned image view and register the image
                             [self registerImageFromUIImageView:view key:key];
-                            [view addObserver:rootView
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:nil];
+                            [rootView startObserving:view
+                                             keyPath:@"image"
+                                             options:NSKeyValueObservingOptionNew
+                                             context:nil];
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
                         }
@@ -360,10 +376,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                     ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &element, NSURL *url, ACRView *rootView) {
                         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                         if (view) {
-                            [view addObserver:self
-                                   forKeyPath:@"image"
-                                      options:NSKeyValueObservingOptionNew
-                                      context:element.get()];
+                            [self startObserving:view
+                                         keyPath:@"image"
+                                         options:NSKeyValueObservingOptionNew
+                                         context:element.get()];
 
                             // store the image view for easy retrieval in ACRView::observeValueForKeyPath
                             [rootView setImageView:key view:view];
@@ -460,6 +476,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 [self loadBackgroundImageAccordingToResourceResolverIF:backgroundImageProperties key:nil observerAction:observerAction];
             }
             [self addBaseCardElementListToConcurrentQueue:carouselPage->GetItems() registration:registration];
+            break;
         }
             
         case AdaptiveCards::CardElementType::AdaptiveCard:
@@ -516,10 +533,10 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
                 ^(NSObject<ACOIResourceResolver> *imageResourceResolver, NSString *key, std::shared_ptr<BaseActionElement> const &elem, NSURL *url, ACRView *rootView) {
                     UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
                     if (view) {
-                        [view addObserver:self
-                               forKeyPath:@"image"
-                                  options:NSKeyValueObservingOptionNew
-                                  context:elem.get()];
+                        [self startObserving:view
+                                     keyPath:@"image"
+                                     options:NSKeyValueObservingOptionNew
+                                     context:elem.get()];
                         [rootView setImageView:key view:view];
                     }
                 };
@@ -681,24 +698,99 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     }
 }
 
-// remove observer from UIImageView
-- (void)removeObserverOnImageView:(NSString *)KeyPath onObject:(NSObject *)object keyToImageView:(NSString *)key
+/// Start observing the given keyPath on the given object.
+/// - Parameters:
+///  - object: The object to observe.
+///  - keyPath: The keyPath to observe.
+///  - options: The options to use when observing.
+///  - context: The context to pass to the observer.
+- (void)startObserving:(nonnull NSObject *)object
+               keyPath:(nonnull NSString *)keyPath
+               options:(NSKeyValueObservingOptions)options
+               context:(nullable void *)context
 {
-    if ([object isKindOfClass:[UIImageView class]]) {
-        if (_imageViewContextMap[key]) {
-            [self removeObserver:self forKeyPath:KeyPath onObject:object];
+    @synchronized(self.observationsByObserver) {
+        // Get or create the array of observations for this object
+        NSMutableArray<ACRStringBasedKeyValueObservation *> *objectObservations = [self.observationsByObserver objectForKey:object];
+        if (!objectObservations) {
+            objectObservations = [NSMutableArray array];
+            [self.observationsByObserver setObject:objectObservations forKey:object];
+        }
+
+        // Create the bridge that will call our observeValueForKeyPath method
+        __weak __typeof(self) weakSelf = self;
+        ACRStringBasedKeyValueObservation *stringBasedKeyValueObservation = [[ACRStringBasedKeyValueObservation alloc] initWithObservableObject:object
+                                                                                                        observedKeyPath:keyPath
+                                                                                                                options:options
+                                                                                                               callback:^(NSString * _Nullable keyPath, NSObject * _Nullable object, NSDictionary<NSKeyValueChangeKey,id> * _Nullable change) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            // Call the original observeValueForKeyPath method
+            [strongSelf observeValueForKeyPath:keyPath
+                                      ofObject:object
+                                        change:change
+                                       context:context];
+        }];
+
+        [objectObservations addObject:stringBasedKeyValueObservation];
+    }
+}
+
+/// Stop observing the given object.
+/// - Parameters:
+///   - object: The object to stop observing. If nil, does nothing.
+/// - Note: This method removes only the first observation for the object (FIFO). If there are multiple observations for the same object, subsequent calls will remove them one by one.
+- (void)stopObserving:(nullable NSObject *)object {
+    if (!object) {
+        return;
+    }
+
+    @synchronized(self.observationsByObserver) {
+        NSMutableArray<ACRStringBasedKeyValueObservation *> *objectObservations = [self.observationsByObserver objectForKey:object];
+        if (!objectObservations || objectObservations.count == 0) {
+            return;
+        }
+
+        // Remove just the first observation from the array
+        ACRStringBasedKeyValueObservation *_Nullable stringBasedKeyValueObservation = [objectObservations firstObject];
+        if (stringBasedKeyValueObservation) {
+            [objectObservations removeObject:stringBasedKeyValueObservation];
+        }
+
+        // If no more observations for this object, remove the entry entirely
+        if (objectObservations.count == 0) {
+            [self.observationsByObserver removeObjectForKey:object];
         }
     }
 }
 
+// Legacy KVO interface methods for backward compatibility
 - (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)path onObject:(NSObject *)object
 {
     // check that makes sure that there are subscribers, and the given observer is not one of the removed observers
     if (_numberOfSubscribers && ![_setOfRemovedObservers containsObject:object]) {
         _numberOfSubscribers--;
-        [object removeObserver:self forKeyPath:path];
+        [self stopObserving:object];
         [_setOfRemovedObservers addObject:object];
         [self callDidLoadElementsIfNeeded];
+    }
+}
+
+// Legacy KVO interface methods for backward compatibility
+- (BOOL)hasKVOObserverForImageView:(nonnull UIImageView *)imageView {
+    @synchronized(self.observationsByObserver) {
+        NSMutableArray<ACRStringBasedKeyValueObservation *> *observations = [self.observationsByObserver objectForKey:imageView];
+        return observations && observations.count > 0;
+    }
+}
+
+// Legacy KVO interface methods for backward compatibility
+- (void)removeObserverOnImageViewForKeyPath:(nonnull NSString *)keyPath onObject:(nonnull UIImageView *)object keyToImageView:(nonnull NSString *)key
+{
+    if ([object isKindOfClass:[UIImageView class]]) {
+        [self stopObserving:object];
+        if (_imageViewContextMap[key]) {
+            [_imageViewContextMap removeObjectForKey:key];
+        }
     }
 }
 
@@ -793,16 +885,9 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 
 - (void)dealloc
 {
-    for (id key in _imageViewContextMap) {
-        id object = _imageViewContextMap[key];
-
-        if ([object isKindOfClass:[ACRContentHoldingUIView class]]) {
-            object = ((UIView *)object).subviews[0];
-        }
-
-        if (![_setOfRemovedObservers containsObject:object] && [object isKindOfClass:[UIImageView class]]) {
-            [object removeObserver:self forKeyPath:@"image"];
-        }
+    // Clean up using safe KVO observation management
+    @synchronized(self.observationsByObserver) {
+        [self.observationsByObserver removeAllObjects];
     }
 }
 

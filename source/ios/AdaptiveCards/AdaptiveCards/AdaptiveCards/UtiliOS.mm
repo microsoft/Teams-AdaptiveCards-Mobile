@@ -112,7 +112,7 @@ void renderBackgroundImage(const std::shared_ptr<AdaptiveCards::BackgroundImage>
     if ([key length]) {
         UIImageView *imgView = nil;
         UIImage *img = [rootView getImageMap][key];
-        if (img) {
+        if (img && [img isKindOfClass:[UIImage class]]) {
             switch (backgroundImage->GetFillMode()) {
                 case ImageFillMode::Repeat:
                 case ImageFillMode::RepeatHorizontally:
@@ -150,7 +150,7 @@ void renderBackgroundImage(const std::shared_ptr<AdaptiveCards::BackgroundImage>
 void renderBackgroundImage(ACRView *rootView, const BackgroundImage *backgroundImageProperties, UIImageView *imageView,
                            UIImage *image)
 {
-    if (rootView == nil || backgroundImageProperties == nullptr || imageView == nullptr || image == nullptr) {
+    if (rootView == nil || backgroundImageProperties == nullptr || imageView == nullptr || image == nullptr || ![image isKindOfClass:[UIImage class]]) {
         return;
     }
 
@@ -438,10 +438,11 @@ ObserverActionBlock generateBackgroundImageObserverAction(
             __unused std::shared_ptr<BaseCardElement> const &elem, NSURL *url, ACRView *rootView) {
         UIImageView *view = [imageResourceResolver resolveImageViewResource:url];
         if (view) {
-            [view addObserver:observer
-                   forKeyPath:@"image"
-                      options:NSKeyValueObservingOptionNew
-                      context:backgroundImageProperties.get()];
+            // Use the new safe KVO method
+            [observer startObserving:view
+                             keyPath:@"image"
+                             options:NSKeyValueObservingOptionNew
+                             context:backgroundImageProperties.get()];
 
             // store the image view and column for easy retrieval in ACRView::observeValueForKeyPath
             [rootView setImageView:key view:view];
@@ -856,8 +857,6 @@ void TexStylesToRichTextElementProperties(const std::shared_ptr<TextBlock> &text
 {
     textProp.SetText(textBlock->GetText());
     textProp.SetLanguage(textBlock->GetLanguage());
-    textProp.SetText(textBlock->GetText());
-    textProp.SetLanguage(textBlock->GetLanguage());
     textProp.SetTextSize(textBlock->GetTextSize().value_or(textStyleConfig.size));
     textProp.SetTextWeight(textBlock->GetTextWeight().value_or(textStyleConfig.weight));
     textProp.SetFontType(textBlock->GetFontType().value_or(textStyleConfig.fontType));
@@ -1042,6 +1041,42 @@ ACRHorizontalAlignment getACRHorizontalAlignment(HorizontalAlignment horizontalA
             return ACRRight;
         default:
             return ACRLeft;
+    }
+}
+
+ACRImageFitMode getACRImageFitMode(ImageFitMode fitMode)
+{
+    switch (fitMode) {
+        case ImageFitMode::Fill:
+            return ACRImageFitModeFill;
+        case ImageFitMode::Contain:
+            return ACRImageFitModeContain;
+        case ImageFitMode::Cover:
+            return ACRImageFitModeCover;
+    }
+}
+
+ACRHorizontalContentAlignment getACRHorizontalContentAlignment(HorizontalContentAlignment horizontalContentAlignment)
+{
+    switch (horizontalContentAlignment) {
+        case HorizontalContentAlignment::Left:
+            return ACRHorizontalContentAlignmentLeft;
+        case HorizontalContentAlignment::Right:
+            return ACRHorizontalContentAlignmentRight;
+        case HorizontalContentAlignment::Center:
+            return ACRHorizontalContentAlignmentCenter;
+    }
+}
+
+ACRVerticalContentAlignment getACRVerticalContentAlignment(VerticalContentAlignment verticalContentAlignment)
+{
+    switch (verticalContentAlignment) {
+        case VerticalContentAlignment::Top:
+            return ACRVerticalContentAlignmentTop;
+        case VerticalContentAlignment::Bottom:
+            return ACRVerticalContentAlignmentBottom;
+        case VerticalContentAlignment::Center:
+            return ACRVerticalContentAlignmentCenter;
     }
 }
 
