@@ -1144,6 +1144,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void TextInput_SetRegex(long jarg1, TextInput jarg1_, String jarg2);
   public final static native void TextInput_addLabel(String jarg1, String jarg2);
   public final static native String TextInput_getLabel(String jarg1);
+  public final static native String TextInput_getLabelForAccessibility(long jarg1, TextInput jarg1_);
   public final static native boolean TextInput_getIsRequired(String jarg1);
   public final static native long TextInput_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_TextInputParser__SWIG_0();

@@ -23861,6 +23861,23 @@ SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectM
 }
 
 
+SWIGEXPORT jstring JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_TextInput_1getLabelForAccessibility(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  std::shared_ptr< AdaptiveCards::TextInput > arg1 ;
+  std::shared_ptr< AdaptiveCards::TextInput > *argp1 ;
+  std::string result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  argp1 = *(std::shared_ptr< AdaptiveCards::TextInput > **)&jarg1;
+  if (argp1) arg1 = *argp1; 
+  result = AdaptiveCards::TextInput::getLabelForAccessibility(arg1);
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
 SWIGEXPORT jboolean JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectModelJNI_TextInput_1getIsRequired(JNIEnv *jenv, jclass jcls, jstring jarg1) {
   jboolean jresult = 0 ;
   std::string *arg1 = 0 ;

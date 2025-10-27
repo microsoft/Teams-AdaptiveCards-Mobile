@@ -211,16 +211,16 @@ public class TextInputRenderer extends BaseCardElementRenderer
             editText.setHint(placeHolder);
         }
 
-        String label = TextInput.getLabel(baseInputElement.GetId());
-        if (!label.isEmpty()) {
-            editText.setContentDescription(label);
-        }
-
         InputUtils.updateInputHandlerInputWatcher(textInputHandler);
         LinearLayout textInputViewGroup = null;
 
         if (textInput != null)
         {
+            String label = TextInput.getLabelForAccessibility(textInput);
+            if (!label.isEmpty()) {
+                editText.setContentDescription(label);
+            }
+
             BaseActionElement action = textInput.GetInlineAction();
 
             if (action != null)

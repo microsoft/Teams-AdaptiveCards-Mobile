@@ -120,6 +120,10 @@ public class TextInput extends BaseInputElement {
     return AdaptiveCardObjectModelJNI.TextInput_getLabel(labelId);
   }
 
+  public static String getLabelForAccessibility(TextInput textInput) {
+    return AdaptiveCardObjectModelJNI.TextInput_getLabelForAccessibility(TextInput.getCPtr(textInput), textInput);
+  }
+
   public static boolean getIsRequired(String labelId) {
     return AdaptiveCardObjectModelJNI.TextInput_getIsRequired(labelId);
   }
