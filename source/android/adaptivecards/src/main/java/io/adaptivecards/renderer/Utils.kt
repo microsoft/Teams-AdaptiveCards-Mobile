@@ -7,6 +7,7 @@ import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Build
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.WindowMetrics
@@ -52,5 +53,13 @@ object Utils {
             windowManager.defaultDisplay.getMetrics(displayMetrics)
             displayMetrics.heightPixels
         }
+    }
+
+    fun Float.dpToPx(context: Context): Float {
+        return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                this,
+                context.resources.displayMetrics
+        )
     }
 }
