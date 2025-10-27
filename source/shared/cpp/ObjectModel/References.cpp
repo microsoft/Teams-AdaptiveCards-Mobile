@@ -27,7 +27,7 @@ const std::vector<std::string> References::GetKeywords() const {
     return m_keywords;
 }
 
-std::optional<std::shared_ptr<AdaptiveCards::AdaptiveCard>> References::GetContent() const {
+std::shared_ptr<AdaptiveCards::AdaptiveCard> References::GetContent() const {
     return m_content;
 }
 
@@ -55,8 +55,8 @@ Json::Value References::SerializeToJsonValue() const {
         }
     }
 
-    if (m_content.has_value()) {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content)] = m_content->get()->SerializeToJsonValue();
+    if (m_content != nullptr) {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Content)] = m_content->SerializeToJsonValue();
     }
 
     return root;

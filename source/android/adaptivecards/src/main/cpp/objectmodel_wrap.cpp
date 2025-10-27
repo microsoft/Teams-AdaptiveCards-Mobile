@@ -30193,7 +30193,7 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   jlong jresult = 0 ;
   AdaptiveCards::References *arg1 = (AdaptiveCards::References *) 0 ;
   std::shared_ptr< AdaptiveCards::References const > *smartarg1 = 0 ;
-  SwigValueWrapper< std::optional< std::shared_ptr< AdaptiveCards::AdaptiveCard > > > result;
+  std::shared_ptr< AdaptiveCards::AdaptiveCard > result;
   
   (void)jenv;
   (void)jcls;
@@ -30202,7 +30202,7 @@ SWIGEXPORT jlong JNICALL Java_io_adaptivecards_objectmodel_AdaptiveCardObjectMod
   smartarg1 = *(std::shared_ptr< const AdaptiveCards::References > **)&jarg1;
   arg1 = (AdaptiveCards::References *)(smartarg1 ? smartarg1->get() : 0); 
   result = ((AdaptiveCards::References const *)arg1)->GetContent();
-  *(std::optional< std::shared_ptr< AdaptiveCards::AdaptiveCard > > **)&jresult = new std::optional< std::shared_ptr< AdaptiveCards::AdaptiveCard > >((const std::optional< std::shared_ptr< AdaptiveCards::AdaptiveCard > > &)result); 
+  *(std::shared_ptr< AdaptiveCards::AdaptiveCard > **)&jresult = result ? new std::shared_ptr< AdaptiveCards::AdaptiveCard >(result) : 0; 
   return jresult;
 }
 
