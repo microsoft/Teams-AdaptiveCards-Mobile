@@ -5,6 +5,84 @@
 	"body": [
 		{
 			"type": "TextBlock",
+			"text": "Pattern Match Verification",
+			"wrap": true,
+			"weight": "Bolder"
+		},
+		{
+			"type": "Container",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Valid: Prefix${rs:hello}Suffix Prefix${rs:world}Suffix",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "Invalid: ${rshello} ${rsworld} [No colon, :]",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "Invalid: ${RS:hello} ${RS:world}  [Case mismatch]",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "Invalid: ${rS:hello} ${Rs:world} [Case mismatch]",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "Invalid: ${rs:hello $rs:world} [Missing Bracket]",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"text": "Invalid: ${rshello} ${rsworld} [Missing Dollar]",
+					"wrap": true
+				},
+				{
+					"type": "RichTextBlock",
+					"inlines": [
+						{
+							"type": "TextRun",
+							"text": "Inside Rich Text Block\n",
+							"size": "large"
+						},
+						{
+							"type": "TextRun",
+							"text": "Valid: Prefix${rs:hello}Suffix Prefix${rs:world}Suffix \n"
+						},
+						{
+							"type": "TextRun",
+							"text": "Invalid: ${rshello} ${rsworld} [No colon, :] \n"
+						},
+						{
+							"type": "TextRun",
+							"text": "Invalid: ${RS:hello} ${RS:world}  [Case mismatch] \n"
+						},
+						{
+							"type": "TextRun",
+							"text": "Invalid: ${rS:hello} ${Rs:world} [Case mismatch] \n"
+						},
+						{
+							"type": "TextRun",
+							"text": "Invalid: ${rs:hello $rs:world} [Missing Bracket] \n"
+						},
+						{
+							"type": "TextRun",
+							"text": "Invalid: ${rshello} ${rsworld} [Missing Dollar] \n"
+						}
+					]
+				}
+			],
+			"style": "accent",
+			"showBorder": true,
+			"roundedCorners": true
+		},
+		{
+			"type": "TextBlock",
 			"text": "Multiple String Resource in One String",
 			"wrap": true,
 			"weight": "Bolder"
@@ -62,7 +140,7 @@
 		},
 		{
 			"type": "TextBlock",
-			"text": "On Regular Text Elements",
+			"text": "On Regular Text Elements in Rich Text Block",
 			"wrap": true,
 			"weight": "Bolder"
 		},
@@ -126,21 +204,16 @@
 		},
 		{
 			"type": "TextBlock",
-			"text": "On URLs",
 			"wrap": true,
-			"weight": "Bolder"
-		},
-		{
-			"type": "TextBlock",
-			"wrap": true,
-			"text": "${rs:info2}"
+			"text": "${rs:info2}",
+			"isVisible": false
 		},
 		{
 			"type": "ActionSet",
 			"actions": [
 				{
 					"type": "Action.ShowCard",
-					"title": "ShowCard",
+					"title": "On ShowCard",
 					"card": {
 						"$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
 						"type": "AdaptiveCard",
@@ -341,6 +414,12 @@
 					}
 				}
 			]
+		},
+		{
+			"type": "TextBlock",
+			"text": "On URLs",
+			"wrap": true,
+			"weight": "Bolder"
 		},
 		{
 			"type": "Container",
