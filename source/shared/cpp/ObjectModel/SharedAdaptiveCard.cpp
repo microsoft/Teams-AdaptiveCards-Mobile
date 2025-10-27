@@ -189,7 +189,7 @@ std::string AdaptiveCard::ReplaceStringResources(
 
     auto strings = resources->GetStrings();
     // Add validation checks to skip replacement & return the same string
-    if (!_IsStringResourcePresent(input) || !resources || strings.empty()) {
+    if (!IsStringResourcePresent(input) || !resources || strings.empty()) {
         return input;
     }
 
@@ -224,7 +224,7 @@ std::string AdaptiveCard::ReplaceStringResources(
     return result;
 }
 
-bool AdaptiveCard::_IsStringResourcePresent(const std::string& input) {
+bool AdaptiveCard::IsStringResourcePresent(const std::string& input) {
     // Regular expression to match pattern ${rs:key}
     std::regex pattern(R"(\$\{rs:[^}]+\})");
     return std::regex_search(input, pattern);

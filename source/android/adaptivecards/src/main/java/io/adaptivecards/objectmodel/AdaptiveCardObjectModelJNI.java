@@ -1485,6 +1485,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long AdaptiveCard_GetFeaturesSupported();
   public final static native boolean AdaptiveCard_MeetsRootRequirements(long jarg1);
   public final static native String AdaptiveCard_ReplaceStringResources(String jarg1, long jarg2, Resources jarg2_, String jarg3);
+  public final static native boolean AdaptiveCard_IsStringResourcePresent(String jarg1);
   public final static native void delete_AdaptiveCard(long jarg1);
   public final static native long new_AdaptiveCardParseException(int jarg1, String jarg2);
   public final static native String AdaptiveCardParseException_what(long jarg1, AdaptiveCardParseException jarg1_);

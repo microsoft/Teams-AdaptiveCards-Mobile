@@ -288,4 +288,8 @@ public class AdaptiveCard {
     return AdaptiveCardObjectModelJNI.AdaptiveCard_ReplaceStringResources(input, Resources.getCPtr(resources), resources, locale);
   }
 
+  public static boolean IsStringResourcePresent(String input) {
+    return AdaptiveCardObjectModelJNI.AdaptiveCard_IsStringResourcePresent(input);
+  }
+
 }

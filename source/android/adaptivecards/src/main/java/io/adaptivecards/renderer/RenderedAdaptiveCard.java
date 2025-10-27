@@ -274,6 +274,9 @@ public class RenderedAdaptiveCard {
 
     @NonNull
     public String replaceStringResources(@NonNull String input) {
-        return AdaptiveCard.ReplaceStringResources(input, getAdaptiveCard().GetResources(), getLanguageTag());
+        if (AdaptiveCard.IsStringResourcePresent(input)) {
+            return AdaptiveCard.ReplaceStringResources(input, getAdaptiveCard().GetResources(), getLanguageTag());
+        }
+        return input;
     }
 }

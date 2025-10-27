@@ -199,10 +199,10 @@ public:
             const std::string& input,
             std::shared_ptr<AdaptiveCards::Resources> resources,
             const std::string& locale);
+    static bool IsStringResourcePresent(const std::string& input);
 
 private:
     static void _ValidateLanguage(const std::string& language, std::vector<std::shared_ptr<AdaptiveCardParseWarning>>& warnings);
-    static bool _IsStringResourcePresent(const std::string& input);
     void PopulateKnownPropertiesSet();
 
     std::string m_version;
