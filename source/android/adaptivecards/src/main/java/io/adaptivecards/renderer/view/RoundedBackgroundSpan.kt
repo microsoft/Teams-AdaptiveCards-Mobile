@@ -11,14 +11,16 @@ class RoundedBackgroundSpan(
     context: Context,
     private val backgroundColor: Int,
     private val textColor: Int,
-    cornerRadiusDp: Float = 8f,
-    paddingHorizontalDp: Float = 8f,
-    paddingVerticalDp: Float = 4f
+    cornerRadiusDp: Float,
+    paddingHorizontalDp: Float,
+    paddingVerticalDp: Float,
+    marginHorizontalDp: Float,
 ) : ReplacementSpan() {
 
     private val cornerRadius: Float = cornerRadiusDp.dpToPx(context)
     private val paddingHorizontal: Float = paddingHorizontalDp.dpToPx(context)
     private val paddingVertical: Float = paddingVerticalDp.dpToPx(context)
+    private val marginHorizontal: Float = marginHorizontalDp.dpToPx(context)
 
     override fun getSize(
         paint: Paint,
@@ -28,7 +30,7 @@ class RoundedBackgroundSpan(
         fm: Paint.FontMetricsInt?
     ): Int {
         val textWidth = paint.measureText(text, start, end)
-        return (textWidth + 2 * paddingHorizontal).toInt()
+        return (textWidth + 2 * paddingHorizontal + 2 * marginHorizontal).toInt()
     }
 
     override fun draw(
@@ -44,14 +46,30 @@ class RoundedBackgroundSpan(
     ) {
         val originalColor = paint.color
         val textWidth = paint.measureText(text, start, end)
-
         val fontMetrics = paint.fontMetrics
+
         val textHeight = fontMetrics.descent - fontMetrics.ascent
 
         val rectTop = y + fontMetrics.ascent - paddingVertical
         val rectBottom = y + fontMetrics.descent + paddingVertical
-        val rectLeft = x
-        val rectRight = x + textWidth + 2 * paddingHorizontal
+
+        // Detect RTL text direction
+        val isRtl = Character.getDirectionality(text[start]) == Character.DIRECTIONALITY_RIGHT_TO_LEFT
+        val rectLeft: Float
+        val rectRight: Float
+        val textX: Float
+
+        if (isRtl) {
+            // For RTL, draw expanding to the left
+            rectRight = x - marginHorizontal
+            rectLeft = rectRight - textWidth - 2 * paddingHorizontal
+            textX = rectRight - paddingHorizontal - textWidth
+        } else {
+            // For LTR, draw expanding to the right
+            rectLeft = x + marginHorizontal
+            rectRight = rectLeft + textWidth + 2 * paddingHorizontal
+            textX = rectLeft + paddingHorizontal
+        }
 
         val backgroundPaint = Paint(paint).apply {
             color = backgroundColor
@@ -60,10 +78,8 @@ class RoundedBackgroundSpan(
 
         val rect = RectF(rectLeft, rectTop, rectRight, rectBottom)
         canvas.drawRoundRect(rect, cornerRadius, cornerRadius, backgroundPaint)
-
         paint.color = textColor
-        canvas.drawText(text, start, end, x + paddingHorizontal, y.toFloat(), paint)
-
+        canvas.drawText(text, start, end, textX, y.toFloat(), paint)
         paint.color = originalColor
     }
 }
