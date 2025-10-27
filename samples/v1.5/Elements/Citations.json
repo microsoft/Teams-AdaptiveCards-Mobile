@@ -12,7 +12,7 @@
 			"wrap": true
 		},
 		{
-			"text": "Second Text block citation [A2](cite:2)",
+			"text": "Second Text block citation [A2](cite:2) [A3](cite:3)",
 			"type": "TextBlock",
 			"wrap": true
 		},
