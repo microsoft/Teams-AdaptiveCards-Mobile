@@ -48,7 +48,8 @@ std::unordered_map<std::string, std::string> StringResource::GetLocalizedValue()
 std::shared_ptr<StringResource> StringResource::Deserialize(ParseContext& context, const Json::Value& json) {
     std::shared_ptr<StringResource> stringResource = std::make_shared<StringResource>();
     stringResource->m_defaultValue = ParseUtil::GetString(json, AdaptiveCardSchemaKey::DefaultValue, false);
-    stringResource->m_localizedValues = ParseUtil::GetStringMap(json, AdaptiveCardSchemaKey::LocalizedValues, false);
+    // lowercase the keys to avoid case mismatch
+    stringResource->m_localizedValues = ParseUtil::GetStringMap(json, AdaptiveCardSchemaKey::LocalizedValues, false, true);
     return stringResource;
 }
 

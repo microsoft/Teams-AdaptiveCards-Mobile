@@ -389,7 +389,11 @@ std::unordered_map<std::string, Json::Value> ParseUtil::GetJsonMap(const Json::V
     return result;
 }
 
-std::unordered_map<std::string, std::string> ParseUtil::GetStringMap(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired) {
+std::unordered_map<std::string, std::string> ParseUtil::GetStringMap(
+        const Json::Value& json,
+        AdaptiveCardSchemaKey key,
+        bool isRequired,
+        bool lowerCaseKeys) {
     std::unordered_map<std::string, Json::Value> valueMap = ParseUtil::GetJsonMap(json, key, isRequired);
     std::unordered_map<std::string, std::string> stringMap;
 
@@ -399,8 +403,7 @@ std::unordered_map<std::string, std::string> ParseUtil::GetStringMap(const Json:
                     ErrorStatusCode::InvalidPropertyValue,
                     "Value for key \"" + pair.first + "\" is not a string.");
         }
-
-        stringMap[pair.first] = pair.second.asString();
+        stringMap[lowerCaseKeys ? ToLowercase(pair.first) : pair.first] = pair.second.asString();
     }
     return stringMap;
 }

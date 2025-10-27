@@ -212,7 +212,8 @@ std::string AdaptiveCard::ReplaceStringResources(
         auto pair = strings.find(key);
         if (pair != strings.end()) {
             auto stringResource = pair->second;
-            result += stringResource->GetDefaultValue(locale, fullMatch);
+            // lowercase the locale to avoid case mismatch
+            result += stringResource->GetDefaultValue(ParseUtil::ToLowercase(locale), fullMatch);
         } else {
             result += fullMatch; // Leave it unchanged if not found
         }

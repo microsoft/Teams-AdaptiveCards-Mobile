@@ -138,7 +138,11 @@ namespace ParseUtil
 
     std::unordered_map<std::string, Json::Value> GetJsonMap(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
 
-    std::unordered_map<std::string, std::string> GetStringMap(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired = false);
+    std::unordered_map<std::string, std::string> GetStringMap(
+            const Json::Value& json,
+            AdaptiveCardSchemaKey key,
+            bool isRequired = false,
+            bool lowerCaseKeys = false);
 
     template <typename T>
     std::unordered_map<std::string, std::shared_ptr<T>> GetGenericMap(
