@@ -7,7 +7,7 @@
 			"size": "large"
 		},
 		{
-			"text": "First Text block citations [1](cite:1)[2](cite:2)",
+			"text": "First Text block citations [LK1](cite:1)[L2](cite:2) [Label](https://adaptivecards.io)",
 			"type": "TextBlock",
 			"wrap": true
 		},
@@ -22,7 +22,33 @@
 				{
 					"type": "TextRun",
 					"text": "Some Rich text block citations"
-				}
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": -1,
+					"text": "Invalid AC-1"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 0,
+					"text": "Invalid AC0"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 3,
+					"text": "Invalid AC03"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 1,
+					"text": "AC01"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 2,
+					"text": "AC02"
+				},
+				"."
 			]
 		}
 	],
