@@ -6,6 +6,7 @@ import static android.content.Context.ACCESSIBILITY_SERVICE;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.text.Layout;
@@ -50,6 +51,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.citation.CitationUtil;
 
 public class TextBlockRenderer extends BaseCardElementRenderer
 {
@@ -298,6 +300,18 @@ public class TextBlockRenderer extends BaseCardElementRenderer
 
         RendererUtil.SpecialTextHandleResult textHandleResult = RendererUtil.handleSpecialTextAndQueryLinks(textWithFormattedDates);
         CharSequence htmlString = textHandleResult.getHtmlString();
+        if (CitationUtil.isCitationUrlSpansPresent(htmlString)) {
+            htmlString = CitationUtil.handleCitationSpansForTextBlock(
+                context,
+                htmlString,
+                Color.MAGENTA,
+                Color.LTGRAY,
+                renderedCard,
+                cardActionHandler,
+                fragmentManager,
+                hostConfig,
+                renderArgs);
+        }
         textView.setText(htmlString);
 
         textView.setEllipsize(TextUtils.TruncateAt.END);
