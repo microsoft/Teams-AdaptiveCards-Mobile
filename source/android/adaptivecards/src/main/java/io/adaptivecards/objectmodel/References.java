@@ -84,8 +84,9 @@ public class References {
     return new StringVector(AdaptiveCardObjectModelJNI.References_GetKeywords(swigCPtr, this), true);
   }
 
-  public SWIGTYPE_p_std__optionalT_std__shared_ptrT_AdaptiveCards__AdaptiveCard_t_t GetContent() {
-    return new SWIGTYPE_p_std__optionalT_std__shared_ptrT_AdaptiveCards__AdaptiveCard_t_t(AdaptiveCardObjectModelJNI.References_GetContent(swigCPtr, this), true);
+  public AdaptiveCard GetContent() {
+    long cPtr = AdaptiveCardObjectModelJNI.References_GetContent(swigCPtr, this);
+    return (cPtr == 0) ? null : new AdaptiveCard(cPtr, true);
   }
 
   public static References Deserialize(ParseContext context, JsonValue json) {

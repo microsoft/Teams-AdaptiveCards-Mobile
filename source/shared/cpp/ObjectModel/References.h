@@ -43,7 +43,7 @@ namespace AdaptiveCards {
         const std::string GetTitle() const;
         const std::string GetUrl() const;
         const std::vector<std::string> GetKeywords() const;
-        std::optional<std::shared_ptr<AdaptiveCards::AdaptiveCard>> GetContent() const;
+        std::shared_ptr<AdaptiveCards::AdaptiveCard> GetContent() const;
 
         static std::shared_ptr<References> Deserialize(ParseContext& context, const Json::Value& json);
         static std::shared_ptr<References> DeserializeFromString(ParseContext& context, const std::string& jsonString);
@@ -54,6 +54,6 @@ namespace AdaptiveCards {
         std::string m_title;
         std::string m_url;
         std::vector<std::string> m_keywords;
-        std::optional<std::shared_ptr<AdaptiveCard>> m_content;
+        std::shared_ptr<AdaptiveCard> m_content;
     };
 } // namespace AdaptiveCards
