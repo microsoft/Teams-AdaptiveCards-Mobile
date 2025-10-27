@@ -29,8 +29,6 @@ public:
 
     std::vector<std::shared_ptr<Inline>>& GetInlines();
     const std::vector<std::shared_ptr<Inline>>& GetInlines() const;
-    
-    std::string GetLabelFor() const;
 
     std::string GetLabelFor() const;
 
