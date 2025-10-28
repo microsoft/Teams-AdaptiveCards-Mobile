@@ -11,6 +11,10 @@ const ReferenceType References::GetType() const {
     return m_type;
 }
 
+const ReferenceIcon References::GetIcon() const {
+    return m_icon;
+}
+
 const std::string References::GetAbstract() const {
     return m_abstract;
 }
@@ -70,6 +74,7 @@ std::shared_ptr<References> References::Deserialize(ParseContext& context, const
     std::shared_ptr<References> references = std::make_shared<References>();
 
     references->m_type = ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::Type, ReferenceType::Document,ReferenceTypeFromString,true);
+    references->m_icon = ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::Icon, ReferenceIcon::Image,ReferenceIconFromString,false);
     references->m_title = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title, true);
     references->m_abstract = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Abstract, true);
     references->m_url = ParseUtil::GetString(json, AdaptiveCardSchemaKey::Url, false);

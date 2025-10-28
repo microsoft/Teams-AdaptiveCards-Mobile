@@ -621,4 +621,27 @@ namespace AdaptiveCards
     DEFINE_ADAPTIVECARD_ENUM(ReferenceType, {
         {ReferenceType::AdaptiveCard, "AdaptiveCardReference"},
         {ReferenceType::Document, "DocumentReference"}})
+
+    DEFINE_ADAPTIVECARD_ENUM(ReferenceIcon, {
+        {ReferenceIcon::AdobeFlash, "adobeFlash"},
+        {ReferenceIcon::AdobeIllustrator, "adobeIllustrator"},
+        {ReferenceIcon::AdobeInDesign, "adobeInDesign"},
+        {ReferenceIcon::AdobePhotoshop, "adobePhotoshop"},
+        {ReferenceIcon::MsExcel, "msExcel"},
+        {ReferenceIcon::MsLoop, "msLoop"},
+        {ReferenceIcon::MsOneNote, "msOneNote"},
+        {ReferenceIcon::MsPowerPoint, "msPowerPoint"},
+        {ReferenceIcon::MsSharePoint, "msSharePoint"},
+        {ReferenceIcon::MsVisio, "msVisio"},
+        {ReferenceIcon::MsWhiteboard, "msWhiteboard"},
+        {ReferenceIcon::MsWord, "msWord"},
+        {ReferenceIcon::Code, "code"},
+        {ReferenceIcon::Gif, "gif"},
+        {ReferenceIcon::Image, "image"},
+        {ReferenceIcon::Pdf, "pdf"},
+        {ReferenceIcon::Sketch, "sketch"},
+        {ReferenceIcon::Sound, "sound"},
+        {ReferenceIcon::Text, "text"},
+        {ReferenceIcon::Video, "video"},
+        {ReferenceIcon::Zip, "zip"}})
 }

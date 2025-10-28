@@ -39,6 +39,7 @@ namespace AdaptiveCards {
         Json::Value SerializeToJsonValue() const;
 
         const ReferenceType GetType() const;
+        const ReferenceIcon GetIcon() const;
         const std::string GetAbstract() const;
         const std::string GetTitle() const;
         const std::string GetUrl() const;
@@ -50,6 +51,7 @@ namespace AdaptiveCards {
 
     private:
         ReferenceType m_type;
+        ReferenceIcon m_icon;
         std::string m_abstract;
         std::string m_title;
         std::string m_url;

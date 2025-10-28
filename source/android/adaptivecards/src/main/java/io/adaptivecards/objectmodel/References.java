@@ -68,6 +68,10 @@ public class References {
     return ReferenceType.swigToEnum(AdaptiveCardObjectModelJNI.References_GetType(swigCPtr, this));
   }
 
+  public ReferenceIcon GetIcon() {
+    return ReferenceIcon.swigToEnum(AdaptiveCardObjectModelJNI.References_GetIcon(swigCPtr, this));
+  }
+
   public String GetAbstract() {
     return AdaptiveCardObjectModelJNI.References_GetAbstract(swigCPtr, this);
   }

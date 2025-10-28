@@ -858,5 +858,30 @@ enum class ReferenceType {
     Document
 };
 DECLARE_ADAPTIVECARD_ENUM(ReferenceType);
+
+enum class ReferenceIcon {
+    AdobeIllustrator,
+    AdobePhotoshop,
+    AdobeInDesign,
+    AdobeFlash,
+    MsWord,
+    MsExcel,
+    MsPowerPoint,
+    MsOneNote,
+    MsSharePoint,
+    MsVisio,
+    MsLoop,
+    MsWhiteboard,
+    Code,
+    Gif,
+    Image,
+    Pdf,
+    Sketch,
+    Sound,
+    Text,
+    Video,
+    Zip
+};
+DECLARE_ADAPTIVECARD_ENUM(ReferenceIcon);
 }
 // namespace AdaptiveCards
