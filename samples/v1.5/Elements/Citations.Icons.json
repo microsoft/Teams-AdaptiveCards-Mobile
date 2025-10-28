@@ -1,0 +1,116 @@
+{
+	"type": "AdaptiveCard",
+	"body": [
+		{
+			"type": "RichTextBlock",
+			"inlines": [
+				{
+					"type": "CitationRun",
+					"referenceIndex": 1,
+					"text": "adobeFlash"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 2,
+					"text": "adobeIllustrator"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 3,
+					"text": "adobeInDesign"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 4,
+					"text": "adobePhotoshop"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 5,
+					"text": "msExcel"
+				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 6,
+					"text": "msLoop"
+				},
+				"."
+			]
+		}
+	],
+	"version": "1.6",
+	"references": [
+		{
+			"type": "DocumentReference",
+			"title": "adobeFlash",
+			"icon": "adobeFlash",
+			"url": "https://adaptivecards.io",
+			"abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"keywords": [
+				"keyword 1",
+				"keyword 2",
+				"keyword 3"
+			]
+		},
+		{
+			"type": "DocumentReference",
+			"title": "adobeIllustrator",
+			"icon": "adobeIllustrator",
+			"url": "https://adaptivecards.io",
+			"abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"keywords": [
+				"keyword 1",
+				"keyword 2",
+				"keyword 3"
+			]
+		},
+		{
+			"type": "DocumentReference",
+			"title": "adobeInDesign",
+			"icon": "adobeInDesign",
+			"url": "https://adaptivecards.io",
+			"abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"keywords": [
+				"keyword 1",
+				"keyword 2",
+				"keyword 3"
+			]
+		},
+		{
+			"type": "DocumentReference",
+			"title": "adobePhotoshop",
+			"icon": "adobePhotoshop",
+			"url": "https://adaptivecards.io",
+			"abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"keywords": [
+				"keyword 1",
+				"keyword 2",
+				"keyword 3"
+			]
+		},
+		{
+			"type": "DocumentReference",
+			"title": "msExcel",
+			"icon": "msExcel",
+			"url": "https://adaptivecards.io",
+			"abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"keywords": [
+				"keyword 1",
+				"keyword 2",
+				"keyword 3"
+			]
+		},
+		{
+			"type": "DocumentReference",
+			"title": "msLoop",
+			"icon": "msLoop",
+			"url": "https://adaptivecards.io",
+			"abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"keywords": [
+				"keyword 1",
+				"keyword 2",
+				"keyword 3"
+			]
+		}
+	]
+}
