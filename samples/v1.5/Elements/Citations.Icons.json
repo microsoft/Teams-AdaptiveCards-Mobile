@@ -7,32 +7,32 @@
 				{
 					"type": "CitationRun",
 					"referenceIndex": 1,
-					"text": "adobeFlash"
+					"text": "adobeFlash\n"
 				},
 				{
 					"type": "CitationRun",
 					"referenceIndex": 2,
-					"text": "adobeIllustrator"
+					"text": "adobeIllustrator\n"
 				},
 				{
 					"type": "CitationRun",
 					"referenceIndex": 3,
-					"text": "adobeInDesign"
+					"text": "adobeInDesign\n"
 				},
 				{
 					"type": "CitationRun",
 					"referenceIndex": 4,
-					"text": "adobePhotoshop"
+					"text": "adobePhotoshop\n"
 				},
 				{
 					"type": "CitationRun",
 					"referenceIndex": 5,
-					"text": "msExcel"
+					"text": "msExcel\n"
 				},
 				{
 					"type": "CitationRun",
 					"referenceIndex": 6,
-					"text": "msLoop"
+					"text": "msLoop\n"
 				},
 				"."
 			]
