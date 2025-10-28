@@ -625,6 +625,18 @@ public class AdaptiveCardObjectModel implements AdaptiveCardObjectModelConstants
     return ReferenceType.swigToEnum(AdaptiveCardObjectModelJNI.ReferenceTypeFromString(t));
   }
 
+  public static SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ReferenceIcon_t getReferenceIconEnum() {
+    return new SWIGTYPE_p_AdaptiveCards__EnumHelpers__EnumMappingT_AdaptiveCards__ReferenceIcon_t(AdaptiveCardObjectModelJNI.getReferenceIconEnum(), false);
+  }
+
+  public static String ReferenceIconToString(ReferenceIcon t) {
+    return AdaptiveCardObjectModelJNI.ReferenceIconToString(t.swigValue());
+  }
+
+  public static ReferenceIcon ReferenceIconFromString(String t) {
+    return ReferenceIcon.swigToEnum(AdaptiveCardObjectModelJNI.ReferenceIconFromString(t));
+  }
+
   public static void HandleUnknownProperties(JsonValue json, SWIGTYPE_p_std__unordered_setT_std__string_t knownProperties, JsonValue unknownProperties) {
     AdaptiveCardObjectModelJNI.HandleUnknownProperties(JsonValue.getCPtr(json), json, SWIGTYPE_p_std__unordered_setT_std__string_t.getCPtr(knownProperties), JsonValue.getCPtr(unknownProperties), unknownProperties);
   }
