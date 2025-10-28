@@ -11,17 +11,91 @@
         android:layout_marginTop="8dp"
         android:padding="10dp">
 
-        <ImageButton
-            android:id="@+id/popover_closeButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:scaleType="fitXY"
-            android:background="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+<!--        <ImageButton-->
+<!--            android:id="@+id/popover_closeButton"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:scaleType="fitXY"-->
+<!--            android:background="@null"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+<!--            -->
+<!--        </ImageButton>-->
 
-        </ImageButton>
+        <TextView
+            android:id="@+id/text_reference_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_globe"
+            app:layout_constraintBottom_toBottomOf="@id/image_globe"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"/>
+
+        <ImageView
+            android:id="@+id/image_globe"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_fluent_star_24_filled"
+            app:layout_constraintStart_toEndOf="@id/text_reference_number"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/citation_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Understanding Domicile in Florida"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/image_globe"
+            app:layout_constraintTop_toTopOf="@id/image_globe"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/citation_keywords"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="07.2025 | 5 min read | This is a long keyword &amp; there is no limit on the number if lines."
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@id/citation_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/citation_title"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/citation_abstract"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="News reports clarified key aspects of establishing domicile in Florida, including legal residency requirements and homestead eligibility."
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/citation_keywords"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/citation_more_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More details >"
+            android:textSize="14sp"
+            android:textColor="@color/design_default_color_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/citation_abstract"
+            android:layout_marginTop="12dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

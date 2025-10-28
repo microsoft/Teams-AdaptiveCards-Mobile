@@ -47,7 +47,6 @@ class CitationCardFragment(
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         val view = inflater.inflate(R.layout.citation_card_bottom_sheet_layout, container, false)
 
         // Add Card to BottomSheet
@@ -78,9 +77,6 @@ class CitationCardFragment(
         super.onStart()
 
         val dialog = dialog as? BottomSheetDialog
-        // store dialog object in rendered card to auto dismiss it on submit/execute
-        renderedAdaptiveCard.setPopoverDialog(dialog)
-
         val bottomSheet =
             dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
 
