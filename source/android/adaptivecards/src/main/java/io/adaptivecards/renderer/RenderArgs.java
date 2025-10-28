@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 package io.adaptivecards.renderer;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.NonNull;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import io.adaptivecards.objectmodel.ActionType;
+import io.adaptivecards.objectmodel.CardElementType;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 
@@ -18,7 +21,12 @@ import io.adaptivecards.objectmodel.HorizontalAlignment;
  */
 public class RenderArgs {
 
+    private final Set<CardElementType> mCardElementsToIgnore;
+    private final Set<ActionType> mActionTypeToIgnore;
+
     public RenderArgs() {
+        mActionTypeToIgnore = new HashSet<>();
+        mCardElementsToIgnore = new HashSet<>();
     }
 
     public RenderArgs(RenderArgs renderArgs) {
@@ -35,6 +43,14 @@ public class RenderArgs {
     public RenderArgs(RenderArgs renderArgs, int popoverId) {
         this(renderArgs);
         this.popoverId = popoverId;
+    }
+
+    public final boolean canRenderElement(@NonNull CardElementType cardElementType) {
+        return !mCardElementsToIgnore.contains(cardElementType);
+    }
+
+    public final boolean canRenderAction(@NonNull ActionType actionType) {
+        return !mActionTypeToIgnore.contains(actionType);
     }
 
     public boolean getAncestorHasFallback()
