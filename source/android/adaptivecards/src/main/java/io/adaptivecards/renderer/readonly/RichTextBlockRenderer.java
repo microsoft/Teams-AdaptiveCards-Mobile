@@ -199,11 +199,6 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 //CitationRun citationRun = null;
                 CitationRun citationRun = CitationUtil.castToCitationRun(inline);
 
-                ForegroundColor textColor = TextRendererUtil.computeTextColor(hostConfig, TextStyle.Default, null, renderArgs);
-                boolean isSubtle = TextRendererUtil.computeIsSubtle(hostConfig, TextStyle.Default, null, renderArgs);
-                int color = BaseCardElementRenderer.getColor(
-                    TextRendererUtil.getTextColor(textColor, hostConfig, isSubtle, renderArgs.getContainerStyle()));
-
                 // Get the text label to shown for the citation
                 String citationText = CitationUtil.getCitationText(citationRun, renderedCard);
 
@@ -217,8 +212,9 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                     spanStart,
                     spanEnd,
                     paragraph,
-                    color,
+                    Color.GRAY,
                     Color.RED,
+                    Color.BLACK,
                     renderedCard,
                     citationRun.GetReferenceIndex(),
                     cardActionHandler,

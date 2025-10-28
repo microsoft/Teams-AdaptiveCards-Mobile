@@ -22,11 +22,6 @@ import java.util.Locale
 
 object CitationUtil {
 
-    private const val CITATION_SPAN_PADDING_HORIZONTAL = 4f
-    private const val CITATION_SPAN_PADDING_VERTICAL = 0f
-    private const val CITATION_SPAN_CORNER_RADIUS = 4f
-    private const val CITATION_SPAN_MARGIN_HORIZONTAL = 2f
-
     @JvmStatic
     fun isCitationUrlSpansPresent(htmlString: CharSequence) : Boolean {
         val paragraph = SpannableStringBuilder(htmlString)
@@ -41,6 +36,7 @@ object CitationUtil {
         htmlString: CharSequence,
         textColor: Int,
         backgroundColor: Int,
+        borderColor: Int,
         renderedCard: RenderedAdaptiveCard,
         cardActionHandler: ICardActionHandler,
         fragmentManager: FragmentManager,
@@ -69,6 +65,7 @@ object CitationUtil {
                         paragraph,
                         textColor,
                         backgroundColor,
+                        borderColor,
                         renderedCard,
                         index,
                         cardActionHandler,
@@ -89,6 +86,7 @@ object CitationUtil {
         paragraph : SpannableStringBuilder,
         textColor: Int,
         backgroundColor: Int,
+        borderColor: Int,
         renderedCard: RenderedAdaptiveCard,
         referenceIndex: Int,
         cardActionHandler: ICardActionHandler,
@@ -98,18 +96,12 @@ object CitationUtil {
     ) {
         val citationReference = getCitationReference(referenceIndex, renderedCard)
 
-        // Apply styling related spans for citations
-        paragraph.setSpan(ForegroundColorSpan(textColor), spanStart, spanEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-
         if (citationReference != null) {
             val roundedBackgroundSpan = RoundedBackgroundSpan(
-                    context,
-                    backgroundColor,
-                    textColor,
-                    CITATION_SPAN_CORNER_RADIUS,
-                    CITATION_SPAN_PADDING_HORIZONTAL,
-                    CITATION_SPAN_PADDING_VERTICAL,
-                    CITATION_SPAN_MARGIN_HORIZONTAL
+                context,
+                textColor,
+                backgroundColor,
+                borderColor
             )
             paragraph.setSpan(roundedBackgroundSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 

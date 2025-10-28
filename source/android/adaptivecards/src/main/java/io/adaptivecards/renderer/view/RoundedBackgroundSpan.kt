@@ -4,20 +4,26 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import android.text.TextPaint
 import android.text.style.ReplacementSpan
+import android.util.TypedValue
 import io.adaptivecards.renderer.Utils.dpToPx
 
 class RoundedBackgroundSpan(
-    context: Context,
-    private val backgroundColor: Int,
-    private val textColor: Int,
-    cornerRadiusDp: Float,
-    paddingHorizontalDp: Float,
-    paddingVerticalDp: Float,
-    marginHorizontalDp: Float,
+    private val context: Context,
+    private val textColor: Int = 0xFF424242.toInt(),
+    private val backgroundColor: Int = 0xFFFAFAFA.toInt(),
+    private val borderColor: Int = 0xFFE0E0E0.toInt(),
+    cornerRadiusDp: Float = 4f,
+    borderWidthDp: Float = 1f,
+    paddingHorizontalDp: Float = 4f,
+    paddingVerticalDp: Float = 2f,
+    marginHorizontalDp: Float = 2f,
+    private val textSizeSp: Float = 12f
 ) : ReplacementSpan() {
 
     private val cornerRadius: Float = cornerRadiusDp.dpToPx(context)
+    private val borderWidth: Float = borderWidthDp.dpToPx(context)
     private val paddingHorizontal: Float = paddingHorizontalDp.dpToPx(context)
     private val paddingVertical: Float = paddingVerticalDp.dpToPx(context)
     private val marginHorizontal: Float = marginHorizontalDp.dpToPx(context)
@@ -29,7 +35,15 @@ class RoundedBackgroundSpan(
         end: Int,
         fm: Paint.FontMetricsInt?
     ): Int {
-        val textWidth = paint.measureText(text, start, end)
+        val textPaint = getConfiguredTextPaint(paint)
+        val textWidth = textPaint.measureText(text, start, end)
+        val fontMetrics = textPaint.fontMetricsInt
+        fm?.let {
+            it.ascent = fontMetrics.ascent - paddingVertical.toInt()
+            it.descent = fontMetrics.descent + paddingVertical.toInt()
+            it.top = it.ascent
+            it.bottom = it.descent
+        }
         return (textWidth + 2 * paddingHorizontal + 2 * marginHorizontal).toInt()
     }
 
@@ -44,12 +58,11 @@ class RoundedBackgroundSpan(
         bottom: Int,
         paint: Paint
     ) {
-        val originalColor = paint.color
-        val textWidth = paint.measureText(text, start, end)
-        val fontMetrics = paint.fontMetrics
+        val textPaint = getConfiguredTextPaint(paint)
+        val textWidth = textPaint.measureText(text, start, end)
+        val fontMetrics = textPaint.fontMetrics
 
-        val textHeight = fontMetrics.descent - fontMetrics.ascent
-
+        // Rectangle bounds
         val rectTop = y + fontMetrics.ascent - paddingVertical
         val rectBottom = y + fontMetrics.descent + paddingVertical
 
@@ -60,26 +73,46 @@ class RoundedBackgroundSpan(
         val textX: Float
 
         if (isRtl) {
-            // For RTL, draw expanding to the left
             rectRight = x - marginHorizontal
             rectLeft = rectRight - textWidth - 2 * paddingHorizontal
             textX = rectRight - paddingHorizontal - textWidth
         } else {
-            // For LTR, draw expanding to the right
             rectLeft = x + marginHorizontal
             rectRight = rectLeft + textWidth + 2 * paddingHorizontal
             textX = rectLeft + paddingHorizontal
         }
 
-        val backgroundPaint = Paint(paint).apply {
+        // Draw background
+        val backgroundPaint = Paint(textPaint).apply {
             color = backgroundColor
+            style = Paint.Style.FILL
             isAntiAlias = true
         }
-
         val rect = RectF(rectLeft, rectTop, rectRight, rectBottom)
         canvas.drawRoundRect(rect, cornerRadius, cornerRadius, backgroundPaint)
-        paint.color = textColor
-        canvas.drawText(text, start, end, textX, y.toFloat(), paint)
-        paint.color = originalColor
+
+        // Draw border
+        val borderPaint = Paint(textPaint).apply {
+            color = borderColor
+            style = Paint.Style.STROKE
+            strokeWidth = borderWidth
+            isAntiAlias = true
+        }
+        canvas.drawRoundRect(rect, cornerRadius, cornerRadius, borderPaint)
+
+        // Draw text centered vertically
+        textPaint.color = textColor
+        val textBaseline = y.toFloat()
+        canvas.drawText(text, start, end, textX, textBaseline, textPaint)
+    }
+
+    private fun getConfiguredTextPaint(basePaint: Paint): TextPaint {
+        val textPaint = if (basePaint is TextPaint) TextPaint(basePaint) else TextPaint(basePaint)
+        // Set text size to textSizeSp
+        textPaint.textSize = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP, textSizeSp, context.resources.displayMetrics
+        )
+        textPaint.isAntiAlias = true
+        return textPaint
     }
 }

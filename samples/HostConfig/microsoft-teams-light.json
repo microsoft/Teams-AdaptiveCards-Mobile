@@ -61,7 +61,19 @@
         }
     },
     "textBlock": {
-        "headingLevel": 2
+        "headingLevel": 2,
+		"citation": {
+			"text": {
+				"textColor": "",
+				"backgroundColor": "",
+				"borderColor": ""
+			},
+			"bottomSheet": {
+				"textColor": "",
+				"backgroundColor": "",
+				"borderColor": ""
+			}
+		}
     },
     "containerStyles": {
         "default": {
