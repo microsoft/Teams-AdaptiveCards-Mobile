@@ -8,9 +8,9 @@ package io.adaptivecards.renderer.registration
  */
 object FeatureFlagResolverUtility {
 
+    const val IS_STRING_RESOURCE_ENABLED = "adaptiveCard/isStringResourceEnabled"
     private const val IS_FLOW_LAYOUT_ENABLED = "adaptiveCard/isFlowLayoutEnabled"
     private const val IS_GRID_LAYOUT_ENABLED = "adaptiveCard/isGridLayoutEnabled"
-    private const val IS_STRING_RESOURCE_ENABLED = "adaptiveCard/isStringResourceEnabled"
     private const val IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN = "adaptiveCard/isItemFitToFillEnabledForColumn"
     private const val FLUENT_ICON_CDN_ROOT_ECS_KEY = "adaptiveCard/fluentIconCdnRoot"
     private const val FLUENT_ICON_CDN_PATH_ECS_KEY = "adaptiveCard/fluentIconCdnPath"
