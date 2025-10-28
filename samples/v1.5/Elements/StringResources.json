@@ -269,7 +269,7 @@
 											},
 											{
 												"type": "TextBlock",
-												"text": "sp-SP: Esta función ayuda a reducir el tamaño de la carga útil de la tarjeta.",
+												"text": "es-ES: Esta función ayuda a reducir el tamaño de la carga útil de la tarjeta.",
 												"wrap": true
 											}
 										],
@@ -303,7 +303,7 @@
 											},
 											{
 												"type": "TextBlock",
-												"text": "sp-SP: Los recursos de cadena también funcionan en tarjetas en línea",
+												"text": "es-ES: Los recursos de cadena también funcionan en tarjetas en línea",
 												"wrap": true
 											}
 										],
@@ -337,7 +337,7 @@
 											},
 											{
 												"type": "TextBlock",
-												"text": "sp-SP: Hola",
+												"text": "es-ES: Hola",
 												"wrap": true
 											}
 										],
@@ -371,7 +371,7 @@
 											},
 											{
 												"type": "TextBlock",
-												"text": "sp-SP: Mundo",
+												"text": "es-ES: Mundo",
 												"wrap": true
 											}
 										],
@@ -400,7 +400,7 @@
 											},
 											{
 												"type": "TextBlock",
-												"text": "sp-SP: MS Spain",
+												"text": "es-ES: MS Spain",
 												"wrap": true
 											}
 										],
@@ -493,7 +493,7 @@
 				"localizedValues": {
 					"en-US": "This feature helps reduce card payload size.",
 					"FR-FR": "Cette fonctionnalité aide à réduire la taille de la charge utile de la carte.",
-					"sp-SP": "Esta función ayuda a reducir el tamaño de la carga útil de la tarjeta."
+					"es-ES": "Esta función ayuda a reducir el tamaño de la carga útil de la tarjeta."
 				}
 			},
 			"info2": {
@@ -501,14 +501,14 @@
 				"localizedValues": {
 					"en-US": "String resources also work in inline cards",
 					"fr-fr": "Les ressources de chaînes fonctionnent également dans les cartes intégrées",
-					"sp-SP": "Los recursos de cadena también funcionan en tarjetas en línea"
+					"es-ES": "Los recursos de cadena también funcionan en tarjetas en línea"
 				}
 			},
 			"hello": {
 				"defaultValue": "By default Hello",
 				"localizedValues": {
 					"en-US": "Hello",
-					"sp-SP": "Hola",
+					"es-ES": "Hola",
 					"FR-fr": "Bonjour"
 				}
 			},
@@ -517,14 +517,14 @@
 				"localizedValues": {
 					"en-US": "World",
 					"fr-FR": "Monde",
-					"sp-SP": "Mundo"
+					"es-ES": "Mundo"
 				}
 			},
 			"noDefaultValue":{
 				"localizedValues": {
 					"en-US": "MS United States",
 					"FR-FR": "MS France",
-					"sp-SP": "MS Spain"
+					"es-ES": "MS Spain"
 				}
 			},
 			"Lighttheme": {
