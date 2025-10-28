@@ -126,19 +126,6 @@
 			"weight": "Bolder"
 		},
 		{
-			"type": "Container",
-			"items": [
-				{
-					"type": "TextBlock",
-					"text": "${rs:hello} ${rs:noDefaultValue}",
-					"wrap": true
-				}
-			],
-			"style": "attention",
-			"showBorder": true,
-			"roundedCorners": true
-		},
-		{
 			"type": "TextBlock",
 			"text": "On Regular Text Elements in Rich Text Block",
 			"wrap": true,
@@ -378,35 +365,6 @@
 										"style": "attention",
 										"showBorder": true,
 										"roundedCorners": true
-									},
-									{
-										"type": "Container",
-										"items": [
-											{
-												"type": "TextBlock",
-												"text": "References for noDefaultValue",
-												"wrap": true,
-												"size": "Large"
-											},
-											{
-												"type": "TextBlock",
-												"text": "en-US: MS United States",
-												"wrap": true
-											},
-											{
-												"type": "TextBlock",
-												"text": "fr-FR: MS France",
-												"wrap": true
-											},
-											{
-												"type": "TextBlock",
-												"text": "es-ES: MS Spain",
-												"wrap": true
-											}
-										],
-										"style": "attention",
-										"showBorder": true,
-										"roundedCorners": true
 									}
 								]
 							}
@@ -518,13 +476,6 @@
 					"en-US": "World",
 					"fr-FR": "Monde",
 					"es-ES": "Mundo"
-				}
-			},
-			"noDefaultValue":{
-				"localizedValues": {
-					"en-US": "MS United States",
-					"FR-FR": "MS France",
-					"es-ES": "MS Spain"
 				}
 			},
 			"Lighttheme": {
