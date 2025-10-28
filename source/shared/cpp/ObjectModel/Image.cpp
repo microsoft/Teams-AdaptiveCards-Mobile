@@ -85,10 +85,10 @@ const std::string& Image::GetUrl(
         const ACTheme theme,
         std::shared_ptr<AdaptiveCards::Resources> resources,
         const std::string& locale) const {
-//    // We need to use ReplaceStringResources in case we want to support String Resources for Image.
-//    // Currently there's no requirement, as SMBA copies the image & replaces the same before sending ahead.
-//    auto themedUrl = ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
-//    return AdaptiveCard::ReplaceStringResources(themedUrl, resources, locale);
+//             We need to use ReplaceStringResources in case we want to support String Resources for Image.
+//             Currently there's no requirement, as SMBA copies the image & replaces the same before sending ahead.
+//             auto themedUrl = ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
+//             return AdaptiveCard::ReplaceStringResources(themedUrl, resources, locale);
     return ThemedUrl::GetThemedUrl(theme, m_themedUrls, m_url);
 }
 
