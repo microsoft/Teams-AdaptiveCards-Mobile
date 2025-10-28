@@ -48,6 +48,11 @@
 					"referenceIndex": 2,
 					"text": "AC02"
 				},
+				{
+					"type": "CitationRun",
+					"referenceIndex": 2,
+					"text": "Longer Reference of AC02"
+				},
 				"."
 			]
 		}
