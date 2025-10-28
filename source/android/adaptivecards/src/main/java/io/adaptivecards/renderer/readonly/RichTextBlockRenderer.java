@@ -48,6 +48,7 @@ import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.InputUtils;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class RichTextBlockRenderer extends BaseCardElementRenderer
 {
@@ -143,7 +144,10 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 }
                 DateTimeParser parser = new DateTimeParser(textRun.GetLanguage());
                 String formattedText = parser.GenerateString(textRun.GetTextForDateParsing());
-                formattedText = renderedCard.replaceStringResources(formattedText);
+
+                if (FeatureFlagResolverUtility.isStringResourceEnabled()) {
+                    formattedText = renderedCard.replaceStringResources(formattedText);
+                }
 
                 paragraph.append(formattedText);
 

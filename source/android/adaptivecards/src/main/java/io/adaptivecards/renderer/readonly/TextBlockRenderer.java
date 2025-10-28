@@ -53,6 +53,7 @@ import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.InputUtils;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class TextBlockRenderer extends BaseCardElementRenderer
 {
@@ -297,7 +298,10 @@ public class TextBlockRenderer extends BaseCardElementRenderer
 
         DateTimeParser parser = new DateTimeParser(textBlock.GetLanguage());
         String textWithFormattedDates = parser.GenerateString(textBlock.GetTextForDateParsing());
-        textWithFormattedDates = renderedCard.replaceStringResources(textWithFormattedDates);
+
+        if (FeatureFlagResolverUtility.isStringResourceEnabled()) {
+            textWithFormattedDates = renderedCard.replaceStringResources(textWithFormattedDates);
+        }
 
         RendererUtil.SpecialTextHandleResult textHandleResult = RendererUtil.handleSpecialTextAndQueryLinks(textWithFormattedDates);
         CharSequence htmlString = textHandleResult.getHtmlString();
