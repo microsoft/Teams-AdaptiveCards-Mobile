@@ -7,9 +7,11 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.URLSpan
 import androidx.fragment.app.FragmentManager
+import io.adaptivecards.R
 import io.adaptivecards.objectmodel.CitationRun
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.Inline
+import io.adaptivecards.objectmodel.ReferenceIcon
 import io.adaptivecards.objectmodel.References
 import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
@@ -132,6 +134,33 @@ object CitationUtil {
         val parser = DateTimeParser(Locale.getDefault().language)
         val formattedText = parser.GenerateString(this.GetTextForDateParsing())
         return renderedCard.replaceStringResources(formattedText)
+    }
+
+    @JvmStatic
+    fun References.getIcon(): Int {
+        return when (this.GetIcon() ?: ReferenceIcon.Image) {
+            ReferenceIcon.AdobeIllustrator -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.AdobePhotoshop -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.AdobeInDesign -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.AdobeFlash -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.MsWord -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.MsExcel -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.MsPowerPoint -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.MsOneNote -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.MsSharePoint -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.MsVisio -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.MsLoop -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.MsWhiteboard -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Code -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Gif -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Image -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Pdf -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Sketch -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Sound -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Text -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Video -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.Zip -> R.drawable.ic_fluent_star_24_filled
+        }
     }
 
     @JvmStatic
