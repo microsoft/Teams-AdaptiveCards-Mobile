@@ -32,16 +32,16 @@
             android:textStyle="bold"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/image_globe"
-            app:layout_constraintBottom_toBottomOf="@id/image_globe"
+            app:layout_constraintTop_toTopOf="@id/citation_icon"
+            app:layout_constraintBottom_toBottomOf="@id/citation_icon"
             android:layout_marginEnd="8dp"
             android:padding="8dp"/>
 
         <ImageView
-            android:id="@+id/image_globe"
+            android:id="@+id/citation_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_fluent_star_24_filled"
+            android:src="@drawable/ic_icon_ms_excel"
             app:layout_constraintStart_toEndOf="@id/text_reference_number"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="8dp"/>
@@ -54,8 +54,8 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            app:layout_constraintStart_toEndOf="@id/image_globe"
-            app:layout_constraintTop_toTopOf="@id/image_globe"
+            app:layout_constraintStart_toEndOf="@id/citation_icon"
+            app:layout_constraintTop_toTopOf="@id/citation_icon"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="16dp"/>
 

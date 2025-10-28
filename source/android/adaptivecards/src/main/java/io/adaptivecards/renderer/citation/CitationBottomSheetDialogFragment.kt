@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
@@ -22,6 +23,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import io.adaptivecards.objectmodel.AdaptiveCard
 import io.adaptivecards.objectmodel.ReferenceType
+import io.adaptivecards.renderer.citation.CitationUtil.getDrawableForIcon
 
 
 class CitationBottomSheetDialogFragment(
@@ -47,7 +49,9 @@ class CitationBottomSheetDialogFragment(
         val abstract = view.findViewById<TextView>(R.id.citation_abstract)
         val keywords = view.findViewById<TextView>(R.id.citation_keywords)
         val moreDetails = view.findViewById<TextView>(R.id.citation_more_details)
+        val icon = view.findViewById<ImageView>(R.id.citation_icon)
 
+        icon.setImageResource(citationReference.getDrawableForIcon())
 
         title.text = citationReference.GetTitle()
         abstract.text = citationReference.GetAbstract()

@@ -137,29 +137,29 @@ object CitationUtil {
     }
 
     @JvmStatic
-    fun References.getIcon(): Int {
+    fun References.getDrawableForIcon(): Int {
         return when (this.GetIcon() ?: ReferenceIcon.Image) {
-            ReferenceIcon.AdobeIllustrator -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.AdobePhotoshop -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.AdobeInDesign -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.AdobeFlash -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.MsWord -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.MsExcel -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.MsPowerPoint -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.MsOneNote -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.MsSharePoint -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.MsVisio -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.MsLoop -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.MsWhiteboard -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Code -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Gif -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Image -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Pdf -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Sketch -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Sound -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Text -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Video -> R.drawable.ic_fluent_star_24_filled
-            ReferenceIcon.Zip -> R.drawable.ic_fluent_star_24_filled
+            ReferenceIcon.AdobeIllustrator -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.AdobePhotoshop -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.AdobeInDesign -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.AdobeFlash -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.MsWord -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.MsExcel -> R.drawable.ic_icon_ms_excel
+            ReferenceIcon.MsPowerPoint -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.MsOneNote -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.MsSharePoint -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.MsVisio -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.MsLoop -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.MsWhiteboard -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Code -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Gif -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Image -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Pdf -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Sketch -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Sound -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Text -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Video -> R.drawable.ic_icon_ms_word
+            ReferenceIcon.Zip -> R.drawable.ic_icon_ms_word
         }
     }
 
