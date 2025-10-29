@@ -64,6 +64,7 @@
 		"textColor": "#212121",
 		"backgroundColor": "#F8F8F8",
 		"borderColor": "#E1E1E1",
+		"dividerColor": "#E1E1E1",
 		"bottomSheetTextColor": "#212121",
 		"bottomSheetKeywordsColor": "#6E6E6E",
 		"bottomSheetMoreDetailColor": "#5B5FC7",

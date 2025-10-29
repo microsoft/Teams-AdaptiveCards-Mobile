@@ -572,6 +572,7 @@ CitationBlock CitationBlock::Deserialize(const Json::Value& json, const Citation
     result.textColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::TextColor, defaultValue.textColor);
     result.backgroundColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BackgroundColor, defaultValue.backgroundColor);
     result.borderColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BorderColor, defaultValue.borderColor);
+    result.dividerColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::DividerColor, defaultValue.dividerColor);
     result.bottomSheetTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BottomSheetTextColor, defaultValue.bottomSheetTextColor);
     result.bottomSheetKeywordsColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BottomSheetKeywordsColor, defaultValue.bottomSheetKeywordsColor);
     result.bottomSheetMoreDetailColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BottomSheetMoreDetailColor, defaultValue.bottomSheetMoreDetailColor);

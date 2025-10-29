@@ -415,6 +415,7 @@ struct CitationBlock {
     std::string textColor = "#E1E1E1";
     std::string backgroundColor = "#141414";
     std::string borderColor = "#292929";
+    std::string dividerColor = "#E1E1E1";
     std::string bottomSheetTextColor = "#E1E1E1";
     std::string bottomSheetKeywordsColor = "#919191";
     std::string bottomSheetMoreDetailColor = "#7F85F5";

@@ -293,6 +293,7 @@ enum class AdaptiveCardSchemaKey
     References,
     ReferenceIndex,
     CitationBlock,
+    DividerColor,
     BottomSheetTextColor,
     BottomSheetKeywordsColor,
     BottomSheetMoreDetailColor,
