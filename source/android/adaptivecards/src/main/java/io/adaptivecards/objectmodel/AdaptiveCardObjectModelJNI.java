@@ -1842,6 +1842,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native String CitationBlock_backgroundColor_get(long jarg1, CitationBlock jarg1_);
   public final static native void CitationBlock_borderColor_set(long jarg1, CitationBlock jarg1_, String jarg2);
   public final static native String CitationBlock_borderColor_get(long jarg1, CitationBlock jarg1_);
+  public final static native void CitationBlock_dividerColor_set(long jarg1, CitationBlock jarg1_, String jarg2);
+  public final static native String CitationBlock_dividerColor_get(long jarg1, CitationBlock jarg1_);
   public final static native void CitationBlock_bottomSheetTextColor_set(long jarg1, CitationBlock jarg1_, String jarg2);
   public final static native String CitationBlock_bottomSheetTextColor_get(long jarg1, CitationBlock jarg1_);
   public final static native void CitationBlock_bottomSheetKeywordsColor_set(long jarg1, CitationBlock jarg1_, String jarg2);

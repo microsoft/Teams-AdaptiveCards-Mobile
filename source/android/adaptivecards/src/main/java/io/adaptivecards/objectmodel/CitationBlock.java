@@ -60,6 +60,14 @@ public class CitationBlock {
     return AdaptiveCardObjectModelJNI.CitationBlock_borderColor_get(swigCPtr, this);
   }
 
+  public void setDividerColor(String value) {
+    AdaptiveCardObjectModelJNI.CitationBlock_dividerColor_set(swigCPtr, this, value);
+  }
+
+  public String getDividerColor() {
+    return AdaptiveCardObjectModelJNI.CitationBlock_dividerColor_get(swigCPtr, this);
+  }
+
   public void setBottomSheetTextColor(String value) {
     AdaptiveCardObjectModelJNI.CitationBlock_bottomSheetTextColor_set(swigCPtr, this, value);
   }
