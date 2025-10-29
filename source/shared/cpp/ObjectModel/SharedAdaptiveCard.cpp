@@ -187,9 +187,13 @@ std::string AdaptiveCard::ReplaceStringResources(
         std::shared_ptr<AdaptiveCards::Resources> resources,
         const std::string& locale) {
 
+    if (!resources)
+    {
+        return input;
+    }
     auto strings = resources->GetStrings();
     // Add validation checks to skip replacement & return the same string
-    if (!IsStringResourcePresent(input) || !resources || strings.empty()) {
+    if (!IsStringResourcePresent(input) || strings.empty()) {
         return input;
     }
 
