@@ -291,7 +291,12 @@ enum class AdaptiveCardSchemaKey
     Abstract,
     Keywords,
     References,
-    ReferenceIndex
+    ReferenceIndex,
+    CitationBlock,
+    BottomSheetTextColor,
+    BottomSheetKeywordsColor,
+    BottomSheetMoreDetailColor,
+    BottomSheetBackgroundColor
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);

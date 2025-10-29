@@ -60,15 +60,14 @@
             "isSubtle": false
         }
     },
-	"citation": {
-		"citationTextColor": "#212121",
-		"citationBackgroundColor": "#F8F8F8",
-		"citationBorderColor": "#E1E1E1",
+	"citationBlock": {
+		"textColor": "#212121",
+		"backgroundColor": "#F8F8F8",
+		"borderColor": "#E1E1E1",
 		"bottomSheetTextColor": "#212121",
 		"bottomSheetKeywordsColor": "#6E6E6E",
 		"bottomSheetMoreDetailColor": "#5B5FC7",
 		"bottomSheetBackgroundColor": "#FFFFFF"
-
 	},
     "textBlock": {
         "headingLevel": 2

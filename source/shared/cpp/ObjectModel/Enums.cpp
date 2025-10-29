@@ -289,7 +289,11 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Abstract, "abstract"},
             {AdaptiveCardSchemaKey::Keywords, "keywords"},
             {AdaptiveCardSchemaKey::References, "references"},
-            {AdaptiveCardSchemaKey::ReferenceIndex, "referenceIndex"}});
+            {AdaptiveCardSchemaKey::CitationBlock, "citationBlock"},
+            {AdaptiveCardSchemaKey::BottomSheetTextColor, "bottomSheetTextColor"},
+            {AdaptiveCardSchemaKey::BottomSheetKeywordsColor, "bottomSheetKeywordsColor"},
+            {AdaptiveCardSchemaKey::BottomSheetMoreDetailColor, "bottomSheetMoreDetailColor"},
+            {AdaptiveCardSchemaKey::BottomSheetBackgroundColor, "bottomSheetBackgroundColor"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},

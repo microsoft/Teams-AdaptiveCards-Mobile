@@ -292,7 +292,12 @@ public enum AdaptiveCardSchemaKey {
   Abstract,
   Keywords,
   References,
-  ReferenceIndex;
+  ReferenceIndex,
+  CitationBlock,
+  BottomSheetTextColor,
+  BottomSheetKeywordsColor,
+  BottomSheetMoreDetailColor,
+  BottomSheetBackgroundColor;
 
   public final int swigValue() {
     return swigValue;
