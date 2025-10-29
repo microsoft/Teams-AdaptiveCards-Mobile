@@ -13,10 +13,18 @@ object InputUtils {
 
     @JvmStatic
     fun appendRequiredLabelSuffix(
-        paragraph: SpannableStringBuilder,
+        input: CharSequence,
+        label: String?,
         hostConfig: HostConfig,
         renderArgs: RenderArgs
     ): SpannableStringBuilder {
+
+        val paragraph = SpannableStringBuilder(input)
+
+        if (label.isNullOrEmpty() || !TextInput.getIsRequired(label)) {
+            return paragraph
+        }
+
         val inputLabelConfig = hostConfig.GetInputs().label.requiredInputs
         val spanStart = paragraph.length
         var requiredLabelSuffix = inputLabelConfig.suffix

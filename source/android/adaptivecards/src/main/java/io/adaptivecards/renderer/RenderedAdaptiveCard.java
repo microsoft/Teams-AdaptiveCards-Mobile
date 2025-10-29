@@ -18,6 +18,7 @@ import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.renderer.inputhandler.BaseInputHandler;
 import io.adaptivecards.renderer.inputhandler.IInputHandler;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class RenderedAdaptiveCard {
 
@@ -273,8 +274,8 @@ public class RenderedAdaptiveCard {
     }
 
     @NonNull
-    public String replaceStringResources(@NonNull String input) {
-        if (AdaptiveCard.IsStringResourcePresent(input)) {
+    public String checkAndReplaceStringResources(@NonNull String input) {
+        if (FeatureFlagResolverUtility.isStringResourceEnabled() && AdaptiveCard.IsStringResourcePresent(input)) {
             return AdaptiveCard.ReplaceStringResources(input, getAdaptiveCard().GetResources(), getLanguageTag());
         }
         return input;
