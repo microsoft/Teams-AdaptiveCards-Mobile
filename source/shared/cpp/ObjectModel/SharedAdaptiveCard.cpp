@@ -752,10 +752,6 @@ void AdaptiveCard::SetSelectAction(const std::shared_ptr<BaseActionElement> acti
     m_selectAction = action;
 }
 
-std::shared_ptr<Resources> AdaptiveCard::GetResources() const {
-    return m_resources;
-}
-
 VerticalContentAlignment AdaptiveCard::GetVerticalContentAlignment() const
 {
     return m_verticalContentAlignment;
