@@ -91,8 +91,11 @@
                 }
                 
                 std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
-                std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
-                                text = [NSString stringWithUTF8String:replacedText.c_str()];
+                if (text != nil)
+                {
+                    std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
+                    text = [NSString stringWithUTF8String:replacedText.c_str()];
+                }
 
                 NSMutableAttributedString *textRunContent = nil;
                 // Initializing NSMutableAttributedString for HTML rendering is very slow
