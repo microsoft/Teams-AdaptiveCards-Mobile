@@ -38,7 +38,9 @@ std::shared_ptr<Resources> Resources::DeserializeFromString(ParseContext& contex
 
 std::shared_ptr<Resources> Resources::Deserialize(ParseContext& context, const Json::Value& json) {
     std::shared_ptr<Resources> resources = std::make_shared<Resources>();
-    auto strings = ParseUtil::GetGenericMap<StringResource>(context, json, AdaptiveCardSchemaKey::Strings, StringResource::Deserialize, false);
-    resources->m_strings = std::move(strings);
+    if (json.isObject()) {
+        auto strings = ParseUtil::GetGenericMap<StringResource>(context, json, AdaptiveCardSchemaKey::Strings, StringResource::Deserialize, false);
+        resources->m_strings = std::move(strings);
+    }
     return resources;
 }
