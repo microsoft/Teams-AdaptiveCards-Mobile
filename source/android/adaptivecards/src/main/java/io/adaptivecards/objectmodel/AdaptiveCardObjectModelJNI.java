@@ -962,7 +962,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_Image(long jarg1);
   public final static native long new_Image__SWIG_3(String jarg1);
   public final static native long Image_SerializeToJsonValue(long jarg1, Image jarg1_);
-  public final static native String Image_GetUrl__SWIG_0(long jarg1, Image jarg1_, int jarg2);
+  public final static native String Image_GetUrl__SWIG_0(long jarg1, Image jarg1_, int jarg2, long jarg3, Resources jarg3_, String jarg4);
   public final static native String Image_GetUrl__SWIG_1(long jarg1, Image jarg1_);
   public final static native void Image_SetUrl(long jarg1, Image jarg1_, String jarg2);
   public final static native String Image_GetBackgroundColor(long jarg1, Image jarg1_);
@@ -1142,6 +1142,10 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void TextInput_SetInlineAction(long jarg1, TextInput jarg1_, long jarg2, BaseActionElement jarg2_);
   public final static native String TextInput_GetRegex(long jarg1, TextInput jarg1_);
   public final static native void TextInput_SetRegex(long jarg1, TextInput jarg1_, String jarg2);
+  public final static native void TextInput_addLabel(String jarg1, String jarg2);
+  public final static native String TextInput_getLabel(String jarg1);
+  public final static native String TextInput_getLabelForAccessibility(long jarg1, TextInput jarg1_);
+  public final static native boolean TextInput_getIsRequired(String jarg1);
   public final static native long TextInput_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_TextInputParser__SWIG_0();
   public final static native long new_TextInputParser__SWIG_1(long jarg1, TextInputParser jarg1_);
@@ -1462,6 +1466,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void AdaptiveCard_SetSelectAction(long jarg1, AdaptiveCard jarg1_, long jarg2, BaseActionElement jarg2_);
   public final static native long AdaptiveCard_GetBody__SWIG_0(long jarg1, AdaptiveCard jarg1_);
   public final static native long AdaptiveCard_GetActions__SWIG_0(long jarg1, AdaptiveCard jarg1_);
+  public final static native long AdaptiveCard_GetResources(long jarg1, AdaptiveCard jarg1_);
   public final static native long AdaptiveCard_GetLayouts__SWIG_0(long jarg1, AdaptiveCard jarg1_);
   public final static native void AdaptiveCard_SetLayouts(long jarg1, AdaptiveCard jarg1_, long jarg2, LayoutVector jarg2_);
   public final static native long AdaptiveCard_GetKnownProperties(long jarg1, AdaptiveCard jarg1_);
@@ -1483,6 +1488,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long AdaptiveCard_GetInternalId(long jarg1, AdaptiveCard jarg1_);
   public final static native long AdaptiveCard_GetFeaturesSupported();
   public final static native boolean AdaptiveCard_MeetsRootRequirements(long jarg1);
+  public final static native String AdaptiveCard_ReplaceStringResources(String jarg1, long jarg2, Resources jarg2_, String jarg3);
+  public final static native boolean AdaptiveCard_IsStringResourcePresent(String jarg1);
   public final static native void delete_AdaptiveCard(long jarg1);
   public final static native long new_AdaptiveCardParseException(int jarg1, String jarg2);
   public final static native String AdaptiveCardParseException_what(long jarg1, AdaptiveCardParseException jarg1_);
@@ -1703,6 +1710,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_ShowCardActionConfig(long jarg1);
   public final static native void PopoverConfig_backgroundColor_set(long jarg1, PopoverConfig jarg1_, String jarg2);
   public final static native String PopoverConfig_backgroundColor_get(long jarg1, PopoverConfig jarg1_);
+  public final static native void PopoverConfig_tintColor_set(long jarg1, PopoverConfig jarg1_, String jarg2);
+  public final static native String PopoverConfig_tintColor_get(long jarg1, PopoverConfig jarg1_);
   public final static native long PopoverConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, PopoverConfig jarg2_);
   public final static native long new_PopoverConfig();
   public final static native void delete_PopoverConfig(long jarg1);
@@ -2047,6 +2056,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void TextBlock_SetHorizontalAlignment(long jarg1, TextBlock jarg1_, long jarg2, StdOptionalHorizontalAlignment jarg2_);
   public final static native void TextBlock_SetLanguage(long jarg1, TextBlock jarg1_, String jarg2);
   public final static native String TextBlock_GetLanguage(long jarg1, TextBlock jarg1_);
+  public final static native String TextBlock_GetLabelFor(long jarg1, TextBlock jarg1_);
   public final static native long TextBlock_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_TextBlockParser__SWIG_0();
   public final static native long new_TextBlockParser__SWIG_1(long jarg1, TextBlockParser jarg1_);
@@ -2179,6 +2189,7 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long RichTextBlock_GetHorizontalAlignment(long jarg1, RichTextBlock jarg1_);
   public final static native void RichTextBlock_SetHorizontalAlignment(long jarg1, RichTextBlock jarg1_, long jarg2, StdOptionalHorizontalAlignment jarg2_);
   public final static native long RichTextBlock_GetInlines__SWIG_0(long jarg1, RichTextBlock jarg1_);
+  public final static native String RichTextBlock_GetLabelFor(long jarg1, RichTextBlock jarg1_);
   public final static native long RichTextBlock_dynamic_cast(long jarg1, BaseCardElement jarg1_);
   public final static native long new_RichTextBlockParser__SWIG_0();
   public final static native long new_RichTextBlockParser__SWIG_1(long jarg1, RichTextBlockParser jarg1_);
@@ -2353,6 +2364,26 @@ public class AdaptiveCardObjectModelJNI {
   public final static native void delete_ProgressRingParser(long jarg1);
   public final static native long ProgressRingParser_Deserialize(long jarg1, ProgressRingParser jarg1_, long jarg2, ParseContext jarg2_, long jarg3, JsonValue jarg3_);
   public final static native long ProgressRingParser_DeserializeFromString(long jarg1, ProgressRingParser jarg1_, long jarg2, ParseContext jarg2_, String jarg3);
+  public final static native long new_StringResource__SWIG_0();
+  public final static native long new_StringResource__SWIG_1(String jarg1, long jarg2);
+  public final static native boolean StringResource_ShouldSerialize(long jarg1, StringResource jarg1_);
+  public final static native String StringResource_Serialize(long jarg1, StringResource jarg1_);
+  public final static native long StringResource_SerializeToJsonValue(long jarg1, StringResource jarg1_);
+  public final static native String StringResource_GetDefaultValue__SWIG_0(long jarg1, StringResource jarg1_);
+  public final static native String StringResource_GetDefaultValue__SWIG_1(long jarg1, StringResource jarg1_, String jarg2, String jarg3);
+  public final static native long StringResource_GetLocalizedValue(long jarg1, StringResource jarg1_);
+  public final static native long StringResource_Deserialize(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
+  public final static native long StringResource_DeserializeFromString(long jarg1, ParseContext jarg1_, String jarg2);
+  public final static native void delete_StringResource(long jarg1);
+  public final static native long new_Resources__SWIG_0();
+  public final static native long new_Resources__SWIG_1(long jarg1);
+  public final static native boolean Resources_ShouldSerialize(long jarg1, Resources jarg1_);
+  public final static native String Resources_Serialize(long jarg1, Resources jarg1_);
+  public final static native long Resources_SerializeToJsonValue(long jarg1, Resources jarg1_);
+  public final static native long Resources_GetStrings(long jarg1, Resources jarg1_);
+  public final static native long Resources_Deserialize(long jarg1, ParseContext jarg1_, long jarg2, JsonValue jarg2_);
+  public final static native long Resources_DeserializeFromString(long jarg1, ParseContext jarg1_, String jarg2);
+  public final static native void delete_Resources(long jarg1);
   public final static native long ActionElementParserWrapper_SWIGSmartPtrUpcast(long jarg1);
   public final static native long BaseCardElementParserWrapper_SWIGSmartPtrUpcast(long jarg1);
   public final static native long BaseCardElement_SWIGSmartPtrUpcast(long jarg1);

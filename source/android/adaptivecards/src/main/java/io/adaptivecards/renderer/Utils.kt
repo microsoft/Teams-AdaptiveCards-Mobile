@@ -11,6 +11,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.WindowMetrics
 import io.adaptivecards.objectmodel.ACTheme
+import java.util.Locale
 
 object Utils {
 
@@ -52,5 +53,11 @@ object Utils {
             windowManager.defaultDisplay.getMetrics(displayMetrics)
             displayMetrics.heightPixels
         }
+    }
+
+    @JvmStatic
+    fun Context.getLanguageTag() : String {
+        val locale: Locale = this.resources.configuration.locales[0]
+        return locale.toLanguageTag()
     }
 }

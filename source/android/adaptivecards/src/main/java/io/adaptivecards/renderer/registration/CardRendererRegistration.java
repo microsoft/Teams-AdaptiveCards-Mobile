@@ -66,6 +66,7 @@ import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.ChoiceSetInputRenderer;
 import io.adaptivecards.renderer.input.DateInputRenderer;
 import io.adaptivecards.renderer.input.InputUtil;
+import io.adaptivecards.renderer.input.InputUtils;
 import io.adaptivecards.renderer.input.NumberInputRenderer;
 import io.adaptivecards.renderer.input.RatingInputRenderer;
 import io.adaptivecards.renderer.input.TextInputRenderer;
@@ -329,6 +330,15 @@ public class CardRendererRegistration
 
     public void setThemeForThemedUrl(@NonNull ACTheme theme) {
         mTheme = theme;
+    }
+
+    @NonNull
+    public String getLanguageTag() {
+        return mLanguageTag;
+    }
+
+    public void setLanguageTag(@NonNull String languageTag) {
+        mLanguageTag = languageTag;
     }
 
     public View renderElements(RenderedAdaptiveCard renderedCard,
@@ -630,9 +640,9 @@ public class CardRendererRegistration
         {
             StretchableInputLayout inputLayout = new StretchableInputLayout(context, mustStretch);
             View actualInput = findElementWithTagContent(mockLayout);
+            boolean shouldShowLabel = InputUtils.shouldShowLabel(element);
 
-            if (inputHasLabel)
-            {
+            if (inputHasLabel && shouldShowLabel) {
                 TextView inputLabel = InputUtil.RenderInputLabel(element.GetLabel(), element.GetIsRequired(), context, hostConfig, renderArgs);
                 inputLayout.setLabel(inputLabel);
 
@@ -644,7 +654,7 @@ public class CardRendererRegistration
                     hostConfig,
                     true /* horizontalLine */);
             }
-            else if (element.GetIsRequired())
+            else if (element.GetIsRequired() && shouldShowLabel)
             {
                 renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.EMPTY_LABEL_IN_REQUIRED_INPUT, "Input is required but there's no label for required hint rendering"));
             }
@@ -774,4 +784,5 @@ public class CardRendererRegistration
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
     private boolean mIsSplitActionEnabled = false;
     private ACTheme mTheme = ACTheme.None;
+    private String mLanguageTag = "";
 }

@@ -188,6 +188,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
 #include "../../../shared/cpp/ObjectModel/ProgressBar.h"
 #include "../../../shared/cpp/ObjectModel/ProgressRing.h"
+#include "../../../shared/cpp/ObjectModel/StringResource.h"
+#include "../../../shared/cpp/ObjectModel/Resources.h"
 %}
 
 
@@ -307,6 +309,8 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::ProgressBarParser)
 %shared_ptr(AdaptiveCards::ProgressRing)
 %shared_ptr(AdaptiveCards::ProgressRingParser)
+%shared_ptr(AdaptiveCards::StringResource)
+%shared_ptr(AdaptiveCards::Resources)
 
 
 %apply unsigned int& INOUT { unsigned int& };
@@ -1238,3 +1242,5 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/ThemedUrl.h"
 %include "../../../shared/cpp/ObjectModel/ProgressBar.h"
 %include "../../../shared/cpp/ObjectModel/ProgressRing.h"
+%include "../../../shared/cpp/ObjectModel/StringResource.h"
+%include "../../../shared/cpp/ObjectModel/Resources.h"

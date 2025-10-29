@@ -188,6 +188,11 @@ public class AdaptiveCard {
     return new BaseActionElementVector(AdaptiveCardObjectModelJNI.AdaptiveCard_GetActions__SWIG_0(swigCPtr, this), false);
   }
 
+  public Resources GetResources() {
+    long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_GetResources(swigCPtr, this);
+    return (cPtr == 0) ? null : new Resources(cPtr, true);
+  }
+
   public LayoutVector GetLayouts() {
     return new LayoutVector(AdaptiveCardObjectModelJNI.AdaptiveCard_GetLayouts__SWIG_0(swigCPtr, this), false);
   }
@@ -277,6 +282,14 @@ public class AdaptiveCard {
 
   public static boolean MeetsRootRequirements(SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t requiresSet) {
     return AdaptiveCardObjectModelJNI.AdaptiveCard_MeetsRootRequirements(SWIGTYPE_p_std__unordered_mapT_std__string_AdaptiveCards__SemanticVersion_t.getCPtr(requiresSet));
+  }
+
+  public static String ReplaceStringResources(String input, Resources resources, String locale) {
+    return AdaptiveCardObjectModelJNI.AdaptiveCard_ReplaceStringResources(input, Resources.getCPtr(resources), resources, locale);
+  }
+
+  public static boolean IsStringResourcePresent(String input) {
+    return AdaptiveCardObjectModelJNI.AdaptiveCard_IsStringResourcePresent(input);
   }
 
 }
