@@ -284,6 +284,10 @@
 										"value": "v1.5/Elements/Image.FitMode.Fill.json"
 									},
 									{
+										"title": "Input Label Text/RichText Block",
+										"value": "v1.5/Elements/InputLabel.json"
+									},
+									{
 										"title": "Progress Bar",
 										"value": "v1.5/Elements/ProgressBar.json"
 									},

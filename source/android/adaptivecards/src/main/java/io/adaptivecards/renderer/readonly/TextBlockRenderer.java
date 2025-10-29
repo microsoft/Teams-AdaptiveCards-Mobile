@@ -7,12 +7,14 @@ import static android.content.Context.ACCESSIBILITY_SERVICE;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.text.Layout;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
@@ -42,6 +44,7 @@ import io.adaptivecards.objectmodel.ForegroundColor;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.TextBlock;
+import io.adaptivecards.objectmodel.TextInput;
 import io.adaptivecards.objectmodel.TextSize;
 import io.adaptivecards.objectmodel.TextStyle;
 import io.adaptivecards.objectmodel.TextWeight;
@@ -52,6 +55,8 @@ import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.citation.CitationUtil;
+import io.adaptivecards.renderer.input.InputUtils;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class TextBlockRenderer extends BaseCardElementRenderer
 {
@@ -296,10 +301,14 @@ public class TextBlockRenderer extends BaseCardElementRenderer
 
         DateTimeParser parser = new DateTimeParser(textBlock.GetLanguage());
         String textWithFormattedDates = parser.GenerateString(textBlock.GetTextForDateParsing());
-        textWithFormattedDates = renderedCard.replaceStringResources(textWithFormattedDates);
+
+        if (FeatureFlagResolverUtility.isStringResourceEnabled()) {
+            textWithFormattedDates = renderedCard.replaceStringResources(textWithFormattedDates);
+        }
 
         RendererUtil.SpecialTextHandleResult textHandleResult = RendererUtil.handleSpecialTextAndQueryLinks(textWithFormattedDates);
         CharSequence htmlString = textHandleResult.getHtmlString();
+
         if (CitationUtil.isCitationUrlSpansPresent(htmlString)) {
             htmlString = CitationUtil.handleCitationSpansForTextBlock(
                 context,
@@ -313,7 +322,12 @@ public class TextBlockRenderer extends BaseCardElementRenderer
                 hostConfig,
                 renderArgs);
         }
-        textView.setText(htmlString);
+
+        if (TextInput.getIsRequired(textBlock.GetLabelFor())) {
+            textView.setText(InputUtils.appendRequiredLabelSuffix(new SpannableStringBuilder(htmlString), hostConfig, renderArgs));
+        } else {
+            textView.setText(htmlString);
+        }
 
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setOnTouchListener(new TouchTextView(new SpannableString(htmlString)));

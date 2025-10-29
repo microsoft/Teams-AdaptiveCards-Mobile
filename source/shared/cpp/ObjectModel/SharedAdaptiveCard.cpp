@@ -188,9 +188,13 @@ std::string AdaptiveCard::ReplaceStringResources(
         std::shared_ptr<AdaptiveCards::Resources> resources,
         const std::string& locale) {
 
+    if (!resources)
+    {
+        return input;
+    }
     auto strings = resources->GetStrings();
     // Add validation checks to skip replacement & return the same string
-    if (!_IsStringResourcePresent(input) || !resources || locale.empty() || strings.empty()) {
+    if (!IsStringResourcePresent(input) || strings.empty()) {
         return input;
     }
 
@@ -213,7 +217,8 @@ std::string AdaptiveCard::ReplaceStringResources(
         auto pair = strings.find(key);
         if (pair != strings.end()) {
             auto stringResource = pair->second;
-            result += stringResource->GetDefaultValue(locale);
+            // lowercase the locale to avoid case mismatch
+            result += stringResource->GetDefaultValue(ParseUtil::ToLowercase(locale), fullMatch);
         } else {
             result += fullMatch; // Leave it unchanged if not found
         }
@@ -225,7 +230,7 @@ std::string AdaptiveCard::ReplaceStringResources(
     return result;
 }
 
-bool AdaptiveCard::_IsStringResourcePresent(const std::string& input) {
+bool AdaptiveCard::IsStringResourcePresent(const std::string& input) {
     // Regular expression to match pattern ${rs:key}
     std::regex pattern(R"(\$\{rs:[^}]+\})");
     return std::regex_search(input, pattern);
@@ -745,6 +750,10 @@ std::shared_ptr<BaseActionElement> AdaptiveCard::GetSelectAction() const
 void AdaptiveCard::SetSelectAction(const std::shared_ptr<BaseActionElement> action)
 {
     m_selectAction = action;
+}
+
+std::shared_ptr<Resources> AdaptiveCard::GetResources() const {
+    return m_resources;
 }
 
 VerticalContentAlignment AdaptiveCard::GetVerticalContentAlignment() const

@@ -5,6 +5,7 @@
 //  Copyright © 2019 Microsoft. All rights reserved.
 //
 
+#import "ACOAdaptiveCardPrivate.h"
 #import "ACRRichTextBlockRenderer.h"
 #import "ACOBaseActionElementPrivate.h"
 #import "ACOBaseCardElementPrivate.h"
@@ -87,6 +88,13 @@
                     options = data[@"options"];
                     descriptor = data[@"descriptor"];
                     text = data[@"nonhtml"];
+                }
+                
+                std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
+                if (text != nil)
+                {
+                    std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
+                    text = [NSString stringWithUTF8String:replacedText.c_str()];
                 }
 
                 NSMutableAttributedString *textRunContent = nil;
