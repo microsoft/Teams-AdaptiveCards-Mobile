@@ -60,20 +60,18 @@
             "isSubtle": false
         }
     },
+	"citation": {
+		"citationTextColor": "#212121",
+		"citationBackgroundColor": "#F8F8F8",
+		"citationBorderColor": "#E1E1E1",
+		"bottomSheetTextColor": "#212121",
+		"bottomSheetKeywordsColor": "#6E6E6E",
+		"bottomSheetMoreDetailColor": "#5B5FC7",
+		"bottomSheetBackgroundColor": "#FFFFFF"
+
+	},
     "textBlock": {
-        "headingLevel": 2,
-		"citation": {
-			"text": {
-				"textColor": "",
-				"backgroundColor": "",
-				"borderColor": ""
-			},
-			"bottomSheet": {
-				"textColor": "",
-				"backgroundColor": "",
-				"borderColor": ""
-			}
-		}
+        "headingLevel": 2
     },
     "containerStyles": {
         "default": {
