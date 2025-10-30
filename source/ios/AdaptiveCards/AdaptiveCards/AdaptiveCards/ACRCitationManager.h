@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "ACRCitationManagerDelegate.h"
 
+@class ACOReference;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -22,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Initialize the citation manager with a delegate
  * @param delegate The delegate that provides references and presentation context
  */
-- (instancetype)initWithDelegate:(nullable id<ACRCitationManagerDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<ACRCitationManagerDelegate>)delegate;
 
 /**
  * Parse an attributed string for TextBlock citations (regex-based pattern matching)

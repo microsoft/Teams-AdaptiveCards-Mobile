@@ -98,8 +98,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         }
         lab.selectable = YES;
         lab.userInteractionEnabled = YES;
-        [rootView card]
-//        id references = [[rootView card] card]->GetReferences();
+        
         // Process citations using the new CitationManager
         content = [[self processCitationsWithManager:content rootView:rootView] mutableCopy];
         
@@ -157,7 +156,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     }
     
     if (txtBlck->GetStyle() == TextStyle::Heading || rootView.context.isFirstRowAsHeaders) {
-        lab.accessibilityTraits |= UIAccessibYilityTraitHeader;
+        lab.accessibilityTraits |= UIAccessibilityTraitHeader;
     }
     
     lab.editable = NO;
@@ -188,10 +187,12 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 
 - (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView {
     
+    // References contain the array of references to render
+    NSArray<ACOReference *> *references = [[rootView card] references];
+    
     // Create CitationManager instance and parse citations with references
     ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
-    NSArray<NSDictionary *> *references = [self referencesForCitations];
-    return [citationManager parseAttributedString:content withReferences:references];
+    return [citationManager parseAttributedString:content withReferences:@[]];
 }
 
 #pragma mark - ACRCitationManagerDelegate
@@ -209,11 +210,6 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 - (UIViewController *)parentViewControllerForCitationPresentation
 {
     return [self topMostViewController];
-}
-
-- (NSArray<NSDictionary *> * _Nullable)referencesForCitations {
-    // Return empty array if no references available
-    return @[];
 }
 
 - (void)citationManager:(ACRCitationManager *)citationManager 

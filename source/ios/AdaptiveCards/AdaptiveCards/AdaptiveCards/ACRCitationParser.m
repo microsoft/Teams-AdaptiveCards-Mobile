@@ -11,6 +11,12 @@
 #import "ACRViewTextAttachment.h"
 #import <objc/runtime.h>
 
+@interface ACRCitationParser()
+
+//@property (nonatomic, weak, readwrite, nullable) id<ACRCitationParserDelegate> delegate;
+
+@end
+
 @implementation ACRCitationParser
 
 - (instancetype)initWithDelegate:(id<ACRCitationParserDelegate>)delegate {

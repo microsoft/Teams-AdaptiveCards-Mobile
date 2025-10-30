@@ -25,9 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Initialize the parser with a delegate
  * @param delegate The delegate that will receive parsing events
+ * @param references An array of the references corresponding to all the citations
  * @return Initialized parser instance
  */
-- (instancetype)initWithDelegate:(id<ACRCitationParserDelegate> _Nullable)delegate;
+- (instancetype)initWithDelegate:(id<ACRCitationParserDelegate>)delegate;
 
 /**
  * Abstract method to parse an attributed string and return a new one with citation attachments

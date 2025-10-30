@@ -11,6 +11,8 @@
 #import "ACRCitationManagerDelegate.h"
 #import "ACRTextBlockCitationParser.h"
 #import "ACRRichTextBlockCitationParser.h"
+#import "ACOAdaptiveCard.h"
+#import "ACOReference.h"
 
 @interface ACRCitationManagerTests : XCTestCase <ACRCitationManagerDelegate>
 
@@ -202,6 +204,48 @@
     // Then: Delegates should be set to the manager
     XCTAssertEqual(textBlockParser.delegate, manager, @"TextBlock parser delegate should be set to manager");
     XCTAssertEqual(richTextParser.delegate, manager, @"RichTextBlock parser delegate should be set to manager");
+}
+
+/// Tests references integration with ACOAdaptiveCard
+- (void)testReferencesIntegration {
+    // Given: An adaptive card JSON with references
+    NSString *cardWithReferencesJson = @"{"
+        "\"type\": \"AdaptiveCard\","
+        "\"version\": \"1.5\","
+        "\"body\": ["
+            "{"
+                "\"type\": \"TextBlock\","
+                "\"text\": \"Check out this research [1](cite:0) for more details.\""
+            "}"
+        "],"
+        "\"references\": ["
+            "{"
+                "\"type\": \"document\","
+                "\"title\": \"Test Research Paper\","
+                "\"abstract\": \"This is a test research paper about citations.\","
+                "\"url\": \"https://example.com/research\","
+                "\"keywords\": [\"research\", \"citations\", \"test\"]"
+            "}"
+        "]"
+    "}";
+    
+    // When: Parsing the adaptive card
+    ACOAdaptiveCardParseResult *parseResult = [ACOAdaptiveCard fromJson:cardWithReferencesJson];
+    ACOAdaptiveCard *card = parseResult.card;
+    
+    // Then: References should be available
+    NSArray<ACOReference *> *references = [card references];
+    XCTAssertNotNil(references, @"References should not be nil");
+    XCTAssertEqual(references.count, 1, @"Should have one reference");
+    
+    if (references.count > 0) {
+        ACOReference *reference = references[0];
+        XCTAssertEqualObjects(reference.title, @"Test Research Paper", @"Reference title should match");
+        XCTAssertEqualObjects(reference.abstract, @"This is a test research paper about citations.", @"Reference abstract should match");
+        XCTAssertEqualObjects(reference.url, @"https://example.com/research", @"Reference URL should match");
+        XCTAssertEqual(reference.type, ACOReferenceTypeDocument, @"Reference type should be document");
+        XCTAssertTrue([reference.keywords containsObject:@"research"], @"Keywords should contain 'research'");
+    }
 }
 
 #pragma mark - ACRCitationManagerDelegate

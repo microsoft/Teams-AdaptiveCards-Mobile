@@ -9,7 +9,10 @@
 #import "ACOAuthenticationPrivate.h"
 #import "ACOBundle.h"
 #import "ACORefreshPrivate.h"
+#import "ACORemoteResourceInformation.h"
 #import "ACORemoteResourceInformationPrivate.h"
+#import "ACOReference.h"
+#import "ACOReferencePrivate.h"
 #import "ACRErrors.h"
 #import "ACRIBaseInputHandler.h"
 #import "ACRParseWarningPrivate.h"
@@ -235,6 +238,29 @@ using namespace AdaptiveCards;
         }
         return JsonToNSData(blob);
     }
+    return nil;
+}
+
+- (NSArray<ACOReference *> *)references
+{
+    if (!_adaptiveCard) {
+        return nil;
+    }
+    
+    NSMutableArray<ACOReference *> *mutableReferences = nil;
+    const std::vector<std::shared_ptr<References>>& referencesVector = _adaptiveCard->GetReferences();
+    
+    if (!referencesVector.empty()) {
+        mutableReferences = [[NSMutableArray alloc] init];
+        for (const auto& reference : referencesVector) {
+            ACOReference *referenceObjc = [[ACOReference alloc] initWithReference:reference];
+            if (referenceObjc) {
+                [mutableReferences addObject:referenceObjc];
+            }
+        }
+        return [NSArray arrayWithArray:mutableReferences];
+    }
+    
     return nil;
 }
 
