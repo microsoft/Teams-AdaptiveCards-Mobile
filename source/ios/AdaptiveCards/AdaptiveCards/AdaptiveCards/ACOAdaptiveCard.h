@@ -23,6 +23,7 @@
 #import <Foundation/Foundation.h>
 
 @class SwiftAdaptiveCardParseResult;
+@class ACOReference;
 
 @interface ACOAdaptiveCard : NSObject
 
@@ -36,6 +37,7 @@
 - (void)appendInputs:(nonnull NSArray *)inputs;
 - (nullable NSArray<ACORemoteResourceInformation *> *)remoteResourceInformation;
 - (nullable NSData *)additionalProperty;
+- (nullable NSArray<ACOReference *> *)references;
 
 /// Swift Adaptive Card Bridge Layer
 - (nullable SwiftAdaptiveCardParseResult *)swiftParseResult;

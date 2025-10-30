@@ -1,0 +1,20 @@
+//
+//  ACOCitation.h
+//  AdaptiveCards
+//
+//  Created by Harika P on 30/10/25.
+//  Copyright © 2025 Microsoft. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <ACOReference.h>
+
+@interface ACOCitation : NSObject
+
+@property (nonatomic, copy) NSString *displayText;
+@property (nonatomic, copy) NSNumber *referenceIndex;
+
+- (instancetype)initWithDisplayText:(NSString *)displayText
+                     referenceIndex:(NSNumber *)referenceIndex;
+
+@end

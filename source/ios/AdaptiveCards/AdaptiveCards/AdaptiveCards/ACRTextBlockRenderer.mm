@@ -23,6 +23,7 @@
 #import "TSExpressionObjCBridge.h"
 #import "ACRViewTextAttachment.h"
 #import "ACRViewAttachingTextView.h"
+#import "ACRCitationManager.h"
 
 @implementation ACRTextBlockRenderer
 
@@ -98,7 +99,8 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         lab.selectable = YES;
         lab.userInteractionEnabled = YES;
         
-        content = [self processCitationsInStringWithButtons:content.string];
+        // Process citations using the new CitationManager
+        content = [[self processCitationsWithManager:content rootView:rootView] mutableCopy];
         
         lab.textContainer.lineFragmentPadding = 0;
         lab.textContainerInset = UIEdgeInsetsZero;
@@ -181,6 +183,35 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     return lab;
 }
 
+#pragma mark - Citation Processing
+
+- (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView {
+    
+    // References contain the array of references to render
+    NSArray<ACOReference *> *references = [[rootView card] references];
+    
+    // Create CitationManager instance and build citations with references
+    ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
+    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
+}
+
+#pragma mark - ACRCitationManagerDelegate
+
+- (UIViewController *)parentViewControllerForCitationPresentation {
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
+}
+
+- (void)citationManager:(ACRCitationManager *)citationManager 
+    didTapCitationWithData:(NSDictionary *)citationData 
+             referenceData:(NSDictionary * _Nullable)referenceData {
+    NSLog(@"Citation tapped in TextBlockRenderer - Citation: %@, Reference: %@", citationData, referenceData);
+}
 
 #pragma mark - Expression Evaluation Helper
 - (void)handleExpressionEvaluationForTextBlock:(ACRViewAttachingTextView *)label
@@ -231,122 +262,6 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
             completion(evalResult, evalError);
         }
     }];
-}
-
-#pragma mark - Citations Helper methods
-
-- (UIButton *)createButtonWithTitle:(NSString *)title size:(CGSize)size {
-
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    
-    button.backgroundColor = [UIColor clearColor];
-    button.layer.borderWidth = 1.0;
-    button.layer.cornerRadius = 4.0;
-    button.layer.backgroundColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.98 alpha:1].CGColor;
-    button.layer.borderColor = [UIColor colorWithRed:0.878 green:0.878 blue:0.878 alpha:1].CGColor;
-    // Set button title font to regular size 14
-    button.titleLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
-    
-    // Ensure button can receive touches
-    button.userInteractionEnabled = YES;
-    
-    // Add target for button tap
-    [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return button;
-}
-
-- (ACRViewTextAttachment *)createCitationButtonAttachmentWithText:(NSString *)text {
-    CGSize size = CGSizeMake(17, 17);
-    
-    // Create a UIButton with citation styling
-    UIButton *citationButton = [self createButtonWithTitle:text size: size];
-    CGFloat newWidth = MAX(citationButton.titleLabel.intrinsicContentSize.width + 8.0, size.width);
-    // Create the ACRViewTextAttachment with the button
-    ACRViewTextAttachment *attachment = [[ACRViewTextAttachment alloc] initWithView:citationButton size:CGSizeMake(newWidth, size.height)];
-    
-    return attachment;
-}
-
-- (NSMutableAttributedString *)processCitationsInStringWithButtons:(NSString *)input {
-    NSMutableAttributedString *attributed =
-        [[NSMutableAttributedString alloc] initWithString:input];
-
-    NSError *error = nil;
-    NSRegularExpression *regex =
-        [NSRegularExpression regularExpressionWithPattern:@"\\[(.*?)\\]\\(cite:(.*?)\\)"
-                                                  options:0
-                                                    error:&error];
-
-    NSArray<NSTextCheckingResult *> *matches =
-        [regex matchesInString:input options:0 range:NSMakeRange(0, input.length)];
-
-    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@" "];
-
-    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        if (match.numberOfRanges == 3) {
-            NSString *displayText = [input substringWithRange:[match rangeAtIndex:1]];
-//            NSString *citeValue   = [input substringWithRange:[match rangeAtIndex:2]];
-
-            // Use the new button-based attachment instead of the image-based one
-            ACRViewTextAttachment *attachment = [self createCitationButtonAttachmentWithText:displayText];
-            NSMutableAttributedString *attachmentString = [NSMutableAttributedString attributedStringWithAttachment:attachment];
-            [attachmentString appendAttributedString:spacer];
-
-            // Replace the [10](cite:1) text with button (don't append, just replace)
-            NSRange fullMatchRange = match.range;
-            [attributed replaceCharactersInRange:fullMatchRange withAttributedString:attachmentString];
-        }
-    }
-    return attributed;
-}
-
-- (void)buttonTapped:(id)sender {
-    UIButton *button = nil;
-    NSString *buttonText = @"Unknown";
-    
-    if ([sender isKindOfClass:[UIButton class]]) {
-        button = (UIButton *)sender;
-        buttonText = button.titleLabel.text ?: @"No Title";
-    } else if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
-        UITapGestureRecognizer *gesture = (UITapGestureRecognizer *)sender;
-        if ([gesture.view isKindOfClass:[UIButton class]]) {
-            button = (UIButton *)gesture.view;
-            buttonText = button.titleLabel.text ?: @"No Title";
-        }
-    }
-    
-    // Handle button tap - you can access the button's properties here
-    NSLog(@"Citation button tapped: %@", buttonText);
-    
-    // Show alert with citation information
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Citation Tapped"
-                                                                   message:[NSString stringWithFormat:@"Citation button '%@' was tapped!", buttonText]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" 
-                                                       style:UIAlertActionStyleDefault 
-                                                     handler:nil];
-    [alert addAction:okAction];
-    
-    // Get the top-most view controller to present the alert
-    UIViewController *topViewController = [self topMostViewController];
-    if (topViewController) {
-        [topViewController presentViewController:alert animated:YES completion:nil];
-    }
-}
-
-- (UIViewController *)topMostViewController {
-    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    
-    while (topController.presentedViewController) {
-        topController = topController.presentedViewController;
-    }
-    
-    return topController;
 }
 
 @end
