@@ -55,21 +55,4 @@
     [self.attachmentBehavior layoutAttachedSubviews];
 }
 
-#pragma mark - Touch Event Forwarding
-
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    // First check if any attached subview should handle the touch
-    for (UIView *subview in self.subviews) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            CGPoint subviewPoint = [self convertPoint:point toView:subview];
-            if ([subview pointInside:subviewPoint withEvent:event]) {
-                return [subview hitTest:subviewPoint withEvent:event];
-            }
-        }
-    }
-    
-    // Fall back to default behavior
-    return nil;
-}
-
 @end
