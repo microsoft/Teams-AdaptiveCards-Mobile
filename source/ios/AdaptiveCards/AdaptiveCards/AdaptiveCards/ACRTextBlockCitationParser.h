@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Parser for TextBlock citations using regex pattern matching (e.g., "[1](cite:0)")
+ * Parser for TextBlock citations using regex-based pattern matching
+ * Handles citations in the format "[displayText](cite:referenceId)"
+ * This is the primary parser used for text content with embedded citation markup
  */
 @interface ACRTextBlockCitationParser : ACRCitationParser
 

@@ -7,7 +7,7 @@
 //
 
 #import "ACRCitationManager.h"
-#import "ACRTextBlockCitationParser.h"
+#import "ACRInlineCitationTokenParser.h"
 #import "ACRRichTextBlockCitationParser.h"
 #import "ACRBottomSheetViewController.h"
 #import "ACRBottomSheetConfiguration.h"
@@ -18,7 +18,7 @@
 @property (nonatomic, weak) id<ACRCitationManagerDelegate> delegate;
 
 // Lazy properties
-@property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
+@property (nonatomic, strong) ACRInlineCitationTokenParser *textBlockParser;
 @property (nonatomic, strong) ACRRichTextBlockCitationParser *richTextBlockParser;
 
 @end
@@ -36,9 +36,9 @@
 
 #pragma mark - Lazy Properties
 
-- (ACRTextBlockCitationParser *)textBlockParser {
+- (ACRInlineCitationTokenParser *)textBlockParser {
     if (!_textBlockParser) {
-        _textBlockParser = [[ACRTextBlockCitationParser alloc] initWithDelegate:self];
+        _textBlockParser = [[ACRInlineCitationTokenParser alloc] initWithDelegate:self];
     }
     return _textBlockParser;
 }

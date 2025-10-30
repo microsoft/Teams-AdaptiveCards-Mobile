@@ -10,6 +10,7 @@
 #import "ACRCitationManager.h"
 #import "ACRViewTextAttachment.h"
 #import "ACOReference.h"
+#import "ACOCitation.h"
 
 @interface ACRTextBlockCitationParser ()
 // No private properties needed - delegation handled by base class
@@ -55,55 +56,62 @@
     return citations;
 }
 
-- (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<ACOReference *> *)references {
-    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
-    NSString *inputString = attributedString.string;
-    
-    NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[(.*?)\\]\\(cite:(.*?)\\)"
-                                                                           options:0
-                                                                             error:&error];
-    
-    if (error) {
-        NSLog(@"Citation regex error: %@", error.localizedDescription);
-        return result;
-    }
-    
-    NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:inputString options:0 range:NSMakeRange(0, inputString.length)];
-    
-    // Process matches in reverse order to maintain correct ranges
-    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
-        if (match.numberOfRanges == 3) {
-            NSString *displayText = [inputString substringWithRange:[match rangeAtIndex:1]];
-            NSString *referenceId = [inputString substringWithRange:[match rangeAtIndex:2]];
+- (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString
+                                      withReferences:(NSArray<ACOReference *> *)references
+{
+    NSMutableAttributedString *result = [attributedString mutableCopy];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    NSMutableArray<NSDictionary *> *replacements = [NSMutableArray array];
+
+    // First: collect all matches
+    [attributedString enumerateAttributesInRange:NSMakeRange(0, attributedString.length)
+                                         options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+                                      usingBlock:^(NSDictionary<NSAttributedStringKey, id> *attrs, NSRange range, BOOL *stop) {
+        id linkValue = attrs[NSLinkAttributeName];
+        NSString *linkString = nil;
+        
+        if ([linkValue isKindOfClass:[NSURL class]]) {
+            linkString = [(NSURL *)linkValue absoluteString];
+        } else if ([linkValue isKindOfClass:[NSString class]]) {
+            linkString = (NSString *)linkValue;
+        }
+        
+        if ([linkString hasPrefix:@"cite:"]) {
+            NSNumber *referenceId = [formatter numberFromString:[linkString substringFromIndex:5]];
+            NSString *displayText = [[attributedString attributedSubstringFromRange:range] string];
+            displayText = [displayText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
-            // Create citation data
-            NSDictionary *citationData = @{
-                @"displayText": displayText,
-                @"referenceId": referenceId
-            };
+            ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
+                                                             referenceIndex:referenceId];
             
             // Find matching reference data by index
             ACOReference *referenceData = nil;
             NSInteger referenceIndex = [referenceId integerValue];
-            if (referenceIndex >= 0 && referenceIndex < references.count) {
+            if (referenceIndex >= 0 && referenceIndex < references.count)
+            {
                 referenceData = references[referenceIndex];
             }
             
-            // Create citation button with both citation and reference data
-            ACRViewTextAttachment *citationPill = [self createCitationPillWithData:citationData 
-                                                                      referenceData:referenceData];
+            ACRViewTextAttachment *citationPill = [self createCitationPillWithData:citation
+                                                                     referenceData:referenceData];
+            NSAttributedString *attachmentString =
+                [NSAttributedString attributedStringWithAttachment:citationPill];
             
-            // Create text attachment with the button
-            NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:citationPill];
-            
-            // Replace the [text](cite:id) with button
-            NSRange fullMatchRange = match.range;
-            [result replaceCharactersInRange:fullMatchRange withAttributedString:attachmentString];
+            // Store replacement info
+            [replacements addObject:@{
+                @"range" : [NSValue valueWithRange:range],
+                @"attachment" : attachmentString
+            }];
         }
+    }];
+
+    // Second: apply replacements (reverse order so ranges stay valid)
+    for (NSDictionary *item in [replacements reverseObjectEnumerator]) {
+        NSRange range = [item[@"range"] rangeValue];
+        NSAttributedString *attachment = item[@"attachment"];
+        [result replaceCharactersInRange:range withAttributedString:attachment];
     }
-    
+
     return result;
 }
 
