@@ -49,7 +49,7 @@
             // Find matching reference data by index using helper method
             ACOReference *referenceData = [self findReferenceByIndex:referenceId inReferences:references];
             
-            ACRViewTextAttachment *citationPill = [self createCitationAttachmentWithData:citation
+            ACRViewTextAttachment *citationPill = [self createAttachmentWithCitation:citation
                                                                      referenceData:referenceData];
             NSAttributedString *attachmentString =
                 [NSAttributedString attributedStringWithAttachment:citationPill];

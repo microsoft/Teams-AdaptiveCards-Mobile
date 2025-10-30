@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param referenceData ACOReference object containing the full reference information
  * @return ACRViewTextAttachment containing the citation button
  */
-- (ACRViewTextAttachment *)createCitationAttachmentWithData:(ACOCitation *)citation 
+- (ACRViewTextAttachment *)createAttachmentWithCitation:(ACOCitation *)citation 
                                               referenceData:(ACOReference *)referenceData;
 
 /**

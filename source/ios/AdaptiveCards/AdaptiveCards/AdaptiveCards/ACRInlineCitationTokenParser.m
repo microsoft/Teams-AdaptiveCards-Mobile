@@ -56,7 +56,7 @@
             ACOReference *referenceData = [self findReferenceByIndex:referenceIndex inReferences:references];
             
             // Create citation button with both citation and reference data
-            ACRViewTextAttachment *citationPill = [self createCitationAttachmentWithData:citation 
+            ACRViewTextAttachment *citationPill = [self createAttachmentWithCitation:citation 
                                                                            referenceData:referenceData];
             
             // Create text attachment with the button
