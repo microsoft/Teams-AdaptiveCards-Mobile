@@ -71,7 +71,7 @@
     return button;
 }
 
-- (ACRViewTextAttachment *)createCitationAttachmentWithData:(ACOCitation *)citation 
+- (ACRViewTextAttachment *)createAttachmentWithCitation:(ACOCitation *)citation 
                                               referenceData:(ACOReference *)referenceData {
     NSString *text = citation.displayText;
     CGSize size = CGSizeMake(17, 17);
