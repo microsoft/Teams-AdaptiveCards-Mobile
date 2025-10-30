@@ -28,6 +28,7 @@
 #import "TextRun.h"
 #import "TextInput.h"
 #import "UtiliOS.h"
+#import "ACRViewAttachingTextView.h"
 
 @implementation ACRRichTextBlockRenderer
 
@@ -51,8 +52,9 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<RichTextBlock> rTxtBlck = std::dynamic_pointer_cast<RichTextBlock>(elem);
-    ACRUILabel *lab =
-        [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, viewGroup.frame.size.width, 0)];
+    
+    ACRViewAttachingTextView *lab = [[ACRViewAttachingTextView alloc] initWithFrame:CGRectMake(0, 0, viewGroup.frame.size.width, 0)];
+
     lab.backgroundColor = [UIColor clearColor];
     lab.style = [viewGroup style];
     // Apple Bug: without setting editable to YES, VO link navigation in iOS 12 and above
@@ -216,16 +218,10 @@
                         NSNumber *number =
                         [NSNumber numberWithUnsignedLongLong:(unsigned long long)citationRun.get()];
                         NSString *key = [number stringValue];
-                        NSData *htmlData = nil;
-                        NSDictionary *options = nil;
-                        NSDictionary *descriptor = nil;
                         NSString *text = nil;
                         NSDictionary *data = textMap[key];
                         if (data) {
                             text = data[@"nonhtml"];
-                        }
-                        
-                        {
                             NSNumber *referenceId = @(citationRun->GetReferenceIndex());
                             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:text referenceIndex:referenceId];
                             NSArray<ACOReference *> *references = [[rootView card] references];
@@ -234,7 +230,6 @@
                             ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
                             NSAttributedString *citationRunContent = [citationManager buildCitationAttachmentWithCitation:citation
                                                                                                                references:references];
-                            
                             [content appendAttributedString:citationRunContent];
                         }
                     }
@@ -243,7 +238,6 @@
                 default:
                     break;
             }
-            
         }
         
         if (!rTxtBlck->GetLabelFor().empty() && TextInput().getIsRequired(rTxtBlck->GetLabelFor()))

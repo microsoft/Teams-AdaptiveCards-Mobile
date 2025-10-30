@@ -71,6 +71,8 @@
     return button;
 }
 
+#pragma mark - Shared Attachment Creation (Reusable by all parsers)
+
 - (ACRViewTextAttachment *)createAttachmentWithCitation:(ACOCitation *)citation 
                                               referenceData:(ACOReference *)referenceData {
     NSString *text = citation.displayText;
@@ -107,6 +109,20 @@
 }
 
 #pragma mark - Helper Methods
+
+- (NSAttributedString *)parseAttributedStringWithCitation:(ACOCitation *)citation
+                                            andReferences:(NSArray<ACOReference *> *)references {
+    // Find matching reference data by index using helper method
+    ACOReference *referenceData = [self findReferenceByIndex:citation.referenceIndex inReferences:references];
+    
+    // TextBlock citations use the default attributed string with attachment
+    ACRViewTextAttachment *attachment = [self createAttachmentWithCitation:citation referenceData:referenceData];
+    
+    // Create text attachment with the button
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+    return attachmentString;
+}
+
 
 - (nullable ACOReference *)findReferenceByIndex:(NSNumber *)referenceId 
                                    inReferences:(NSArray<ACOReference *> *)references {

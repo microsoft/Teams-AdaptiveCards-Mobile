@@ -42,10 +42,21 @@ NS_ASSUME_NONNULL_BEGIN
                                       withReferences:(NSArray<ACOReference *> *)references;
 
 /**
- * Concrete method to create a citation pill with reference data
+ * Abstract method to parse a citation object and create an attributed string with citation attachment
+ * Subclasses must override this method
+ * @param citation ACOCitation object containing displayText and referenceIndex
+ * @param references Array of ACOReference objects for citations
+ * @return NSAttributedString containing the citation attachment
+ */
+- (NSAttributedString *)parseAttributedStringWithCitation:(ACOCitation *)citation 
+                                            andReferences:(NSArray<ACOReference *> *)references;
+
+/**
+ * Concrete helper method to create a default citation attributed string with attachment
+ * Subclasses can use this as a base implementation or create their own custom styling
  * @param citation ACOCitation object containing displayText and referenceIndex
  * @param referenceData ACOReference object containing the full reference information
- * @return ACRViewTextAttachment containing the citation button
+ * @return NSAttributedString containing the citation attachment with default styling
  */
 - (ACRViewTextAttachment *)createAttachmentWithCitation:(ACOCitation *)citation 
                                               referenceData:(ACOReference *)referenceData;
