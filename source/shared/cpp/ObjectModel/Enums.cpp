@@ -289,6 +289,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::Abstract, "abstract"},
             {AdaptiveCardSchemaKey::Keywords, "keywords"},
             {AdaptiveCardSchemaKey::References, "references"},
+            {AdaptiveCardSchemaKey::ReferenceIndex, "referenceIndex"},
             {AdaptiveCardSchemaKey::CitationBlock, "citationBlock"},
             {AdaptiveCardSchemaKey::DividerColor, "dividerColor"},
             {AdaptiveCardSchemaKey::BottomSheetTextColor, "bottomSheetTextColor"},
