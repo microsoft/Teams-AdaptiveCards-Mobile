@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
@@ -55,7 +56,7 @@ class CitationCardFragment(
         val header = view.findViewById<TextView>(R.id.title_references)
         header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
-        val back = view.findViewById<TextView>(R.id.back_button)
+        val back = view.findViewById<ImageButton>(R.id.back_button)
         back.setOnClickListener {
             dismiss()
         }

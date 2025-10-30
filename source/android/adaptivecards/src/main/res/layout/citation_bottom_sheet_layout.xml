@@ -21,7 +21,7 @@
 
         <!-- Title centered in parent -->
         <TextView
-            android:id="@+id/title_references"
+            android:id="@+id/header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="References"
@@ -55,7 +55,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="4dp"
                 android:gravity="center"
-                android:text="01"
+                android:text="0dsdsewdsfdffd1"
+                android:maxLength="5"
                 android:textColor="#212121"
                 app:layout_constraintBottom_toBottomOf="@id/citation_icon"
                 app:layout_constraintStart_toStartOf="parent"

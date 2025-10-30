@@ -60,29 +60,19 @@ class CitationBottomSheetDialogFragment(
 
         val view = inflater.inflate(R.layout.citation_bottom_sheet_layout, container, false)
 
-        val header = view.findViewById<TextView>(R.id.title_references)
-        val referenceNumber = view.findViewById<TextView>(R.id.text_reference_number)
-        val title = view.findViewById<TextView>(R.id.citation_title)
-        val abstract = view.findViewById<TextView>(R.id.citation_abstract)
-        val keywords = view.findViewById<TextView>(R.id.citation_keywords)
-        val moreDetails = view.findViewById<TextView>(R.id.citation_more_details)
-        val icon = view.findViewById<ImageView>(R.id.citation_icon)
-
+        val header = view.findViewById<TextView>(R.id.header)
         header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
+        val referenceNumber = view.findViewById<TextView>(R.id.text_reference_number)
         referenceNumber.text = citationText
+        referenceNumber.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
+        val icon = view.findViewById<ImageView>(R.id.citation_icon)
         icon.setImageResource(citationReference.getDrawableForIcon())
 
+        val title = view.findViewById<TextView>(R.id.citation_title)
         title.text = citationReference.GetTitle()
         title.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
-
-        keywords.text = citationReference.GetKeywords().joinToString(" | ")
-        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetKeywordsColor.toColorInt())
-
-        abstract.text = citationReference.GetAbstract()
-        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
-
         title.setOnClickListener {
             val url = citationReference.GetUrl()?.toUri()
             url?.let {
@@ -91,9 +81,18 @@ class CitationBottomSheetDialogFragment(
             }
         }
 
+        val keywords = view.findViewById<TextView>(R.id.citation_keywords)
+        keywords.text = citationReference.GetKeywords().joinToString(" | ")
+        keywords.setTextColor(hostConfig.GetCitationBlock().bottomSheetKeywordsColor.toColorInt())
+
+        val abstract = view.findViewById<TextView>(R.id.citation_abstract)
+        abstract.text = citationReference.GetAbstract()
+        abstract.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
+
         if (citationReference.GetType() == ReferenceType.AdaptiveCard && citationReference.GetContent() != null) {
+            val moreDetails = view.findViewById<TextView>(R.id.citation_more_details)
             moreDetails.visibility = View.VISIBLE
-            title.setTextColor(hostConfig.GetCitationBlock().bottomSheetMoreDetailColor.toColorInt())
+            moreDetails.setTextColor(hostConfig.GetCitationBlock().bottomSheetMoreDetailColor.toColorInt())
             moreDetails.setOnClickListener {
                 val bottomSheet =
                     dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)

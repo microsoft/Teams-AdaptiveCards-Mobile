@@ -15,46 +15,6 @@
 			"text": "Second Text block citation [A2](cite:2) [A3](cite:3)",
 			"type": "TextBlock",
 			"wrap": true
-		},
-		{
-			"type": "RichTextBlock",
-			"inlines": [
-				{
-					"type": "TextRun",
-					"text": "Some Rich text block citations"
-				},
-				{
-					"type": "CitationRun",
-					"referenceIndex": -1,
-					"text": "Invalid AC-1"
-				},
-				{
-					"type": "CitationRun",
-					"referenceIndex": 0,
-					"text": "Invalid AC0"
-				},
-				{
-					"type": "CitationRun",
-					"referenceIndex": 3,
-					"text": "Invalid AC03"
-				},
-				{
-					"type": "CitationRun",
-					"referenceIndex": 1,
-					"text": "AC01"
-				},
-				{
-					"type": "CitationRun",
-					"referenceIndex": 2,
-					"text": "AC02"
-				},
-				{
-					"type": "CitationRun",
-					"referenceIndex": 2,
-					"text": "Longer Reference of AC02"
-				},
-				"."
-			]
 		}
 	],
 	"version": "1.6",
