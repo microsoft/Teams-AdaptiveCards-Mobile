@@ -52,15 +52,9 @@
             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
                                                              referenceIndex:referenceIndex];
             
-            // Find matching reference data by index using helper method
-            ACOReference *referenceData = [self findReferenceByIndex:referenceIndex inReferences:references];
-            
-            // Create citation button with both citation and reference data
-            ACRViewTextAttachment *citationPill = [self createAttachmentWithCitation:citation 
-                                                                           referenceData:referenceData];
-            
-            // Create text attachment with the button
-            NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:citationPill];
+            // Create citation attachment using the parser method
+            NSAttributedString *attachmentString = [self parseAttributedStringWithCitation:citation 
+                                                                            andReferences:references];
             
             // Replace the [text](cite:id) with button
             NSRange fullMatchRange = match.range;

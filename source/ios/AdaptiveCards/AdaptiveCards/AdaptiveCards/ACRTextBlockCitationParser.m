@@ -46,13 +46,8 @@
             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
                                                              referenceIndex:referenceId];
             
-            // Find matching reference data by index using helper method
-            ACOReference *referenceData = [self findReferenceByIndex:referenceId inReferences:references];
-            
-            ACRViewTextAttachment *citationPill = [self createAttachmentWithCitation:citation
-                                                                     referenceData:referenceData];
-            NSAttributedString *attachmentString =
-                [NSAttributedString attributedStringWithAttachment:citationPill];
+            NSAttributedString *attachmentString = [self parseAttributedStringWithCitation:citation
+                                                                           andReferences:references];
             
             // Store replacement info
             [replacements addObject:@{

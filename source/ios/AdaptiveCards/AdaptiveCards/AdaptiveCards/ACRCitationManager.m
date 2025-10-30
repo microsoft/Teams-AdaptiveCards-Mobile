@@ -78,13 +78,9 @@
 
 - (NSAttributedString *)buildCitationAttachmentWithCitation:(ACOCitation *)citation
                                                  references:(NSArray<ACOReference *> *)references {
-    // Find matching reference data by index using helper method from citation parser
-    ACOReference *referenceData = [self.citationRunParser findReferenceByIndex:citation.referenceIndex inReferences:references];
-    
-    // Create citation attachment using the CitationRun parser
-    ACRViewTextAttachment *citationPill = [self.citationRunParser createAttachmentWithCitation:citation
-                                                                                 referenceData:referenceData];
-    return [NSAttributedString attributedStringWithAttachment:citationPill];
+    // Use CitationRun parser to create citation attributed string
+    return [self.citationRunParser parseAttributedStringWithCitation:citation
+                                                       andReferences:references];
 }
 
 #pragma mark - ACRCitationParserDelegate
