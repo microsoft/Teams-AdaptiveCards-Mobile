@@ -1,11 +1,10 @@
 package io.adaptivecards.renderer.citation
 
 import android.content.Context
-import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.text.style.URLSpan
+import androidx.core.graphics.toColorInt
 import androidx.fragment.app.FragmentManager
 import io.adaptivecards.R
 import io.adaptivecards.objectmodel.CitationRun
@@ -61,9 +60,9 @@ object CitationUtil {
                     start,
                     end,
                     paragraph,
-                    hostConfig.GetCitationBlock().textColor.toInt(),
-                    hostConfig.GetCitationBlock().backgroundColor.toInt(),
-                    hostConfig.GetCitationBlock().borderColor.toInt(),
+                    hostConfig.GetCitationBlock().textColor.toColorInt(),
+                    hostConfig.GetCitationBlock().backgroundColor.toColorInt(),
+                    hostConfig.GetCitationBlock().borderColor.toColorInt(),
                     renderedCard,
                     index,
                     cardActionHandler,
