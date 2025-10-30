@@ -14,6 +14,7 @@
 #import "ACRBottomSheetConfiguration.h"
 #import "ACOReference.h"
 #import "ACOCitation.h"
+#import "ACRCitationParserDelegate.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate>
 
@@ -62,18 +63,18 @@
 
 #pragma mark - Public Methods
 
-- (NSAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString 
+- (NSAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString
                                                 references:(NSArray<ACOReference *> *)references {
     // Use inline citation parser for token-based citation parsing
     NSMutableAttributedString *result = [self.inlineCitationParser parseAttributedString:attributedString withReferences:references];
-    return [result copy]; // Return immutable copy
+    return [result copy];
 }
 
-- (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString 
-                                                                   references:(NSArray<ACOReference *> *)references {
+- (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString
+                                                                  references:(NSArray<ACOReference *> *)references {
     // Use TextBlock parser for NSLink-based citation parsing from attributed strings
     NSMutableAttributedString *result = [self.textBlockParser parseAttributedString:attributedString withReferences:references];
-    return [result copy]; // Return immutable copy
+    return [result copy];
 }
 
 - (NSAttributedString *)buildCitationAttachmentWithCitation:(ACOCitation *)citation
@@ -85,8 +86,8 @@
 
 #pragma mark - ACRCitationParserDelegate
 
-- (void)citationParser:(id)parser 
-        didTapCitation:(ACOCitation *)citation 
+- (void)citationParser:(id)parser
+        didTapCitation:(ACOCitation *)citation
          referenceData:(ACOReference * _Nullable)referenceData {
     
     // Handle citation tap from parser - delegate to the main delegate
@@ -102,8 +103,8 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Citation Tapped"
                                                                                      message:@"A citation was tapped. Handle accordingly."
                                                                               preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" 
-                                                               style:UIAlertActionStyleDefault 
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                               style:UIAlertActionStyleDefault
                                                              handler:nil];
             [alertController addAction:okAction];
             [parentViewController presentViewController:alertController animated:YES completion:nil];

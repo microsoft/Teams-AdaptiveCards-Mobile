@@ -12,10 +12,6 @@
 #import "ACOReference.h"
 #import "ACOCitation.h"
 
-@interface ACRInlineCitationTokenParser ()
-// No private properties needed - delegation handled by base class
-@end
-
 @implementation ACRInlineCitationTokenParser
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
@@ -50,11 +46,11 @@
             
             // Create ACOCitation object
             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
-                                                             referenceIndex:referenceIndex];
+                                                              referenceIndex:referenceIndex];
             
             // Create citation attachment using the parser method
             NSAttributedString *attachmentString = [self parseAttributedStringWithCitation:citation 
-                                                                            andReferences:references];
+                                                                             andReferences:references];
             
             // Replace the [text](cite:id) with button
             NSRange fullMatchRange = match.range;
