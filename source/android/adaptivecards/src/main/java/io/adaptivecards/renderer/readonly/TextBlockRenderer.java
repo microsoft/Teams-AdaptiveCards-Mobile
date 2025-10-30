@@ -302,12 +302,12 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         DateTimeParser parser = new DateTimeParser(textBlock.GetLanguage());
         String textWithFormattedDates = parser.GenerateString(textBlock.GetTextForDateParsing());
 
-        if (FeatureFlagResolverUtility.isStringResourceEnabled()) {
-            textWithFormattedDates = renderedCard.replaceStringResources(textWithFormattedDates);
-        }
+        // Check & replace string resource if present
+        textWithFormattedDates = renderedCard.checkAndReplaceStringResources(textWithFormattedDates);
 
         RendererUtil.SpecialTextHandleResult textHandleResult = RendererUtil.handleSpecialTextAndQueryLinks(textWithFormattedDates);
         CharSequence htmlString = textHandleResult.getHtmlString();
+        htmlString = InputUtils.appendRequiredLabelSuffix(htmlString, textBlock.GetLabelFor(), hostConfig, renderArgs);
 
         if (CitationUtil.isCitationUrlSpansPresent(htmlString)) {
             htmlString = CitationUtil.handleCitationSpansForTextBlock(
@@ -320,12 +320,7 @@ public class TextBlockRenderer extends BaseCardElementRenderer
                 renderArgs);
         }
 
-        if (TextInput.getIsRequired(textBlock.GetLabelFor())) {
-            textView.setText(InputUtils.appendRequiredLabelSuffix(new SpannableStringBuilder(htmlString), hostConfig, renderArgs));
-        } else {
-            textView.setText(htmlString);
-        }
-
+        textView.setText(htmlString);
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setOnTouchListener(new TouchTextView(new SpannableString(htmlString)));
 

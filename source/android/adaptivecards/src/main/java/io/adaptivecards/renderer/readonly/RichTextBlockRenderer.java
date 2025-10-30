@@ -51,7 +51,6 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.citation.CitationUtil;
 import io.adaptivecards.renderer.input.InputUtils;
-import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class RichTextBlockRenderer extends BaseCardElementRenderer
 {
@@ -149,9 +148,9 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 DateTimeParser parser = new DateTimeParser(textRun.GetLanguage());
                 String formattedText = parser.GenerateString(textRun.GetTextForDateParsing());
 
-                if (FeatureFlagResolverUtility.isStringResourceEnabled()) {
-                    formattedText = renderedCard.replaceStringResources(formattedText);
-                }
+                // Check & replace string resource if present
+                formattedText = renderedCard.checkAndReplaceStringResources(formattedText);
+
 
                 paragraph.append(formattedText);
 
@@ -232,9 +231,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
             }
         }
 
-        if (TextInput.getIsRequired(richTextBlock.GetLabelFor())) {
-            paragraph = InputUtils.appendRequiredLabelSuffix(paragraph, hostConfig, renderArgs);
-        }
+        paragraph = InputUtils.appendRequiredLabelSuffix(paragraph, richTextBlock.GetLabelFor(), hostConfig, renderArgs);
 
         return paragraph;
     }
