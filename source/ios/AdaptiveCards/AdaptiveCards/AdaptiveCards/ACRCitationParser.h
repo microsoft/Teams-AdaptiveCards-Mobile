@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import "ACRCitationParserDelegate.h"
 
+@protocol ACRCitationParserDelegate;
 @class ACRViewTextAttachment;
 @class ACOReference;
 @class ACOCitation;
@@ -59,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @return NSAttributedString containing the citation attachment with default styling
  */
 - (ACRViewTextAttachment *)createAttachmentWithCitation:(ACOCitation *)citation 
-                                              referenceData:(ACOReference *)referenceData;
+                                          referenceData:(ACOReference *)referenceData;
 
 /**
  * Helper method to find a reference by its index in the references array

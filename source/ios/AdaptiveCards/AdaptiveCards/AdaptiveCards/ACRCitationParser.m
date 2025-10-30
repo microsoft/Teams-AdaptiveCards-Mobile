@@ -12,13 +12,7 @@
 #import "ACOReference.h"
 #import "ACOCitation.h"
 #import <objc/runtime.h>
-
-@interface ACRCitationParser()
-
-//@property (nonatomic, weak, readwrite, nullable) id<ACRCitationParserDelegate> delegate;
-
-@end
-
+#import "ACRCitationParserDelegate.h"
 @implementation ACRCitationParser
 
 - (instancetype)initWithDelegate:(id<ACRCitationParserDelegate>)delegate {
@@ -47,7 +41,7 @@
 #pragma mark - Shared Button Creation (Reusable by all parsers)
 
 - (UIButton *)createButtonWithTitle:(NSString *)title size:(CGSize)size {
-
+    
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     
     [button setTitle:title forState:UIControlStateNormal];
@@ -74,7 +68,7 @@
 #pragma mark - Shared Attachment Creation (Reusable by all parsers)
 
 - (ACRViewTextAttachment *)createAttachmentWithCitation:(ACOCitation *)citation 
-                                              referenceData:(ACOReference *)referenceData {
+                                          referenceData:(ACOReference *)referenceData {
     NSString *text = citation.displayText;
     CGSize size = CGSizeMake(17, 17);
     
@@ -126,6 +120,7 @@
 
 - (nullable ACOReference *)findReferenceByIndex:(NSNumber *)referenceId 
                                    inReferences:(NSArray<ACOReference *> *)references {
+    
     if (!referenceId || !references) {
         return nil;
     }

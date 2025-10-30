@@ -12,10 +12,6 @@
 #import "ACOReference.h"
 #import "ACOCitation.h"
 
-@interface ACRTextBlockCitationParser ()
-// No private properties needed - delegation handled by base class
-@end
-
 @implementation ACRTextBlockCitationParser
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString
@@ -24,7 +20,7 @@
     NSMutableAttributedString *result = [attributedString mutableCopy];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     NSMutableArray<NSDictionary *> *replacements = [NSMutableArray array];
-
+    
     // First: collect all matches
     [attributedString enumerateAttributesInRange:NSMakeRange(0, attributedString.length)
                                          options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
@@ -44,10 +40,10 @@
             displayText = [displayText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
-                                                             referenceIndex:referenceId];
+                                                              referenceIndex:referenceId];
             
             NSAttributedString *attachmentString = [self parseAttributedStringWithCitation:citation
-                                                                           andReferences:references];
+                                                                             andReferences:references];
             
             // Store replacement info
             [replacements addObject:@{
@@ -56,14 +52,14 @@
             }];
         }
     }];
-
+    
     // Second: apply replacements (reverse order so ranges stay valid)
     for (NSDictionary *item in [replacements reverseObjectEnumerator]) {
         NSRange range = [item[@"range"] rangeValue];
         NSAttributedString *attachment = item[@"attachment"];
         [result replaceCharactersInRange:range withAttributedString:attachment];
     }
-
+    
     return result;
 }
 

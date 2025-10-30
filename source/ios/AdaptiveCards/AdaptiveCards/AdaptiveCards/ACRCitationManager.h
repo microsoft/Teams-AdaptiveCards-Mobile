@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @return A new attributed string with citation links replaced by interactive text attachments
  */
 - (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString 
-                                                                   references:(NSArray<ACOReference *> *)references;
+                                                                  references:(NSArray<ACOReference *> *)references;
 
 /**
  * Build a single citation attachment from an ACOCitation object
