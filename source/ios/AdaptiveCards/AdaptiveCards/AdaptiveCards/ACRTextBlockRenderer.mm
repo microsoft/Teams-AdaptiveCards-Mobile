@@ -197,7 +197,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 
 #pragma mark - ACRCitationManagerDelegate
 
-- (UIViewController *)topMostViewController {
+- (UIViewController *)parentViewControllerForCitationPresentation {
     UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
     while (topController.presentedViewController) {
@@ -205,11 +205,6 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     }
     
     return topController;
-}
-
-- (UIViewController *)parentViewControllerForCitationPresentation
-{
-    return [self topMostViewController];
 }
 
 - (void)citationManager:(ACRCitationManager *)citationManager 
