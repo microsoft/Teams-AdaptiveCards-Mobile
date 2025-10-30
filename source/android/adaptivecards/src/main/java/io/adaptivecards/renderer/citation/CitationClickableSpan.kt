@@ -11,6 +11,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 
 class CitationClickableSpan(
+    val citationText: String,
     val reference: References,
     val context: Context,
     val renderedCard: RenderedAdaptiveCard,
@@ -26,19 +27,20 @@ class CitationClickableSpan(
 
     private fun showCitationReference() {
         val factory = CitationBottomSheetDialogFragmentFactory(
-                context,
-                reference,
-                renderedCard,
-                fragmentManager,
-                cardActionHandler,
-                hostConfig,
-                renderArgs
+            context,
+            citationText,
+            reference,
+            renderedCard,
+            fragmentManager,
+            cardActionHandler,
+            hostConfig,
+            renderArgs
         )
         fragmentManager.fragmentFactory = factory
 
         val fragment = factory.instantiate(
-                ClassLoader.getSystemClassLoader(),
-                CitationBottomSheetDialogFragment::class.java.name
+            ClassLoader.getSystemClassLoader(),
+            CitationBottomSheetDialogFragment::class.java.name
         )
 
         if (fragment is CitationBottomSheetDialogFragment) {

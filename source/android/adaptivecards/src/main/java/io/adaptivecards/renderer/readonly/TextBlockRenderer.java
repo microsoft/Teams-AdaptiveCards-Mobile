@@ -313,9 +313,6 @@ public class TextBlockRenderer extends BaseCardElementRenderer
             htmlString = CitationUtil.handleCitationSpansForTextBlock(
                 context,
                 htmlString,
-                Color.GRAY,
-                Color.GREEN,
-                Color.BLACK,
                 renderedCard,
                 cardActionHandler,
                 fragmentManager,

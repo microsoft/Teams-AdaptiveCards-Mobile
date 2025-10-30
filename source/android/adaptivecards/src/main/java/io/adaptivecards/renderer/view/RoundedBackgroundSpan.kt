@@ -67,7 +67,8 @@ class RoundedBackgroundSpan(
         val rectBottom = y + fontMetrics.descent + paddingVertical
 
         // Detect RTL text direction
-        val isRtl = Character.getDirectionality(text[start]) == Character.DIRECTIONALITY_RIGHT_TO_LEFT
+        val isRtl =
+            Character.getDirectionality(text[start]) == Character.DIRECTIONALITY_RIGHT_TO_LEFT
         val rectLeft: Float
         val rectRight: Float
         val textX: Float

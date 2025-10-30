@@ -28,6 +28,7 @@ import io.adaptivecards.renderer.citation.CitationUtil.getDrawableForIcon
 
 class CitationBottomSheetDialogFragment(
     private val context: Context,
+    private val citationText: String,
     private val citationReference: References,
     private val renderedAdaptiveCard: RenderedAdaptiveCard,
     private val fragmentManager: FragmentManager,
@@ -41,21 +42,38 @@ class CitationBottomSheetDialogFragment(
         return dialog
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         val view = inflater.inflate(R.layout.citation_bottom_sheet_layout, container, false)
 
+        val header = view.findViewById<TextView>(R.id.title_references)
+        val referenceNumber = view.findViewById<TextView>(R.id.text_reference_number)
         val title = view.findViewById<TextView>(R.id.citation_title)
         val abstract = view.findViewById<TextView>(R.id.citation_abstract)
         val keywords = view.findViewById<TextView>(R.id.citation_keywords)
         val moreDetails = view.findViewById<TextView>(R.id.citation_more_details)
         val icon = view.findViewById<ImageView>(R.id.citation_icon)
 
+        view.setBackgroundColor(hostConfig.GetCitationBlock().bottomSheetBackgroundColor.toInt())
+
+        header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toInt())
+
+        referenceNumber.text = citationText
+
         icon.setImageResource(citationReference.getDrawableForIcon())
 
         title.text = citationReference.GetTitle()
-        abstract.text = citationReference.GetAbstract()
+        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toInt())
+
         keywords.text = citationReference.GetKeywords().joinToString(" | ")
+        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetKeywordsColor.toInt())
+
+        abstract.text = citationReference.GetAbstract()
+        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toInt())
 
         title.setOnClickListener {
             val url = citationReference.GetUrl()?.toUri()
@@ -67,6 +85,7 @@ class CitationBottomSheetDialogFragment(
 
         if (citationReference.GetType() == ReferenceType.AdaptiveCard && citationReference.GetContent() != null) {
             moreDetails.visibility = View.VISIBLE
+            title.setTextColor(hostConfig.GetCitationBlock().bottomSheetMoreDetailColor.toInt())
             moreDetails.setOnClickListener {
                 showCitationCard(citationReference.GetContent())
             }
@@ -77,18 +96,18 @@ class CitationBottomSheetDialogFragment(
 
     private fun showCitationCard(adaptiveCard: AdaptiveCard) {
         val factory = CitationCardFragmentFactory(
-                context,
-                adaptiveCard,
-                renderedAdaptiveCard,
-                actionHandler,
-                hostConfig,
-                renderArgs
+            context,
+            adaptiveCard,
+            renderedAdaptiveCard,
+            actionHandler,
+            hostConfig,
+            renderArgs
         )
         fragmentManager.fragmentFactory = factory
 
         val fragment = factory.instantiate(
-                ClassLoader.getSystemClassLoader(),
-                CitationCardFragment::class.java.name
+            ClassLoader.getSystemClassLoader(),
+            CitationCardFragment::class.java.name
         )
 
         if (fragment is CitationCardFragment) {
@@ -103,6 +122,7 @@ class CitationBottomSheetDialogFragment(
 
 class CitationBottomSheetDialogFragmentFactory(
     private val context: Context,
+    private val citationText: String,
     private val citationReference: References,
     private val renderedAdaptiveCard: RenderedAdaptiveCard,
     private val fragmentManager: FragmentManager,
@@ -114,13 +134,14 @@ class CitationBottomSheetDialogFragmentFactory(
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         return when (className) {
             CitationBottomSheetDialogFragment::class.java.name -> CitationBottomSheetDialogFragment(
-                    context,
-                    citationReference,
-                    renderedAdaptiveCard,
-                    fragmentManager,
-                    actionHandler,
-                    hostConfig,
-                    renderArgs
+                context,
+                citationText,
+                citationReference,
+                renderedAdaptiveCard,
+                fragmentManager,
+                actionHandler,
+                hostConfig,
+                renderArgs
             )
 
             else -> super.instantiate(classLoader, className)

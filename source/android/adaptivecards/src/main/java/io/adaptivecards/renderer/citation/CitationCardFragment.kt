@@ -50,7 +50,7 @@ class CitationCardFragment(
         val view = inflater.inflate(R.layout.citation_card_bottom_sheet_layout, container, false)
 
         // Add Card to BottomSheet
-        val contentLayout = view.findViewById<LinearLayout>(R.id.citation_card_contentLayout)
+        val contentLayout = view.findViewById<LinearLayout>(R.id.adaptiveCard_contentLayout)
         //val dialogContentViewId = Util.getViewId(view).toInt()
         renderCitationCard(contentLayout)
         return view

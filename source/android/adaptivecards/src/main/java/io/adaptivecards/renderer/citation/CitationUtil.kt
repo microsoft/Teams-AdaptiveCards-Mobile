@@ -23,7 +23,7 @@ import java.util.Locale
 object CitationUtil {
 
     @JvmStatic
-    fun isCitationUrlSpansPresent(htmlString: CharSequence) : Boolean {
+    fun isCitationUrlSpansPresent(htmlString: CharSequence): Boolean {
         val paragraph = SpannableStringBuilder(htmlString)
         val urlSpans = paragraph.getSpans(0, paragraph.length, URLSpan::class.java)
         val citeRegex = Regex("""^cite:(.+)$""")
@@ -34,14 +34,12 @@ object CitationUtil {
     fun handleCitationSpansForTextBlock(
         context: Context,
         htmlString: CharSequence,
-        textColor: Int,
-        backgroundColor: Int,
-        borderColor: Int,
         renderedCard: RenderedAdaptiveCard,
         cardActionHandler: ICardActionHandler,
         fragmentManager: FragmentManager,
         hostConfig: HostConfig,
-        renderArgs: RenderArgs) : SpannableStringBuilder {
+        renderArgs: RenderArgs
+    ): SpannableStringBuilder {
         val paragraph = SpannableStringBuilder(htmlString)
         val urlSpans = paragraph.getSpans(0, paragraph.length, URLSpan::class.java)
         val citeRegex = Regex("""^cite:(.+)$""")
@@ -59,19 +57,19 @@ object CitationUtil {
                 val index = matchResult.groupValues[1].toIntOrNull() ?: -1
 
                 applyCitationSpans(
-                        context,
-                        start,
-                        end,
-                        paragraph,
-                        textColor,
-                        backgroundColor,
-                        borderColor,
-                        renderedCard,
-                        index,
-                        cardActionHandler,
-                        fragmentManager,
-                        hostConfig,
-                        renderArgs
+                    context,
+                    start,
+                    end,
+                    paragraph,
+                    hostConfig.GetCitationBlock().textColor.toInt(),
+                    hostConfig.GetCitationBlock().backgroundColor.toInt(),
+                    hostConfig.GetCitationBlock().borderColor.toInt(),
+                    renderedCard,
+                    index,
+                    cardActionHandler,
+                    fragmentManager,
+                    hostConfig,
+                    renderArgs
                 )
             }
         }
@@ -83,7 +81,7 @@ object CitationUtil {
         context: Context,
         spanStart: Int,
         spanEnd: Int,
-        paragraph : SpannableStringBuilder,
+        paragraph: SpannableStringBuilder,
         textColor: Int,
         backgroundColor: Int,
         borderColor: Int,
@@ -103,10 +101,23 @@ object CitationUtil {
                 backgroundColor,
                 borderColor
             )
-            paragraph.setSpan(roundedBackgroundSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            paragraph.setSpan(
+                roundedBackgroundSpan,
+                spanStart,
+                spanEnd,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
-            val clickableSpan = CitationClickableSpan(citationReference, context, renderedCard, cardActionHandler, fragmentManager,
-                    hostConfig, renderArgs)
+            val clickableSpan = CitationClickableSpan(
+                paragraph.toString(),
+                citationReference,
+                context,
+                renderedCard,
+                cardActionHandler,
+                fragmentManager,
+                hostConfig,
+                renderArgs
+            )
 
             paragraph.setSpan(clickableSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
@@ -117,12 +128,13 @@ object CitationUtil {
         return if (this is CitationRun) {
             this
         } else {
-            CitationRun.dynamic_cast(this) ?: throw InternalError("Unable to convert BaseCardElement to TextBlock object model.")
+            CitationRun.dynamic_cast(this)
+                ?: throw InternalError("Unable to convert BaseCardElement to TextBlock object model.")
         }
     }
 
     @JvmStatic
-    fun CitationRun.getCitationText(renderedCard: RenderedAdaptiveCard) : String {
+    fun CitationRun.getCitationText(renderedCard: RenderedAdaptiveCard): String {
         val parser = DateTimeParser(Locale.getDefault().language)
         val formattedText = parser.GenerateString(this.GetTextForDateParsing())
         return renderedCard.replaceStringResources(formattedText)

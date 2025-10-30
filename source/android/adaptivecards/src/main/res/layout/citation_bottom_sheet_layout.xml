@@ -18,26 +18,16 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
-        <!-- Back arrow -->
-        <ImageView
-            android:id="@+id/backButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Back"
-            android:paddingLeft="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Title centered in parent -->
         <TextView
-            android:id="@+id/titleReferences"
+            android:id="@+id/title_references"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="References"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="#212121"
             android:textSize="17sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,110 +38,92 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#E0E0E0" />
+        android:background="#E1E1E1" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/text_reference_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:text="01"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/citation_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/citation_icon" />
-
-                <ImageView
-                    android:id="@+id/citation_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_icon_ms_excel"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintStart_toEndOf="@id/text_reference_number"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/citation_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Understanding Domicile in Florida"
-                    android:textColor="@android:color/black"
-                    android:textSize="17sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/citation_icon"/>
-
-                <TextView
-                    android:id="@+id/citation_keywords"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="07.2025 | 5 min read | This is a long keyword &amp; there is no limit on the number if lines."
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/citation_title"
-                    app:layout_constraintTop_toBottomOf="@id/citation_title" />
-
-                <TextView
-                    android:id="@+id/citation_abstract"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="News reports clarified key aspects of establishing domicile in Florida, including legal residency requirements and homestead eligibility."
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/citation_title"
-                    app:layout_constraintTop_toBottomOf="@id/citation_keywords" />
-
-                <TextView
-                    android:id="@+id/citation_more_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="More details >"
-                    android:textColor="@color/design_default_color_primary"
-                    android:textSize="14sp"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/citation_abstract" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:id="@+id/adaptiveCard_contentLayout"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_reference_number"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center"
+                android:text="01"
+                android:textColor="#212121"
+                app:layout_constraintBottom_toBottomOf="@id/citation_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/citation_icon" />
 
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/citation_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_icon_ms_excel"
+                app:layout_constraintStart_toEndOf="@id/text_reference_number"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/citation_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:text="Understanding Domicile in Florida"
+                android:textColor="#212121"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/citation_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/citation_keywords"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:text="07.2025 | 5 min read | This is a long keyword &amp; there is no limit on the number if lines."
+                android:textColor="#6E6E6E"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/citation_title"
+                app:layout_constraintTop_toBottomOf="@id/citation_title" />
+
+            <TextView
+                android:id="@+id/citation_abstract"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:text="News reports clarified key aspects of establishing domicile in Florida, including legal residency requirements and homestead eligibility."
+                android:textColor="#212121"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/citation_title"
+                app:layout_constraintTop_toBottomOf="@id/citation_keywords" />
+
+            <TextView
+                android:id="@+id/citation_more_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="More details >"
+                android:textColor="#5B5FC7"
+                android:textSize="13sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/citation_title"
+                app:layout_constraintTop_toBottomOf="@id/citation_abstract" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
 </LinearLayout>
