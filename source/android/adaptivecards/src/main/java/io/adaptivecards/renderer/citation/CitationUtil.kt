@@ -1,6 +1,7 @@
 package io.adaptivecards.renderer.citation
 
 import android.content.Context
+import android.graphics.Color
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.URLSpan
@@ -97,17 +98,14 @@ object CitationUtil {
         val citationReference = getCitationReference(referenceIndex, renderedCard)
 
         if (citationReference != null) {
-            val roundedBackgroundSpan = RoundedBackgroundSpan(
+            applyCitationBackgroundSpan(
                 context,
+                paragraph,
                 textColor,
                 backgroundColor,
-                borderColor
-            )
-            paragraph.setSpan(
-                roundedBackgroundSpan,
+                borderColor,
                 spanStart,
-                spanEnd,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                spanEnd
             )
 
             val clickableSpan = CitationClickableSpan(
@@ -123,6 +121,47 @@ object CitationUtil {
 
             paragraph.setSpan(clickableSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
+    }
+
+    @JvmStatic
+    fun applyCitationSpanForBottomSheet(
+        context: Context,
+        paragraph: SpannableStringBuilder,
+        hostConfig: HostConfig
+    ) {
+        applyCitationBackgroundSpan(
+                context,
+                paragraph,
+                hostConfig.GetCitationBlock().textColor.toColorInt(),
+                Color.TRANSPARENT,
+                hostConfig.GetCitationBlock().borderColor.toColorInt(),
+                0,
+                paragraph.length,
+        )
+    }
+
+    @JvmStatic
+    private fun applyCitationBackgroundSpan(
+        context: Context,
+        paragraph: SpannableStringBuilder,
+        textColor: Int,
+        backgroundColor: Int,
+        borderColor: Int,
+        spanStart: Int,
+        spanEnd: Int
+    ) {
+        val roundedBackgroundSpan = RoundedBackgroundSpan(
+                context,
+                textColor,
+                backgroundColor,
+                borderColor
+        )
+        paragraph.setSpan(
+                roundedBackgroundSpan,
+                spanStart,
+                spanEnd,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
     }
 
     @JvmStatic

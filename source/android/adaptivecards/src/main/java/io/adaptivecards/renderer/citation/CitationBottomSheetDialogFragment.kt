@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -64,7 +65,11 @@ class CitationBottomSheetDialogFragment(
         header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
         val referenceNumber = view.findViewById<TextView>(R.id.text_reference_number)
-        referenceNumber.text = citationText
+
+        val text = SpannableStringBuilder(citationText)
+        CitationUtil.applyCitationSpanForBottomSheet(context, text, hostConfig)
+        referenceNumber.text = text
+
         referenceNumber.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
         val icon = view.findViewById<ImageView>(R.id.citation_icon)
