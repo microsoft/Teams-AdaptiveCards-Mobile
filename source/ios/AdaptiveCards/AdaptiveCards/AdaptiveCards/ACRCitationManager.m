@@ -12,6 +12,7 @@
 #import "ACRBottomSheetViewController.h"
 #import "ACRBottomSheetConfiguration.h"
 #import "ACOReference.h"
+#import "ACOCitation.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate>
 
@@ -61,12 +62,12 @@
 #pragma mark - ACRCitationParserDelegate
 
 - (void)citationParser:(id)parser 
-      didTapCitationWithData:(NSDictionary *)citationData 
-               referenceData:(ACOReference * _Nullable)referenceData {
+        didTapCitation:(ACOCitation *)citation 
+         referenceData:(ACOReference * _Nullable)referenceData {
     
     // Handle citation tap from parser - delegate to the main delegate
-    if (self.delegate && [self.delegate respondsToSelector:@selector(citationManager:didTapCitationWithData:referenceData:)]) {
-        [self.delegate citationManager:self didTapCitationWithData:citationData referenceData:referenceData];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(citationManager:didTapCitation:referenceData:)]) {
+        [self.delegate citationManager:self didTapCitation:citation referenceData:referenceData];
     }
     
     // TODO: Show BottomSheet

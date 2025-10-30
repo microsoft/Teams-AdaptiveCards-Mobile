@@ -18,44 +18,6 @@
 
 @implementation ACRTextBlockCitationParser
 
-- (NSArray<NSDictionary *> *)extractCitationData:(NSAttributedString *)attributedString {
-    NSMutableArray<NSDictionary *> *citations = [NSMutableArray array];
-    NSString *inputString = attributedString.string;
-    
-    // Regex pattern to match "[displayText](cite:referenceId)"
-    NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[([^\\]]+)\\]\\(cite:([^)]+)\\)"
-                                                                           options:0
-                                                                             error:&error];
-    
-    if (error) {
-        NSLog(@"Citation regex error: %@", error.localizedDescription);
-        return citations;
-    }
-    
-    NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:inputString
-                                                              options:0
-                                                                range:NSMakeRange(0, inputString.length)];
-    
-    for (NSTextCheckingResult *match in matches) {
-        if (match.numberOfRanges >= 3) {
-            NSRange displayTextRange = [match rangeAtIndex:1];
-            NSRange referenceIdRange = [match rangeAtIndex:2];
-            
-            NSString *displayText = [inputString substringWithRange:displayTextRange];
-            NSString *referenceId = [inputString substringWithRange:referenceIdRange];
-            
-            NSDictionary *citationData = @{
-                @"displayText": displayText,
-                @"referenceId": referenceId
-            };
-            [citations addObject:citationData];
-        }
-    }
-    
-    return citations;
-}
-
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString
                                       withReferences:(NSArray<ACOReference *> *)references
 {
@@ -84,15 +46,10 @@
             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
                                                              referenceIndex:referenceId];
             
-            // Find matching reference data by index
-            ACOReference *referenceData = nil;
-            NSInteger referenceIndex = [referenceId integerValue];
-            if (referenceIndex >= 0 && referenceIndex < references.count)
-            {
-                referenceData = references[referenceIndex];
-            }
+            // Find matching reference data by index using helper method
+            ACOReference *referenceData = [self findReferenceByIndex:referenceId inReferences:references];
             
-            ACRViewTextAttachment *citationPill = [self createCitationPillWithData:citation
+            ACRViewTextAttachment *citationPill = [self createCitationAttachmentWithData:citation
                                                                      referenceData:referenceData];
             NSAttributedString *attachmentString =
                 [NSAttributedString attributedStringWithAttachment:citationPill];

@@ -10,6 +10,7 @@
 #import "ACRCitationManager.h"
 #import "ACRViewTextAttachment.h"
 #import "ACOReference.h"
+#import "ACOCitation.h"
 #import <objc/runtime.h>
 
 @interface ACRCitationParser()
@@ -70,16 +71,16 @@
     return button;
 }
 
-- (ACRViewTextAttachment *)createCitationPillWithData:(NSDictionary *)citationData 
-                                        referenceData:(ACOReference *)referenceData {
-    NSString *text = citationData[@"displayText"];
+- (ACRViewTextAttachment *)createCitationAttachmentWithData:(ACOCitation *)citation 
+                                              referenceData:(ACOReference *)referenceData {
+    NSString *text = citation.displayText;
     CGSize size = CGSizeMake(17, 17);
     
     // Create a UIButton with citation styling
     UIButton *citationButton = [self createButtonWithTitle:text size: size];
     
     // Store both citation data and reference data for retrieval in tap handler
-    objc_setAssociatedObject(citationButton, @"citationData", citationData, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(citationButton, @"citation", citation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     objc_setAssociatedObject(citationButton, @"referenceData", referenceData, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     // Adjust width for long strings
@@ -93,16 +94,32 @@
 
 - (void)citationButtonTapped:(UIButton *)button {
     // Get stored citation and reference data
-    NSDictionary *citationData = objc_getAssociatedObject(button, @"citationData");
+    ACOCitation *citation = objc_getAssociatedObject(button, @"citation");
     ACOReference *referenceData = objc_getAssociatedObject(button, @"referenceData");
     
     // Delegate back to the parser delegate
-    if (self.delegate && citationData) {
-        [self.delegate citationParser:self didTapCitationWithData:citationData referenceData:referenceData];
+    if (self.delegate && citation) {
+        [self.delegate citationParser:self didTapCitation:citation referenceData:referenceData];
     }
     
     //TODO
     
+}
+
+#pragma mark - Helper Methods
+
+- (nullable ACOReference *)findReferenceByIndex:(NSNumber *)referenceId 
+                                   inReferences:(NSArray<ACOReference *> *)references {
+    if (!referenceId || !references) {
+        return nil;
+    }
+    
+    NSInteger referenceIndex = [referenceId integerValue];
+    if (referenceIndex >= 0 && referenceIndex < references.count) {
+        return references[referenceIndex];
+    }
+    
+    return nil;
 }
 
 @end
