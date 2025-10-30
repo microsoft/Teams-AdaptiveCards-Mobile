@@ -11,6 +11,7 @@
 
 @class ACRCitationManager;
 @class ACOReference;
+@class ACOCitation;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -41,14 +42,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)citationDidDismiss:(NSString *)citationId;
 
 /**
- * Called when a citation is tapped by user
+ * Called when a citation button is tapped
  * @param citationManager The citation manager handling the tap
- * @param citationData Dictionary containing citation information
+ * @param citation ACOCitation object containing citation information
  * @param referenceData ACOReference object containing full reference information
  */
 - (void)citationManager:(ACRCitationManager *)citationManager 
-    didTapCitationWithData:(NSDictionary *)citationData 
-             referenceData:(ACOReference * _Nullable)referenceData;
+         didTapCitation:(ACOCitation *)citation 
+          referenceData:(ACOReference * _Nullable)referenceData;
 
 @end
 

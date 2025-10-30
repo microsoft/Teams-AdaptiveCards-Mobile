@@ -12,6 +12,7 @@
 
 @class ACRViewTextAttachment;
 @class ACOReference;
+@class ACOCitation;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Initialize the parser with a delegate
  * @param delegate The delegate that will receive parsing events
- * @param references An array of the references corresponding to all the citations
  * @return Initialized parser instance
  */
 - (instancetype)initWithDelegate:(id<ACRCitationParserDelegate>)delegate;
@@ -42,21 +42,22 @@ NS_ASSUME_NONNULL_BEGIN
                                       withReferences:(NSArray<ACOReference *> *)references;
 
 /**
- * Abstract method to extract citation data from the input
- * Subclasses must override this method  
- * @param attributedString The input attributed string to parse
- * @return Array of dictionaries containing citation data (displayText, referenceId)
- */
-- (NSArray<NSDictionary *> *)extractCitationData:(NSAttributedString *)attributedString;
-
-/**
  * Concrete method to create a citation pill with reference data
- * @param citationData Dictionary containing displayText and referenceId
+ * @param citation ACOCitation object containing displayText and referenceIndex
  * @param referenceData ACOReference object containing the full reference information
  * @return ACRViewTextAttachment containing the citation button
  */
-- (ACRViewTextAttachment *)createCitationPillWithData:(NSDictionary *)citationData 
-                                        referenceData:(ACOReference *)referenceData;
+- (ACRViewTextAttachment *)createCitationAttachmentWithData:(ACOCitation *)citation 
+                                              referenceData:(ACOReference *)referenceData;
+
+/**
+ * Helper method to find a reference by its index in the references array
+ * @param referenceId NSNumber containing the reference index
+ * @param references Array of ACOReference objects to search through
+ * @return ACOReference object if found, nil otherwise
+ */
+- (nullable ACOReference *)findReferenceByIndex:(NSNumber *)referenceId 
+                                   inReferences:(NSArray<ACOReference *> *)references;
 
 @end
 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ACOReference;
+@class ACOCitation;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,12 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Called when a citation button is tapped
- * @param citationData Dictionary containing citation information (displayText, referenceId)
+ * @param citation ACOCitation object containing citation information
  * @param referenceData ACOReference object containing full reference information
  */
 - (void)citationParser:(id)parser 
-      didTapCitationWithData:(NSDictionary *)citationData 
-               referenceData:(ACOReference * _Nullable)referenceData;
+      didTapCitation:(ACOCitation *)citation 
+       referenceData:(ACOReference * _Nullable)referenceData;
 
 @end
 

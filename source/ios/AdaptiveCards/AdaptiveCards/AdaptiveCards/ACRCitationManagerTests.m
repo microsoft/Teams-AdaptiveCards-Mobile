@@ -13,6 +13,7 @@
 #import "ACRRichTextBlockCitationParser.h"
 #import "ACOAdaptiveCard.h"
 #import "ACOReference.h"
+#import "ACOCitation.h"
 
 @interface ACRCitationManagerTests : XCTestCase <ACRCitationManagerDelegate>
 
@@ -109,23 +110,20 @@
 
 /// Tests citation manager delegation when citation is tapped through parser
 - (void)testCitationTappedDelegation {
-    // Given: Citation and reference data
-    NSDictionary *citationData = @{
-        @"displayText": @"1",
-        @"referenceId": @"0"
-    };
+    // Given: Citation data with reference
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1" referenceIndex:@0];
     NSDictionary *referenceData = self.testReferences[0];
     
     // When: Simulating a citation tap from parser
     [self.citationManager citationParser:self.citationManager.textBlockParser 
-                    didTapCitationWithData:citationData 
-                             referenceData:referenceData];
+                           didTapCitation:citation 
+                            referenceData:referenceData];
     
     // Then: Delegate method should be called
     XCTAssertEqual(self.citationTapEvents.count, 1, @"One citation tap event should be recorded");
     
     NSDictionary *tapEvent = self.citationTapEvents.firstObject;
-    XCTAssertEqualObjects(tapEvent[@"citationData"], citationData, @"Citation data should match");
+    XCTAssertEqualObjects(tapEvent[@"citation"], citation, @"Citation object should match");
     XCTAssertEqualObjects(tapEvent[@"referenceData"], referenceData, @"Reference data should match");
 }
 
@@ -260,13 +258,13 @@
 }
 
 - (void)citationManager:(ACRCitationManager *)citationManager 
-    didTapCitationWithData:(NSDictionary *)citationData 
-             referenceData:(NSDictionary * _Nullable)referenceData {
+         didTapCitation:(ACOCitation *)citation 
+          referenceData:(ACOReference * _Nullable)referenceData {
     
     // Record the tap event for verification
     NSDictionary *tapEvent = @{
-        @"citationData": citationData ?: @{},
-        @"referenceData": referenceData ?: @{}
+        @"citation": citation ?: [NSNull null],
+        @"referenceData": referenceData ?: [NSNull null]
     };
     [self.citationTapEvents addObject:tapEvent];
 }

@@ -10,50 +10,13 @@
 #import "ACRCitationManager.h"
 #import "ACRViewTextAttachment.h"
 #import "ACOReference.h"
+#import "ACOCitation.h"
 
 @interface ACRInlineCitationTokenParser ()
 // No private properties needed - delegation handled by base class
 @end
 
 @implementation ACRInlineCitationTokenParser
-
-- (NSArray<NSDictionary *> *)extractCitationData:(NSAttributedString *)attributedString {
-    NSMutableArray<NSDictionary *> *citations = [NSMutableArray array];
-    NSString *inputString = attributedString.string;
-    
-    // Regex pattern to match "[displayText](cite:referenceId)"
-    NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[([^\\]]+)\\]\\(cite:([^)]+)\\)"
-                                                                           options:0
-                                                                             error:&error];
-    
-    if (error) {
-        NSLog(@"Citation regex error: %@", error.localizedDescription);
-        return citations;
-    }
-    
-    NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:inputString
-                                                              options:0
-                                                                range:NSMakeRange(0, inputString.length)];
-    
-    for (NSTextCheckingResult *match in matches) {
-        if (match.numberOfRanges >= 3) {
-            NSRange displayTextRange = [match rangeAtIndex:1];
-            NSRange referenceIdRange = [match rangeAtIndex:2];
-            
-            NSString *displayText = [inputString substringWithRange:displayTextRange];
-            NSString *referenceId = [inputString substringWithRange:referenceIdRange];
-            
-            NSDictionary *citationData = @{
-                @"displayText": displayText,
-                @"referenceId": referenceId
-            };
-            [citations addObject:citationData];
-        }
-    }
-    
-    return citations;
-}
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
                                       withReferences:(NSArray<ACOReference *> *)references {
@@ -78,22 +41,23 @@
             NSString *displayText = [inputString substringWithRange:[match rangeAtIndex:1]];
             NSString *referenceId = [inputString substringWithRange:[match rangeAtIndex:2]];
             
-            // Create citation data
-            NSDictionary *citationData = @{
-                @"displayText": displayText,
-                @"referenceId": referenceId
-            };
-            
-            // Find matching reference data by index
-            ACOReference *referenceData = nil;
-            NSInteger referenceIndex = [referenceId integerValue];
-            if (referenceIndex >= 0 && referenceIndex < references.count) {
-                referenceData = references[referenceIndex];
+            // Convert referenceId to NSNumber for ACOCitation
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            NSNumber *referenceIndex = [formatter numberFromString:referenceId];
+            if (!referenceIndex) {
+                referenceIndex = @0; // Default to 0 if parsing fails
             }
             
+            // Create ACOCitation object
+            ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
+                                                             referenceIndex:referenceIndex];
+            
+            // Find matching reference data by index using helper method
+            ACOReference *referenceData = [self findReferenceByIndex:referenceIndex inReferences:references];
+            
             // Create citation button with both citation and reference data
-            ACRViewTextAttachment *citationPill = [self createCitationPillWithData:citationData 
-                                                                      referenceData:referenceData];
+            ACRViewTextAttachment *citationPill = [self createCitationAttachmentWithData:citation 
+                                                                           referenceData:referenceData];
             
             // Create text attachment with the button
             NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:citationPill];
