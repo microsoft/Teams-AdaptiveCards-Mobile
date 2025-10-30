@@ -93,7 +93,7 @@ class CitationBottomSheetDialogFragment(
 
         if (citationReference.GetType() == ReferenceType.AdaptiveCard && citationReference.GetContent() != null) {
             moreDetails.visibility = View.VISIBLE
-            title.setTextColor(hostConfig.GetCitationBlock().bottomSheetMoreDetailColor.toInt())
+            title.setTextColor(hostConfig.GetCitationBlock().bottomSheetMoreDetailColor.toColorInt())
             moreDetails.setOnClickListener {
                 val bottomSheet =
                     dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
