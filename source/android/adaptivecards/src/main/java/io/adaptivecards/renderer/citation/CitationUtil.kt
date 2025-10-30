@@ -137,7 +137,7 @@ object CitationUtil {
     fun CitationRun.getCitationText(renderedCard: RenderedAdaptiveCard): String {
         val parser = DateTimeParser(Locale.getDefault().language)
         val formattedText = parser.GenerateString(this.GetTextForDateParsing())
-        return renderedCard.replaceStringResources(formattedText)
+        return renderedCard.checkAndReplaceStringResources(formattedText)
     }
 
     @JvmStatic
