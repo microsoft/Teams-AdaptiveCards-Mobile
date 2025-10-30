@@ -7,6 +7,7 @@
 //
 
 #import "ACRCitationManager.h"
+#import "ACRTextBlockCitationParser.h"
 #import "ACRInlineCitationTokenParser.h"
 #import "ACRRichTextBlockCitationParser.h"
 #import "ACRBottomSheetViewController.h"
@@ -19,6 +20,7 @@
 @property (nonatomic, weak) id<ACRCitationManagerDelegate> delegate;
 
 // Lazy properties
+@property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
 @property (nonatomic, strong) ACRInlineCitationTokenParser *inlineCitationParser;
 @property (nonatomic, strong) ACRRichTextBlockCitationParser *citationRunParser;
 
@@ -37,6 +39,13 @@
 
 #pragma mark - Lazy Properties
 
+- (ACRTextBlockCitationParser *)textBlockParser {
+    if (!_textBlockParser) {
+        _textBlockParser = [[ACRTextBlockCitationParser alloc] initWithDelegate:self];
+    }
+    return _textBlockParser;
+}
+
 - (ACRInlineCitationTokenParser *)inlineCitationParser {
     if (!_inlineCitationParser) {
         _inlineCitationParser = [[ACRInlineCitationTokenParser alloc] initWithDelegate:self];
@@ -53,10 +62,29 @@
 
 #pragma mark - Public Methods
 
-- (NSMutableAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString 
-                                                       references:(NSArray<ACOReference *> *)references {
-    // Use TextBlock parser for regex-based citation parsing
-    return [self.inlineCitationParser parseAttributedString:attributedString withReferences:references];
+- (NSAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString 
+                                                references:(NSArray<ACOReference *> *)references {
+    // Use inline citation parser for token-based citation parsing
+    NSMutableAttributedString *result = [self.inlineCitationParser parseAttributedString:attributedString withReferences:references];
+    return [result copy]; // Return immutable copy
+}
+
+- (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString 
+                                                                   references:(NSArray<ACOReference *> *)references {
+    // Use TextBlock parser for NSLink-based citation parsing from attributed strings
+    NSMutableAttributedString *result = [self.textBlockParser parseAttributedString:attributedString withReferences:references];
+    return [result copy]; // Return immutable copy
+}
+
+- (NSAttributedString *)buildCitationAttachmentWithCitation:(ACOCitation *)citation
+                                                 references:(NSArray<ACOReference *> *)references {
+    // Find matching reference data by index using helper method from citation parser
+    ACOReference *referenceData = [self.citationRunParser findReferenceByIndex:citation.referenceIndex inReferences:references];
+    
+    // Create citation attachment using the CitationRun parser
+    ACRViewTextAttachment *citationPill = [self.citationRunParser createAttachmentWithCitation:citation
+                                                                                 referenceData:referenceData];
+    return [NSAttributedString attributedStringWithAttachment:citationPill];
 }
 
 #pragma mark - ACRCitationParserDelegate

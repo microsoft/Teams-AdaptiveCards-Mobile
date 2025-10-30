@@ -10,6 +10,7 @@
 #import "ACRCitationManagerDelegate.h"
 
 @class ACOReference;
+@class ACOCitation;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,8 +35,29 @@ NS_ASSUME_NONNULL_BEGIN
  * @param references Array of ACOReference objects for citations
  * @return A new attributed string with citations replaced by interactive text attachments
  */
-- (NSMutableAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString 
-                                                       references:(NSArray<ACOReference *> *)references;
+- (NSAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString 
+                                                references:(NSArray<ACOReference *> *)references;
+
+/**
+ * Build interactive citations from NSLink attributes in an attributed string
+ * Specifically processes attributed strings that contain NSLinkAttributeName with "cite:" URLs
+ * Used for TextBlock citations that have already been parsed into NSLink attributes
+ * @param attributedString The input attributed string with NSLink attributes to process
+ * @param references Array of ACOReference objects for citations
+ * @return A new attributed string with citation links replaced by interactive text attachments
+ */
+- (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString 
+                                                                   references:(NSArray<ACOReference *> *)references;
+
+/**
+ * Build a single citation attachment from an ACOCitation object
+ * Used for RichTextBlock CitationRun processing where citations are already parsed
+ * @param citation ACOCitation object containing display text and reference index
+ * @param references Array of ACOReference objects for citations
+ * @return An attributed string containing the citation attachment
+ */
+- (NSAttributedString *)buildCitationAttachmentWithCitation:(ACOCitation *)citation
+                                                 references:(NSArray<ACOReference *> *)references;
 
 @end
 

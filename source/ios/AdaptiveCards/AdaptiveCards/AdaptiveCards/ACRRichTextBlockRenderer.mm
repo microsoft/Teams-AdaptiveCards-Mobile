@@ -226,14 +226,15 @@
                         }
                         
                         {
-                            // TEMP Code 
                             NSNumber *referenceId = @(citationRun->GetReferenceIndex());
                             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:text referenceIndex:referenceId];
                             NSArray<ACOReference *> *references = [[rootView card] references];
                             
                             // Create CitationManager instance to handle citation processing
                             ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
-                            NSAttributedString *citationRunContent = [citationManager buildCitationsFromAttributedString:content references:references];                            
+                            NSAttributedString *citationRunContent = [citationManager buildCitationAttachmentWithCitation:citation
+                                                                                                               references:references];
+                            
                             [content appendAttributedString:citationRunContent];
                         }
                     }
