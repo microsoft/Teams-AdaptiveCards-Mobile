@@ -2,6 +2,7 @@ package io.adaptivecards.renderer.citation
 
 import android.content.Context
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import io.adaptivecards.objectmodel.HostConfig
@@ -11,7 +12,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 
 class CitationClickableSpan(
-    val citationText: String,
+    private val citationText: String,
     val reference: References,
     val context: Context,
     val renderedCard: RenderedAdaptiveCard,
@@ -23,6 +24,9 @@ class CitationClickableSpan(
 
     override fun onClick(view: View) {
         showCitationReference()
+
+        Log.d("CitationClickableSpan", "$citationText : ${reference.GetIcon().toString()}")
+
     }
 
     private fun showCitationReference() {

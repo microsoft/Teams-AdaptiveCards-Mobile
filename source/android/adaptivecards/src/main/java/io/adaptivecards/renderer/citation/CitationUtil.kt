@@ -47,6 +47,7 @@ object CitationUtil {
             val url = span.url
             val start = paragraph.getSpanStart(span)
             val end = paragraph.getSpanEnd(span)
+            val spanText = paragraph.subSequence(start, end).toString()
             val matchResult = citeRegex.matchEntire(url)
 
             if (matchResult != null) {
@@ -59,6 +60,7 @@ object CitationUtil {
                     context,
                     start,
                     end,
+                    spanText,
                     paragraph,
                     hostConfig.GetCitationBlock().textColor.toColorInt(),
                     hostConfig.GetCitationBlock().backgroundColor.toColorInt(),
@@ -80,6 +82,7 @@ object CitationUtil {
         context: Context,
         spanStart: Int,
         spanEnd: Int,
+        citationText: String,
         paragraph: SpannableStringBuilder,
         textColor: Int,
         backgroundColor: Int,
@@ -108,7 +111,7 @@ object CitationUtil {
             )
 
             val clickableSpan = CitationClickableSpan(
-                paragraph.toString(),
+                citationText,
                 citationReference,
                 context,
                 renderedCard,

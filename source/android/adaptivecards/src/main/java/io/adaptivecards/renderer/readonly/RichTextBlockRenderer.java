@@ -217,6 +217,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                     context,
                     spanStart,
                     spanEnd,
+                    citationText,
                     paragraph,
                     Color.parseColor(hostConfig.GetCitationBlock().getTextColor()),
                     Color.parseColor(hostConfig.GetCitationBlock().getBackgroundColor()),
