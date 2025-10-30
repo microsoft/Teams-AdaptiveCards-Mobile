@@ -192,7 +192,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     
     // Create CitationManager instance and build citations with references
     ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
-    return [citationManager buildCitationsFromAttributedString:content references:references];
+    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
 }
 
 #pragma mark - ACRCitationManagerDelegate
