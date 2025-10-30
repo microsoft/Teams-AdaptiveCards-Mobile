@@ -78,9 +78,9 @@
     NSString *inputText = @"Machine learning has changed computing [1](cite:0) and sustainable practices are important [2](cite:1).";
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
     
-    // When: Parsing attributed string with references
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString 
-                                                                    withReferences:self.testReferences];
+    // When: Building citations from attributed string with references
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString 
+                                                                                      references:self.testReferences];
     
     // Then: Result should contain text attachments for citations
     XCTAssertNotNil(result, @"Result should not be nil");
@@ -136,9 +136,9 @@
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
     NSArray<NSDictionary *> *emptyReferences = @[];
     
-    // When: Parsing with empty references
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString 
-                                                                    withReferences:emptyReferences];
+    // When: Building citations with empty references
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString 
+                                                                                      references:emptyReferences];
     
     // Then: Should handle gracefully without crashes
     XCTAssertNotNil(result, @"Result should not be nil even with empty references");
@@ -150,9 +150,9 @@
     NSString *inputText = @"This has a citation [1](cite:test).";
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
     
-    // When: Parsing with nil references
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString 
-                                                                    withReferences:nil];
+    // When: Building citations with nil references
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString 
+                                                                                      references:nil];
     
     // Then: Should handle gracefully without crashes
     XCTAssertNotNil(result, @"Result should not be nil even with nil references");

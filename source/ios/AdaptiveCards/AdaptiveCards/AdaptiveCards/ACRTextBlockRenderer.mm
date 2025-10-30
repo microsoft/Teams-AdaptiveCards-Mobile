@@ -190,9 +190,9 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     // References contain the array of references to render
     NSArray<ACOReference *> *references = [[rootView card] references];
     
-    // Create CitationManager instance and parse citations with references
+    // Create CitationManager instance and build citations with references
     ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
-    return [citationManager parseAttributedString:content withReferences:references];
+    return [citationManager buildCitationsFromAttributedString:content references:references];
 }
 
 #pragma mark - ACRCitationManagerDelegate
