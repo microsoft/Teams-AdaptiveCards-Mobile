@@ -24,8 +24,8 @@
             android:id="@+id/back_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_fluent_star_28_filled"
             android:contentDescription="Back"
+            android:background="@null"
             android:layout_marginStart="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
 
         <!-- Title centered in parent -->
         <TextView
-            android:id="@+id/title_references"
+            android:id="@+id/header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="References"
@@ -48,6 +48,7 @@
 
     <!-- Divider below header -->
     <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#E1E1E1" />

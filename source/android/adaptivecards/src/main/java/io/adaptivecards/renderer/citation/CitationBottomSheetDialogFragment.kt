@@ -64,6 +64,9 @@ class CitationBottomSheetDialogFragment(
         val header = view.findViewById<TextView>(R.id.header)
         header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
+        val divider = view.findViewById<View>(R.id.divider)
+        divider.setBackgroundColor(hostConfig.GetCitationBlock().dividerColor.toColorInt())
+
         val referenceNumber = view.findViewById<TextView>(R.id.text_reference_number)
 
         val text = SpannableStringBuilder(citationText)

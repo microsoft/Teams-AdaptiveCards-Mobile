@@ -82,7 +82,7 @@
 				"body": [
 					{
 						"type": "TextBlock",
-						"text": "Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange. When delivered to a specific app, the JSON is transformed into native UI that automatically adapts to its surroundings",
+						"text": "Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange. When delivered to a specific app, the JSON is transformed into native UI that automatically adapts to its surroundings.Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange.Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange.Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange.Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange.Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange.Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange.",
 						"wrap": true
 					}
 				]

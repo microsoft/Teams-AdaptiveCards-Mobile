@@ -22,6 +22,7 @@ import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import io.adaptivecards.R
+import io.adaptivecards.objectmodel.ACTheme
 import io.adaptivecards.objectmodel.AdaptiveCard
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.renderer.AdaptiveCardRenderer
@@ -53,10 +54,14 @@ class CitationCardFragment(
     ): View {
         val view = inflater.inflate(R.layout.citation_card_bottom_sheet_layout, container, false)
 
-        val header = view.findViewById<TextView>(R.id.title_references)
+        val header = view.findViewById<TextView>(R.id.header)
         header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
+        val divider = view.findViewById<View>(R.id.divider)
+        divider.setBackgroundColor(hostConfig.GetCitationBlock().dividerColor.toColorInt())
+
         val back = view.findViewById<ImageButton>(R.id.back_button)
+        back.setImageResource(if (renderedAdaptiveCard.theme == ACTheme.Dark) R.drawable.ic_icon_back_dark else R.drawable.ic_icon_back)
         back.setOnClickListener {
             dismiss()
         }
