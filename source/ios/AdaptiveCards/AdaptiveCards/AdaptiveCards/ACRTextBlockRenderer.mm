@@ -25,9 +25,20 @@
 #import "ACRViewAttachingTextView.h"
 #import "ACRCitationManager.h"
 
-@implementation ACRTextBlockRenderer
+@implementation ACRTextBlockRenderer {
+    ACRCitationManager *_citationManager;
+}
 
 NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
+
+#pragma mark - Lazy Properties
+
+- (ACRCitationManager *)citationManager {
+    if (!_citationManager) {
+        _citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
+    }
+    return _citationManager;
+}
 
 + (ACRTextBlockRenderer *)getInstance
 {
@@ -190,9 +201,8 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     // References contain the array of references to render
     NSArray<ACOReference *> *references = [[rootView card] references];
     
-    // Create CitationManager instance and build citations with references
-    ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
-    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
+    // Use lazy property for CitationManager instance
+    return [self.citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
 }
 
 #pragma mark - ACRCitationManagerDelegate
