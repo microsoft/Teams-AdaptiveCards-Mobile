@@ -3,7 +3,6 @@ package io.adaptivecards.renderer.citation
 import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
@@ -27,10 +27,12 @@ import io.adaptivecards.renderer.AdaptiveCardRenderer
 import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Utils
+import io.adaptivecards.renderer.Utils.dpToPx
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 
 class CitationCardFragment(
     private val context: Context,
+    private val minHeight: Int?,
     private val adaptiveCard: AdaptiveCard,
     private val renderedAdaptiveCard: RenderedAdaptiveCard,
     private val actionHandler: ICardActionHandler,
@@ -38,35 +40,45 @@ class CitationCardFragment(
     private val renderArgs: RenderArgs
 ) : BottomSheetDialogFragment() {
 
-    val Float.dpToPx: Float
-        get() = this * Resources.getSystem().displayMetrics.density
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         return dialog
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val view = inflater.inflate(R.layout.citation_card_bottom_sheet_layout, container, false)
 
-        // Add Card to BottomSheet
+        val header = view.findViewById<TextView>(R.id.title_references)
+        header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
+
+        val back = view.findViewById<TextView>(R.id.back_button)
+        back.setOnClickListener {
+            dismiss()
+        }
+
         val contentLayout = view.findViewById<LinearLayout>(R.id.adaptiveCard_contentLayout)
         //val dialogContentViewId = Util.getViewId(view).toInt()
         renderCitationCard(contentLayout)
+
         return view
     }
 
     private fun renderCitationCard(contentLayout: ViewGroup) {
         try {
             val cardView = AdaptiveCardRenderer.getInstance().internalRender(
-                    renderedAdaptiveCard,
-                    context,
-                    fragmentManager,
-                    adaptiveCard,
-                    actionHandler,
-                    hostConfig,
-                    false,
-                    View.NO_ID.toLong())
+                renderedAdaptiveCard,
+                context,
+                fragmentManager,
+                adaptiveCard,
+                actionHandler,
+                hostConfig,
+                false,
+                View.NO_ID.toLong()
+            )
             contentLayout.addView(cardView)
         } catch (e: Exception) {
             // Error rendering card content
@@ -82,12 +94,13 @@ class CitationCardFragment(
 
         bottomSheet?.background = MaterialShapeDrawable().apply {
             shapeAppearanceModel = ShapeAppearanceModel.builder()
-                .setTopLeftCorner(CornerFamily.ROUNDED, 10f.dpToPx)
-                .setTopRightCorner(CornerFamily.ROUNDED, 10f.dpToPx)
+                .setTopLeftCorner(CornerFamily.ROUNDED, 10f.dpToPx(context))
+                .setTopRightCorner(CornerFamily.ROUNDED, 10f.dpToPx(context))
                 .setBottomLeftCorner(CornerFamily.ROUNDED, 0f)
                 .setBottomRightCorner(CornerFamily.ROUNDED, 0f)
                 .build()
-            fillColor = ColorStateList.valueOf(hostConfig.GetActions().getPopover().getBackgroundColor().toColorInt())
+            fillColor =
+                ColorStateList.valueOf(hostConfig.GetCitationBlock().bottomSheetBackgroundColor.toColorInt())
         }
 
         bottomSheet?.viewTreeObserver?.addOnGlobalLayoutListener(object :
@@ -95,7 +108,7 @@ class CitationCardFragment(
             override fun onGlobalLayout() {
                 bottomSheet.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 val height = bottomSheet.height
-                Log.d(TAG, "Bottom sheet height: $height")
+                Log.d(CitationCardFragment.Companion.TAG, "Bottom sheet height: $height")
 
                 bottomSheet?.let {
                     val behavior = BottomSheetBehavior.from(it)
@@ -114,8 +127,8 @@ class CitationCardFragment(
 
     private fun getPeekHeight(contentHeight: Int): Int {
         val screenHeight = Utils.getScreenAvailableHeight(context)
-        val minHeight = screenHeight / 5
-        val maxHeight = (screenHeight * 2) / 3
+        val minHeight = minHeight ?: screenHeight / 3
+        val maxHeight = screenHeight / 2
         return contentHeight.coerceIn(minHeight, maxHeight)
     }
 
@@ -126,6 +139,7 @@ class CitationCardFragment(
 
 class CitationCardFragmentFactory(
     private val context: Context,
+    private val minHeight: Int?,
     private val adaptiveCard: AdaptiveCard,
     private val renderedAdaptiveCard: RenderedAdaptiveCard,
     private val actionHandler: ICardActionHandler,
@@ -136,12 +150,13 @@ class CitationCardFragmentFactory(
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         return when (className) {
             CitationCardFragment::class.java.name -> CitationCardFragment(
-                    context,
-                    adaptiveCard,
-                    renderedAdaptiveCard,
-                    actionHandler,
-                    hostConfig,
-                    renderArgs
+                context,
+                minHeight,
+                adaptiveCard,
+                renderedAdaptiveCard,
+                actionHandler,
+                hostConfig,
+                renderArgs
             )
 
             else -> super.instantiate(classLoader, className)

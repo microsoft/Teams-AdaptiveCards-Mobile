@@ -3,12 +3,16 @@ package io.adaptivecards.renderer.citation
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -21,8 +25,14 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 import io.adaptivecards.objectmodel.AdaptiveCard
 import io.adaptivecards.objectmodel.ReferenceType
+import io.adaptivecards.renderer.Utils
+import io.adaptivecards.renderer.Utils.dpToPx
 import io.adaptivecards.renderer.citation.CitationUtil.getDrawableForIcon
 
 
@@ -58,22 +68,20 @@ class CitationBottomSheetDialogFragment(
         val moreDetails = view.findViewById<TextView>(R.id.citation_more_details)
         val icon = view.findViewById<ImageView>(R.id.citation_icon)
 
-        view.setBackgroundColor(hostConfig.GetCitationBlock().bottomSheetBackgroundColor.toInt())
-
-        header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toInt())
+        header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
         referenceNumber.text = citationText
 
         icon.setImageResource(citationReference.getDrawableForIcon())
 
         title.text = citationReference.GetTitle()
-        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toInt())
+        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
         keywords.text = citationReference.GetKeywords().joinToString(" | ")
-        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetKeywordsColor.toInt())
+        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetKeywordsColor.toColorInt())
 
         abstract.text = citationReference.GetAbstract()
-        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toInt())
+        title.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
         title.setOnClickListener {
             val url = citationReference.GetUrl()?.toUri()
@@ -87,16 +95,65 @@ class CitationBottomSheetDialogFragment(
             moreDetails.visibility = View.VISIBLE
             title.setTextColor(hostConfig.GetCitationBlock().bottomSheetMoreDetailColor.toInt())
             moreDetails.setOnClickListener {
-                showCitationCard(citationReference.GetContent())
+                val bottomSheet =
+                    dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                showCitationCard(bottomSheet?.height, citationReference.GetContent())
             }
         }
 
         return view
     }
 
-    private fun showCitationCard(adaptiveCard: AdaptiveCard) {
+    override fun onStart() {
+        super.onStart()
+
+        val dialog = dialog as? BottomSheetDialog
+        val bottomSheet =
+            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+        bottomSheet?.background = MaterialShapeDrawable().apply {
+            shapeAppearanceModel = ShapeAppearanceModel.builder()
+                .setTopLeftCorner(CornerFamily.ROUNDED, 10f.dpToPx(context))
+                .setTopRightCorner(CornerFamily.ROUNDED, 10f.dpToPx(context))
+                .setBottomLeftCorner(CornerFamily.ROUNDED, 0f)
+                .setBottomRightCorner(CornerFamily.ROUNDED, 0f)
+                .build()
+            fillColor = ColorStateList.valueOf(hostConfig.GetCitationBlock().bottomSheetBackgroundColor.toColorInt())
+        }
+
+        bottomSheet?.viewTreeObserver?.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                bottomSheet.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                val height = bottomSheet.height
+                Log.d(CitationCardFragment.Companion.TAG, "Bottom sheet height: $height")
+
+                bottomSheet?.let {
+                    val behavior = BottomSheetBehavior.from(it)
+
+                    it.layoutParams.height = getPeekHeight(height)
+                    it.requestLayout()
+
+                    // Set to collapsed and disable other states
+                    behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    behavior.peekHeight = getPeekHeight(height)
+                    behavior.isDraggable = false
+                }
+            }
+        })
+    }
+
+    private fun getPeekHeight(contentHeight: Int): Int {
+        val screenHeight = Utils.getScreenAvailableHeight(context)
+        val minHeight = screenHeight / 3
+        val maxHeight = screenHeight / 2
+        return contentHeight.coerceIn(minHeight, maxHeight)
+    }
+
+    private fun showCitationCard(minHeight: Int?, adaptiveCard: AdaptiveCard) {
         val factory = CitationCardFragmentFactory(
             context,
+            minHeight,
             adaptiveCard,
             renderedAdaptiveCard,
             actionHandler,
