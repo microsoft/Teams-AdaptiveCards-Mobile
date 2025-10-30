@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 
 @class ACRCitationManager;
+@class ACOReference;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param citationId The ID of the citation being presented
  * @param referenceData The reference data for the citation
  */
-- (void)citationWillPresent:(NSString *)citationId referenceData:(NSDictionary * _Nullable)referenceData;
+- (void)citationWillPresent:(NSString *)citationId referenceData:(ACOReference * _Nullable)referenceData;
 
 /**
  * Called when a citation presentation is dismissed
@@ -43,11 +44,11 @@ NS_ASSUME_NONNULL_BEGIN
  * Called when a citation is tapped by user
  * @param citationManager The citation manager handling the tap
  * @param citationData Dictionary containing citation information
- * @param referenceData Dictionary containing full reference information
+ * @param referenceData ACOReference object containing full reference information
  */
 - (void)citationManager:(ACRCitationManager *)citationManager 
     didTapCitationWithData:(NSDictionary *)citationData 
-             referenceData:(NSDictionary * _Nullable)referenceData;
+             referenceData:(ACOReference * _Nullable)referenceData;
 
 @end
 

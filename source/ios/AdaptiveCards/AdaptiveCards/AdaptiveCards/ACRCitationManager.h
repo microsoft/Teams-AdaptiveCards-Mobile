@@ -30,21 +30,21 @@ NS_ASSUME_NONNULL_BEGIN
  * Parse an attributed string for TextBlock citations (regex-based pattern matching)
  * Used by ACRTextBlockRenderer to process text with "[1](cite:0)" style citations
  * @param attributedString The input attributed string to parse
- * @param references Array of reference dictionaries for citations
+ * @param references Array of ACOReference objects for citations
  * @return A new attributed string with citations replaced by interactive text attachments
  */
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<NSDictionary *> *)references;
+                                      withReferences:(NSArray<ACOReference *> *)references;
 
 /**
  * Parse an attributed string with embedded citation data for RichTextBlock
  * Used by ACRRichTextBlockRenderer to process text with embedded citation information
  * @param attributedString The input attributed string with citation data
- * @param references Array of reference dictionaries for citations
+ * @param references Array of ACOReference objects for citations
  * @return A new attributed string with citations replaced by interactive text attachments
  */
 - (NSMutableAttributedString *)parseAttributedStringWithCitations:(NSAttributedString *)attributedString 
-                                                   withReferences:(NSArray<NSDictionary *> *)references;
+                                                   withReferences:(NSArray<ACOReference *> *)references;
 
 /**
  * Handle citation button taps - called by parsers when citation pills are tapped

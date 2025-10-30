@@ -9,6 +9,7 @@
 #import "ACRCitationParser.h"
 #import "ACRCitationManager.h"
 #import "ACRViewTextAttachment.h"
+#import "ACOReference.h"
 #import <objc/runtime.h>
 
 @interface ACRCitationParser()
@@ -28,7 +29,7 @@
 }
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<NSDictionary *> *)references {
+                                      withReferences:(NSArray<ACOReference *> *)references {
     // Abstract method - subclasses must override
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)]
@@ -70,7 +71,7 @@
 }
 
 - (ACRViewTextAttachment *)createCitationPillWithData:(NSDictionary *)citationData 
-                                        referenceData:(NSDictionary *)referenceData {
+                                        referenceData:(ACOReference *)referenceData {
     NSString *text = citationData[@"displayText"];
     CGSize size = CGSizeMake(17, 17);
     
@@ -93,12 +94,15 @@
 - (void)citationButtonTapped:(UIButton *)button {
     // Get stored citation and reference data
     NSDictionary *citationData = objc_getAssociatedObject(button, @"citationData");
-    NSDictionary *referenceData = objc_getAssociatedObject(button, @"referenceData");
+    ACOReference *referenceData = objc_getAssociatedObject(button, @"referenceData");
     
     // Delegate back to the parser delegate
     if (self.delegate && citationData) {
         [self.delegate citationParser:self didTapCitationWithData:citationData referenceData:referenceData];
     }
+    
+    //TODO
+    
 }
 
 @end

@@ -192,7 +192,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     
     // Create CitationManager instance and parse citations with references
     ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
-    return [citationManager parseAttributedString:content withReferences:@[]];
+    return [citationManager parseAttributedString:content withReferences:references];
 }
 
 #pragma mark - ACRCitationManagerDelegate
@@ -215,11 +215,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 - (void)citationManager:(ACRCitationManager *)citationManager 
     didTapCitationWithData:(NSDictionary *)citationData 
              referenceData:(NSDictionary * _Nullable)referenceData {
-    
     NSLog(@"Citation tapped in TextBlockRenderer - Citation: %@, Reference: %@", citationData, referenceData);
-    
-    // TODO: Implement citation presentation logic
-    // For now, just log the tap event
 }
 
 #pragma mark - Expression Evaluation Helper
