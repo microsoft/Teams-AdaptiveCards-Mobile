@@ -89,24 +89,7 @@
     }
     [self attachBottomSheetInputsToMainCard];
     
-    CGFloat minMultiplier = 0.2;
-    CGFloat maxMultiplier = 0.66;
-    CGFloat borderHeight = 0.5;
-    CGFloat closeButtonTopInset = 16;
-    CGFloat closeButtonSideInset = 12;
-    CGFloat closeButtonToScrollGap = 20;
-    CGFloat contentPadding = 16;
-    CGFloat closeButtonSize = 28.0;
-    
-    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithMinMultiplier:minMultiplier
-                                                                                       maxMultiplier:maxMultiplier
-                                                                                        borderHeight:borderHeight
-                                                                                 closeButtonTopInset:closeButtonTopInset
-                                                                                closeButtonSideInset:closeButtonSideInset
-                                                                              closeButtonToScrollGap:closeButtonToScrollGap
-                                                                                      contentPadding:contentPadding
-                                                                                     closeButtonSize:closeButtonSize
-                                                                                       acoHostConfig:self.rootView.hostConfig];
+    ACRBottomSheetConfiguration *config = [ACRBottomSheetConfiguration defaultWithHostConfig:self.rootView.hostConfig];
     
     self.currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:self.cachedContentView configuration:config];
     [self markActionTargetsAsFromBottomSheet:self.cachedContentView];

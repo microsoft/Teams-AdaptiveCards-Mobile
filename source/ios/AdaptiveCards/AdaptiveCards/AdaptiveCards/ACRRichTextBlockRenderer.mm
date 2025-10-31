@@ -237,8 +237,11 @@
                             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:text referenceIndex:referenceId];
                             NSArray<ACOReference *> *references = [[rootView card] references];
                             
-                            // Use lazy property for CitationManager instance
-                            NSAttributedString *citationRunContent = [self.citationManager buildCitationAttachmentWithCitation:citation
+                            ACRCitationManager *citationManager = [self citationManager];
+                            [citationManager setRootView:rootView];
+                            
+                            // Use citation manager (rootView is stored as property)
+                            NSAttributedString *citationRunContent = [citationManager buildCitationAttachmentWithCitation:citation
                                                                                                                references:references];
                             [content appendAttributedString:citationRunContent];
                         }
@@ -317,21 +320,11 @@
     // References contain the array of references to render
     NSArray<ACOReference *> *references = [[rootView card] references];
     
-    // Use lazy property for CitationManager instance
-    return [self.citationManager buildCitationsFromAttributedString:content references:references];
-}
-
-#pragma mark - ACRCitationManagerDelegate
-
-- (UIViewController *)parentViewControllerForCitationPresentation
-{
-    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    ACRCitationManager *citationManager = [self citationManager];
+    [citationManager setRootView:rootView];
     
-    while (topController.presentedViewController) {
-        topController = topController.presentedViewController;
-    }
-    
-    return topController;
+    // Use citation manager (rootView is stored as property)
+    return [citationManager buildCitationsFromAttributedString:content references:references];
 }
 
 @end

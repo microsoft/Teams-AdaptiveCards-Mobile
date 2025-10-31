@@ -201,26 +201,11 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     // References contain the array of references to render
     NSArray<ACOReference *> *references = [[rootView card] references];
     
-    // Use lazy property for CitationManager instance
-    return [self.citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
-}
-
-#pragma mark - ACRCitationManagerDelegate
-
-- (UIViewController *)parentViewControllerForCitationPresentation {
-    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    ACRCitationManager *citationManager = [self citationManager];
+    [citationManager setRootView:rootView];
     
-    while (topController.presentedViewController) {
-        topController = topController.presentedViewController;
-    }
-    
-    return topController;
-}
-
-- (void)citationManager:(ACRCitationManager *)citationManager 
-    didTapCitationWithData:(NSDictionary *)citationData 
-             referenceData:(NSDictionary * _Nullable)referenceData {
-    NSLog(@"Citation tapped in TextBlockRenderer - Citation: %@, Reference: %@", citationData, referenceData);
+    // Use citation manager (rootView is stored as property in citation manager)
+    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
 }
 
 #pragma mark - Expression Evaluation Helper

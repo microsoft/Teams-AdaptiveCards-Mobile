@@ -36,4 +36,16 @@
     return self;
 }
 
++ (instancetype)defaultWithHostConfig:(ACOHostConfig *)hostConfig {
+    return [[ACRBottomSheetConfiguration alloc] initWithMinMultiplier:0.2
+                                                        maxMultiplier:0.66
+                                                         borderHeight:0.5
+                                                  closeButtonTopInset:16
+                                                 closeButtonSideInset:12
+                                               closeButtonToScrollGap:20
+                                                       contentPadding:16
+                                                      closeButtonSize:28.0
+                                                        acoHostConfig:hostConfig];
+}
+
 @end

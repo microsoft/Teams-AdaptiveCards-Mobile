@@ -10,6 +10,7 @@
 #import "ACRCitationManagerDelegate.h"
 
 @class ACOReference;
+@class ACRView;
 @class ACOCitation;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -22,7 +23,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ACRCitationManager : NSObject
 
 /**
- * Initialize the citation manager with a delegate
+ * The root view associated with this citation manager
+ */
+@property (nonatomic, strong) ACRView *rootView;
+
+/**
+ * Initialize the citation manager with a root view and delegate
+ * @param rootView The ACRView instance that contains the citations
  * @param delegate The delegate that provides references and presentation context
  */
 - (instancetype)initWithDelegate:(id<ACRCitationManagerDelegate>)delegate;

@@ -15,6 +15,7 @@
 #import "ACOReference.h"
 #import "ACOCitation.h"
 #import "ACRCitationParserDelegate.h"
+#import "ACRView.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate>
 
@@ -95,21 +96,21 @@
         [self.delegate citationManager:self didTapCitation:citation referenceData:referenceData];
     }
     
-    // TODO: Show BottomSheet
-    // TEMP: Show an alert as a placeholder for bottom sheet
-    if ([self.delegate respondsToSelector:@selector(parentViewControllerForCitationPresentation)]) {
-        UIViewController *parentViewController = [self.delegate parentViewControllerForCitationPresentation];
-        if (parentViewController) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Citation Tapped"
-                                                                                     message:@"A citation was tapped. Handle accordingly."
-                                                                              preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                                               style:UIAlertActionStyleDefault
-                                                             handler:nil];
-            [alertController addAction:okAction];
-            [parentViewController presentViewController:alertController animated:YES completion:nil];
-        }
+    // Show bottom sheet
+    id<ACRActionDelegate> actionDelegate = self.rootView.acrActionDelegate;
+    
+    if (![actionDelegate respondsToSelector:@selector(activeViewController)])
+    {
+        return;
     }
+    
+    UIViewController *host = [actionDelegate activeViewController];
+    [self presentBottomSheetFrom:host didTapCitation:citation referenceData:referenceData];
+    
+}
+
+- (void)presentBottomSheetFrom:(UIViewController *)activeController didTapCitation:(ACOCitation *)citation  referenceData:(ACOReference * _Nullable)referenceData {
+    
 }
 
 @end
