@@ -31,4 +31,6 @@
                       closeButtonSize:(CGFloat)closeButtonSize
                         acoHostConfig:(ACOHostConfig *)hostConfig;
 
++ (instancetype)defaultWithHostConfig:(ACOHostConfig *)hostConfig;
+
 @end

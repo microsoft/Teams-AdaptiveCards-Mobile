@@ -20,12 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol ACRCitationManagerDelegate <NSObject>
 
-/**
- * Provides the parent view controller for presenting citation details
- * @return The view controller that should present the citation bottom sheet
- */
-- (UIViewController * _Nullable)parentViewControllerForCitationPresentation;
-
 @optional
 
 /**
@@ -43,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Called when a citation button is tapped
- * @param citationManager The citation manager handling the tap
+ * @param citationManager The citation manager handling the tap (contains rootView as property)
  * @param citation ACOCitation object containing citation information
  * @param referenceData ACOReference object containing full reference information
  */

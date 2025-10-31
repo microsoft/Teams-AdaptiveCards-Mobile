@@ -264,7 +264,8 @@
     // Record the tap event for verification
     NSDictionary *tapEvent = @{
         @"citation": citation ?: [NSNull null],
-        @"referenceData": referenceData ?: [NSNull null]
+        @"referenceData": referenceData ?: [NSNull null],
+        @"rootView": citationManager.rootView ?: [NSNull null]
     };
     [self.citationTapEvents addObject:tapEvent];
 }
