@@ -314,13 +314,11 @@
 #pragma mark - Button Actions
 
 - (void)moreDetailsButtonTapped:(UIButton *)sender {
-    // Handle more details button tap
-    // This can be extended to call a delegate method or open a URL
-    if (self.reference.url && self.reference.url.length > 0) {
-        NSURL *url = [NSURL URLWithString:self.reference.url];
-        if (url && [[UIApplication sharedApplication] canOpenURL:url]) {
-            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-        }
+    // Notify delegate about the more details button tap
+    if (self.delegate && [self.delegate respondsToSelector:@selector(citationReferenceView:didTapMoreDetailsForCitation:reference:)]) {
+        [self.delegate citationReferenceView:self 
+                  didTapMoreDetailsForCitation:self.citation 
+                                     reference:self.reference];
     }
 }
 
@@ -350,12 +348,8 @@
     // Update icon
     [self updateIconForReference:reference];
     
-    // Show/hide more details button based on URL availability
-    if (reference.url && reference.url.length > 0) {
-        self.moreDetailsButton.hidden = NO;
-    } else {
-        self.moreDetailsButton.hidden = YES;
-    }
+    // // Show/hide more details button based on URL availability or content availability
+    self.moreDetailsButton.hidden = reference.content == nil;
 }
 
 - (void)updateKeywordsDisplay:(NSArray<NSString *> *)keywords {

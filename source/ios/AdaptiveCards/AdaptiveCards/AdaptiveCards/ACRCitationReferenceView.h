@@ -10,6 +10,22 @@
 
 @class ACOReference;
 @class ACOCitation;
+@class ACRCitationReferenceView;
+
+@protocol ACRCitationReferenceViewDelegate <NSObject>
+
+@optional
+/**
+ * Called when the user taps the "More details" button
+ * @param citationReferenceView The view that triggered the event
+ * @param citation The citation associated with the reference
+ * @param reference The reference containing the content/URL to show
+ */
+- (void)citationReferenceView:(ACRCitationReferenceView *)citationReferenceView 
+         didTapMoreDetailsForCitation:(ACOCitation *)citation 
+                            reference:(ACOReference *)reference;
+
+@end
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,6 +44,11 @@ NS_ASSUME_NONNULL_BEGIN
  * The citation containing the display text for the pill
  */
 @property (nonatomic, strong) ACOCitation *citation;
+
+/**
+ * The delegate to handle user interactions
+ */
+@property (nonatomic, weak) id<ACRCitationReferenceViewDelegate> delegate;
 
 /**
  * Initialize with a citation and reference

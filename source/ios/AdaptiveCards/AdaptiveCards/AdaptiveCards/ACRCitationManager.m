@@ -18,7 +18,7 @@
 #import "ACRView.h"
 #import "ACRCitationReferenceView.h"
 
-@interface ACRCitationManager () <ACRCitationParserDelegate>
+@interface ACRCitationManager () <ACRCitationParserDelegate, ACRCitationReferenceViewDelegate>
 
 @property (nonatomic, weak) id<ACRCitationManagerDelegate> delegate;
 
@@ -114,22 +114,24 @@
     
     ACRCitationReferenceView *citationView = [[ACRCitationReferenceView alloc] initWithCitation:citation 
                                                                                        reference:referenceData];
-    
-    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithMinMultiplier:0.2
-                                                                                        maxMultiplier:0.66
-                                                                                         borderHeight:0.5
-                                                                                  closeButtonTopInset:16
-                                                                                 closeButtonSideInset:12
-                                                                               closeButtonToScrollGap:20
-                                                                                       contentPadding:0
-                                                                                      closeButtonSize:28.0
-                                                                                       showCloseButton:NO
-                                                                                        acoHostConfig:self.rootView.hostConfig];
+    citationView.delegate = self;
+
+    ACRBottomSheetConfiguration *config = [ACRBottomSheetConfiguration defaultWithHostConfig:self.rootView.hostConfig];
+    config.showCloseButton = NO;
+    config.contentPadding = 0;
     
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
                                                                                                configuration:config];
 
     [activeController presentViewController:currentBottomSheet animated:YES completion:nil];
+}
+
+#pragma mark - ACRCitationReferenceViewDelegate
+
+- (void)citationReferenceView:(ACRCitationReferenceView *)citationReferenceView 
+         didTapMoreDetailsForCitation:(ACOCitation *)citation 
+                            reference:(ACOReference *)reference {
+   
 }
 
 @end
