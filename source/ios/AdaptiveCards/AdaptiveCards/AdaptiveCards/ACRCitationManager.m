@@ -111,6 +111,20 @@
 
 - (void)presentBottomSheetFrom:(UIViewController *)activeController didTapCitation:(ACOCitation *)citation  referenceData:(ACOReference * _Nullable)referenceData {
     
+    UIView *vie = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    vie.backgroundColor = UIColor.redColor;
+    
+    ACRBottomSheetConfiguration *config = [ACRBottomSheetConfiguration defaultWithHostConfig:self.rootView.hostConfig];
+    
+    ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:vie
+                                                                                               configuration:config];
+//    currentBottomSheet.onDismissBlock = ^{
+//        if (weakSelf)
+//        {
+//            //[weakSelf detachBottomSheetInputsFromMainCard];
+//        }
+//    };
+    [activeController presentViewController:currentBottomSheet animated:YES completion:nil];
 }
 
 @end
