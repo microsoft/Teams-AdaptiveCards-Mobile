@@ -112,11 +112,19 @@
 
 - (void)presentBottomSheetFrom:(UIViewController *)activeController didTapCitation:(ACOCitation *)citation  referenceData:(ACOReference * _Nullable)referenceData {
     
-    ACRCitationReferenceView *citationView = [[ACRCitationReferenceView alloc] initWithReference:referenceData 
-                                                                                   referenceIndex:0];
+    ACRCitationReferenceView *citationView = [[ACRCitationReferenceView alloc] initWithCitation:citation 
+                                                                                       reference:referenceData];
     
-    ACRBottomSheetConfiguration *config = [ACRBottomSheetConfiguration defaultWithHostConfig:self.rootView.hostConfig];
-    config.showCloseButton = NO;
+    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithMinMultiplier:0.2
+                                                                                        maxMultiplier:0.66
+                                                                                         borderHeight:0.5
+                                                                                  closeButtonTopInset:16
+                                                                                 closeButtonSideInset:12
+                                                                               closeButtonToScrollGap:20
+                                                                                       contentPadding:0
+                                                                                      closeButtonSize:28.0
+                                                                                       showCloseButton:NO
+                                                                                        acoHostConfig:self.rootView.hostConfig];
     
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
                                                                                                configuration:config];
