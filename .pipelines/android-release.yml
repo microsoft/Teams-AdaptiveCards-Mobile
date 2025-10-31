@@ -52,6 +52,7 @@ extends:
       - stage: Staging
         jobs:
         - job: Staging
+          timeoutInMinutes: 120
           steps:
           - task: UseDotNet@2
             displayName: 'Use .NET Core sdk 2.1.818'
