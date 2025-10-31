@@ -1,0 +1,48 @@
+//
+//  ACRCitationReferenceView.h
+//  AdaptiveCards
+//
+//  Created by Gaurav Keshre on 31/10/25.
+//  Copyright © 2025 Microsoft. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@class ACOReference;
+@class ACOCitation;
+
+NS_ASSUME_NONNULL_BEGIN
+
+/**
+ * A custom UIView that renders a citation reference with a numbered pill, icon, title, keywords, and description
+ * Designed to match the bottom sheet citation reference layout
+ */
+@interface ACRCitationReferenceView : UIView
+
+/**
+ * The reference data to display
+ */
+@property (nonatomic, strong) ACOReference *reference;
+
+/**
+ * The citation containing the display text for the pill
+ */
+@property (nonatomic, strong) ACOCitation *citation;
+
+/**
+ * Initialize with a citation and reference
+ * @param citation The ACOCitation object containing the display text for the pill
+ * @param reference The ACOReference object containing the data to display
+ */
+- (instancetype)initWithCitation:(ACOCitation *)citation reference:(ACOReference *)reference;
+
+/**
+ * Update the view with new citation and reference data
+ * @param citation The ACOCitation object containing the display text for the pill
+ * @param reference The ACOReference object containing the data to display
+ */
+- (void)updateWithCitation:(ACOCitation *)citation reference:(ACOReference *)reference;
+
+@end
+
+NS_ASSUME_NONNULL_END
