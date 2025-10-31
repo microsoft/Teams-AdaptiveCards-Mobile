@@ -16,6 +16,7 @@
 #import "ACOCitation.h"
 #import "ACRCitationParserDelegate.h"
 #import "ACRView.h"
+#import "ACRCitationReferenceView.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate>
 
@@ -111,19 +112,15 @@
 
 - (void)presentBottomSheetFrom:(UIViewController *)activeController didTapCitation:(ACOCitation *)citation  referenceData:(ACOReference * _Nullable)referenceData {
     
-    UIView *vie = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-    vie.backgroundColor = UIColor.redColor;
+    ACRCitationReferenceView *citationView = [[ACRCitationReferenceView alloc] initWithReference:referenceData 
+                                                                                   referenceIndex:0];
     
     ACRBottomSheetConfiguration *config = [ACRBottomSheetConfiguration defaultWithHostConfig:self.rootView.hostConfig];
+    config.showCloseButton = NO;
     
-    ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:vie
+    ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
                                                                                                configuration:config];
-//    currentBottomSheet.onDismissBlock = ^{
-//        if (weakSelf)
-//        {
-//            //[weakSelf detachBottomSheetInputsFromMainCard];
-//        }
-//    };
+
     [activeController presentViewController:currentBottomSheet animated:YES completion:nil];
 }
 

@@ -18,6 +18,7 @@
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIButton *dismissButton;
 @property (nonatomic, weak) UIView *contentView;
+@property (nonatomic, weak) UIView *dragIndicator;
 @property (nonatomic) ACRBottomSheetConfiguration *config;
 
 @end
@@ -43,7 +44,13 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [_config.hostConfig getPopoverBackgroundColor];
-    [self setupCloseButton];
+    
+    if (_config.showCloseButton) {
+        [self setupCloseButton];
+    } else {
+        [self setupDragIndicator];
+    }
+    
     [self setupScrollView];
     [self setupConstraints];
 }
@@ -80,6 +87,16 @@
     self.dismissButton = dismissButton;
 }
 
+- (void)setupDragIndicator
+{
+    UIView *dragIndicator = [[UIView alloc] init];
+    dragIndicator.backgroundColor = [UIColor tertiaryLabelColor];
+    dragIndicator.layer.cornerRadius = 2.0;
+    dragIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:dragIndicator];
+    self.dragIndicator = dragIndicator;
+}
+
 - (void)setupScrollView
 {
     UIScrollView *scrollView = [[UIScrollView alloc] init];
@@ -98,18 +115,41 @@
     CGFloat scrollBtnGap = self.config.closeButtonToScrollGap;
     CGFloat closeBtnSize = self.config.closeButtonSize;
     
-    [NSLayoutConstraint activateConstraints:@[
+    NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
+    
+    if (self.config.showCloseButton) {
+        // Dismiss button constraints
+        [constraints addObjectsFromArray:@[
+            [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnTopInset],
+            [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnSideInset],
+            [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
+            [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
+        ]];
         
-        /* Dismiss button constraints */
-        [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnTopInset],
-        [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnSideInset],
-        [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
-        [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
+        // Scroll view positioned below dismiss button
+        [constraints addObjectsFromArray:@[
+            [self.scrollView.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant:scrollBtnGap],
+        ]];
+    } else {
+        // Drag indicator constraints
+        [constraints addObjectsFromArray:@[
+            [self.dragIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
+            [self.dragIndicator.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+            [self.dragIndicator.widthAnchor constraintEqualToConstant:36],
+            [self.dragIndicator.heightAnchor constraintEqualToConstant:4],
+        ]];
         
+        // Scroll view positioned below drag indicator
+        [constraints addObjectsFromArray:@[
+            [self.scrollView.topAnchor constraintEqualToAnchor:self.dragIndicator.bottomAnchor constant:12],
+        ]];
+    }
+    
+    // Common scroll view and content constraints
+    [constraints addObjectsFromArray:@[
         /* scroll container */
         [self.scrollView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [self.scrollView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [self.scrollView.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant:scrollBtnGap],
         [self.scrollView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
         
         /* content inside scroll */
@@ -119,12 +159,14 @@
         [self.contentView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
         [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant:(-2 * contentPad)],
     ]];
+    
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (CGSize)preferredContentSize
 {
     [self.view layoutIfNeeded];
-    CGFloat header  = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
+    CGFloat header = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
     CGFloat natural = header + self.scrollView.contentSize.height;
     CGFloat presentingViewHeight = self.presentingViewController.view.bounds.size.height;
     CGFloat minH = self.config.minHeightMultiplier * presentingViewHeight;
