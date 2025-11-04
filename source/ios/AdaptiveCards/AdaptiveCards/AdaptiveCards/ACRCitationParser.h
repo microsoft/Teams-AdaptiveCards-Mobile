@@ -11,6 +11,7 @@
 #import "ACRCitationParserDelegate.h"
 
 @class ACRViewTextAttachment;
+@class ACOReference;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,11 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
  * Abstract method to parse an attributed string and return a new one with citation attachments
  * Subclasses must override this method
  * @param attributedString The input attributed string to parse
- * @param references Array of reference dictionaries for citations
+ * @param references Array of ACOReference objects for citations
  * @return A new attributed string with citations replaced by text attachments
  */
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<NSDictionary *> *)references;
+                                      withReferences:(NSArray<ACOReference *> *)references;
 
 /**
  * Abstract method to extract citation data from the input
@@ -51,11 +52,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Concrete method to create a citation pill with reference data
  * @param citationData Dictionary containing displayText and referenceId
- * @param referenceData Dictionary containing the full reference information
+ * @param referenceData ACOReference object containing the full reference information
  * @return ACRViewTextAttachment containing the citation button
  */
 - (ACRViewTextAttachment *)createCitationPillWithData:(NSDictionary *)citationData 
-                                        referenceData:(NSDictionary *)referenceData;
+                                        referenceData:(ACOReference *)referenceData;
 
 @end
 

@@ -7,6 +7,7 @@
 //
 
 #import "ACRRichTextBlockCitationParser.h"
+#import "ACOReference.h"
 
 @implementation ACRRichTextBlockCitationParser
 
@@ -17,7 +18,7 @@
 }
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                          tapHandler:(void (^)(id sender, NSDictionary *citationData))tapHandler {
+                                      withReferences:(NSArray<ACOReference *> *)references {
     // TODO: Implement RichTextBlock citation parsing
     // This will be implemented later when we focus on RichTextBlock
     return [attributedString mutableCopy];

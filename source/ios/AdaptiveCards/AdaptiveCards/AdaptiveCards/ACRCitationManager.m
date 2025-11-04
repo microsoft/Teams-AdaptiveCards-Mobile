@@ -54,13 +54,13 @@
 #pragma mark - Public Methods
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<NSDictionary *> *)references {
+                                      withReferences:(NSArray<ACOReference *> *)references {
     // Use TextBlock parser for regex-based citation parsing
     return [self.textBlockParser parseAttributedString:attributedString withReferences:references];
 }
 
 - (NSMutableAttributedString *)parseAttributedStringWithCitations:(NSAttributedString *)attributedString 
-                                                   withReferences:(NSArray<NSDictionary *> *)references {
+                                                   withReferences:(NSArray<ACOReference *> *)references {
     // Use RichTextBlock parser for embedded citation data parsing  
     return [self.richTextBlockParser parseAttributedString:attributedString withReferences:references];
 }
@@ -69,7 +69,7 @@
 
 - (void)citationParser:(id)parser 
       didTapCitationWithData:(NSDictionary *)citationData 
-               referenceData:(NSDictionary * _Nullable)referenceData {
+               referenceData:(ACOReference * _Nullable)referenceData {
     // Handle citation tap from parser - delegate to the main delegate for presentation
     if (self.delegate && [self.delegate respondsToSelector:@selector(citationManager:didTapCitationWithData:referenceData:)]) {
         [self.delegate citationManager:self didTapCitationWithData:citationData referenceData:referenceData];

@@ -9,6 +9,7 @@
 #import "ACRTextBlockCitationParser.h"
 #import "ACRCitationManager.h"
 #import "ACRViewTextAttachment.h"
+#import "ACOReference.h"
 
 @interface ACRTextBlockCitationParser ()
 // No private properties needed - delegation handled by base class
@@ -55,7 +56,7 @@
 }
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<NSDictionary *> *)references {
+                                      withReferences:(NSArray<ACOReference *> *)references {
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
     NSString *inputString = attributedString.string;
     
@@ -83,13 +84,11 @@
                 @"referenceId": referenceId
             };
             
-            // Find matching reference data by ID
-            NSDictionary *referenceData = nil;
-            for (NSDictionary *reference in references) {
-                if ([reference[@"id"] isEqualToString:referenceId]) {
-                    referenceData = reference;
-                    break;
-                }
+            // Find matching reference data by index
+            ACOReference *referenceData = nil;
+            NSInteger referenceIndex = [referenceId integerValue];
+            if (referenceIndex >= 0 && referenceIndex < references.count) {
+                referenceData = references[referenceIndex];
             }
             
             // Create citation button with both citation and reference data
