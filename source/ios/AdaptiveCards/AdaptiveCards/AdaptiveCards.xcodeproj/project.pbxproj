@@ -29,10 +29,10 @@
 		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
 		241C67252E02DE5D0007EA18 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */; };
 		246485662E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */; };
-		24C5A8232EB0E4AD00AEFBB4 /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 24C5A81F2EB0E4AD00AEFBB4 /* Resources.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		24C5A8242EB0E4AD00AEFBB4 /* StringResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 24C5A8212EB0E4AD00AEFBB4 /* StringResource.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		24C5A8252EB0E4AD00AEFBB4 /* StringResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24C5A8222EB0E4AD00AEFBB4 /* StringResource.cpp */; };
-		24C5A8262EB0E4AD00AEFBB4 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24C5A8202EB0E4AD00AEFBB4 /* Resources.cpp */; };
+		24D7AB462EB344A600F0806F /* StringResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D7AB452EB344A600F0806F /* StringResource.cpp */; };
+		24D7AB472EB344A600F0806F /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D7AB432EB344A600F0806F /* Resources.cpp */; };
+		24D7AB482EB344A600F0806F /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D7AB422EB344A600F0806F /* Resources.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		24D7AB492EB344A600F0806F /* StringResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D7AB442EB344A600F0806F /* StringResource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24EDF0BC2DCB7B2500558378 /* ACRProgressBarRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */; };
 		24EDF0BE2DCB7B6C00558378 /* ACRProgressBarRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */; };
 		24EDF0C02DCB7F8100558378 /* ACRProgressRingRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */; };
@@ -667,10 +667,10 @@
 		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
 		246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverTargetTests.mm; sourceTree = "<group>"; };
-		24C5A81F2EB0E4AD00AEFBB4 /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
-		24C5A8202EB0E4AD00AEFBB4 /* Resources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Resources.cpp; sourceTree = "<group>"; };
-		24C5A8212EB0E4AD00AEFBB4 /* StringResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringResource.h; sourceTree = "<group>"; };
-		24C5A8222EB0E4AD00AEFBB4 /* StringResource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StringResource.cpp; sourceTree = "<group>"; };
+		24D7AB422EB344A600F0806F /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../../../../shared/cpp/ObjectModel/Resources.h; sourceTree = "<group>"; };
+		24D7AB432EB344A600F0806F /* Resources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Resources.cpp; path = ../../../../shared/cpp/ObjectModel/Resources.cpp; sourceTree = "<group>"; };
+		24D7AB442EB344A600F0806F /* StringResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringResource.h; path = ../../../../shared/cpp/ObjectModel/StringResource.h; sourceTree = "<group>"; };
+		24D7AB452EB344A600F0806F /* StringResource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringResource.cpp; path = ../../../../shared/cpp/ObjectModel/StringResource.cpp; sourceTree = "<group>"; };
 		24EDF0BB2DCB7B2500558378 /* ACRProgressBarRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRProgressBarRenderer.h; sourceTree = "<group>"; };
 		24EDF0BD2DCB7B6C00558378 /* ACRProgressBarRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressBarRenderer.mm; sourceTree = "<group>"; };
 		24EDF0BF2DCB7F8100558378 /* ACRProgressRingRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRProgressRingRenderer.mm; sourceTree = "<group>"; };
@@ -1965,10 +1965,10 @@
 				6B2242A22233439D000ACDA1 /* TextElementProperties.h */,
 				F44872ED1EE2261F00FCAFAE /* TextInput.cpp */,
 				F44872EE1EE2261F00FCAFAE /* TextInput.h */,
-				24C5A81F2EB0E4AD00AEFBB4 /* Resources.h */,
-				24C5A8202EB0E4AD00AEFBB4 /* Resources.cpp */,
-				24C5A8212EB0E4AD00AEFBB4 /* StringResource.h */,
-				24C5A8222EB0E4AD00AEFBB4 /* StringResource.cpp */,
+				24D7AB422EB344A600F0806F /* Resources.h */,
+				24D7AB432EB344A600F0806F /* Resources.cpp */,
+				24D7AB442EB344A600F0806F /* StringResource.h */,
+				24D7AB452EB344A600F0806F /* StringResource.cpp */,
 				6B2242AA22334451000ACDA1 /* TextRun.cpp */,
 				6B2242A922334451000ACDA1 /* TextRun.h */,
 				F44872EF1EE2261F00FCAFAE /* TimeInput.cpp */,
@@ -2274,9 +2274,9 @@
 				6B27CD6624BD52D600C0F90F /* ACRInputLabelView.h in Headers */,
 				6BBE841923CD184D00ECA586 /* ACREnums.h in Headers */,
 				6BBE841F23CE60E300ECA586 /* ACRMediaRenderer.h in Headers */,
-				24C5A8232EB0E4AD00AEFBB4 /* Resources.h in Headers */,
-				24C5A8242EB0E4AD00AEFBB4 /* StringResource.h in Headers */,
 				6B74403925BA71B60051F2A1 /* ACRImageProperties.h in Headers */,
+				24D7AB482EB344A600F0806F /* Resources.h in Headers */,
+				24D7AB492EB344A600F0806F /* StringResource.h in Headers */,
 				6BBE841B23CD184D00ECA586 /* ACOWarning.h in Headers */,
 				37A8DF542DB79C8800F3A23F /* ProgressRing.h in Headers */,
 				37A8DF552DB79C8800F3A23F /* ProgressBar.h in Headers */,
@@ -2999,8 +2999,8 @@
 				6BE8DFD4249C4C1B005EFE66 /* ACRToggleInputView.mm in Sources */,
 				46058FE12C64774800966E76 /* ACRLayoutHelper.mm in Sources */,
 				7AD18A8C2E028F2900A35DDD /* ACRBottomSheetViewController.mm in Sources */,
-				24C5A8252EB0E4AD00AEFBB4 /* StringResource.cpp in Sources */,
-				24C5A8262EB0E4AD00AEFBB4 /* Resources.cpp in Sources */,
+				24D7AB462EB344A600F0806F /* StringResource.cpp in Sources */,
+				24D7AB472EB344A600F0806F /* Resources.cpp in Sources */,
 				84AE295C27FFA26F00D01B82 /* CaptionSource.cpp in Sources */,
 				F495FC0A2022A18F0093D4DE /* ACRChoiceSetViewDataSource.mm in Sources */,
 			);
