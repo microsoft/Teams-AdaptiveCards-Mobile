@@ -19,8 +19,8 @@
 @property (nonatomic, weak) id<ACRCitationManagerDelegate> delegate;
 
 // Lazy properties
-@property (nonatomic, strong) ACRInlineCitationTokenParser *textBlockParser;
-@property (nonatomic, strong) ACRRichTextBlockCitationParser *richTextBlockParser;
+@property (nonatomic, strong) ACRInlineCitationTokenParser *inlineCitationParser;
+@property (nonatomic, strong) ACRRichTextBlockCitationParser *citationRunParser;
 
 @end
 
@@ -37,18 +37,18 @@
 
 #pragma mark - Lazy Properties
 
-- (ACRInlineCitationTokenParser *)textBlockParser {
-    if (!_textBlockParser) {
-        _textBlockParser = [[ACRInlineCitationTokenParser alloc] initWithDelegate:self];
+- (ACRInlineCitationTokenParser *)inlineCitationParser {
+    if (!_inlineCitationParser) {
+        _inlineCitationParser = [[ACRInlineCitationTokenParser alloc] initWithDelegate:self];
     }
-    return _textBlockParser;
+    return _inlineCitationParser;
 }
 
-- (ACRRichTextBlockCitationParser *)richTextBlockParser {
-    if (!_richTextBlockParser) {
-        _richTextBlockParser = [[ACRRichTextBlockCitationParser alloc] initWithDelegate:self];
+- (ACRRichTextBlockCitationParser *)citationRunParser {
+    if (!_citationRunParser) {
+        _citationRunParser = [[ACRRichTextBlockCitationParser alloc] initWithDelegate:self];
     }
-    return _richTextBlockParser;
+    return _citationRunParser;
 }
 
 #pragma mark - Public Methods
@@ -56,7 +56,7 @@
 - (NSMutableAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString 
                                                        references:(NSArray<ACOReference *> *)references {
     // Use TextBlock parser for regex-based citation parsing
-    return [self.textBlockParser parseAttributedString:attributedString withReferences:references];
+    return [self.inlineCitationParser parseAttributedString:attributedString withReferences:references];
 }
 
 #pragma mark - ACRCitationParserDelegate
