@@ -10,6 +10,51 @@
 #import "ACOReference.h"
 #import "ACOCitation.h"
 
+// Layout Constants
+static const CGFloat kACRCitationViewSpacing = 8.0;
+
+// Header Constants
+static const CGFloat kACRCitationHeaderHeight = 40.0;
+static const CGFloat kACRCitationHeaderTitleHeight = 28.0;
+static const CGFloat kACRCitationHeaderBottomPadding = 12.0;
+static const CGFloat kACRCitationHeaderFontSize = 17.0;
+static const NSInteger kACRCitationHeaderTextColor = 32;
+
+// Separator Constants
+static const CGFloat kACRCitationSeparatorHeight = 1.0;
+static const NSInteger kACRCitationSeparatorColor = 224;
+
+// Pill Constants
+static const CGFloat kACRCitationPillFontSize = 12.0;
+static const CGFloat kACRCitationPillBorderWidth = 1.0;
+static const CGFloat kACRCitationPillCornerRadius = 4.0;
+static const CGFloat kACRCitationPillMinSize = 17.0;
+static const CGFloat kACRCitationPillMaxWidth = 50.0;
+static const CGFloat kACRCitationPillTopBottomPadding = 1.0;
+static const CGFloat kACRCitationPillLeftRightPadding = 2.0;
+
+// Icon Constants
+static const CGFloat kACRCitationIconSize = 32.0;
+
+// Title Constants
+static const CGFloat kACRCitationTitleFontSize = 16.0;
+
+// Abstract Constants
+static const CGFloat kACRCitationAbstractFontSize = 15.0;
+static const NSInteger kACRCitationAbstractTextColor = 34;
+
+// Keywords Constants
+static const CGFloat kACRCitationKeywordsFontSize = 12.0;
+static const CGFloat kACRCitationKeywordsMinHeight = 16.0;
+static const NSInteger kACRCitationKeywordsTextColor = 110;
+static const NSInteger kACRCitationMaxKeywords = 3;
+
+// More Details Button Constants
+static const CGFloat kACRCitationMoreDetailsButtonFontSize = 14.0;
+
+// Layout Proportions
+static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
+
 @interface UIColor (ACRCitationReferenceView)
 + (UIColor *)grayColorWithValue:(NSInteger)value;
 @end
@@ -74,7 +119,7 @@
     // Create root vertical stack view with padding
     UIStackView *rootStackView = [[UIStackView alloc] init];
     rootStackView.axis = UILayoutConstraintAxisVertical;
-    rootStackView.spacing = 8;
+    rootStackView.spacing = kACRCitationViewSpacing;
     rootStackView.alignment = UIStackViewAlignmentFill;
     rootStackView.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -90,7 +135,7 @@
     
     // Add separator as direct child of main view (spans full width)
     UIView *separatorView = [[UIView alloc] init];
-    separatorView.backgroundColor = [UIColor grayColorWithValue:224];
+    separatorView.backgroundColor = [UIColor grayColorWithValue:kACRCitationSeparatorColor];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:separatorView];
     self.separatorView = separatorView;
@@ -113,8 +158,8 @@
     UILabel *headerTitleLabel = [[UILabel alloc] init];
     headerTitleLabel.text = @"References";
     headerTitleLabel.textAlignment = NSTextAlignmentCenter;
-    headerTitleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
-    headerTitleLabel.textColor =  [UIColor grayColorWithValue:32];
+    headerTitleLabel.font = [UIFont systemFontOfSize:kACRCitationHeaderFontSize weight:UIFontWeightSemibold];
+    headerTitleLabel.textColor =  [UIColor grayColorWithValue:kACRCitationHeaderTextColor];
     headerTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
 
@@ -128,7 +173,7 @@
 - (UIStackView *)setupMainContentSection {
     UIStackView *mainContentStackView = [[UIStackView alloc] init];
     mainContentStackView.axis = UILayoutConstraintAxisHorizontal;
-    mainContentStackView.spacing = 8;
+    mainContentStackView.spacing = kACRCitationViewSpacing;
     mainContentStackView.alignment = UIStackViewAlignmentTop;
     mainContentStackView.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -149,13 +194,13 @@
 - (UIStackView *)setupLeftSideSection {
     UIStackView *leftSideStackView = [[UIStackView alloc] init];
     leftSideStackView.axis = UILayoutConstraintAxisHorizontal;
-    leftSideStackView.spacing = 8;
+    leftSideStackView.spacing = kACRCitationViewSpacing;
     leftSideStackView.alignment = UIStackViewAlignmentTop;
     
     // Pill label with border and padding
     UILabel *pillLabel = [[UILabel alloc] init];
     pillLabel.textAlignment = NSTextAlignmentCenter;
-    pillLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
+    pillLabel.font = [UIFont systemFontOfSize:kACRCitationPillFontSize weight:UIFontWeightMedium];
     pillLabel.textColor = [UIColor labelColor];
     pillLabel.numberOfLines = 0;
     pillLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -164,8 +209,8 @@
     UIView *pillContainer = [[UIView alloc] init];
     pillContainer.translatesAutoresizingMaskIntoConstraints = NO;
     pillContainer.layer.borderColor = [UIColor separatorColor].CGColor;
-    pillContainer.layer.borderWidth = 1.0;
-    pillContainer.layer.cornerRadius = 4;
+    pillContainer.layer.borderWidth = kACRCitationPillBorderWidth;
+    pillContainer.layer.cornerRadius = kACRCitationPillCornerRadius;
     pillContainer.layer.masksToBounds = YES;
 
     [pillContainer addSubview:pillLabel];
@@ -188,12 +233,12 @@
 - (UIStackView *)setupRightSideSection {
     UIStackView *rightSideStackView = [[UIStackView alloc] init];
     rightSideStackView.axis = UILayoutConstraintAxisVertical;
-    rightSideStackView.spacing = 8;
+    rightSideStackView.spacing = kACRCitationViewSpacing;
     rightSideStackView.alignment = UIStackViewAlignmentLeading;
     
     // Title label
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightSemibold];
+    titleLabel.font = [UIFont systemFontOfSize:kACRCitationTitleFontSize weight:UIFontWeightSemibold];
     titleLabel.textColor = [UIColor labelColor];
     titleLabel.numberOfLines = 0;
     [rightSideStackView addArrangedSubview:titleLabel];
@@ -206,8 +251,8 @@
     
     // Abstract label
     UILabel *abstractLabel = [[UILabel alloc] init];
-    abstractLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
-    abstractLabel.textColor = [UIColor grayColorWithValue:34];
+    abstractLabel.font = [UIFont systemFontOfSize:kACRCitationAbstractFontSize weight:UIFontWeightRegular];
+    abstractLabel.textColor = [UIColor grayColorWithValue:kACRCitationAbstractTextColor];
     abstractLabel.numberOfLines = 0;
     [rightSideStackView addArrangedSubview:abstractLabel];
     self.abstractLabel = abstractLabel;
@@ -227,8 +272,8 @@
 // Keywords label with attributed string
 - (UILabel *)setupKeywordsSection {
     UILabel *keywordsLabel = [[UILabel alloc] init];
-    keywordsLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
-    keywordsLabel.textColor = [UIColor grayColorWithValue:110];
+    keywordsLabel.font = [UIFont systemFontOfSize:kACRCitationKeywordsFontSize weight:UIFontWeightRegular];
+    keywordsLabel.textColor = [UIColor grayColorWithValue:kACRCitationKeywordsTextColor];
     keywordsLabel.numberOfLines = 0;
     return keywordsLabel;
 }
@@ -244,7 +289,7 @@
     NSAttributedString *detailsText = [[NSAttributedString alloc] initWithString:@"More details" 
                                                                       attributes:@{
         NSForegroundColorAttributeName: [UIColor systemBlueColor],
-        NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightRegular]
+        NSFontAttributeName: [UIFont systemFontOfSize:kACRCitationMoreDetailsButtonFontSize weight:UIFontWeightRegular]
     }];
     [buttonText appendAttributedString:detailsText];
     
@@ -252,7 +297,7 @@
     NSAttributedString *chevron = [[NSAttributedString alloc] initWithString:@" >" 
                                                                   attributes:@{
         NSForegroundColorAttributeName: [UIColor systemBlueColor],
-        NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightRegular]
+        NSFontAttributeName: [UIFont systemFontOfSize:kACRCitationMoreDetailsButtonFontSize weight:UIFontWeightRegular]
     }];
     [buttonText appendAttributedString:chevron];
     
@@ -269,12 +314,12 @@
 }
 
 - (void)setupConstraints {
-    // Root stack view constraints with 8pt padding
+    // Root stack view constraints with padding
     [NSLayoutConstraint activateConstraints:@[
-        [self.rootStackView.topAnchor constraintEqualToAnchor:self.topAnchor constant:8],
-        [self.rootStackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:8],
-        [self.rootStackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-8],
-        [self.rootStackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-8]
+        [self.rootStackView.topAnchor constraintEqualToAnchor:self.topAnchor constant:kACRCitationViewSpacing],
+        [self.rootStackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:kACRCitationViewSpacing],
+        [self.rootStackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-kACRCitationViewSpacing],
+        [self.rootStackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-kACRCitationViewSpacing]
     ]];
     
     // Full-width separator positioned below header section
@@ -282,47 +327,47 @@
         [self.separatorView.topAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor],
         [self.separatorView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
         [self.separatorView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-        [self.separatorView.heightAnchor constraintEqualToConstant:1]
+        [self.separatorView.heightAnchor constraintEqualToConstant:kACRCitationSeparatorHeight]
     ]];
     
     // Header section constraints
     [NSLayoutConstraint activateConstraints:@[
-        [self.headerSection.heightAnchor constraintEqualToConstant:40],
-        [self.headerTitleLabel.heightAnchor constraintEqualToConstant:28],
+        [self.headerSection.heightAnchor constraintEqualToConstant:kACRCitationHeaderHeight],
+        [self.headerTitleLabel.heightAnchor constraintEqualToConstant:kACRCitationHeaderTitleHeight],
         [self.headerTitleLabel.topAnchor constraintEqualToAnchor:self.headerSection.topAnchor],
         [self.headerTitleLabel.leadingAnchor constraintEqualToAnchor:self.headerSection.leadingAnchor],
         [self.headerTitleLabel.trailingAnchor constraintEqualToAnchor:self.headerSection.trailingAnchor],
-        [self.headerTitleLabel.bottomAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor constant:-12]
+        [self.headerTitleLabel.bottomAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor constant:-kACRCitationHeaderBottomPadding]
     ]];
 
     // Left side stack view width constraint
     [NSLayoutConstraint activateConstraints:@[
-        [self.leftSideStackView.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor multiplier:0.5]
+        [self.leftSideStackView.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor multiplier:kACRCitationLeftSideMaxWidthMultiplier]
     ]];
     
-    // Add padding constraints - 1px on left and right
+    // Pill container and label constraints
     [NSLayoutConstraint activateConstraints:@[
-        [self.pillContainer.widthAnchor constraintGreaterThanOrEqualToConstant:17],
-        [self.pillContainer.heightAnchor constraintGreaterThanOrEqualToConstant:17],
-        [self.pillContainer.widthAnchor constraintLessThanOrEqualToConstant:50], /*Enough room for 5 characters*/
-        [self.pillLabel.topAnchor constraintEqualToAnchor:self.pillContainer.topAnchor constant:1],
-        [self.pillLabel.bottomAnchor constraintEqualToAnchor:self.pillContainer.bottomAnchor constant:-1],
-        [self.pillLabel.leadingAnchor constraintEqualToAnchor:self.pillContainer.leadingAnchor constant:2.0],
-        [self.pillLabel.trailingAnchor constraintEqualToAnchor:self.pillContainer.trailingAnchor constant:-2.0],
+        [self.pillContainer.widthAnchor constraintGreaterThanOrEqualToConstant:kACRCitationPillMinSize],
+        [self.pillContainer.heightAnchor constraintGreaterThanOrEqualToConstant:kACRCitationPillMinSize],
+        [self.pillContainer.widthAnchor constraintLessThanOrEqualToConstant:kACRCitationPillMaxWidth],
+        [self.pillLabel.topAnchor constraintEqualToAnchor:self.pillContainer.topAnchor constant:kACRCitationPillTopBottomPadding],
+        [self.pillLabel.bottomAnchor constraintEqualToAnchor:self.pillContainer.bottomAnchor constant:-kACRCitationPillTopBottomPadding],
+        [self.pillLabel.leadingAnchor constraintEqualToAnchor:self.pillContainer.leadingAnchor constant:kACRCitationPillLeftRightPadding],
+        [self.pillLabel.trailingAnchor constraintEqualToAnchor:self.pillContainer.trailingAnchor constant:-kACRCitationPillLeftRightPadding],
     ]];
     
     [self.pillLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     
-    // Icon image view constraints - 32x32 with 1:1 aspect ratio
+    // Icon image view constraints with 1:1 aspect ratio
     [NSLayoutConstraint activateConstraints:@[
-        [self.iconImageView.widthAnchor constraintEqualToConstant:32],
-        [self.iconImageView.heightAnchor constraintEqualToConstant:32],
+        [self.iconImageView.widthAnchor constraintEqualToConstant:kACRCitationIconSize],
+        [self.iconImageView.heightAnchor constraintEqualToConstant:kACRCitationIconSize],
         [self.iconImageView.widthAnchor constraintEqualToAnchor:self.iconImageView.heightAnchor]
     ]];
     
     // Keywords label minimum height constraint
     [NSLayoutConstraint activateConstraints:@[
-        [self.keywordsLabel.heightAnchor constraintGreaterThanOrEqualToConstant:16]
+        [self.keywordsLabel.heightAnchor constraintGreaterThanOrEqualToConstant:kACRCitationKeywordsMinHeight]
     ]];
 }
 
@@ -369,8 +414,8 @@
 
 - (void)updateKeywordsDisplay:(NSArray<NSString *> *)keywords {
     if (keywords && keywords.count > 0) {
-        // Limit to max 3 keywords as per spec
-        NSInteger maxKeywords = MIN(keywords.count, 3);
+        // Limit to max keywords as per spec
+        NSInteger maxKeywords = MIN(keywords.count, kACRCitationMaxKeywords);
         NSArray *displayKeywords = [keywords subarrayWithRange:NSMakeRange(0, maxKeywords)];
         
         // Create attributed string with keywords separated by "|"
