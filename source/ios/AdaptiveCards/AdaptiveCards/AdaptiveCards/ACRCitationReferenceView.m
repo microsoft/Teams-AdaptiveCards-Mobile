@@ -70,6 +70,12 @@
 - (void)setupUI {
     self.backgroundColor = [UIColor systemBackgroundColor];
     
+    // Set content priorities for the view itself to prevent unnecessary expansion
+    [self setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+    [self setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+    [self setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [self setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    
     // A - Create root vertical stack view with padding
     UIStackView *rootStackView = [[UIStackView alloc] init];
     rootStackView.axis = UILayoutConstraintAxisVertical;
@@ -129,7 +135,7 @@
 - (UIStackView *)setupMainContentSection {
     UIStackView *mainContentStackView = [[UIStackView alloc] init];
     mainContentStackView.axis = UILayoutConstraintAxisHorizontal;
-    mainContentStackView.spacing = 16;
+    mainContentStackView.spacing = 8;
     mainContentStackView.alignment = UIStackViewAlignmentTop;
     mainContentStackView.translatesAutoresizingMaskIntoConstraints = NO;
     mainContentStackView.backgroundColor = [[UIColor systemGreenColor] colorWithAlphaComponent:0.1]; // B - Main content
@@ -151,8 +157,8 @@
 - (UIStackView *)setupLeftSideSection {
     UIStackView *leftSideStackView = [[UIStackView alloc] init];
     leftSideStackView.axis = UILayoutConstraintAxisHorizontal;
-    leftSideStackView.spacing = 12;
-    leftSideStackView.alignment = UIStackViewAlignmentCenter;
+    leftSideStackView.spacing = 16;
+    leftSideStackView.alignment = UIStackViewAlignmentTop;
     leftSideStackView.backgroundColor = [[UIColor systemOrangeColor] colorWithAlphaComponent:0.1]; // C - Left side
     
     // C1 - Pill label with border
@@ -160,12 +166,20 @@
     pillLabel.textAlignment = NSTextAlignmentCenter;
     pillLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
     pillLabel.textColor = [UIColor labelColor];
-    pillLabel.backgroundColor = [UIColor clearColor];
+//    pillLabel.backgroundColor = [UIColor clearColor];
     pillLabel.layer.borderColor = [UIColor separatorColor].CGColor;
     pillLabel.layer.borderWidth = 1.0;
     pillLabel.layer.cornerRadius = 4;
     pillLabel.layer.masksToBounds = YES;
+    pillLabel.numberOfLines = 5;
     pillLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // Set content priorities to prioritize showing full text without clipping
+//    [pillLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+//    [pillLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+//    [pillLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+//    [pillLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+    
     [leftSideStackView addArrangedSubview:pillLabel];
     self.pillLabel = pillLabel;
     
@@ -292,10 +306,11 @@
         [self.leftSideStackView.widthAnchor constraintEqualToConstant:80]
     ]];
     
-    // Pill label constraints - rectangular with padding
+    // Pill label constraints - grows with content but max 30% of root view width
     [NSLayoutConstraint activateConstraints:@[
         [self.pillLabel.widthAnchor constraintGreaterThanOrEqualToConstant:32],
-        [self.pillLabel.heightAnchor constraintEqualToConstant:24]
+        [self.pillLabel.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor multiplier:0.3],
+        [self.pillLabel.heightAnchor constraintGreaterThanOrEqualToConstant:24]
     ]];
     
     // Icon image view constraints - 32x32 with 1:1 aspect ratio
