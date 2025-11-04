@@ -1,0 +1,27 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.6666 19.9999C36.6666 29.2047 29.2047 36.6666 19.9999 36.6666C10.7952 36.6666 3.33325 29.2047 3.33325 19.9999C3.33325 10.7952 10.7952 3.33325 19.9999 3.33325C29.2047 3.33325 36.6666 10.7952 36.6666 19.9999Z" fill="#D35230"/>
+<path d="M19.9999 3.33325C10.7952 3.33325 3.33325 10.7952 3.33325 19.9999H19.9999V3.33325Z" fill="#ED6C47"/>
+<path d="M36.6667 19.9999C36.6667 10.7952 29.2047 3.33325 20 3.33325V19.9999H36.6667Z" fill="#FF8F6B"/>
+<mask id="mask0_4071_5252" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="34" height="34">
+<path d="M36.6666 19.9999C36.6666 29.2047 29.2047 36.6666 19.9999 36.6666C10.7952 36.6666 3.33325 29.2047 3.33325 19.9999C3.33325 10.7952 10.7952 3.33325 19.9999 3.33325C29.2047 3.33325 36.6666 10.7952 36.6666 19.9999Z" fill="#D35230"/>
+</mask>
+<g mask="url(#mask0_4071_5252)">
+<g opacity="0.75" filter="url(#filter0_f_4071_5252)">
+<rect x="1.66675" y="13.3333" width="16.6667" height="15.8333" rx="1.45833" fill="#242424"/>
+</g>
+</g>
+<rect x="1.66675" y="11.6667" width="16.6667" height="16.6667" rx="1.45833" fill="url(#paint0_linear_4071_5252)"/>
+<path d="M8.37644 21.5272V25H6.66675V15H9.80701C10.9701 15 11.8563 15.2696 12.4658 15.8089C13.0752 16.3436 13.3799 17.1246 13.3799 18.152C13.3799 19.1516 13.0357 19.9651 12.3471 20.5927C11.6586 21.2157 10.7351 21.5272 9.57672 21.5272H8.37644ZM8.37644 16.3947V20.1464H9.43715C10.1396 20.1464 10.6723 19.9814 11.0352 19.6513C11.4027 19.3212 11.5865 18.8447 11.5865 18.2218C11.5865 17.6127 11.412 17.1571 11.0631 16.855C10.7188 16.5481 10.2001 16.3947 9.50694 16.3947H8.37644Z" fill="white"/>
+<defs>
+<filter id="filter0_f_4071_5252" x="-0.416585" y="11.2499" width="20.8334" height="19.9999" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="1.04167" result="effect1_foregroundBlur_4071_5252"/>
+</filter>
+<linearGradient id="paint0_linear_4071_5252" x1="-65.6041" y1="8.77091" x2="-57.4513" y2="22.8959" gradientUnits="userSpaceOnUse">
+<stop stop-color="#CA4C28"/>
+<stop offset="0.5" stop-color="#C5401E"/>
+<stop offset="1" stop-color="#B62F14"/>
+</linearGradient>
+</defs>
+</svg>
