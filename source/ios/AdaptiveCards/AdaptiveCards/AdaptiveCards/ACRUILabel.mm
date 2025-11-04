@@ -70,7 +70,7 @@
             return self;
         }
     }
-    return nil;
+    return [super hitTest:point withEvent:event];
 }
 
 // translate point where touch landed into character index in text container,
