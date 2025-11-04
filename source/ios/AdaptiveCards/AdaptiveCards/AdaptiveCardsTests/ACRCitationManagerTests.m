@@ -90,14 +90,14 @@
     XCTAssertNotNil(manager, @"Citation manager should not be nil");
 }
 
-/// Test parsing attributed string with TextBlock citations
-- (void)testParseAttributedStringWithTextBlockCitations {
+/// Test building citations from attributed string with TextBlock citations
+- (void)testBuildCitationsFromAttributedStringWithTextBlockCitations {
     // Given
     NSString *inputText = @"This text has [1](cite:0) and [Reference 2](cite:1) citations.";
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
     
     // When
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString];
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString references:@[]];
     
     // Then
     XCTAssertNotNil(result, @"Result should not be nil");
@@ -107,14 +107,14 @@
     XCTAssertNotEqual(result.length, inputText.length, @"Result length should be different due to citation processing");
 }
 
-/// Test parsing attributed string without citations
-- (void)testParseAttributedStringWithoutCitations {
+/// Test building citations from attributed string without citations
+- (void)testBuildCitationsFromAttributedStringWithoutCitations {
     // Given
     NSString *inputText = @"This text has no citations in it at all.";
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
     
     // When
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString];
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString references:@[]];
     
     // Then
     XCTAssertNotNil(result, @"Result should not be nil");
@@ -122,14 +122,14 @@
     XCTAssertEqualObjects(result.string, inputText, @"Result string should be same as input when no citations");
 }
 
-/// Test parsing attributed string with malformed citations
-- (void)testParseAttributedStringWithMalformedCitations {
+/// Test building citations from attributed string with malformed citations
+- (void)testBuildCitationsFromAttributedStringWithMalformedCitations {
     // Given
     NSString *inputText = @"This text has [malformed](not-cite:0) and [incomplete](cite: citations.";
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
     
     // When
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString];
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString references:@[]];
     
     // Then
     XCTAssertNotNil(result, @"Result should not be nil");
@@ -137,14 +137,14 @@
     XCTAssertEqualObjects(result.string, inputText, @"Result string should be same as input for malformed citations");
 }
 
-/// Test parsing attributed string with multiple valid citations
-- (void)testParseAttributedStringWithMultipleCitations {
+/// Test building citations from attributed string with multiple valid citations
+- (void)testBuildCitationsFromAttributedStringWithMultipleCitations {
     // Given
     NSString *inputText = @"Start [1](cite:0) middle [A](cite:1) and [Long Citation Text](cite:0) end.";
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
     
     // When
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString];
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString references:@[]];
     
     // Then
     XCTAssertNotNil(result, @"Result should not be nil");
@@ -164,12 +164,12 @@
 }
 
 /// Test empty attributed string
-- (void)testParseEmptyAttributedString {
+- (void)testBuildEmptyAttributedString {
     // Given
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:@""];
     
     // When
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString];
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString references:@[]];
     
     // Then
     XCTAssertNotNil(result, @"Result should not be nil for empty string");
@@ -216,13 +216,13 @@
 }
 
 /// Test edge case with citation at start and end of text
-- (void)testParseAttributedStringWithCitationsAtBoundaries {
+- (void)testBuildCitationsFromAttributedStringWithCitationsAtBoundaries {
     // Given
     NSString *inputText = @"[Start](cite:0) middle text [End](cite:1)";
     NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
     
     // When
-    NSMutableAttributedString *result = [self.citationManager parseAttributedString:inputAttributedString];
+    NSMutableAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString references:@[]];
     
     // Then
     XCTAssertNotNil(result, @"Result should not be nil");

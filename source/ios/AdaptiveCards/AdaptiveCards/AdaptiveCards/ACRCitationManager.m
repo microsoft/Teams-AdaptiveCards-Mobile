@@ -14,8 +14,8 @@
 #import "ACOReference.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate>
+
 @property (nonatomic, weak) id<ACRCitationManagerDelegate> delegate;
-//@property (nonatomic, strong) NSArray<ACOReference *> * references;
 
 // Lazy properties
 @property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
@@ -30,7 +30,6 @@
     self = [super init];
     if (self) {
         _delegate = delegate;
-//        _references = references;
     }
     return self;
 }
@@ -53,16 +52,10 @@
 
 #pragma mark - Public Methods
 
-- (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<ACOReference *> *)references {
+- (NSMutableAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString 
+                                                       references:(NSArray<ACOReference *> *)references {
     // Use TextBlock parser for regex-based citation parsing
     return [self.textBlockParser parseAttributedString:attributedString withReferences:references];
-}
-
-- (NSMutableAttributedString *)parseAttributedStringWithCitations:(NSAttributedString *)attributedString 
-                                                   withReferences:(NSArray<ACOReference *> *)references {
-    // Use RichTextBlock parser for embedded citation data parsing  
-    return [self.richTextBlockParser parseAttributedString:attributedString withReferences:references];
 }
 
 #pragma mark - ACRCitationParserDelegate
@@ -70,14 +63,27 @@
 - (void)citationParser:(id)parser 
       didTapCitationWithData:(NSDictionary *)citationData 
                referenceData:(ACOReference * _Nullable)referenceData {
-    // Handle citation tap from parser - delegate to the main delegate for presentation
+    
+    // Handle citation tap from parser - delegate to the main delegate
     if (self.delegate && [self.delegate respondsToSelector:@selector(citationManager:didTapCitationWithData:referenceData:)]) {
         [self.delegate citationManager:self didTapCitationWithData:citationData referenceData:referenceData];
     }
     
-    NSLog(@"Citation tapped - Citation: %@, Reference: %@", citationData, referenceData);
+    // TODO: Show BottomSheet
+    // TEMP: Show an alert as a placeholder for bottom sheet
+    if ([self.delegate respondsToSelector:@selector(parentViewControllerForCitationPresentation)]) {
+        UIViewController *parentViewController = [self.delegate parentViewControllerForCitationPresentation];
+        if (parentViewController) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Citation Tapped"
+                                                                                     message:@"A citation was tapped. Handle accordingly."
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" 
+                                                               style:UIAlertActionStyleDefault 
+                                                             handler:nil];
+            [alertController addAction:okAction];
+            [parentViewController presentViewController:alertController animated:YES completion:nil];
+        }
+    }
 }
-
-
 
 @end
