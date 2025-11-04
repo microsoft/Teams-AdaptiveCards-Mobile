@@ -23,7 +23,9 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import io.adaptivecards.R
 import io.adaptivecards.objectmodel.ACTheme
+import io.adaptivecards.objectmodel.ActionType
 import io.adaptivecards.objectmodel.AdaptiveCard
+import io.adaptivecards.objectmodel.CardElementType
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.renderer.AdaptiveCardRenderer
 import io.adaptivecards.renderer.RenderArgs
@@ -75,6 +77,9 @@ class CitationCardFragment(
 
     private fun renderCitationCard(contentLayout: ViewGroup) {
         try {
+            val renderArgsUpdated =
+                RenderArgs(renderArgs, unsupportedElements, unsupportedActionItems)
+
             val cardView = AdaptiveCardRenderer.getInstance().internalRender(
                 renderedAdaptiveCard,
                 context,
@@ -83,7 +88,9 @@ class CitationCardFragment(
                 actionHandler,
                 hostConfig,
                 false,
-                View.NO_ID.toLong()
+                View.NO_ID.toLong(),
+                renderArgsUpdated,
+                hostConfig.GetCitationBlock().bottomSheetBackgroundColor
             )
             contentLayout.addView(cardView)
         } catch (e: Exception) {
@@ -140,6 +147,31 @@ class CitationCardFragment(
 
     companion object {
         const val TAG = "CitationCardFragment"
+        private val unsupportedElements = setOf(
+            CardElementType.ActionSet,
+            CardElementType.AdaptiveCard,
+            CardElementType.ChoiceInput,
+            CardElementType.ChoiceSetInput,
+            CardElementType.DateInput,
+            CardElementType.NumberInput,
+            CardElementType.RatingInput,
+            CardElementType.TimeInput,
+            CardElementType.TextInput,
+            CardElementType.ToggleInput,
+            CardElementType.CompoundButton,
+        )
+        private val unsupportedActionItems = setOf(
+            ActionType.Unsupported,
+            ActionType.Execute,
+            ActionType.OpenUrl,
+            ActionType.Popover,
+            ActionType.ShowCard,
+            ActionType.Submit,
+            ActionType.ToggleVisibility,
+            ActionType.Custom,
+            ActionType.UnknownAction,
+            ActionType.Overflow
+        )
     }
 }
 

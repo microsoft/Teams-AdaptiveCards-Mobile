@@ -248,7 +248,7 @@ public class OverflowActionLayoutRenderer implements IActionLayoutRenderer {
                     throw new AdaptiveFallbackException(actionElement, featureRegistration);
                 }
 
-                menuItemViewList.add(actionRenderer.render(renderedCard, context, fragmentManager, actionButtonsLayout, actionElement, cardActionHandler, hostConfig, renderArgs));
+                menuItemViewList.add(actionRenderer.renderNew(renderedCard, context, fragmentManager, actionButtonsLayout, actionElement, cardActionHandler, hostConfig, renderArgs));
             }
             catch (AdaptiveFallbackException e)
             {

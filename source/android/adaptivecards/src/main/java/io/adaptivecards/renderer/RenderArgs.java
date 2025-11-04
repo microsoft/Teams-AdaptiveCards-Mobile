@@ -29,8 +29,7 @@ public class RenderArgs {
         mCardElementsToIgnore = new HashSet<>();
     }
 
-    public RenderArgs(RenderArgs renderArgs) {
-        this();
+    public RenderArgs(RenderArgs renderArgs, Set<CardElementType> cardElementsToIgnore, Set<ActionType> actionTypeToIgnore) {
         setAncestorHasFallback(renderArgs.getAncestorHasFallback());
         setContainerStyle(renderArgs.getContainerStyle());
         setContainerCardId(renderArgs.getContainerCardId());
@@ -38,6 +37,12 @@ public class RenderArgs {
         setHorizontalAlignment(renderArgs.getHorizontalAlignment());
         setAncestorHasSelectAction(renderArgs.getAncestorHasSelectAction());
         this.popoverId = renderArgs.getPopoverId();
+        mActionTypeToIgnore = actionTypeToIgnore;
+        mCardElementsToIgnore = cardElementsToIgnore;
+    }
+
+    public RenderArgs(RenderArgs renderArgs) {
+        this(renderArgs, renderArgs.mCardElementsToIgnore, renderArgs.mActionTypeToIgnore);
     }
 
     public RenderArgs(RenderArgs renderArgs, int popoverId) {
