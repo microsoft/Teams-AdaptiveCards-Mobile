@@ -35,23 +35,20 @@
 
     ACRColumnView *parent = _currentShowcard;
 
-    while (parent) {
-        NSMutableArray<ACRIBaseInputHandler> *inputs = parent.inputHandlers;
-        for (id<ACRIBaseInputHandler> input in inputs) {
-            BOOL validationResult = [input validate:&error];
-            [_gatheredInputs addObject:input];
-            if (self.hasValidationPassed && !validationResult) {
-                self.firstFailedInput = input;
-            } else {
-                [input setFocus:NO view:nil];
-            }
-            if (validationResult) {
-                [_set addObject:input];
-            }
-            self.hasValidationPassed &= validationResult;
-            self.hasViewChangedForAnyViews |= input.hasVisibilityChanged;
+    NSMutableArray<ACRIBaseInputHandler> *inputs = parent.inputHandlers;
+    for (id<ACRIBaseInputHandler> input in inputs) {
+        BOOL validationResult = [input validate:&error];
+        [_gatheredInputs addObject:input];
+        if (self.hasValidationPassed && !validationResult) {
+            self.firstFailedInput = input;
+        } else {
+            [input setFocus:NO view:nil];
         }
-        parent = [_view getParent:parent];
+        if (validationResult) {
+            [_set addObject:input];
+        }
+        self.hasValidationPassed &= validationResult;
+        self.hasViewChangedForAnyViews |= input.hasVisibilityChanged;
     }
 }
 
