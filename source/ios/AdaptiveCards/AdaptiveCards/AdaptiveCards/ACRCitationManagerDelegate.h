@@ -24,12 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (UIViewController * _Nullable)parentViewControllerForCitationPresentation;
 
-/**
- * Provides the references data for citations
- * @return Array of dictionaries containing reference information (title, abstract, url, etc.)
- */
-- (NSArray<NSDictionary *> * _Nullable)referencesForCitations;
-
 @optional
 
 /**

@@ -11,9 +11,13 @@
 #import "ACRRichTextBlockCitationParser.h"
 #import "ACRBottomSheetViewController.h"
 #import "ACRBottomSheetConfiguration.h"
+#import "ACOReference.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate>
 @property (nonatomic, weak) id<ACRCitationManagerDelegate> delegate;
+//@property (nonatomic, strong) NSArray<ACOReference *> * references;
+
+// Lazy properties
 @property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
 @property (nonatomic, strong) ACRRichTextBlockCitationParser *richTextBlockParser;
 
@@ -21,10 +25,12 @@
 
 @implementation ACRCitationManager
 
-- (instancetype)initWithDelegate:(id<ACRCitationManagerDelegate>)delegate {
+- (instancetype)initWithDelegate:(id<ACRCitationManagerDelegate>)delegate
+{
     self = [super init];
     if (self) {
         _delegate = delegate;
+//        _references = references;
     }
     return self;
 }
