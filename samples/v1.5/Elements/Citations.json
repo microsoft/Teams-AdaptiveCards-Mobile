@@ -31,7 +31,7 @@
 		{
 		  "type": "CitationRun",
 		  "referenceIndex": 2,
-		  "text": "AC02"
+		  "text":"ABCDE 23 very very long link"
 		},
 		"."
 	  ]
@@ -52,8 +52,30 @@
 	  ]
 	},
 	{
-	  "type": "AdaptiveCardReference",
+	  "type": "DocumentReference",
 	  "title": "Adaptive Cards",
+	  "icon": "image",
+	  "url": "https://adaptivecards.io",
+	  "abstract": "Adaptive Cards are platform-agnostic snippets of UI, ",
+	  "content": {
+		"type": "AdaptiveCard",
+		"body": [
+		  {
+			"type": "TextBlock",
+			"text": "Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange. When delivered to a specific app, the JSON is transformed into native UI that automatically adapts to its surroundings",
+			"wrap": true
+		  }
+		]
+	  },
+	  "keywords": [
+		"Citations",
+		"Adaptive cards",
+		"updated 1 day ago"
+	  ]
+	},
+	{
+	  "type": "AdaptiveCardReference",
+	  "title": "Adaptive Cards Long",
 	  "icon": "image",
 	  "url": "https://adaptivecards.io",
 	  "abstract": "Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services can openly exchange. When delivered to a specific app, the JSON is transformed into native UI that automatically adapts to its surroundings",
@@ -70,7 +92,7 @@
 	  "keywords": [
 		"Citations",
 		"Adaptive cards",
-		"updated 1 day ago"
+		"Adaptive Cards are platform-agnostic snippets of UI, authored in JSON, that apps and services"
 	  ]
 	}
   ]

@@ -18,6 +18,7 @@
                closeButtonToScrollGap:(CGFloat)closeButtonToScrollGap
                        contentPadding:(CGFloat)contentPadding
                       closeButtonSize:(CGFloat)closeButtonSize
+                       showCloseButton:(BOOL)showCloseButton
                         acoHostConfig:(ACOHostConfig *)hostConfig
 {
     self = [super init];
@@ -31,9 +32,23 @@
         self.closeButtonToScrollGap = closeButtonToScrollGap;
         self.contentPadding = contentPadding;
         self.closeButtonSize = closeButtonSize;
+        self.showCloseButton = showCloseButton;
         self.hostConfig = hostConfig;
     }
     return self;
+}
+
++ (instancetype)defaultWithHostConfig:(ACOHostConfig *)hostConfig {
+    return [[ACRBottomSheetConfiguration alloc] initWithMinMultiplier:0.2
+                                                        maxMultiplier:0.66
+                                                         borderHeight:0.5
+                                                  closeButtonTopInset:16
+                                                 closeButtonSideInset:12
+                                               closeButtonToScrollGap:20
+                                                       contentPadding:16
+                                                      closeButtonSize:28.0
+                                                       showCloseButton:YES
+                                                        acoHostConfig:hostConfig];
 }
 
 @end

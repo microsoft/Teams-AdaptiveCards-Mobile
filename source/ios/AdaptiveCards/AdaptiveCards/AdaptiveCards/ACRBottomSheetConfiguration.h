@@ -19,6 +19,7 @@
 @property CGFloat closeButtonToScrollGap;
 @property CGFloat contentPadding;
 @property CGFloat closeButtonSize;
+@property BOOL showCloseButton;
 @property ACOHostConfig *hostConfig;
 
 - (instancetype)initWithMinMultiplier:(CGFloat)minMultiplier
@@ -29,6 +30,9 @@
                closeButtonToScrollGap:(CGFloat)closeButtonToScrollGap
                        contentPadding:(CGFloat)contentPadding
                       closeButtonSize:(CGFloat)closeButtonSize
+                       showCloseButton:(BOOL)showCloseButton
                         acoHostConfig:(ACOHostConfig *)hostConfig;
+
++ (instancetype)defaultWithHostConfig:(ACOHostConfig *)hostConfig;
 
 @end
