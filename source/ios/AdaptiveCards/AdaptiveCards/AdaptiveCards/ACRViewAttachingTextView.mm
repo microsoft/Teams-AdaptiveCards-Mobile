@@ -8,6 +8,8 @@
 
 #import "ACRViewAttachingTextView.h"
 #import "ACRViewAttachingTextViewBehavior.h"
+#import "ACRViewAttachingTextViewBehavior.h"
+#import "ACRViewTextAttachment.h"
 
 @interface ACRViewAttachingTextView ()
 @property (nonatomic, strong) ACRViewAttachingTextViewBehavior *attachmentBehavior;
@@ -37,6 +39,16 @@
         [self commonInit];
     }
     return self;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    id attribute = [self attribute:NSAttachmentAttributeName atPoint:point withEvent:event];
+    if (attribute && [attribute isKindOfClass:ACRViewTextAttachment.class]) {
+        ACRViewTextAttachment *attachmentAttr = (ACRViewTextAttachment *)attribute;
+        return [attachmentAttr.viewProvider instantiateViewForAttachment:attachmentAttr inBehavior:self.attachmentBehavior];
+    }
+    return nil;
 }
 
 - (void)commonInit {

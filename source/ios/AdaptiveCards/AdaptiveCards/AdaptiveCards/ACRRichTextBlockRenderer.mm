@@ -30,7 +30,18 @@
 #import "UtiliOS.h"
 #import "ACRViewAttachingTextView.h"
 
-@implementation ACRRichTextBlockRenderer
+@implementation ACRRichTextBlockRenderer {
+    ACRCitationManager *_citationManager;
+}
+
+#pragma mark - Lazy Properties
+
+- (ACRCitationManager *)citationManager {
+    if (!_citationManager) {
+        _citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
+    }
+    return _citationManager;
+}
 
 + (ACRRichTextBlockRenderer *)getInstance
 {
@@ -226,9 +237,8 @@
                             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:text referenceIndex:referenceId];
                             NSArray<ACOReference *> *references = [[rootView card] references];
                             
-                            // Create CitationManager instance to handle citation processing
-                            ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
-                            NSAttributedString *citationRunContent = [citationManager buildCitationAttachmentWithCitation:citation
+                            // Use lazy property for CitationManager instance
+                            NSAttributedString *citationRunContent = [self.citationManager buildCitationAttachmentWithCitation:citation
                                                                                                                references:references];
                             [content appendAttributedString:citationRunContent];
                         }
@@ -307,9 +317,8 @@
     // References contain the array of references to render
     NSArray<ACOReference *> *references = [[rootView card] references];
     
-    // Create CitationManager instance and build citations with references
-    ACRCitationManager *citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
-    return [citationManager buildCitationsFromAttributedString:content references:references];
+    // Use lazy property for CitationManager instance
+    return [self.citationManager buildCitationsFromAttributedString:content references:references];
 }
 
 #pragma mark - ACRCitationManagerDelegate
