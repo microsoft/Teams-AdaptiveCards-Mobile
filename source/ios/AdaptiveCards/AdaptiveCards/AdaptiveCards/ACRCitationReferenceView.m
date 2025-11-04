@@ -16,29 +16,30 @@
 
 @interface ACRCitationReferenceView ()
 
-// Main structure - A (Root vertical stack view)
-@property (nonatomic, weak) UIStackView *rootStackView; // A
+// Main structure - Root vertical stack view
+@property (nonatomic, weak) UIStackView *rootStackView;
 
-// A1 - Header section with title and separator
-@property (nonatomic, weak) UIView *headerSection; // A1
+// Header section with title and separator
+@property (nonatomic, weak) UIView *headerSection;
 @property (nonatomic, weak) UILabel *headerTitleLabel;
 @property (nonatomic, weak) UIView *separatorView;
 
-// B - Main content horizontal stack view
-@property (nonatomic, weak) UIStackView *mainContentStackView; // B
+// Main content horizontal stack view
+@property (nonatomic, weak) UIStackView *mainContentStackView;
 
-// C - Left side (pill + icon) horizontal stack view
-@property (nonatomic, weak) UIStackView *leftSideStackView; // C
-@property (nonatomic, weak) UILabel *pillLabel; // C1
-@property (nonatomic, weak) UIImageView *iconImageView; // C2
+// Left side (pill + icon) horizontal stack view
+@property (nonatomic, weak) UIStackView *leftSideStackView;
+@property (nonatomic, weak) UIView *pillContainer;
+@property (nonatomic, weak) UILabel *pillLabel;
+@property (nonatomic, weak) UIImageView *iconImageView;
 
-// D - Right side content vertical stack view
-@property (nonatomic, weak) UIStackView *rightSideStackView; // D
-@property (nonatomic, weak) UILabel *titleLabel; // D1
-@property (nonatomic, weak) UILabel *abstractLabel; // D2
+// Right side content vertical stack view
+@property (nonatomic, weak) UIStackView *rightSideStackView;
+@property (nonatomic, weak) UILabel *titleLabel;
+@property (nonatomic, weak) UILabel *abstractLabel;
 
-// E - Keywords label (inside D)
-@property (nonatomic, weak) UILabel *keywordsLabel; // E
+// Keywords label
+@property (nonatomic, weak) UILabel *keywordsLabel;
 
 // More details button
 @property (nonatomic, weak) UIButton *moreDetailsButton;
@@ -70,25 +71,22 @@
 - (void)setupUI {
     self.backgroundColor = [UIColor systemBackgroundColor];
     
-    // Set content priorities for the view itself to prevent unnecessary expansion
-    [self setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
-    [self setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
-    [self setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-    [self setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-    
-    // A - Create root vertical stack view with padding
+    // Create root vertical stack view with padding
     UIStackView *rootStackView = [[UIStackView alloc] init];
     rootStackView.axis = UILayoutConstraintAxisVertical;
     rootStackView.spacing = 8;
     rootStackView.alignment = UIStackViewAlignmentFill;
     rootStackView.translatesAutoresizingMaskIntoConstraints = NO;
+
+
     [self addSubview:rootStackView];
     self.rootStackView = rootStackView;
     
-    // Setup A1 - Header section (title only, no separator)
+    // Setup header section (title only, no separator)
     UIView *headerSection = [self setupHeaderSection];
     [self.rootStackView addArrangedSubview:headerSection];
     self.headerSection = headerSection;
+
     
     // Add separator as direct child of main view (spans full width)
     UIView *separatorView = [[UIView alloc] init];
@@ -97,7 +95,7 @@
     [self addSubview:separatorView];
     self.separatorView = separatorView;
     
-    // Setup B - Main content section
+    // Setup main content section
     UIStackView *mainContentStackView = [self setupMainContentSection];
     [self.rootStackView addArrangedSubview:mainContentStackView];
     self.mainContentStackView = mainContentStackView;
@@ -106,7 +104,7 @@
     [self setupConstraints];
 }
 
-// A1 - Header section with "References" title only
+// Header section with "References" title only
 - (UIView *) setupHeaderSection {
     UIView *headerSection = [[UIView alloc] init];
     headerSection.translatesAutoresizingMaskIntoConstraints = NO;
@@ -118,34 +116,28 @@
     headerTitleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
     headerTitleLabel.textColor =  [UIColor grayColorWithValue:32];
     headerTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+
     [headerSection addSubview:headerTitleLabel];
     self.headerTitleLabel = headerTitleLabel;
-    
-    // Header section constraints - only title label
-    [NSLayoutConstraint activateConstraints:@[
-        [headerTitleLabel.topAnchor constraintEqualToAnchor:headerSection.topAnchor],
-        [headerTitleLabel.leadingAnchor constraintEqualToAnchor:headerSection.leadingAnchor],
-        [headerTitleLabel.trailingAnchor constraintEqualToAnchor:headerSection.trailingAnchor],
-        [headerTitleLabel.bottomAnchor constraintEqualToAnchor:headerSection.bottomAnchor]
-    ]];
+
     return headerSection;
 }
 
-// B - Main content horizontal stack view
+// Main content horizontal stack view
 - (UIStackView *)setupMainContentSection {
     UIStackView *mainContentStackView = [[UIStackView alloc] init];
     mainContentStackView.axis = UILayoutConstraintAxisHorizontal;
     mainContentStackView.spacing = 8;
     mainContentStackView.alignment = UIStackViewAlignmentTop;
     mainContentStackView.translatesAutoresizingMaskIntoConstraints = NO;
-    mainContentStackView.backgroundColor = [[UIColor systemGreenColor] colorWithAlphaComponent:0.1]; // B - Main content
     
-    // Setup C - Left side (pill + icon)
+    // Setup left side (pill + icon)
     UIStackView *leftSideStackView = [self setupLeftSideSection];
     [mainContentStackView addArrangedSubview:leftSideStackView];
     self.leftSideStackView = leftSideStackView;
     
-    // Setup D - Right side content
+    // Setup right side content
     UIStackView *rightSideStackView = [self setupRightSideSection];
     [mainContentStackView addArrangedSubview:rightSideStackView];
     self.rightSideStackView = rightSideStackView;
@@ -153,37 +145,36 @@
     return mainContentStackView;
 }
 
-// C - Left side horizontal stack view (pill + icon)
+// Left side horizontal stack view (pill + icon)
 - (UIStackView *)setupLeftSideSection {
     UIStackView *leftSideStackView = [[UIStackView alloc] init];
     leftSideStackView.axis = UILayoutConstraintAxisHorizontal;
-    leftSideStackView.spacing = 16;
+    leftSideStackView.spacing = 8;
     leftSideStackView.alignment = UIStackViewAlignmentTop;
-    leftSideStackView.backgroundColor = [[UIColor systemOrangeColor] colorWithAlphaComponent:0.1]; // C - Left side
     
-    // C1 - Pill label with border
+    // Pill label with border and padding
     UILabel *pillLabel = [[UILabel alloc] init];
     pillLabel.textAlignment = NSTextAlignmentCenter;
     pillLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
     pillLabel.textColor = [UIColor labelColor];
-//    pillLabel.backgroundColor = [UIColor clearColor];
-    pillLabel.layer.borderColor = [UIColor separatorColor].CGColor;
-    pillLabel.layer.borderWidth = 1.0;
-    pillLabel.layer.cornerRadius = 4;
-    pillLabel.layer.masksToBounds = YES;
-    pillLabel.numberOfLines = 5;
+    pillLabel.numberOfLines = 0;
     pillLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
-    // Set content priorities to prioritize showing full text without clipping
-//    [pillLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-//    [pillLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-//    [pillLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
-//    [pillLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+    // Create a container view for the pill label to handle padding
+    UIView *pillContainer = [[UIView alloc] init];
+    pillContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    pillContainer.layer.borderColor = [UIColor separatorColor].CGColor;
+    pillContainer.layer.borderWidth = 1.0;
+    pillContainer.layer.cornerRadius = 4;
+    pillContainer.layer.masksToBounds = YES;
+
+    [pillContainer addSubview:pillLabel];
     
-    [leftSideStackView addArrangedSubview:pillLabel];
+    [leftSideStackView addArrangedSubview:pillContainer];
+    self.pillContainer = pillContainer;
     self.pillLabel = pillLabel;
     
-    // C2 - Icon image view
+    // Icon image view
     UIImageView *iconImageView = [[UIImageView alloc] init];
     iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -193,15 +184,14 @@
     return leftSideStackView;
 }
 
-// D - Right side vertical stack view (title, keywords, abstract)
+// Right side vertical stack view (title, keywords, abstract)
 - (UIStackView *)setupRightSideSection {
     UIStackView *rightSideStackView = [[UIStackView alloc] init];
     rightSideStackView.axis = UILayoutConstraintAxisVertical;
     rightSideStackView.spacing = 8;
     rightSideStackView.alignment = UIStackViewAlignmentLeading;
-    rightSideStackView.backgroundColor = [[UIColor systemYellowColor] colorWithAlphaComponent:0.1]; // D - Right side
     
-    // D1 - Title label
+    // Title label
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightSemibold];
     titleLabel.textColor = [UIColor labelColor];
@@ -209,12 +199,12 @@
     [rightSideStackView addArrangedSubview:titleLabel];
     self.titleLabel = titleLabel;
     
-    // E - Keywords label
+    // Keywords label
     UILabel *keywordsLabel = [self setupKeywordsSection];
     [rightSideStackView addArrangedSubview:keywordsLabel];
     self.keywordsLabel = keywordsLabel;
     
-    // D2 - Abstract label
+    // Abstract label
     UILabel *abstractLabel = [[UILabel alloc] init];
     abstractLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
     abstractLabel.textColor = [UIColor grayColorWithValue:34];
@@ -234,13 +224,12 @@
     return rightSideStackView;
 }
 
-// E - Keywords label with attributed string
+// Keywords label with attributed string
 - (UILabel *)setupKeywordsSection {
     UILabel *keywordsLabel = [[UILabel alloc] init];
     keywordsLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
     keywordsLabel.textColor = [UIColor grayColorWithValue:110];
     keywordsLabel.numberOfLines = 0;
-    keywordsLabel.backgroundColor = [[UIColor systemPinkColor] colorWithAlphaComponent:0.1]; // E - Keywords label
     return keywordsLabel;
 }
 
@@ -290,28 +279,39 @@
     
     // Full-width separator positioned below header section
     [NSLayoutConstraint activateConstraints:@[
-        [self.separatorView.topAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor constant:4],
+        [self.separatorView.topAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor],
         [self.separatorView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
         [self.separatorView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
         [self.separatorView.heightAnchor constraintEqualToConstant:1]
     ]];
     
-    // Header height
+    // Header section constraints
     [NSLayoutConstraint activateConstraints:@[
-        [self.headerSection.heightAnchor constraintEqualToConstant:36]
+        [self.headerSection.heightAnchor constraintEqualToConstant:40],
+        [self.headerTitleLabel.heightAnchor constraintEqualToConstant:28],
+        [self.headerTitleLabel.topAnchor constraintEqualToAnchor:self.headerSection.topAnchor],
+        [self.headerTitleLabel.leadingAnchor constraintEqualToAnchor:self.headerSection.leadingAnchor],
+        [self.headerTitleLabel.trailingAnchor constraintEqualToAnchor:self.headerSection.trailingAnchor],
+        [self.headerTitleLabel.bottomAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor constant:-12]
     ]];
-    
+
     // Left side stack view width constraint
     [NSLayoutConstraint activateConstraints:@[
-        [self.leftSideStackView.widthAnchor constraintEqualToConstant:80]
+        [self.leftSideStackView.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor multiplier:0.5]
     ]];
     
-    // Pill label constraints - grows with content but max 30% of root view width
+    // Add padding constraints - 1px on left and right
     [NSLayoutConstraint activateConstraints:@[
-        [self.pillLabel.widthAnchor constraintGreaterThanOrEqualToConstant:32],
-        [self.pillLabel.widthAnchor constraintLessThanOrEqualToAnchor:self.widthAnchor multiplier:0.3],
-        [self.pillLabel.heightAnchor constraintGreaterThanOrEqualToConstant:24]
+        [self.pillContainer.widthAnchor constraintGreaterThanOrEqualToConstant:17],
+        [self.pillContainer.heightAnchor constraintGreaterThanOrEqualToConstant:17],
+        [self.pillContainer.widthAnchor constraintLessThanOrEqualToConstant:50], /*Enough room for 5 characters*/
+        [self.pillLabel.topAnchor constraintEqualToAnchor:self.pillContainer.topAnchor constant:1],
+        [self.pillLabel.bottomAnchor constraintEqualToAnchor:self.pillContainer.bottomAnchor constant:-1],
+        [self.pillLabel.leadingAnchor constraintEqualToAnchor:self.pillContainer.leadingAnchor constant:2.0],
+        [self.pillLabel.trailingAnchor constraintEqualToAnchor:self.pillContainer.trailingAnchor constant:-2.0],
     ]];
+    
+    [self.pillLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     
     // Icon image view constraints - 32x32 with 1:1 aspect ratio
     [NSLayoutConstraint activateConstraints:@[
@@ -344,7 +344,7 @@
     self.reference = reference;
     
     // Update pill label with citation display text
-    self.pillLabel.text = citation.displayText ?: @"?";
+    self.pillLabel.text = citation.displayText ?: @"";
     
     // Update title
     self.titleLabel.text = reference.title ?: @"Unknown Reference";
@@ -363,7 +363,7 @@
     // Update icon
     [self updateIconForReference:reference];
     
-    // // Show/hide more details button based on URL availability or content availability
+    // Show/hide more details button based on URL availability or content availability
     self.moreDetailsButton.hidden = reference.content == nil;
 }
 
@@ -431,20 +431,6 @@
     
     self.iconImageView.image = iconImage;
 }
-
-#pragma mark - Layout
-
-- (CGSize)intrinsicContentSize {
-    return [self.rootStackView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    // Pill has fixed corner radius for rectangular shape
-    self.pillLabel.layer.cornerRadius = 4;
-}
-
 @end
 
 #pragma mark - UIColor Private Extension
