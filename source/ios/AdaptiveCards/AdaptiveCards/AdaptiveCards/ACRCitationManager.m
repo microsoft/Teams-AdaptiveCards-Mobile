@@ -145,6 +145,7 @@
     [self.bottomSheetPopover dismissViewControllerAnimated:NO completion:nil];
         
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
+    config.dismissButtonType = ACRBottomSheetDismissButtonTypeBack;
     config.minHeight = self.bottomSheetPopover.preferredContentSize.height;
     
     

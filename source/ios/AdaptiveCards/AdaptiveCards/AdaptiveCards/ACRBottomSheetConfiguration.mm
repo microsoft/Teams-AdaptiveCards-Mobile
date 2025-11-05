@@ -104,6 +104,9 @@ static const CGFloat kDefaultCloseButtonSize = 28.0f;
         case ACRBottomSheetDismissButtonTypeDragIndicator:
             dismissButtonTypeString = @"DragIndicator";
             break;
+        case ACRBottomSheetDismissButtonTypeBack:
+            dismissButtonTypeString = @"Back button";
+            break;
     }
     
     return [NSString stringWithFormat:@"<%@: %p; minHeight: %.2f; maxHeight: %.2f; closeButtonInsets: {%.1f,%.1f,%.1f,%.1f}; dismissButtonType: %@>",

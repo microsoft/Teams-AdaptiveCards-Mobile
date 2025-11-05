@@ -47,10 +47,13 @@
     
     switch (self.config.dismissButtonType) {
         case ACRBottomSheetDismissButtonTypeCross:
-            [self setupCloseButton];
+            [self setupDismissButton: @"Dismiss"];
             break;
         case ACRBottomSheetDismissButtonTypeDragIndicator:
             [self setupDragIndicator];
+            break;
+        case ACRBottomSheetDismissButtonTypeBack:
+            [self setupDismissButton: @"ChevronLeft"];
             break;
         default:
             // No dismiss UI
@@ -70,11 +73,11 @@
     }
 }
 
-- (void)setupCloseButton
+- (void)setupDismissButton:(NSString *)buttonIconName
 {
     UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    dismissButton.accessibilityLabel = NSLocalizedString(@"Dismiss", nil);
-    NSString *dismissIcon = @"dismiss";
+    dismissButton.accessibilityLabel = NSLocalizedString(buttonIconName, nil);
+    NSString *dismissIcon = buttonIconName.lowercaseString;
     NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
     CGSize iconSize = CGSizeMake(24, 24);
     UIColor *tintColor = [self.config.hostConfig getPopoverTintColor];
@@ -85,8 +88,9 @@
                                                  tintColor:tintColor];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
     [dismissButton addSubview:imageView];
+    SEL action = (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeBack) ? @selector(backAction) : @selector(closeAction);
     [dismissButton addTarget:self
-                      action:@selector(closeAction)
+                      action:action
             forControlEvents:UIControlEventTouchUpInside];
     dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:dismissButton];
@@ -121,8 +125,9 @@
     
     NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
     
-    if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross) {
-        // Dismiss button constraints
+    if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross || 
+        self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeBack) {
+        // Dismiss button constraints (same for cross and back buttons)
         [constraints addObjectsFromArray:@[
             [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnInsets.top],
             [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnInsets.left],
@@ -194,6 +199,17 @@
 - (void)closeAction
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)backAction
+{
+    // Check if we're in a navigation controller and can pop
+    if (self.navigationController && self.navigationController.viewControllers.count > 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        // Fallback to dismiss if not in navigation stack
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 // MARK: Transition Delegate
