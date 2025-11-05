@@ -9,6 +9,7 @@
 #import "ACRCitationReferenceView.h"
 #import "ACOReference.h"
 #import "ACOCitation.h"
+#import "ACOBundle.h"
 
 // Layout Constants
 static const CGFloat kACRCitationViewSpacing = 8.0;
@@ -450,32 +451,11 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
 }
 
 - (void)updateIconForReference:(ACOReference *)reference {
-    // Set default document icon
-    UIImage *iconImage = [UIImage systemImageNamed:@"doc.fill"];
-    
-    // Customize icon based on reference type or URL
-    if (reference.url) {
-        NSString *urlString = reference.url.lowercaseString;
-        
-        if ([urlString containsString:@".pdf"]) {
-            iconImage = [UIImage systemImageNamed:@"doc.fill"];
-            self.iconImageView.tintColor = [UIColor systemRedColor];
-        } else if ([urlString containsString:@".doc"] || [urlString containsString:@".docx"]) {
-            iconImage = [UIImage systemImageNamed:@"doc.fill"];
-            self.iconImageView.tintColor = [UIColor systemBlueColor];
-        } else if ([urlString containsString:@".ppt"] || [urlString containsString:@".pptx"]) {
-            iconImage = [UIImage systemImageNamed:@"doc.fill"];
-            self.iconImageView.tintColor = [UIColor systemOrangeColor];
-        } else {
-            iconImage = [UIImage systemImageNamed:@"link"];
-            self.iconImageView.tintColor = [UIColor systemBlueColor];
-        }
-    } else {
-        self.iconImageView.tintColor = [UIColor systemGrayColor];
-    }
-    
-    self.iconImageView.image = iconImage;
+    NSString *iconName = [reference icon:_citation.theme];
+    UIImage *image = [UIImage imageNamed:iconName inBundle:[[ACOBundle getInstance] getBundle] compatibleWithTraitCollection:nil];
+    self.iconImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
+
 @end
 
 #pragma mark - UIColor Private Extension

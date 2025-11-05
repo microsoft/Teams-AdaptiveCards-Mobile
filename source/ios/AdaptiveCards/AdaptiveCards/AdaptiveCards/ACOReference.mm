@@ -62,6 +62,120 @@ using namespace AdaptiveCards;
     return [NSString stringWithUTF8String:_reference->GetUrl().c_str()];
 }
 
+- (NSString *)icon:(ACRTheme)theme
+{
+    if (!_reference) {
+        return @"";
+    }
+    ACRCitationIcon icon = ACRCitationIcon(_reference->GetIcon());
+    switch (icon)
+    {
+        // Handling icons independent of theme
+        case ACRAdobeIllustrator: return @"adobeIllustrator";
+        case ACRAdobePhotoshop: return @"adobePhotoshop";
+        case ACRAdobeInDesign: return @"adobeInDesign";
+        case ACRMsWord: return @"msword";
+        case ACRMsExcel: return @"msExcel";
+        case ACRMsPowerPoint: return @"msPowerPoint";
+        case ACRMsOneNote: return @"msOneNote";
+        case ACRMsSharePoint: return @"msSharePoint";
+        case ACRMsVisio: return @"msVisio";
+        case ACRMsLoop: return @"msLoop";
+        case ACRMsWhiteboard: return @"msWhiteboard";
+        case ACRPdf: return @"pdf";
+        case ACRSketch: return @"sketch";
+        case ACRZip: return @"zip";
+        
+        // Handling icons based on theme
+        case ACRAdobeFlash:
+        {
+            switch (theme)
+            {
+                case ACRThemeLight:
+                    return @"invalid_light";
+                case ACRThemeDark:
+                    return @"invalid_dark";
+                default:
+                    return @"";
+            }
+        }
+        case ACRCode:
+        {
+            switch (theme)
+            {
+                case ACRThemeLight:
+                    return @"code_light";
+                case ACRThemeDark:
+                    return @"code_dark";
+                default:
+                    return @"";
+            }
+        }
+        case ACRGif:
+        {
+            switch (theme)
+            {
+                case ACRThemeLight:
+                    return @"gif_light";
+                case ACRThemeDark:
+                    return @"gif_dark";
+                default:
+                    return @"";
+            }
+        }
+        case ACRCitationImage:
+        {
+            switch (theme)
+            {
+                case ACRThemeLight:
+                    return @"image_light";
+                case ACRThemeDark:
+                    return @"image_dark";
+                default:
+                    return @"";
+            }
+        }
+        case ACRSound:
+        {
+            switch (theme)
+            {
+                case ACRThemeLight:
+                    return @"sound_light";
+                case ACRThemeDark:
+                    return @"sound_dark";
+                default:
+                    return @"";
+            }
+        }
+        case ACRText:
+        {
+            switch (theme)
+            {
+                case ACRThemeLight:
+                    return @"text_light";
+                case ACRThemeDark:
+                    return @"text_dark";
+                default:
+                    return @"";
+            }
+        }
+        case ACRVideo:
+        {
+            switch (theme)
+            {
+                case ACRThemeLight:
+                    return @"video_light";
+                case ACRThemeDark:
+                    return @"video_dark";
+                default:
+                    return @"";
+            }
+        }
+        default:
+            return @"";
+    }
+}
+
 - (NSArray<NSString *> *)keywords {
     if (!_reference) {
         return @[];
@@ -82,13 +196,13 @@ using namespace AdaptiveCards;
         return nil;
     }
     
-    auto contentOpt = _reference->GetContent();
-    if (!contentOpt || !contentOpt.value()) {
+    auto content = _reference->GetContent();
+    if (!content) {
         return nil;
     }
     
     ACOAdaptiveCard *acoCard = [[ACOAdaptiveCard alloc] init];
-    [acoCard setCard:contentOpt.value()];
+    [acoCard setCard:content];
     return acoCard;
 }
 

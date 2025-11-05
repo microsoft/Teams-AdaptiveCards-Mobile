@@ -12,12 +12,15 @@
 
 - (instancetype)initWithDisplayText:(NSString *)displayText
                      referenceIndex:(NSNumber *)referenceIndex
+                              theme:(ACRTheme)theme
 {
     self = [super init];
     if (self)
     {
         self.displayText = displayText;
-        self.referenceIndex = referenceIndex;
+        NSInteger referenceId = [referenceIndex integerValue] - 1;
+        self.referenceIndex = @(referenceId);
+        self.theme = theme;
     }
     return self;
 }

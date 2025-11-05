@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ACOEnums.h"
 
 @protocol ACRCitationParserDelegate;
 @class ACRViewTextAttachment;
@@ -38,7 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @return A new attributed string with citations replaced by text attachments
  */
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<ACOReference *> *)references;
+                                      withReferences:(NSArray<ACOReference *> *)references
+                                               theme:(ACRTheme)theme;
 
 /**
  * Abstract method to parse a citation object and create an attributed string with citation attachment

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ACOEnums.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,7 +46,6 @@ typedef NS_ENUM(NSUInteger, ACOReferenceType) {
  * URL of the reference
  */
 @property (nonatomic, readonly, copy) NSString *url;
-
 /**
  * Keywords associated with the reference
  */
@@ -55,6 +55,11 @@ typedef NS_ENUM(NSUInteger, ACOReferenceType) {
  * Optional adaptive card content for the reference
  */
 @property (nonatomic, readonly, nullable) ACOAdaptiveCard *content;
+
+/**
+ * Icon to show in citation bottomsheet
+ */
+- (NSString *)icon:(ACRTheme)theme;
 
 @end
 

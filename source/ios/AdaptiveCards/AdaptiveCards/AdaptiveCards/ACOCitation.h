@@ -13,8 +13,10 @@
 
 @property (nonatomic, copy) NSString *displayText;
 @property (nonatomic, copy) NSNumber *referenceIndex;
+@property ACRTheme theme;
 
 - (instancetype)initWithDisplayText:(NSString *)displayText
-                     referenceIndex:(NSNumber *)referenceIndex;
+                     referenceIndex:(NSNumber *)referenceIndex
+                              theme:(ACRTheme)theme;
 
 @end

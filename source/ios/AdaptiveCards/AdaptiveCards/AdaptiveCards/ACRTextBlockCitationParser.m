@@ -16,6 +16,7 @@
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString
                                       withReferences:(NSArray<ACOReference *> *)references
+                                               theme:(ACRTheme)theme
 {
     NSMutableAttributedString *result = [attributedString mutableCopy];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
@@ -40,7 +41,8 @@
             displayText = [displayText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
-                                                              referenceIndex:referenceId];
+                                                              referenceIndex:referenceId
+                                                                       theme:theme];
             
             NSAttributedString *attachmentString = [self parseAttributedStringWithCitation:citation
                                                                              andReferences:references];

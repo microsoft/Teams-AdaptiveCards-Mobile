@@ -168,3 +168,27 @@ typedef NS_ENUM(NSUInteger, ACRBadgeAppearance) {
     ACRFilled = 0,
     ACRTint
 };
+
+typedef NS_ENUM(NSInteger, ACRCitationIcon) {
+    ACRAdobeIllustrator,
+    ACRAdobePhotoshop,
+    ACRAdobeInDesign,
+    ACRAdobeFlash,
+    ACRMsWord,
+    ACRMsExcel,
+    ACRMsPowerPoint,
+    ACRMsOneNote,
+    ACRMsSharePoint,
+    ACRMsVisio,
+    ACRMsLoop,
+    ACRMsWhiteboard,
+    ACRCode,
+    ACRGif,
+    ACRCitationImage,
+    ACRPdf,
+    ACRSketch,
+    ACRSound,
+    ACRText,
+    ACRVideo,
+    ACRZip
+};

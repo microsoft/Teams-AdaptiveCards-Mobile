@@ -69,6 +69,10 @@
 
 - (ACRViewTextAttachment *)createAttachmentWithCitation:(ACOCitation *)citation 
                                           referenceData:(ACOReference *)referenceData {
+    if (!referenceData)
+    {
+        return nil;
+    }
     NSString *text = citation.displayText;
     CGSize size = CGSizeMake(17, 17);
     
@@ -111,6 +115,11 @@
     
     // TextBlock citations use the default attributed string with attachment
     ACRViewTextAttachment *attachment = [self createAttachmentWithCitation:citation referenceData:referenceData];
+    
+    if(!attachment)
+    {
+        return [[NSAttributedString alloc] initWithString:citation.displayText];
+    }
     
     // Create text attachment with the button
     NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];

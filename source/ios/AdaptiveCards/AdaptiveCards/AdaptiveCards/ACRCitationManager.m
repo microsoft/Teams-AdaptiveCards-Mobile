@@ -66,16 +66,24 @@
 #pragma mark - Public Methods
 
 - (NSAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString
-                                                references:(NSArray<ACOReference *> *)references {
+                                                references:(NSArray<ACOReference *> *)references
+                                                     theme:(ACRTheme) theme
+{
     // Use inline citation parser for token-based citation parsing
-    NSMutableAttributedString *result = [self.inlineCitationParser parseAttributedString:attributedString withReferences:references];
+    NSMutableAttributedString *result = [self.inlineCitationParser parseAttributedString:attributedString
+                                                                          withReferences:references
+                                                                                   theme:theme];
     return [result copy];
 }
 
 - (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString
-                                                                  references:(NSArray<ACOReference *> *)references {
+                                                                  references:(NSArray<ACOReference *> *)references
+                                                                       theme:(ACRTheme) theme
+{
     // Use TextBlock parser for NSLink-based citation parsing from attributed strings
-    NSMutableAttributedString *result = [self.textBlockParser parseAttributedString:attributedString withReferences:references];
+    NSMutableAttributedString *result = [self.textBlockParser parseAttributedString:attributedString
+                                                                     withReferences:references
+                                                                              theme:theme];
     return [result copy];
 }
 
