@@ -288,7 +288,17 @@ public enum AdaptiveCardSchemaKey {
   Resources,
   Strings,
   DefaultValue,
-  LocalizedValues;
+  LocalizedValues,
+  Abstract,
+  Keywords,
+  References,
+  ReferenceIndex,
+  CitationBlock,
+  DividerColor,
+  BottomSheetTextColor,
+  BottomSheetKeywordsColor,
+  BottomSheetMoreDetailColor,
+  BottomSheetBackgroundColor;
 
   public final int swigValue() {
     return swigValue;

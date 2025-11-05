@@ -287,7 +287,17 @@ enum class AdaptiveCardSchemaKey
     Resources,
     Strings,
     DefaultValue,
-    LocalizedValues
+    LocalizedValues,
+    Abstract,
+    Keywords,
+    References,
+    ReferenceIndex,
+    CitationBlock,
+    DividerColor,
+    BottomSheetTextColor,
+    BottomSheetKeywordsColor,
+    BottomSheetMoreDetailColor,
+    BottomSheetBackgroundColor
 };
 
 DECLARE_ADAPTIVECARD_ENUM(AdaptiveCardSchemaKey);
@@ -333,7 +343,10 @@ DECLARE_ADAPTIVECARD_ENUM(CardElementType);
 
 enum class InlineElementType
 {
-    TextRun = 0
+    TextRun = 0,
+    CitationRun,
+    IconRun,
+    ImageRun
 };
 DECLARE_ADAPTIVECARD_ENUM(InlineElementType);
 
@@ -845,5 +858,36 @@ enum class ProgressBarColor {
     Warning
 };
 DECLARE_ADAPTIVECARD_ENUM(ProgressBarColor);
+
+enum class ReferenceType {
+    AdaptiveCard,
+    Document
+};
+DECLARE_ADAPTIVECARD_ENUM(ReferenceType);
+
+enum class ReferenceIcon {
+    AdobeIllustrator,
+    AdobePhotoshop,
+    AdobeInDesign,
+    AdobeFlash,
+    MsWord,
+    MsExcel,
+    MsPowerPoint,
+    MsOneNote,
+    MsSharePoint,
+    MsVisio,
+    MsLoop,
+    MsWhiteboard,
+    Code,
+    Gif,
+    Image,
+    Pdf,
+    Sketch,
+    Sound,
+    Text,
+    Video,
+    Zip
+};
+DECLARE_ADAPTIVECARD_ENUM(ReferenceIcon);
 }
 // namespace AdaptiveCards

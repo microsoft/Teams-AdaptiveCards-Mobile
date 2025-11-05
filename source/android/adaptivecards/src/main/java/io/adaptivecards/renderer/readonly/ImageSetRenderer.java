@@ -83,7 +83,7 @@ public class ImageSetRenderer extends BaseCardElementRenderer
 
             try
             {
-                View imageView = imageRenderer.render(renderedCard, context, fragmentManager, horizFlowLayout, image, cardActionHandler, hostConfig, renderArgs);
+                View imageView = imageRenderer.renderNew(renderedCard, context, fragmentManager, horizFlowLayout, image, cardActionHandler, hostConfig, renderArgs);
                 ((ImageView) imageView).setMaxHeight(Util.dpToPixels(context, hostConfig.GetImageSet().getMaxImageHeight()));
             }
             catch (AdaptiveFallbackException e)

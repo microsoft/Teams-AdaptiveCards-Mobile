@@ -5,9 +5,9 @@ package io.adaptivecards.renderer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
@@ -42,6 +42,16 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
      * This tag key is used in {@link io.adaptivecards.renderer.action.DropdownElementRenderer} to get the container view of the Overflow ("...") action, so dropdown view can behave like a primary action element.
      */
     public final static int PARENT_DROPDOWN_TAG = 0xffffffff;
+
+    @Override
+    public Button renderNew(RenderedAdaptiveCard renderedCard, Context context, FragmentManager fragmentManager, ViewGroup viewGroup, BaseActionElement baseActionElement, ICardActionHandler cardActionHandler, HostConfig hostConfig, RenderArgs renderArgs) throws AdaptiveFallbackException {
+        if (renderArgs.canRenderAction(baseActionElement.GetElementType())) {
+            return render(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
+        }
+        return null;
+    }
+
+    protected abstract Button render(RenderedAdaptiveCard renderedCard, Context context, FragmentManager fragmentManager, ViewGroup viewGroup, BaseActionElement baseActionElement, ICardActionHandler cardActionHandler, HostConfig hostConfig, RenderArgs renderArgs) throws AdaptiveFallbackException;
 
     protected static int getColor(String colorCode)
     {
@@ -257,7 +267,7 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             ShowCardAction showCardAction = Util.castTo(m_action, ShowCardAction.class);
 
             m_invisibleCard = AdaptiveCardRenderer.getInstance().internalRender(m_renderedAdaptiveCard, context, fragmentManager, showCardAction.GetCard(),
-                                                                                m_cardActionHandler, hostConfig, true, renderArgs.getContainerCardId());
+                                                                                m_cardActionHandler, hostConfig, true, renderArgs.getContainerCardId(), null, null);
             m_invisibleCard.setVisibility(View.GONE);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, Util.dpToPixels(context, hostConfig.GetActions().getShowCard().getInlineTopMargin()), 0, 0);

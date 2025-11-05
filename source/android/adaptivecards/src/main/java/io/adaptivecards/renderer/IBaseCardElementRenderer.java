@@ -16,7 +16,7 @@ import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 
 public interface IBaseCardElementRenderer
 {
-    @Nullable View render(
+    @Nullable View renderNew(
             @NonNull RenderedAdaptiveCard renderedCard,
             @NonNull Context context,
             @NonNull FragmentManager fragmentManager,
