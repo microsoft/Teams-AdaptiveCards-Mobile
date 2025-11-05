@@ -176,7 +176,6 @@
 {
     [self.view layoutIfNeeded];
     CGFloat header = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
-    CGFloat space =  24;
     CGFloat naturalHeight =  header + self.scrollView.contentSize.height;
     CGFloat presentingViewHeight = self.presentingViewController.view.bounds.size.height;
     CGFloat maxH = self.config.maxHeightMultiplier * presentingViewHeight;
@@ -189,7 +188,7 @@
     CGFloat sheetH = MAX(min, MIN(naturalHeight, maxH));
     self.scrollView.scrollEnabled = naturalHeight > sheetH;
     self.scrollView.alwaysBounceVertical = self.scrollView.scrollEnabled;
-    return CGSizeMake(naturalHeight, sheetH+space);
+    return CGSizeMake(naturalHeight, sheetH);
 }
 
 - (void)closeAction
