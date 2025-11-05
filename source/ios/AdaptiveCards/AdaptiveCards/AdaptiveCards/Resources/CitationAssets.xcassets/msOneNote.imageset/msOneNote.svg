@@ -1,0 +1,28 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="4.16675" width="26.6667" height="31.6667" rx="3.54167" fill="#CA64EA"/>
+<rect x="28.3333" y="12.5" width="8.33333" height="7.5" fill="#AE4BD5"/>
+<rect x="28.3333" y="20" width="8.33333" height="7.5" fill="#9332BF"/>
+<path d="M28.3333 27.5H36.6666V32.2917C36.6666 34.2477 35.0809 35.8333 33.1249 35.8333H28.3333V27.5Z" fill="#7719AA"/>
+<mask id="mask0_4071_5341" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="10" y="4" width="27" height="32">
+<rect x="10" y="4.16675" width="26.6667" height="31.6667" rx="3.54167" fill="#CA64EA"/>
+</mask>
+<g mask="url(#mask0_4071_5341)">
+<g opacity="0.75" filter="url(#filter0_f_4071_5341)">
+<rect x="3.33325" y="13.3335" width="16.6667" height="15.8333" rx="1.45833" fill="#242424"/>
+</g>
+</g>
+<rect x="3.33325" y="11.6667" width="16.6667" height="16.6667" rx="1.45833" fill="url(#paint0_linear_4071_5341)"/>
+<path d="M15.9344 25.0035H14.0782L9.43758 17.8717C9.34454 17.7274 9.26312 17.5949 9.19334 17.4739C9.12821 17.3529 9.07238 17.2413 9.02586 17.1389H8.99097C9.00958 17.2832 9.02353 17.4809 9.03284 17.7321C9.04214 17.9787 9.04679 18.2811 9.04679 18.6393V25.0035H7.3999V14.9966H9.37478L13.8688 21.968C13.9665 22.1168 14.0526 22.2541 14.127 22.3797C14.2061 22.5053 14.2713 22.6169 14.3224 22.7146H14.3503C14.3271 22.5844 14.3108 22.4006 14.3015 22.1634C14.2922 21.9214 14.2875 21.6307 14.2875 21.2911V14.9966H15.9344V25.0035Z" fill="white"/>
+<defs>
+<filter id="filter0_f_4071_5341" x="1.24992" y="11.2502" width="20.8334" height="19.9999" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="1.04167" result="effect1_foregroundBlur_4071_5341"/>
+</filter>
+<linearGradient id="paint0_linear_4071_5341" x1="6.22831" y1="10.5803" x2="17.1049" y2="29.4198" gradientUnits="userSpaceOnUse">
+<stop stop-color="#8324B3"/>
+<stop offset="0.5" stop-color="#7A1BAC"/>
+<stop offset="1" stop-color="#621197"/>
+</linearGradient>
+</defs>
+</svg>
