@@ -17,16 +17,19 @@
 #import "ACRCitationParserDelegate.h"
 #import "ACRView.h"
 #import "ACRCitationReferenceView.h"
+#import "ACRCitationReferenceMoreDetailsView.h"
+#import "ACRRenderer.h"
+#import "ACRRenderResult.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate, ACRCitationReferenceViewDelegate>
 
 @property (nonatomic, weak) id<ACRCitationManagerDelegate> delegate;
+@property (nonatomic, weak) UIViewController *citationMainBottomSheet;
 
 // Lazy properties
 @property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
 @property (nonatomic, strong) ACRInlineCitationTokenParser *inlineCitationParser;
 @property (nonatomic, strong) ACRRichTextBlockCitationParser *citationRunParser;
-@property (nonatomic, strong) ACRBottomSheetViewController *bottomSheetPopover;
 @property (nonatomic, weak) UIViewController *activeViewController;
 
 @end
@@ -69,23 +72,21 @@
 
 - (NSAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString
                                                 references:(NSArray<ACOReference *> *)references
-                                                     theme:(ACRTheme) theme
 {
     // Use inline citation parser for token-based citation parsing
     NSMutableAttributedString *result = [self.inlineCitationParser parseAttributedString:attributedString
                                                                           withReferences:references
-                                                                                   theme:theme];
+                                                                                   theme:self.rootView.theme];
     return [result copy];
 }
 
 - (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString
                                                                   references:(NSArray<ACOReference *> *)references
-                                                                       theme:(ACRTheme) theme
 {
     // Use TextBlock parser for NSLink-based citation parsing from attributed strings
     NSMutableAttributedString *result = [self.textBlockParser parseAttributedString:attributedString
                                                                      withReferences:references
-                                                                              theme:theme];
+                                                                              theme:self.rootView.theme];
     return [result copy];
 }
 
@@ -131,38 +132,31 @@
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
     config.contentPadding = 0;
     
-    self.bottomSheetPopover = [[ACRBottomSheetViewController alloc] initWithContent:citationView configuration:config];
-
-    [activeController presentViewController:self.bottomSheetPopover animated:YES completion:nil];
+    ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
+                                                                                               configuration:config];
+    self.citationMainBottomSheet = currentBottomSheet;
+    [activeController presentViewController:currentBottomSheet animated:YES completion:nil];
 }
 
 #pragma mark - ACRCitationReferenceViewDelegate
 
-- (void)citationReferenceView:(ACRCitationReferenceView *)citationReferenceView 
-         didTapMoreDetailsForCitation:(ACOCitation *)citation 
-                            reference:(ACOReference *)reference {
+- (void)citationReferenceView:(ACRCitationReferenceView *)citationReferenceView
+ didTapMoreDetailsForCitation:(ACOCitation *)citation
+                    reference:(ACOReference *)reference
+{
+    ACRRenderResult *renderResult = [ACRRenderer render:reference.content
+                                                 config:self.rootView.hostConfig
+                                        widthConstraint:self.rootView.frame.size.width
+                                                  theme:citation.theme];
     
-    [self.bottomSheetPopover dismissViewControllerAnimated:NO completion:nil];
-        
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
-    config.minHeight = self.bottomSheetPopover.preferredContentSize.height;
-    
-    
-    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    v.backgroundColor = UIColor.redColor;
-
-    ACRBottomSheetViewController *popover = [[ACRBottomSheetViewController alloc] initWithContent:v configuration:config];
-    
-        __weak ACRCitationManager *weakSelf = self;
-    popover.onDismissBlock = ^{
-        if (weakSelf)
-        {
-            [weakSelf.activeViewController presentViewController:weakSelf.bottomSheetPopover animated:YES completion:nil];
-        }
-    };
-
-    [self.activeViewController presentViewController:popover animated:YES completion:nil];
-   
+    config.minHeight = self.citationMainBottomSheet.preferredContentSize.height;
+    config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
+    UIView *resultView = (UIView *)renderResult.view;
+    ACRCitationReferenceMoreDetailsView *moreDetailsView = [[ACRCitationReferenceMoreDetailsView alloc] initWithAdaptiveCard: resultView];
+    ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:moreDetailsView
+                                                                                               configuration:config];
+    [self.citationMainBottomSheet presentViewController:currentBottomSheet animated:YES completion:nil];
 }
 
 @end

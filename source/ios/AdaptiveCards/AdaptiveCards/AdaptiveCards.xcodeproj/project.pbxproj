@@ -33,6 +33,8 @@
 		248924C72EBB617600F76802 /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C52EBB617600F76802 /* References.cpp */; };
 		248924C82EBB617600F76802 /* CitationRun.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924C22EBB617600F76802 /* CitationRun.h */; };
 		248924C92EBB617600F76802 /* References.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924C42EBB617600F76802 /* References.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		248924D02EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248924CF2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m */; };
+		248924D12EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924CE2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h */; };
 		24D7AB462EB344A600F0806F /* StringResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D7AB452EB344A600F0806F /* StringResource.cpp */; };
 		24D7AB472EB344A600F0806F /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D7AB432EB344A600F0806F /* Resources.cpp */; };
 		24D7AB482EB344A600F0806F /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D7AB422EB344A600F0806F /* Resources.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -701,6 +703,8 @@
 		248924C32EBB617600F76802 /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CitationRun.cpp; path = ../../../../shared/cpp/ObjectModel/CitationRun.cpp; sourceTree = "<group>"; };
 		248924C42EBB617600F76802 /* References.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = References.h; path = ../../../../shared/cpp/ObjectModel/References.h; sourceTree = "<group>"; };
 		248924C52EBB617600F76802 /* References.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = References.cpp; path = ../../../../shared/cpp/ObjectModel/References.cpp; sourceTree = "<group>"; };
+		248924CE2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationReferenceMoreDetailsView.h; sourceTree = "<group>"; };
+		248924CF2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationReferenceMoreDetailsView.m; sourceTree = "<group>"; };
 		24D7AB422EB344A600F0806F /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../../../../shared/cpp/ObjectModel/Resources.h; sourceTree = "<group>"; };
 		24D7AB432EB344A600F0806F /* Resources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Resources.cpp; path = ../../../../shared/cpp/ObjectModel/Resources.cpp; sourceTree = "<group>"; };
 		24D7AB442EB344A600F0806F /* StringResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringResource.h; path = ../../../../shared/cpp/ObjectModel/StringResource.h; sourceTree = "<group>"; };
@@ -1802,6 +1806,8 @@
 		E204C8942EBB799B0065F8F5 /* Citation */ = {
 			isa = PBXGroup;
 			children = (
+				248924CE2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h */,
+				248924CF2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m */,
 				E204C8C22EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m */,
 				E204C8C32EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h */,
 				E204C8C42EBB81D30065F8F5 /* ACRTextBlockCitationParser.h */,
@@ -2417,6 +2423,7 @@
 				F44873041EE2261F00FCAFAE /* ColumnSet.h in Headers */,
 				F44873001EE2261F00FCAFAE /* ChoiceSetInput.h in Headers */,
 				F44872FE1EE2261F00FCAFAE /* ChoiceInput.h in Headers */,
+				248924D12EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h in Headers */,
 				F44872FC1EE2261F00FCAFAE /* BaseInputElement.h in Headers */,
 				F4071C7A1FCCBAEF00AF4FEA /* ElementParserRegistration.h in Headers */,
 				F4071C7B1FCCBAEF00AF4FEA /* ActionParserRegistration.h in Headers */,
@@ -2991,6 +2998,7 @@
 				6B2242A72233442C000ACDA1 /* RichTextBlock.cpp in Sources */,
 				F4FE456B1F196F3D0071D9E5 /* ACRContentStackView.mm in Sources */,
 				7A2D17572DFAE1B800E59055 /* ACRActionPopoverRenderer.mm in Sources */,
+				248924D02EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m in Sources */,
 				F429793F1F3155EF00E89914 /* ACRTextField.mm in Sources */,
 				F43A94191F20502D0001920B /* ACRInputToggleRenderer.mm in Sources */,
 				6B124C9B26B9F7AD007E9641 /* ACOVisibilityManager.mm in Sources */,
