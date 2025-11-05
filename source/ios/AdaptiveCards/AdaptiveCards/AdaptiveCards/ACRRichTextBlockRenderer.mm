@@ -36,7 +36,7 @@
 
 #pragma mark - Lazy Properties
 
-- (ACRCitationManager *)citationManager {
+- (ACRCitationManager *)citationManager2 {
     if (!_citationManager) {
         _citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
     }
@@ -96,79 +96,10 @@
                         NSDictionary *descriptor = nil;
                         NSString *text = nil;
 
-                if (![textMap objectForKey:key]) {
-                    RichTextElementProperties textProp;
-                    TextRunToRichTextElementProperties(textRun, textProp);
-                    buildIntermediateResultForText(rootView, acoConfig, textProp, key);
-                }
-
-                NSDictionary *data = textMap[key];
-                if (data) {
-                    htmlData = data[@"html"];
-                    options = data[@"options"];
-                    descriptor = data[@"descriptor"];
-                    text = data[@"nonhtml"];
-                }
-                
-                std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
-                if (text != nil)
-                {
-                    std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
-                    text = [NSString stringWithUTF8String:replacedText.c_str()];
-                }
-
-                NSMutableAttributedString *textRunContent = nil;
-                // Initializing NSMutableAttributedString for HTML rendering is very slow
-                if (htmlData) {
-                    textRunContent = [[NSMutableAttributedString alloc] initWithData:htmlData
-                                                                             options:options
-                                                                  documentAttributes:nil
-                                                                               error:nil];
-                    UpdateFontWithDynamicType(textRunContent);
-
-                    lab.selectable = YES;
-                    lab.dataDetectorTypes = UIDataDetectorTypeLink | UIDataDetectorTypePhoneNumber;
-                    lab.userInteractionEnabled = YES;
-                } else {
-                    textRunContent = [[NSMutableAttributedString alloc] initWithString:text
-                                                                            attributes:descriptor];
-                }
-                // Set paragraph style such as line break mode and alignment
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.alignment =
-                    [ACOHostConfig getTextBlockAlignment:rTxtBlck->GetHorizontalAlignment().value_or(HorizontalAlignment::Left)
-                                                 context:rootView.context];
-
-                // Obtain text color to apply to the attributed string
-                ACRContainerStyle style = lab.style;
-                auto textColor = textRun->GetTextColor().value_or(ForegroundColor::Default);
-                auto foregroundColor = [acoConfig getTextBlockColor:style
-                                                          textColor:textColor
-                                                       subtleOption:textRun->GetIsSubtle().value_or(false)];
-
-                // Config and add Select Action
-                std::shared_ptr<BaseActionElement> baseAction = textRun->GetSelectAction();
-                ACOBaseActionElement *acoAction = [[ACOBaseActionElement alloc] initWithBaseActionElement:baseAction];
-                if (baseAction && [acoAction isEnabled]) {
-                    NSObject *target;
-                    if (ACRRenderingStatus::ACROk ==
-                        buildTarget([rootView getSelectActionsTargetBuilderDirector], acoAction,
-                                    &target)) {
-                        NSRange selectActionRange = NSMakeRange(0, textRunContent.length);
-
-                        [textRunContent addAttribute:NSLinkAttributeName
-                                               value:target
-                                               range:selectActionRange];
-
-                        if (!hasGestureRecognizerAdded) {
-                            [ACRTapGestureRecognizerFactory
-                                addTapGestureRecognizerToUITextView:lab
-                                                             target:(NSObject<ACRSelectActionDelegate>
-                                                                         *)target
-                                                           rootView:rootView
-                                                         hostConfig:acoConfig];
-                            hasGestureRecognizerAdded = YES;
-
+                        if (![textMap objectForKey:key]) {
+                            RichTextElementProperties textProp;
+                            TextRunToRichTextElementProperties(textRun, textProp);
+                            buildIntermediateResultForText(rootView, acoConfig, textProp, key);
                         }
 
                         NSDictionary *data = textMap[key];
@@ -177,6 +108,13 @@
                             options = data[@"options"];
                             descriptor = data[@"descriptor"];
                             text = data[@"nonhtml"];
+                        }
+                        
+                        std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
+                        if (text != nil)
+                        {
+                            std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
+                            text = [NSString stringWithUTF8String:replacedText.c_str()];
                         }
 
                         NSMutableAttributedString *textRunContent = nil;
@@ -293,26 +231,32 @@
                 }
                 case InlineElementType::CitationRun:
                 {
-                    std::shared_ptr<CitationRun> citationRun = std::static_pointer_cast<CitationRun>(inlineText);
-                    if (citationRun) {
-                        NSNumber *number =
-                        [NSNumber numberWithUnsignedLongLong:(unsigned long long)citationRun.get()];
-                        NSString *key = [number stringValue];
-                        NSString *text = nil;
-                        NSDictionary *data = textMap[key];
-                        if (data) {
-                            text = data[@"nonhtml"];
-                            NSNumber *referenceId = @(citationRun->GetReferenceIndex());
-                            ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:text referenceIndex:referenceId];
-                            NSArray<ACOReference *> *references = [[rootView card] references];
-                            
-                            ACRCitationManager *citationManager = [self citationManager];
-                            [citationManager setRootView:rootView];
-                            
-                            // Use citation manager (rootView is stored as property)
-                            NSAttributedString *citationRunContent = [citationManager buildCitationAttachmentWithCitation:citation
-                                                                                                               references:references];
-                            [content appendAttributedString:citationRunContent];
+                    BOOL isCitationsEnabled = [featureFlagResolver boolForFlag:@"isCitationsEnabled"] ?: NO;
+                    if (isCitationsEnabled)
+                    {
+                        std::shared_ptr<CitationRun> citationRun = std::static_pointer_cast<CitationRun>(inlineText);
+                        if (citationRun) {
+                            NSNumber *number =
+                            [NSNumber numberWithUnsignedLongLong:(unsigned long long)citationRun.get()];
+                            NSString *key = [number stringValue];
+                            NSString *text = nil;
+                            NSDictionary *data = textMap[key];
+                            if (data) {
+                                text = data[@"nonhtml"];
+                                NSNumber *referenceId = @(citationRun->GetReferenceIndex());
+                                ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:text
+                                                                                  referenceIndex:referenceId
+                                                                                           theme:rootView.theme];
+                                NSArray<ACOReference *> *references = [[rootView card] references];
+                                
+                                ACRCitationManager *citationManager = [self citationManager];
+                                [citationManager setRootView:rootView];
+                                
+                                // Use citation manager (rootView is stored as property)
+                                NSAttributedString *citationRunContent = [citationManager buildCitationAttachmentWithCitation:citation
+                                                                                                                   references:references];
+                                [content appendAttributedString:citationRunContent];
+                            }
                         }
                     }
                     break;

@@ -15,7 +15,9 @@
 @implementation ACRInlineCitationTokenParser
 
 - (NSMutableAttributedString *)parseAttributedString:(NSAttributedString *)attributedString 
-                                      withReferences:(NSArray<ACOReference *> *)references {
+                                      withReferences:(NSArray<ACOReference *> *)references
+                                               theme:(ACRTheme) theme
+{
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
     NSString *inputString = attributedString.string;
     
@@ -46,7 +48,8 @@
             
             // Create ACOCitation object
             ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:displayText
-                                                              referenceIndex:referenceIndex];
+                                                              referenceIndex:referenceIndex
+                                                                       theme:theme];
             
             // Create citation attachment using the parser method
             NSAttributedString *attachmentString = [self parseAttributedStringWithCitation:citation 
