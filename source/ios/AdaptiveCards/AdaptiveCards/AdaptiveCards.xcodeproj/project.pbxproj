@@ -29,10 +29,10 @@
 		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
 		241C67252E02DE5D0007EA18 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */; };
 		246485662E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */; };
-		248924BE2EBB2E7C00F76802 /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924BD2EBB2E7C00F76802 /* References.cpp */; };
-		248924BF2EBB2E7C00F76802 /* CitationRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924BB2EBB2E7C00F76802 /* CitationRun.cpp */; };
-		248924C02EBB2E7C00F76802 /* CitationRun.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924BA2EBB2E7C00F76802 /* CitationRun.h */; };
-		248924C12EBB2E7C00F76802 /* References.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924BC2EBB2E7C00F76802 /* References.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		248924C62EBB617600F76802 /* CitationRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C32EBB617600F76802 /* CitationRun.cpp */; };
+		248924C72EBB617600F76802 /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C52EBB617600F76802 /* References.cpp */; };
+		248924C82EBB617600F76802 /* CitationRun.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924C22EBB617600F76802 /* CitationRun.h */; };
+		248924C92EBB617600F76802 /* References.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924C42EBB617600F76802 /* References.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24D7AB462EB344A600F0806F /* StringResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D7AB452EB344A600F0806F /* StringResource.cpp */; };
 		24D7AB472EB344A600F0806F /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D7AB432EB344A600F0806F /* Resources.cpp */; };
 		24D7AB482EB344A600F0806F /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D7AB422EB344A600F0806F /* Resources.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -672,10 +672,10 @@
 		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
 		246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverTargetTests.mm; sourceTree = "<group>"; };
-		248924BA2EBB2E7C00F76802 /* CitationRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CitationRun.h; path = "/Users/harikap/Documents/Teams-AdaptiveCards-Mobile/source/shared/cpp/ObjectModel/CitationRun.h"; sourceTree = "<absolute>"; };
-		248924BB2EBB2E7C00F76802 /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CitationRun.cpp; path = "/Users/harikap/Documents/Teams-AdaptiveCards-Mobile/source/shared/cpp/ObjectModel/CitationRun.cpp"; sourceTree = "<absolute>"; };
-		248924BC2EBB2E7C00F76802 /* References.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = References.h; path = "/Users/harikap/Documents/Teams-AdaptiveCards-Mobile/source/shared/cpp/ObjectModel/References.h"; sourceTree = "<absolute>"; };
-		248924BD2EBB2E7C00F76802 /* References.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = References.cpp; path = "/Users/harikap/Documents/Teams-AdaptiveCards-Mobile/source/shared/cpp/ObjectModel/References.cpp"; sourceTree = "<absolute>"; };
+		248924C22EBB617600F76802 /* CitationRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CitationRun.h; path = ../../../../shared/cpp/ObjectModel/CitationRun.h; sourceTree = "<group>"; };
+		248924C32EBB617600F76802 /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CitationRun.cpp; path = ../../../../shared/cpp/ObjectModel/CitationRun.cpp; sourceTree = "<group>"; };
+		248924C42EBB617600F76802 /* References.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = References.h; path = ../../../../shared/cpp/ObjectModel/References.h; sourceTree = "<group>"; };
+		248924C52EBB617600F76802 /* References.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = References.cpp; path = ../../../../shared/cpp/ObjectModel/References.cpp; sourceTree = "<group>"; };
 		24D7AB422EB344A600F0806F /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../../../../shared/cpp/ObjectModel/Resources.h; sourceTree = "<group>"; };
 		24D7AB432EB344A600F0806F /* Resources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Resources.cpp; path = ../../../../shared/cpp/ObjectModel/Resources.cpp; sourceTree = "<group>"; };
 		24D7AB442EB344A600F0806F /* StringResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringResource.h; path = ../../../../shared/cpp/ObjectModel/StringResource.h; sourceTree = "<group>"; };
@@ -1973,13 +1973,13 @@
 				F44872EB1EE2261F00FCAFAE /* TextBlock.cpp */,
 				F44872EC1EE2261F00FCAFAE /* TextBlock.h */,
 				6B2242A12233439D000ACDA1 /* TextElementProperties.cpp */,
-				248924BA2EBB2E7C00F76802 /* CitationRun.h */,
-				248924BB2EBB2E7C00F76802 /* CitationRun.cpp */,
-				248924BC2EBB2E7C00F76802 /* References.h */,
-				248924BD2EBB2E7C00F76802 /* References.cpp */,
 				6B2242A22233439D000ACDA1 /* TextElementProperties.h */,
 				F44872ED1EE2261F00FCAFAE /* TextInput.cpp */,
 				F44872EE1EE2261F00FCAFAE /* TextInput.h */,
+				248924C22EBB617600F76802 /* CitationRun.h */,
+				248924C32EBB617600F76802 /* CitationRun.cpp */,
+				248924C42EBB617600F76802 /* References.h */,
+				248924C52EBB617600F76802 /* References.cpp */,
 				24D7AB422EB344A600F0806F /* Resources.h */,
 				24D7AB432EB344A600F0806F /* Resources.cpp */,
 				24D7AB442EB344A600F0806F /* StringResource.h */,
@@ -2285,7 +2285,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				248924C12EBB2E7C00F76802 /* References.h in Headers */,
+				248924C92EBB617600F76802 /* References.h in Headers */,
 				CFF954DD2981B2A700F321C3 /* ACRTypeaheadSearchParameters.h in Headers */,
 				6B27CD6624BD52D600C0F90F /* ACRInputLabelView.h in Headers */,
 				6BBE841923CD184D00ECA586 /* ACREnums.h in Headers */,
@@ -2344,7 +2344,7 @@
 				CFB972012941C07A008E3795 /* ChoicesData.h in Headers */,
 				B37FE7612CBEB00400537817 /* ACRBadgeView.h in Headers */,
 				B37FE7622CBEB00400537817 /* ACRBadgeRenderer.h in Headers */,
-				248924C02EBB2E7C00F76802 /* CitationRun.h in Headers */,
+				248924C82EBB617600F76802 /* CitationRun.h in Headers */,
 				F44872F61EE2261F00FCAFAE /* AdaptiveCardParseException.h in Headers */,
 				F44872FA1EE2261F00FCAFAE /* BaseCardElement.h in Headers */,
 				F44872F81EE2261F00FCAFAE /* BaseActionElement.h in Headers */,
@@ -2846,8 +2846,6 @@
 				F4D0694A205B27EA003645E4 /* ACRViewController.mm in Sources */,
 				F44872F51EE2261F00FCAFAE /* AdaptiveCardParseException.cpp in Sources */,
 				463C4EE12BDF640300A95C4E /* ACRSVGIconHoldingView.mm in Sources */,
-				248924BE2EBB2E7C00F76802 /* References.cpp in Sources */,
-				248924BF2EBB2E7C00F76802 /* CitationRun.cpp in Sources */,
 				F429794D1F32684900E89914 /* ACRDateTextField.mm in Sources */,
 				CFF954E02981B62000F321C3 /* ACRTypeaheadSearchViewController.mm in Sources */,
 				F4F44B8120478C6F00A2F24C /* Util.cpp in Sources */,
@@ -2887,6 +2885,8 @@
 				F42E51741FEC3840008F9642 /* MarkDownBlockParser.cpp in Sources */,
 				F43A94151F1EED6D0001920B /* ACRInputRenderer.mm in Sources */,
 				F401A87C1F0DCBC8006D7AF2 /* ACRImageSetRenderer.mm in Sources */,
+				248924C62EBB617600F76802 /* CitationRun.cpp in Sources */,
+				248924C72EBB617600F76802 /* References.cpp in Sources */,
 				6B2242B422334492000ACDA1 /* Inline.cpp in Sources */,
 				6B096D4F225431D0006CC034 /* ACRRichTextBlockRenderer.mm in Sources */,
 				B37FE7572CBEAAEC00537817 /* ACRBadgeRenderer.mm in Sources */,
