@@ -88,9 +88,8 @@
                                                  tintColor:tintColor];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
     [dismissButton addSubview:imageView];
-    SEL action = (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeBack) ? @selector(backAction) : @selector(closeAction);
     [dismissButton addTarget:self
-                      action:action
+                      action:@selector(closeAction)
             forControlEvents:UIControlEventTouchUpInside];
     dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:dismissButton];
