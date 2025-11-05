@@ -183,7 +183,7 @@
     CGFloat naturalHeight =  header + self.scrollView.contentSize.height;
     CGFloat presentingViewHeight = self.presentingViewController.view.bounds.size.height;
     CGFloat maxH = self.config.maxHeightMultiplier * presentingViewHeight;
-    CGFloat min = self.config.minHeight;;
+    CGFloat min = self.config.minHeight;
     
     if (min == NSNotFound) {
         min = self.config.minHeightMultiplier * presentingViewHeight;

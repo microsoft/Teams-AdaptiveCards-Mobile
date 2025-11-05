@@ -157,7 +157,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     
     // Header title label
     UILabel *headerTitleLabel = [[UILabel alloc] init];
-    headerTitleLabel.text = @"References";
+    headerTitleLabel.text = NSLocalizedString(@"References", nil);
     headerTitleLabel.textAlignment = NSTextAlignmentCenter;
     headerTitleLabel.font = [UIFont systemFontOfSize:kACRCitationHeaderFontSize weight:UIFontWeightSemibold];
     headerTitleLabel.textColor =  [UIColor grayColorWithValue:kACRCitationHeaderTextColor];
@@ -287,7 +287,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     NSMutableAttributedString *buttonText = [[NSMutableAttributedString alloc] init];
     
     // "More details" text
-    NSAttributedString *detailsText = [[NSAttributedString alloc] initWithString:@"More details" 
+    NSAttributedString *detailsText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"More details", nil)
                                                                       attributes:@{
         NSForegroundColorAttributeName: [UIColor systemBlueColor],
         NSFontAttributeName: [UIFont systemFontOfSize:kACRCitationMoreDetailsButtonFontSize weight:UIFontWeightRegular]

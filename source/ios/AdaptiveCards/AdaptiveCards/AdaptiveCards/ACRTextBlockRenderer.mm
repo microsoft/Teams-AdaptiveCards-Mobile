@@ -219,7 +219,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     [citationManager setRootView:rootView];
     
     // Use citation manager (rootView is stored as property in citation manager)
-    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references theme:rootView.theme];
+    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
 }
 
 #pragma mark - Expression Evaluation Helper
