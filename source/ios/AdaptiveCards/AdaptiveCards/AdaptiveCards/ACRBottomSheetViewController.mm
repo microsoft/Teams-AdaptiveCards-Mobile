@@ -17,8 +17,8 @@
 
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIButton *dismissButton;
-@property (nonatomic, weak) UIView *contentView;
 @property (nonatomic, weak) UIView *dragIndicator;
+@property (nonatomic) UIView *contentView;
 @property (nonatomic) ACRBottomSheetConfiguration *config;
 
 @end
@@ -43,12 +43,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [_config.hostConfig getPopoverBackgroundColor];
+    self.view.backgroundColor = [self.config.hostConfig getPopoverBackgroundColor];
     
-    if (_config.showCloseButton) {
-        [self setupCloseButton];
-    } else {
-        [self setupDragIndicator];
+    switch (self.config.dismissButtonType) {
+        case ACRBottomSheetDismissButtonTypeCross:
+            [self setupCloseButton];
+            break;
+        case ACRBottomSheetDismissButtonTypeDragIndicator:
+            [self setupDragIndicator];
+            break;
+        default:
+            // No dismiss UI
+            break;
     }
     
     [self setupScrollView];
@@ -110,27 +116,25 @@
 - (void)setupConstraints
 {
     CGFloat contentPad = self.config.contentPadding;
-    CGFloat btnTopInset = self.config.closeButtonTopInset;
-    CGFloat btnSideInset = self.config.closeButtonSideInset;
-    CGFloat scrollBtnGap = self.config.closeButtonToScrollGap;
+    UIEdgeInsets btnInsets = self.config.closeButtonInsets;
     CGFloat closeBtnSize = self.config.closeButtonSize;
     
     NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
     
-    if (self.config.showCloseButton) {
+    if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross) {
         // Dismiss button constraints
         [constraints addObjectsFromArray:@[
-            [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnTopInset],
-            [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnSideInset],
+            [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnInsets.top],
+            [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnInsets.left],
             [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
             [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
         ]];
         
-        // Scroll view positioned below dismiss button
+        // Scroll view positioned below dismiss button (using bottom inset as gap)
         [constraints addObjectsFromArray:@[
-            [self.scrollView.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant:scrollBtnGap],
+            [self.scrollView.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant:btnInsets.bottom],
         ]];
-    } else {
+    } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
         // Drag indicator constraints
         [constraints addObjectsFromArray:@[
             [self.dragIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
@@ -142,6 +146,11 @@
         // Scroll view positioned below drag indicator
         [constraints addObjectsFromArray:@[
             [self.scrollView.topAnchor constraintEqualToAnchor:self.dragIndicator.bottomAnchor constant:12],
+        ]];
+    } else {
+        // No dismiss button - scroll view starts at top with padding
+        [constraints addObjectsFromArray:@[
+            [self.scrollView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
         ]];
     }
     
@@ -167,14 +176,19 @@
 {
     [self.view layoutIfNeeded];
     CGFloat header = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
-    CGFloat natural = header + self.scrollView.contentSize.height;
+    CGFloat naturalHeight =  header + self.scrollView.contentSize.height;
     CGFloat presentingViewHeight = self.presentingViewController.view.bounds.size.height;
-    CGFloat minH = self.config.minHeightMultiplier * presentingViewHeight;
     CGFloat maxH = self.config.maxHeightMultiplier * presentingViewHeight;
-    CGFloat sheetH = MAX(minH, MIN(natural, maxH));
-    self.scrollView.scrollEnabled = natural > sheetH;
+    CGFloat min = self.config.minHeight;;
+    
+    if (min == NSNotFound) {
+        min = self.config.minHeightMultiplier * presentingViewHeight;
+    }
+    
+    CGFloat sheetH = MAX(min, MIN(naturalHeight, maxH));
+    self.scrollView.scrollEnabled = naturalHeight > sheetH;
     self.scrollView.alwaysBounceVertical = self.scrollView.scrollEnabled;
-    return CGSizeMake(natural, sheetH);
+    return CGSizeMake(naturalHeight, sheetH);
 }
 
 - (void)closeAction
@@ -187,8 +201,9 @@
                                                       presentingViewController:(UIViewController *)presenting
                                                           sourceViewController:(UIViewController *)source
 {
-    return [[ACRBottomSheetPresentationController alloc] initWithPresentedViewController:presented
+    ACRBottomSheetPresentationController *pres = [[ACRBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                                 presentingViewController:presenting];
+    return pres;
 }
 
 @end
