@@ -12,6 +12,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
+ * Enum defining the type of dismiss button to display on the bottom sheet
+ */
+typedef NS_ENUM(NSInteger, ACRBottomSheetDismissButtonType) {
+    /// No dismiss button or indicator
+    ACRBottomSheetDismissButtonTypeNone = 0,
+    /// Show a cross/close button
+    ACRBottomSheetDismissButtonTypeCross = 1,
+    /// Show a drag indicator handle
+    ACRBottomSheetDismissButtonTypeDragIndicator = 2
+};
+
+/**
  * Configuration class for customizing bottom sheet presentation behavior and appearance.
  * This class provides settings for height constraints, UI element positioning, and visual styling
  * of bottom sheets used to display Adaptive Card content.
@@ -37,12 +49,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// The padding applied to the content area in points
 @property (nonatomic) CGFloat contentPadding;
 
-#pragma mark - Close Button Configuration
+#pragma mark - Dismiss Button Configuration
 
-/// Whether to show the close button
-@property (nonatomic) BOOL showCloseButton;
+/// The type of dismiss button to display
+@property (nonatomic) ACRBottomSheetDismissButtonType dismissButtonType;
 
-/// The size of the close button in points (width and height)
+/// The size of the close button in points (width and height) - only applies when dismissButtonType is Cross
 @property (nonatomic) CGFloat closeButtonSize;
 
 /// The insets for the close button from the edges (top, left, bottom, right)

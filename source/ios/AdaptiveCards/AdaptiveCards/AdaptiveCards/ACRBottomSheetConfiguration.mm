@@ -45,7 +45,7 @@ static const CGFloat kDefaultCloseButtonSize = 28.0f;
         _contentPadding = kDefaultContentPadding;
         _closeButtonSize = kDefaultCloseButtonSize;
         _minHeight = NSNotFound; // Default to using multiplier-based height
-        _showCloseButton = YES; // Default to YES
+        _dismissButtonType = ACRBottomSheetDismissButtonTypeCross; // Default to cross button
         _closeButtonInsets = kDefaultCloseButtonInsets; // Default insets
     }
     return self;
@@ -93,12 +93,25 @@ static const CGFloat kDefaultCloseButtonSize = 28.0f;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p; minHeight: %.2f; maxHeight: %.2f; closeButtonInsets: {%.1f,%.1f,%.1f,%.1f}; showCloseButton: %@>",
+    NSString *dismissButtonTypeString = @"Unknown";
+    switch (self.dismissButtonType) {
+        case ACRBottomSheetDismissButtonTypeNone:
+            dismissButtonTypeString = @"None";
+            break;
+        case ACRBottomSheetDismissButtonTypeCross:
+            dismissButtonTypeString = @"Cross";
+            break;
+        case ACRBottomSheetDismissButtonTypeDragIndicator:
+            dismissButtonTypeString = @"DragIndicator";
+            break;
+    }
+    
+    return [NSString stringWithFormat:@"<%@: %p; minHeight: %.2f; maxHeight: %.2f; closeButtonInsets: {%.1f,%.1f,%.1f,%.1f}; dismissButtonType: %@>",
             NSStringFromClass([self class]), self, 
             self.minHeightMultiplier, self.maxHeightMultiplier,
             self.closeButtonInsets.top, self.closeButtonInsets.left, 
             self.closeButtonInsets.bottom, self.closeButtonInsets.right,
-            self.showCloseButton ? @"YES" : @"NO"];
+            dismissButtonTypeString];
 }
 
 @end

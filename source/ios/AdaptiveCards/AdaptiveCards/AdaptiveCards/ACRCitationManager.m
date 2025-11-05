@@ -128,7 +128,7 @@
     citationView.delegate = self;
 
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
-    config.showCloseButton = NO;
+    config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
     config.contentPadding = 0;
     
     self.bottomSheetPopover = [[ACRBottomSheetViewController alloc] initWithContent:citationView configuration:config];
