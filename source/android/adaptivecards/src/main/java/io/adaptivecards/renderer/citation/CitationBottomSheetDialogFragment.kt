@@ -76,7 +76,7 @@ class CitationBottomSheetDialogFragment(
         referenceNumber.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
         val icon = view.findViewById<ImageView>(R.id.citation_icon)
-        icon.setImageResource(citationReference.getDrawableForIcon())
+        icon.setImageDrawable(citationReference.getDrawableForIcon(context, renderedAdaptiveCard.theme))
 
         val title = view.findViewById<TextView>(R.id.citation_title)
         title.text = citationReference.GetTitle()
