@@ -1812,6 +1812,8 @@
 			children = (
 				E25D48E82EBBE58B00CF9715 /* ACRCitationReferenceBaseView.h */,
 				E25D48E92EBBE58B00CF9715 /* ACRCitationReferenceBaseView.m */,
+				E204C8A12EBB79F60065F8F5 /* ACRCitationReferenceView.h */,
+				E204C8A22EBB79F60065F8F5 /* ACRCitationReferenceView.m */,
 				248924CE2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h */,
 				248924CF2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m */,
 				E204C8C22EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m */,
@@ -1828,8 +1830,6 @@
 				E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */,
 				E204C89F2EBB79F60065F8F5 /* ACRCitationParser.m */,
 				E204C8A02EBB79F60065F8F5 /* ACRCitationParserDelegate.h */,
-				E204C8A12EBB79F60065F8F5 /* ACRCitationReferenceView.h */,
-				E204C8A22EBB79F60065F8F5 /* ACRCitationReferenceView.m */,
 				E204C8A32EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h */,
 				E204C8A42EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m */,
 			);

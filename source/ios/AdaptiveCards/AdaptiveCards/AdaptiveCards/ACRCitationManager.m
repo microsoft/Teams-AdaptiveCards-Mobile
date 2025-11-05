@@ -24,7 +24,7 @@
 @interface ACRCitationManager () <ACRCitationParserDelegate, ACRCitationReferenceViewDelegate>
 
 @property (nonatomic, weak) id<ACRCitationManagerDelegate> delegate;
-@property (nonatomic, weak) UIViewController *citationMainBottomSheet;
+@property (nonatomic, weak) UIViewController *bottomSheetViewController;
 
 // Lazy properties
 @property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
@@ -130,11 +130,11 @@
 
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
-    config.contentPadding = 0;
+    config.contentPadding = 8;
     
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
                                                                                                configuration:config];
-    self.citationMainBottomSheet = currentBottomSheet;
+    self.bottomSheetViewController = currentBottomSheet;
     [activeController presentViewController:currentBottomSheet animated:YES completion:nil];
 }
 
@@ -144,19 +144,20 @@
  didTapMoreDetailsForCitation:(ACOCitation *)citation
                     reference:(ACOReference *)reference
 {
+    
+    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
+    config.contentPadding = 8;
+    config.minHeight = self.bottomSheetViewController.preferredContentSize.height;
+    config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
+    
     ACRRenderResult *renderResult = [ACRRenderer render:reference.content
                                                  config:self.rootView.hostConfig
                                         widthConstraint:self.rootView.frame.size.width
                                                   theme:citation.theme];
-    
-    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
-    config.minHeight = self.citationMainBottomSheet.preferredContentSize.height;
-    config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
-    UIView *resultView = (UIView *)renderResult.view;
-    ACRCitationReferenceMoreDetailsView *moreDetailsView = [[ACRCitationReferenceMoreDetailsView alloc] initWithAdaptiveCard: resultView];
+    ACRCitationReferenceMoreDetailsView *moreDetailsView = [[ACRCitationReferenceMoreDetailsView alloc] initWithAdaptiveCard: (UIView *)renderResult.view];
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:moreDetailsView
                                                                                                configuration:config];
-    [self.citationMainBottomSheet presentViewController:currentBottomSheet animated:YES completion:nil];
+    [self.bottomSheetViewController presentViewController:currentBottomSheet animated:YES completion:nil];
 }
 
 @end

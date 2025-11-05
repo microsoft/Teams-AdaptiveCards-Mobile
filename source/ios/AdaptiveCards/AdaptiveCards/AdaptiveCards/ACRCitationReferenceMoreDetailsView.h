@@ -7,18 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ACOAdaptiveCard.h"
+#import "ACRCitationReferenceBaseView.h"
 
-@class ACOReference;
-@class ACOCitation;
 @class ACRCitationReferenceMoreDetailsView;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * A custom UIView that renders a citation reference with a Adaptive card with no actionable elements
+ * A view that displays an adaptive card with the standard citation reference header.
+ * Inherits the "References" header and separator from ACRCitationReferenceBaseView.
  */
-@interface ACRCitationReferenceMoreDetailsView : UIView
+@interface ACRCitationReferenceMoreDetailsView : ACRCitationReferenceBaseView
 
 /**
  * The Adaptive card to display
@@ -26,8 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *adaptiveCard;
 
 /**
- * Initialize with a adaptive card
- * @param adaptiveCard  Adaptive card that needs to be displayed inside more details bottomsheet
+ * Initialize with an adaptive card
+ * @param adaptiveCard The adaptive card view to display below the header
  */
 - (instancetype)initWithAdaptiveCard:(UIView *)adaptiveCard;
 

@@ -93,7 +93,7 @@ static const NSInteger kACRCitationSeparatorColor = 224;
     
     // Header title label
     UILabel *headerTitleLabel = [[UILabel alloc] init];
-    headerTitleLabel.text = @"References";
+    headerTitleLabel.text = NSLocalizedString(@"References", nil);
     headerTitleLabel.textAlignment = NSTextAlignmentCenter;
     headerTitleLabel.font = [UIFont systemFontOfSize:kACRCitationHeaderFontSize weight:UIFontWeightSemibold];
     headerTitleLabel.textColor = [UIColor grayColorWithValue:kACRCitationHeaderTextColor];

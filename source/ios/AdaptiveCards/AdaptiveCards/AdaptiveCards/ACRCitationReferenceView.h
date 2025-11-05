@@ -13,6 +13,8 @@
 @class ACOCitation;
 @class ACRCitationReferenceView;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol ACRCitationReferenceViewDelegate <NSObject>
 
 @optional
@@ -22,13 +24,12 @@
  * @param citation The citation associated with the reference
  * @param reference The reference containing the content/URL to show
  */
-- (void)citationReferenceView:(ACRCitationReferenceView *)citationReferenceView 
-         didTapMoreDetailsForCitation:(ACOCitation *)citation 
+- (void)citationReferenceView:(ACRCitationReferenceView *)citationReferenceView
+         didTapMoreDetailsForCitation:(ACOCitation *)citation
                             reference:(ACOReference *)reference;
 
 @end
 
-NS_ASSUME_NONNULL_BEGIN
 
 /**
  * A custom UIView that renders a citation reference with a numbered pill, icon, title, keywords, and description
