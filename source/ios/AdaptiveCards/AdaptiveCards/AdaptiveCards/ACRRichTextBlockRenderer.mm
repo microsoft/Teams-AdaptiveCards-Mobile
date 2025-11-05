@@ -36,7 +36,7 @@
 
 #pragma mark - Lazy Properties
 
-- (ACRCitationManager *)citationManager2 {
+- (ACRCitationManager *)citationManager {
     if (!_citationManager) {
         _citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
     }
@@ -231,6 +231,8 @@
                 }
                 case InlineElementType::CitationRun:
                 {
+                    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+                    
                     BOOL isCitationsEnabled = [featureFlagResolver boolForFlag:@"isCitationsEnabled"] ?: NO;
                     if (isCitationsEnabled)
                     {
