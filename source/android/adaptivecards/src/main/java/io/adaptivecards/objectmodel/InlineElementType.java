@@ -9,7 +9,10 @@
 package io.adaptivecards.objectmodel;
 
 public enum InlineElementType {
-  TextRun(0);
+  TextRun(0),
+  CitationRun,
+  IconRun,
+  ImageRun;
 
   public final int swigValue() {
     return swigValue;

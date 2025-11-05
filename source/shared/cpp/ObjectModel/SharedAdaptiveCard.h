@@ -9,6 +9,7 @@
 #include "Refresh.h"
 #include "Authentication.h"
 #include "Layout.h"
+#include "References.h"
 #include "Resources.h"
 #include "StringResource.h"
 
@@ -16,6 +17,7 @@ namespace AdaptiveCards
 {
 class Container;
 class BackgroundImage;
+class References;
 
 class AdaptiveCard
 {
@@ -135,6 +137,8 @@ public:
     const std::vector<std::shared_ptr<BaseCardElement>>& GetBody() const;
     std::vector<std::shared_ptr<BaseActionElement>>& GetActions();
     const std::vector<std::shared_ptr<BaseActionElement>>& GetActions() const;
+    const std::vector<std::shared_ptr<References>>& GetReferences() const;
+    const std::optional<std::shared_ptr<References>> GetReference(int index) const;
     std::shared_ptr<AdaptiveCards::Resources> GetResources() const;
 
     std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts();
@@ -225,6 +229,7 @@ private:
 
     std::vector<std::shared_ptr<BaseCardElement>> m_body;
     std::vector<std::shared_ptr<BaseActionElement>> m_actions;
+    std::vector<std::shared_ptr<References>> m_references;
     std::shared_ptr<AdaptiveCards::Resources> m_resources;
 
     std::shared_ptr<BaseActionElement> m_selectAction;
