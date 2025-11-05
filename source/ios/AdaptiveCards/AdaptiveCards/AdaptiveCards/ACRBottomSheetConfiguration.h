@@ -20,7 +20,9 @@ typedef NS_ENUM(NSInteger, ACRBottomSheetDismissButtonType) {
     /// Show a cross/close button
     ACRBottomSheetDismissButtonTypeCross = 1,
     /// Show a drag indicator handle
-    ACRBottomSheetDismissButtonTypeDragIndicator = 2
+    ACRBottomSheetDismissButtonTypeDragIndicator = 2,
+    /// Show a back indicator handle
+    ACRBottomSheetDismissButtonTypeBack = 3
 };
 
 /**
