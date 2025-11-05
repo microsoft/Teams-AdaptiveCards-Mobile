@@ -309,7 +309,8 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         CharSequence htmlString = textHandleResult.getHtmlString();
         htmlString = InputUtils.appendRequiredLabelSuffix(htmlString, textBlock.GetLabelFor(), hostConfig, renderArgs);
 
-        if (CitationUtil.isCitationUrlSpansPresent(htmlString)) {
+        final boolean isCitationPresent = CitationUtil.isCitationUrlSpansPresent(htmlString);
+        if (isCitationPresent) {
             htmlString = CitationUtil.handleCitationSpansForTextBlock(
                 context,
                 htmlString,
