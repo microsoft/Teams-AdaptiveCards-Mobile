@@ -8,47 +8,97 @@
 
 #import "ACRBottomSheetConfiguration.h"
 
+#pragma mark - Constants
+
+/// Default minimum height multiplier for bottom sheet
+static const CGFloat kDefaultMinHeightMultiplier = 0.2f;
+
+/// Default maximum height multiplier for bottom sheet
+static const CGFloat kDefaultMaxHeightMultiplier = 0.66f;
+
+/// Default border height for the top indicator
+static const CGFloat kDefaultBorderHeight = 0.5f;
+
+/// Default insets for the close button (top, left, bottom=gap to content, right)
+static const UIEdgeInsets kDefaultCloseButtonInsets = {16.0f, 12.0f, 20.0f, 12.0f};
+
+/// Default content padding
+static const CGFloat kDefaultContentPadding = 16.0f;
+
+/// Default close button size
+static const CGFloat kDefaultCloseButtonSize = 28.0f;
+
 @implementation ACRBottomSheetConfiguration
 
-- (instancetype)initWithMinMultiplier:(CGFloat)minMultiplier
-                        maxMultiplier:(CGFloat)maxMultiplier
-                         borderHeight:(CGFloat)borderHeight
-                  closeButtonTopInset:(CGFloat)closeButtonTopInset
-                 closeButtonSideInset:(CGFloat)closeButtonSideInset
-               closeButtonToScrollGap:(CGFloat)closeButtonToScrollGap
-                       contentPadding:(CGFloat)contentPadding
-                      closeButtonSize:(CGFloat)closeButtonSize
-                       showCloseButton:(BOOL)showCloseButton
-                        acoHostConfig:(ACOHostConfig *)hostConfig
+#pragma mark - Initialization
+
+- (instancetype)initWithHostConfig:(ACOHostConfig *)hostConfig
 {
+    NSParameterAssert(hostConfig != nil);
+    
     self = [super init];
-    if (self)
-    {
-        self.minHeightMultiplier = minMultiplier;
-        self.maxHeightMultiplier = maxMultiplier;
-        self.borderHeight = borderHeight;
-        self.closeButtonTopInset = closeButtonTopInset;
-        self.closeButtonSideInset = closeButtonSideInset;
-        self.closeButtonToScrollGap = closeButtonToScrollGap;
-        self.contentPadding = contentPadding;
-        self.closeButtonSize = closeButtonSize;
-        self.showCloseButton = showCloseButton;
-        self.hostConfig = hostConfig;
+    if (self) {
+        _hostConfig = hostConfig;
+        _minHeightMultiplier = kDefaultMinHeightMultiplier;
+        _maxHeightMultiplier = kDefaultMaxHeightMultiplier;
+        _borderHeight = kDefaultBorderHeight;
+        _contentPadding = kDefaultContentPadding;
+        _closeButtonSize = kDefaultCloseButtonSize;
+        _minHeight = NSNotFound; // Default to using multiplier-based height
+        _showCloseButton = YES; // Default to YES
+        _closeButtonInsets = kDefaultCloseButtonInsets; // Default insets
     }
     return self;
 }
 
-+ (instancetype)defaultWithHostConfig:(ACOHostConfig *)hostConfig {
-    return [[ACRBottomSheetConfiguration alloc] initWithMinMultiplier:0.2
-                                                        maxMultiplier:0.66
-                                                         borderHeight:0.5
-                                                  closeButtonTopInset:16
-                                                 closeButtonSideInset:12
-                                               closeButtonToScrollGap:20
-                                                       contentPadding:16
-                                                      closeButtonSize:28.0
-                                                       showCloseButton:YES
-                                                        acoHostConfig:hostConfig];
+#pragma mark - Property Validation
+
+- (void)setMinHeightMultiplier:(CGFloat)minHeightMultiplier
+{
+    // Clamp value between 0.0 and 1.0
+    CGFloat clampedValue = MAX(0.0f, MIN(1.0f, minHeightMultiplier));
+    
+    // Ensure it doesn't exceed maxHeightMultiplier
+    _minHeightMultiplier = MIN(clampedValue, self.maxHeightMultiplier);
+}
+
+- (void)setMaxHeightMultiplier:(CGFloat)maxHeightMultiplier
+{
+    // Clamp value between 0.0 and 1.0
+    CGFloat clampedValue = MAX(0.0f, MIN(1.0f, maxHeightMultiplier));
+    
+    // Ensure it's at least as large as minHeightMultiplier
+    _maxHeightMultiplier = MAX(clampedValue, self.minHeightMultiplier);
+}
+
+- (void)setBorderHeight:(CGFloat)borderHeight
+{
+    // Clamp to non-negative value
+    _borderHeight = MAX(0.0f, borderHeight);
+}
+
+- (void)setContentPadding:(CGFloat)contentPadding
+{
+    // Clamp to non-negative value
+    _contentPadding = MAX(0.0f, contentPadding);
+}
+
+- (void)setCloseButtonSize:(CGFloat)closeButtonSize
+{
+    // Clamp to minimum size of 1.0 (must be positive)
+    _closeButtonSize = MAX(17.0f, closeButtonSize);
+}
+
+#pragma mark - Description
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %p; minHeight: %.2f; maxHeight: %.2f; closeButtonInsets: {%.1f,%.1f,%.1f,%.1f}; showCloseButton: %@>",
+            NSStringFromClass([self class]), self, 
+            self.minHeightMultiplier, self.maxHeightMultiplier,
+            self.closeButtonInsets.top, self.closeButtonInsets.left, 
+            self.closeButtonInsets.bottom, self.closeButtonInsets.right,
+            self.showCloseButton ? @"YES" : @"NO"];
 }
 
 @end

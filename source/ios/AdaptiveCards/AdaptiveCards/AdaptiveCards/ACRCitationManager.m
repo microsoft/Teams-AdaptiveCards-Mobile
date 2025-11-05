@@ -26,6 +26,8 @@
 @property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
 @property (nonatomic, strong) ACRInlineCitationTokenParser *inlineCitationParser;
 @property (nonatomic, strong) ACRRichTextBlockCitationParser *citationRunParser;
+@property (nonatomic, strong) ACRBottomSheetViewController *bottomSheetPopover;
+@property (nonatomic, weak) UIViewController *activeViewController;
 
 @end
 
@@ -120,18 +122,18 @@
 
 - (void)presentBottomSheetFrom:(UIViewController *)activeController didTapCitation:(ACOCitation *)citation  referenceData:(ACOReference * _Nullable)referenceData {
     
-    ACRCitationReferenceView *citationView = [[ACRCitationReferenceView alloc] initWithCitation:citation 
+    self.activeViewController = activeController;
+    ACRCitationReferenceView *citationView = [[ACRCitationReferenceView alloc] initWithCitation:citation
                                                                                        reference:referenceData];
     citationView.delegate = self;
 
-    ACRBottomSheetConfiguration *config = [ACRBottomSheetConfiguration defaultWithHostConfig:self.rootView.hostConfig];
+    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
     config.showCloseButton = NO;
     config.contentPadding = 0;
     
-    ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
-                                                                                               configuration:config];
+    self.bottomSheetPopover = [[ACRBottomSheetViewController alloc] initWithContent:citationView configuration:config];
 
-    [activeController presentViewController:currentBottomSheet animated:YES completion:nil];
+    [activeController presentViewController:self.bottomSheetPopover animated:YES completion:nil];
 }
 
 #pragma mark - ACRCitationReferenceViewDelegate
@@ -139,6 +141,27 @@
 - (void)citationReferenceView:(ACRCitationReferenceView *)citationReferenceView 
          didTapMoreDetailsForCitation:(ACOCitation *)citation 
                             reference:(ACOReference *)reference {
+    
+    [self.bottomSheetPopover dismissViewControllerAnimated:NO completion:nil];
+        
+    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
+    config.minHeight = self.bottomSheetPopover.preferredContentSize.height;
+    
+    
+    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    v.backgroundColor = UIColor.redColor;
+
+    ACRBottomSheetViewController *popover = [[ACRBottomSheetViewController alloc] initWithContent:v configuration:config];
+    
+        __weak ACRCitationManager *weakSelf = self;
+    popover.onDismissBlock = ^{
+        if (weakSelf)
+        {
+            [weakSelf.activeViewController presentViewController:weakSelf.bottomSheetPopover animated:YES completion:nil];
+        }
+    };
+
+    [self.activeViewController presentViewController:popover animated:YES completion:nil];
    
 }
 

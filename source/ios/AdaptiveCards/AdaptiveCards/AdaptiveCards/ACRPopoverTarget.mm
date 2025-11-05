@@ -89,10 +89,11 @@
     }
     [self attachBottomSheetInputsToMainCard];
     
-    ACRBottomSheetConfiguration *config = [ACRBottomSheetConfiguration defaultWithHostConfig:self.rootView.hostConfig];
+    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
     
     self.currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:self.cachedContentView configuration:config];
     [self markActionTargetsAsFromBottomSheet:self.cachedContentView];
+    
     __weak ACRPopoverTarget *weakSelf = self;
     self.currentBottomSheet.onDismissBlock = ^{
         if (weakSelf)
