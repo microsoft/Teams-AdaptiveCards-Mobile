@@ -353,7 +353,10 @@ public class ImageRenderer extends BaseCardElementRenderer
             imageLoaderAsync.registerCustomOnlineImageLoader(onlineImageLoader);
         }
 
-        imageLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, image.GetUrl(renderedCard.getTheme()));
+        imageLoaderAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, image.GetUrl(
+            renderedCard.getTheme(),
+            renderedCard.getAdaptiveCard().GetResources(),
+            renderedCard.getLanguageTag()));
 
         TagContent tagContent = new TagContent(image, separator, viewGroup);
 

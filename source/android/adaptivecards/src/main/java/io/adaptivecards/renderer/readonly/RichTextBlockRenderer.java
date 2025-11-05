@@ -35,6 +35,7 @@ import io.adaptivecards.objectmodel.Inline;
 import io.adaptivecards.objectmodel.InlineElementType;
 import io.adaptivecards.objectmodel.InlineVector;
 import io.adaptivecards.objectmodel.RichTextBlock;
+import io.adaptivecards.objectmodel.TextInput;
 import io.adaptivecards.objectmodel.TextRun;
 import io.adaptivecards.objectmodel.TextSize;
 import io.adaptivecards.objectmodel.TextStyle;
@@ -46,6 +47,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.input.InputUtils;
 
 public class RichTextBlockRenderer extends BaseCardElementRenderer
 {
@@ -106,6 +108,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
 
     private SpannableStringBuilder buildSpannableParagraph(
                 RenderedAdaptiveCard renderedCard,
+                RichTextBlock richTextBlock,
                 InlineVector inlines,
                 ICardActionHandler cardActionHandler,
                 FragmentManager fragmentManager,
@@ -140,6 +143,10 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 }
                 DateTimeParser parser = new DateTimeParser(textRun.GetLanguage());
                 String formattedText = parser.GenerateString(textRun.GetTextForDateParsing());
+
+                // Check & replace string resource if present
+                formattedText = renderedCard.checkAndReplaceStringResources(formattedText);
+
 
                 paragraph.append(formattedText);
 
@@ -192,6 +199,8 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
             }
         }
 
+        paragraph = InputUtils.appendRequiredLabelSuffix(paragraph, richTextBlock.GetLabelFor(), hostConfig, renderArgs);
+
         return paragraph;
     }
 
@@ -226,7 +235,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
         InlineVector inlines = richTextBlock.GetInlines();
 
         textView.setText("");
-        SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, inlines, cardActionHandler, fragmentManager, hostConfig, renderArgs);
+        SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, richTextBlock, inlines, cardActionHandler, fragmentManager, hostConfig, renderArgs);
         textView.append(convertedString);
 
         // Properties required for actions to fire onClick event

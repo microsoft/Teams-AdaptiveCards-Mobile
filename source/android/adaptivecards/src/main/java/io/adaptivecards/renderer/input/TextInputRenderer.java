@@ -210,11 +210,17 @@ public class TextInputRenderer extends BaseCardElementRenderer
         {
             editText.setHint(placeHolder);
         }
+
         InputUtils.updateInputHandlerInputWatcher(textInputHandler);
         LinearLayout textInputViewGroup = null;
 
         if (textInput != null)
         {
+            String label = TextInput.getLabelForAccessibility(textInput);
+            if (!label.isEmpty()) {
+                editText.setContentDescription(label);
+            }
+
             BaseActionElement action = textInput.GetInlineAction();
 
             if (action != null)

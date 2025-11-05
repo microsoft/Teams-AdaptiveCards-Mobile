@@ -77,7 +77,7 @@ std::shared_ptr<BaseCardElement> RichTextBlockParser::Deserialize(ParseContext& 
         context, json, AdaptiveCardSchemaKey::Inlines, Inline::Deserialize, false);
     richTextBlock->m_inlines = std::move(inlines);
     richTextBlock->m_labelFor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LabelFor, "", false);
-    
+
     if (!richTextBlock->m_labelFor.empty() && !richTextBlock->m_inlines.empty())
     {
         std::string label;
@@ -89,7 +89,7 @@ std::shared_ptr<BaseCardElement> RichTextBlockParser::Deserialize(ParseContext& 
                 label += textRun->GetText() + " ";
             }
         }
-        
+
         if (!label.empty())
         {
             // Add label for corresponding ChoiceSetInput

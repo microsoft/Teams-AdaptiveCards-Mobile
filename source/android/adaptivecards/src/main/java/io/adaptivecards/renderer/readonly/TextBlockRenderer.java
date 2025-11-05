@@ -12,6 +12,7 @@ import android.text.Layout;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
@@ -41,6 +42,7 @@ import io.adaptivecards.objectmodel.ForegroundColor;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.TextBlock;
+import io.adaptivecards.objectmodel.TextInput;
 import io.adaptivecards.objectmodel.TextSize;
 import io.adaptivecards.objectmodel.TextStyle;
 import io.adaptivecards.objectmodel.TextWeight;
@@ -50,6 +52,8 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.input.InputUtils;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class TextBlockRenderer extends BaseCardElementRenderer
 {
@@ -295,10 +299,14 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         DateTimeParser parser = new DateTimeParser(textBlock.GetLanguage());
         String textWithFormattedDates = parser.GenerateString(textBlock.GetTextForDateParsing());
 
+        // Check & replace string resource if present
+        textWithFormattedDates = renderedCard.checkAndReplaceStringResources(textWithFormattedDates);
+
         RendererUtil.SpecialTextHandleResult textHandleResult = RendererUtil.handleSpecialTextAndQueryLinks(textWithFormattedDates);
         CharSequence htmlString = textHandleResult.getHtmlString();
-        textView.setText(htmlString);
+        htmlString = InputUtils.appendRequiredLabelSuffix(htmlString, textBlock.GetLabelFor(), hostConfig, renderArgs);
 
+        textView.setText(htmlString);
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setOnTouchListener(new TouchTextView(new SpannableString(htmlString)));
 

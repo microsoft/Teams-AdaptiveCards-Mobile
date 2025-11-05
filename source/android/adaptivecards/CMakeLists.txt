@@ -87,6 +87,8 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/SemanticVersion.cpp
              ../../shared/cpp/ObjectModel/SharedAdaptiveCard.cpp
              ../../shared/cpp/ObjectModel/ShowCardAction.cpp
+             ../../shared/cpp/ObjectModel/StringResource.cpp
+             ../../shared/cpp/ObjectModel/Resources.cpp
              ../../shared/cpp/ObjectModel/StyledCollectionElement.cpp
              ../../shared/cpp/ObjectModel/SubmitAction.cpp
              ../../shared/cpp/ObjectModel/Table.cpp

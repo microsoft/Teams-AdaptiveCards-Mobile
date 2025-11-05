@@ -276,12 +276,20 @@
 										"value": "v1.5/Elements/Image.FitMode.Fill.json"
 									},
 									{
+										"title": "Input Label Text/RichText Block",
+										"value": "v1.5/Elements/InputLabel.json"
+									},
+									{
 										"title": "Progress Bar",
 										"value": "v1.5/Elements/ProgressBar.json"
 									},
 									{
 										"title": "Progress Ring",
 										"value": "v1.5/Elements/ProgressRing.json"
+									},
+									{
+										"title": "String Resources",
+										"value": "v1.5/Elements/StringResources.json"
 									},
 									{
 										"title": "Spacing Sample",

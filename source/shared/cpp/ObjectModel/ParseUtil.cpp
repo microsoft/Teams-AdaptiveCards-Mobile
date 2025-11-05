@@ -362,6 +362,52 @@ void ParseUtil::ExpectKeyAndValueType(const Json::Value& json, const char* expec
     throwIfWrongType(value);
 }
 
+std::unordered_map<std::string, Json::Value> ParseUtil::GetJsonMap(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired) {
+    const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
+    Json::Value mapValue = json.get(propertyName, Json::Value());
+
+    if (!mapValue.isNull() && !mapValue.isObject()) {
+        throw AdaptiveCardParseException(
+                ErrorStatusCode::InvalidPropertyValue,
+                "Could not parse specified key: " + propertyName + ". It was not an object (map)");
+    }
+
+    if (isRequired && mapValue.isNull()) {
+        throw AdaptiveCardParseException(
+                ErrorStatusCode::RequiredPropertyMissing,
+                "Could not parse required key: " + propertyName + ". It was not found");
+    }
+
+    std::unordered_map<std::string, Json::Value> result;
+
+    if (!mapValue.isNull()) {
+        for (const auto& key : mapValue.getMemberNames()) {
+            result[key] = mapValue[key]; // No type restriction here
+        }
+    }
+
+    return result;
+}
+
+std::unordered_map<std::string, std::string> ParseUtil::GetStringMap(
+        const Json::Value& json,
+        AdaptiveCardSchemaKey key,
+        bool isRequired,
+        bool lowerCaseKeys) {
+    std::unordered_map<std::string, Json::Value> valueMap = ParseUtil::GetJsonMap(json, key, isRequired);
+    std::unordered_map<std::string, std::string> stringMap;
+
+    for (const auto& pair : valueMap) {
+        if (!pair.second.isString()) {
+            throw AdaptiveCardParseException(
+                    ErrorStatusCode::InvalidPropertyValue,
+                    "Value for key \"" + pair.first + "\" is not a string.");
+        }
+        stringMap[lowerCaseKeys ? ToLowercase(pair.first) : pair.first] = pair.second.asString();
+    }
+    return stringMap;
+}
+
 Json::Value ParseUtil::GetArray(const Json::Value& json, AdaptiveCardSchemaKey key, bool isRequired)
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);

@@ -18,10 +18,12 @@ import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.renderer.inputhandler.BaseInputHandler;
 import io.adaptivecards.renderer.inputhandler.IInputHandler;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class RenderedAdaptiveCard {
 
     private final ACTheme theme;
+    private final @NonNull String languageTag;
     private View view;
     private Vector<AdaptiveWarning> warnings;
     private Vector<IInputHandler> handlers;
@@ -42,7 +44,10 @@ public class RenderedAdaptiveCard {
     @Nullable
     private BottomSheetDialog popoverDialog;
 
-    protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard, @NonNull ACTheme theme) {
+    protected RenderedAdaptiveCard(@NonNull AdaptiveCard adaptiveCard,
+                                   @NonNull ACTheme theme,
+                                   @NonNull String languageTag) {
+        this.languageTag = languageTag;
         this.warnings = new Vector<>();
         this.handlers = new Vector<>();
         this.adaptiveCard = adaptiveCard;
@@ -261,5 +266,18 @@ public class RenderedAdaptiveCard {
 
     public void setPopoverDialog(@Nullable BottomSheetDialog popoverDialog) {
         this.popoverDialog = popoverDialog;
+    }
+
+    @NonNull
+    public String getLanguageTag() {
+        return languageTag;
+    }
+
+    @NonNull
+    public String checkAndReplaceStringResources(@NonNull String input) {
+        if (FeatureFlagResolverUtility.isStringResourceEnabled() && AdaptiveCard.IsStringResourcePresent(input)) {
+            return AdaptiveCard.ReplaceStringResources(input, getAdaptiveCard().GetResources(), getLanguageTag());
+        }
+        return input;
     }
 }

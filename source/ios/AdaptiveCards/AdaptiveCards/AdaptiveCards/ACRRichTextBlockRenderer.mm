@@ -96,10 +96,79 @@
                         NSDictionary *descriptor = nil;
                         NSString *text = nil;
 
-                        if (![textMap objectForKey:key]) {
-                            RichTextElementProperties textProp;
-                            TextRunToRichTextElementProperties(textRun, textProp);
-                            buildIntermediateResultForText(rootView, acoConfig, textProp, key);
+                if (![textMap objectForKey:key]) {
+                    RichTextElementProperties textProp;
+                    TextRunToRichTextElementProperties(textRun, textProp);
+                    buildIntermediateResultForText(rootView, acoConfig, textProp, key);
+                }
+
+                NSDictionary *data = textMap[key];
+                if (data) {
+                    htmlData = data[@"html"];
+                    options = data[@"options"];
+                    descriptor = data[@"descriptor"];
+                    text = data[@"nonhtml"];
+                }
+                
+                std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
+                if (text != nil)
+                {
+                    std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
+                    text = [NSString stringWithUTF8String:replacedText.c_str()];
+                }
+
+                NSMutableAttributedString *textRunContent = nil;
+                // Initializing NSMutableAttributedString for HTML rendering is very slow
+                if (htmlData) {
+                    textRunContent = [[NSMutableAttributedString alloc] initWithData:htmlData
+                                                                             options:options
+                                                                  documentAttributes:nil
+                                                                               error:nil];
+                    UpdateFontWithDynamicType(textRunContent);
+
+                    lab.selectable = YES;
+                    lab.dataDetectorTypes = UIDataDetectorTypeLink | UIDataDetectorTypePhoneNumber;
+                    lab.userInteractionEnabled = YES;
+                } else {
+                    textRunContent = [[NSMutableAttributedString alloc] initWithString:text
+                                                                            attributes:descriptor];
+                }
+                // Set paragraph style such as line break mode and alignment
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.alignment =
+                    [ACOHostConfig getTextBlockAlignment:rTxtBlck->GetHorizontalAlignment().value_or(HorizontalAlignment::Left)
+                                                 context:rootView.context];
+
+                // Obtain text color to apply to the attributed string
+                ACRContainerStyle style = lab.style;
+                auto textColor = textRun->GetTextColor().value_or(ForegroundColor::Default);
+                auto foregroundColor = [acoConfig getTextBlockColor:style
+                                                          textColor:textColor
+                                                       subtleOption:textRun->GetIsSubtle().value_or(false)];
+
+                // Config and add Select Action
+                std::shared_ptr<BaseActionElement> baseAction = textRun->GetSelectAction();
+                ACOBaseActionElement *acoAction = [[ACOBaseActionElement alloc] initWithBaseActionElement:baseAction];
+                if (baseAction && [acoAction isEnabled]) {
+                    NSObject *target;
+                    if (ACRRenderingStatus::ACROk ==
+                        buildTarget([rootView getSelectActionsTargetBuilderDirector], acoAction,
+                                    &target)) {
+                        NSRange selectActionRange = NSMakeRange(0, textRunContent.length);
+
+                        [textRunContent addAttribute:NSLinkAttributeName
+                                               value:target
+                                               range:selectActionRange];
+
+                        if (!hasGestureRecognizerAdded) {
+                            [ACRTapGestureRecognizerFactory
+                                addTapGestureRecognizerToUITextView:lab
+                                                             target:(NSObject<ACRSelectActionDelegate>
+                                                                         *)target
+                                                           rootView:rootView
+                                                         hostConfig:acoConfig];
+                            hasGestureRecognizerAdded = YES;
+
                         }
 
                         NSDictionary *data = textMap[key];

@@ -17,6 +17,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
 
+import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.BaseActionElementVector;
 import io.adaptivecards.objectmodel.ContainerStyle;
@@ -74,9 +75,10 @@ public class AdaptiveCardRenderer
         AdaptiveCard adaptiveCard,
         ICardActionHandler cardActionHandler,
         @Nullable IOverflowActionRenderer overflowActionRenderer,
-        HostConfig hostConfig)
-    {
-        RenderedAdaptiveCard result = new RenderedAdaptiveCard(adaptiveCard, CardRendererRegistration.getInstance().getTheme());
+        HostConfig hostConfig) {
+        ACTheme acTheme = CardRendererRegistration.getInstance().getTheme();;
+        String languageTag = CardRendererRegistration.getInstance().getLanguageTag();
+        RenderedAdaptiveCard result = new RenderedAdaptiveCard(adaptiveCard, acTheme, languageTag);
         CardRendererRegistration.getInstance().registerOverflowActionRenderer(overflowActionRenderer);
         View cardView = internalRender(result, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, false, View.NO_ID);
         result.setView(cardView);

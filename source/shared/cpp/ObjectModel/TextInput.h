@@ -41,14 +41,14 @@ public:
 
     std::string GetRegex() const;
     void SetRegex(const std::string& value);
-    
+
     static void addLabel(const std::string& labelId, const std::string& label)
     {
         if (!labelId.empty() && !label.empty()) {
             inputIdToLabelMap[labelId] = label;
         }
     }
-    
+
     static std::string getLabel(const std::string& labelId)
     {
         if (inputIdToLabelMap.find(labelId) != inputIdToLabelMap.end())
@@ -57,7 +57,29 @@ public:
         }
         return "";
     }
-    
+
+    static std::string getLabelForAccessibility(std::shared_ptr<AdaptiveCards::TextInput> textInput) {
+        std::string label = "";
+
+        if (textInput != nullptr && textInput.get() != nullptr) {
+            auto input = textInput.get();
+            auto labelId = input->GetId();
+
+            if (inputIdToLabelMap.find(labelId) != inputIdToLabelMap.end()) {
+                label += " " + inputIdToLabelMap[labelId];
+            } else if (!input->GetLabel().empty()) {
+                label += " " + input->GetLabel();
+            }
+
+            label += " " + input->GetPlaceholder();
+            if (input->GetIsRequired()) {
+                label += " required";
+            }
+        }
+
+        return label;
+    }
+
     static bool getIsRequired(const std::string& labelId)
     {
         return requiredInputIdSet.find(labelId) != requiredInputIdSet.end();
