@@ -18,7 +18,6 @@ class RoundedBackgroundSpan(
     borderWidthDp: Float = 1f,
     paddingHorizontalDp: Float = 4f,
     paddingVerticalDp: Float = 2f,
-    marginHorizontalDp: Float = 2f,
     private val textSizeSp: Float = 12f
 ) : ReplacementSpan() {
 
@@ -26,7 +25,6 @@ class RoundedBackgroundSpan(
     private val borderWidth: Float = borderWidthDp.dpToPx(context)
     private val paddingHorizontal: Float = paddingHorizontalDp.dpToPx(context)
     private val paddingVertical: Float = paddingVerticalDp.dpToPx(context)
-    private val marginHorizontal: Float = marginHorizontalDp.dpToPx(context)
 
     override fun getSize(
         paint: Paint,
@@ -44,7 +42,7 @@ class RoundedBackgroundSpan(
             it.top = it.ascent
             it.bottom = it.descent
         }
-        return (textWidth + 2 * paddingHorizontal + 2 * marginHorizontal).toInt()
+        return (textWidth + 2 * paddingHorizontal).toInt()
     }
 
     override fun draw(
@@ -74,11 +72,11 @@ class RoundedBackgroundSpan(
         val textX: Float
 
         if (isRtl) {
-            rectRight = x - marginHorizontal
+            rectRight = x
             rectLeft = rectRight - textWidth - 2 * paddingHorizontal
             textX = rectRight - paddingHorizontal - textWidth
         } else {
-            rectLeft = x + marginHorizontal
+            rectLeft = x
             rectRight = rectLeft + textWidth + 2 * paddingHorizontal
             textX = rectLeft + paddingHorizontal
         }

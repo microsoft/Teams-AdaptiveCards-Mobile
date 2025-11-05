@@ -44,16 +44,20 @@ object CitationUtil {
         val urlSpans = paragraph.getSpans(0, paragraph.length, URLSpan::class.java)
         val citeRegex = Regex("""^cite:(.+)$""")
 
-        for (span in urlSpans) {
+        for (span in urlSpans.reversed()) {
             val url = span.url
-            val start = paragraph.getSpanStart(span)
-            val end = paragraph.getSpanEnd(span)
-            val spanText = paragraph.subSequence(start, end).toString()
             val matchResult = citeRegex.matchEntire(url)
 
             if (matchResult != null) {
+                val start = paragraph.getSpanStart(span)
+                val end = paragraph.getSpanEnd(span)
+                val spanText = paragraph.subSequence(start, end).toString()
+
                 // Remove the URLSpan regardless
                 paragraph.removeSpan(span)
+
+                // Insert space after this span to fix touch target issue & to comply with Desktop
+                paragraph.insert(end, " ")
 
                 val index = matchResult.groupValues[1].toIntOrNull() ?: -1
 
