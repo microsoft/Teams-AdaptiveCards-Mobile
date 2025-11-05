@@ -119,8 +119,13 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         lab.selectable = YES;
         lab.userInteractionEnabled = YES;
         
-        // Process citations using the new CitationManager
-        content = [[self processCitationsWithManager:content rootView:rootView] mutableCopy];
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+        BOOL isCitationsEnabled = [featureFlagResolver boolForFlag:@"isCitationsEnabled"] ?: NO;
+        if (isCitationsEnabled)
+        {
+            // Process citations using the new CitationManager
+            content = [[self processCitationsWithManager:content rootView:rootView] mutableCopy];
+        }
         
         lab.textContainer.lineFragmentPadding = 0;
         lab.textContainerInset = UIEdgeInsetsZero;
@@ -214,7 +219,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     [citationManager setRootView:rootView];
     
     // Use citation manager (rootView is stored as property in citation manager)
-    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
+    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references theme:rootView.theme];
 }
 
 #pragma mark - Expression Evaluation Helper

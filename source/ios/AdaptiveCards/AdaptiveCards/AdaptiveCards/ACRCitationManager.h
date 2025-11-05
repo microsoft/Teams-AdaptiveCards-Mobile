@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ACRCitationManagerDelegate.h"
+#import "ACOEnums.h"
 
 @class ACOReference;
 @class ACRView;
@@ -54,7 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @return A new attributed string with citation links replaced by interactive text attachments
  */
 - (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString 
-                                                                  references:(NSArray<ACOReference *> *)references;
+                                                                  references:(NSArray<ACOReference *> *)references
+                                                                       theme:(ACRTheme) theme;
 
 /**
  * Build a single citation attachment from an ACOCitation object
