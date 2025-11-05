@@ -11,6 +11,7 @@
 #include "ParseUtil.h"
 #include "Util.h"
 #include "TextInput.h"
+#include "CitationRun.h"
 #include "TextRun.h"
 
 using namespace AdaptiveCards;
@@ -87,6 +88,9 @@ std::shared_ptr<BaseCardElement> RichTextBlockParser::Deserialize(ParseContext& 
             {
                 auto textRun = std::static_pointer_cast<TextRun>(item);
                 label += textRun->GetText() + " ";
+            } else if (item->GetInlineType() == InlineElementType::CitationRun) {
+                auto citationRun = std::static_pointer_cast<CitationRun>(item);
+                label += citationRun->GetText() + " ";
             }
         }
 

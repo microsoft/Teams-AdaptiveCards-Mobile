@@ -85,6 +85,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/RatingInput.cpp
              ../../shared/cpp/ObjectModel/RatingLabel.cpp
              ../../shared/cpp/ObjectModel/SemanticVersion.cpp
+             ../../shared/cpp/ObjectModel/References.cpp
              ../../shared/cpp/ObjectModel/SharedAdaptiveCard.cpp
              ../../shared/cpp/ObjectModel/ShowCardAction.cpp
              ../../shared/cpp/ObjectModel/StringResource.cpp
@@ -98,6 +99,7 @@ add_library( # Sets the name of the library.
              ../../shared/cpp/ObjectModel/TextBlock.cpp
              ../../shared/cpp/ObjectModel/TextElementProperties.cpp
              ../../shared/cpp/ObjectModel/TextInput.cpp
+             ../../shared/cpp/ObjectModel/CitationRun.cpp
              ../../shared/cpp/ObjectModel/TextRun.cpp
              ../../shared/cpp/ObjectModel/TimeInput.cpp
              ../../shared/cpp/ObjectModel/ToggleInput.cpp

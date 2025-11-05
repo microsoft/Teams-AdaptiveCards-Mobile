@@ -51,7 +51,7 @@ object TableRenderer : BaseCardElementRenderer() {
                     containerStyle = rowStyle
                     isColumnHeader = (i == 0) && isFirstRowHeader
                 }
-                tableCellRenderer.render(renderedCard, context, fragmentManager, rowLayout, cell, cardActionHandler, hostConfig, cellArgs)
+                tableCellRenderer.renderNew(renderedCard, context, fragmentManager, rowLayout, cell, cardActionHandler, hostConfig, cellArgs)
             }
             tableLayout.addView(rowLayout)
         }

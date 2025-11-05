@@ -8,17 +8,33 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.Set;
+
+import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.Spacing;
 import io.adaptivecards.objectmodel.SpacingConfig;
+import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 
 public abstract class BaseCardElementRenderer implements IBaseCardElementRenderer
 {
+    @Nullable
+    @Override
+    public View renderNew(@NonNull RenderedAdaptiveCard renderedCard, @NonNull Context context, @NonNull FragmentManager fragmentManager, @NonNull ViewGroup viewGroup, @NonNull BaseCardElement baseCardElement, ICardActionHandler cardActionHandler, @NonNull HostConfig hostConfig, @NonNull RenderArgs renderArgs) throws Exception {
+        if (renderArgs.canRenderElement(baseCardElement.GetElementType())) {
+            return render(renderedCard, context, fragmentManager, viewGroup, baseCardElement, cardActionHandler, hostConfig, renderArgs);
+        }
+        return null;
+    }
+
+    protected abstract View render(@NonNull RenderedAdaptiveCard renderedCard, @NonNull Context context, @NonNull FragmentManager fragmentManager, @NonNull ViewGroup viewGroup, @NonNull BaseCardElement baseCardElement, ICardActionHandler cardActionHandler, @NonNull HostConfig hostConfig, @NonNull RenderArgs renderArgs) throws Exception;
+
     protected static long getSpacingSize(Spacing spacing, SpacingConfig defaultSpacingConfig)
     {
         long spacingSize = 0;
