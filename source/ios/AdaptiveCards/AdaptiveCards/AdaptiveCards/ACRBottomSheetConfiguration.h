@@ -43,6 +43,10 @@ typedef NS_ENUM(NSInteger, ACRBottomSheetDismissButtonType) {
 /// The miniimum height in points. If set, this overrides minHeightMultiplier
 @property (nonatomic) CGFloat minHeight;
 
+/// The height that, if present, needs to be used with mutliplier to determine view height
+/// This will help if the the parent view is not full screen
+@property (nonatomic) CGFloat referenceWindowHeight;
+
 #pragma mark - Visual Styling
 
 /// The height of the top border/handle indicator in points

@@ -44,10 +44,11 @@ static const CGFloat kDefaultCloseButtonSize = 28.0f;
         _borderHeight = kDefaultBorderHeight;
         _contentPadding = kDefaultContentPadding;
         _closeButtonSize = kDefaultCloseButtonSize;
-        _minHeight = NSNotFound; // Default to using multiplier-based height
         _dismissButtonType = ACRBottomSheetDismissButtonTypeCross; // Default to cross button
         _closeButtonInsets = kDefaultCloseButtonInsets; // Default insets
         _headerText = nil; // No header by default
+        _referenceWindowHeight = NSNotFound;
+        _minHeight = NSNotFound; // Default to using multiplier-based height
     }
     return self;
 }
