@@ -28,6 +28,7 @@
 		0D993BF02C788D4200B4D1C6 /* ARCGridViewLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BEF2C788D4200B4D1C6 /* ARCGridViewLayout.mm */; };
 		0D993BF32C7A11E000B4D1C6 /* ACRLayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D993BF12C7A11E000B4D1C6 /* ACRLayoutHelper.mm */; };
 		241C67252E02DE5D0007EA18 /* FluentAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */; };
+		244915622EBCE3BD0040DF94 /* ACOReferencePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 244915612EBCE3BD0040DF94 /* ACOReferencePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		246485662E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */; };
 		248924C62EBB617600F76802 /* CitationRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C32EBB617600F76802 /* CitationRun.cpp */; };
 		248924C72EBB617600F76802 /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C52EBB617600F76802 /* References.cpp */; };
@@ -698,6 +699,7 @@
 		0E46B8FBE57A09301765F779 /* Pods-Fluent-AdaptiveCardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; path = "Target Support Files/Pods-Fluent-AdaptiveCardsTests/Pods-Fluent-AdaptiveCardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0FFDCEA85BBFF936BE8D0383 /* Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; path = "Target Support Files/Pods-AdaptiveCardsTests-AdaptiveCards/Pods-AdaptiveCardsTests-AdaptiveCards.debug.xcconfig"; sourceTree = "<group>"; };
 		241C67232E02DE5D0007EA18 /* FluentAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FluentAssets.xcassets; sourceTree = "<group>"; };
+		244915612EBCE3BD0040DF94 /* ACOReferencePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACOReferencePrivate.h; path = PrivateHeaders/ACOReferencePrivate.h; sourceTree = "<group>"; };
 		246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverTargetTests.mm; sourceTree = "<group>"; };
 		248924C22EBB617600F76802 /* CitationRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CitationRun.h; path = ../../../../shared/cpp/ObjectModel/CitationRun.h; sourceTree = "<group>"; };
 		248924C32EBB617600F76802 /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CitationRun.cpp; path = ../../../../shared/cpp/ObjectModel/CitationRun.cpp; sourceTree = "<group>"; };
@@ -1496,6 +1498,7 @@
 				6BFF23E42714C0F000183C59 /* ACOAdaptiveCardPrivate.h */,
 				6BFF23E92714C0F000183C59 /* ACOBaseActionElementPrivate.h */,
 				F4F44B8A2048F83F00A2F24C /* ACOBaseCardElement.h */,
+				244915612EBCE3BD0040DF94 /* ACOReferencePrivate.h */,
 				F4F44B882048F82F00A2F24C /* ACOBaseCardElement.mm */,
 				6BFF23DD2714C0EF00183C59 /* ACOBaseCardElementPrivate.h */,
 				6B8C766426461E98009548FA /* ACOBundle.h */,
@@ -2588,6 +2591,7 @@
 				F974C53B2800B8EA00C1B3C7 /* ContentSource.h in Headers */,
 				6BFF23F92714C0F000183C59 /* ACORefreshPrivate.h in Headers */,
 				6BFF240C2714E3D100183C59 /* ACRSeparator.h in Headers */,
+				244915622EBCE3BD0040DF94 /* ACOReferencePrivate.h in Headers */,
 				CFF954D92981AF5800F321C3 /* ACRChoiceSetFilteredStyleView.h in Headers */,
 				6BFF240A2714E33000183C59 /* ACRToggleVisibilityTarget.h in Headers */,
 				6BFF23F22714C0F000183C59 /* ACORemoteResourceInformationPrivate.h in Headers */,
