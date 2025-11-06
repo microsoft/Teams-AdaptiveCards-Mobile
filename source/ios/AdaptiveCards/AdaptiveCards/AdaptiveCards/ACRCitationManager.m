@@ -133,7 +133,7 @@ static NSString *const referencesKey = @"References";
 
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
-    config.contentPadding = 0;
+    config.contentPadding = 8;
     config.headerText = NSLocalizedString(referencesKey, nil);
     
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
@@ -149,7 +149,7 @@ static NSString *const referencesKey = @"References";
                     reference:(ACOReference *)reference
 {
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
-    config.contentPadding = 0;
+    config.contentPadding = 8;
     config.minHeight = self.bottomSheetViewController.preferredContentSize.height;
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeBack;
     config.headerText = NSLocalizedString(referencesKey, nil);

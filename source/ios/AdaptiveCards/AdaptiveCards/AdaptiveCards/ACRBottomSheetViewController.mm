@@ -119,7 +119,6 @@
     separatorView.backgroundColor = [UIColor grayColorWithValue:kACRCitationSeparatorColor];;
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:separatorView];
-    self.separatorView = separatorView;
     
     // Header and separator constraints
     [NSLayoutConstraint activateConstraints:@[
@@ -127,7 +126,7 @@
         [headerSection.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [headerSection.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
         
-        [separatorView.topAnchor constraintEqualToAnchor:headerSection.bottomAnchor],
+        [separatorView.topAnchor constraintEqualToAnchor:headerSection.bottomAnchor constant: -1 * kACRCitationSeparatorHeight],
         [separatorView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [separatorView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
         [separatorView.heightAnchor constraintEqualToConstant:kACRCitationSeparatorHeight]
