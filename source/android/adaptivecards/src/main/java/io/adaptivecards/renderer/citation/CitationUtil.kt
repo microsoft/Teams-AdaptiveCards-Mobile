@@ -237,7 +237,7 @@ object CitationUtil {
         // Return Drawable from resource
         val drawable = ContextCompat.getDrawable(context, resId).apply {
             if (icon in overrideIconList) {
-                applyDrawableColor(hostConfig.GetCitationBlock().textColor.toColorInt())
+                applyDrawableColor(hostConfig.GetCitationBlock().iconColor.toColorInt())
             }
         }
 

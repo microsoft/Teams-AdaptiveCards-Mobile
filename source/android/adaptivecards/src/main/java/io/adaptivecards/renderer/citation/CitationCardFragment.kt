@@ -64,7 +64,7 @@ class CitationCardFragment(
 
         val back = view.findViewById<ImageButton>(R.id.back_button)
         val drawable = ContextCompat.getDrawable(context, R.drawable.ic_icon_back).apply {
-            this.applyDrawableColor(hostConfig.GetCitationBlock().textColor.toColorInt())
+            this.applyDrawableColor(hostConfig.GetCitationBlock().iconColor.toColorInt())
         }
         back.setImageDrawable(drawable)
 

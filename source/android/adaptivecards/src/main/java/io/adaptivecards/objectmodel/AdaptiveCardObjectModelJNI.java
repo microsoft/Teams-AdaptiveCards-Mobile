@@ -1836,6 +1836,8 @@ public class AdaptiveCardObjectModelJNI {
   public final static native long TextBlockConfig_Deserialize(long jarg1, JsonValue jarg1_, long jarg2, TextBlockConfig jarg2_);
   public final static native long new_TextBlockConfig();
   public final static native void delete_TextBlockConfig(long jarg1);
+  public final static native void CitationBlock_iconColor_set(long jarg1, CitationBlock jarg1_, String jarg2);
+  public final static native String CitationBlock_iconColor_get(long jarg1, CitationBlock jarg1_);
   public final static native void CitationBlock_textColor_set(long jarg1, CitationBlock jarg1_, String jarg2);
   public final static native String CitationBlock_textColor_get(long jarg1, CitationBlock jarg1_);
   public final static native void CitationBlock_backgroundColor_set(long jarg1, CitationBlock jarg1_, String jarg2);

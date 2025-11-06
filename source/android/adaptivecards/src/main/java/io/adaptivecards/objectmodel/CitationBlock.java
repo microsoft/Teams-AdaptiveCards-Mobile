@@ -36,6 +36,14 @@ public class CitationBlock {
     }
   }
 
+  public void setIconColor(String value) {
+    AdaptiveCardObjectModelJNI.CitationBlock_iconColor_set(swigCPtr, this, value);
+  }
+
+  public String getIconColor() {
+    return AdaptiveCardObjectModelJNI.CitationBlock_iconColor_get(swigCPtr, this);
+  }
+
   public void setTextColor(String value) {
     AdaptiveCardObjectModelJNI.CitationBlock_textColor_set(swigCPtr, this, value);
   }
