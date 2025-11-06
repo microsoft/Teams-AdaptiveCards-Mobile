@@ -33,8 +33,6 @@
 		248924C72EBB617600F76802 /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C52EBB617600F76802 /* References.cpp */; };
 		248924C82EBB617600F76802 /* CitationRun.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924C22EBB617600F76802 /* CitationRun.h */; };
 		248924C92EBB617600F76802 /* References.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924C42EBB617600F76802 /* References.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		248924D02EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248924CF2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m */; };
-		248924D12EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924CE2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h */; };
 		24D7AB462EB344A600F0806F /* StringResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D7AB452EB344A600F0806F /* StringResource.cpp */; };
 		24D7AB472EB344A600F0806F /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24D7AB432EB344A600F0806F /* Resources.cpp */; };
 		24D7AB482EB344A600F0806F /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 24D7AB422EB344A600F0806F /* Resources.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -421,7 +419,6 @@
 		CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */; };
 		DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */; };
 		E204C8A52EBB79F60065F8F5 /* ACOCitation.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8962EBB79F60065F8F5 /* ACOCitation.h */; };
-		E204C8A62EBB79F60065F8F5 /* ACRCitationReferenceView.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8A12EBB79F60065F8F5 /* ACRCitationReferenceView.h */; };
 		E204C8A72EBB79F60065F8F5 /* ACRCitationManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89C2EBB79F60065F8F5 /* ACRCitationManagerDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E204C8A82EBB79F60065F8F5 /* ACRCitationParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */; };
 		E204C8A92EBB79F60065F8F5 /* ACRCitationParserDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8A02EBB79F60065F8F5 /* ACRCitationParserDelegate.h */; };
@@ -430,7 +427,6 @@
 		E204C8AC2EBB79F60065F8F5 /* ACRCitationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89A2EBB79F60065F8F5 /* ACRCitationManager.h */; };
 		E204C8AD2EBB79F60065F8F5 /* ACRCitationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C89B2EBB79F60065F8F5 /* ACRCitationManager.m */; };
 		E204C8AE2EBB79F60065F8F5 /* ACRCitationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C89F2EBB79F60065F8F5 /* ACRCitationParser.m */; };
-		E204C8AF2EBB79F60065F8F5 /* ACRCitationReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8A22EBB79F60065F8F5 /* ACRCitationReferenceView.m */; };
 		E204C8B02EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8A42EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m */; };
 		E204C8B12EBB79F60065F8F5 /* ACOCitation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E204C8972EBB79F60065F8F5 /* ACOCitation.mm */; };
 		E204C8B32EBB79F60065F8F5 /* ACOReference.mm in Sources */ = {isa = PBXBuildFile; fileRef = E204C8992EBB79F60065F8F5 /* ACOReference.mm */; };
@@ -445,8 +441,8 @@
 		E204C8C72EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8C32EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h */; };
 		E204C8C82EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8C22EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m */; };
 		E204C8C92EBB81D30065F8F5 /* ACRTextBlockCitationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8C52EBB81D30065F8F5 /* ACRTextBlockCitationParser.m */; };
-		E25D48EA2EBBE58B00CF9715 /* ACRCitationReferenceBaseView.h in Headers */ = {isa = PBXBuildFile; fileRef = E25D48E82EBBE58B00CF9715 /* ACRCitationReferenceBaseView.h */; };
-		E25D48EB2EBBE58B00CF9715 /* ACRCitationReferenceBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = E25D48E92EBBE58B00CF9715 /* ACRCitationReferenceBaseView.m */; };
+		E25D48EE2EBC7A1D00CF9715 /* ACRCitationReferenceView.h in Headers */ = {isa = PBXBuildFile; fileRef = E25D48EC2EBC7A1D00CF9715 /* ACRCitationReferenceView.h */; };
+		E25D48EF2EBC7A1D00CF9715 /* ACRCitationReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = E25D48ED2EBC7A1D00CF9715 /* ACRCitationReferenceView.m */; };
 		E67241702E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m in Sources */ = {isa = PBXBuildFile; fileRef = E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */; };
 		E67241712E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h in Headers */ = {isa = PBXBuildFile; fileRef = E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC367F912F6036B68C5BBFDB /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
@@ -705,8 +701,6 @@
 		248924C32EBB617600F76802 /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CitationRun.cpp; path = ../../../../shared/cpp/ObjectModel/CitationRun.cpp; sourceTree = "<group>"; };
 		248924C42EBB617600F76802 /* References.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = References.h; path = ../../../../shared/cpp/ObjectModel/References.h; sourceTree = "<group>"; };
 		248924C52EBB617600F76802 /* References.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = References.cpp; path = ../../../../shared/cpp/ObjectModel/References.cpp; sourceTree = "<group>"; };
-		248924CE2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationReferenceMoreDetailsView.h; sourceTree = "<group>"; };
-		248924CF2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationReferenceMoreDetailsView.m; sourceTree = "<group>"; };
 		24D7AB422EB344A600F0806F /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../../../../shared/cpp/ObjectModel/Resources.h; sourceTree = "<group>"; };
 		24D7AB432EB344A600F0806F /* Resources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Resources.cpp; path = ../../../../shared/cpp/ObjectModel/Resources.cpp; sourceTree = "<group>"; };
 		24D7AB442EB344A600F0806F /* StringResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringResource.h; path = ../../../../shared/cpp/ObjectModel/StringResource.h; sourceTree = "<group>"; };
@@ -1122,8 +1116,6 @@
 		E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationParser.h; sourceTree = "<group>"; };
 		E204C89F2EBB79F60065F8F5 /* ACRCitationParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationParser.m; sourceTree = "<group>"; };
 		E204C8A02EBB79F60065F8F5 /* ACRCitationParserDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationParserDelegate.h; sourceTree = "<group>"; };
-		E204C8A12EBB79F60065F8F5 /* ACRCitationReferenceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationReferenceView.h; sourceTree = "<group>"; };
-		E204C8A22EBB79F60065F8F5 /* ACRCitationReferenceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationReferenceView.m; sourceTree = "<group>"; };
 		E204C8A32EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRInlineCitationTokenParser.h; sourceTree = "<group>"; };
 		E204C8A42EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRInlineCitationTokenParser.m; sourceTree = "<group>"; };
 		E204C8B42EBB7A110065F8F5 /* ACRViewAttachingTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRViewAttachingTextView.h; sourceTree = "<group>"; };
@@ -1137,8 +1129,8 @@
 		E204C8C32EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRRichTextBlockRenderer.h; sourceTree = "<group>"; };
 		E204C8C42EBB81D30065F8F5 /* ACRTextBlockCitationParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRTextBlockCitationParser.h; sourceTree = "<group>"; };
 		E204C8C52EBB81D30065F8F5 /* ACRTextBlockCitationParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRTextBlockCitationParser.m; sourceTree = "<group>"; };
-		E25D48E82EBBE58B00CF9715 /* ACRCitationReferenceBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationReferenceBaseView.h; sourceTree = "<group>"; };
-		E25D48E92EBBE58B00CF9715 /* ACRCitationReferenceBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationReferenceBaseView.m; sourceTree = "<group>"; };
+		E25D48EC2EBC7A1D00CF9715 /* ACRCitationReferenceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationReferenceView.h; sourceTree = "<group>"; };
+		E25D48ED2EBC7A1D00CF9715 /* ACRCitationReferenceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationReferenceView.m; sourceTree = "<group>"; };
 		E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards_AdaptiveCardsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRStringBasedKeyValueObservation.h; sourceTree = "<group>"; };
 		E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRStringBasedKeyValueObservation.m; sourceTree = "<group>"; };
@@ -1810,12 +1802,8 @@
 		E204C8942EBB799B0065F8F5 /* Citation */ = {
 			isa = PBXGroup;
 			children = (
-				E25D48E82EBBE58B00CF9715 /* ACRCitationReferenceBaseView.h */,
-				E25D48E92EBBE58B00CF9715 /* ACRCitationReferenceBaseView.m */,
-				E204C8A12EBB79F60065F8F5 /* ACRCitationReferenceView.h */,
-				E204C8A22EBB79F60065F8F5 /* ACRCitationReferenceView.m */,
-				248924CE2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h */,
-				248924CF2EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m */,
+				E25D48EC2EBC7A1D00CF9715 /* ACRCitationReferenceView.h */,
+				E25D48ED2EBC7A1D00CF9715 /* ACRCitationReferenceView.m */,
 				E204C8C22EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m */,
 				E204C8C32EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h */,
 				E204C8C42EBB81D30065F8F5 /* ACRTextBlockCitationParser.h */,
@@ -2429,7 +2417,6 @@
 				F44873041EE2261F00FCAFAE /* ColumnSet.h in Headers */,
 				F44873001EE2261F00FCAFAE /* ChoiceSetInput.h in Headers */,
 				F44872FE1EE2261F00FCAFAE /* ChoiceInput.h in Headers */,
-				248924D12EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.h in Headers */,
 				F44872FC1EE2261F00FCAFAE /* BaseInputElement.h in Headers */,
 				F4071C7A1FCCBAEF00AF4FEA /* ElementParserRegistration.h in Headers */,
 				F4071C7B1FCCBAEF00AF4FEA /* ActionParserRegistration.h in Headers */,
@@ -2481,7 +2468,6 @@
 				F43110431F357487001AAE30 /* ACRInputTableView.h in Headers */,
 				F4F44B94204A157B00A2F24C /* ACRImageRenderer.h in Headers */,
 				E204C8A52EBB79F60065F8F5 /* ACOCitation.h in Headers */,
-				E204C8A62EBB79F60065F8F5 /* ACRCitationReferenceView.h in Headers */,
 				E204C8A72EBB79F60065F8F5 /* ACRCitationManagerDelegate.h in Headers */,
 				E204C8A82EBB79F60065F8F5 /* ACRCitationParser.h in Headers */,
 				E204C8A92EBB79F60065F8F5 /* ACRCitationParserDelegate.h in Headers */,
@@ -2592,7 +2578,6 @@
 				6BFF23F52714C0F000183C59 /* ACOAdaptiveCardPrivate.h in Headers */,
 				6BFF24042714E1BD00183C59 /* ACRDateTextField.h in Headers */,
 				46058FD92C6086AA00966E76 /* GridArea.h in Headers */,
-				E25D48EA2EBBE58B00CF9715 /* ACRCitationReferenceBaseView.h in Headers */,
 				F974C53B2800B8EA00C1B3C7 /* ContentSource.h in Headers */,
 				6BFF23F92714C0F000183C59 /* ACORefreshPrivate.h in Headers */,
 				6BFF240C2714E3D100183C59 /* ACRSeparator.h in Headers */,
@@ -2654,6 +2639,7 @@
 				7751C07B2CAC0F4100C876DD /* ACRCarouselPageView.h in Headers */,
 				6B8C766726461E98009548FA /* ACOBundle.h in Headers */,
 				4608EE8D2BF5C1B800543095 /* ACRRatingInputRenderer.h in Headers */,
+				E25D48EE2EBC7A1D00CF9715 /* ACRCitationReferenceView.h in Headers */,
 				6B124C9F26BCB2FE007E9641 /* ACOVisibilityManager.h in Headers */,
 				6B92A7E62677DFAB00CAE3BF /* ACRChoiceSetCompactStyleView.h in Headers */,
 				6BD859FB26F2CA7B0086F5BA /* ACOFillerSpaceManager.h in Headers */,
@@ -2910,7 +2896,6 @@
 				F42979431F322C3E00E89914 /* ACRErrors.mm in Sources */,
 				E204C8AD2EBB79F60065F8F5 /* ACRCitationManager.m in Sources */,
 				E204C8AE2EBB79F60065F8F5 /* ACRCitationParser.m in Sources */,
-				E204C8AF2EBB79F60065F8F5 /* ACRCitationReferenceView.m in Sources */,
 				E204C8B02EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m in Sources */,
 				E204C8B12EBB79F60065F8F5 /* ACOCitation.mm in Sources */,
 				E204C8B32EBB79F60065F8F5 /* ACOReference.mm in Sources */,
@@ -3002,11 +2987,9 @@
 				46F6F7832BFF1CB400D31C47 /* ValueChangedAction.cpp in Sources */,
 				6B22425F21E80647000ACDA1 /* ACOParseContext.mm in Sources */,
 				F4071C7E1FCCBAEF00AF4FEA /* ActionParserRegistration.cpp in Sources */,
-				E25D48EB2EBBE58B00CF9715 /* ACRCitationReferenceBaseView.m in Sources */,
 				6B2242A72233442C000ACDA1 /* RichTextBlock.cpp in Sources */,
 				F4FE456B1F196F3D0071D9E5 /* ACRContentStackView.mm in Sources */,
 				7A2D17572DFAE1B800E59055 /* ACRActionPopoverRenderer.mm in Sources */,
-				248924D02EBBB37E00F76802 /* ACRCitationReferenceMoreDetailsView.m in Sources */,
 				F429793F1F3155EF00E89914 /* ACRTextField.mm in Sources */,
 				F43A94191F20502D0001920B /* ACRInputToggleRenderer.mm in Sources */,
 				6B124C9B26B9F7AD007E9641 /* ACOVisibilityManager.mm in Sources */,
@@ -3122,6 +3105,7 @@
 				4608EE8E2BF5C1B800543095 /* ACRRatingInputRenderer.mm in Sources */,
 				6BF43080219129600068E432 /* ACRQuickReplyMultilineView.mm in Sources */,
 				6BDE5C4726FEA7DC003A1DDB /* ACRAggregateTarget.mm in Sources */,
+				E25D48EF2EBC7A1D00CF9715 /* ACRCitationReferenceView.m in Sources */,
 				6B9BDF7320E1BD0E00F13155 /* ACRToggleInputDataSource.mm in Sources */,
 				7773C2DB2CA3FF8600097C06 /* ACRCarouselPageView.mm in Sources */,
 				F4C1F5DA1F218ABC0018CB78 /* ACRInputTimeRenderer.mm in Sources */,

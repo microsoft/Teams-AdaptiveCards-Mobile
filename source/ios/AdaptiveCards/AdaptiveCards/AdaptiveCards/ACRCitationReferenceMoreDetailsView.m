@@ -10,7 +10,14 @@
 
 @interface ACRCitationReferenceMoreDetailsView ()
 @property (nonatomic, weak) UIView *contentView;
+@property (nonatomic, weak) UIView *adaptiveCard;
 @end
+
+@implementation ACRCitationReferenceMoreDetailsView
+
+#pragma mark - Initialization
+
+#import "ACRCitationReferenceMoreDetailsView.h"
 
 @implementation ACRCitationReferenceMoreDetailsView
 
@@ -19,10 +26,38 @@
 - (instancetype)initWithAdaptiveCard:(UIView *)adaptiveCard {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        [self setupContentViewWithAdaptiveCard: adaptiveCard];
+        _adaptiveCard = adaptiveCard;
+        [self setupUI];
     }
     return self;
 }
+
+#pragma mark - UI Setup
+
+- (void)setupUI {
+    self.backgroundColor = [UIColor systemBackgroundColor];
+    
+    if (self.adaptiveCard) {
+        self.adaptiveCard.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:self.adaptiveCard];
+        
+        // Set up constraints to fill the view
+        [NSLayoutConstraint activateConstraints:@[
+            [self.adaptiveCard.topAnchor constraintEqualToAnchor:self.topAnchor],
+            [self.adaptiveCard.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+            [self.adaptiveCard.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+            [self.adaptiveCard.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
+        ]];
+        
+        // Set priorities for proper sizing
+        [self.adaptiveCard setContentCompressionResistancePriority:UILayoutPriorityRequired 
+                                                           forAxis:UILayoutConstraintAxisVertical];
+        [self.adaptiveCard setContentHuggingPriority:UILayoutPriorityDefaultLow 
+                                             forAxis:UILayoutConstraintAxisVertical];
+    }
+}
+
+@end
 
 #pragma mark - Base Class Overrides
 
@@ -36,7 +71,6 @@
     
     cardView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:cardView];
-//    [self.rootStackView addArrangedSubview:cardView];
     self.adaptiveCard = cardView;
     
     [NSLayoutConstraint activateConstraints:@[
@@ -51,19 +85,6 @@
     // Ensure the root stack view fills available space
     if (self.rootStackView) {
         self.rootStackView.distribution = UIStackViewDistributionFill;
-        NSLog(@"ACRCitationReferenceMoreDetailsView: Set root stack view distribution to fill");
-    }
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    // Debug: Log the final frame sizes after layout
-    NSLog(@"ACRCitationReferenceMoreDetailsView frame: %.2f x %.2f", 
-          self.frame.size.width, self.frame.size.height);
-    if (self.adaptiveCard) {
-        NSLog(@"Adaptive card frame: %.2f x %.2f", 
-              self.adaptiveCard.frame.size.width, self.adaptiveCard.frame.size.height);
     }
 }
 

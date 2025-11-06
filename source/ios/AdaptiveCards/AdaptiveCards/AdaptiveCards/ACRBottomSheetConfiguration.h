@@ -63,6 +63,11 @@ typedef NS_ENUM(NSInteger, ACRBottomSheetDismissButtonType) {
 /// Note: The bottom inset represents the gap between the close button and scrollable content
 @property (nonatomic) UIEdgeInsets closeButtonInsets;
 
+#pragma mark - Header Configuration
+
+/// Optional header text to display at the top of the bottom sheet. If nil, no header is shown.
+@property (nonatomic, strong, nullable) NSString *headerText;
+
 #pragma mark - Host Configuration
 
 /// The host configuration used for styling Adaptive Card content

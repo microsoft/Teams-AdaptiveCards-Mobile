@@ -131,7 +131,8 @@
 
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
-    config.contentPadding = 8;
+    config.contentPadding = 0;
+    config.headerText = @"References";
     
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
                                                                                                configuration:config];
@@ -147,9 +148,10 @@
 {
     
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
-    config.contentPadding = 8;
+    config.contentPadding = 0;
     config.minHeight = self.bottomSheetViewController.preferredContentSize.height;
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeBack;
+    config.headerText = @"References";
     
     ACRRenderResult *renderResult = [ACRRenderer render:reference.content
                                                  config:self.rootView.hostConfig
@@ -158,8 +160,7 @@
         
     
     UIView *cardContentView = (UIView *)renderResult.view;
-    ACRCitationReferenceMoreDetailsView *moreDetailsView = [[ACRCitationReferenceMoreDetailsView alloc] initWithAdaptiveCard: cardContentView];
-    ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:moreDetailsView
+    ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:cardContentView
                                                                                                configuration:config];
     [self.bottomSheetViewController presentViewController:currentBottomSheet animated:YES completion:nil];
 }

@@ -47,6 +47,7 @@ static const CGFloat kDefaultCloseButtonSize = 28.0f;
         _minHeight = NSNotFound; // Default to using multiplier-based height
         _dismissButtonType = ACRBottomSheetDismissButtonTypeCross; // Default to cross button
         _closeButtonInsets = kDefaultCloseButtonInsets; // Default insets
+        _headerText = nil; // No header by default
     }
     return self;
 }

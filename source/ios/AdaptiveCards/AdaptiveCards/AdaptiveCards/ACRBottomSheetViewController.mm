@@ -18,6 +18,9 @@
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIButton *dismissButton;
 @property (nonatomic, weak) UIView *dragIndicator;
+@property (nonatomic, weak) UIView *headerSection;
+@property (nonatomic, weak) UILabel *headerTitleLabel;
+@property (nonatomic, weak) UIView *separatorView;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) ACRBottomSheetConfiguration *config;
 
@@ -44,6 +47,11 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [self.config.hostConfig getPopoverBackgroundColor];
+    
+    // Setup header if headerText is provided
+    if (self.config.headerText && self.config.headerText.length > 0) {
+        [self setupHeaderSection];
+    }
     
     switch (self.config.dismissButtonType) {
         case ACRBottomSheetDismissButtonTypeCross:
@@ -106,6 +114,68 @@
     self.dragIndicator = dragIndicator;
 }
 
+- (void)setupHeaderSection
+{
+    // Header Constants
+    static const CGFloat kACRCitationHeaderHeight = 40.0;
+    static const CGFloat kACRCitationHeaderTitleHeight = 28.0;
+    static const CGFloat kACRCitationHeaderBottomPadding = 12.0;
+    static const CGFloat kACRCitationHeaderFontSize = 17.0;
+    static const NSInteger kACRCitationHeaderTextColor = 32;
+    static const CGFloat kACRCitationSeparatorHeight = 1.0;
+    static const NSInteger kACRCitationSeparatorColor = 224;
+    
+    // Header section
+    UIView *headerSection = [[UIView alloc] init];
+    headerSection.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:headerSection];
+    self.headerSection = headerSection;
+    
+    // Header title label
+    UILabel *headerTitleLabel = [[UILabel alloc] init];
+    headerTitleLabel.text = self.config.headerText;
+    headerTitleLabel.textAlignment = NSTextAlignmentCenter;
+    headerTitleLabel.font = [UIFont systemFontOfSize:kACRCitationHeaderFontSize weight:UIFontWeightSemibold];
+    
+    // Gray color helper
+    NSInteger clampedValue = MAX(0, MIN(255, kACRCitationHeaderTextColor));
+    CGFloat normalizedValue = clampedValue / 255.0;
+    UIColor *grayColor = [UIColor colorWithRed:normalizedValue green:normalizedValue blue:normalizedValue alpha:1.0];
+    headerTitleLabel.textColor = grayColor;
+    
+    headerTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [headerSection addSubview:headerTitleLabel];
+    self.headerTitleLabel = headerTitleLabel;
+    
+    // Separator
+    UIView *separatorView = [[UIView alloc] init];
+    NSInteger clampedSeparatorValue = MAX(0, MIN(255, kACRCitationSeparatorColor));
+    CGFloat normalizedSeparatorValue = clampedSeparatorValue / 255.0;
+    UIColor *separatorColor = [UIColor colorWithRed:normalizedSeparatorValue green:normalizedSeparatorValue blue:normalizedSeparatorValue alpha:1.0];
+    separatorView.backgroundColor = separatorColor;
+    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:separatorView];
+    self.separatorView = separatorView;
+    
+    // Header constraints
+    [NSLayoutConstraint activateConstraints:@[
+        [self.headerSection.heightAnchor constraintEqualToConstant:kACRCitationHeaderHeight],
+        [self.headerSection.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [self.headerSection.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        
+        [self.headerTitleLabel.heightAnchor constraintEqualToConstant:kACRCitationHeaderTitleHeight],
+        [self.headerTitleLabel.topAnchor constraintEqualToAnchor:self.headerSection.topAnchor],
+        [self.headerTitleLabel.leadingAnchor constraintEqualToAnchor:self.headerSection.leadingAnchor],
+        [self.headerTitleLabel.trailingAnchor constraintEqualToAnchor:self.headerSection.trailingAnchor],
+        [self.headerTitleLabel.bottomAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor constant:-kACRCitationHeaderBottomPadding],
+        
+        [self.separatorView.topAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor],
+        [self.separatorView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [self.separatorView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.separatorView.heightAnchor constraintEqualToConstant:kACRCitationSeparatorHeight]
+    ]];
+}
+
 - (void)setupScrollView
 {
     UIScrollView *scrollView = [[UIScrollView alloc] init];
@@ -123,43 +193,55 @@
     
     NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
     
-    if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross ||
-        self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeBack) {
-
-        UIEdgeInsets btnInsets = self.config.closeButtonInsets;
-        CGFloat closeBtnSize = self.config.closeButtonSize;
-
-        // Dismiss button constraints (same for cross and back buttons)
+    // Determine the top anchor for scroll view based on header and dismiss button presence
+    NSLayoutYAxisAnchor *scrollViewTopAnchor;
+    CGFloat scrollViewTopConstant = 0;
+    
+    // If header exists, position header at top and scroll view below separator
+    if (self.headerSection) {
         [constraints addObjectsFromArray:@[
-            [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnInsets.top],
-            [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnInsets.left],
-            [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
-            [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
+            [self.headerSection.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8]
         ]];
-        
-        // Scroll view positioned below dismiss button (using bottom inset as gap)
-        [constraints addObjectsFromArray:@[
-            [self.scrollView.topAnchor constraintEqualToAnchor:self.dismissButton.bottomAnchor constant:btnInsets.bottom],
-        ]];
-    } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
-        // Drag indicator constraints
-        [constraints addObjectsFromArray:@[
-            [self.dragIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
-            [self.dragIndicator.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-            [self.dragIndicator.widthAnchor constraintEqualToConstant:36],
-            [self.dragIndicator.heightAnchor constraintEqualToConstant:4],
-        ]];
-        
-        // Scroll view positioned below drag indicator
-        [constraints addObjectsFromArray:@[
-            [self.scrollView.topAnchor constraintEqualToAnchor:self.dragIndicator.bottomAnchor constant:12],
-        ]];
+        scrollViewTopAnchor = self.separatorView.bottomAnchor;
+        scrollViewTopConstant = 8;
     } else {
-        // No dismiss button - scroll view starts at top with padding
-        [constraints addObjectsFromArray:@[
-            [self.scrollView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
-        ]];
+        // No header, position elements as before
+        if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross ||
+            self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeBack) {
+
+            UIEdgeInsets btnInsets = self.config.closeButtonInsets;
+            CGFloat closeBtnSize = self.config.closeButtonSize;
+
+            // Dismiss button constraints (same for cross and back buttons)
+            [constraints addObjectsFromArray:@[
+                [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnInsets.top],
+                [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnInsets.left],
+                [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
+                [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
+            ]];
+            
+            scrollViewTopAnchor = self.view.topAnchor;
+            scrollViewTopConstant = 20;
+        } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
+            // Drag indicator constraints
+            [constraints addObjectsFromArray:@[
+                [self.dragIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
+                [self.dragIndicator.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+                [self.dragIndicator.widthAnchor constraintEqualToConstant:36],
+                [self.dragIndicator.heightAnchor constraintEqualToConstant:4],
+            ]];
+            
+            scrollViewTopAnchor = self.view.topAnchor;
+            scrollViewTopConstant = 20;
+        } else {
+            // No dismiss button - scroll view starts at top with padding
+            scrollViewTopAnchor = self.view.topAnchor;
+            scrollViewTopConstant = 8;
+        }
     }
+    
+    // Scroll view top constraint
+    [constraints addObject:[self.scrollView.topAnchor constraintEqualToAnchor:scrollViewTopAnchor constant:scrollViewTopConstant]];
     
     // Common scroll view and content constraints
     [constraints addObjectsFromArray:@[
@@ -184,7 +266,7 @@
     [self.view layoutIfNeeded];
     CGFloat header = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
     CGFloat naturalHeight =  header + self.scrollView.contentSize.height;
-    CGFloat presentingViewHeight = 800;//self.presentingViewController.view.bounds.size.height;
+    CGFloat presentingViewHeight = self.presentingViewController.view.bounds.size.height;
     CGFloat maxH = self.config.maxHeightMultiplier * presentingViewHeight;
     CGFloat min = self.config.minHeight;
     

@@ -7,7 +7,6 @@
 //
 
 #import "ACRCitationReferenceView.h"
-#import "ACRCitationReferenceBaseView.h"
 #import "ACOReference.h"
 #import "ACOCitation.h"
 #import "ACOBundle.h"
@@ -46,6 +45,13 @@ static const CGFloat kACRCitationMoreDetailsButtonFontSize = 14.0;
 // Layout Proportions
 static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
 
+
+@interface UIColor (ACRCitationReferenceView)
+
++ (UIColor *)grayColorWithValue:(NSInteger)value;
+
+@end
+
 @interface ACRCitationReferenceView ()
 
 // Main content horizontal stack view
@@ -77,20 +83,32 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
 - (instancetype)initWithCitation:(ACOCitation *)citation reference:(ACOReference *)reference {
     self = [super initWithFrame:CGRectZero];
     if (self) {
+        [self setupUI];
         [self updateWithCitation:citation reference:reference];
     }
     return self;
 }
 
-#pragma mark - Content Setup (Base Class Override)
+#pragma mark - UI Setup
 
-- (void)setupContentView {
-    [super setupContentView];
+- (void)setupUI {
+    self.backgroundColor = [UIColor systemBackgroundColor];
     
-    // Setup main content section and add to inherited rootStackView
+    // Create main content section
     UIStackView *mainContentStackView = [self setupMainContentSection];
-    [self.rootStackView addArrangedSubview:mainContentStackView];
+    mainContentStackView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:mainContentStackView];
     self.mainContentStackView = mainContentStackView;
+    
+    // Set up constraints
+    [NSLayoutConstraint activateConstraints:@[
+        [mainContentStackView.topAnchor constraintEqualToAnchor:self.topAnchor constant:kACRCitationViewSpacing],
+        [mainContentStackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:kACRCitationViewSpacing],
+        [mainContentStackView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-kACRCitationViewSpacing],
+        [mainContentStackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-kACRCitationViewSpacing]
+    ]];
+    
+    [self setupContentConstraints];
 }
 
 // Main content horizontal stack view
@@ -210,7 +228,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     NSMutableAttributedString *buttonText = [[NSMutableAttributedString alloc] init];
     
     // "More details" text
-    NSAttributedString *detailsText = [[NSAttributedString alloc] initWithString:@"More details" 
+    NSAttributedString *detailsText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"More details", nil)
                                                                       attributes:@{
         NSForegroundColorAttributeName: [UIColor systemBlueColor],
         NSFontAttributeName: [UIFont systemFontOfSize:kACRCitationMoreDetailsButtonFontSize weight:UIFontWeightRegular]
@@ -238,8 +256,6 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
 }
 
 - (void)setupContentConstraints {
-    [super setupContentConstraints];
-    
     // Content-specific constraints
     // Left side stack view width constraint
     [NSLayoutConstraint activateConstraints:@[
@@ -293,7 +309,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     self.pillLabel.text = citation.displayText ?: @"";
     
     // Update title
-    self.titleLabel.text = reference.title ?: @"Unknown Reference";
+    self.titleLabel.text = reference.title ?: @"";
     
     // Update keywords with separators
     [self updateKeywordsDisplay:reference.keywords];
@@ -354,6 +370,23 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     NSString *iconName = [reference icon:_citation.theme];
     UIImage *image = [UIImage imageNamed:iconName inBundle:[[ACOBundle getInstance] getBundle] compatibleWithTraitCollection:nil];
     self.iconImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+}
+
+@end
+
+#pragma mark - UIColor Private Extension
+
+@implementation UIColor (ACRCitationReferenceView)
+
++ (UIColor *)grayColorWithValue:(NSInteger)value {
+    // Clamp value to 0-255 range
+    NSInteger clampedValue = MAX(0, MIN(255, value));
+    CGFloat normalizedValue = clampedValue / 255.0;
+    
+    return [UIColor colorWithRed:normalizedValue 
+                           green:normalizedValue 
+                            blue:normalizedValue 
+                           alpha:1.0];
 }
 
 @end

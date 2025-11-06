@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ACRCitationReferenceBaseView.h"
 
 @class ACOReference;
 @class ACOCitation;
@@ -35,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
  * A custom UIView that renders a citation reference with a numbered pill, icon, title, keywords, and description
  * Designed to match the bottom sheet citation reference layout
  */
-@interface ACRCitationReferenceView : ACRCitationReferenceBaseView
+@interface ACRCitationReferenceView : UIView
 
 /**
  * The reference data to display

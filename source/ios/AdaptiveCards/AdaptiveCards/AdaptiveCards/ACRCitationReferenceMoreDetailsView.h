@@ -7,22 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ACRCitationReferenceBaseView.h"
 
 @class ACRCitationReferenceMoreDetailsView;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * A view that displays an adaptive card with the standard citation reference header.
- * Inherits the "References" header and separator from ACRCitationReferenceBaseView.
+ * A view that displays an adaptive card content.
  */
-@interface ACRCitationReferenceMoreDetailsView : ACRCitationReferenceBaseView
+@interface ACRCitationReferenceMoreDetailsView : UIView
 
-/**
- * The Adaptive card to display
- */
-@property (nonatomic, strong) UIView *adaptiveCard;
 
 /**
  * Initialize with an adaptive card
