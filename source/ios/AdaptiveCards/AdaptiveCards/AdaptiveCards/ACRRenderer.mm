@@ -30,6 +30,32 @@
 
 using namespace AdaptiveCards;
 
+NSSet *unsupportedElements = [NSSet setWithArray:@[
+    @(static_cast<int>(CardElementType::ActionSet)),
+    @(static_cast<int>(CardElementType::AdaptiveCard)),
+    @(static_cast<int>(CardElementType::ChoiceInput)),
+    @(static_cast<int>(CardElementType::ChoiceSetInput)),
+    @(static_cast<int>(CardElementType::DateInput)),
+    @(static_cast<int>(CardElementType::NumberInput)),
+    @(static_cast<int>(CardElementType::RatingInput)),
+    @(static_cast<int>(CardElementType::TimeInput)),
+    @(static_cast<int>(CardElementType::TextInput)),
+    @(static_cast<int>(CardElementType::ToggleInput)),
+    @(static_cast<int>(CardElementType::CompoundButton))
+]];
+
+NSSet *unsupportedActionItems = [NSSet setWithArray:@[
+    @(static_cast<int>(ActionType::Unsupported)),
+    @(static_cast<int>(ActionType::Execute)),
+    @(static_cast<int>(ActionType::OpenUrl)),
+    @(static_cast<int>(ActionType::Popover)),
+    @(static_cast<int>(ActionType::ShowCard)),
+    @(static_cast<int>(ActionType::Submit)),
+    @(static_cast<int>(ActionType::ToggleVisibility)),
+    @(static_cast<int>(ActionType::Custom)),
+    @(static_cast<int>(ActionType::UnknownAction)),
+    @(static_cast<int>(ActionType::Overflow))
+]];
 @implementation ACRRenderer
 
 - (instancetype)init
@@ -251,6 +277,12 @@ using namespace AdaptiveCards;
     auto firstelem = elems.begin();
 
     for (const auto &elem : elems) {
+        CardElementType elementType = elem->GetElementType();
+        if ([rootView.card shouldNotRenderActions] && ([unsupportedElements containsObject:@(static_cast<int>(elementType))] ||
+                                                       [unsupportedActionItems containsObject:@(static_cast<int>(elementType))]))
+        {
+            continue;
+        }
         ACRSeparator *separator = nil;
         if (*firstelem != elem && renderedView && elem->MeetsTargetWidthRequirement(hostWidth)) {
             separator = [ACRSeparator renderSeparation:elem
@@ -260,10 +292,10 @@ using namespace AdaptiveCards;
         }
 
         ACRBaseCardElementRenderer *renderer =
-            [reg getRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];
+            [reg getRenderer:[NSNumber numberWithInt:(int)elementType]];
 
         if (renderer == nil) {
-            NSLog(@"Unsupported card element type:%d\n", (int)elem->GetElementType());
+            NSLog(@"Unsupported card element type:%d\n", (int)elementType);
             continue;
         }
 

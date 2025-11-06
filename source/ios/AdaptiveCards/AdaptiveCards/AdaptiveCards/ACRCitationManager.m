@@ -37,6 +37,8 @@
 
 @implementation ACRCitationManager
 
+static NSString *const referencesKey = @"References";
+
 - (instancetype)initWithDelegate:(id<ACRCitationManagerDelegate>)delegate
 {
     self = [super init];
@@ -132,7 +134,7 @@
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
     config.contentPadding = 0;
-    config.headerText = @"References";
+    config.headerText = NSLocalizedString(referencesKey, nil);
     
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:citationView
                                                                                                configuration:config];
@@ -146,14 +148,14 @@
  didTapMoreDetailsForCitation:(ACOCitation *)citation
                     reference:(ACOReference *)reference
 {
-    
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
     config.contentPadding = 0;
     config.minHeight = self.bottomSheetViewController.preferredContentSize.height;
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeBack;
-    config.headerText = @"References";
-    
-    ACRRenderResult *renderResult = [ACRRenderer render:reference.content
+    config.headerText = NSLocalizedString(referencesKey, nil);
+    ACOAdaptiveCard *acoCard = reference.content;
+    acoCard.shouldNotRenderActions = YES;
+    ACRRenderResult *renderResult = [ACRRenderer render:acoCard
                                                  config:self.rootView.hostConfig
                                         widthConstraint:self.rootView.frame.size.width
                                                   theme:citation.theme];

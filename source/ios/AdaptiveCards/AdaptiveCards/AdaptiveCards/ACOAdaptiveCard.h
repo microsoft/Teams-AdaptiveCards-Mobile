@@ -29,6 +29,7 @@
 
 @property (nullable, nonatomic, strong) ACORefresh *refresh;
 @property (nullable, nonatomic, strong) ACOAuthentication *authentication;
+@property BOOL shouldNotRenderActions;
 
 + (nonnull ACOAdaptiveCardParseResult *)fromJson:(nullable NSString *)payload;
 - (nullable NSData *)inputs;
