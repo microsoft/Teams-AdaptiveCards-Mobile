@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, ACRBottomSheetDismissButtonType) {
 
 /// The height that, if present, needs to be used with mutliplier to determine view height
 /// This will help if the the parent view is not full screen
-@property (nonatomic) CGFloat referenceWindowHeight;
+@property (nonatomic) CGSize referenceWindowSize;
 
 #pragma mark - Visual Styling
 

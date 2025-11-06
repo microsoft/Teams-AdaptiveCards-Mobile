@@ -153,13 +153,13 @@ static NSString *const referencesKey = @"References";
     config.minHeight = self.bottomSheetViewController.preferredContentSize.height;
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeBack;
     config.headerText = NSLocalizedString(referencesKey, nil);
-    config.referenceWindowHeight = self.activeViewController.view.frame.size.height;
+    config.referenceWindowSize = self.activeViewController.view.frame.size;
     
     ACOAdaptiveCard *acoCard = reference.content;
     acoCard.shouldNotRenderActions = YES;
     ACRRenderResult *renderResult = [ACRRenderer render:acoCard
                                                  config:self.rootView.hostConfig
-                                        widthConstraint:self.rootView.frame.size.width
+                                        widthConstraint:config.referenceWindowSize.width - (2 * config.contentPadding)
                                                   theme:citation.theme];
         
     

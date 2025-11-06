@@ -254,7 +254,7 @@
         [self.contentView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
         [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant:(-2 * contentPad)],
     ]];
-    
+
     // Common scroll view and content constraints
     [NSLayoutConstraint activateConstraints:constraints];
 }
@@ -265,22 +265,22 @@
     CGFloat header = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
     CGFloat naturalHeight =  header + self.scrollView.contentSize.height;
     
-    CGFloat referenceHeight = self.config.referenceWindowHeight;
-    if (referenceHeight == NSNotFound) {
-        referenceHeight = self.presentingViewController.view.bounds.size.height;
+    CGSize referenceWindowSize = self.config.referenceWindowSize;
+    if (CGSizeEqualToSize(referenceWindowSize, CGSizeZero)) {
+        referenceWindowSize = self.presentingViewController.view.bounds.size;
     }
     
-    CGFloat maxH = self.config.maxHeightMultiplier * referenceHeight;
+    CGFloat maxH = self.config.maxHeightMultiplier * referenceWindowSize.height;
     CGFloat min = self.config.minHeight;
     
     if (min == NSNotFound) {
-        min = self.config.minHeightMultiplier * referenceHeight;
+        min = self.config.minHeightMultiplier * referenceWindowSize.height;
     }
     
     CGFloat sheetH = MAX(min, MIN(naturalHeight, maxH));
     self.scrollView.scrollEnabled = naturalHeight > sheetH;
     self.scrollView.alwaysBounceVertical = self.scrollView.scrollEnabled;
-    return CGSizeMake(naturalHeight, sheetH);
+    return CGSizeMake(referenceWindowSize.width, sheetH);
 }
 
 - (void)closeAction

@@ -238,6 +238,9 @@ UIColor* defaultButtonBackgroundColor;
     #if TARGET_OS_VISION
     self.view.backgroundColor = UIColor.clearColor;
     #endif
+    
+    /// Directly Load A certain page for faster debugging
+       [self loadSamplesDirectlyWithVersion:@"v1.5" type:@"Elements" index:17];
 }
 
 - (void)viewWillAppear:(BOOL)animated
