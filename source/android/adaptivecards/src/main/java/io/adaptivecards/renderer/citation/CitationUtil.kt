@@ -7,12 +7,12 @@ import android.graphics.drawable.Drawable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.URLSpan
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.FragmentManager
 import io.adaptivecards.R
-import io.adaptivecards.objectmodel.ACTheme
 import io.adaptivecards.objectmodel.CitationRun
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.Inline
@@ -195,7 +195,7 @@ object CitationUtil {
     }
 
     @JvmStatic
-    fun References.getDrawableForIcon(context: Context, theme: ACTheme): Drawable? {
+    fun References.getDrawableForIcon(context: Context, hostConfig: HostConfig): Drawable? {
         val icon = this.GetIcon() ?: ReferenceIcon.Image
         val resId = when (icon) {
             ReferenceIcon.AdobeIllustrator -> R.drawable.ic_icon_adobe_illustrator
@@ -224,9 +224,7 @@ object CitationUtil {
             ReferenceIcon.Zip -> R.drawable.ic_icon_zip
         }
 
-        // Return Drawable from resource
-        val drawable = ContextCompat.getDrawable(context, resId)
-        val darkIconList = listOf(
+        val overrideIconList = listOf(
                 ReferenceIcon.AdobeFlash,
                 ReferenceIcon.Code,
                 ReferenceIcon.Image,
@@ -236,12 +234,22 @@ object CitationUtil {
                 ReferenceIcon.Video
         )
 
-        if (drawable != null && theme == ACTheme.Dark && icon in darkIconList) {
-            DrawableCompat.setTint(drawable, Color.WHITE)
-            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_IN)
+        // Return Drawable from resource
+        val drawable = ContextCompat.getDrawable(context, resId).apply {
+            if (icon in overrideIconList) {
+                applyDrawableColor(hostConfig.GetCitationBlock().textColor.toColorInt())
+            }
         }
 
         return drawable
+    }
+
+    @JvmStatic
+    fun Drawable?.applyDrawableColor(@ColorInt color: Int ){
+        this?.apply {
+            DrawableCompat.setTint(this, color)
+            DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)
+        }
     }
 
     @JvmStatic

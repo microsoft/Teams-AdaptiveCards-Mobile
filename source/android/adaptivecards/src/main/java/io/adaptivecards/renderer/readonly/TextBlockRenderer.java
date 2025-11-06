@@ -322,7 +322,6 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         }
 
         textView.setText(htmlString);
-        textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setOnTouchListener(new TouchTextView(new SpannableString(htmlString)));
 
         textView.setHorizontallyScrolling(false);
@@ -333,13 +332,11 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         applyAccessibilityHeading(textView, textBlock.GetStyle());
         applyAccessibilityProperties(textView, context, textHandleResult);
 
-        int maxLines = (int)textBlock.GetMaxLines();
-        if (maxLines > 0 && textBlock.GetWrap())
-        {
+        textView.setEllipsize(TextUtils.TruncateAt.END);
+        int maxLines = (int) textBlock.GetMaxLines();
+        if (maxLines > 0 && textBlock.GetWrap()) {
             textView.setMaxLines(maxLines);
-        }
-        else if (!textBlock.GetWrap())
-        {
+        } else if (!textBlock.GetWrap()) {
             textView.setMaxLines(1);
         }
 
