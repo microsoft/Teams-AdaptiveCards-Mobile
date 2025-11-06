@@ -88,6 +88,7 @@ typedef NS_ENUM(NSInteger, ACRBottomSheetDismissButtonType) {
  */
 - (instancetype)init NS_UNAVAILABLE;
 
+- (BOOL) hasDismissButton;
 @end
 
 NS_ASSUME_NONNULL_END

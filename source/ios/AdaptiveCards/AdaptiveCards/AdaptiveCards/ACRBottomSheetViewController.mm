@@ -12,6 +12,7 @@
 #import "ACRBottomSheetPresentationController.h"
 #import "ACRBottomSheetConfiguration.h"
 #import "UtiliOS.h"
+#import "UIColor+GrayColor.h"
 
 @interface ACRBottomSheetViewController ()
 
@@ -48,24 +49,14 @@
     [super viewDidLoad];
     self.view.backgroundColor = [self.config.hostConfig getPopoverBackgroundColor];
     
-    // Setup header if headerText is provided
-    if (self.config.headerText && self.config.headerText.length > 0) {
-        [self setupHeaderSection];
-    }
+    // Setup unified header view if we have header text OR dismiss button (excluding drag indicator)
+    BOOL hasHeaderText = (self.config.headerText && self.config.headerText.length > 0);
+    BOOL hasDismissButton = [self.config hasDismissButton];
     
-    switch (self.config.dismissButtonType) {
-        case ACRBottomSheetDismissButtonTypeCross:
-            [self setupDismissButton: @"Dismiss"];
-            break;
-        case ACRBottomSheetDismissButtonTypeDragIndicator:
-            [self setupDragIndicator];
-            break;
-        case ACRBottomSheetDismissButtonTypeBack:
-            [self setupDismissButton: @"ChevronLeft"];
-            break;
-        default:
-            // No dismiss UI
-            break;
+    if (hasHeaderText || hasDismissButton) {
+        [self setupUnifiedHeaderView];
+    } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
+        [self setupDragIndicator];
     }
     
     [self setupScrollView];
@@ -81,12 +72,80 @@
     }
 }
 
-- (void)setupDismissButton:(NSString *)buttonIconName
+- (void)setupUnifiedHeaderView
 {
+    // Header Constants
+    static const CGFloat kACRCitationHeaderHeight = 50.0;
+    static const CGFloat kACRCitationHeaderFontSize = 17.0;
+    static const NSInteger kACRCitationHeaderTextColor = 32;
+    static const CGFloat kACRCitationSeparatorHeight = 1.0;
+    static const NSInteger kACRCitationSeparatorColor = 224;
+    
+    // Header section container
+    UIView *headerSection = [[UIView alloc] init];
+    headerSection.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:headerSection];
+    self.headerSection = headerSection;
+    
+    // Setup header title if provided
+    if (self.config.headerText && self.config.headerText.length > 0) {
+        UILabel *headerTitleLabel = [[UILabel alloc] init];
+        headerTitleLabel.text = self.config.headerText;
+        headerTitleLabel.textAlignment = NSTextAlignmentCenter;
+        headerTitleLabel.font = [UIFont systemFontOfSize:kACRCitationHeaderFontSize weight:UIFontWeightSemibold];
+        
+        // Gray color helper
+        headerTitleLabel.textColor = [UIColor grayColorWithValue:kACRCitationHeaderTextColor];
+        
+        headerTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [headerSection addSubview:headerTitleLabel];
+        self.headerTitleLabel = headerTitleLabel;
+        
+        // Center in the remaining space, accounting for button
+        [NSLayoutConstraint activateConstraints:@[
+            [headerTitleLabel.leadingAnchor constraintEqualToAnchor:headerSection.leadingAnchor],
+            [headerTitleLabel.trailingAnchor constraintEqualToAnchor:headerSection.trailingAnchor],
+            [headerTitleLabel.topAnchor constraintEqualToAnchor:headerSection.topAnchor],
+            [headerTitleLabel.bottomAnchor constraintEqualToAnchor:headerSection.bottomAnchor],
+        ]];
+    }
+    
+    // Setup dismiss button if needed
+    if ([self.config hasDismissButton]) {
+        [self setupDismissButton];
+    }
+    
+    // Separator
+    UIView *separatorView = [[UIView alloc] init];
+    separatorView.backgroundColor = [UIColor grayColorWithValue:kACRCitationSeparatorColor];;
+    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:separatorView];
+    self.separatorView = separatorView;
+    
+    // Header and separator constraints
+    [NSLayoutConstraint activateConstraints:@[
+        [headerSection.heightAnchor constraintEqualToConstant:kACRCitationHeaderHeight],
+        [headerSection.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [headerSection.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        
+        [separatorView.topAnchor constraintEqualToAnchor:headerSection.bottomAnchor],
+        [separatorView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [separatorView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [separatorView.heightAnchor constraintEqualToConstant:kACRCitationSeparatorHeight]
+    ]];
+}
+
+
+- (void)setupDismissButton
+{
+    NSString *buttonIconName = (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross) ? @"dismiss" : @"ChevronLeft";
+    NSString *buttonIconA11yName = (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross) ? @"Dismiss" : @"Back";
+
     UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    dismissButton.accessibilityLabel = NSLocalizedString(buttonIconName, nil);
-    NSString *dismissIcon = buttonIconName.lowercaseString;
-    NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
+    dismissButton.accessibilityLabel = NSLocalizedString(buttonIconA11yName, nil);
+    
+    NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, buttonIconName, buttonIconName];
+    
     CGSize iconSize = CGSizeMake(24, 24);
     UIColor *tintColor = [self.config.hostConfig getPopoverTintColor];
     UIImageView *imageView = [[ACRSVGImageView alloc] init:url
@@ -100,8 +159,34 @@
                       action:@selector(closeAction)
             forControlEvents:UIControlEventTouchUpInside];
     dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:dismissButton];
+    [self.headerSection addSubview:dismissButton];
     self.dismissButton = dismissButton;
+    
+    [NSLayoutConstraint activateConstraints:@[
+        [imageView.leadingAnchor constraintEqualToAnchor:dismissButton.leadingAnchor],
+        [imageView.trailingAnchor constraintEqualToAnchor:dismissButton.trailingAnchor],
+        [imageView.topAnchor constraintEqualToAnchor:dismissButton.topAnchor],
+        [imageView.bottomAnchor constraintEqualToAnchor:dismissButton.bottomAnchor],
+        [dismissButton.widthAnchor constraintEqualToConstant:24],
+        [dismissButton.heightAnchor constraintEqualToConstant:24],
+        [dismissButton.leadingAnchor constraintEqualToAnchor:self.headerSection.leadingAnchor constant:16.0],
+        [dismissButton.centerYAnchor constraintEqualToAnchor:self.headerSection.centerYAnchor],
+    ]];
+}
+
+- (UIImageView *)createSVGImageViewForIcon:(NSString *)iconName
+{
+    NSString *dismissIcon = iconName.lowercaseString;
+    NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
+    CGSize iconSize = CGSizeMake(24, 24);
+    UIColor *tintColor = [self.config.hostConfig getPopoverTintColor];
+    UIImageView *imageView = [[ACRSVGImageView alloc] init:url
+                                                       rtl:ACRRtlNone
+                                                  isFilled:false
+                                                      size:iconSize
+                                                 tintColor:tintColor];
+    imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    return imageView;
 }
 
 - (void)setupDragIndicator
@@ -114,67 +199,7 @@
     self.dragIndicator = dragIndicator;
 }
 
-- (void)setupHeaderSection
-{
-    // Header Constants
-    static const CGFloat kACRCitationHeaderHeight = 40.0;
-    static const CGFloat kACRCitationHeaderTitleHeight = 28.0;
-    static const CGFloat kACRCitationHeaderBottomPadding = 12.0;
-    static const CGFloat kACRCitationHeaderFontSize = 17.0;
-    static const NSInteger kACRCitationHeaderTextColor = 32;
-    static const CGFloat kACRCitationSeparatorHeight = 1.0;
-    static const NSInteger kACRCitationSeparatorColor = 224;
-    
-    // Header section
-    UIView *headerSection = [[UIView alloc] init];
-    headerSection.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:headerSection];
-    self.headerSection = headerSection;
-    
-    // Header title label
-    UILabel *headerTitleLabel = [[UILabel alloc] init];
-    headerTitleLabel.text = self.config.headerText;
-    headerTitleLabel.textAlignment = NSTextAlignmentCenter;
-    headerTitleLabel.font = [UIFont systemFontOfSize:kACRCitationHeaderFontSize weight:UIFontWeightSemibold];
-    
-    // Gray color helper
-    NSInteger clampedValue = MAX(0, MIN(255, kACRCitationHeaderTextColor));
-    CGFloat normalizedValue = clampedValue / 255.0;
-    UIColor *grayColor = [UIColor colorWithRed:normalizedValue green:normalizedValue blue:normalizedValue alpha:1.0];
-    headerTitleLabel.textColor = grayColor;
-    
-    headerTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [headerSection addSubview:headerTitleLabel];
-    self.headerTitleLabel = headerTitleLabel;
-    
-    // Separator
-    UIView *separatorView = [[UIView alloc] init];
-    NSInteger clampedSeparatorValue = MAX(0, MIN(255, kACRCitationSeparatorColor));
-    CGFloat normalizedSeparatorValue = clampedSeparatorValue / 255.0;
-    UIColor *separatorColor = [UIColor colorWithRed:normalizedSeparatorValue green:normalizedSeparatorValue blue:normalizedSeparatorValue alpha:1.0];
-    separatorView.backgroundColor = separatorColor;
-    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:separatorView];
-    self.separatorView = separatorView;
-    
-    // Header constraints
-    [NSLayoutConstraint activateConstraints:@[
-        [self.headerSection.heightAnchor constraintEqualToConstant:kACRCitationHeaderHeight],
-        [self.headerSection.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.headerSection.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        
-        [self.headerTitleLabel.heightAnchor constraintEqualToConstant:kACRCitationHeaderTitleHeight],
-        [self.headerTitleLabel.topAnchor constraintEqualToAnchor:self.headerSection.topAnchor],
-        [self.headerTitleLabel.leadingAnchor constraintEqualToAnchor:self.headerSection.leadingAnchor],
-        [self.headerTitleLabel.trailingAnchor constraintEqualToAnchor:self.headerSection.trailingAnchor],
-        [self.headerTitleLabel.bottomAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor constant:-kACRCitationHeaderBottomPadding],
-        
-        [self.separatorView.topAnchor constraintEqualToAnchor:self.headerSection.bottomAnchor],
-        [self.separatorView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.separatorView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [self.separatorView.heightAnchor constraintEqualToConstant:kACRCitationSeparatorHeight]
-    ]];
-}
+
 
 - (void)setupScrollView
 {
@@ -193,51 +218,32 @@
     
     NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
     
-    // Determine the top anchor for scroll view based on header and dismiss button presence
+    // Determine the top anchor for scroll view based on what UI elements are present
     NSLayoutYAxisAnchor *scrollViewTopAnchor;
     CGFloat scrollViewTopConstant = 0;
     
-    // If header exists, position header at top and scroll view below separator
     if (self.headerSection) {
+        // Unified header view is present (contains button and/or title)
         [constraints addObjectsFromArray:@[
             [self.headerSection.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8]
         ]];
         scrollViewTopAnchor = self.separatorView.bottomAnchor;
         scrollViewTopConstant = 8;
+    } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
+        // Only drag indicator is present
+        [constraints addObjectsFromArray:@[
+            [self.dragIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
+            [self.dragIndicator.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+            [self.dragIndicator.widthAnchor constraintEqualToConstant:36],
+            [self.dragIndicator.heightAnchor constraintEqualToConstant:4],
+        ]];
+        
+        scrollViewTopAnchor = self.view.topAnchor;
+        scrollViewTopConstant = 20;
     } else {
-        // No header, position elements as before
-        if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross ||
-            self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeBack) {
-
-            UIEdgeInsets btnInsets = self.config.closeButtonInsets;
-            CGFloat closeBtnSize = self.config.closeButtonSize;
-
-            // Dismiss button constraints (same for cross and back buttons)
-            [constraints addObjectsFromArray:@[
-                [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnInsets.top],
-                [self.dismissButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:btnInsets.left],
-                [self.dismissButton.widthAnchor constraintEqualToConstant:closeBtnSize],
-                [self.dismissButton.heightAnchor constraintEqualToAnchor:self.dismissButton.widthAnchor],
-            ]];
-            
-            scrollViewTopAnchor = self.view.topAnchor;
-            scrollViewTopConstant = 20;
-        } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
-            // Drag indicator constraints
-            [constraints addObjectsFromArray:@[
-                [self.dragIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
-                [self.dragIndicator.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-                [self.dragIndicator.widthAnchor constraintEqualToConstant:36],
-                [self.dragIndicator.heightAnchor constraintEqualToConstant:4],
-            ]];
-            
-            scrollViewTopAnchor = self.view.topAnchor;
-            scrollViewTopConstant = 20;
-        } else {
-            // No dismiss button - scroll view starts at top with padding
-            scrollViewTopAnchor = self.view.topAnchor;
-            scrollViewTopConstant = 8;
-        }
+        // No header or drag indicator - scroll view starts at top with padding
+        scrollViewTopAnchor = self.view.topAnchor;
+        scrollViewTopConstant = 8;
     }
     
     // Scroll view top constraint

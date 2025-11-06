@@ -10,6 +10,7 @@
 #import "ACOReference.h"
 #import "ACOCitation.h"
 #import "ACOBundle.h"
+#import "UIColor+GrayColor.h"
 
 // Layout Constants (inherits kACRCitationViewSpacing from base class)
 static const CGFloat kACRCitationViewSpacing = 8.0;
@@ -44,13 +45,6 @@ static const CGFloat kACRCitationMoreDetailsButtonFontSize = 14.0;
 
 // Layout Proportions
 static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
-
-
-@interface UIColor (ACRCitationReferenceView)
-
-+ (UIColor *)grayColorWithValue:(NSInteger)value;
-
-@end
 
 @interface ACRCitationReferenceView ()
 
@@ -370,23 +364,6 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     NSString *iconName = [reference icon:_citation.theme];
     UIImage *image = [UIImage imageNamed:iconName inBundle:[[ACOBundle getInstance] getBundle] compatibleWithTraitCollection:nil];
     self.iconImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-}
-
-@end
-
-#pragma mark - UIColor Private Extension
-
-@implementation UIColor (ACRCitationReferenceView)
-
-+ (UIColor *)grayColorWithValue:(NSInteger)value {
-    // Clamp value to 0-255 range
-    NSInteger clampedValue = MAX(0, MIN(255, value));
-    CGFloat normalizedValue = clampedValue / 255.0;
-    
-    return [UIColor colorWithRed:normalizedValue 
-                           green:normalizedValue 
-                            blue:normalizedValue 
-                           alpha:1.0];
 }
 
 @end

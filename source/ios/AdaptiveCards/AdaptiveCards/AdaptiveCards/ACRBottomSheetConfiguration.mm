@@ -51,7 +51,13 @@ static const CGFloat kDefaultCloseButtonSize = 28.0f;
     }
     return self;
 }
+#pragma mark - computed props
 
+- (BOOL) hasDismissButton
+{
+    return self.dismissButtonType == ACRBottomSheetDismissButtonTypeCross ||
+    self.dismissButtonType == ACRBottomSheetDismissButtonTypeBack;
+}
 #pragma mark - Property Validation
 
 - (void)setMinHeightMultiplier:(CGFloat)minHeightMultiplier
