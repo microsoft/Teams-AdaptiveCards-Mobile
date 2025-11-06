@@ -51,12 +51,9 @@
     
     // Setup unified header view if we have header text OR dismiss button (excluding drag indicator)
     BOOL hasHeaderText = (self.config.headerText && self.config.headerText.length > 0);
-    BOOL hasDismissButton = [self.config hasDismissButton];
     
-    if (hasHeaderText || hasDismissButton) {
+    if (hasHeaderText || (self.config.dismissButtonType != ACRBottomSheetDismissButtonTypeNone)) {
         [self setupUnifiedHeaderView];
-    } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
-        [self setupDragIndicator];
     }
     
     [self setupScrollView];
@@ -113,6 +110,8 @@
     // Setup dismiss button if needed
     if ([self.config hasDismissButton]) {
         [self setupDismissButton];
+    } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
+        [self setupDragIndicator];
     }
     
     // Separator
@@ -197,9 +196,15 @@
     dragIndicator.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:dragIndicator];
     self.dragIndicator = dragIndicator;
+    
+    // Only drag indicator is present
+    [NSLayoutConstraint activateConstraints:@[
+        [self.dragIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
+        [self.dragIndicator.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.dragIndicator.widthAnchor constraintEqualToConstant:36],
+        [self.dragIndicator.heightAnchor constraintEqualToConstant:4],
+    ]];
 }
-
-
 
 - (void)setupScrollView
 {
@@ -219,7 +224,7 @@
     NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
     
     // Determine the top anchor for scroll view based on what UI elements are present
-    NSLayoutYAxisAnchor *scrollViewTopAnchor;
+    NSLayoutYAxisAnchor *scrollViewTopAnchor = self.view.topAnchor;;
     CGFloat scrollViewTopConstant = 0;
     
     if (self.headerSection) {
@@ -227,31 +232,19 @@
         [constraints addObjectsFromArray:@[
             [self.headerSection.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8]
         ]];
-        scrollViewTopAnchor = self.separatorView.bottomAnchor;
-        scrollViewTopConstant = 8;
+        scrollViewTopAnchor = self.headerSection.bottomAnchor;
+        scrollViewTopConstant = 0;
     } else if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeDragIndicator) {
-        // Only drag indicator is present
-        [constraints addObjectsFromArray:@[
-            [self.dragIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:8],
-            [self.dragIndicator.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-            [self.dragIndicator.widthAnchor constraintEqualToConstant:36],
-            [self.dragIndicator.heightAnchor constraintEqualToConstant:4],
-        ]];
-        
-        scrollViewTopAnchor = self.view.topAnchor;
         scrollViewTopConstant = 20;
     } else {
         // No header or drag indicator - scroll view starts at top with padding
-        scrollViewTopAnchor = self.view.topAnchor;
         scrollViewTopConstant = 8;
     }
     
-    // Scroll view top constraint
-    [constraints addObject:[self.scrollView.topAnchor constraintEqualToAnchor:scrollViewTopAnchor constant:scrollViewTopConstant]];
-    
     // Common scroll view and content constraints
-    [constraints addObjectsFromArray:@[
+    [NSLayoutConstraint activateConstraints:@[
         /* scroll container */
+        [self.scrollView.topAnchor constraintEqualToAnchor:scrollViewTopAnchor constant:scrollViewTopConstant],
         [self.scrollView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [self.scrollView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
         [self.scrollView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
@@ -263,8 +256,6 @@
         [self.contentView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
         [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant:(-2 * contentPad)],
     ]];
-    
-    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (CGSize)preferredContentSize
