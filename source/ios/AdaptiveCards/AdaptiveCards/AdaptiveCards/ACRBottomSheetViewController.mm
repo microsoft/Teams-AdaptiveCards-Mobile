@@ -241,8 +241,7 @@
         scrollViewTopConstant = 8;
     }
     
-    // Common scroll view and content constraints
-    [NSLayoutConstraint activateConstraints:@[
+    [constraints addObjectsFromArray:@[
         /* scroll container */
         [self.scrollView.topAnchor constraintEqualToAnchor:scrollViewTopAnchor constant:scrollViewTopConstant],
         [self.scrollView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
@@ -256,6 +255,9 @@
         [self.contentView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
         [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant:(-2 * contentPad)],
     ]];
+    
+    // Common scroll view and content constraints
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (CGSize)preferredContentSize
