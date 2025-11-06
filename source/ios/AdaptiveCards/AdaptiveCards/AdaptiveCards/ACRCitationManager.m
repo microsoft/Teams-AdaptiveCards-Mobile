@@ -153,6 +153,8 @@ static NSString *const referencesKey = @"References";
     config.minHeight = self.bottomSheetViewController.preferredContentSize.height;
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeBack;
     config.headerText = NSLocalizedString(referencesKey, nil);
+    config.referenceWindowHeight = self.activeViewController.view.frame.size.height;
+    
     ACOAdaptiveCard *acoCard = reference.content;
     acoCard.shouldNotRenderActions = YES;
     ACRRenderResult *renderResult = [ACRRenderer render:acoCard
@@ -164,7 +166,9 @@ static NSString *const referencesKey = @"References";
     UIView *cardContentView = (UIView *)renderResult.view;
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:cardContentView
                                                                                                configuration:config];
+    
     [self.bottomSheetViewController presentViewController:currentBottomSheet animated:YES completion:nil];
+    
 }
 
 @end

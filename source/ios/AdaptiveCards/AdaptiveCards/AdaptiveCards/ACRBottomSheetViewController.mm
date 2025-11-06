@@ -264,12 +264,17 @@
     [self.view layoutIfNeeded];
     CGFloat header = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
     CGFloat naturalHeight =  header + self.scrollView.contentSize.height;
-    CGFloat presentingViewHeight = self.presentingViewController.view.bounds.size.height;
-    CGFloat maxH = self.config.maxHeightMultiplier * presentingViewHeight;
+    
+    CGFloat referenceHeight = self.config.referenceWindowHeight;
+    if (referenceHeight == NSNotFound) {
+        referenceHeight = self.presentingViewController.view.bounds.size.height;
+    }
+    
+    CGFloat maxH = self.config.maxHeightMultiplier * referenceHeight;
     CGFloat min = self.config.minHeight;
     
     if (min == NSNotFound) {
-        min = self.config.minHeightMultiplier * presentingViewHeight;
+        min = self.config.minHeightMultiplier * referenceHeight;
     }
     
     CGFloat sheetH = MAX(min, MIN(naturalHeight, maxH));
@@ -283,25 +288,13 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)backAction
-{
-    // Check if we're in a navigation controller and can pop
-    if (self.navigationController && self.navigationController.viewControllers.count > 1) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-        // Fallback to dismiss if not in navigation stack
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
 // MARK: Transition Delegate
 - (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented
                                                       presentingViewController:(UIViewController *)presenting
                                                           sourceViewController:(UIViewController *)source
 {
-    ACRBottomSheetPresentationController *pres = [[ACRBottomSheetPresentationController alloc] initWithPresentedViewController:presented
+    return [[ACRBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                                 presentingViewController:presenting];
-    return pres;
 }
 
 @end
