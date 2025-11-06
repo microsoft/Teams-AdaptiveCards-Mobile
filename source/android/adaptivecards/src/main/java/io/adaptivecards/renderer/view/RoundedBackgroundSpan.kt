@@ -18,7 +18,7 @@ class RoundedBackgroundSpan(
     borderWidthDp: Float = 1f,
     paddingHorizontalDp: Float = 4f,
     paddingVerticalDp: Float = 2f,
-    private val textSizeSp: Float = 12f
+    private val textSizeSp: Float = 13f
 ) : ReplacementSpan() {
 
     private val cornerRadius: Float = cornerRadiusDp.dpToPx(context)

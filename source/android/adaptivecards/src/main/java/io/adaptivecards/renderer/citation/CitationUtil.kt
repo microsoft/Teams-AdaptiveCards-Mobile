@@ -114,7 +114,8 @@ object CitationUtil {
                 backgroundColor,
                 borderColor,
                 spanStart,
-                spanEnd
+                spanEnd,
+                13f
             )
 
             val clickableSpan = CitationClickableSpan(
@@ -146,6 +147,7 @@ object CitationUtil {
                 hostConfig.GetCitationBlock().borderColor.toColorInt(),
                 0,
                 paragraph.length,
+                12f
         )
     }
 
@@ -157,13 +159,15 @@ object CitationUtil {
         backgroundColor: Int,
         borderColor: Int,
         spanStart: Int,
-        spanEnd: Int
+        spanEnd: Int,
+        textSizeSp: Float
     ) {
         val roundedBackgroundSpan = RoundedBackgroundSpan(
                 context,
                 textColor,
                 backgroundColor,
-                borderColor
+                borderColor,
+                textSizeSp = textSizeSp
         )
         paragraph.setSpan(
                 roundedBackgroundSpan,
