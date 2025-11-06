@@ -20,6 +20,7 @@
 #import "ACRCitationReferenceMoreDetailsView.h"
 #import "ACRRenderer.h"
 #import "ACRRenderResult.h"
+#import "ACRContentStackView.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate, ACRCitationReferenceViewDelegate>
 
@@ -148,13 +149,16 @@
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
     config.contentPadding = 8;
     config.minHeight = self.bottomSheetViewController.preferredContentSize.height;
-    config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
+    config.dismissButtonType = ACRBottomSheetDismissButtonTypeBack;
     
     ACRRenderResult *renderResult = [ACRRenderer render:reference.content
                                                  config:self.rootView.hostConfig
                                         widthConstraint:self.rootView.frame.size.width
                                                   theme:citation.theme];
-    ACRCitationReferenceMoreDetailsView *moreDetailsView = [[ACRCitationReferenceMoreDetailsView alloc] initWithAdaptiveCard: (UIView *)renderResult.view];
+        
+    
+    UIView *cardContentView = (UIView *)renderResult.view;
+    ACRCitationReferenceMoreDetailsView *moreDetailsView = [[ACRCitationReferenceMoreDetailsView alloc] initWithAdaptiveCard: cardContentView];
     ACRBottomSheetViewController *currentBottomSheet = [[ACRBottomSheetViewController alloc] initWithContent:moreDetailsView
                                                                                                configuration:config];
     [self.bottomSheetViewController presentViewController:currentBottomSheet animated:YES completion:nil];

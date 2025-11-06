@@ -114,18 +114,21 @@
     self.scrollView = scrollView;
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.scrollView addSubview:self.contentView];
+    [self.contentView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
 }
 
 - (void)setupConstraints
 {
     CGFloat contentPad = self.config.contentPadding;
-    UIEdgeInsets btnInsets = self.config.closeButtonInsets;
-    CGFloat closeBtnSize = self.config.closeButtonSize;
     
     NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
     
-    if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross || 
+    if (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross ||
         self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeBack) {
+
+        UIEdgeInsets btnInsets = self.config.closeButtonInsets;
+        CGFloat closeBtnSize = self.config.closeButtonSize;
+
         // Dismiss button constraints (same for cross and back buttons)
         [constraints addObjectsFromArray:@[
             [self.dismissButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:btnInsets.top],
@@ -181,7 +184,7 @@
     [self.view layoutIfNeeded];
     CGFloat header = CGRectGetMinY(self.scrollView.frame) + self.view.safeAreaInsets.bottom;
     CGFloat naturalHeight =  header + self.scrollView.contentSize.height;
-    CGFloat presentingViewHeight = self.presentingViewController.view.bounds.size.height;
+    CGFloat presentingViewHeight = 800;//self.presentingViewController.view.bounds.size.height;
     CGFloat maxH = self.config.maxHeightMultiplier * presentingViewHeight;
     CGFloat min = self.config.minHeight;
     

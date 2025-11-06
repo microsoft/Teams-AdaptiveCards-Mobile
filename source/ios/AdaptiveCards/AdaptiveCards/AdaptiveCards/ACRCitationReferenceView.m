@@ -93,8 +93,6 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     self.mainContentStackView = mainContentStackView;
 }
 
-
-
 // Main content horizontal stack view
 - (UIStackView *)setupMainContentSection {
     UIStackView *mainContentStackView = [[UIStackView alloc] init];

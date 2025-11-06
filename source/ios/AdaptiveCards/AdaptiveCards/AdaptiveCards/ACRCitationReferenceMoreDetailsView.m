@@ -9,7 +9,7 @@
 #import "ACRCitationReferenceMoreDetailsView.h"
 
 @interface ACRCitationReferenceMoreDetailsView ()
-@property (nonatomic, weak) UIStackView *contentStackView;
+@property (nonatomic, weak) UIView *contentView;
 @end
 
 @implementation ACRCitationReferenceMoreDetailsView
@@ -19,45 +19,51 @@
 - (instancetype)initWithAdaptiveCard:(UIView *)adaptiveCard {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        _adaptiveCard = adaptiveCard;
-        [self setupContentView];
+        [self setupContentViewWithAdaptiveCard: adaptiveCard];
     }
     return self;
 }
 
 #pragma mark - Base Class Overrides
 
-- (void)setupContentView {
-    [super setupContentView];
+- (void)setupContentViewWithAdaptiveCard:(UIView *)cardView {
     
-    // Create content stack view to hold the adaptive card
-    UIStackView *contentStackView = [[UIStackView alloc] init];
-    contentStackView.axis = UILayoutConstraintAxisVertical;
-    contentStackView.alignment = UIStackViewAlignmentFill;
-    contentStackView.translatesAutoresizingMaskIntoConstraints = NO;
+    UIView *contentView = [[UIView alloc] init];
+    contentView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    // Add the adaptive card to the content stack view
-    if (self.adaptiveCard) {
-        self.adaptiveCard.translatesAutoresizingMaskIntoConstraints = NO;
-        [contentStackView addArrangedSubview:self.adaptiveCard];
+    [self.rootStackView addArrangedSubview:contentView];
+    self.contentView = contentView;
+    
+    cardView.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentView addSubview:cardView];
+//    [self.rootStackView addArrangedSubview:cardView];
+    self.adaptiveCard = cardView;
+    
+    [NSLayoutConstraint activateConstraints:@[
+        [self.adaptiveCard.topAnchor constraintEqualToAnchor:self.contentView.topAnchor],
+        [self.adaptiveCard.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+        [self.adaptiveCard.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
+        [self.adaptiveCard.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor]
+    ]];
+    
+    [self.adaptiveCard setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                                       forAxis:UILayoutConstraintAxisVertical];
+    // Ensure the root stack view fills available space
+    if (self.rootStackView) {
+        self.rootStackView.distribution = UIStackViewDistributionFill;
+        NSLog(@"ACRCitationReferenceMoreDetailsView: Set root stack view distribution to fill");
     }
-    
-    // Add content stack view to the inherited root stack view
-    [self.rootStackView addArrangedSubview:contentStackView];
-    self.contentStackView = contentStackView;
 }
 
-- (void)setupContentConstraints {
-    [super setupContentConstraints];
+- (void)layoutSubviews {
+    [super layoutSubviews];
     
-    // Content-specific constraints - the adaptive card should fill the content area
-    if (self.adaptiveCard && self.contentStackView) {
-        [NSLayoutConstraint activateConstraints:@[
-            [self.adaptiveCard.topAnchor constraintEqualToAnchor:self.contentStackView.topAnchor],
-            [self.adaptiveCard.leadingAnchor constraintEqualToAnchor:self.contentStackView.leadingAnchor],
-            [self.adaptiveCard.trailingAnchor constraintEqualToAnchor:self.contentStackView.trailingAnchor],
-            [self.adaptiveCard.bottomAnchor constraintEqualToAnchor:self.contentStackView.bottomAnchor]
-        ]];
+    // Debug: Log the final frame sizes after layout
+    NSLog(@"ACRCitationReferenceMoreDetailsView frame: %.2f x %.2f", 
+          self.frame.size.width, self.frame.size.height);
+    if (self.adaptiveCard) {
+        NSLog(@"Adaptive card frame: %.2f x %.2f", 
+              self.adaptiveCard.frame.size.width, self.adaptiveCard.frame.size.height);
     }
 }
 
