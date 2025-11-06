@@ -240,7 +240,7 @@ UIColor* defaultButtonBackgroundColor;
     #endif
     
     /// Directly Load A certain page for faster debugging
-       [self loadSamplesDirectlyWithVersion:@"v1.5" type:@"Elements" index:17];
+//       [self loadSamplesDirectlyWithVersion:@"v1.5" type:@"Elements" index:17];
 }
 
 - (void)viewWillAppear:(BOOL)animated

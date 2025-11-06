@@ -7,7 +7,6 @@
 //
 
 #import "ACOHostConfigPrivate.h"
-#import "ACRSVGImageView.h"
 #import "ACRBottomSheetViewController.h"
 #import "ACRBottomSheetPresentationController.h"
 #import "ACRBottomSheetConfiguration.h"
@@ -136,23 +135,22 @@
 
 - (void)setupDismissButton
 {
-    NSString *buttonIconName = (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross) ? @"dismiss" : @"ChevronLeft";
+    CGFloat buttonWidth = 16.0;
+    NSString *systemIconName = (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross) ? @"xmark" : @"chevron.left";
     NSString *buttonIconA11yName = (self.config.dismissButtonType == ACRBottomSheetDismissButtonTypeCross) ? @"Dismiss" : @"Back";
 
     UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
     dismissButton.accessibilityLabel = NSLocalizedString(buttonIconA11yName, nil);
     
-    NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, buttonIconName, buttonIconName];
+    // Use system image with configuration
+    UIImageSymbolConfiguration *configuration = [UIImageSymbolConfiguration configurationWithPointSize:buttonWidth weight:UIImageSymbolWeightRegular];
+    UIImage *buttonIcon = [UIImage systemImageNamed:systemIconName withConfiguration:configuration];
+    [dismissButton setImage:buttonIcon forState:UIControlStateNormal];
     
-    CGSize iconSize = CGSizeMake(24, 24);
+    // Set tint color from host config
     UIColor *tintColor = [self.config.hostConfig getPopoverTintColor];
-    UIImageView *imageView = [[ACRSVGImageView alloc] init:url
-                                                       rtl:ACRRtlNone
-                                                  isFilled:false
-                                                      size:iconSize
-                                                 tintColor:tintColor];
-    imageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [dismissButton addSubview:imageView];
+    dismissButton.tintColor = tintColor;
+    
     [dismissButton addTarget:self
                       action:@selector(closeAction)
             forControlEvents:UIControlEventTouchUpInside];
@@ -161,30 +159,11 @@
     self.dismissButton = dismissButton;
     
     [NSLayoutConstraint activateConstraints:@[
-        [imageView.leadingAnchor constraintEqualToAnchor:dismissButton.leadingAnchor],
-        [imageView.trailingAnchor constraintEqualToAnchor:dismissButton.trailingAnchor],
-        [imageView.topAnchor constraintEqualToAnchor:dismissButton.topAnchor],
-        [imageView.bottomAnchor constraintEqualToAnchor:dismissButton.bottomAnchor],
-        [dismissButton.widthAnchor constraintEqualToConstant:24],
-        [dismissButton.heightAnchor constraintEqualToConstant:24],
+        [dismissButton.widthAnchor constraintEqualToConstant:32],
+        [dismissButton.heightAnchor constraintEqualToConstant:32],
         [dismissButton.leadingAnchor constraintEqualToAnchor:self.headerSection.leadingAnchor constant:16.0],
         [dismissButton.centerYAnchor constraintEqualToAnchor:self.headerSection.centerYAnchor],
     ]];
-}
-
-- (UIImageView *)createSVGImageViewForIcon:(NSString *)iconName
-{
-    NSString *dismissIcon = iconName.lowercaseString;
-    NSString *url = [[NSString alloc] initWithFormat:@"%@%@/%@.json", baseFluentIconCDNURL, dismissIcon, dismissIcon];
-    CGSize iconSize = CGSizeMake(24, 24);
-    UIColor *tintColor = [self.config.hostConfig getPopoverTintColor];
-    UIImageView *imageView = [[ACRSVGImageView alloc] init:url
-                                                       rtl:ACRRtlNone
-                                                  isFilled:false
-                                                      size:iconSize
-                                                 tintColor:tintColor];
-    imageView.translatesAutoresizingMaskIntoConstraints = NO;
-    return imageView;
 }
 
 - (void)setupDragIndicator
@@ -254,7 +233,7 @@
         [self.contentView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
         [self.contentView.widthAnchor constraintEqualToAnchor:self.scrollView.widthAnchor constant:(-2 * contentPad)],
     ]];
-
+    
     // Common scroll view and content constraints
     [NSLayoutConstraint activateConstraints:constraints];
 }
