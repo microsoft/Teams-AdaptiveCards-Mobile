@@ -115,8 +115,8 @@ NSSet *unsupportedActionItems = [NSSet setWithArray:@[
 
     std::vector<std::shared_ptr<BaseCardElement>> body = adaptiveCard->GetBody();
     ACRColumnView *verticalView = containingView;
-
-    std::vector<std::shared_ptr<BaseActionElement>> actions = adaptiveCard->GetActions();
+    
+    std::vector<std::shared_ptr<BaseActionElement>> actions = [rootView.card shouldNotRenderActions] ? std::vector<std::shared_ptr<BaseActionElement>>() : adaptiveCard->GetActions();
     
     if (!actions.empty()) {
         [rootView loadImagesForActionsAndCheckIfAllActionsHaveIconImages:actions hostconfig:config hash:iOSInternalIdHash(adaptiveCard->GetInternalId().Hash())];
