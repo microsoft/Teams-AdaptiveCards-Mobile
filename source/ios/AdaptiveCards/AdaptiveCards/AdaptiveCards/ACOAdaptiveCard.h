@@ -23,11 +23,13 @@
 #import <Foundation/Foundation.h>
 
 @class SwiftAdaptiveCardParseResult;
+@class ACOReference;
 
 @interface ACOAdaptiveCard : NSObject
 
 @property (nullable, nonatomic, strong) ACORefresh *refresh;
 @property (nullable, nonatomic, strong) ACOAuthentication *authentication;
+@property BOOL shouldNotRenderActions;
 
 + (nonnull ACOAdaptiveCardParseResult *)fromJson:(nullable NSString *)payload;
 - (nullable NSData *)inputs;
@@ -36,6 +38,7 @@
 - (void)appendInputs:(nonnull NSArray *)inputs;
 - (nullable NSArray<ACORemoteResourceInformation *> *)remoteResourceInformation;
 - (nullable NSData *)additionalProperty;
+- (nullable NSArray<ACOReference *> *)references;
 
 /// Swift Adaptive Card Bridge Layer
 - (nullable SwiftAdaptiveCardParseResult *)swiftParseResult;

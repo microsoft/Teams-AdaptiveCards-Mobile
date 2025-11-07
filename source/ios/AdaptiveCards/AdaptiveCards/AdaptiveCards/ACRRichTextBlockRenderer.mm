@@ -7,8 +7,11 @@
 
 #import "ACOAdaptiveCardPrivate.h"
 #import "ACRRichTextBlockRenderer.h"
+#import "ACRCitationManager.h"
+#import "ACRViewTextAttachment.h"
 #import "ACOBaseActionElementPrivate.h"
 #import "ACOBaseCardElementPrivate.h"
+#import "ACOCitation.h"
 #import "ACOHostConfigPrivate.h"
 #import "ACRAggregateTarget.h"
 #import "ACRContentHoldingUIView.h"
@@ -16,6 +19,7 @@
 #import "ACRTapGestureRecognizerFactory.h"
 #import "ACRUILabel.h"
 #import "ACRView.h"
+#import "CitationRun.h"
 #import "DateTimePreparsedToken.h"
 #import "DateTimePreparser.h"
 #import "HostConfig.h"
@@ -24,8 +28,20 @@
 #import "TextRun.h"
 #import "TextInput.h"
 #import "UtiliOS.h"
+#import "ACRViewAttachingTextView.h"
 
-@implementation ACRRichTextBlockRenderer
+@implementation ACRRichTextBlockRenderer {
+    ACRCitationManager *_citationManager;
+}
+
+#pragma mark - Lazy Properties
+
+- (ACRCitationManager *)citationManager {
+    if (!_citationManager) {
+        _citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
+    }
+    return _citationManager;
+}
 
 + (ACRRichTextBlockRenderer *)getInstance
 {
@@ -47,8 +63,9 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<RichTextBlock> rTxtBlck = std::dynamic_pointer_cast<RichTextBlock>(elem);
-    ACRUILabel *lab =
-        [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, viewGroup.frame.size.width, 0)];
+    
+    ACRViewAttachingTextView *lab = [[ACRViewAttachingTextView alloc] initWithFrame:CGRectMake(0, 0, viewGroup.frame.size.width, 0)];
+
     lab.backgroundColor = [UIColor clearColor];
     lab.style = [viewGroup style];
     // Apple Bug: without setting editable to YES, VO link navigation in iOS 12 and above
@@ -67,24 +84,24 @@
         BOOL hasLongPressGestureRecognizerAdded = NO;
         for (const auto &inlineText : rTxtBlck->GetInlines()) {
             switch (inlineText->GetInlineType()) {
-                case AdaptiveCards::InlineElementType::TextRun:
+                case InlineElementType::TextRun:
                 {
                     std::shared_ptr<TextRun> textRun = std::static_pointer_cast<TextRun>(inlineText);
                     if (textRun) {
                         NSNumber *number =
-                        [NSNumber numberWithUnsignedLongLong:(unsigned long long)textRun.get()];
+                            [NSNumber numberWithUnsignedLongLong:(unsigned long long)textRun.get()];
                         NSString *key = [number stringValue];
                         NSData *htmlData = nil;
                         NSDictionary *options = nil;
                         NSDictionary *descriptor = nil;
                         NSString *text = nil;
-                        
+
                         if (![textMap objectForKey:key]) {
                             RichTextElementProperties textProp;
                             TextRunToRichTextElementProperties(textRun, textProp);
                             buildIntermediateResultForText(rootView, acoConfig, textProp, key);
                         }
-                        
+
                         NSDictionary *data = textMap[key];
                         if (data) {
                             htmlData = data[@"html"];
@@ -99,7 +116,7 @@
                             std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
                             text = [NSString stringWithUTF8String:replacedText.c_str()];
                         }
-                        
+
                         NSMutableAttributedString *textRunContent = nil;
                         // Initializing NSMutableAttributedString for HTML rendering is very slow
                         if (htmlData) {
@@ -108,7 +125,7 @@
                                                                           documentAttributes:nil
                                                                                        error:nil];
                             UpdateFontWithDynamicType(textRunContent);
-                            
+
                             lab.selectable = YES;
                             lab.dataDetectorTypes = UIDataDetectorTypeLink | UIDataDetectorTypePhoneNumber;
                             lab.userInteractionEnabled = YES;
@@ -119,16 +136,16 @@
                         // Set paragraph style such as line break mode and alignment
                         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
                         paragraphStyle.alignment =
-                        [ACOHostConfig getTextBlockAlignment:rTxtBlck->GetHorizontalAlignment().value_or(HorizontalAlignment::Left)
-                                                     context:rootView.context];
-                        
+                            [ACOHostConfig getTextBlockAlignment:rTxtBlck->GetHorizontalAlignment().value_or(HorizontalAlignment::Left)
+                                                         context:rootView.context];
+
                         // Obtain text color to apply to the attributed string
                         ACRContainerStyle style = lab.style;
                         auto textColor = textRun->GetTextColor().value_or(ForegroundColor::Default);
                         auto foregroundColor = [acoConfig getTextBlockColor:style
                                                                   textColor:textColor
                                                                subtleOption:textRun->GetIsSubtle().value_or(false)];
-                        
+
                         // Config and add Select Action
                         std::shared_ptr<BaseActionElement> baseAction = textRun->GetSelectAction();
                         ACOBaseActionElement *acoAction = [[ACOBaseActionElement alloc] initWithBaseActionElement:baseAction];
@@ -138,21 +155,21 @@
                                 buildTarget([rootView getSelectActionsTargetBuilderDirector], acoAction,
                                             &target)) {
                                 NSRange selectActionRange = NSMakeRange(0, textRunContent.length);
-                                
+
                                 [textRunContent addAttribute:NSLinkAttributeName
                                                        value:target
                                                        range:selectActionRange];
-                                
+
                                 if (!hasGestureRecognizerAdded) {
                                     [ACRTapGestureRecognizerFactory
-                                     addTapGestureRecognizerToUITextView:lab
-                                     target:(NSObject<ACRSelectActionDelegate>
-                                             *)target
-                                     rootView:rootView
-                                     hostConfig:acoConfig];
+                                        addTapGestureRecognizerToUITextView:lab
+                                                                     target:(NSObject<ACRSelectActionDelegate>
+                                                                                 *)target
+                                                                   rootView:rootView
+                                                                 hostConfig:acoConfig];
                                     hasGestureRecognizerAdded = YES;
                                 }
-                                
+
                                 if (acoAction.inlineTooltip && [acoAction.inlineTooltip length]) {
                                     [((ACRBaseTarget *)target) setTooltip:lab toolTipText:acoAction.inlineTooltip];
                                     if (!hasLongPressGestureRecognizerAdded) {
@@ -161,17 +178,17 @@
                                         hasLongPressGestureRecognizerAdded = YES;
                                     }
                                 }
-                                
+
                                 foregroundColor = UIColor.linkColor;
                             }
                         }
-                        
+
                         // apply hightlight to textrun
                         if (textRun->GetHighlight()) {
                             UIColor *highlightColor = [acoConfig getHighlightColor:style
                                                                    foregroundColor:textRun->GetTextColor().value_or(ForegroundColor::Default)
                                                                       subtleOption:textRun->GetIsSubtle().value_or(false)];
-#if TARGET_OS_VISION
+                            #if TARGET_OS_VISION
                             // Reduce alpha component and add shadow to ensure is visible on Vision Pro
                             highlightColor = [highlightColor colorWithAlphaComponent:0.3];
                             
@@ -181,25 +198,25 @@
                             [textRunContent addAttribute:NSShadowAttributeName
                                                    value:shadow
                                                    range:NSMakeRange(0, textRunContent.length)];
-#endif
+                            #endif
                             
                             [textRunContent addAttribute:NSBackgroundColorAttributeName
                                                    value:highlightColor
                                                    range:NSMakeRange(0, textRunContent.length)];
                         }
-                        
+
                         if (textRun->GetStrikethrough()) {
                             [textRunContent addAttribute:NSStrikethroughStyleAttributeName
                                                    value:[NSNumber numberWithInteger:NSUnderlineStyleSingle]
                                                    range:NSMakeRange(0, textRunContent.length)];
                         }
-                        
+
                         if (textRun->GetUnderline()) {
                             [textRunContent addAttribute:NSUnderlineStyleAttributeName
                                                    value:[NSNumber numberWithInteger:NSUnderlineStyleSingle]
                                                    range:NSMakeRange(0, textRunContent.length)];
                         }
-                        
+
                         // Add paragraph style, text color, text weight as attributes to a
                         // NSMutableAttributedString, content.
                         [textRunContent addAttributes:@{
@@ -207,12 +224,47 @@
                             NSForegroundColorAttributeName : foregroundColor,
                         }
                                                 range:NSMakeRange(0, textRunContent.length)];
-                        
+
                         [content appendAttributedString:textRunContent];
                     }
-                }
                     break;
-                default: break;
+                }
+                case InlineElementType::CitationRun:
+                {
+                    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+                    
+                    BOOL isCitationsEnabled = [featureFlagResolver boolForFlag:@"isCitationsEnabled"] ?: NO;
+                    if (isCitationsEnabled)
+                    {
+                        std::shared_ptr<CitationRun> citationRun = std::static_pointer_cast<CitationRun>(inlineText);
+                        if (citationRun) {
+                            NSNumber *number =
+                            [NSNumber numberWithUnsignedLongLong:(unsigned long long)citationRun.get()];
+                            NSString *key = [number stringValue];
+                            NSString *text = nil;
+                            NSDictionary *data = textMap[key];
+                            if (data) {
+                                text = data[@"nonhtml"];
+                                NSNumber *referenceId = @(citationRun->GetReferenceIndex());
+                                ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:text
+                                                                                  referenceIndex:referenceId
+                                                                                           theme:rootView.theme];
+                                NSArray<ACOReference *> *references = [[rootView card] references];
+                                
+                                ACRCitationManager *citationManager = [self citationManager];
+                                [citationManager setRootView:rootView];
+                                
+                                // Use citation manager (rootView is stored as property)
+                                NSAttributedString *citationRunContent = [citationManager buildCitationAttachmentWithCitation:citation
+                                                                                                                   references:references];
+                                [content appendAttributedString:citationRunContent];
+                            }
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
             }
         }
         
@@ -274,6 +326,20 @@
     [viewGroup addArrangedSubview:lab withAreaName:areaName];
 
     return lab;
+}
+
+#pragma mark - Citation Processing
+
+- (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView {
+    
+    // References contain the array of references to render
+    NSArray<ACOReference *> *references = [[rootView card] references];
+    
+    ACRCitationManager *citationManager = [self citationManager];
+    [citationManager setRootView:rootView];
+    
+    // Use citation manager (rootView is stored as property)
+    return [citationManager buildCitationsFromAttributedString:content references:references];
 }
 
 @end

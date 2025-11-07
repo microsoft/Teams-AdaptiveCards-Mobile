@@ -23,5 +23,6 @@
 @property ACRViewController *viewcontroller;
 @property BOOL succeeded;
 @property (weak) NSArray<ACOWarning *> *warnings;
+@property BOOL shouldShowActionElements;
 
 @end

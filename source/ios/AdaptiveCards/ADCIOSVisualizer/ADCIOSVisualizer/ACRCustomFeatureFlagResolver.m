@@ -13,6 +13,7 @@
 
 static NSString *const isSplitButtonEnabledKey = @"isSplitButtonEnabled";
 static NSString *const isProgressRingEnabledKey = @"isProgressRingEnabled";
+static NSString *const isCitationsEnabledKey = @"isCitationsEnabled";
 
 - (NSArray *)arrayForFlag:(NSString *)flag 
 {
@@ -37,6 +38,11 @@ static NSString *const isProgressRingEnabledKey = @"isProgressRingEnabled";
     }
     
     if([flag isEqualToString:isProgressRingEnabledKey])
+    {
+        return YES;
+    }
+    
+     if([flag isEqualToString:isCitationsEnabledKey])
     {
         return YES;
     }
