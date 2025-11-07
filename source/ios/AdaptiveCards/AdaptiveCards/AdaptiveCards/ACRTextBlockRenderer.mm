@@ -22,10 +22,24 @@
 #import "UtiliOS.h"
 #import "ARCGridViewLayout.h"
 #import "TSExpressionObjCBridge.h"
+#import "ACRViewTextAttachment.h"
+#import "ACRViewAttachingTextView.h"
+#import "ACRCitationManager.h"
 
-@implementation ACRTextBlockRenderer
+@implementation ACRTextBlockRenderer {
+    ACRCitationManager *_citationManager;
+}
 
 NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
+
+#pragma mark - Lazy Properties
+
+- (ACRCitationManager *)citationManager {
+    if (!_citationManager) {
+        _citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
+    }
+    return _citationManager;
+}
 
 + (ACRTextBlockRenderer *)getInstance
 {
@@ -39,22 +53,22 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
 }
 
 - (UIView *)render:(UIView<ACRIContentHoldingView> *)viewGroup
-           rootView:(ACRView *)rootView
-             inputs:(NSMutableArray *)inputs
-    baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig
+          rootView:(ACRView *)rootView
+            inputs:(NSMutableArray *)inputs
+   baseCardElement:(ACOBaseCardElement *)acoElem
+        hostConfig:(ACOHostConfig *)acoConfig
 {
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<TextBlock> txtBlck = std::dynamic_pointer_cast<TextBlock>(elem);
-
+    
     if (txtBlck->GetText().empty()) {
         return nil;
     }
-
-    ACRUILabel *lab = [[ACRUILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    
+    ACRViewAttachingTextView *lab = [[ACRViewAttachingTextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     lab.backgroundColor = [UIColor clearColor];
-
+    
     lab.style = [viewGroup style];
     NSMutableAttributedString *content = nil;
     if (rootView) {
@@ -66,13 +80,13 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         NSDictionary *options = nil;
         NSDictionary *descriptor = nil;
         NSString *text = nil;
-
+        
         if (![textMap objectForKey:key] || rootView.context.isFirstRowAsHeaders) {
             RichTextElementProperties textProp;
             TexStylesToRichTextElementProperties(txtBlck, [acoConfig getHostConfig]->GetTextStyles().columnHeader, textProp);
             buildIntermediateResultForText(rootView, acoConfig, textProp, key);
         }
-
+        
         data = textMap[key];
         htmlData = data[@"html"];
         options = data[@"options"];
@@ -92,9 +106,9 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
             content = [[NSMutableAttributedString alloc] initWithData:htmlData options:options documentAttributes:nil error:nil];
             // Drop newline char
             [content deleteCharactersInRange:NSMakeRange([content length] - 1, 1)];
-
+            
             UpdateFontWithDynamicType(content);
-
+            
             lab.selectable = YES;
             lab.dataDetectorTypes = UIDataDetectorTypeLink | UIDataDetectorTypePhoneNumber;
             lab.userInteractionEnabled = YES;
@@ -102,25 +116,35 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
             // if html rendering is skipped, remove p tags from both ends (<p>, </p>)
             content = [[NSMutableAttributedString alloc] initWithString:text attributes:descriptor];
         }
-
+        lab.selectable = YES;
+        lab.userInteractionEnabled = YES;
+        
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
+        BOOL isCitationsEnabled = [featureFlagResolver boolForFlag:@"isCitationsEnabled"] ?: NO;
+        if (isCitationsEnabled)
+        {
+            // Process citations using the new CitationManager
+            content = [[self processCitationsWithManager:content rootView:rootView] mutableCopy];
+        }
+        
         lab.textContainer.lineFragmentPadding = 0;
         lab.textContainerInset = UIEdgeInsetsZero;
         lab.layoutManager.usesFontLeading = false;
-
+        
         // Set paragraph style such as line break mode and alignment
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = [ACOHostConfig getTextBlockAlignment:txtBlck->GetHorizontalAlignment().value_or(HorizontalAlignment::Left) context:rootView.context];
-
+        
         auto sharedStyle = txtBlck->GetStyle();
         auto backUpColor = sharedStyle.has_value() ? txtBlck->GetTextColor().value_or(config->GetTextStyles().heading.color) : txtBlck->GetTextColor().value_or(ForegroundColor::Default);
         auto backUpIsSubtle = sharedStyle.has_value() ? txtBlck->GetIsSubtle().value_or(config->GetTextStyles().heading.isSubtle) : txtBlck->GetIsSubtle().value_or(false);
-
+        
         // Obtain text color to apply to the attributed string
         ACRContainerStyle style = lab.style;
         auto foregroundColor = [acoConfig getTextBlockColor:style textColor:backUpColor subtleOption:backUpIsSubtle];
-
+        
         // Add paragraph style, text color, text weight as attributes to a NSMutableAttributedString, content.
-
+        
         [content addAttributes:@{
             NSParagraphStyleAttributeName : paragraphStyle,
             NSForegroundColorAttributeName : foregroundColor,
@@ -134,7 +158,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
             NSAttributedString *redStar = initAttributedText(acoConfig, " *", redStarProperties, [viewGroup style]);
             [content appendAttributedString:redStar];
         }
-
+        
         lab.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
         lab.attributedText = content;
         lab.accessibilityLabel = content.string;
@@ -148,22 +172,22 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
             lab.isAccessibilityElement = NO;
         }
     }
-
+    
     lab.translatesAutoresizingMaskIntoConstraints = NO;
-
+    
     lab.textContainer.maximumNumberOfLines = int(txtBlck->GetMaxLines());
     if (!lab.textContainer.maximumNumberOfLines && !txtBlck->GetWrap()) {
         lab.textContainer.maximumNumberOfLines = 1;
     }
-
+    
     if (txtBlck->GetStyle() == TextStyle::Heading || rootView.context.isFirstRowAsHeaders) {
         lab.accessibilityTraits |= UIAccessibilityTraitHeader;
     }
-
+    
     lab.editable = NO;
     
     [lab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-
+    
     if (txtBlck->GetHeight() == HeightType::Auto) {
         [lab setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
     } else {
@@ -180,13 +204,26 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:lab withAreaName:areaName];
-
+    
     return lab;
 }
 
+#pragma mark - Citation Processing
+
+- (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView {
+    
+    // References contain the array of references to render
+    NSArray<ACOReference *> *references = [[rootView card] references];
+    
+    ACRCitationManager *citationManager = [self citationManager];
+    [citationManager setRootView:rootView];
+    
+    // Use citation manager (rootView is stored as property in citation manager)
+    return [citationManager buildCitationsFromNSLinkAttributesInAttributedString:content references:references];
+}
 
 #pragma mark - Expression Evaluation Helper
-- (void)handleExpressionEvaluationForTextBlock:(ACRUILabel *)label
+- (void)handleExpressionEvaluationForTextBlock:(ACRViewAttachingTextView *)label
                                       rootView:(ACRView *)rootView
                                baseCardElement:(ACOBaseCardElement *)acoElem
 {
@@ -205,9 +242,9 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         }
     }
 }
-    
+
 - (void)evaluateDynamicProperties:(NSString * _Nullable)textDynamic
-                            label:(ACRUILabel *)label
+                            label:(ACRViewAttachingTextView *)label
 {
     if (textDynamic && [textDynamic length] > 0)
     {

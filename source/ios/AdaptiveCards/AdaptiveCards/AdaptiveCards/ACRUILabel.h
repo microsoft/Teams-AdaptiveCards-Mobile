@@ -8,10 +8,14 @@
 #import "ACOBaseCardElement.h"
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ACRUILabel : UITextView <UITextViewDelegate>
 @property ACRContainerStyle style;
 @property CGFloat area;
 
-- (void)handleInlineAction:(UIGestureRecognizer *)gestureRecognizer;
-
+- (void)handleInlineAction:(nullable UIGestureRecognizer *)gestureRecognizer;
+- (nullable id) attribute:(NSAttributedStringKey)attrName atPoint:(CGPoint)point withEvent:(UIEvent *)event;
 @end
+
+NS_ASSUME_NONNULL_END

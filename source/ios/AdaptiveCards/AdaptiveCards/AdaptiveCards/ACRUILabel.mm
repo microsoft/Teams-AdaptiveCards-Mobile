@@ -50,9 +50,7 @@
     _area = area;
     [self updateAccessibility];
 }
-
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
+- (nullable id) attribute:(NSAttributedStringKey)attributeName atPoint:(CGPoint)point withEvent:(UIEvent *)event {
     CGPoint location = point;
     location.x -= self.textContainerInset.left;
     location.y -= self.textContainerInset.top;
@@ -60,15 +58,18 @@
     NSUInteger characterIndex = [self.layoutManager characterIndexForPoint:location
                                                            inTextContainer:self.textContainer
                                   fractionOfDistanceBetweenInsertionPoints:&fraction];
-    // TextView will handle the touch event if the touch was landed whithin the range over
+    // TextView will handle the touch event if the touch was landed within the range over
     // that link or custom attribute, SelectAction was defined
     if (!(fraction == 0.0 || fraction == 1.0) && characterIndex < self.textStorage.length) {
-        if ([self.textStorage attribute:NSLinkAttributeName atIndex:characterIndex effectiveRange:NULL] ||
-            [self.textStorage attribute:NSLinkAttributeName
-                                atIndex:characterIndex
-                         effectiveRange:NULL]) {
-            return self;
-        }
+        return [self.textStorage attribute:attributeName atIndex:characterIndex effectiveRange:NULL];
+    }
+    return nil;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if ([self attribute:NSLinkAttributeName atPoint:point withEvent:event] != nil) {
+        return self;
     }
     return nil;
 }
