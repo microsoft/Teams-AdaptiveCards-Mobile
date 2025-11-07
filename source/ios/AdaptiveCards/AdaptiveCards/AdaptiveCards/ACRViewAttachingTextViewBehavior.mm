@@ -133,8 +133,12 @@ static CGPoint ACRIntegralPointWithScaleFactor(CGPoint point, CGFloat scaleFacto
     }
     
     NSLayoutManager *layoutManager = self.textView.layoutManager;
-    CGFloat scaleFactor = self.textView.window.screen.scale ?: [UIScreen mainScreen].scale;
-    
+    CGFloat scaleFactor;
+    #if !TARGET_OS_VISION
+        scaleFactor = self.textView.window.screen.scale ?: [UIScreen mainScreen].scale;
+    #else
+        scaleFactor = 1.0;
+    #endif
     // For each attached subview, find its associated attachment and position it according to its text layout
     NSArray<NSDictionary *> *attachmentRanges = [self.textView.textStorage acr_subviewAttachmentRanges];
     

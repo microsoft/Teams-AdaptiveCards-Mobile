@@ -30,8 +30,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) ACRView *rootView;
 
-
+/**
+ * Parser for handling inline citation tokens in text content
+ * Processes citation patterns like "{{cite:0}}" found in TextBlock elements
+ * and converts them into interactive citation pills
+ */
 @property (nonatomic, strong) ACRInlineCitationTokenParser *inlineCitationParser;
+
+/**
+ * Parser for handling citation runs in RichTextBlock elements
+ * Processes ACOCitation objects that are already parsed from RichTextBlock CitationRun elements
+ * and converts them into interactive citation attachments
+ */
 @property (nonatomic, strong) ACRCitationParser *citationRunParser;
 
 /**
