@@ -156,6 +156,7 @@ static NSString *const referencesKey = @"References";
     ACRRenderResult *renderResult = [ACRRenderer render:acoCard
                                                  config:self.rootView.hostConfig
                                         widthConstraint:config.referenceWindowSize.width - (2 * config.contentPadding)
+                                               delegate:self.rootView.acrActionDelegate
                                                   theme:citation.theme];
         
     
