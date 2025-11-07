@@ -80,6 +80,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         NSDictionary *options = nil;
         NSDictionary *descriptor = nil;
         NSString *text = nil;
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
         
         if (![textMap objectForKey:key] || rootView.context.isFirstRowAsHeaders) {
             RichTextElementProperties textProp;
@@ -94,8 +95,8 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         text = data[@"nonhtml"];
         
         std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
-        
-        if (text != nil)
+        BOOL isStringResourceEnabled = [featureFlagResolver boolForFlag:@"isStringResourceEnabled"] ?: NO;
+        if (isStringResourceEnabled && text != nil)
         {
             std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
             text = [NSString stringWithUTF8String:replacedText.c_str()];
@@ -118,8 +119,6 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         }
         lab.selectable = YES;
         lab.userInteractionEnabled = YES;
-        
-        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
         BOOL isCitationsEnabled = [featureFlagResolver boolForFlag:@"isCitationsEnabled"] ?: NO;
         if (isCitationsEnabled)
         {

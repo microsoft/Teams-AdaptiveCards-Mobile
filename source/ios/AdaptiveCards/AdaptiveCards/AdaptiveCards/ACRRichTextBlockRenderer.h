@@ -12,6 +12,4 @@
 
 + (ACRRichTextBlockRenderer *)getInstance;
 
-+ (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView;
-
 @end
