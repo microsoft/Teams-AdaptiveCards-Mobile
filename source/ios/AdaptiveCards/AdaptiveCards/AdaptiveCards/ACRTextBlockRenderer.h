@@ -12,6 +12,6 @@
 
 + (ACRTextBlockRenderer *)getInstance;
 
-+ (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView;
+- (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView;
 
 @end
