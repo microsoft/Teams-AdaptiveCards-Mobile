@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "ACRCitationManagerDelegate.h"
 #import "ACOEnums.h"
+#import "ACRCitationParser.h"
+#import "ACRInlineCitationTokenParser.h"
 
 @class ACOReference;
 @class ACRView;
@@ -28,9 +30,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) ACRView *rootView;
 
+
+@property (nonatomic, strong) ACRInlineCitationTokenParser *inlineCitationParser;
+@property (nonatomic, strong) ACRCitationParser *citationRunParser;
+
 /**
  * Initialize the citation manager with a root view and delegate
- * @param rootView The ACRView instance that contains the citations
  * @param delegate The delegate that provides references and presentation context
  */
 - (instancetype)initWithDelegate:(id<ACRCitationManagerDelegate>)delegate;

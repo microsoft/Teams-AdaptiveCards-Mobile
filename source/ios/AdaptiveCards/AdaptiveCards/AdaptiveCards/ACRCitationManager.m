@@ -9,7 +9,6 @@
 #import "ACRCitationManager.h"
 #import "ACRTextBlockCitationParser.h"
 #import "ACRInlineCitationTokenParser.h"
-#import "ACRRichTextBlockCitationParser.h"
 #import "ACRBottomSheetViewController.h"
 #import "ACRBottomSheetConfiguration.h"
 #import "ACOReference.h"
@@ -17,7 +16,6 @@
 #import "ACRCitationParserDelegate.h"
 #import "ACRView.h"
 #import "ACRCitationReferenceView.h"
-#import "ACRCitationReferenceMoreDetailsView.h"
 #import "ACRRenderer.h"
 #import "ACRRenderResult.h"
 #import "ACRContentStackView.h"
@@ -29,8 +27,6 @@
 
 // Lazy properties
 @property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
-@property (nonatomic, strong) ACRInlineCitationTokenParser *inlineCitationParser;
-@property (nonatomic, strong) ACRRichTextBlockCitationParser *citationRunParser;
 @property (nonatomic, weak) UIViewController *activeViewController;
 
 @end
@@ -64,9 +60,9 @@ static NSString *const referencesKey = @"References";
     return _inlineCitationParser;
 }
 
-- (ACRRichTextBlockCitationParser *)citationRunParser {
+- (ACRCitationParser *)citationRunParser {
     if (!_citationRunParser) {
-        _citationRunParser = [[ACRRichTextBlockCitationParser alloc] initWithDelegate:self];
+        _citationRunParser = [[ACRCitationParser alloc] initWithDelegate:self];
     }
     return _citationRunParser;
 }

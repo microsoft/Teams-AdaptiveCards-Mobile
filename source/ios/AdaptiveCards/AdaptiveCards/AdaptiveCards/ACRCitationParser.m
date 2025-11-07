@@ -100,10 +100,7 @@
     // Delegate back to the parser delegate
     if (self.delegate && citation) {
         [self.delegate citationParser:self didTapCitation:citation referenceData:referenceData];
-    }
-    
-    //TODO
-    
+    }    
 }
 
 #pragma mark - Helper Methods

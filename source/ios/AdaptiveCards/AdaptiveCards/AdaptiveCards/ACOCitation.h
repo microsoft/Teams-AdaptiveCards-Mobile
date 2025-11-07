@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <ACOReference.h>
+#import "ACOReference.h"
 
 @interface ACOCitation : NSObject
 

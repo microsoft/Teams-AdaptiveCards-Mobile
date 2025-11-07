@@ -440,7 +440,6 @@
 		E204C8C12EBB7A600065F8F5 /* ACRCitationManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8C02EBB7A600065F8F5 /* ACRCitationManagerTests.m */; };
 		E204C8C62EBB81D30065F8F5 /* ACRTextBlockCitationParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8C42EBB81D30065F8F5 /* ACRTextBlockCitationParser.h */; };
 		E204C8C72EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8C32EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h */; };
-		E204C8C82EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8C22EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m */; };
 		E204C8C92EBB81D30065F8F5 /* ACRTextBlockCitationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8C52EBB81D30065F8F5 /* ACRTextBlockCitationParser.m */; };
 		E25D48EE2EBC7A1D00CF9715 /* ACRCitationReferenceView.h in Headers */ = {isa = PBXBuildFile; fileRef = E25D48EC2EBC7A1D00CF9715 /* ACRCitationReferenceView.h */; };
 		E25D48EF2EBC7A1D00CF9715 /* ACRCitationReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = E25D48ED2EBC7A1D00CF9715 /* ACRCitationReferenceView.m */; };
@@ -1129,7 +1128,6 @@
 		E204C8B82EBB7A110065F8F5 /* ACRViewTextAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRViewTextAttachment.h; sourceTree = "<group>"; };
 		E204C8B92EBB7A110065F8F5 /* ACRViewTextAttachment.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRViewTextAttachment.mm; sourceTree = "<group>"; };
 		E204C8C02EBB7A600065F8F5 /* ACRCitationManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationManagerTests.m; sourceTree = "<group>"; };
-		E204C8C22EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRRichTextBlockCitationParser.m; sourceTree = "<group>"; };
 		E204C8C32EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRRichTextBlockRenderer.h; sourceTree = "<group>"; };
 		E204C8C42EBB81D30065F8F5 /* ACRTextBlockCitationParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRTextBlockCitationParser.h; sourceTree = "<group>"; };
 		E204C8C52EBB81D30065F8F5 /* ACRTextBlockCitationParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRTextBlockCitationParser.m; sourceTree = "<group>"; };
@@ -1813,7 +1811,6 @@
 			children = (
 				E25D48EC2EBC7A1D00CF9715 /* ACRCitationReferenceView.h */,
 				E25D48ED2EBC7A1D00CF9715 /* ACRCitationReferenceView.m */,
-				E204C8C22EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m */,
 				E204C8C32EBB81D30065F8F5 /* ACRRichTextBlockRenderer.h */,
 				E204C8C42EBB81D30065F8F5 /* ACRTextBlockCitationParser.h */,
 				E204C8C52EBB81D30065F8F5 /* ACRTextBlockCitationParser.m */,
@@ -2887,7 +2884,6 @@
 				6B616C4421CB20D2003E29CE /* ACRActionToggleVisibilityRenderer.mm in Sources */,
 				7773C2E62CA5592200097C06 /* ACRCarouselView.mm in Sources */,
 				7773C2E22CA558AE00097C06 /* ACRCarouselPageContainerView.mm in Sources */,
-				E204C8C82EBB81D30065F8F5 /* ACRRichTextBlockCitationParser.m in Sources */,
 				E204C8C92EBB81D30065F8F5 /* ACRTextBlockCitationParser.m in Sources */,
 				CA1218C921C4509400152EA8 /* ToggleVisibilityAction.cpp in Sources */,
 				468F1F1A2BFC5BC500C2F561 /* ACRRatingInputDataSource.mm in Sources */,
