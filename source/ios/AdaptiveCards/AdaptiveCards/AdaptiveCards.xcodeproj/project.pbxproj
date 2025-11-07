@@ -432,7 +432,7 @@
 		E204C8B12EBB79F60065F8F5 /* ACOCitation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E204C8972EBB79F60065F8F5 /* ACOCitation.mm */; };
 		E204C8B32EBB79F60065F8F5 /* ACOReference.mm in Sources */ = {isa = PBXBuildFile; fileRef = E204C8992EBB79F60065F8F5 /* ACOReference.mm */; };
 		E204C8BA2EBB7A110065F8F5 /* ACRViewTextAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8B82EBB7A110065F8F5 /* ACRViewTextAttachment.h */; };
-		E204C8BB2EBB7A110065F8F5 /* ACRViewAttachingTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8B42EBB7A110065F8F5 /* ACRViewAttachingTextView.h */; };
+		E204C8BB2EBB7A110065F8F5 /* ACRViewAttachingTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8B42EBB7A110065F8F5 /* ACRViewAttachingTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E204C8BC2EBB7A110065F8F5 /* ACRViewAttachingTextViewBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8B62EBB7A110065F8F5 /* ACRViewAttachingTextViewBehavior.h */; };
 		E204C8BD2EBB7A110065F8F5 /* ACRViewTextAttachment.mm in Sources */ = {isa = PBXBuildFile; fileRef = E204C8B92EBB7A110065F8F5 /* ACRViewTextAttachment.mm */; };
 		E204C8BE2EBB7A110065F8F5 /* ACRViewAttachingTextViewBehavior.mm in Sources */ = {isa = PBXBuildFile; fileRef = E204C8B72EBB7A110065F8F5 /* ACRViewAttachingTextViewBehavior.mm */; };

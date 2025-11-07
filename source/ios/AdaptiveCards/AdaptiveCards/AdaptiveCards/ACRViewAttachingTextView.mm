@@ -48,6 +48,9 @@
         ACRViewTextAttachment *attachmentAttr = (ACRViewTextAttachment *)attribute;
         return [attachmentAttr.viewProvider instantiateViewForAttachment:attachmentAttr inBehavior:self.attachmentBehavior];
     }
+    if ([self attribute:NSLinkAttributeName atPoint:point withEvent:event] != nil) {
+        return self;
+    }
     return nil;
 }
 

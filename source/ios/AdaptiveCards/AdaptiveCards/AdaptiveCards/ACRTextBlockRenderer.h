@@ -11,4 +11,7 @@
 @interface ACRTextBlockRenderer : ACRBaseCardElementRenderer <ACRCitationManagerDelegate>
 
 + (ACRTextBlockRenderer *)getInstance;
+
+- (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView;
+
 @end

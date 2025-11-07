@@ -11,4 +11,5 @@
 @interface ACRRichTextBlockRenderer : ACRBaseCardElementRenderer <ACRCitationManagerDelegate>
 
 + (ACRRichTextBlockRenderer *)getInstance;
+
 @end

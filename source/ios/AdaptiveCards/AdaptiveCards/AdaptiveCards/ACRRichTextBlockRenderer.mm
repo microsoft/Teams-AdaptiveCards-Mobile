@@ -79,7 +79,7 @@
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] init];
     if (rootView) {
         NSMutableDictionary *textMap = [rootView getTextMap];
-
+        NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
         BOOL hasGestureRecognizerAdded = NO;
         BOOL hasLongPressGestureRecognizerAdded = NO;
         for (const auto &inlineText : rTxtBlck->GetInlines()) {
@@ -111,7 +111,8 @@
                         }
                         
                         std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
-                        if (text != nil)
+                        BOOL isStringResourceEnabled = [featureFlagResolver boolForFlag:@"isStringResourceEnabled"] ?: NO;
+                        if (isStringResourceEnabled && text != nil)
                         {
                             std::string replacedText = AdaptiveCard::ReplaceStringResources([text UTF8String], card->GetResources(), GetDeviceLanguageLocale());
                             text = [NSString stringWithUTF8String:replacedText.c_str()];
@@ -231,8 +232,6 @@
                 }
                 case InlineElementType::CitationRun:
                 {
-                    NSObject<ACRIFeatureFlagResolver> *featureFlagResolver = [[ACRRegistration getInstance] getFeatureFlagResolver];
-                    
                     BOOL isCitationsEnabled = [featureFlagResolver boolForFlag:@"isCitationsEnabled"] ?: NO;
                     if (isCitationsEnabled)
                     {
