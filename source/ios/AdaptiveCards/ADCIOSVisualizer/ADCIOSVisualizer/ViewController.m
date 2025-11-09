@@ -238,6 +238,9 @@ UIColor* defaultButtonBackgroundColor;
     #if TARGET_OS_VISION
     self.view.backgroundColor = UIColor.clearColor;
     #endif
+    
+    /// Directly Load A certain page for faster debugging
+//       [self loadSamplesDirectlyWithVersion:@"v1.5" type:@"Elements" index:17];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -896,5 +899,55 @@ UIColor* defaultButtonBackgroundColor;
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okAction];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+// Load samples diredctly without selecting everytime
+- (void)loadSamplesDirectlyWithVersion:(NSString *)version type:(NSString *)type index:(NSUInteger )index {
+    // Get the main bundle path
+    NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+    NSString *path = [NSString stringWithFormat:@"samples/%@/%@", version, type];
+    NSString *elementsPath = [bundlePath stringByAppendingPathComponent:path];
+    
+    // Get all JSON files in the Elements directory
+    NSError *error;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:elementsPath error:&error];
+    
+    if (error) {
+        NSLog(@"Error reading Elements directory: %@", error.localizedDescription);
+        return;
+    }
+    
+    // Filter for JSON files and sort them
+    NSMutableArray *jsonFiles = [[NSMutableArray alloc] init];
+    for (NSString *file in files) {
+        if ([file.pathExtension isEqualToString:@"json"]) {
+            [jsonFiles addObject:file];
+        }
+    }
+    [jsonFiles sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    
+    // Check if we have at least index+1 files
+    if (jsonFiles.count > index) {
+        NSString *citationFileName = jsonFiles[index];
+        NSString *citationFilePath = [elementsPath stringByAppendingPathComponent:citationFileName];
+        
+        // Read the JSON content
+        NSString *jsonString = [NSString stringWithContentsOfFile:citationFilePath
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:&error];
+        
+        if (error) {
+            NSLog(@"Error reading citation JSON file: %@", error.localizedDescription);
+            return;
+        }
+        
+        if (jsonString) {
+            NSLog(@"Loading citation JSON from: %@", citationFileName);
+            // Call update with the loaded JSON
+            [self update:jsonString];
+        }
+    } else {
+        NSLog(@"Not enough JSON files found in Elements directory. Found: %lu", (unsigned long)jsonFiles.count);
+    }
 }
 @end

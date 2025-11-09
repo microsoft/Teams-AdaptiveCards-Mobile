@@ -17,6 +17,7 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
 
+import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.BaseActionElementVector;
 import io.adaptivecards.objectmodel.ContainerStyle;
@@ -74,11 +75,12 @@ public class AdaptiveCardRenderer
         AdaptiveCard adaptiveCard,
         ICardActionHandler cardActionHandler,
         @Nullable IOverflowActionRenderer overflowActionRenderer,
-        HostConfig hostConfig)
-    {
-        RenderedAdaptiveCard result = new RenderedAdaptiveCard(adaptiveCard, CardRendererRegistration.getInstance().getTheme());
+        HostConfig hostConfig) {
+        ACTheme acTheme = CardRendererRegistration.getInstance().getTheme();;
+        String languageTag = CardRendererRegistration.getInstance().getLanguageTag();
+        RenderedAdaptiveCard result = new RenderedAdaptiveCard(adaptiveCard, acTheme, languageTag);
         CardRendererRegistration.getInstance().registerOverflowActionRenderer(overflowActionRenderer);
-        View cardView = internalRender(result, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, false, View.NO_ID);
+        View cardView = internalRender(result, context, fragmentManager, adaptiveCard, cardActionHandler, hostConfig, false, View.NO_ID, null, null);
         result.setView(cardView);
         return result;
     }
@@ -113,7 +115,9 @@ public class AdaptiveCardRenderer
                                ICardActionHandler cardActionHandler,
                                HostConfig hostConfig,
                                boolean isInlineShowCard,
-                               long containerCardId)
+                               long containerCardId,
+                               @Nullable RenderArgs renderArgs,
+                               @Nullable String backgroundColor)
     {
         if (hostConfig == null)
         {
@@ -167,7 +171,9 @@ public class AdaptiveCardRenderer
             style = adaptiveCard.GetStyle();
         }
 
-        RenderArgs renderArgs = new RenderArgs();
+        if (renderArgs == null) {
+            renderArgs = new RenderArgs();
+        }
         renderArgs.setContainerStyle(style);
         renderArgs.setAncestorHasSelectAction(adaptiveCard.GetSelectAction() != null);
 
@@ -176,8 +182,10 @@ public class AdaptiveCardRenderer
         renderedCard.setParentToCard(cardId, containerCardId);
 
         // Render the body section of the Adaptive Card
-        String color = hostConfig.GetBackgroundColor(style);
-        cardLayout.setBackgroundColor(Color.parseColor(color));
+        if (backgroundColor == null) {
+            backgroundColor = hostConfig.GetBackgroundColor(style);
+        }
+        cardLayout.setBackgroundColor(Color.parseColor(backgroundColor));
         /**
          * Rendering the body section of adaptive card inside the flexbox layout if the layout is flow
          * and adding the flow layout to the card layout
@@ -208,7 +216,7 @@ public class AdaptiveCardRenderer
                 BaseActionElementVector secondaryElementVector = actionElementVectorPair.second;
 
                 LinearLayout showCardsLayout = new LinearLayout(context);
-                showCardsLayout.setBackgroundColor(Color.parseColor(color));
+                showCardsLayout.setBackgroundColor(Color.parseColor(backgroundColor));
                 showCardsLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 rootLayout.addView(showCardsLayout);
 

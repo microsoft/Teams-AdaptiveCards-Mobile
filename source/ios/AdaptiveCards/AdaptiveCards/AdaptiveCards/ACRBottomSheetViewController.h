@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ACRBottomSheetConfiguration.h"
 
+NS_ASSUME_NONNULL_BEGIN
 @interface ACRBottomSheetViewController: UIViewController <UIViewControllerTransitioningDelegate>
 
 @property (nonatomic, copy) void (^onDismissBlock)(void);
@@ -17,3 +18,4 @@
 
 @end
 
+NS_ASSUME_NONNULL_END

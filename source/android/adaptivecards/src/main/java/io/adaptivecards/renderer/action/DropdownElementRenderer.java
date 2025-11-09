@@ -29,7 +29,7 @@ import io.adaptivecards.renderer.registration.CardRendererRegistration;
 /**
  * Responsible for rendering dropdown element.
  */
-public class DropdownElementRenderer implements IBaseActionElementRenderer {
+public class DropdownElementRenderer extends BaseActionElementRenderer {
 
     private final static int PADDING = 10;
 
@@ -67,7 +67,7 @@ public class DropdownElementRenderer implements IBaseActionElementRenderer {
         //Remove button so it does not get added to the default viewGroup. Also, do not download icon.
         String iconUrl = baseActionElement.GetIconUrl(renderedCard.getTheme());
         baseActionElement.SetIconUrl("");
-        Button button = actionRenderer.render(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
+        Button button = actionRenderer.renderNew(renderedCard, context, fragmentManager, viewGroup, baseActionElement, cardActionHandler, hostConfig, renderArgs);
         viewGroup.removeView(button);
 
         String svgInfoURL = Util.getSvgInfoUrl(baseActionElement.GetSVGPath(iconUrl));

@@ -6,6 +6,7 @@
 #include "BaseActionElement.h"
 #include "BaseCardElement.h"
 #include "ElementParserRegistration.h"
+#include "Resources.h"
 
 namespace AdaptiveCards
 {
@@ -42,7 +43,11 @@ public:
 
     Json::Value SerializeToJsonValue() const override;
 
-    const std::string& GetUrl(const ACTheme theme) const;
+    const std::string& GetUrl(
+            const ACTheme theme,
+            std::shared_ptr<AdaptiveCards::Resources> resources,
+            const std::string& locale) const;
+
     std::string GetUrl() const;
     void SetUrl(const std::string& value);
 

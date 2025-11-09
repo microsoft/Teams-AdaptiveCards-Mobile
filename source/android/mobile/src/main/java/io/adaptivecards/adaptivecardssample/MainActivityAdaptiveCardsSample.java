@@ -362,6 +362,8 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
     private void registerCustomFeatures(@NonNull Context context) {
         // Register Theme
         CardRendererRegistration.getInstance().setThemeForThemedUrl(Utils.getTheme(context));
+        // Set the languageTag
+        CardRendererRegistration.getInstance().setLanguageTag(Utils.getLanguageTag(context));
         registerCustomImageLoaders();
         registerCustomMediaLoaders();
         registerFeatureRegistration();

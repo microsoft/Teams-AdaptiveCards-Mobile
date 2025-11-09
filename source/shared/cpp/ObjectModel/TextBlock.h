@@ -59,7 +59,7 @@ public:
 
     void SetLanguage(const std::string& value);
     const std::string& GetLanguage() const;
-    
+
     std::string GetLabelFor() const;
 
 private:

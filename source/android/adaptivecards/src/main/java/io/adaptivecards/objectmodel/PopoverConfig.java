@@ -44,6 +44,14 @@ public class PopoverConfig {
     return AdaptiveCardObjectModelJNI.PopoverConfig_backgroundColor_get(swigCPtr, this);
   }
 
+  public void setTintColor(String value) {
+    AdaptiveCardObjectModelJNI.PopoverConfig_tintColor_set(swigCPtr, this, value);
+  }
+
+  public String getTintColor() {
+    return AdaptiveCardObjectModelJNI.PopoverConfig_tintColor_get(swigCPtr, this);
+  }
+
   public static PopoverConfig Deserialize(JsonValue json, PopoverConfig defaultValue) {
     return new PopoverConfig(AdaptiveCardObjectModelJNI.PopoverConfig_Deserialize(JsonValue.getCPtr(json), json, PopoverConfig.getCPtr(defaultValue), defaultValue), true);
   }

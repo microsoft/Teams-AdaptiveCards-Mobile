@@ -175,6 +175,10 @@ public class TextBlock extends BaseCardElement {
     return AdaptiveCardObjectModelJNI.TextBlock_GetLanguage(swigCPtr, this);
   }
 
+  public String GetLabelFor() {
+    return AdaptiveCardObjectModelJNI.TextBlock_GetLabelFor(swigCPtr, this);
+  }
+
   public static TextBlock dynamic_cast(BaseCardElement baseCardElement) {
     long cPtr = AdaptiveCardObjectModelJNI.TextBlock_dynamic_cast(BaseCardElement.getCPtr(baseCardElement), baseCardElement);
     return (cPtr == 0) ? null : new TextBlock(cPtr, true);

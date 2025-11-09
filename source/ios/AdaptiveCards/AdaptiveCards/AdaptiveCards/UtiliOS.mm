@@ -1413,3 +1413,16 @@ NSString *cdnURLForIcon(NSString *iconPath)
     NSString const *CDNPath = [featureFlagResolver stringForFlag:@"fluentIconCdnURL"] ?: baseFluentIconCDNURL;
     return [[NSString alloc] initWithFormat:@"%@%@",CDNPath, iconPath];
 }
+
+std::string GetDeviceLanguageLocale()
+{
+    @autoreleasepool {
+        NSString *languageID = [[NSLocale preferredLanguages] firstObject];
+        NSLocale *locale = [NSLocale localeWithLocaleIdentifier:languageID];
+        NSString *languageCode = [locale objectForKey:NSLocaleLanguageCode];
+        NSString *regionCode   = [locale objectForKey:NSLocaleCountryCode];
+        NSString *formatted = regionCode ? [NSString stringWithFormat:@"%@-%@", [languageCode lowercaseString], [regionCode uppercaseString]] : [languageCode lowercaseString];
+
+        return [formatted UTF8String];
+    }
+}

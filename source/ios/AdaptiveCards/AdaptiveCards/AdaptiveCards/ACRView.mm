@@ -834,7 +834,8 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     } else {
         std::shared_ptr<Image> imgElem = std::static_pointer_cast<Image>(elem);
         number = [NSNumber numberWithUnsignedLongLong:(unsigned long long)imgElem.get()];
-        nSUrlStr = [NSString stringWithCString:imgElem->GetUrl(ACTheme(_theme)).c_str() encoding:[NSString defaultCStringEncoding]];
+        std::shared_ptr<AdaptiveCard> card = [[self card] card];
+        nSUrlStr = [NSString stringWithCString:imgElem->GetUrl(ACTheme(_theme), card->GetResources(), GetDeviceLanguageLocale()).c_str() encoding:[NSString defaultCStringEncoding]];
     }
 
     if (!key) {

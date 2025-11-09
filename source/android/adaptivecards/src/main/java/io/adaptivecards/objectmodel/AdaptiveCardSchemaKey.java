@@ -275,6 +275,7 @@ public enum AdaptiveCardSchemaKey {
   ThemedIconUrls,
   ThemedUrls,
   Theme,
+  TintColor,
   LabelPosition,
   Content,
   DisplayArrow,
@@ -282,7 +283,22 @@ public enum AdaptiveCardSchemaKey {
   Position,
   Popover,
   ImageFitMode,
-  HorizontalContentAlignment;
+  HorizontalContentAlignment,
+  LabelFor,
+  Resources,
+  Strings,
+  DefaultValue,
+  LocalizedValues,
+  Abstract,
+  Keywords,
+  References,
+  ReferenceIndex,
+  CitationBlock,
+  DividerColor,
+  BottomSheetTextColor,
+  BottomSheetKeywordsColor,
+  BottomSheetMoreDetailColor,
+  BottomSheetBackgroundColor;
 
   public final int swigValue() {
     return swigValue;

@@ -5,6 +5,8 @@ package io.adaptivecards.renderer.readonly;
 import android.graphics.Typeface;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -148,7 +150,7 @@ public class TextRendererUtil
         return TextSize.Default;
     }
 
-    static ForegroundColor computeTextColor(HostConfig hostConfig, TextStyle declaredStyle, ForegroundColor declaredColor, RenderArgs renderArgs)
+    static ForegroundColor computeTextColor(HostConfig hostConfig, TextStyle declaredStyle, @Nullable ForegroundColor declaredColor, RenderArgs renderArgs)
     {
         if (declaredColor != null)
         {
@@ -182,7 +184,7 @@ public class TextRendererUtil
         return TextWeight.Default;
     }
 
-    static boolean computeIsSubtle(HostConfig hostConfig, TextStyle declaredStyle, Boolean declaredIsSubtle, RenderArgs renderArgs)
+    static boolean computeIsSubtle(HostConfig hostConfig, TextStyle declaredStyle, @Nullable Boolean declaredIsSubtle, RenderArgs renderArgs)
     {
         if (declaredIsSubtle != null)
         {
