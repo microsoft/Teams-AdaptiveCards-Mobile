@@ -295,6 +295,7 @@ public enum AdaptiveCardSchemaKey {
   ReferenceIndex,
   CitationBlock,
   DividerColor,
+  IconColor,
   BottomSheetTextColor,
   BottomSheetKeywordsColor,
   BottomSheetMoreDetailColor,
