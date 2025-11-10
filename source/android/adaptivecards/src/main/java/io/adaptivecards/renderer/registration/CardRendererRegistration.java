@@ -440,7 +440,7 @@ public class CardRendererRegistration
 
             if (hostWidth == null || cardElement.MeetsTargetWidthRequirement(hostWidth))
             {
-                renderedElementView = renderer.render(renderedCard, context, fragmentManager, mockLayout, cardElement, cardActionHandler, hostConfig, childRenderArgs);
+                renderedElementView = renderer.renderNew(renderedCard, context, fragmentManager, mockLayout, cardElement, cardActionHandler, hostConfig, childRenderArgs);
                 renderedElement = cardElement;
             }
         }
@@ -477,7 +477,7 @@ public class CardRendererRegistration
                             // pass that as the viewgroup and
 
                             if (hostWidth == null || cardElement.MeetsTargetWidthRequirement(hostWidth)) {
-                                renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, fallbackCardElement, cardActionHandler, hostConfig, childRenderArgs);
+                                renderedElementView = fallbackRenderer.renderNew(renderedCard, context, fragmentManager, mockLayout, fallbackCardElement, cardActionHandler, hostConfig, childRenderArgs);
                                 renderedElement = fallbackCardElement;
                                 break;
                             }
@@ -525,7 +525,7 @@ public class CardRendererRegistration
                 }
                 else
                 {
-                    renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, renderedElement, cardActionHandler, hostConfig, childRenderArgs);
+                    renderedElementView = fallbackRenderer.renderNew(renderedCard, context, fragmentManager, mockLayout, renderedElement, cardActionHandler, hostConfig, childRenderArgs);
                     shouldRenderCardElements = false;
                 }
             }

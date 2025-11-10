@@ -6,6 +6,8 @@ import static android.content.Context.ACCESSIBILITY_SERVICE;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.text.Layout;
@@ -52,6 +54,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.citation.CitationUtil;
 import io.adaptivecards.renderer.input.InputUtils;
 import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
@@ -305,6 +308,17 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         RendererUtil.SpecialTextHandleResult textHandleResult = RendererUtil.handleSpecialTextAndQueryLinks(textWithFormattedDates);
         CharSequence htmlString = textHandleResult.getHtmlString();
         htmlString = InputUtils.appendRequiredLabelSuffix(htmlString, textBlock.GetLabelFor(), hostConfig, renderArgs);
+
+        if (CitationUtil.isCitationUrlSpansPresent(htmlString)) {
+            htmlString = CitationUtil.handleCitationSpansForTextBlock(
+                context,
+                htmlString,
+                renderedCard,
+                cardActionHandler,
+                fragmentManager,
+                hostConfig,
+                renderArgs);
+        }
 
         textView.setText(htmlString);
         textView.setEllipsize(TextUtils.TruncateAt.END);

@@ -13,7 +13,7 @@ import io.adaptivecards.objectmodel.HostConfig;
 
 public interface IBaseActionElementRenderer
 {
-    Button render(
+    Button renderNew(
             RenderedAdaptiveCard renderedCard,
             Context context,
             FragmentManager fragmentManager,

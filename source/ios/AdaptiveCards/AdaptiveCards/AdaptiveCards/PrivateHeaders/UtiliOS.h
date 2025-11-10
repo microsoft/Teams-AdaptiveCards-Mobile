@@ -204,4 +204,3 @@ NSString *cdnURLForIcon(NSString *iconPath);
 
 // Returns device locale in "en-US" format
 std::string GetDeviceLanguageLocale();
-

@@ -149,6 +149,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/SubmitAction.h"
 #include "../../../shared/cpp/ObjectModel/ParseContext.h"
 #include "../../../shared/cpp/ObjectModel/ParseResult.h"
+#include "../../../shared/cpp/ObjectModel/References.h"
 #include "../../../shared/cpp/ObjectModel/SharedAdaptiveCard.h"
 #include "../../../shared/cpp/ObjectModel/AdaptiveCardParseException.h"
 #include "../../../shared/cpp/ObjectModel/HostConfig.h"
@@ -174,6 +175,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 #include "../../../shared/cpp/ObjectModel/TextElementProperties.h"
 #include "../../../shared/cpp/ObjectModel/Inline.h"
 #include "../../../shared/cpp/ObjectModel/RichTextBlock.h"
+#include "../../../shared/cpp/ObjectModel/CitationRun.h"
 #include "../../../shared/cpp/ObjectModel/TextRun.h"
 #include "../../../shared/cpp/ObjectModel/RichTextElementProperties.h"
 #include "../../../shared/cpp/ObjectModel/ExecuteAction.h"
@@ -242,6 +244,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::SubmitAction)
 %shared_ptr(AdaptiveCards::ParseResult)
 %shared_ptr(AdaptiveCards::RemoteResourceInformation)
+%shared_ptr(AdaptiveCards::References)
 %shared_ptr(AdaptiveCards::AdaptiveCard)
 %shared_ptr(AdaptiveCards::CarouselParser)
 %shared_ptr(AdaptiveCards::CarouselPageParser)
@@ -290,6 +293,7 @@ STD_OPTIONAL(AdaptiveCards::VerticalContentAlignment, StdOptionalVerticalContent
 %shared_ptr(AdaptiveCards::Inline)
 %shared_ptr(AdaptiveCards::RichTextBlock)
 %shared_ptr(AdaptiveCards::RichTextBlockParser)
+%shared_ptr(AdaptiveCards::CitationRun)
 %shared_ptr(AdaptiveCards::TextRun)
 %shared_ptr(AdaptiveCards::TextElementProperties)
 %shared_ptr(AdaptiveCards::RichTextElementProperties)
@@ -514,6 +518,7 @@ namespace Json {
   }
 %}
 
+%template(ReferencesVector) std::vector<std::shared_ptr<AdaptiveCards::References> >;
 %template(RemoteResourceInformationVector) std::vector<AdaptiveCards::RemoteResourceInformation>;
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;
 %template(BaseCardElementVector) std::vector<std::shared_ptr<AdaptiveCards::BaseCardElement> >;
@@ -1064,6 +1069,21 @@ namespace Json {
     }
 };
 
+%exception AdaptiveCards::CitationRun::dynamic_cast(AdaptiveCards::Inline *inlineVar) {
+    $action
+    if (!result) {
+        jclass excep = jenv->FindClass("java/lang/ClassCastException");
+        if (excep) {
+            jenv->ThrowNew(excep, "dynamic_cast exception");
+        }
+    }
+}
+%extend AdaptiveCards::CitationRun {
+        static AdaptiveCards::CitationRun *dynamic_cast(AdaptiveCards::Inline *inlineVar) {
+            return dynamic_cast<AdaptiveCards::CitationRun *>(inlineVar);
+        }
+};
+
 %exception AdaptiveCards::TextRun::dynamic_cast(AdaptiveCards::Inline *inlineVar) {
     $action
     if (!result) {
@@ -1208,6 +1228,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/ShowCardAction.h"
 %include "../../../shared/cpp/ObjectModel/SubmitAction.h"
 %include "../../../shared/cpp/ObjectModel/ParseResult.h"
+%include "../../../shared/cpp/ObjectModel/References.h"
 %include "../../../shared/cpp/ObjectModel/SharedAdaptiveCard.h"
 %include "../../../shared/cpp/ObjectModel/AdaptiveCardParseException.h"
 %include "../../../shared/cpp/ObjectModel/HostConfig.h"
@@ -1233,6 +1254,7 @@ namespace Json {
 %include "../../../shared/cpp/ObjectModel/TextElementProperties.h"
 %include "../../../shared/cpp/ObjectModel/Inline.h"
 %include "../../../shared/cpp/ObjectModel/RichTextBlock.h"
+%include "../../../shared/cpp/ObjectModel/CitationRun.h"
 %include "../../../shared/cpp/ObjectModel/TextRun.h"
 %include "../../../shared/cpp/ObjectModel/RichTextElementProperties.h"
 %include "../../../shared/cpp/ObjectModel/ValueChangedAction.h"
