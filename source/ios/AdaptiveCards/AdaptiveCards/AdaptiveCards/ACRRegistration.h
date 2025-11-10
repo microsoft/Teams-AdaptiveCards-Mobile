@@ -18,6 +18,7 @@
 #endif
 #import "ACOBaseCardElement.h"
 #import "ACRIFeatureFlagResolver.h"
+#import "ACRIImageResolver.h"
 
 @interface ACRRegistration : NSObject
 
@@ -67,6 +68,9 @@
 
 - (void)setFeatureFlagResolver:(NSObject<ACRIFeatureFlagResolver> *_Nonnull)featureFlagResolver;
 - (NSObject<ACRIFeatureFlagResolver> *_Nullable)getFeatureFlagResolver;
+
+- (void)setImageResolver:(NSObject<ACRIImageResolver> *_Nonnull)imageResolver;
+- (NSObject<ACRIImageResolver> *_Nullable)getImageResolver;
 
 @end
 

@@ -11,6 +11,8 @@
 #import "ACOAdaptiveCard.h"
 #import "ACOAdaptiveCardPrivate.h"
 #import "SharedAdaptiveCard.h"
+#import "ACRIImageResolver.h"
+#import "ACRRegistration.h"
 
 using namespace AdaptiveCards;
 
@@ -62,118 +64,14 @@ using namespace AdaptiveCards;
     return [NSString stringWithUTF8String:_reference->GetUrl().c_str()];
 }
 
-- (NSString *)icon:(ACRTheme)theme
+- (UIImage *)icon:(ACRTheme)theme
 {
+    NSObject<ACRIImageResolver> *imageResolver = [[ACRRegistration getInstance] getImageResolver];
     if (!_reference) {
-        return @"";
+        return nil;
     }
     ACRCitationIcon icon = ACRCitationIcon(_reference->GetIcon());
-    switch (icon)
-    {
-        // Handling icons independent of theme
-        case ACRAdobeIllustrator: return @"adobeIllustrator";
-        case ACRAdobePhotoshop: return @"adobePhotoshop";
-        case ACRAdobeInDesign: return @"adobeInDesign";
-        case ACRMsWord: return @"msword";
-        case ACRMsExcel: return @"msExcel";
-        case ACRMsPowerPoint: return @"msPowerPoint";
-        case ACRMsOneNote: return @"msOneNote";
-        case ACRMsSharePoint: return @"msSharePoint";
-        case ACRMsVisio: return @"msVisio";
-        case ACRMsLoop: return @"msLoop";
-        case ACRMsWhiteboard: return @"msWhiteboard";
-        case ACRPdf: return @"pdf";
-        case ACRSketch: return @"sketch";
-        case ACRZip: return @"zip";
-        
-        // Handling icons based on theme
-        case ACRAdobeFlash:
-        {
-            switch (theme)
-            {
-                case ACRThemeLight:
-                    return @"invalid_light";
-                case ACRThemeDark:
-                    return @"invalid_dark";
-                default:
-                    return @"";
-            }
-        }
-        case ACRCode:
-        {
-            switch (theme)
-            {
-                case ACRThemeLight:
-                    return @"code_light";
-                case ACRThemeDark:
-                    return @"code_dark";
-                default:
-                    return @"";
-            }
-        }
-        case ACRGif:
-        {
-            switch (theme)
-            {
-                case ACRThemeLight:
-                    return @"gif_light";
-                case ACRThemeDark:
-                    return @"gif_dark";
-                default:
-                    return @"";
-            }
-        }
-        case ACRCitationImage:
-        {
-            switch (theme)
-            {
-                case ACRThemeLight:
-                    return @"image_light";
-                case ACRThemeDark:
-                    return @"image_dark";
-                default:
-                    return @"";
-            }
-        }
-        case ACRSound:
-        {
-            switch (theme)
-            {
-                case ACRThemeLight:
-                    return @"sound_light";
-                case ACRThemeDark:
-                    return @"sound_dark";
-                default:
-                    return @"";
-            }
-        }
-        case ACRText:
-        {
-            switch (theme)
-            {
-                case ACRThemeLight:
-                    return @"text_light";
-                case ACRThemeDark:
-                    return @"text_dark";
-                default:
-                    return @"";
-            }
-        }
-        case ACRVideo:
-        {
-            switch (theme)
-            {
-                case ACRThemeLight:
-                    return @"video_light";
-                case ACRThemeDark:
-                    return @"video_dark";
-                default:
-                    return @"";
-            }
-        }
-        default:
-            return @"";
-    }
+    return [imageResolver getImageForCitation:icon withTheme:theme];
 }
 
 - (NSArray<NSString *> *)keywords {

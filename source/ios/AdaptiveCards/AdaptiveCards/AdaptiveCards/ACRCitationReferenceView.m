@@ -360,10 +360,9 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     }
 }
 
-- (void)updateIconForReference:(ACOReference *)reference {
-    NSString *iconName = [reference icon:_citation.theme];
-    UIImage *image = [UIImage imageNamed:iconName inBundle:[[ACOBundle getInstance] getBundle] compatibleWithTraitCollection:nil];
-    self.iconImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+- (void)updateIconForReference:(ACOReference *)reference
+{
+    self.iconImageView.image = [[reference icon:_citation.theme] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 @end
