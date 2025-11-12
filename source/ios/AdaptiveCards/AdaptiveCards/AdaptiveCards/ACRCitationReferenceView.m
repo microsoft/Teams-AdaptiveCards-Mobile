@@ -131,7 +131,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     UIStackView *leftSideStackView = [[UIStackView alloc] init];
     leftSideStackView.axis = UILayoutConstraintAxisHorizontal;
     leftSideStackView.spacing = kACRCitationViewSpacing;
-    leftSideStackView.alignment = UIStackViewAlignmentTop;
+    leftSideStackView.alignment = UIStackViewAlignmentCenter;
     
     // Pill label with border and padding
     UILabel *pillLabel = [[UILabel alloc] init];
@@ -222,7 +222,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     NSMutableAttributedString *buttonText = [[NSMutableAttributedString alloc] init];
     
     // "More details" text
-    NSAttributedString *detailsText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"More details", nil)
+    NSAttributedString *detailsText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"More details ", nil)
                                                                       attributes:@{
         NSForegroundColorAttributeName: [UIColor systemBlueColor],
         NSFontAttributeName: [UIFont systemFontOfSize:kACRCitationMoreDetailsButtonFontSize weight:UIFontWeightRegular]
@@ -230,11 +230,19 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     [buttonText appendAttributedString:detailsText];
     
     // Chevron symbol
-    NSAttributedString *chevron = [[NSAttributedString alloc] initWithString:@" >" 
-                                                                  attributes:@{
-        NSForegroundColorAttributeName: [UIColor systemBlueColor],
-        NSFontAttributeName: [UIFont systemFontOfSize:kACRCitationMoreDetailsButtonFontSize weight:UIFontWeightRegular]
-    }];
+    UIImageSymbolConfiguration *config = [UIImageSymbolConfiguration configurationWithPointSize:kACRCitationMoreDetailsButtonFontSize weight:UIFontWeightRegular];
+    UIImage *chevronImage = [UIImage systemImageNamed:@"chevron.right" withConfiguration:config];
+    chevronImage = [chevronImage imageWithTintColor:[UIColor systemBlueColor] renderingMode:UIImageRenderingModeAlwaysOriginal];
+
+    NSTextAttachment *chevronAttachment = [[NSTextAttachment alloc] init];
+    chevronAttachment.image = chevronImage;
+
+    // Adjust vertical alignment if needed
+    CGFloat offsetY = -2.0; // tweak as per visual alignment
+    chevronAttachment.bounds = CGRectMake(0, offsetY, chevronImage.size.width, chevronImage.size.height);
+
+    NSAttributedString *chevron = [NSAttributedString attributedStringWithAttachment:chevronAttachment];
+
     [buttonText appendAttributedString:chevron];
     
     [moreDetailsButton setAttributedTitle:buttonText forState:UIControlStateNormal];
@@ -278,6 +286,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     
     // Keywords label minimum height constraint
     [NSLayoutConstraint activateConstraints:@[
+        [self.keywordsLabel.topAnchor constraintEqualToAnchor:self.titleLabel.bottomAnchor constant:4],
         [self.keywordsLabel.heightAnchor constraintGreaterThanOrEqualToConstant:kACRCitationKeywordsMinHeight]
     ]];
 }
@@ -335,9 +344,13 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
         for (NSInteger i = 0; i < displayKeywords.count; i++) {
             // Add separator if not first keyword
             if (i > 0) {
-                NSAttributedString *separator = [[NSAttributedString alloc] initWithString:@" | " 
+                // Setting hexcode: #E0E0E0 for separator
+                NSAttributedString *separator = [[NSAttributedString alloc] initWithString:@"  |  "
                                                                                  attributes:@{
-                    NSForegroundColorAttributeName: [UIColor tertiaryLabelColor],
+                    NSForegroundColorAttributeName: [UIColor colorWithRed:224.0/255.0
+                                                                    green:224.0/255.0
+                                                                     blue:224.0/255.0
+                                                                    alpha:1.0],
                     NSFontAttributeName: [UIFont systemFontOfSize:12 weight:UIFontWeightRegular]
                 }];
                 [attributedString appendAttributedString:separator];

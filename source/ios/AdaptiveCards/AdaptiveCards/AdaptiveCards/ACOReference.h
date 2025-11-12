@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "ACOEnums.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class UIImage;
 
 /**
  * Represents different types of references
