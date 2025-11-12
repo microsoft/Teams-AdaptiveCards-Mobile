@@ -61,6 +61,7 @@
         }
     },
 	"citationBlock": {
+		"iconColor": "#212121",
 		"textColor": "#212121",
 		"backgroundColor": "#F8F8F8",
 		"borderColor": "#E1E1E1",

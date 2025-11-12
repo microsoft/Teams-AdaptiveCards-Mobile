@@ -4,14 +4,21 @@ package io.adaptivecards.adaptivecardssample.CustomObjects;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+
+import java.util.Arrays;
+import java.util.List;
 
 import io.adaptivecards.adaptivecardssample.R;
+import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.ReferenceIcon;
 import io.adaptivecards.renderer.IDrawableResolver;
 
@@ -19,7 +26,10 @@ public class DrawableResolver implements IDrawableResolver {
 
     @Nullable
     @Override
-    public Drawable getDrawableForReferenceIcon(@NonNull Context context, @NonNull ReferenceIcon icon) {
+    public Drawable getDrawableForReferenceIcon(
+        @NonNull Context context,
+        @NonNull ReferenceIcon icon,
+        @NonNull HostConfig hostConfig) {
         @DrawableRes Integer drawableRes = switch (icon) {
             case AdobeIllustrator -> R.drawable.ic_icon_adobe_illustrator;
             case AdobePhotoshop -> R.drawable.ic_icon_adobe_photoshop;
@@ -47,6 +57,23 @@ public class DrawableResolver implements IDrawableResolver {
             case Zip -> R.drawable.ic_icon_zip;
         };
 
-        return ContextCompat.getDrawable(context, drawableRes);
+        List<ReferenceIcon> overrideIconList = Arrays.asList(
+            ReferenceIcon.AdobeFlash,
+            ReferenceIcon.Code,
+            ReferenceIcon.Image,
+            ReferenceIcon.Gif,
+            ReferenceIcon.Sound,
+            ReferenceIcon.Text,
+            ReferenceIcon.Video
+        );
+
+        // Return Drawable from resource
+        Drawable drawable = ContextCompat.getDrawable(context, drawableRes);
+        if (drawable != null && overrideIconList.contains(icon)) {
+            int color = Color.parseColor(hostConfig.GetCitationBlock().getIconColor());
+            DrawableCompat.setTint(drawable, color);
+            DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_IN);
+        }
+        return drawable;
     }
 }

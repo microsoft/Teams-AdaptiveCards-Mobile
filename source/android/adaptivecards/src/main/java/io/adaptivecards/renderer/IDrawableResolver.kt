@@ -4,9 +4,13 @@ package io.adaptivecards.renderer
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.ReferenceIcon
 
 interface IDrawableResolver {
 
-    fun getDrawableForReferenceIcon(context: Context, icon: ReferenceIcon) : Drawable?
+    fun getDrawableForReferenceIcon(
+        context: Context,
+        icon: ReferenceIcon,
+        hostConfig: HostConfig) : Drawable?
 }

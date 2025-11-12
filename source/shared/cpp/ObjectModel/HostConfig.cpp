@@ -569,6 +569,7 @@ TextBlockConfig TextBlockConfig::Deserialize(const Json::Value& json, const Text
 
 CitationBlock CitationBlock::Deserialize(const Json::Value& json, const CitationBlock& defaultValue) {
     CitationBlock result;
+    result.iconColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::IconColor, defaultValue.iconColor);
     result.textColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::TextColor, defaultValue.textColor);
     result.backgroundColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BackgroundColor, defaultValue.backgroundColor);
     result.borderColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BorderColor, defaultValue.borderColor);

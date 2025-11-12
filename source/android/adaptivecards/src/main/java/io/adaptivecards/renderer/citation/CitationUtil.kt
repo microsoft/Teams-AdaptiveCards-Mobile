@@ -2,9 +2,14 @@ package io.adaptivecards.renderer.citation
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.URLSpan
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.FragmentManager
 import io.adaptivecards.R
@@ -50,16 +55,20 @@ object CitationUtil {
         val urlSpans = paragraph.getSpans(0, paragraph.length, URLSpan::class.java)
         val citeRegex = Regex("""^cite:(.+)$""")
 
-        for (span in urlSpans) {
+        for (span in urlSpans.reversed()) {
             val url = span.url
-            val start = paragraph.getSpanStart(span)
-            val end = paragraph.getSpanEnd(span)
-            val spanText = paragraph.subSequence(start, end).toString()
             val matchResult = citeRegex.matchEntire(url)
 
             if (matchResult != null) {
+                val start = paragraph.getSpanStart(span)
+                val end = paragraph.getSpanEnd(span)
+                val spanText = paragraph.subSequence(start, end).toString()
+
                 // Remove the URLSpan regardless
                 paragraph.removeSpan(span)
+
+                // Insert space after this span to fix touch target issue & to comply with Desktop
+                paragraph.insert(end, " ")
 
                 val index = matchResult.groupValues[1].toIntOrNull() ?: -1
 
@@ -111,7 +120,8 @@ object CitationUtil {
                 backgroundColor,
                 borderColor,
                 spanStart,
-                spanEnd
+                spanEnd,
+                13f
             )
 
             val clickableSpan = CitationClickableSpan(
@@ -143,6 +153,7 @@ object CitationUtil {
                 hostConfig.GetCitationBlock().borderColor.toColorInt(),
                 0,
                 paragraph.length,
+                12f
         )
     }
 
@@ -154,13 +165,15 @@ object CitationUtil {
         backgroundColor: Int,
         borderColor: Int,
         spanStart: Int,
-        spanEnd: Int
+        spanEnd: Int,
+        textSizeSp: Float
     ) {
         val roundedBackgroundSpan = RoundedBackgroundSpan(
                 context,
                 textColor,
                 backgroundColor,
-                borderColor
+                borderColor,
+                textSizeSp = textSizeSp
         )
         paragraph.setSpan(
                 roundedBackgroundSpan,
@@ -185,6 +198,14 @@ object CitationUtil {
         val parser = DateTimeParser(Locale.getDefault().language)
         val formattedText = parser.GenerateString(this.GetTextForDateParsing())
         return renderedCard.checkAndReplaceStringResources(formattedText)
+    }
+
+    @JvmStatic
+    fun Drawable?.applyDrawableColor(@ColorInt color: Int ){
+        this?.apply {
+            DrawableCompat.setTint(this, color)
+            DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)
+        }
     }
 
     @JvmStatic

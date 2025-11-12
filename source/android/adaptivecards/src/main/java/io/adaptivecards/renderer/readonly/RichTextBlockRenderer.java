@@ -52,6 +52,7 @@ import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.citation.CitationUtil;
 import io.adaptivecards.renderer.input.InputUtils;
 import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class RichTextBlockRenderer extends BaseCardElementRenderer
 {
@@ -202,58 +203,43 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                     paragraph.setSpan(new ActionSpan(textRun.GetSelectAction(), renderedCard, cardActionHandler, fragmentManager, hostConfig, renderArgs), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
 
-            } else if (inline.GetInlineType() == InlineElementType.CitationRun) {
-                // Handle CitationRun Rendering
-                handleCitationRunBlock(inline, paragraph, context, renderedCard, fragmentManager, cardActionHandler, hostConfig, renderArgs);
+            } else if (FeatureFlagResolverUtility.isCitationsEnabled()
+                && inline.GetInlineType() == InlineElementType.CitationRun) {
+                CitationRun citationRun = CitationUtil.castToCitationRun(inline);
+
+                // Get the text label to shown for the citation
+                String citationText = CitationUtil.getCitationText(citationRun, renderedCard);
+
+                // Calculate start & end
+                int spanStart = paragraph.length();
+                paragraph.append(citationText);
+                int spanEnd = paragraph.length();
+
+                CitationUtil.applyCitationSpans(
+                    context,
+                    spanStart,
+                    spanEnd,
+                    citationText,
+                    paragraph,
+                    Color.parseColor(hostConfig.GetCitationBlock().getTextColor()),
+                    Color.parseColor(hostConfig.GetCitationBlock().getBackgroundColor()),
+                    Color.parseColor(hostConfig.GetCitationBlock().getBorderColor()),
+                    renderedCard,
+                    citationRun.GetReferenceIndex(),
+                    cardActionHandler,
+                    fragmentManager,
+                    hostConfig,
+                    renderArgs
+                );
+
+                // Insert space after this span to fix touch target issue & to comply with Desktop
+                paragraph.append(" ");
             }
         }
 
         paragraph = InputUtils.appendRequiredLabelSuffix(paragraph, richTextBlock.GetLabelFor(), hostConfig, renderArgs);
 
         return paragraph;
-    }
-
-    protected final void handleCitationRunBlock(
-        @NonNull Inline inline,
-        SpannableStringBuilder paragraph,
-        Context context,
-        RenderedAdaptiveCard renderedCard,
-        FragmentManager fragmentManager,
-        ICardActionHandler cardActionHandler,
-        HostConfig hostConfig,
-        RenderArgs renderArgs
-    ) {
-        if (!FeatureFlagResolverUtility.isCitationsEnabled()) {
-            return;
-        }
-
-        //CitationRun citationRun = null;
-        CitationRun citationRun = CitationUtil.castToCitationRun(inline);
-
-        // Get the text label to shown for the citation
-        String citationText = CitationUtil.getCitationText(citationRun, renderedCard);
-
-        // Calculate start & end
-        int spanStart = paragraph.length();
-        paragraph.append(citationText);
-        int spanEnd = paragraph.length();
-
-        CitationUtil.applyCitationSpans(
-            context,
-            spanStart,
-            spanEnd,
-            citationText,
-            paragraph,
-            Color.parseColor(hostConfig.GetCitationBlock().getTextColor()),
-            Color.parseColor(hostConfig.GetCitationBlock().getBackgroundColor()),
-            Color.parseColor(hostConfig.GetCitationBlock().getBorderColor()),
-            renderedCard,
-            citationRun.GetReferenceIndex(),
-            cardActionHandler,
-            fragmentManager,
-            hostConfig,
-            renderArgs
-        );
     }
 
     @Override

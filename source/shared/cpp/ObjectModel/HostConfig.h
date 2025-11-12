@@ -412,6 +412,7 @@ struct TextBlockConfig
 };
 
 struct CitationBlock {
+    std::string iconColor = "#212121";
     std::string textColor = "#E1E1E1";
     std::string backgroundColor = "#141414";
     std::string borderColor = "#292929";

@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
@@ -22,7 +22,6 @@ import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import io.adaptivecards.R
-import io.adaptivecards.objectmodel.ACTheme
 import io.adaptivecards.objectmodel.ActionType
 import io.adaptivecards.objectmodel.AdaptiveCard
 import io.adaptivecards.objectmodel.CardElementType
@@ -33,6 +32,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Utils
 import io.adaptivecards.renderer.Utils.dpToPx
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
+import io.adaptivecards.renderer.citation.CitationUtil.applyDrawableColor
 
 class CitationCardFragment(
     private val context: Context,
@@ -63,7 +63,11 @@ class CitationCardFragment(
         divider.setBackgroundColor(hostConfig.GetCitationBlock().dividerColor.toColorInt())
 
         val back = view.findViewById<ImageButton>(R.id.back_button)
-        back.setImageResource(if (renderedAdaptiveCard.theme == ACTheme.Dark) R.drawable.ic_icon_back_dark else R.drawable.ic_icon_back)
+        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_icon_back).apply {
+            this.applyDrawableColor(hostConfig.GetCitationBlock().iconColor.toColorInt())
+        }
+        back.setImageDrawable(drawable)
+
         back.setOnClickListener {
             dismiss()
         }
@@ -121,9 +125,8 @@ class CitationCardFragment(
             override fun onGlobalLayout() {
                 bottomSheet.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 val height = bottomSheet.height
-                Log.d(CitationCardFragment.Companion.TAG, "Bottom sheet height: $height")
 
-                bottomSheet?.let {
+                bottomSheet.let {
                     val behavior = BottomSheetBehavior.from(it)
 
                     it.layoutParams.height = getPeekHeight(height)
@@ -140,7 +143,7 @@ class CitationCardFragment(
 
     private fun getPeekHeight(contentHeight: Int): Int {
         val screenHeight = Utils.getScreenAvailableHeight(context)
-        val minHeight = minHeight ?: screenHeight / 3
+        val minHeight = minHeight ?: (screenHeight / 3)
         val maxHeight = screenHeight / 2
         return contentHeight.coerceIn(minHeight, maxHeight)
     }
