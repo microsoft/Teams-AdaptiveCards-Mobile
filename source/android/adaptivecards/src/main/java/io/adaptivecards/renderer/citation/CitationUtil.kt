@@ -188,36 +188,6 @@ object CitationUtil {
     }
 
     @JvmStatic
-    fun References.getDrawableForIcon(): Int {
-        return when (this.GetIcon() ?: ReferenceIcon.Image) {
-            ReferenceIcon.AdobeIllustrator -> R.drawable.ic_icon_adobe_illustrator
-            ReferenceIcon.AdobePhotoshop -> R.drawable.ic_icon_adobe_photoshop
-            ReferenceIcon.AdobeInDesign -> R.drawable.ic_icon_adobe_indesign
-            ReferenceIcon.AdobeFlash -> R.drawable.ic_icon_invalid
-
-            ReferenceIcon.MsExcel -> R.drawable.ic_icon_ms_excel
-            ReferenceIcon.MsLoop -> R.drawable.ic_icon_ms_loop
-            ReferenceIcon.MsVisio -> R.drawable.ic_icon_ms_visio
-            ReferenceIcon.MsOneNote -> R.drawable.ic_icon_ms_onenote
-            ReferenceIcon.MsPowerPoint -> R.drawable.ic_icon_ms_powerpoint
-            ReferenceIcon.MsSharePoint -> R.drawable.ic_icon_ms_sharepoint
-            ReferenceIcon.MsWhiteboard -> R.drawable.ic_icon_ms_whiteboard
-            ReferenceIcon.MsWord -> R.drawable.ic_icon_ms_word
-
-            ReferenceIcon.Sketch -> R.drawable.ic_icon_sketch
-
-            ReferenceIcon.Code -> R.drawable.ic_icon_code
-            ReferenceIcon.Gif -> R.drawable.ic_icon_gif
-            ReferenceIcon.Image -> R.drawable.ic_icon_image
-            ReferenceIcon.Pdf -> R.drawable.ic_icon_pdf
-            ReferenceIcon.Sound -> R.drawable.ic_icon_sound
-            ReferenceIcon.Text -> R.drawable.ic_icon_text
-            ReferenceIcon.Video -> R.drawable.ic_icon_video
-            ReferenceIcon.Zip -> R.drawable.ic_icon_zip
-        }
-    }
-
-    @JvmStatic
     fun getCitationReference(referenceIndex: Int, renderedCard: RenderedAdaptiveCard): References? {
         val index = referenceIndex - 1
         return renderedCard.adaptiveCard.GetReferences()
