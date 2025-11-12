@@ -82,7 +82,8 @@ class CitationBottomSheetDialogFragment(
         if (iconDrawable != null) {
             icon.setImageDrawable(iconDrawable)
         } else {
-            icon.visibility = View.GONE
+            icon.layoutParams.width = 0
+            icon.requestLayout()
         }
 
         val title = view.findViewById<TextView>(R.id.citation_title)

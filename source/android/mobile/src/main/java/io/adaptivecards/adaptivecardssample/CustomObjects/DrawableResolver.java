@@ -30,6 +30,9 @@ public class DrawableResolver implements IDrawableResolver {
         @NonNull Context context,
         @NonNull ReferenceIcon icon,
         @NonNull HostConfig hostConfig) {
+        if (icon == ReferenceIcon.Zip) {
+            return null;
+        }
         @DrawableRes Integer drawableRes = switch (icon) {
             case AdobeIllustrator -> R.drawable.ic_icon_adobe_illustrator;
             case AdobePhotoshop -> R.drawable.ic_icon_adobe_photoshop;
