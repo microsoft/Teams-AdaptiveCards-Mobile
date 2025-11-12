@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ACRIImageResolver <NSObject>
 
-- (UIImage *) getImageForCitation:(ACRCitationIcon) iconName withTheme:(ACRTheme) theme;
+- (UIImage *) getImageForCitation:(ACIcon) iconName withTheme:(ACRTheme) theme;
 
 @end
 

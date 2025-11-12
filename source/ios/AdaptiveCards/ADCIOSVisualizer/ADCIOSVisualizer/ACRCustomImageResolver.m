@@ -11,27 +11,27 @@
 
 @implementation ACRCustomImageResolver
 
-- (UIImage *)getImageForCitation:(ACRCitationIcon)iconName withTheme:(ACRTheme)theme {
+- (UIImage *)getImageForCitation:(ACIcon)iconName withTheme:(ACRTheme)theme {
     switch (iconName)
     {
         // Handling icons independent of theme
-        case ACRAdobeIllustrator: return [UIImage imageNamed: @"adobeIllustrator"];
-        case ACRAdobePhotoshop: return [UIImage imageNamed: @"adobePhotoshop"];
-        case ACRAdobeInDesign: return [UIImage imageNamed: @"adobeInDesign"];
-        case ACRMsWord: return [UIImage imageNamed: @"msword"];
-        case ACRMsExcel: return [UIImage imageNamed: @"msExcel"];
-        case ACRMsPowerPoint: return [UIImage imageNamed: @"msPowerPoint"];
-        case ACRMsOneNote: return [UIImage imageNamed: @"msOneNote"];
-        case ACRMsSharePoint: return [UIImage imageNamed: @"msSharePoint"];
-        case ACRMsVisio: return [UIImage imageNamed: @"msVisio"];
-        case ACRMsLoop: return [UIImage imageNamed: @"msLoop"];
-        case ACRMsWhiteboard: return [UIImage imageNamed: @"msWhiteboard"];
-        case ACRPdf: return [UIImage imageNamed: @"pdf"];
-        case ACRSketch: return [UIImage imageNamed: @"sketch"];
-        case ACRZip: return [UIImage imageNamed: @"zip"];
+        case ACIconAdobeIllustrator: return [UIImage imageNamed: @"adobeIllustrator"];
+        case ACIconAdobePhotoshop: return [UIImage imageNamed: @"adobePhotoshop"];
+        case ACIconAdobeInDesign: return [UIImage imageNamed: @"adobeInDesign"];
+        case ACIconMsWord: return [UIImage imageNamed: @"msword"];
+        case ACIconMsExcel: return [UIImage imageNamed: @"msExcel"];
+        case ACIconMsPowerPoint: return [UIImage imageNamed: @"msPowerPoint"];
+        case ACIconMsOneNote: return [UIImage imageNamed: @"msOneNote"];
+        case ACIconMsSharePoint: return [UIImage imageNamed: @"msSharePoint"];
+        case ACIconMsVisio: return [UIImage imageNamed: @"msVisio"];
+        case ACIconMsLoop: return [UIImage imageNamed: @"msLoop"];
+        case ACIconMsWhiteboard: return [UIImage imageNamed: @"msWhiteboard"];
+        case ACIconPdf: return [UIImage imageNamed: @"pdf"];
+        case ACIconSketch: return [UIImage imageNamed: @"sketch"];
+        case ACIconZip: return [UIImage imageNamed: @"zip"];
         
         // Handling icons based on theme
-        case ACRAdobeFlash:
+        case ACIconAdobeFlash:
         {
             switch (theme)
             {
@@ -43,7 +43,7 @@
                     return nil;
             }
         }
-        case ACRCode:
+        case ACIconCode:
         {
             switch (theme)
             {
@@ -55,7 +55,7 @@
                     return nil;
             }
         }
-        case ACRGif:
+        case ACIconGif:
         {
             switch (theme)
             {
@@ -67,7 +67,7 @@
                     return nil;
             }
         }
-        case ACRCitationImage:
+        case ACIconCitationImage:
         {
             switch (theme)
             {
@@ -79,7 +79,7 @@
                     return nil;
             }
         }
-        case ACRSound:
+        case ACIconSound:
         {
             switch (theme)
             {
@@ -91,7 +91,7 @@
                     return nil;
             }
         }
-        case ACRText:
+        case ACIconText:
         {
             switch (theme)
             {
@@ -103,7 +103,7 @@
                     return nil;
             }
         }
-        case ACRVideo:
+        case ACIconVideo:
         {
             switch (theme)
             {

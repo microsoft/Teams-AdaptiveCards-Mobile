@@ -70,8 +70,9 @@ using namespace AdaptiveCards;
     if (!_reference) {
         return nil;
     }
-    ACRCitationIcon icon = ACRCitationIcon(_reference->GetIcon());
-    return [imageResolver getImageForCitation:icon withTheme:theme];
+    ACRCitationIcon citationIcon = ACRCitationIcon(_reference->GetIcon());
+    ACIcon acIcon = ACIcon(citationIcon);
+    return [imageResolver getImageForCitation:acIcon withTheme:theme];
 }
 
 - (NSArray<NSString *> *)keywords {

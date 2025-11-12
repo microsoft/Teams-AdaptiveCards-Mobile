@@ -170,7 +170,7 @@ typedef NS_ENUM(NSUInteger, ACRBadgeAppearance) {
 };
 
 typedef NS_ENUM(NSInteger, ACRCitationIcon) {
-    ACRAdobeIllustrator,
+    ACRAdobeIllustrator = 0,
     ACRAdobePhotoshop,
     ACRAdobeInDesign,
     ACRAdobeFlash,
@@ -191,4 +191,28 @@ typedef NS_ENUM(NSInteger, ACRCitationIcon) {
     ACRText,
     ACRVideo,
     ACRZip
+};
+
+typedef NS_ENUM(NSInteger, ACIcon) {
+    ACIconAdobeIllustrator = 0,
+    ACIconAdobePhotoshop,
+    ACIconAdobeInDesign,
+    ACIconAdobeFlash,
+    ACIconMsWord,
+    ACIconMsExcel,
+    ACIconMsPowerPoint,
+    ACIconMsOneNote,
+    ACIconMsSharePoint,
+    ACIconMsVisio,
+    ACIconMsLoop,
+    ACIconMsWhiteboard,
+    ACIconCode,
+    ACIconGif,
+    ACIconCitationImage,
+    ACIconPdf,
+    ACIconSketch,
+    ACIconSound,
+    ACIconText,
+    ACIconVideo,
+    ACIconZip
 };
