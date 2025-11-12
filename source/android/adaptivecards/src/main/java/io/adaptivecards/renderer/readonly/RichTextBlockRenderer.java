@@ -51,6 +51,7 @@ import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.citation.CitationUtil;
 import io.adaptivecards.renderer.input.InputUtils;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class RichTextBlockRenderer extends BaseCardElementRenderer
 {
@@ -201,7 +202,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                     paragraph.setSpan(new ActionSpan(textRun.GetSelectAction(), renderedCard, cardActionHandler, fragmentManager, hostConfig, renderArgs), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
 
-            } else if (inline.GetInlineType() == InlineElementType.CitationRun) {
+            } else if (FeatureFlagResolverUtility.isCitationsEnabled() && inline.GetInlineType() == InlineElementType.CitationRun) {
                 //CitationRun citationRun = null;
                 CitationRun citationRun = CitationUtil.castToCitationRun(inline);
 

@@ -16,6 +16,7 @@ import io.adaptivecards.objectmodel.References
 import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
+import io.adaptivecards.renderer.citation.CitationUtil.isCitationUrlSpansPresent
 import io.adaptivecards.renderer.readonly.DateTimeParser
 import io.adaptivecards.renderer.view.RoundedBackgroundSpan
 import java.util.Locale
@@ -41,6 +42,11 @@ object CitationUtil {
         renderArgs: RenderArgs
     ): SpannableStringBuilder {
         val paragraph = SpannableStringBuilder(htmlString)
+
+        if (!isCitationUrlSpansPresent(htmlString)) {
+            return paragraph
+        }
+
         val urlSpans = paragraph.getSpans(0, paragraph.length, URLSpan::class.java)
         val citeRegex = Regex("""^cite:(.+)$""")
 
