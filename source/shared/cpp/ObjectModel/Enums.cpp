@@ -292,6 +292,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::ReferenceIndex, "referenceIndex"},
             {AdaptiveCardSchemaKey::CitationBlock, "citationBlock"},
             {AdaptiveCardSchemaKey::DividerColor, "dividerColor"},
+            {AdaptiveCardSchemaKey::IconColor, "iconColor"},
             {AdaptiveCardSchemaKey::BottomSheetTextColor, "bottomSheetTextColor"},
             {AdaptiveCardSchemaKey::BottomSheetKeywordsColor, "bottomSheetKeywordsColor"},
             {AdaptiveCardSchemaKey::BottomSheetMoreDetailColor, "bottomSheetMoreDetailColor"},

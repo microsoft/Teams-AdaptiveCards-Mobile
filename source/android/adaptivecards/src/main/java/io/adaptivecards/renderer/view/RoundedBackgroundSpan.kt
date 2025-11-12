@@ -18,15 +18,15 @@ class RoundedBackgroundSpan(
     borderWidthDp: Float = 1f,
     paddingHorizontalDp: Float = 4f,
     paddingVerticalDp: Float = 2f,
-    marginHorizontalDp: Float = 2f,
-    private val textSizeSp: Float = 12f
+    marginVerticalDp: Float = 2f,
+    private val textSizeSp: Float = 13f
 ) : ReplacementSpan() {
 
     private val cornerRadius: Float = cornerRadiusDp.dpToPx(context)
     private val borderWidth: Float = borderWidthDp.dpToPx(context)
     private val paddingHorizontal: Float = paddingHorizontalDp.dpToPx(context)
     private val paddingVertical: Float = paddingVerticalDp.dpToPx(context)
-    private val marginHorizontal: Float = marginHorizontalDp.dpToPx(context)
+    private val marginVertical = marginVerticalDp.dpToPx(context)
 
     override fun getSize(
         paint: Paint,
@@ -39,12 +39,17 @@ class RoundedBackgroundSpan(
         val textWidth = textPaint.measureText(text, start, end)
         val fontMetrics = textPaint.fontMetricsInt
         fm?.let {
-            it.ascent = fontMetrics.ascent - paddingVertical.toInt()
-            it.descent = fontMetrics.descent + paddingVertical.toInt()
+            // Text box height = text + padding
+            val ascent = fontMetrics.ascent - paddingVertical.toInt()
+            val descent = fontMetrics.descent + paddingVertical.toInt()
+
+            // Apply margin OUTSIDE the span area
+            it.ascent = ascent - marginVertical.toInt()
+            it.descent = descent + marginVertical.toInt()
             it.top = it.ascent
             it.bottom = it.descent
         }
-        return (textWidth + 2 * paddingHorizontal + 2 * marginHorizontal).toInt()
+        return (textWidth + 2 * paddingHorizontal).toInt()
     }
 
     override fun draw(
@@ -62,7 +67,7 @@ class RoundedBackgroundSpan(
         val textWidth = textPaint.measureText(text, start, end)
         val fontMetrics = textPaint.fontMetrics
 
-        // Rectangle bounds
+        // The rectangle only accounts for padding — NOT margin.
         val rectTop = y + fontMetrics.ascent - paddingVertical
         val rectBottom = y + fontMetrics.descent + paddingVertical
 
@@ -74,16 +79,16 @@ class RoundedBackgroundSpan(
         val textX: Float
 
         if (isRtl) {
-            rectRight = x - marginHorizontal
+            rectRight = x
             rectLeft = rectRight - textWidth - 2 * paddingHorizontal
             textX = rectRight - paddingHorizontal - textWidth
         } else {
-            rectLeft = x + marginHorizontal
+            rectLeft = x
             rectRight = rectLeft + textWidth + 2 * paddingHorizontal
             textX = rectLeft + paddingHorizontal
         }
 
-        // Draw background
+        // Draw background rectangle
         val backgroundPaint = Paint(textPaint).apply {
             color = backgroundColor
             style = Paint.Style.FILL

@@ -229,6 +229,9 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                     hostConfig,
                     renderArgs
                 );
+
+                // Insert space after this span to fix touch target issue & to comply with Desktop
+                paragraph.append(" ");
             }
         }
 
