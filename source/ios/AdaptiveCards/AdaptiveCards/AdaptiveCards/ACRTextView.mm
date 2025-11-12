@@ -168,7 +168,8 @@
 
 - (BOOL)validate:(NSError * __autoreleasing *)error
 {
-    return [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:self.hasText predicate:self.regexPredicate text:self.text error:error];
+    BOOL hasText = self.hasText && !_isShowingPlaceholder;
+    return [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:hasText predicate:self.regexPredicate text:self.text error:error];
 }
 
 - (void)setFocus:(BOOL)shouldBecomeFirstResponder view:(UIView *_Nullable)view
