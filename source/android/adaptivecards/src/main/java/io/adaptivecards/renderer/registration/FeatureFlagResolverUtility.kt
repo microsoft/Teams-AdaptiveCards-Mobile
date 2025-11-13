@@ -9,6 +9,7 @@ package io.adaptivecards.renderer.registration
 object FeatureFlagResolverUtility {
 
     const val IS_STRING_RESOURCE_ENABLED = "adaptiveCard/isStringResourceEnabled"
+    const val IS_CITATIONS_ENABLED = "adaptiveCard/isCitationsEnabled"
     private const val IS_FLOW_LAYOUT_ENABLED = "adaptiveCard/isFlowLayoutEnabled"
     private const val IS_GRID_LAYOUT_ENABLED = "adaptiveCard/isGridLayoutEnabled"
     private const val IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN = "adaptiveCard/isItemFitToFillEnabledForColumn"
@@ -21,6 +22,13 @@ object FeatureFlagResolverUtility {
     fun isStringResourceEnabled(): Boolean {
         val featureFlagResolver = CardRendererRegistration.getInstance().featureFlagResolver
         return featureFlagResolver?.getEcsSettingAsBoolean(IS_STRING_RESOURCE_ENABLED)
+            ?: false
+    }
+
+    @JvmStatic
+    fun isCitationsEnabled() : Boolean {
+        val featureFlagResolver = CardRendererRegistration.getInstance().featureFlagResolver
+        return featureFlagResolver?.getEcsSettingAsBoolean(IS_CITATIONS_ENABLED)
             ?: false
     }
 
