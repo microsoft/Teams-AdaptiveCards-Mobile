@@ -68,6 +68,7 @@ using namespace AdaptiveCards;
     id<ACRIBaseActionSetRenderer> _defaultActionSetRenderer;
     ACOParseContext *_parseContext;
     NSObject<ACRIFeatureFlagResolver> *featureFlagResolverImp;
+    NSObject<ACRIImageResolver> *imageResolverImp;
     int _hostCardContainer;
 }
 
@@ -362,6 +363,16 @@ using namespace AdaptiveCards;
 - (NSObject<ACRIFeatureFlagResolver> *_Nullable)getFeatureFlagResolver
 {
     return featureFlagResolverImp;
+}
+
+- (void)setImageResolver:(NSObject<ACRIImageResolver> *_Nonnull)imageResolver
+{
+    imageResolverImp = imageResolver;
+}
+
+- (NSObject<ACRIImageResolver> *_Nullable)getImageResolver
+{
+    return imageResolverImp;
 }
 
 @end
