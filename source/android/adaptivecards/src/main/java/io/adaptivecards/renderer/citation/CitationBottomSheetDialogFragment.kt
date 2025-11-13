@@ -34,7 +34,7 @@ import io.adaptivecards.objectmodel.AdaptiveCard
 import io.adaptivecards.objectmodel.ReferenceType
 import io.adaptivecards.renderer.Utils
 import io.adaptivecards.renderer.Utils.dpToPx
-import io.adaptivecards.renderer.citation.CitationUtil.getDrawableForIcon
+import io.adaptivecards.renderer.registration.CardRendererRegistration
 
 
 class CitationBottomSheetDialogFragment(
@@ -75,8 +75,16 @@ class CitationBottomSheetDialogFragment(
 
         referenceNumber.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
 
+        val iconDrawable = CardRendererRegistration.getInstance()
+            .drawableResolver?.getDrawableForReferenceIcon(context, citationReference.GetIcon(), hostConfig)
         val icon = view.findViewById<ImageView>(R.id.citation_icon)
-        icon.setImageDrawable(citationReference.getDrawableForIcon(context, hostConfig))
+
+        if (iconDrawable != null) {
+            icon.setImageDrawable(iconDrawable)
+        } else {
+            icon.layoutParams.width = 0
+            icon.requestLayout()
+        }
 
         val title = view.findViewById<TextView>(R.id.citation_title)
         title.text = citationReference.GetTitle()

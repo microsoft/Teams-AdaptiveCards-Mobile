@@ -49,6 +49,7 @@ import io.adaptivecards.renderer.CompoundButtonRenderer;
 import io.adaptivecards.renderer.IActionLayoutRenderer;
 import io.adaptivecards.renderer.IBaseActionElementRenderer;
 import io.adaptivecards.renderer.IBaseCardElementRenderer;
+import io.adaptivecards.renderer.IDrawableResolver;
 import io.adaptivecards.renderer.IFeatureFlagResolver;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
@@ -280,6 +281,15 @@ public class CardRendererRegistration
     public IFeatureFlagResolver getFeatureFlagResolver()
     {
         return m_featureFlagResolver;
+    }
+
+    public void registerDrawableResolver(@NonNull IDrawableResolver drawableResolver) {
+        m_drawableResolver = drawableResolver;
+    }
+
+    @Nullable
+    public IDrawableResolver getDrawableResolver() {
+        return m_drawableResolver;
     }
 
     public FeatureRegistration getFeatureRegistration()
@@ -780,6 +790,7 @@ public class CardRendererRegistration
     private FeatureRegistration m_featureRegistration = null;
     private int m_hostCardContainer = -1;
     private IFeatureFlagResolver m_featureFlagResolver;
+    private IDrawableResolver m_drawableResolver = null;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
     private boolean mIsSplitActionEnabled = false;

@@ -47,6 +47,7 @@ import io.adaptivecards.adaptivecardssample.CustomObjects.Actions.ShowCardOverri
 import io.adaptivecards.adaptivecardssample.CustomObjects.CardElements.CustomBlahParser;
 import io.adaptivecards.adaptivecardssample.CustomObjects.CardElements.CustomBlahRenderer;
 import io.adaptivecards.adaptivecardssample.CustomObjects.CardElements.CustomInput;
+import io.adaptivecards.adaptivecardssample.CustomObjects.DrawableResolver;
 import io.adaptivecards.adaptivecardssample.CustomObjects.FeatureFlagResolver;
 import io.adaptivecards.adaptivecardssample.CustomObjects.Media.CustomImageLoaderForButtons;
 import io.adaptivecards.adaptivecardssample.CustomObjects.Media.LocalResourcesLoader;
@@ -415,6 +416,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             layout.removeAllViews();
 
             registerFeatureFlagResolver();
+            CardRendererRegistration.getInstance().registerDrawableResolver(new DrawableResolver());
             CardRendererRegistration.getInstance().setIsSplitActionEnabled(true);
             registerCustomFeatures(layout.getContext());
             if (mLayoutWidth != 0) {

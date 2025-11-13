@@ -68,7 +68,6 @@
                 android:layout_height="36dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginStart="4dp"
-                android:src="@drawable/ic_icon_ms_excel"
                 app:layout_constraintStart_toEndOf="@id/text_reference_number"
                 app:layout_constraintTop_toTopOf="parent" />
 

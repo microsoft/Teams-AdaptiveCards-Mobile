@@ -8,15 +8,12 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.URLSpan
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.FragmentManager
-import io.adaptivecards.R
 import io.adaptivecards.objectmodel.CitationRun
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.objectmodel.Inline
-import io.adaptivecards.objectmodel.ReferenceIcon
 import io.adaptivecards.objectmodel.References
 import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
@@ -46,6 +43,11 @@ object CitationUtil {
         renderArgs: RenderArgs
     ): SpannableStringBuilder {
         val paragraph = SpannableStringBuilder(htmlString)
+
+        if (!isCitationUrlSpansPresent(htmlString)) {
+            return paragraph
+        }
+
         val urlSpans = paragraph.getSpans(0, paragraph.length, URLSpan::class.java)
         val citeRegex = Regex("""^cite:(.+)$""")
 
@@ -192,56 +194,6 @@ object CitationUtil {
         val parser = DateTimeParser(Locale.getDefault().language)
         val formattedText = parser.GenerateString(this.GetTextForDateParsing())
         return renderedCard.checkAndReplaceStringResources(formattedText)
-    }
-
-    @JvmStatic
-    fun References.getDrawableForIcon(context: Context, hostConfig: HostConfig): Drawable? {
-        val icon = this.GetIcon() ?: ReferenceIcon.Image
-        val resId = when (icon) {
-            ReferenceIcon.AdobeIllustrator -> R.drawable.ic_icon_adobe_illustrator
-            ReferenceIcon.AdobePhotoshop -> R.drawable.ic_icon_adobe_photoshop
-            ReferenceIcon.AdobeInDesign -> R.drawable.ic_icon_adobe_indesign
-            ReferenceIcon.AdobeFlash -> R.drawable.ic_icon_invalid
-
-            ReferenceIcon.MsExcel -> R.drawable.ic_icon_ms_excel
-            ReferenceIcon.MsLoop -> R.drawable.ic_icon_ms_loop
-            ReferenceIcon.MsVisio -> R.drawable.ic_icon_ms_visio
-            ReferenceIcon.MsOneNote -> R.drawable.ic_icon_ms_onenote
-            ReferenceIcon.MsPowerPoint -> R.drawable.ic_icon_ms_powerpoint
-            ReferenceIcon.MsSharePoint -> R.drawable.ic_icon_ms_sharepoint
-            ReferenceIcon.MsWhiteboard -> R.drawable.ic_icon_ms_whiteboard
-            ReferenceIcon.MsWord -> R.drawable.ic_icon_ms_word
-
-            ReferenceIcon.Sketch -> R.drawable.ic_icon_sketch
-
-            ReferenceIcon.Code -> R.drawable.ic_icon_code
-            ReferenceIcon.Gif -> R.drawable.ic_icon_gif
-            ReferenceIcon.Image -> R.drawable.ic_icon_image
-            ReferenceIcon.Pdf -> R.drawable.ic_icon_pdf
-            ReferenceIcon.Sound -> R.drawable.ic_icon_sound
-            ReferenceIcon.Text -> R.drawable.ic_icon_text
-            ReferenceIcon.Video -> R.drawable.ic_icon_video
-            ReferenceIcon.Zip -> R.drawable.ic_icon_zip
-        }
-
-        val overrideIconList = listOf(
-                ReferenceIcon.AdobeFlash,
-                ReferenceIcon.Code,
-                ReferenceIcon.Image,
-                ReferenceIcon.Gif,
-                ReferenceIcon.Sound,
-                ReferenceIcon.Text,
-                ReferenceIcon.Video
-        )
-
-        // Return Drawable from resource
-        val drawable = ContextCompat.getDrawable(context, resId).apply {
-            if (icon in overrideIconList) {
-                applyDrawableColor(hostConfig.GetCitationBlock().iconColor.toColorInt())
-            }
-        }
-
-        return drawable
     }
 
     @JvmStatic
