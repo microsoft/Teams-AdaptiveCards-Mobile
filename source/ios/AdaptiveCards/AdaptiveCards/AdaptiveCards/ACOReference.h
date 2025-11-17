@@ -11,6 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class UIImage;
+
 /**
  * Represents different types of references
  */
@@ -59,7 +61,7 @@ typedef NS_ENUM(NSUInteger, ACOReferenceType) {
 /**
  * Icon to show in citation bottomsheet
  */
-- (NSString *)icon:(ACRTheme)theme;
+- (UIImage *)iconForTheme:(ACRTheme)theme;
 
 @end
 

@@ -128,7 +128,7 @@ static NSString *const referencesKey = @"References";
     citationView.delegate = self;
 
     ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
-    config.dismissButtonType = ACRBottomSheetDismissButtonTypeDragIndicator;
+    config.dismissButtonType = ACRBottomSheetDismissButtonTypeNone;
     config.contentPadding = 8;
     config.headerText = NSLocalizedString(referencesKey, nil);
     

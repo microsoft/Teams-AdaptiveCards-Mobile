@@ -35,7 +35,7 @@
 
     ACRColumnView *parent = _currentShowcard;
 
-    NSMutableArray<ACRIBaseInputHandler> *inputs = parent.inputHandlers;
+    NSArray<ACRIBaseInputHandler> *inputs = parent.inputHandlers;
     for (id<ACRIBaseInputHandler> input in inputs) {
         BOOL validationResult = [input validate:&error];
         [_gatheredInputs addObject:input];
