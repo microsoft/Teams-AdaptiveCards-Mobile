@@ -20,6 +20,31 @@ using namespace AdaptiveCards;
     std::shared_ptr<References> _reference;
 }
 
+typedef NS_ENUM(NSInteger, ACRCitationIcon) {
+    ACRAdobeIllustrator = 0,
+    ACRAdobePhotoshop,
+    ACRAdobeInDesign,
+    ACRAdobeFlash,
+    ACRMsWord,
+    ACRMsExcel,
+    ACRMsPowerPoint,
+    ACRMsOneNote,
+    ACRMsSharePoint,
+    ACRMsVisio,
+    ACRMsLoop,
+    ACRMsWhiteboard,
+    ACRCode,
+    ACRGif,
+    ACRCitationImage,
+    ACRPdf,
+    ACRSketch,
+    ACRSound,
+    ACRText,
+    ACRVideo,
+    ACRZip
+};
+
+
 - (instancetype)initWithReference:(const std::shared_ptr<References> &)reference {
     self = [super init];
     if (self && reference) {
