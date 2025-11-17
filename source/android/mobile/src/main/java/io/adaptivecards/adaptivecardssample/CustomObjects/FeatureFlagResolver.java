@@ -14,6 +14,7 @@ public class FeatureFlagResolver implements IFeatureFlagResolver {
         return key.equals("adaptiveCard/isFlowLayoutEnabled")
             || key.equals("adaptiveCard/isItemFitToFillEnabledForColumn")
             || key.equals("adaptiveCard/isGridLayoutEnabled")
+            || key.equals(FeatureFlagResolverUtility.IS_CITATIONS_ENABLED)
             || key.equals(FeatureFlagResolverUtility.IS_STRING_RESOURCE_ENABLED);
     }
 
