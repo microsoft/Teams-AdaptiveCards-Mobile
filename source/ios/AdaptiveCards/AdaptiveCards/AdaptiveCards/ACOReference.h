@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger, ACOReferenceType) {
 /**
  * Icon to show in citation bottomsheet
  */
-- (UIImage *)icon:(ACRTheme)theme;
+- (UIImage *)iconForTheme:(ACRTheme)theme;
 
 @end
 

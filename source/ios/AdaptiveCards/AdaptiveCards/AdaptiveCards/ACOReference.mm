@@ -64,7 +64,7 @@ using namespace AdaptiveCards;
     return [NSString stringWithUTF8String:_reference->GetUrl().c_str()];
 }
 
-- (UIImage *)icon:(ACRTheme)theme
+- (UIImage *)iconForTheme:(ACRTheme)theme
 {
     NSObject<ACRIImageResolver> *imageResolver = [[ACRRegistration getInstance] getImageResolver];
     if (!_reference) {
@@ -72,7 +72,7 @@ using namespace AdaptiveCards;
     }
     ACRCitationIcon citationIcon = ACRCitationIcon(_reference->GetIcon());
     ACIcon acIcon = ACIcon(citationIcon);
-    return [imageResolver getImageForCitation:acIcon withTheme:theme];
+    return [imageResolver getImage:acIcon withTheme:theme];
 }
 
 - (NSArray<NSString *> *)keywords {

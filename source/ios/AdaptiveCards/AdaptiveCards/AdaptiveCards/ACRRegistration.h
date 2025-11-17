@@ -1,11 +1,14 @@
 //
-//  ACRRegistartion
-//  ACRRegistartion.h
+//  ACRRegistration
+//  ACRRegistration.h
 //
 //  Copyright © 2017 Microsoft. All rights reserved.
 //
 //
+
 @class ACRBaseCardElementRenderer;
+
+@protocol ACRIImageResolver;
 
 #ifdef SWIFT_PACKAGE
 /// Swift Package Imports
@@ -18,7 +21,6 @@
 #endif
 #import "ACOBaseCardElement.h"
 #import "ACRIFeatureFlagResolver.h"
-#import "ACRIImageResolver.h"
 
 @interface ACRRegistration : NSObject
 

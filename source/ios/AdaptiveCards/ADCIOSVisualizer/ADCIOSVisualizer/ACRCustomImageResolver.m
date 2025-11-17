@@ -11,7 +11,7 @@
 
 @implementation ACRCustomImageResolver
 
-- (UIImage *)getImageForCitation:(ACIcon)iconName withTheme:(ACRTheme)theme {
+- (UIImage *)getImage:(ACIcon)iconName withTheme:(ACRTheme)theme {
     switch (iconName)
     {
         // Handling icons independent of theme

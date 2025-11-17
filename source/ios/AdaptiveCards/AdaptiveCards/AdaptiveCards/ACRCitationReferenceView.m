@@ -237,8 +237,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
     NSTextAttachment *chevronAttachment = [[NSTextAttachment alloc] init];
     chevronAttachment.image = chevronImage;
 
-    // Adjust vertical alignment if needed
-    CGFloat offsetY = -2.0; // tweak as per visual alignment
+    CGFloat offsetY = -2.0;
     chevronAttachment.bounds = CGRectMake(0, offsetY, chevronImage.size.width, chevronImage.size.height);
 
     NSAttributedString *chevron = [NSAttributedString attributedStringWithAttachment:chevronAttachment];
@@ -347,10 +346,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
                 // Setting hexcode: #E0E0E0 for separator
                 NSAttributedString *separator = [[NSAttributedString alloc] initWithString:@"  |  "
                                                                                  attributes:@{
-                    NSForegroundColorAttributeName: [UIColor colorWithRed:224.0/255.0
-                                                                    green:224.0/255.0
-                                                                     blue:224.0/255.0
-                                                                    alpha:1.0],
+                    NSForegroundColorAttributeName: [UIColor grayColor],
                     NSFontAttributeName: [UIFont systemFontOfSize:12 weight:UIFontWeightRegular]
                 }];
                 [attributedString appendAttributedString:separator];
@@ -375,7 +371,7 @@ static const CGFloat kACRCitationLeftSideMaxWidthMultiplier = 0.5;
 
 - (void)updateIconForReference:(ACOReference *)reference
 {
-    self.iconImageView.image = [[reference icon:_citation.theme] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.iconImageView.image = [[reference iconForTheme:_citation.theme] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 @end
