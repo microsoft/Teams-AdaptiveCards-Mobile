@@ -38,11 +38,6 @@ static NSString *const isStringResourceEnabledKey = @"isStringResourceEnabled";
         return YES;
     }
     
-    if([flag isEqualToString:isProgressRingEnabledKey])
-    {
-        return YES;
-    }
-    
     if([flag isEqualToString:isCitationsEnabledKey])
     {
         return YES;
