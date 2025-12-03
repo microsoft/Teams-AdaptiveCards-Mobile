@@ -26,9 +26,9 @@
     CGFloat containerHeight = self.containerView.bounds.size.height;
     CGFloat visibleHeight = containerHeight - self.keyboardHeight;
     CGFloat y = visibleHeight - targetHeight;
-    y = y < 0 ? 0 : y;
-
-    return CGRectMake(0, y, self.containerView.bounds.size.width, targetHeight);
+    CGFloat safeY = self.presentingViewController.view.safeAreaInsets.top;
+    y = y <= 0 ? safeY : y;
+    return CGRectMake(0, y, self.containerView.bounds.size.width, visibleHeight - y);
 }
 
 #pragma mark - Layout
@@ -108,8 +108,8 @@
     self.isAdjustingForKeyboard = YES;
 
     CGRect newFrame = [self frameOfPresentedViewInContainerView];
-
-    [UIView animateWithDuration:0.25 animations:^{
+    NSTimeInterval animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:animationDuration animations:^{
         self.presentedView.frame = newFrame;
     } completion:^(BOOL finished) {
         self.isAdjustingForKeyboard = NO;
@@ -122,8 +122,8 @@
     self.isAdjustingForKeyboard = YES;
 
     CGRect newFrame = [self frameOfPresentedViewInContainerView];
-
-    [UIView animateWithDuration:0.25 animations:^{
+    NSTimeInterval animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:animationDuration animations:^{
         self.presentedView.frame = newFrame;
     } completion:^(BOOL finished) {
         self.isAdjustingForKeyboard = NO;
