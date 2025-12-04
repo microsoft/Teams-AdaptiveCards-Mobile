@@ -856,7 +856,7 @@ struct SwiftImageSetParser: SwiftBaseCardElementParser {
         let imageSet = try SwiftBaseCardElement.deserialize(from: value) as! SwiftImageSet
         
         // Grab the "images" array from the JSON.
-        let imagesArray: [[String: Any]] = try SwiftParseUtil.getArray(from: value, key: "images", required: true)
+        let imagesArray: [[String: Any]] = try SwiftParseUtil.getArray(from: value, key: "images", required: false)
         var images: [SwiftImage] = []
         for imageJson in imagesArray {
             var temp = imageJson
