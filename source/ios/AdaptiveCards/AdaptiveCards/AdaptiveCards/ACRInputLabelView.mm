@@ -151,17 +151,18 @@
         std::string label = TextInput().getLabel(inputBlck->GetId());
         if (!label.empty())
         {
-            NSString *accessibilityString = [NSString stringWithUTF8String:label.c_str()];
-            if (inputBlck->GetIsRequired())
-            {
-                accessibilityString = [accessibilityString stringByAppendingString: NSLocalizedString(@"\nRequired", nil)];
-            }
-            inputView.accessibilityLabel = accessibilityString;
+            inputView.accessibilityLabel = [NSString stringWithUTF8String:label.c_str()];
         }
         else
         {
             inputView.accessibilityLabel = self.label.text;
         }
+        
+        if (inputBlck->GetIsRequired() && inputView.accessibilityLabel)
+        {
+            inputView.accessibilityLabel = [inputView.accessibilityLabel stringByAppendingString: NSLocalizedString(@"\nRequired", nil)];
+        }
+        
         self.inputAccessibilityItem = inputView;
         self.inputAccessibilityItem.accessibilityIdentifier = [NSString stringWithUTF8String:inputBlck->GetId().c_str()];
         if (inputView != accessibilityItem) {
