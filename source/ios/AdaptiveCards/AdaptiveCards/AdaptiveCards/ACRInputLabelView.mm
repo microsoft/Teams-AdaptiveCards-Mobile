@@ -158,7 +158,7 @@
             inputView.accessibilityLabel = self.label.text;
         }
         
-        if (inputBlck->GetIsRequired())
+        if (inputBlck->GetIsRequired() && inputView.accessibilityLabel)
         {
             inputView.accessibilityLabel = [inputView.accessibilityLabel stringByAppendingString: NSLocalizedString(@"\nRequired", nil)];
         }
