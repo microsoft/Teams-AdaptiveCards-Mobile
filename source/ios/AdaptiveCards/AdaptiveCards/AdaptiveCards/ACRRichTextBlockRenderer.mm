@@ -148,6 +148,7 @@
                                                                subtleOption:textRun->GetIsSubtle().value_or(false)];
 
                         // Config and add Select Action
+                        BOOL isLink = NO;
                         std::shared_ptr<BaseActionElement> baseAction = textRun->GetSelectAction();
                         ACOBaseActionElement *acoAction = [[ACOBaseActionElement alloc] initWithBaseActionElement:baseAction];
                         if (baseAction && [acoAction isEnabled]) {
@@ -179,9 +180,17 @@
                                         hasLongPressGestureRecognizerAdded = YES;
                                     }
                                 }
-
-                                foregroundColor = UIColor.linkColor;
+                                
+                                isLink = YES;
                             }
+                        }
+                        
+                        // Only apply foreground color for non-link text
+                        // Links with NSLinkAttributeName handle their own color automatically
+                        if (!isLink) {
+                            [textRunContent addAttribute:NSForegroundColorAttributeName
+                                                   value:foregroundColor
+                                                   range:NSMakeRange(0, textRunContent.length)];
                         }
 
                         // apply hightlight to textrun
@@ -218,13 +227,10 @@
                                                    range:NSMakeRange(0, textRunContent.length)];
                         }
 
-                        // Add paragraph style, text color, text weight as attributes to a
-                        // NSMutableAttributedString, content.
-                        [textRunContent addAttributes:@{
-                            NSParagraphStyleAttributeName : paragraphStyle,
-                            NSForegroundColorAttributeName : foregroundColor,
-                        }
-                                                range:NSMakeRange(0, textRunContent.length)];
+                        // Add paragraph style as attribute to NSMutableAttributedString
+                        [textRunContent addAttribute:NSParagraphStyleAttributeName
+                                               value:paragraphStyle
+                                               range:NSMakeRange(0, textRunContent.length)];
 
                         [content appendAttributedString:textRunContent];
                     }
