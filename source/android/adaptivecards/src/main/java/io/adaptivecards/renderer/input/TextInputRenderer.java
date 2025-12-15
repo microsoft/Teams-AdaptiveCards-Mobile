@@ -21,11 +21,13 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.fragment.app.FragmentManager;
@@ -218,7 +220,13 @@ public class TextInputRenderer extends BaseCardElementRenderer
         {
             String label = TextInput.getLabelForAccessibility(textInput);
             if (!label.isEmpty()) {
-                editText.setContentDescription(label);
+                editText.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+                    @Override
+                    public void onInitializeAccessibilityNodeInfo(@NonNull View host, @NonNull AccessibilityNodeInfo info) {
+                        super.onInitializeAccessibilityNodeInfo(host, info);
+                        info.setText(label);
+                    }
+                });
             }
 
             BaseActionElement action = textInput.GetInlineAction();
