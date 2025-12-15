@@ -263,7 +263,8 @@ void DateTimePreparser::ParseDateTime(const std::string& in)
                     else
                     {
                         std::ostringstream parsedTime;
-                        parsedTime << std::put_time(&result, "%I:%M %p");
+                        // Changing to am pm format
+                        parsedTime << std::put_time(&result, "%H:%M");
                         AddTextToken(parsedTime.str(), DateTimePreparsedTokenFormat::RegularString);
                     }
                 }

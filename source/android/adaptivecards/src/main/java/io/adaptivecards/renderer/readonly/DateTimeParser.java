@@ -15,7 +15,11 @@ import java.text.SimpleDateFormat;
 public class DateTimeParser {
 
     public DateTimeParser(String language){
-        m_language = new Locale(language);
+        if (language.isBlank()) {
+            m_language = Locale.getDefault();
+        } else {
+            m_language = new Locale(language);
+        }
     }
 
     public String GenerateString(DateTimePreparser text){
@@ -28,15 +32,15 @@ public class DateTimeParser {
             // Java complains of the enum not being a constant type, so have to do this with if elses
             Date dateToParse = FormatDate(ts.GetYear(), ts.GetMonth(), ts.GetDay());
             if (ts.GetFormat() == DateTimePreparsedTokenFormat.DateCompact) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 parsedString += dateFormat.format(dateToParse);
             } else {
                 if (ts.GetFormat() == DateTimePreparsedTokenFormat.DateShort) {
-                    SimpleDateFormat localizedFormat = new SimpleDateFormat("EEE, MMM dd, yyyy", m_language);
+                    SimpleDateFormat localizedFormat = new SimpleDateFormat("EEE, dd MMM yyyy", m_language);
                     parsedString += localizedFormat.format(dateToParse);
                 } else {
                     if (ts.GetFormat() == DateTimePreparsedTokenFormat.DateLong) {
-                        SimpleDateFormat localizedFormat = new SimpleDateFormat("EEEE, MMMM dd, yyyy", m_language);
+                        SimpleDateFormat localizedFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", m_language);
                         parsedString += localizedFormat.format(dateToParse);
                     } else {
                         parsedString += ts.GetText();
