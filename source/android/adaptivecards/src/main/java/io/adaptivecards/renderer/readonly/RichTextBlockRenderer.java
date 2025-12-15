@@ -25,6 +25,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.List;
 import java.util.Locale;
 
 import io.adaptivecards.objectmodel.BaseActionElement;
@@ -114,7 +115,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
     private SpannableStringBuilder buildSpannableParagraph(
                 RenderedAdaptiveCard renderedCard,
                 RichTextBlock richTextBlock,
-                InlineVector inlines,
+                List<Inline> inlines,
                 ICardActionHandler cardActionHandler,
                 FragmentManager fragmentManager,
                 HostConfig hostConfig,
@@ -162,7 +163,6 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 int color = getColor(TextRendererUtil.getTextColor(textColor, hostConfig, isSubtle, renderArgs.getContainerStyle()));
                 paragraph.setSpan(new ForegroundColorSpan(color), spanStart, spanEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
 
-                if (textRun.GetHighlight())
                 {
                     int highlightColor = getColor(TextRendererUtil.getHighlightColor(textColor, hostConfig, isSubtle, renderArgs.getContainerStyle()));
                     paragraph.setSpan(new BackgroundColorSpan(highlightColor), spanStart, spanEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -255,33 +255,46 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
     {
         RichTextBlock richTextBlock = Util.castTo(baseCardElement, RichTextBlock.class);
 
-        TextView textView = new TextView(context);
-        textView.setEllipsize(TextUtils.TruncateAt.END);
-        textView.setHorizontallyScrolling(false);
+//        FlexboxLayout flexboxLayout = new FlexboxLayout(context);
+//        flexboxLayout.setFlexDirection(FlexDirection.ROW);
+//        flexboxLayout.setFlexWrap(FlexWrap.WRAP);
+//        flexboxLayout.setLayoutParams(new FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        textView.setTag(new TagContent(richTextBlock));
+        List<List<Inline>> lists = RichTextRenderUtil.splitInlines(richTextBlock.GetInlines());
 
-        // RichTextBlock properties
-        // HorizontalAlignment
-        // Inlines
+        for (List<Inline> inlines : lists) {
+            TextView textView = new TextView(context);
+            textView.setEllipsize(TextUtils.TruncateAt.END);
+            textView.setHorizontallyScrolling(false);
 
-        TextBlockRenderer.applyHorizontalAlignment(textView, richTextBlock.GetHorizontalAlignment(), renderArgs);
+            textView.setTag(new TagContent(richTextBlock));
 
-        // This is the section for rendering the paragraphs
-        // Every paragraph may contain contains any number of inlines
-        // The current inline element types are TextRun
-        InlineVector inlines = richTextBlock.GetInlines();
+            // RichTextBlock properties
+            // HorizontalAlignment
+            // Inlines
+            TextBlockRenderer.applyHorizontalAlignment(textView, richTextBlock.GetHorizontalAlignment(), renderArgs);
 
-        textView.setText("");
-        SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, richTextBlock, inlines, cardActionHandler, fragmentManager, hostConfig, renderArgs, textView.getContext());
-        textView.append(convertedString);
+            // This is the section for rendering the paragraphs
+            // Every paragraph may contain contains any number of inlines
+            // The current inline element types are TextRun
 
-        // Properties required for actions to fire onClick event
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-        textView.setClickable(true);
+            //InlineVector inlines = richTextBlock.GetInlines();
 
-        viewGroup.addView(textView);
-        return textView;
+            textView.setText("");
+            SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, richTextBlock, inlines, cardActionHandler, fragmentManager, hostConfig, renderArgs, textView.getContext());
+            textView.append(convertedString);
+
+            // Properties required for actions to fire onClick event
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            textView.setClickable(true);
+
+            //flexboxLayout.addView(textView);
+            viewGroup.addView(textView);
+            return textView;
+        }
+
+        //flexboxLayout.setTag(new TagContent(richTextBlock));
+        throw new RuntimeException("hello");
     }
 
     private static RichTextBlockRenderer s_instance = null;
