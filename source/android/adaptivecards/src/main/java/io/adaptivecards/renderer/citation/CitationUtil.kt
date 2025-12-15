@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.text.style.URLSpan
 import androidx.annotation.ColorInt
 import androidx.core.graphics.drawable.DrawableCompat
@@ -132,6 +133,8 @@ object CitationUtil {
             )
 
             paragraph.setSpan(clickableSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        } else {
+            paragraph.setSpan(ForegroundColorSpan(textColor), spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
 
