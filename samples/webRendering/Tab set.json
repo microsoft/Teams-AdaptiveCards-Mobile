@@ -1,0 +1,113 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Below is a TabSet with 3 tab pages in default (medium) size",
+      "wrap": true,
+      "size": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "TabSet in small size",
+      "wrap": true,
+      "size": "Large"
+    },
+    {
+      "type": "TabSet",
+      "size": "small",
+      "pages": [
+        {
+          "type": "TabPage",
+          "style": "emphasis",
+          "iconName": "Calendar",
+          "title": "Tab 1",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 1 of 6",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "TabPage",
+          "style": "emphasis",
+          "iconName": "Calendar",
+          "showBorder": true,
+          "roundedCorners": true,
+          "title": "Tab 2",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 2 of 6",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "TabPage",
+          "iconName": "Calendar",
+          "title": "Tab 3",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 3 of 6",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "TabPage",
+          "style": "emphasis",
+          "iconName": "Calendar",
+          "title": "Tab 4 long tab name long tab name",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 4 of 6",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "TabPage",
+          "style": "emphasis",
+          "iconName": "Calendar",
+          "showBorder": true,
+          "roundedCorners": true,
+          "title": "Tab 5",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 5 of 6",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "TabPage",
+          "iconName": "Calendar",
+          "title": "Tab 6",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 6 of 6",
+              "wrap": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
