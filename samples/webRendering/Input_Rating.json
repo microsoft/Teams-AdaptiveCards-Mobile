@@ -20,7 +20,7 @@
     },
     {
       "type": "Input.Rating",
-      "id": "rating1",
+      "id": "rating2",
       "label": "Pick a rating(Large)",
       "size": "Large",
       "isRequired": true,
@@ -29,7 +29,7 @@
     },
     {
       "type": "Input.Rating",
-      "id": "rating2",
+      "id": "rating3",
       "label": "Pick a rating(Medium)",
       "allowHalfSteps": true,
       "size": "Medium",
@@ -40,7 +40,7 @@
     },
     {
       "type": "Input.Rating",
-      "id": "rating2",
+      "id": "rating4",
       "label": "Pick a rating(Large)",
       "allowHalfSteps": true,
       "size": "Large",
