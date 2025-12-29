@@ -186,6 +186,7 @@
       "id": "filteredChoice",
       "label": "Input.ChoiceSet (Filtered/Typeahead)",
       "style": "Filtered",
+      "isMultiSelect": true,
       "placeholder": "Start typing to search...",
       "choices": [
         {
