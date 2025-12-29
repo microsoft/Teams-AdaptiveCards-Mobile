@@ -1,0 +1,142 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Headings",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "# H1: Heading level 1  \n## H2: Heading level 2  \n### H3: Heading level 3  \n#### H4: H4  \n##### H5: H5  \n###### H6: H6",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Emphasis",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "**Bold text** or __bold__.  \n*Italic text* or _italic_.  \n***Bold italic*** or ___bold italic___."
+    },
+    {
+        "type": "TextBlock",
+        "text": "H~2~O is water (using tilde for subscript).",
+        "wrap": true
+    },
+    {
+        "type": "TextBlock",
+        "text": "a**2** is a squared (using caret for superscript).",
+        "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Blockquotes",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "> Dorothy followed her through many beautiful rooms.  \n>> Nested > blockquote.  \n> - **Lists** in quotes.  \n> *Everything* is **according to plan**."
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Lists",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "1. **Ordered** item one  \n2. Item two with *italics*  \n   1. Nested ordered  \n   2. Another  \n3. Item three  \n\n- **Unordered** item  \n- Item two  \n  - Nested bullet  \n- [x] **Task** list (extended)  \n- [ ] Pending task"
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Links",
+      "wrap": true
+    },
+            {
+            "text": "Autolink - https://adaptivecards.io",
+            "type": "TextBlock",
+            "wrap": true
+        },
+        {
+            "text": "Valid Markdown style link (should show alert) - [Adaptive cards](https://adaptivecards.io)",
+            "type": "TextBlock",
+            "wrap": true
+        },
+        {
+            "text": "Now check out this invalid link - [Invalid link](invalid:://adaptivecards.io) (*cricket sounds*)",
+            "type": "TextBlock",
+            "wrap": true
+        },
+            {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Images and media",
+      "wrap": true
+    },
+         {
+            "text": "Icon: [![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)",
+            "type": "TextBlock",
+            "wrap": true
+        },
+        {
+            "text": "Badge: [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)",
+            "type": "TextBlock",
+            "wrap": true
+        },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Tables",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "| **Syntax** | **Description** | **Notes** |\n|-|:-:|-:|\n| *Header*  | Title | Right |\n| Paragraph | Text | **Bold**  |\n| [`Code`](https://example.com) | Link | |"
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Footnote and separator",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+        "text": "Reference to first footnote[^1]\nReference to second footnote[^2]\n[^1]: This is the first footnote.\n[^2]: This is the second footnote."
+    },
+    {
+      "type": "TextBlock",
+      "text": "Text `before` the separator, somewhat long, as we need to check if things wrap as they should...\n---\n...and more text after the separator, again let's make it long because wrapping is very important."
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "### Code Block with Syntax Highlighting",
+      "wrap": true
+    },
+        {
+      "type": "TextBlock",
+      "text": "`Inline code` like `nano`.  \n``Escaped `backticks` ``."
+    },
+    {
+      "type": "TextBlock",
+      "text": "```typescript\n/**\n * @author John Smith <john.smith@example.com>\n*/\npackage l2f.gameserver.model;\n\npublic abstract strict class L2Char extends L2Object {\n  public static final Short ERROR = 0x0001;\n\n  public void moveTo(int x, int y, int z) {\n    _ai = null;\n    log(\"Should not be called\");\n\n    if (1 > 5) {\n          return;\n    }\n  }\n}\n```"
+    }
+  ]
+}
