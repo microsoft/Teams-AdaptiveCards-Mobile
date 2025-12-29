@@ -1,0 +1,235 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "All Input Types",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Input.Text",
+      "id": "singleLineText",
+      "label": "Input.Text (Single Line)",
+      "placeholder": "Enter text here (Max 25)",
+      "maxLength": 25,
+      "isRequired": true,
+      "errorMessage": "Single Line Text"
+    },
+    {
+      "type": "Input.Text",
+      "id": "multilineText",
+      "label": "Input.Text (Multiline)",
+      "placeholder": "Enter multiple lines of text (Max 50)",
+      "isMultiline": true,
+      "maxLength": 50,
+      "isRequired": true,
+      "errorMessage": "Multi Line Text"
+    },
+    {
+      "type": "Input.Text",
+      "id": "emailText",
+      "label": "Input.Text (Email - Regex)",
+      "placeholder": "Enter your email",
+      "style": "Email",
+      "regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+      "isRequired": true,
+      "errorMessage": "Email"
+    },
+    {
+      "type": "Input.Text",
+      "id": "telText",
+      "label": "Input.Text (Phone Number - Regex)",
+      "placeholder": "Enter your phone number",
+      "style": "Tel",
+      "regex": "^\\+?[0-9]{7,15}$",
+      "isRequired": true,
+      "errorMessage": "Phone Number"
+    },
+    {
+      "type": "Input.Text",
+      "id": "urlText",
+      "label": "Input.Text (URL - Regex)",
+      "placeholder": "https://example.com",
+      "style": "Url",
+      "regex": "^https?:\\/\\/[^\\s/$.?#].[^\\s]*$",
+      "isRequired": true,
+      "errorMessage": "URL"
+    },
+    {
+      "type": "Input.Text",
+      "id": "passwordText",
+      "label": "Input.Number (Password)",
+      "placeholder": "Enter your password",
+      "style": "Password",
+      "isRequired": true,
+      "errorMessage": "Password"
+    },
+    {
+      "type": "Input.Number",
+      "id": "numberInput",
+      "label": "Input.Number (-100 to 100)",
+      "placeholder": "Enter a number",
+      "min": -100,
+      "max": 100,
+      "value": 50,
+      "isRequired": true,
+      "errorMessage": "Number"
+    },
+    {
+      "type": "Input.Date",
+      "id": "dateInput",
+      "label": "Input.Date (1st Jan 2024 to 31st Dec 2024)",
+      "placeholder": "Select a date",
+      "min": "2020-01-01",
+      "max": "2030-12-31",
+      "isRequired": true,
+      "errorMessage": "Date"
+    },
+    {
+      "type": "Input.Time",
+      "id": "timeInput",
+      "label": "Input.Time (9 AM to 6 PM)",
+      "placeholder": "Select a time",
+      "min": "09:00",
+      "max": "18:00",
+      "isRequired": true,
+      "errorMessage": "Time"
+    },
+    {
+      "type": "Input.Toggle",
+      "id": "toggleInput",
+      "title": "Input.Toggle",
+      "value": "true",
+      "valueOn": "true",
+      "valueOff": "false",
+      "isRequired": true,
+      "errorMessage": "Toggle"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "dropdownChoice",
+      "label": "Input.ChoiceSet (Dropdown)",
+      "style": "Compact",
+      "placeholder": "Select a value",
+      "choices": [
+        {
+          "title": "Option 1",
+          "value": "1"
+        },
+        {
+          "title": "Option 2",
+          "value": "2"
+        },
+        {
+          "title": "Option 3",
+          "value": "3"
+        }
+      ],
+      "isRequired": true,
+      "errorMessage": "Dropdown"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "radioChoice",
+      "label": "Input.ChoiceSet (Expanded/Radio)",
+      "style": "Expanded",
+      "value": "red",
+      "choices": [
+        {
+          "title": "Red",
+          "value": "red"
+        },
+        {
+          "title": "Green",
+          "value": "green"
+        },
+        {
+          "title": "Blue",
+          "value": "blue"
+        }
+      ],
+      "isRequired": true,
+      "errorMessage": "Radio"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "multiSelectChoice",
+      "label": "Input.ChoiceSet (Multi-Select)",
+      "style": "Expanded",
+      "isMultiSelect": true,
+      "value": "apple,banana",
+      "choices": [
+        {
+          "title": "Apple",
+          "value": "apple"
+        },
+        {
+          "title": "Banana",
+          "value": "banana"
+        },
+        {
+          "title": "Cherry",
+          "value": "cherry"
+        },
+        {
+          "title": "Date",
+          "value": "date"
+        }
+      ],
+      "isRequired": true,
+      "errorMessage": "MultiSelect"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "filteredChoice",
+      "label": "Input.ChoiceSet (Filtered/Typeahead)",
+      "style": "Filtered",
+      "placeholder": "Start typing to search...",
+      "choices": [
+        {
+          "title": "United States",
+          "value": "us"
+        },
+        {
+          "title": "United Kingdom",
+          "value": "uk"
+        },
+        {
+          "title": "Canada",
+          "value": "ca"
+        },
+        {
+          "title": "Australia",
+          "value": "au"
+        },
+        {
+          "title": "Germany",
+          "value": "de"
+        },
+        {
+          "title": "France",
+          "value": "fr"
+        },
+        {
+          "title": "Japan",
+          "value": "jp"
+        }
+      ],
+      "isRequired": true,
+      "errorMessage": "Filtered"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit All"
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Submit (No Validation)",
+      "associatedInputs": "none"
+    }
+  ]
+}
