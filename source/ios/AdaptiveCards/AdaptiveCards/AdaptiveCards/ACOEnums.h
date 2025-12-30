@@ -99,6 +99,18 @@ typedef NS_ENUM(NSUInteger, ACRHorizontalAlignment) {
     ACRRight
 };
 
+typedef NS_ENUM(NSUInteger, ACRHorizontalContentAlignment) {
+    ACRHorizontalContentAlignmentLeft = 0,
+    ACRHorizontalContentAlignmentCenter,
+    ACRHorizontalContentAlignmentRight
+};
+
+typedef NS_ENUM(NSUInteger, ACRImageFitMode) {
+    ACRImageFitModeFill,
+    ACRImageFitModeContain,
+    ACRImageFitModeCover
+};
+
 typedef NS_ENUM(NSUInteger, ACRRatingSize) {
     ACRMedium = 0,
     ACRLarge
@@ -155,4 +167,28 @@ typedef NS_ENUM(NSUInteger, ACRBadgeSize) {
 typedef NS_ENUM(NSUInteger, ACRBadgeAppearance) {
     ACRFilled = 0,
     ACRTint
+};
+
+typedef NS_ENUM(NSInteger, ACIcon) {
+    ACIconAdobeIllustrator = 0,
+    ACIconAdobePhotoshop,
+    ACIconAdobeInDesign,
+    ACIconAdobeFlash,
+    ACIconMsWord,
+    ACIconMsExcel,
+    ACIconMsPowerPoint,
+    ACIconMsOneNote,
+    ACIconMsSharePoint,
+    ACIconMsVisio,
+    ACIconMsLoop,
+    ACIconMsWhiteboard,
+    ACIconCode,
+    ACIconGif,
+    ACIconCitationImage,
+    ACIconPdf,
+    ACIconSketch,
+    ACIconSound,
+    ACIconText,
+    ACIconVideo,
+    ACIconZip
 };

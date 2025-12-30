@@ -139,7 +139,7 @@ public class ActionLayoutRenderer implements IActionLayoutRenderer {
                     throw new AdaptiveFallbackException(actionElement, featureRegistration);
                 }
 
-                actionRenderer.render(renderedCard, context, fragmentManager, actionButtonsLayout, actionElement, cardActionHandler, hostConfig, renderArgs);
+                actionRenderer.renderNew(renderedCard, context, fragmentManager, actionButtonsLayout, actionElement, cardActionHandler, hostConfig, renderArgs);
             }
             catch (AdaptiveFallbackException e)
             {
@@ -168,7 +168,7 @@ public class ActionLayoutRenderer implements IActionLayoutRenderer {
                                     throw new AdaptiveFallbackException(fallbackElement, featureRegistration);
                                 }
 
-                                fallbackActionRenderer.render(renderedCard, context, fragmentManager, actionButtonsLayout, fallbackActionElement, cardActionHandler, hostConfig, renderArgs);
+                                fallbackActionRenderer.renderNew(renderedCard, context, fragmentManager, actionButtonsLayout, fallbackActionElement, cardActionHandler, hostConfig, renderArgs);
                                 break;
                             }
                             catch (AdaptiveFallbackException e2)

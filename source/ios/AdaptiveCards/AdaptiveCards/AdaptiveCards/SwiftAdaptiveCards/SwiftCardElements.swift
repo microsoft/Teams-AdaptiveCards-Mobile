@@ -206,7 +206,7 @@ public class SwiftRichTextBlock: SwiftBaseCardElement {
         
         while !inlinesContainer.isAtEnd {
             // Try to decode as a dictionary first (for TextRun)
-            if let inlineDict = try? inlinesContainer.decode([String: AnyCodable].self) {
+            if let inlineDict = try? inlinesContainer.decode([String: SwiftAnyCodable].self) {
                 let dict = inlineDict.mapValues { $0.value }
                 if let typeString = dict["type"] as? String, typeString == "TextRun",
                    let textRun = try? SwiftTextRun.deserialize(from: dict) {
@@ -238,7 +238,7 @@ public class SwiftRichTextBlock: SwiftBaseCardElement {
         var inlinesContainer = container.nestedUnkeyedContainer(forKey: .inlines)
         for inline in inlines {
             if let textRun = inline as? SwiftTextRun {
-                try inlinesContainer.encode(AnyCodable(textRun.serializeToJson()))
+                try inlinesContainer.encode(SwiftAnyCodable(textRun.serializeToJson()))
             } else if let stringValue = inline as? String {
                 try inlinesContainer.encode(stringValue)
             }
@@ -331,7 +331,7 @@ public class SwiftImage: SwiftBaseCardElement {
         
         // Decode selectAction if present
         if container.contains(.selectAction) {
-            let actionDict = try container.decode([String: AnyCodable].self, forKey: .selectAction)
+            let actionDict = try container.decode([String: SwiftAnyCodable].self, forKey: .selectAction)
             let dict = actionDict.mapValues { $0.value }
             selectAction = try SwiftBaseActionElement.deserializeAction(from: dict)
         } else {
@@ -359,7 +359,7 @@ public class SwiftImage: SwiftBaseCardElement {
         try container.encodeIfPresent(hAlignment, forKey: .hAlignment)
         
         if let action = selectAction {
-            try container.encode(AnyCodable(try SwiftBaseCardElement.serializeSelectAction(action)), forKey: .selectAction)
+            try container.encode(SwiftAnyCodable(try SwiftBaseCardElement.serializeSelectAction(action)), forKey: .selectAction)
         }
         try super.encode(to: encoder)
     }
@@ -482,7 +482,7 @@ class SwiftIcon: SwiftBaseCardElement {
         
         // Decode selectAction if present
         if container.contains(.selectAction) {
-            let actionDict = try container.decode([String: AnyCodable].self, forKey: .selectAction)
+            let actionDict = try container.decode([String: SwiftAnyCodable].self, forKey: .selectAction)
             let dict = actionDict.mapValues { $0.value }
             selectAction = try SwiftBaseActionElement.deserializeAction(from: dict)
         } else {
@@ -504,7 +504,7 @@ class SwiftIcon: SwiftBaseCardElement {
         try container.encode(iconStyle, forKey: .iconStyle)
         
         if let action = selectAction {
-            try container.encode(AnyCodable(try SwiftBaseCardElement.serializeSelectAction(action)), forKey: .selectAction)
+            try container.encode(SwiftAnyCodable(try SwiftBaseCardElement.serializeSelectAction(action)), forKey: .selectAction)
         }
         
         try super.encode(to: encoder)
@@ -559,7 +559,7 @@ public struct SwiftTextRun: Codable, SwiftInline {
     public let selectAction: SwiftBaseActionElement?
     
     /// Additional properties not explicitly defined
-    public var additionalProperties: [String: AnyCodable] = [:]
+    public var additionalProperties: [String: SwiftAnyCodable] = [:]
     
     // MARK: - Computed Properties
     
@@ -595,7 +595,7 @@ public struct SwiftTextRun: Codable, SwiftInline {
         underline: Bool = false,
         language: String? = nil, // Default to nil, not "en"
         selectAction: SwiftBaseActionElement? = nil,
-        additionalProperties: [String: AnyCodable] = [:]
+        additionalProperties: [String: SwiftAnyCodable] = [:]
     ) {
         self.text = text
         self.textSize = textSize
@@ -645,7 +645,7 @@ public struct SwiftTextRun: Codable, SwiftInline {
             guard !CodingKeys.allCases.contains(key) else { continue }
             
             // Try to decode any additional properties
-            if let value = try? container.decode(AnyCodable.self, forKey: key) {
+            if let value = try? container.decode(SwiftAnyCodable.self, forKey: key) {
                 additionalProperties[key.stringValue] = value
             }
         }
@@ -791,7 +791,7 @@ public class SwiftImageSet: SwiftBaseCardElement {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Decode the images array (using our helper for AnyCodable dictionaries)
-        let rawImages = try container.decodeIfPresent([[String: AnyCodable]].self, forKey: .images) ?? []
+        let rawImages = try container.decodeIfPresent([[String: SwiftAnyCodable]].self, forKey: .images) ?? []
         var finalImages = [SwiftImage]()
         for rawImg in rawImages {
             var dict = rawImg.mapValues { $0.value }
@@ -856,7 +856,7 @@ struct SwiftImageSetParser: SwiftBaseCardElementParser {
         let imageSet = try SwiftBaseCardElement.deserialize(from: value) as! SwiftImageSet
         
         // Grab the "images" array from the JSON.
-        let imagesArray: [[String: Any]] = try SwiftParseUtil.getArray(from: value, key: "images", required: true)
+        let imagesArray: [[String: Any]] = try SwiftParseUtil.getArray(from: value, key: "images", required: false)
         var images: [SwiftImage] = []
         for imageJson in imagesArray {
             var temp = imageJson
@@ -889,7 +889,7 @@ struct SwiftImageSetParser: SwiftBaseCardElementParser {
 
 protocol SwiftInline: Codable {
     var inlineType: SwiftInlineElementType { get }
-    var additionalProperties: [String: AnyCodable] { get set }
+    var additionalProperties: [String: SwiftAnyCodable] { get set }
 
     func serializeToJson() -> [String: Any]
     static func deserialize(from json: [String: Any]) -> SwiftInline?
@@ -934,7 +934,7 @@ public class SwiftActionSet: SwiftBaseCardElement {
         
         while !actionsContainer.isAtEnd {
             // Get the action as a dictionary first
-            let actionDict = try actionsContainer.decode([String: AnyCodable].self)
+            let actionDict = try actionsContainer.decode([String: SwiftAnyCodable].self)
             let dict = actionDict.mapValues { $0.value }
             
             // Use BaseActionElement's deserializeAction to get the correct type
@@ -1401,9 +1401,9 @@ public class SwiftUnknownElement: SwiftBaseCardElement {
         elementType = typeString
         
         // Store ALL properties including type
-        var properties = [String: AnyCodable]()
+        var properties = [String: SwiftAnyCodable]()
         for key in container.allKeys {
-            properties[key.stringValue] = try container.decode(AnyCodable.self, forKey: key)
+            properties[key.stringValue] = try container.decode(SwiftAnyCodable.self, forKey: key)
         }
         
         // Call super.init after initializing properties
@@ -1412,7 +1412,7 @@ public class SwiftUnknownElement: SwiftBaseCardElement {
     }
     
     // Custom initializer
-    init(id: String? = nil, elementType: String, additionalProperties: [String: AnyCodable] = [:]) {
+    init(id: String? = nil, elementType: String, additionalProperties: [String: SwiftAnyCodable] = [:]) {
         self.elementType = elementType
         super.init(
             type: .unknown,
@@ -1427,7 +1427,7 @@ public class SwiftUnknownElement: SwiftBaseCardElement {
         
         // Store ALL properties including type
         var props = additionalProperties
-        props["type"] = AnyCodable(elementType)
+        props["type"] = SwiftAnyCodable(elementType)
         self.additionalProperties = props
     }
     
@@ -1550,7 +1550,7 @@ class SwiftCompoundButton: SwiftBaseCardElement {
         
         // Decode selectAction if present
         if container.contains(.selectAction) {
-            let actionDict = try container.decode([String: AnyCodable].self, forKey: .selectAction)
+            let actionDict = try container.decode([String: SwiftAnyCodable].self, forKey: .selectAction)
             let dict = actionDict.mapValues { $0.value }
             selectAction = try SwiftBaseActionElement.deserializeAction(from: dict)
         } else {
@@ -1572,7 +1572,7 @@ class SwiftCompoundButton: SwiftBaseCardElement {
         try container.encodeIfPresent(icon, forKey: .icon)
         
         if let action = selectAction {
-            try container.encode(AnyCodable(try SwiftBaseCardElement.serializeSelectAction(action)), forKey: .selectAction)
+            try container.encode(SwiftAnyCodable(try SwiftBaseCardElement.serializeSelectAction(action)), forKey: .selectAction)
         }
         
         try super.encode(to: encoder)

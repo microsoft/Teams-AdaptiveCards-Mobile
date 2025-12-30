@@ -70,6 +70,9 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._textBlock = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextBlockConfig>(
         json, AdaptiveCardSchemaKey::TextBlock, result._textBlock, TextBlockConfig::Deserialize);
 
+    result._citationBlock = ParseUtil::ExtractJsonValueAndMergeWithDefault<CitationBlock>(
+            json, AdaptiveCardSchemaKey::CitationBlock, result._citationBlock, CitationBlock::Deserialize);
+
     result._textStyles = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextStylesConfig>(
         json, AdaptiveCardSchemaKey::TextStyles, result._textStyles, TextStylesConfig::Deserialize);
 
@@ -317,6 +320,7 @@ ShowCardActionConfig ShowCardActionConfig::Deserialize(const Json::Value& json, 
 PopoverConfig PopoverConfig::Deserialize(const Json::Value& json, const PopoverConfig& defaultValue) {
     PopoverConfig result;
     result.backgroundColor = ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::BackgroundColor).value_or(defaultValue.backgroundColor);
+    result.tintColor = ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::TintColor).value_or(defaultValue.tintColor);
     return result;
 }
 
@@ -440,26 +444,26 @@ SeparatorConfig SeparatorConfig::Deserialize(const Json::Value& json, const Sepa
     result.lineColor = lineColor == "" ? defaultValue.lineColor : lineColor;
     // Update line color with result value
     lineColor = result.lineColor;
-    
+
     // Assign lineColor as default values if not exists to avoid regression
     std::string lineColorDefault = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorDefault);
     result.lineColorDefault = lineColorDefault == "" ? lineColor : lineColorDefault;
-    
+
     std::string lineColorEmphasis = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorEmphasis);
     result.lineColorEmphasis = lineColorEmphasis == "" ? lineColor : lineColorEmphasis;
-    
+
     std::string lineColorGood = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorGood);
     result.lineColorGood = lineColorGood == "" ? lineColor : lineColorGood;
-    
+
     std::string lineColorAttention = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAttention);
     result.lineColorAttention = lineColorAttention == "" ? lineColor : lineColorAttention;
-    
+
     std::string lineColorWarning = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorWarning);
     result.lineColorWarning = lineColorWarning == "" ? lineColor : lineColorWarning;
-    
+
     std::string lineColorAccent = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LineColorAccent);
     result.lineColorAccent = lineColorAccent == "" ? lineColor : lineColorAccent;
-    
+
     return result;
 }
 
@@ -560,6 +564,20 @@ TextBlockConfig TextBlockConfig::Deserialize(const Json::Value& json, const Text
 
     result.headingLevel = ParseUtil::GetInt(json, AdaptiveCardSchemaKey::HeadingLevel, defaultValue.headingLevel);
 
+    return result;
+}
+
+CitationBlock CitationBlock::Deserialize(const Json::Value& json, const CitationBlock& defaultValue) {
+    CitationBlock result;
+    result.iconColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::IconColor, defaultValue.iconColor);
+    result.textColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::TextColor, defaultValue.textColor);
+    result.backgroundColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BackgroundColor, defaultValue.backgroundColor);
+    result.borderColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BorderColor, defaultValue.borderColor);
+    result.dividerColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::DividerColor, defaultValue.dividerColor);
+    result.bottomSheetTextColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BottomSheetTextColor, defaultValue.bottomSheetTextColor);
+    result.bottomSheetKeywordsColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BottomSheetKeywordsColor, defaultValue.bottomSheetKeywordsColor);
+    result.bottomSheetMoreDetailColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BottomSheetMoreDetailColor, defaultValue.bottomSheetMoreDetailColor);
+    result.bottomSheetBackgroundColor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::BottomSheetBackgroundColor, defaultValue.bottomSheetBackgroundColor);
     return result;
 }
 
@@ -1141,6 +1159,10 @@ void HostConfig::SetHostWidth(const HostWidthConfig value)
 TextBlockConfig HostConfig::GetTextBlock() const
 {
     return _textBlock;
+}
+
+CitationBlock HostConfig::GetCitationBlock() const {
+    return _citationBlock;
 }
 
 void HostConfig::SetTextBlock(const TextBlockConfig value)

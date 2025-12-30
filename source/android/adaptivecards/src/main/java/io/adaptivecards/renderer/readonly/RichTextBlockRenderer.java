@@ -3,6 +3,7 @@
 package io.adaptivecards.renderer.readonly;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -28,6 +29,7 @@ import java.util.Locale;
 
 import io.adaptivecards.objectmodel.BaseActionElement;
 import io.adaptivecards.objectmodel.BaseCardElement;
+import io.adaptivecards.objectmodel.CitationRun;
 import io.adaptivecards.objectmodel.FontType;
 import io.adaptivecards.objectmodel.ForegroundColor;
 import io.adaptivecards.objectmodel.HostConfig;
@@ -35,6 +37,7 @@ import io.adaptivecards.objectmodel.Inline;
 import io.adaptivecards.objectmodel.InlineElementType;
 import io.adaptivecards.objectmodel.InlineVector;
 import io.adaptivecards.objectmodel.RichTextBlock;
+import io.adaptivecards.objectmodel.TextInput;
 import io.adaptivecards.objectmodel.TextRun;
 import io.adaptivecards.objectmodel.TextSize;
 import io.adaptivecards.objectmodel.TextStyle;
@@ -46,6 +49,10 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.citation.CitationUtil;
+import io.adaptivecards.renderer.input.InputUtils;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class RichTextBlockRenderer extends BaseCardElementRenderer
 {
@@ -106,11 +113,13 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
 
     private SpannableStringBuilder buildSpannableParagraph(
                 RenderedAdaptiveCard renderedCard,
+                RichTextBlock richTextBlock,
                 InlineVector inlines,
                 ICardActionHandler cardActionHandler,
                 FragmentManager fragmentManager,
                 HostConfig hostConfig,
-                RenderArgs renderArgs)
+                RenderArgs renderArgs,
+                Context context)
     {
         SpannableStringBuilder paragraph = new SpannableStringBuilder();
         int lastStringLength = 0;
@@ -140,6 +149,10 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 }
                 DateTimeParser parser = new DateTimeParser(textRun.GetLanguage());
                 String formattedText = parser.GenerateString(textRun.GetTextForDateParsing());
+
+                // Check & replace string resource if present
+                formattedText = renderedCard.checkAndReplaceStringResources(formattedText);
+
 
                 paragraph.append(formattedText);
 
@@ -189,8 +202,42 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
                 {
                     paragraph.setSpan(new ActionSpan(textRun.GetSelectAction(), renderedCard, cardActionHandler, fragmentManager, hostConfig, renderArgs), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
+
+            } else if (FeatureFlagResolverUtility.isCitationsEnabled()
+                && inline.GetInlineType() == InlineElementType.CitationRun) {
+                CitationRun citationRun = CitationUtil.castToCitationRun(inline);
+
+                // Get the text label to shown for the citation
+                String citationText = CitationUtil.getCitationText(citationRun, renderedCard);
+
+                // Calculate start & end
+                int spanStart = paragraph.length();
+                paragraph.append(citationText);
+                int spanEnd = paragraph.length();
+
+                CitationUtil.applyCitationSpans(
+                    context,
+                    spanStart,
+                    spanEnd,
+                    citationText,
+                    paragraph,
+                    Color.parseColor(hostConfig.GetCitationBlock().getTextColor()),
+                    Color.parseColor(hostConfig.GetCitationBlock().getBackgroundColor()),
+                    Color.parseColor(hostConfig.GetCitationBlock().getBorderColor()),
+                    renderedCard,
+                    citationRun.GetReferenceIndex(),
+                    cardActionHandler,
+                    fragmentManager,
+                    hostConfig,
+                    renderArgs
+                );
+
+                // Insert space after this span to fix touch target issue & to comply with Desktop
+                paragraph.append(" ");
             }
         }
+
+        paragraph = InputUtils.appendRequiredLabelSuffix(paragraph, richTextBlock.GetLabelFor(), hostConfig, renderArgs);
 
         return paragraph;
     }
@@ -226,7 +273,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
         InlineVector inlines = richTextBlock.GetInlines();
 
         textView.setText("");
-        SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, inlines, cardActionHandler, fragmentManager, hostConfig, renderArgs);
+        SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, richTextBlock, inlines, cardActionHandler, fragmentManager, hostConfig, renderArgs, textView.getContext());
         textView.append(convertedString);
 
         // Properties required for actions to fire onClick event

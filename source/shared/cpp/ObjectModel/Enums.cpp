@@ -208,6 +208,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::TextConfig, "textConfig"},
             {AdaptiveCardSchemaKey::TextInput, "textInput"},
             {AdaptiveCardSchemaKey::TextStyles, "textStyles"},
+            {AdaptiveCardSchemaKey::TintColor, "tintColor"},
             {AdaptiveCardSchemaKey::MarigoldColor, "marigoldColor"},
             {AdaptiveCardSchemaKey::NeutralColor, "neutralColor"},
             {AdaptiveCardSchemaKey::FilledStar, "filledStar"},
@@ -278,8 +279,24 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::MaxPopoverWidth, "maxPopoverWidth"},
             {AdaptiveCardSchemaKey::Position, "position"},
             {AdaptiveCardSchemaKey::Popover, "popover"},
-        {AdaptiveCardSchemaKey::ImageFitMode, "fitMode"},
-        {AdaptiveCardSchemaKey::HorizontalContentAlignment, "horizontalContentAlignment"}});
+            {AdaptiveCardSchemaKey::ImageFitMode, "fitMode"},
+            {AdaptiveCardSchemaKey::HorizontalContentAlignment, "horizontalContentAlignment"},
+            {AdaptiveCardSchemaKey::LabelFor, "labelFor"},
+            {AdaptiveCardSchemaKey::Resources, "resources"},
+            {AdaptiveCardSchemaKey::Strings, "strings"},
+            {AdaptiveCardSchemaKey::DefaultValue, "defaultValue"},
+            {AdaptiveCardSchemaKey::LocalizedValues, "localizedValues"},
+            {AdaptiveCardSchemaKey::Abstract, "abstract"},
+            {AdaptiveCardSchemaKey::Keywords, "keywords"},
+            {AdaptiveCardSchemaKey::References, "references"},
+            {AdaptiveCardSchemaKey::ReferenceIndex, "referenceIndex"},
+            {AdaptiveCardSchemaKey::CitationBlock, "citationBlock"},
+            {AdaptiveCardSchemaKey::DividerColor, "dividerColor"},
+            {AdaptiveCardSchemaKey::IconColor, "iconColor"},
+            {AdaptiveCardSchemaKey::BottomSheetTextColor, "bottomSheetTextColor"},
+            {AdaptiveCardSchemaKey::BottomSheetKeywordsColor, "bottomSheetKeywordsColor"},
+            {AdaptiveCardSchemaKey::BottomSheetMoreDetailColor, "bottomSheetMoreDetailColor"},
+            {AdaptiveCardSchemaKey::BottomSheetBackgroundColor, "bottomSheetBackgroundColor"}});
 
     DEFINE_ADAPTIVECARD_ENUM(CardElementType, {
             {CardElementType::ActionSet, "ActionSet"},
@@ -523,7 +540,10 @@ namespace AdaptiveCards
             {PageAnimation::None,"None"}});
 
     DEFINE_ADAPTIVECARD_ENUM(InlineElementType, {
-            {InlineElementType::TextRun, "TextRun"}});
+            {InlineElementType::TextRun, "TextRun"},
+            {InlineElementType::CitationRun, "CitationRun"},
+            {InlineElementType::IconRun, "IconRun"},
+            {InlineElementType::ImageRun, "ImageRun"}});
 
     DEFINE_ADAPTIVECARD_ENUM(Mode, {
             {Mode::Primary, "primary"},
@@ -604,4 +624,31 @@ namespace AdaptiveCards
         {LabelPosition::Below, "Below"},
         {LabelPosition::Before, "Before"},
         {LabelPosition::After, "After"}})
+
+    DEFINE_ADAPTIVECARD_ENUM(ReferenceType, {
+        {ReferenceType::AdaptiveCard, "AdaptiveCardReference"},
+        {ReferenceType::Document, "DocumentReference"}})
+
+    DEFINE_ADAPTIVECARD_ENUM(ReferenceIcon, {
+        {ReferenceIcon::AdobeFlash, "adobeFlash"},
+        {ReferenceIcon::AdobeIllustrator, "adobeIllustrator"},
+        {ReferenceIcon::AdobeInDesign, "adobeInDesign"},
+        {ReferenceIcon::AdobePhotoshop, "adobePhotoshop"},
+        {ReferenceIcon::MsExcel, "msExcel"},
+        {ReferenceIcon::MsLoop, "msLoop"},
+        {ReferenceIcon::MsOneNote, "msOneNote"},
+        {ReferenceIcon::MsPowerPoint, "msPowerPoint"},
+        {ReferenceIcon::MsSharePoint, "msSharePoint"},
+        {ReferenceIcon::MsVisio, "msVisio"},
+        {ReferenceIcon::MsWhiteboard, "msWhiteboard"},
+        {ReferenceIcon::MsWord, "msWord"},
+        {ReferenceIcon::Code, "code"},
+        {ReferenceIcon::Gif, "gif"},
+        {ReferenceIcon::Image, "image"},
+        {ReferenceIcon::Pdf, "pdf"},
+        {ReferenceIcon::Sketch, "sketch"},
+        {ReferenceIcon::Sound, "sound"},
+        {ReferenceIcon::Text, "text"},
+        {ReferenceIcon::Video, "video"},
+        {ReferenceIcon::Zip, "zip"}})
 }

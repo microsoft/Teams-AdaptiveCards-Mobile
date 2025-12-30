@@ -1,11 +1,14 @@
 //
-//  ACRRegistartion
-//  ACRRegistartion.h
+//  ACRRegistration
+//  ACRRegistration.h
 //
 //  Copyright © 2017 Microsoft. All rights reserved.
 //
 //
+
 @class ACRBaseCardElementRenderer;
+
+@protocol ACRIImageResolver;
 
 #ifdef SWIFT_PACKAGE
 /// Swift Package Imports
@@ -67,6 +70,9 @@
 
 - (void)setFeatureFlagResolver:(NSObject<ACRIFeatureFlagResolver> *_Nonnull)featureFlagResolver;
 - (NSObject<ACRIFeatureFlagResolver> *_Nullable)getFeatureFlagResolver;
+
+- (void)setImageResolver:(NSObject<ACRIImageResolver> *_Nonnull)imageResolver;
+- (NSObject<ACRIImageResolver> *_Nullable)getImageResolver;
 
 @end
 

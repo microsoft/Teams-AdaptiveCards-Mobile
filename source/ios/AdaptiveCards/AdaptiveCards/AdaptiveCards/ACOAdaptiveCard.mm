@@ -9,7 +9,10 @@
 #import "ACOAuthenticationPrivate.h"
 #import "ACOBundle.h"
 #import "ACORefreshPrivate.h"
+#import "ACORemoteResourceInformation.h"
 #import "ACORemoteResourceInformationPrivate.h"
+#import "ACOReference.h"
+#import "ACOReferencePrivate.h"
 #import "ACRErrors.h"
 #import "ACRIBaseInputHandler.h"
 #import "ACRParseWarningPrivate.h"
@@ -20,6 +23,7 @@
 #import "UtiliOS.h"
 #import <Foundation/Foundation.h>
 #import "SwiftAdaptiveCardObjcBridge.h"
+#import "TSExpressionObjCBridge.h"
 
 using namespace AdaptiveCards;
 
@@ -235,6 +239,46 @@ using namespace AdaptiveCards;
         return JsonToNSData(blob);
     }
     return nil;
+}
+
+- (NSArray<ACOReference *> *)references
+{
+    if (!_adaptiveCard) {
+        return nil;
+    }
+    
+    NSMutableArray<ACOReference *> *mutableReferences = nil;
+    const std::vector<std::shared_ptr<References>>& referencesVector = _adaptiveCard->GetReferences();
+    
+    if (!referencesVector.empty()) {
+        mutableReferences = [[NSMutableArray alloc] init];
+        for (const auto& reference : referencesVector) {
+            ACOReference *referenceObjc = [[ACOReference alloc] initWithReference:reference];
+            if (referenceObjc) {
+                [mutableReferences addObject:referenceObjc];
+            }
+        }
+        return [NSArray arrayWithArray:mutableReferences];
+    }
+    
+    return nil;
+}
+
++ (BOOL)isExpressionEvalEnabled
+{
+    return [TSExpressionObjCBridge isExpressionEvalEnabled];
+}
+
++ (void)setExpressionEvalEnabled:(BOOL)enabled
+{
+    [TSExpressionObjCBridge setExpressionEvalEnabled:enabled];
+}
+
++ (void)evaluateExpression:(NSString *)expression
+                  withData:(NSDictionary * _Nullable)data
+                completion:(void (^_Nullable)(id _Nullable result, NSError * _Nullable error))completion
+{
+    [TSExpressionObjCBridge evaluateExpression:expression withData:data completion:completion];
 }
 
 @end

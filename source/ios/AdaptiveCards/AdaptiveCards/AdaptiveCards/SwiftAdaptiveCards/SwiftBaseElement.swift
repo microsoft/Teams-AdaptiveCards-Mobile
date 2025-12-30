@@ -13,7 +13,7 @@ open class SwiftBaseElement: Codable {
     var typeString: String
     public var id: String?
     public let internalId: SwiftInternalId
-    public var additionalProperties: [String: AnyCodable]?
+    public var additionalProperties: [String: SwiftAnyCodable]?
     let requires: [String: SwiftSemanticVersion]?
     var fallbackType: SwiftFallbackType?
     public var fallbackContent: SwiftBaseElement?
@@ -44,7 +44,7 @@ open class SwiftBaseElement: Codable {
         typeString: String,
         id: String? = nil,
         internalId: SwiftInternalId = SwiftInternalId.current(),
-        additionalProperties: [String: AnyCodable]? = nil,
+        additionalProperties: [String: SwiftAnyCodable]? = nil,
         requires: [String: SwiftSemanticVersion]? = nil,
         fallbackType: SwiftFallbackType? = nil,
         fallbackContent: SwiftBaseElement? = nil,
@@ -64,9 +64,9 @@ open class SwiftBaseElement: Codable {
     public required init(from decoder: Decoder) throws {
         // First decode all keys using a dynamic container.
         let dynamicContainer = try decoder.container(keyedBy: DynamicCodingKeys.self)
-        var rawDict = [String: AnyCodable]()
+        var rawDict = [String: SwiftAnyCodable]()
         for key in dynamicContainer.allKeys {
-            rawDict[key.stringValue] = try dynamicContainer.decode(AnyCodable.self, forKey: key)
+            rawDict[key.stringValue] = try dynamicContainer.decode(SwiftAnyCodable.self, forKey: key)
         }
         
         // Now decode known properties.
@@ -84,7 +84,7 @@ open class SwiftBaseElement: Codable {
                 if fallbackString.lowercased() == "drop" {
                     fallbackType = .drop
                 }
-            } else if let rawFallback = try? container.decode([String: AnyCodable].self, forKey: .fallback) {
+            } else if let rawFallback = try? container.decode([String: SwiftAnyCodable].self, forKey: .fallback) {
                 let fallbackDict = rawFallback.mapValues { $0.value }
                 fallbackContent = try SwiftBaseCardElement.deserialize(from: fallbackDict)
             }

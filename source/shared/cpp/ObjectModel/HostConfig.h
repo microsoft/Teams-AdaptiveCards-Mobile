@@ -328,7 +328,8 @@ struct ShowCardActionConfig
 };
 
 struct PopoverConfig {
-    std::string backgroundColor = "#000000";
+    std::string backgroundColor = "#FFFFFF";
+    std::string tintColor = "#000000";
 
     static PopoverConfig Deserialize(const Json::Value& json, const PopoverConfig& defaultValue);
 };
@@ -408,6 +409,20 @@ struct TextBlockConfig
     unsigned int headingLevel = 2;
 
     static TextBlockConfig Deserialize(const Json::Value& json, const TextBlockConfig& defaultValue);
+};
+
+struct CitationBlock {
+    std::string iconColor = "#212121";
+    std::string textColor = "#E1E1E1";
+    std::string backgroundColor = "#141414";
+    std::string borderColor = "#292929";
+    std::string dividerColor = "#E1E1E1";
+    std::string bottomSheetTextColor = "#E1E1E1";
+    std::string bottomSheetKeywordsColor = "#919191";
+    std::string bottomSheetMoreDetailColor = "#7F85F5";
+    std::string bottomSheetBackgroundColor = "#000000";
+
+    static CitationBlock Deserialize(const Json::Value& json, const CitationBlock& defaultValue);
 };
 
 struct TableConfig
@@ -632,6 +647,8 @@ public:
     TextBlockConfig GetTextBlock() const;
     void SetTextBlock(const TextBlockConfig value);
 
+    CitationBlock GetCitationBlock() const;
+
     TableConfig GetTable() const;
     void SetTable(const TableConfig value);
 
@@ -668,6 +685,7 @@ private:
     InputsConfig _inputs;
     HostWidthConfig _hostWidth;
     TextBlockConfig _textBlock;
+    CitationBlock _citationBlock;
     TextStylesConfig _textStyles;
     RatingElementConfig _ratingInputConfig;
     RatingElementConfig _ratingLabelConfig;

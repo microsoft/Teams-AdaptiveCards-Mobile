@@ -19,6 +19,7 @@
 #import "CustomTextBlockRenderer.h"
 #import <SafariServices/SafariServices.h>
 #import "ACRCustomFeatureFlagResolver.h"
+#import "ACRCustomImageResolver.h"
 
 // the width of the AdaptiveCards does not need to be set.
 // if the width for Adaptive Cards is zero, the width is determined by the contraint(s) set externally on the card.
@@ -143,6 +144,7 @@ UIColor* defaultButtonBackgroundColor;
     // Required registration for testing responsive layout
     [registration registerHostCardContainer:kFileBrowserWidth];
     [registration setFeatureFlagResolver:([[ACRCustomFeatureFlagResolver alloc] init])];
+    [registration setImageResolver:([[ACRCustomImageResolver alloc] init])];
 
     self.ACVTabVC = [[ACVTableViewController alloc] init];
     [self addChildViewController:self.ACVTabVC];
@@ -227,7 +229,10 @@ UIColor* defaultButtonBackgroundColor;
     }
 
     [ViewController applyConstraints:visualFormats variables:viewMap];
-
+    
+    // Enable Expression Engine
+    [ACOAdaptiveCard setExpressionEvalEnabled:YES];
+    
     ACOFeatureRegistration *featureReg = [ACOFeatureRegistration getInstance];
     [featureReg addFeature:@"acTest" featureVersion:@"1.0"];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleVoiceOverEvent:) name:UIAccessibilityElementFocusedNotification object:nil];
@@ -235,6 +240,9 @@ UIColor* defaultButtonBackgroundColor;
     #if TARGET_OS_VISION
     self.view.backgroundColor = UIColor.clearColor;
     #endif
+    
+    /// Directly Load A certain page for faster debugging
+//       [self loadSamplesDirectlyWithVersion:@"v1.5" type:@"Elements" index:17];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -374,6 +382,11 @@ UIColor* defaultButtonBackgroundColor;
     return alertController;
 }
 
+- (UIViewController *) activeViewController
+{
+    return self;
+}
+
 - (void)didChangeViewLayout:(CGRect)oldFrame newFrame:(CGRect)newFrame
 {
     [self reloadRowsAtChatWindowsWithIndexPaths:self.chatWindow.indexPathsForSelectedRows];
@@ -458,32 +471,46 @@ UIColor* defaultButtonBackgroundColor;
     //    [self presentViewController: alert];
 
     // [Option 2] client can prepare its own presentation by direclty employing menuItems
+    UIViewController *presentingController = self;
+    if (self.presentedViewController && [self.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")])
+    {
+        // Present the overflow menu on top of the bottom sheet
+        presentingController = self.presentedViewController;
+    }
     UIAlertController *myAlert = [UIAlertController alertControllerWithTitle:nil
                                                                      message:nil
                                                               preferredStyle:UIAlertControllerStyleAlert];
 
     for (ACROverflowMenuItem *item in menuItems) {
+        __weak __typeof(self) weakSelf = self;
         UIAlertAction *action = [UIAlertAction actionWithTitle:item.title
                                                          style:UIAlertActionStyleDestructive
                                                        handler:^(UIAlertAction *_Nonnull action) {
-                                                           [item.target doSelectAction];
-                                                       }];
+            if (weakSelf.presentedViewController && [weakSelf.presentedViewController isKindOfClass:NSClassFromString(@"ACRBottomSheetViewController")])
+            {
+                [item.target performSelector:@selector(send:) withObject:item.target];
+            }
+            else
+            {
+                [item.target doSelectAction];
+            }
+        }];
 
         [item loadIconImageWithSize:CGSizeMake(40, 40)
                        onIconLoaded:^(UIImage *image) {
-                           if (image) {
-                               [action setValue:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                         forKey:@"image"];
-                           }
-                       }];
+            if (image) {
+                [action setValue:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                          forKey:@"image"];
+            }
+        }];
 
         [myAlert addAction:action];
     }
     [myAlert addAction:[UIAlertAction actionWithTitle:@"Cancel"
                                                 style:UIAlertActionStyleCancel
                                               handler:nil]];
-    [self presentViewController:myAlert animated:YES completion:nil];
-    return YES; // skip SDK defult display
+    [presentingController presentViewController:myAlert animated:YES completion:nil];
+    return YES; // skip SDK default display
 }
 
 - (void)onChoiceSetQueryChange:(NSDictionary *)searchRequest acoElem:(ACOBaseCardElement *)elem completion:(void (^)(NSDictionary *response, NSError *error))completion
@@ -822,5 +849,55 @@ UIColor* defaultButtonBackgroundColor;
     // Update responsive layout's host card container when device orientation changes
     CGFloat cardWidthAfterTransition = size.width - 32.0f;
     [[ACRRegistration getInstance] registerHostCardContainer:cardWidthAfterTransition];
+}
+
+// Load samples diredctly without selecting everytime
+- (void)loadSamplesDirectlyWithVersion:(NSString *)version type:(NSString *)type index:(NSUInteger )index {
+    // Get the main bundle path
+    NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+    NSString *path = [NSString stringWithFormat:@"samples/%@/%@", version, type];
+    NSString *elementsPath = [bundlePath stringByAppendingPathComponent:path];
+    
+    // Get all JSON files in the Elements directory
+    NSError *error;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:elementsPath error:&error];
+    
+    if (error) {
+        NSLog(@"Error reading Elements directory: %@", error.localizedDescription);
+        return;
+    }
+    
+    // Filter for JSON files and sort them
+    NSMutableArray *jsonFiles = [[NSMutableArray alloc] init];
+    for (NSString *file in files) {
+        if ([file.pathExtension isEqualToString:@"json"]) {
+            [jsonFiles addObject:file];
+        }
+    }
+    [jsonFiles sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    
+    // Check if we have at least index+1 files
+    if (jsonFiles.count > index) {
+        NSString *citationFileName = jsonFiles[index];
+        NSString *citationFilePath = [elementsPath stringByAppendingPathComponent:citationFileName];
+        
+        // Read the JSON content
+        NSString *jsonString = [NSString stringWithContentsOfFile:citationFilePath
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:&error];
+        
+        if (error) {
+            NSLog(@"Error reading citation JSON file: %@", error.localizedDescription);
+            return;
+        }
+        
+        if (jsonString) {
+            NSLog(@"Loading citation JSON from: %@", citationFileName);
+            // Call update with the loaded JSON
+            [self update:jsonString];
+        }
+    } else {
+        NSLog(@"Not enough JSON files found in Elements directory. Found: %lu", (unsigned long)jsonFiles.count);
+    }
 }
 @end

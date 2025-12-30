@@ -9,11 +9,15 @@
 #include "Refresh.h"
 #include "Authentication.h"
 #include "Layout.h"
+#include "References.h"
+#include "Resources.h"
+#include "StringResource.h"
 
 namespace AdaptiveCards
 {
 class Container;
 class BackgroundImage;
+class References;
 
 class AdaptiveCard
 {
@@ -82,7 +86,7 @@ public:
         unsigned int minHeight,
         std::vector<std::shared_ptr<BaseCardElement>>& body,
         std::vector<std::shared_ptr<BaseActionElement>>& actions);
-    
+
     AdaptiveCard(
         std::string const& version,
         std::string const& fallbackText,
@@ -133,7 +137,10 @@ public:
     const std::vector<std::shared_ptr<BaseCardElement>>& GetBody() const;
     std::vector<std::shared_ptr<BaseActionElement>>& GetActions();
     const std::vector<std::shared_ptr<BaseActionElement>>& GetActions() const;
-    
+    const std::vector<std::shared_ptr<References>>& GetReferences() const;
+    const std::optional<std::shared_ptr<References>> GetReference(int index) const;
+    std::shared_ptr<AdaptiveCards::Resources> GetResources() const;
+
     std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts();
     const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& GetLayouts() const;
     void SetLayouts(const std::vector<std::shared_ptr<AdaptiveCards::Layout>>& value);
@@ -146,7 +153,7 @@ public:
     std::vector<RemoteResourceInformation> GetResourceInformation();
 
     CardElementType GetElementType() const;
-    
+
     std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& GetRootRequires();
     const std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& GetRootRequires() const;
     std::shared_ptr<BaseElement> GetRootFallbackContent() const;
@@ -182,7 +189,7 @@ public:
 #endif // __ANDROID__
     Json::Value SerializeToJsonValue() const;
     std::string Serialize() const;
-    
+
     const InternalId GetInternalId() const
     {
         return m_internalId;
@@ -190,6 +197,13 @@ public:
     // Feature support validation
     static const std::unordered_map<std::string, AdaptiveCards::SemanticVersion> GetFeaturesSupported();
     static bool MeetsRootRequirements(std::unordered_map<std::string, AdaptiveCards::SemanticVersion> requiresSet);
+
+    // Replace all occurrences of ${rs:key} with value from the map
+    static std::string ReplaceStringResources(
+            const std::string& input,
+            std::shared_ptr<AdaptiveCards::Resources> resources,
+            const std::string& locale);
+    static bool IsStringResourcePresent(const std::string& input);
 
 private:
     static void _ValidateLanguage(const std::string& language, std::vector<std::shared_ptr<AdaptiveCardParseWarning>>& warnings);
@@ -210,14 +224,16 @@ private:
     InternalId m_internalId;
     std::unordered_set<std::string> m_knownProperties;
     Json::Value m_additionalProperties;
-    
+
     std::vector<std::shared_ptr<Layout>> m_layouts;
 
     std::vector<std::shared_ptr<BaseCardElement>> m_body;
     std::vector<std::shared_ptr<BaseActionElement>> m_actions;
+    std::vector<std::shared_ptr<References>> m_references;
+    std::shared_ptr<AdaptiveCards::Resources> m_resources;
 
     std::shared_ptr<BaseActionElement> m_selectAction;
-    
+
     std::unordered_map<std::string, AdaptiveCards::SemanticVersion> m_requires;
     std::shared_ptr<BaseElement> m_fallbackContent;
     FallbackType m_fallbackType;

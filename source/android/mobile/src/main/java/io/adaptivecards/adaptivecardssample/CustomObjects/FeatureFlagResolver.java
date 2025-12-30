@@ -4,6 +4,7 @@ package io.adaptivecards.adaptivecardssample.CustomObjects;
 
 import androidx.annotation.NonNull;
 import io.adaptivecards.renderer.IFeatureFlagResolver;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class FeatureFlagResolver implements IFeatureFlagResolver {
 
@@ -12,7 +13,9 @@ public class FeatureFlagResolver implements IFeatureFlagResolver {
         // This is a sample implementation. The host app should implement this method to return the correct value of the feature flag.
         return key.equals("adaptiveCard/isFlowLayoutEnabled")
             || key.equals("adaptiveCard/isItemFitToFillEnabledForColumn")
-            || key.equals("adaptiveCard/isGridLayoutEnabled");
+            || key.equals("adaptiveCard/isGridLayoutEnabled")
+            || key.equals(FeatureFlagResolverUtility.IS_CITATIONS_ENABLED)
+            || key.equals(FeatureFlagResolverUtility.IS_STRING_RESOURCE_ENABLED);
     }
 
     @Override

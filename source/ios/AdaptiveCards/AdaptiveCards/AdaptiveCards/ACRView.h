@@ -23,6 +23,7 @@
 @property (readonly) ACORenderContext *context;
 @property (readwrite)ACRTheme theme;
 @property (readonly) ACOHostConfig *hostConfig;
+@property (nonatomic, assign) BOOL isRenderingInsideBottomSheet;
 
 - (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config widthConstraint:(float)width theme:(ACRTheme)theme;
 
@@ -51,5 +52,7 @@
 - (float)widthForElement:(unsigned int)key;
 
 - (void)waitForAsyncTasksToFinish;
+
+- (BOOL)hasKVOObserverForImageView:(UIImageView *)imageView;
 
 @end

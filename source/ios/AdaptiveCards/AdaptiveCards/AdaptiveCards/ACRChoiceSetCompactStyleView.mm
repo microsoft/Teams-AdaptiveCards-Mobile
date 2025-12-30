@@ -113,7 +113,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         // configure AdaptiveCards input handler
         self.id = [NSString stringWithCString:choiceSet->GetId().c_str()
                                      encoding:NSUTF8StringEncoding];
-        self.isRequired = _validator.isRequired;
+        self.isRequired = _validator.isRequired && !rootView.isRenderingInsideBottomSheet;
         self.hasValidationProperties = self.isRequired;
         auto inputLabel = choiceSet->GetLabel();
         _inputLabel = (!inputLabel.empty()) ? [NSString stringWithCString:inputLabel.c_str() encoding:NSUTF8StringEncoding] : @"";

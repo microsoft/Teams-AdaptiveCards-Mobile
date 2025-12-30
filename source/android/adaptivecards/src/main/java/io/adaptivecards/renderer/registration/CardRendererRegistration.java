@@ -49,6 +49,7 @@ import io.adaptivecards.renderer.CompoundButtonRenderer;
 import io.adaptivecards.renderer.IActionLayoutRenderer;
 import io.adaptivecards.renderer.IBaseActionElementRenderer;
 import io.adaptivecards.renderer.IBaseCardElementRenderer;
+import io.adaptivecards.renderer.IDrawableResolver;
 import io.adaptivecards.renderer.IFeatureFlagResolver;
 import io.adaptivecards.renderer.IOnlineImageLoader;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
@@ -66,6 +67,7 @@ import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.ChoiceSetInputRenderer;
 import io.adaptivecards.renderer.input.DateInputRenderer;
 import io.adaptivecards.renderer.input.InputUtil;
+import io.adaptivecards.renderer.input.InputUtils;
 import io.adaptivecards.renderer.input.NumberInputRenderer;
 import io.adaptivecards.renderer.input.RatingInputRenderer;
 import io.adaptivecards.renderer.input.TextInputRenderer;
@@ -281,6 +283,15 @@ public class CardRendererRegistration
         return m_featureFlagResolver;
     }
 
+    public void registerDrawableResolver(@NonNull IDrawableResolver drawableResolver) {
+        m_drawableResolver = drawableResolver;
+    }
+
+    @Nullable
+    public IDrawableResolver getDrawableResolver() {
+        return m_drawableResolver;
+    }
+
     public FeatureRegistration getFeatureRegistration()
     {
         if (m_featureRegistration == null) {
@@ -329,6 +340,15 @@ public class CardRendererRegistration
 
     public void setThemeForThemedUrl(@NonNull ACTheme theme) {
         mTheme = theme;
+    }
+
+    @NonNull
+    public String getLanguageTag() {
+        return mLanguageTag;
+    }
+
+    public void setLanguageTag(@NonNull String languageTag) {
+        mLanguageTag = languageTag;
     }
 
     public View renderElements(RenderedAdaptiveCard renderedCard,
@@ -430,7 +450,7 @@ public class CardRendererRegistration
 
             if (hostWidth == null || cardElement.MeetsTargetWidthRequirement(hostWidth))
             {
-                renderedElementView = renderer.render(renderedCard, context, fragmentManager, mockLayout, cardElement, cardActionHandler, hostConfig, childRenderArgs);
+                renderedElementView = renderer.renderNew(renderedCard, context, fragmentManager, mockLayout, cardElement, cardActionHandler, hostConfig, childRenderArgs);
                 renderedElement = cardElement;
             }
         }
@@ -467,7 +487,7 @@ public class CardRendererRegistration
                             // pass that as the viewgroup and
 
                             if (hostWidth == null || cardElement.MeetsTargetWidthRequirement(hostWidth)) {
-                                renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, fallbackCardElement, cardActionHandler, hostConfig, childRenderArgs);
+                                renderedElementView = fallbackRenderer.renderNew(renderedCard, context, fragmentManager, mockLayout, fallbackCardElement, cardActionHandler, hostConfig, childRenderArgs);
                                 renderedElement = fallbackCardElement;
                                 break;
                             }
@@ -515,7 +535,7 @@ public class CardRendererRegistration
                 }
                 else
                 {
-                    renderedElementView = fallbackRenderer.render(renderedCard, context, fragmentManager, mockLayout, renderedElement, cardActionHandler, hostConfig, childRenderArgs);
+                    renderedElementView = fallbackRenderer.renderNew(renderedCard, context, fragmentManager, mockLayout, renderedElement, cardActionHandler, hostConfig, childRenderArgs);
                     shouldRenderCardElements = false;
                 }
             }
@@ -631,9 +651,9 @@ public class CardRendererRegistration
         {
             StretchableInputLayout inputLayout = new StretchableInputLayout(context, mustStretch);
             View actualInput = findElementWithTagContent(mockLayout);
+            boolean shouldShowLabel = InputUtils.shouldShowLabel(element);
 
-            if (inputHasLabel)
-            {
+            if (inputHasLabel && shouldShowLabel) {
                 TextView inputLabel = InputUtil.RenderInputLabel(element.GetLabel(), element.GetIsRequired(), context, hostConfig, renderArgs);
                 inputLayout.setLabel(inputLabel);
 
@@ -645,7 +665,7 @@ public class CardRendererRegistration
                     hostConfig,
                     true /* horizontalLine */);
             }
-            else if (element.GetIsRequired())
+            else if (element.GetIsRequired() && shouldShowLabel)
             {
                 renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.EMPTY_LABEL_IN_REQUIRED_INPUT, "Input is required but there's no label for required hint rendering"));
             }
@@ -771,8 +791,10 @@ public class CardRendererRegistration
     private FeatureRegistration m_featureRegistration = null;
     private int m_hostCardContainer = -1;
     private IFeatureFlagResolver m_featureFlagResolver;
+    private IDrawableResolver m_drawableResolver = null;
     private IOverflowActionRenderer m_overflowActionRenderer =null;
     private IActionLayoutRenderer m_overflowActionLayoutRenderer = null;
     private boolean mIsSplitActionEnabled = false;
     private ACTheme mTheme = ACTheme.None;
+    private String mLanguageTag = "";
 }

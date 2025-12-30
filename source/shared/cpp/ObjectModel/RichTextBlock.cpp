@@ -10,6 +10,9 @@
 #include "DateTimePreparser.h"
 #include "ParseUtil.h"
 #include "Util.h"
+#include "TextInput.h"
+#include "CitationRun.h"
+#include "TextRun.h"
 
 using namespace AdaptiveCards;
 
@@ -58,6 +61,11 @@ const std::vector<std::shared_ptr<Inline>>& RichTextBlock::GetInlines() const
     return m_inlines;
 }
 
+std::string RichTextBlock::GetLabelFor() const
+{
+    return m_labelFor;
+}
+
 std::shared_ptr<BaseCardElement> RichTextBlockParser::Deserialize(ParseContext& context, const Json::Value& json)
 {
     ParseUtil::ExpectTypeString(json, CardElementType::RichTextBlock);
@@ -69,6 +77,29 @@ std::shared_ptr<BaseCardElement> RichTextBlockParser::Deserialize(ParseContext& 
     auto inlines = ParseUtil::GetElementCollectionOfSingleType<Inline>(
         context, json, AdaptiveCardSchemaKey::Inlines, Inline::Deserialize, false);
     richTextBlock->m_inlines = std::move(inlines);
+    richTextBlock->m_labelFor = ParseUtil::GetString(json, AdaptiveCardSchemaKey::LabelFor, "", false);
+
+    if (!richTextBlock->m_labelFor.empty() && !richTextBlock->m_inlines.empty())
+    {
+        std::string label;
+        for (const auto &item: richTextBlock->m_inlines)
+        {
+            if (item->GetInlineType() == InlineElementType::TextRun)
+            {
+                auto textRun = std::static_pointer_cast<TextRun>(item);
+                label += textRun->GetText() + " ";
+            } else if (item->GetInlineType() == InlineElementType::CitationRun) {
+                auto citationRun = std::static_pointer_cast<CitationRun>(item);
+                label += citationRun->GetText() + " ";
+            }
+        }
+
+        if (!label.empty())
+        {
+            // Add label for corresponding ChoiceSetInput
+            TextInput::addLabel(richTextBlock->m_labelFor, label);
+        }
+    }
 
     return richTextBlock;
 }

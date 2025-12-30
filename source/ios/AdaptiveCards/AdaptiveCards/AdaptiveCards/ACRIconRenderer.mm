@@ -70,6 +70,9 @@
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, wrappingView, viewGroup);
     
+    // Configure visibility for the wrapping view so toggle visibility actions work correctly
+    configVisibility(wrappingView, elem);
+    
     return iconView;
 }
 

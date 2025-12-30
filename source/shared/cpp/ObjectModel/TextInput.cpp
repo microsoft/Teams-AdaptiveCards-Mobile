@@ -7,6 +7,9 @@
 
 using namespace AdaptiveCards;
 
+std::unordered_map<std::string, std::string> AdaptiveCards::TextInput::inputIdToLabelMap;
+std::unordered_set<std::string> AdaptiveCards::TextInput::requiredInputIdSet;
+
 TextInput::TextInput() :
     BaseInputElement(CardElementType::TextInput), m_isMultiline(false), m_maxLength(0), m_style(TextInputStyle::Text)
 {
@@ -152,6 +155,12 @@ std::shared_ptr<BaseCardElement> TextInputParser::Deserialize(ParseContext& cont
 
     textInput->SetInlineAction(ParseUtil::GetAction(context, json, AdaptiveCardSchemaKey::InlineAction, false));
     textInput->SetRegex(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Regex));
+
+    if (textInput->GetIsRequired())
+    {
+        // If the ChoiceSetInput is required, add its ID to the set of required inputs
+        TextInput::requiredInputIdSet.insert(textInput->GetId());
+    }
 
     return textInput;
 }

@@ -3,7 +3,6 @@ package io.adaptivecards.renderer
 import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -32,6 +31,7 @@ import androidx.core.graphics.toColorInt
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import io.adaptivecards.renderer.Utils.dpToPx
 
 class PopoverBottomSheetDailogFragment(
     private val context: Context,
@@ -131,8 +131,8 @@ class PopoverBottomSheetDailogFragment(
 
         bottomSheet?.background = MaterialShapeDrawable().apply {
             shapeAppearanceModel = ShapeAppearanceModel.builder()
-                .setTopLeftCorner(CornerFamily.ROUNDED, 10f.dpToPx)
-                .setTopRightCorner(CornerFamily.ROUNDED, 10f.dpToPx)
+                .setTopLeftCorner(CornerFamily.ROUNDED, 10f.dpToPx(context))
+                .setTopRightCorner(CornerFamily.ROUNDED, 10f.dpToPx(context))
                 .setBottomLeftCorner(CornerFamily.ROUNDED, 0f)
                 .setBottomRightCorner(CornerFamily.ROUNDED, 0f)
                 .build()
@@ -160,9 +160,6 @@ class PopoverBottomSheetDailogFragment(
             }
         })
     }
-
-    val Float.dpToPx: Float
-        get() = this * Resources.getSystem().displayMetrics.density
 
     private fun getPeekHeight(contentHeight: Int): Int {
         val screenHeight = Utils.getScreenAvailableHeight(context)

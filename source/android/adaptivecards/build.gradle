@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 plugins {
     id 'io.codearte.nexus-staging' version '0.30.0'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.24'
 }
 apply from: '../constants.gradle'
 apply plugin: 'com.android.library'
@@ -43,7 +44,7 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    ndkVersion '23.1.7779620'
+    ndkVersion '28.0.13004108'
     lint {
         abortOnError false
     }
@@ -192,7 +193,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:' + androidExoPlayerVersion
     implementation "com.caverock:androidsvg-aar:$androidsvg"
     implementation "com.google.android.material:material:$googleMaterialVersion"
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     //viewpager2
     implementation "androidx.viewpager2:viewpager2:${androidxViewPager2Version}"
 }

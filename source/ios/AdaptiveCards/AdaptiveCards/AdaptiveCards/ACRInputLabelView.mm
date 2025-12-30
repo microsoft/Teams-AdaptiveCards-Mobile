@@ -12,6 +12,7 @@
 #import "ACRQuickReplyView.h"
 #import "UtiliOS.h"
 #import "ValueChangedAction.h"
+#import "TextInput.h"
 
 @implementation ACRInputLabelView
 
@@ -91,10 +92,10 @@
         self.dataSource = dataSource;
 
         if (dataSource) {
-            dataSource.isRequired = inputBlck->GetIsRequired();
+            dataSource.isRequired = inputBlck->GetIsRequired() && !rootView.isRenderingInsideBottomSheet;
         }
 
-        if (inputBlck->GetIsRequired()) {
+        if (inputBlck->GetIsRequired() && !rootView.isRenderingInsideBottomSheet) {
             self.isRequired = YES;
             textElementProperties.SetTextSize(pLabelConfig->size);
             textElementProperties.SetTextWeight(pLabelConfig->weight);
@@ -147,7 +148,21 @@
         self.inputView = inputView;
         self.label.isAccessibilityElement = NO;
         self.isAccessibilityElement = NO;
-        inputView.accessibilityLabel = self.label.text;
+        std::string label = TextInput().getLabel(inputBlck->GetId());
+        if (!label.empty())
+        {
+            inputView.accessibilityLabel = [NSString stringWithUTF8String:label.c_str()];
+        }
+        else
+        {
+            inputView.accessibilityLabel = self.label.text;
+        }
+        
+        if (inputBlck->GetIsRequired() && inputView.accessibilityLabel)
+        {
+            inputView.accessibilityLabel = [inputView.accessibilityLabel stringByAppendingString: NSLocalizedString(@"\nRequired", nil)];
+        }
+        
         self.inputAccessibilityItem = inputView;
         self.inputAccessibilityItem.accessibilityIdentifier = [NSString stringWithUTF8String:inputBlck->GetId().c_str()];
         if (inputView != accessibilityItem) {

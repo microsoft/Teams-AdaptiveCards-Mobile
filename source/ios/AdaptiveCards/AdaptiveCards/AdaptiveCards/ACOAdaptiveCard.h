@@ -23,22 +23,33 @@
 #import <Foundation/Foundation.h>
 
 @class SwiftAdaptiveCardParseResult;
+@class ACOReference;
 
 @interface ACOAdaptiveCard : NSObject
 
-@property ACORefresh *refresh;
-@property ACOAuthentication *authentication;
+@property (nullable, nonatomic, strong) ACORefresh *refresh;
+@property (nullable, nonatomic, strong) ACOAuthentication *authentication;
+@property BOOL shouldNotRenderActions;
 
-+ (ACOAdaptiveCardParseResult *)fromJson:(NSString *)payload;
-- (NSData *)inputs;
-- (NSArray<ACRIBaseInputHandler> *)getInputs;
-- (void)setInputs:(NSArray *)inputs;
-- (void)appendInputs:(NSArray *)inputs;
-- (NSArray<ACORemoteResourceInformation *> *)remoteResourceInformation;
-- (NSData *)additionalProperty;
++ (nonnull ACOAdaptiveCardParseResult *)fromJson:(nullable NSString *)payload;
+- (nullable NSData *)inputs;
+- (nullable NSArray<ACRIBaseInputHandler> *)getInputs;
+- (void)setInputs:(nonnull NSArray *)inputs;
+- (void)appendInputs:(nonnull NSArray *)inputs;
+- (nullable NSArray<ACORemoteResourceInformation *> *)remoteResourceInformation;
+- (nullable NSData *)additionalProperty;
+- (nullable NSArray<ACOReference *> *)references;
 
 /// Swift Adaptive Card Bridge Layer
-- (SwiftAdaptiveCardParseResult *)swiftParseResult;
+- (nullable SwiftAdaptiveCardParseResult *)swiftParseResult;
 + (BOOL)isSwiftParserEnabled;
 + (void)setSwiftParserEnabled:(BOOL)enabled;
+
+/// Expression Engine Adaptive Card Bridge 
++ (BOOL)isExpressionEvalEnabled;
++ (void)setExpressionEvalEnabled:(BOOL)enabled;
++ (void)evaluateExpression:(NSString * _Nonnull)expression
+                  withData:(NSDictionary * _Nullable)data
+                completion:(void (^_Nullable)(id _Nullable result, NSError * _Nullable error))completion;
+
 @end

@@ -5,6 +5,7 @@
 //  Copyright © 2017 Microsoft. All rights reserved.
 //
 
+#import "ACOAdaptiveCardPrivate.h"
 #import "ACOParseContext.h"
 #import "ACRImageRenderer.h"
 #import "ACOBaseCardElementPrivate.h"
@@ -23,6 +24,20 @@
 #import <Foundation/Foundation.h>
 
 @implementation ACRImageRenderer
+
+typedef NS_ENUM(NSInteger, CustomContentMode) {
+    CustomContentModeScaleAspectFitLeft,
+    CustomContentModeScaleAspectFitRight,
+    CustomContentModeScaleAspectFitTop,
+    CustomContentModeScaleAspectFitBottom,
+    CustomContentModeScaleAspectFitCenter,
+    
+    CustomContentModeScaleAspectFillLeft,
+    CustomContentModeScaleAspectFillRight,
+    CustomContentModeScaleAspectFillTop,
+    CustomContentModeScaleAspectFillBottom,
+    CustomContentModeScaleAspectFillCenter
+};
 
 + (ACRImageRenderer *)getInstance
 {
@@ -47,7 +62,8 @@
     // makes parts for building a key to UIImage, there are different interfaces for loading the images
     // we list all the parts that are needed in building the key.
     NSString *number = [[NSNumber numberWithUnsignedLongLong:(unsigned long long)(elem.get())] stringValue];
-    NSString *urlString = [NSString stringWithCString:imgElem->GetUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
+    std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
+    NSString *urlString = [NSString stringWithCString:imgElem->GetUrl(ACTheme(rootView.theme), card->GetResources(), GetDeviceLanguageLocale()).c_str() encoding:[NSString defaultCStringEncoding]];
     NSDictionary *pieces = @{
         @"number" : number,
         @"url" : urlString
@@ -232,12 +248,199 @@
     }
 
     [rootView removeObserver:rootView forKeyPath:@"image" onObject:imageView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setImageFitModeFor:imageView image:image imageProps:imageProps];
+    });
 }
 
 + (UILayoutPriority)getImageUILayoutPriority:(UIView *)wrappingView
 {
     UILayoutPriority priority = [wrappingView contentHuggingPriorityForAxis:UILayoutConstraintAxisHorizontal];
     return (!wrappingView || priority > ACRColumnWidthPriorityStretch) ? UILayoutPriorityDefaultHigh : priority;
+}
+
+- (void)setImageFitModeFor:(UIImageView *)imageView
+                     image:(UIImage *)image
+                imageProps:(ACRImageProperties *)imageProps
+{
+    ACRImageFitMode fitMode = imageProps.acrImageFitMode;
+    
+    if (fitMode == ACRImageFitModeFill || image.size.width <= 0 || image.size.height <= 0)
+    {
+        return;
+    }
+    
+    ACRHorizontalContentAlignment hAlign = (ACRHorizontalContentAlignment)(imageProps.acrHorizontalContentAlignment ?: ACRHorizontalContentAlignmentLeft);
+    ACRVerticalContentAlignment vAlign = (ACRVerticalContentAlignment)(imageProps.acrVerticalContentAlignment ?: ACRVerticalContentAlignmentTop);
+    
+    CGSize viewSize = imageView.bounds.size;
+    CGSize imageSize = image.size;
+    
+    if (viewSize.width <= 0 || viewSize.height <= 0)
+    {
+        return;
+    }
+    
+    imageView.contentMode = fitMode == ACRImageFitModeContain ? UIViewContentModeScaleAspectFit : UIViewContentModeScaleAspectFill;
+    imageView.clipsToBounds = YES;
+    
+    CGFloat imageViewAspectRatio = viewSize.width / viewSize.height;
+    CGFloat imageAspectRatio = imageSize.width / imageSize.height;
+    
+    CustomContentMode mode = CustomContentModeScaleAspectFitCenter;
+    
+    if (fitMode == ACRImageFitModeContain)
+    {
+        if (imageViewAspectRatio > imageAspectRatio)
+        {
+            // Horizontal alignment
+            switch (hAlign)
+            {
+                case ACRHorizontalContentAlignmentLeft:
+                    mode = CustomContentModeScaleAspectFitLeft;
+                    break;
+                case ACRHorizontalContentAlignmentCenter:
+                    mode = CustomContentModeScaleAspectFitCenter;
+                    break;
+                case ACRHorizontalContentAlignmentRight:
+                    mode = CustomContentModeScaleAspectFitRight;
+                    break;
+            }
+        }
+        else
+        {
+            // Vertical alignment
+            switch (vAlign)
+            {
+                case ACRVerticalContentAlignmentTop:
+                    mode = CustomContentModeScaleAspectFitTop;
+                    break;
+                case ACRVerticalContentAlignmentCenter:
+                    mode = CustomContentModeScaleAspectFitCenter;
+                    break;
+                case ACRVerticalContentAlignmentBottom:
+                    mode = CustomContentModeScaleAspectFitBottom;
+                    break;
+            }
+        }
+    }
+    else // ACRImageFitModeCover
+    {
+        if (imageViewAspectRatio < imageAspectRatio)
+        {
+            // Horizontal alignment
+            switch (hAlign)
+            {
+                case ACRHorizontalContentAlignmentLeft:
+                    mode = CustomContentModeScaleAspectFillLeft;
+                    break;
+                case ACRHorizontalContentAlignmentCenter:
+                    mode = CustomContentModeScaleAspectFillCenter;
+                    break;
+                case ACRHorizontalContentAlignmentRight:
+                    mode = CustomContentModeScaleAspectFillRight;
+                    break;
+            }
+        }
+        else
+        {
+            // Vertical alignment
+            switch (vAlign)
+            {
+                case ACRVerticalContentAlignmentTop:
+                    mode = CustomContentModeScaleAspectFillTop;
+                    break;
+                case ACRVerticalContentAlignmentCenter:
+                    mode = CustomContentModeScaleAspectFillCenter;
+                    break;
+                case ACRVerticalContentAlignmentBottom:
+                    mode = CustomContentModeScaleAspectFillBottom;
+                    break;
+            }
+        }
+    }
+    
+    imageView.image = [self makeImage:image forImageView:imageView mode:mode];
+    [imageView layoutIfNeeded];
+}
+
+- (UIImage *)makeImage:(UIImage *)image forImageView:(UIImageView *)imageView mode:(CustomContentMode)mode
+{
+    CGSize viewSize = imageView.bounds.size;
+    CGSize imageSize = image.size;
+    
+    if (viewSize.width <= 0 || viewSize.height <= 0 || imageSize.width <= 0 || imageSize.height <= 0)
+    {
+        return image;
+    }
+    
+    CGFloat aspectWidth = viewSize.width / imageSize.width;
+    CGFloat aspectHeight = viewSize.height / imageSize.height;
+    
+    BOOL isFitMode = (mode <= CustomContentModeScaleAspectFitCenter); // Fit modes come first
+    CGFloat scale = isFitMode ? MIN(aspectWidth, aspectHeight) : MAX(aspectWidth, aspectHeight);
+    
+    CGFloat scaledWidth = imageSize.width * scale;
+    CGFloat scaledHeight = imageSize.height * scale;
+    
+    CGFloat xOffset = 0.0;
+    CGFloat yOffset = 0.0;
+    
+    // Horizontal alignment
+    switch (mode)
+    {
+        case CustomContentModeScaleAspectFitLeft:
+        case CustomContentModeScaleAspectFillLeft:
+            xOffset = 0;
+            break;
+            
+        case CustomContentModeScaleAspectFitRight:
+        case CustomContentModeScaleAspectFillRight:
+            xOffset = viewSize.width - scaledWidth;
+            break;
+            
+        case CustomContentModeScaleAspectFitCenter:
+        case CustomContentModeScaleAspectFillCenter:
+            xOffset = (viewSize.width - scaledWidth) / 2.0;
+            break;
+            
+        default:
+            break;
+    }
+    
+    // Vertical alignment
+    switch (mode)
+    {
+        case CustomContentModeScaleAspectFitTop:
+        case CustomContentModeScaleAspectFillTop:
+            yOffset = 0;
+            break;
+            
+        case CustomContentModeScaleAspectFitBottom:
+        case CustomContentModeScaleAspectFillBottom:
+            yOffset = viewSize.height - scaledHeight;
+            break;
+            
+        case CustomContentModeScaleAspectFitCenter:
+        case CustomContentModeScaleAspectFillCenter:
+            yOffset = (viewSize.height - scaledHeight) / 2.0;
+            break;
+            
+        default:
+            break;
+    }
+    
+    CGRect drawRect = CGRectMake(xOffset, yOffset, scaledWidth, scaledHeight);
+    
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:viewSize];
+    UIImage *resultImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context)
+                            {
+        [[UIColor clearColor] setFill];
+        UIRectFill(CGRectMake(0, 0, viewSize.width, viewSize.height));
+        [image drawInRect:drawRect];
+    }];
+    
+    return resultImage;
 }
 
 @end

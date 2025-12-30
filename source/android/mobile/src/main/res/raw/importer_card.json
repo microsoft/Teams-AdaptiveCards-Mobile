@@ -264,6 +264,14 @@
 										"value": "v1.6/Elements/Carousel.ScenarioCards.json"
 									},
 									{
+										"title": "Citations",
+										"value": "v1.5/Elements/Citations.json"
+									},
+									{
+										"title": "Citations Icons",
+										"value": "v1.5/Elements/Citations.Icons.json"
+									},
+									{
 										"title": "Image FitMode Contain",
 										"value": "v1.5/Elements/Image.FitMode.Contain.json"
 									},
@@ -276,12 +284,20 @@
 										"value": "v1.5/Elements/Image.FitMode.Fill.json"
 									},
 									{
+										"title": "Input Label Text/RichText Block",
+										"value": "v1.5/Elements/InputLabel.json"
+									},
+									{
 										"title": "Progress Bar",
 										"value": "v1.5/Elements/ProgressBar.json"
 									},
 									{
 										"title": "Progress Ring",
 										"value": "v1.5/Elements/ProgressRing.json"
+									},
+									{
+										"title": "String Resources",
+										"value": "v1.5/Elements/StringResources.json"
 									},
 									{
 										"title": "Spacing Sample",

@@ -2,48 +2,31 @@
 // Licensed under the MIT License.
 package io.adaptivecards.adaptivecardssample;
 
-import android.content.res.Configuration;
-import android.graphics.Typeface;
-import android.os.Build;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import androidx.appcompat.widget.SwitchCompat;
 import android.widget.TabHost;
-import android.view.View;
-import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import io.adaptivecards.adaptivecardssample.CustomObjects.FeatureFlagResolver;
-import io.adaptivecards.objectmodel.*;
-import io.adaptivecards.renderer.AdaptiveCardRenderer;
-import io.adaptivecards.renderer.IOnlineImageLoader;
-import io.adaptivecards.renderer.IOnlineMediaLoader;
-import io.adaptivecards.renderer.Util;
-import io.adaptivecards.renderer.Utils;
-import io.adaptivecards.renderer.actionhandler.AfterTextChangedListener;
-import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
-import io.adaptivecards.renderer.RenderedAdaptiveCard;
-import io.adaptivecards.renderer.readonly.TextRendererUtil;
-import io.adaptivecards.renderer.inputhandler.IInputWatcher;
-import io.adaptivecards.renderer.registration.CardRendererRegistration;
-
-import io.adaptivecards.adaptivecardssample.CustomObjects.Actions.*;
-import io.adaptivecards.adaptivecardssample.CustomObjects.CardElements.*;
-import io.adaptivecards.adaptivecardssample.CustomObjects.Media.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,6 +39,49 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.adaptivecards.adaptivecardssample.CustomObjects.Actions.CustomBlueAction;
+import io.adaptivecards.adaptivecardssample.CustomObjects.Actions.CustomGreenAction;
+import io.adaptivecards.adaptivecardssample.CustomObjects.Actions.CustomRedAction;
+import io.adaptivecards.adaptivecardssample.CustomObjects.Actions.ShowCardOverrideRenderer;
+import io.adaptivecards.adaptivecardssample.CustomObjects.CardElements.CustomBlahParser;
+import io.adaptivecards.adaptivecardssample.CustomObjects.CardElements.CustomBlahRenderer;
+import io.adaptivecards.adaptivecardssample.CustomObjects.CardElements.CustomInput;
+import io.adaptivecards.adaptivecardssample.CustomObjects.DrawableResolver;
+import io.adaptivecards.adaptivecardssample.CustomObjects.FeatureFlagResolver;
+import io.adaptivecards.adaptivecardssample.CustomObjects.Media.CustomImageLoaderForButtons;
+import io.adaptivecards.adaptivecardssample.CustomObjects.Media.LocalResourcesLoader;
+import io.adaptivecards.adaptivecardssample.CustomObjects.Media.OnlineImageLoader;
+import io.adaptivecards.adaptivecardssample.CustomObjects.Media.OnlineMediaLoader;
+import io.adaptivecards.objectmodel.ActionParserRegistration;
+import io.adaptivecards.objectmodel.ActionType;
+import io.adaptivecards.objectmodel.ActionsConfig;
+import io.adaptivecards.objectmodel.AdaptiveCard;
+import io.adaptivecards.objectmodel.AdaptiveCardObjectModel;
+import io.adaptivecards.objectmodel.BaseActionElement;
+import io.adaptivecards.objectmodel.BaseCardElement;
+import io.adaptivecards.objectmodel.ElementParserRegistration;
+import io.adaptivecards.objectmodel.ExecuteAction;
+import io.adaptivecards.objectmodel.FeatureRegistration;
+import io.adaptivecards.objectmodel.HostConfig;
+import io.adaptivecards.objectmodel.IconPlacement;
+import io.adaptivecards.objectmodel.OpenUrlAction;
+import io.adaptivecards.objectmodel.ParseContext;
+import io.adaptivecards.objectmodel.ParseResult;
+import io.adaptivecards.objectmodel.ShowCardAction;
+import io.adaptivecards.objectmodel.SubmitAction;
+import io.adaptivecards.renderer.AdaptiveCardV2Parser;
+import io.adaptivecards.renderer.AdaptiveCardRenderer;
+import io.adaptivecards.renderer.IOnlineImageLoader;
+import io.adaptivecards.renderer.IOnlineMediaLoader;
+import io.adaptivecards.renderer.RenderedAdaptiveCard;
+import io.adaptivecards.renderer.Util;
+import io.adaptivecards.renderer.Utils;
+import io.adaptivecards.renderer.actionhandler.AfterTextChangedListener;
+import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.inputhandler.IInputWatcher;
+import io.adaptivecards.renderer.readonly.TextRendererUtil;
+import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
 //import com.google.zxing.integration.android.IntentIntegrator;
 //import com.google.zxing.integration.android.IntentResult;
@@ -79,6 +105,7 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
     private TextView m_selectedHostConfigText;
     private Timer m_timer=new Timer();
     private final long DELAY = 1000; // milliseconds
+    private CheckBox m_checkBox;
 
     // Options for custom elements
     private SwitchCompat m_customActions;
@@ -109,6 +136,8 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
         // Add text change handler
         m_jsonEditText = findViewById(R.id.jsonAdaptiveCard);
         m_configEditText = findViewById(R.id.hostConfig);
+
+        m_checkBox = findViewById(R.id.checkBox);
 
         TextWatcher watcher = new AfterTextChangedListener() {
             @Override
@@ -334,6 +363,8 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
     private void registerCustomFeatures(@NonNull Context context) {
         // Register Theme
         CardRendererRegistration.getInstance().setThemeForThemedUrl(Utils.getTheme(context));
+        // Set the languageTag
+        CardRendererRegistration.getInstance().setLanguageTag(Utils.getLanguageTag(context));
         registerCustomImageLoaders();
         registerCustomMediaLoaders();
         registerFeatureRegistration();
@@ -370,11 +401,22 @@ public class MainActivityAdaptiveCardsSample extends FragmentActivity
             hostConfig.SetActions(actionsConfig);
 
             ParseContext context = createParseContextForCustomElements();
-            ParseResult parseResult = AdaptiveCard.DeserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
+            ParseResult parseResult = AdaptiveCardV2Parser.INSTANCE.deserializeFromString(jsonText, AdaptiveCardRenderer.VERSION, context);
+            if (m_checkBox.isChecked()) {
+                try {
+
+                    // get the all the warnings
+                   // Set<String> warnings = AdaptiveCardNativeParser.INSTANCE.evaluateNativeParsingDiff(jsonText, AdaptiveCardRenderer.VERSION, parseResult);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             LinearLayout layout = findViewById(R.id.visualAdaptiveCardLayout);
             layout.removeAllViews();
 
             registerFeatureFlagResolver();
+            CardRendererRegistration.getInstance().registerDrawableResolver(new DrawableResolver());
             CardRendererRegistration.getInstance().setIsSplitActionEnabled(true);
             registerCustomFeatures(layout.getContext());
             if (mLayoutWidth != 0) {

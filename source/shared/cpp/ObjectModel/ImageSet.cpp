@@ -63,7 +63,7 @@ std::shared_ptr<BaseCardElement> ImageSetParser::Deserialize(ParseContext& conte
 
     // Parse Images
     auto images = ParseUtil::GetElementCollection<Image>(
-        true, context, value, AdaptiveCardSchemaKey::Images, true, CardElementTypeToString(CardElementType::Image));
+        true, context, value, AdaptiveCardSchemaKey::Images, false, CardElementTypeToString(CardElementType::Image));
 
     for (auto image : images)
     {
