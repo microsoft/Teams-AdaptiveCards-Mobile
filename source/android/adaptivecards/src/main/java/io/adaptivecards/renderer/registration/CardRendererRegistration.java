@@ -28,6 +28,7 @@ import io.adaptivecards.objectmodel.CardElementType;
 import io.adaptivecards.objectmodel.Column;
 import io.adaptivecards.objectmodel.CompoundButton;
 import io.adaptivecards.objectmodel.Container;
+import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.FallbackType;
 import io.adaptivecards.objectmodel.FeatureRegistration;
 import io.adaptivecards.objectmodel.HeightType;
@@ -567,7 +568,8 @@ public class CardRendererRegistration
             // if the layoutToApply is a flow layout, then the spacing and separator properties on items are ignored
             boolean isFlowLayout = layoutToApply.GetLayoutContainerType() == LayoutContainerType.Flow ||
                 layoutToApply.GetLayoutContainerType() == LayoutContainerType.AreaGrid;
-            HandleSpacing(context, viewGroup, renderedElement, hostConfig, tagContent, !isColumn, isFlowLayout);
+            HandleSpacing(context, viewGroup, renderedElement, hostConfig,
+                tagContent, renderArgs.getContainerStyle(), !isColumn, isFlowLayout);
 
             // Check if the element is an input or must be stretched
             BaseInputElement baseInputElement = Util.tryCastTo(renderedElement, BaseInputElement.class);
@@ -602,6 +604,7 @@ public class CardRendererRegistration
                                       BaseCardElement cardElement,
                                       HostConfig hostConfig,
                                       TagContent tagContent,
+                                      ContainerStyle containerStyle,
                                       boolean isHorizontalSpacing,
                                       boolean isFlowLayout)
     {
@@ -612,7 +615,7 @@ public class CardRendererRegistration
                 cardElement.GetSpacing(),
                 cardElement.GetSeparator(),
                 hostConfig,
-                null,
+                containerStyle,
                 isHorizontalSpacing,
                 false /* isImageSet */);
 
@@ -663,7 +666,9 @@ public class CardRendererRegistration
                     hostConfig.GetInputs().getLabel().getInputSpacing(),
                     false /* separator */,
                     hostConfig,
-                    true /* horizontalLine */);
+                    renderArgs.getContainerStyle(),
+                    true /* horizontalLine */,
+                    false /* isImageSet */);
             }
             else if (element.GetIsRequired() && shouldShowLabel)
             {
@@ -691,7 +696,9 @@ public class CardRendererRegistration
                     hostConfig.GetInputs().getErrorMessage().getSpacing(),
                     false /* separator */,
                     hostConfig,
-                    true /* horizontalLine */);
+                    renderArgs.getContainerStyle(),
+                    true /* horizontalLine */,
+                    false /* isImageSet */);
 
                 TextView errorMessage = InputUtil.RenderErrorMessage(element.GetErrorMessage(), context, hostConfig, renderArgs);
                 errorMessage.setTag(new TagContent(null, spacing, null));
