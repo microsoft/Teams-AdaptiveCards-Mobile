@@ -5,9 +5,9 @@
   "body": [
     {
       "type": "TextBlock",
-      "size": "ExtraLarge",
-      "spacing": "ExtraLarge",
-      "text": "Rating input"
+      "text": "Component - Input.Rating",
+      "size": "Large",
+      "weight": "Bolder"
     },
     {
       "type": "Input.Rating",
@@ -51,7 +51,7 @@
     },
     {
       "type": "TextBlock",
-      "size": "ExtraLarge",
+      "size": "Medium",
       "text": "Read-only ratings",
       "separator": true,
       "spacing": "ExtraLarge"

@@ -3,6 +3,12 @@
   "body": [
     {
       "type": "TextBlock",
+      "text": "Component - Input.Toggle",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
       "text": "Toggle Inputs with showTitle Property"

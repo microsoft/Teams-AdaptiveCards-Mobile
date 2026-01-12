@@ -1,0 +1,186 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Event Registration Form",
+      "weight": "Bolder",
+      "size": "Large",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Please fill in the details below and choose your preferences.",
+      "wrap": true
+    },
+    {
+      "type": "Input.Text",
+      "id": "fullName",
+      "placeholder": "Enter your full name",
+      "style": "text"
+    },
+    {
+      "type": "Input.Text",
+      "id": "email",
+      "placeholder": "Enter your email",
+      "style": "email"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "ticketType",
+      "style": "expanded",
+      "choices": [
+        { "title": "Standard", "value": "standard" },
+        { "title": "VIP", "value": "vip" },
+        { "title": "Student", "value": "student" }
+      ]
+    },
+    {
+      "type": "Input.Toggle",
+      "id": "newsletter",
+      "title": "Subscribe to newsletter?",
+      "valueOn": "true",
+      "valueOff": "false"
+    },
+    {
+      "type": "Container",
+      "id": "extraOptionsContainer",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "layouts": [
+        {
+          "type": "Layout.Flow",
+          "horizontalItemsAlignment": "Left",
+          "minItemWidth": "0px"
+        }
+      ],
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Additional Options",
+          "weight": "Bolder",
+          "size": "Medium",
+          "wrap": true
+        },
+        {
+          "type": "Input.Toggle",
+          "id": "vipLounge",
+          "title": "Access VIP lounge?",
+          "valueOn": "yes",
+          "valueOff": "no"
+        },
+        {
+          "type": "Input.Toggle",
+          "id": "mealPreference",
+          "title": "Include special meal?",
+          "valueOn": "yes",
+          "valueOff": "no"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "id": "detailsContainer",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "layouts": [
+        {
+          "type": "Layout.Flow",
+          "horizontalItemsAlignment": "Left",
+          "minItemWidth": "0px"
+        }
+      ],
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "More Information",
+          "weight": "Bolder",
+          "size": "Medium",
+          "wrap": true
+        },
+        {
+          "type": "Input.Text",
+          "id": "comments",
+          "placeholder": "Any special requests or comments?",
+          "isMultiline": true
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit Registration",
+      "data": {
+        "action": "submitRegistration"
+      }
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Visit Event Website",
+      "url": "https://www.example.com/event"
+    },
+    {
+      "type": "Action.ResetInputs",
+      "title": "Clear Form"
+    },
+    {
+      "type": "Action.ShowCard",
+      "title": "More Options",
+      "card": {
+        "type": "AdaptiveCard",
+        "version": "1.6",
+        "body": [
+          {
+            "type": "TextBlock",
+            "text": "Emergency Contact Details",
+            "weight": "Bolder"
+          },
+          {
+            "type": "Input.Text",
+            "id": "emergencyName",
+            "placeholder": "Enter contact name"
+          },
+          {
+            "type": "Input.Text",
+            "id": "emergencyPhone",
+            "placeholder": "Enter contact phone number"
+          }
+        ],
+        "actions": [
+          {
+            "type": "Action.Submit",
+            "title": "Save Contact",
+            "data": {
+              "action": "saveEmergencyContact"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Action.ToggleVisibility",
+      "title": "Toggle Extra Options",
+      "targetElements": [
+        "extraOptionsContainer"
+      ]
+    },
+    {
+      "type": "Action.Execute",
+      "title": "Calculate Total",
+      "verb": "calculateTotal",
+      "data": {
+        "ticketPrice": {
+          "standard": 50,
+          "vip": 100,
+          "student": 25
+        },
+        "mealPrice": 20
+      }
+    }
+  ]
+}

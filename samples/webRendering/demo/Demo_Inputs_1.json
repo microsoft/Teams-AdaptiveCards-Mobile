@@ -1,0 +1,224 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Customer Support Feedback",
+      "weight": "Bolder",
+      "size": "Large"
+    },
+    {
+      "type": "Badge",
+      "text": "Post-Interaction Survey"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Please complete this short survey regarding your recent support experience. Fields marked as required must be completed before submission.",
+      "wrap": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Support Channel Used",
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                {
+                  "type": "Badge",
+                  "text": "Required"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Input.ChoiceSet",
+          "id": "supportChannel",
+          "style": "expanded",
+          "isRequired": true,
+          "errorMessage": "You must select a support channel.",
+          "choices": [
+            { "title": "Live Chat", "value": "live_chat" },
+            { "title": "Email", "value": "email" },
+            { "title": "Phone Call", "value": "phone" },
+            { "title": "Self-Service Portal", "value": "self_service" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Was your issue resolved?",
+          "weight": "Bolder"
+        },
+        {
+          "type": "Input.Toggle",
+          "id": "issueResolved",
+          "title": "Yes, my issue was resolved",
+          "valueOn": "true",
+          "valueOff": "false"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Overall Satisfaction Rating",
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                {
+                  "type": "Badge",
+                  "text": "Required"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Input.Rating",
+          "id": "overallRating",
+          "max": 5,
+          "isRequired": true,
+          "errorMessage": "Please provide a satisfaction rating from 1 to 5."
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Time Taken to Resolve (minutes)",
+          "weight": "Bolder"
+        },
+        {
+          "type": "Input.Number",
+          "id": "resolutionTime",
+          "min": 1,
+          "max": 240,
+          "isRequired": true,
+          "placeholder": "Enter a value between 1 and 240",
+          "errorMessage": "Resolution time must be between 1 and 240 minutes."
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Additional Comments",
+          "weight": "Bolder"
+        },
+        {
+          "type": "Badge",
+          "text": "Optional"
+        },
+        {
+          "type": "Input.Text",
+          "id": "additionalComments",
+          "isMultiline": true,
+          "maxLength": 500,
+          "placeholder": "Describe what went well or what could be improved",
+          "regex": "^[a-zA-Z0-9 .,!?\\n\\r-]*$",
+          "errorMessage": "Comments contain unsupported characters."
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "spacing": "Large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Would you recommend our support service?",
+          "weight": "Bolder"
+        },
+        {
+          "type": "Badge",
+          "text": "Required"
+        },
+        {
+          "type": "Input.ChoiceSet",
+          "id": "recommendSupport",
+          "style": "compact",
+          "isRequired": true,
+          "errorMessage": "Please select a recommendation option.",
+          "choices": [
+            { "title": "Definitely", "value": "definitely" },
+            { "title": "Maybe", "value": "maybe" },
+            { "title": "Unlikely", "value": "unlikely" }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit Feedback",
+      "data": {
+        "formType": "customer_support_feedback",
+        "submissionSource": "adaptive_card",
+        "schemaVersion": "1.6"
+      }
+    },
+    {
+      "type": "Action.ResetInputs",
+      "title": "Reset",
+      "targetInputIds": [
+        "supportChannel",
+        "issueResolved",
+        "overallRating",
+        "resolutionTime",
+        "additionalComments",
+       "recommendSupport" 
+      ]
+    }
+  ]
+}

@@ -5,21 +5,15 @@
   "body": [
     {
       "type": "TextBlock",
-      "size": "Medium",
-      "weight": "Bolder",
-      "text": "### Headings",
-      "wrap": true
-    },
-    {
-      "type": "TextBlock",
-      "text": "# H1: Heading level 1  \n## H2: Heading level 2  \n### H3: Heading level 3  \n#### H4: H4  \n##### H5: H5  \n###### H6: H6",
-      "wrap": true
+      "text": "Component - RichText Markdown",
+      "size": "ExtraLarge",
+      "weight": "Bolder"
     },
     {
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "### Emphasis",
+      "text": "##### Emphasis",
       "wrap": true
     },
     {
@@ -40,7 +34,7 @@
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "### Blockquotes",
+      "text": "##### Blockquotes",
       "wrap": true
     },
     {
@@ -51,7 +45,7 @@
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "### Lists",
+      "text": "##### Lists",
       "wrap": true
     },
     {
@@ -62,7 +56,19 @@
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "### Links",
+      "text": "##### Headings",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "# H1: Heading level 1  \n## H2: Heading level 2  \n### H3: Heading level 3  \n#### H4: H4  \n##### H5: H5  \n###### H6: H6",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "##### Links",
       "wrap": true
     },
             {
@@ -84,7 +90,7 @@
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "### Images and media",
+      "text": "##### Images and media",
       "wrap": true
     },
          {
@@ -101,7 +107,7 @@
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "### Tables",
+      "text": "##### Tables",
       "wrap": true
     },
     {
@@ -112,7 +118,7 @@
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "### Footnote and separator",
+      "text": "##### Footnote and separator",
       "wrap": true
     },
     {
@@ -121,13 +127,13 @@
     },
     {
       "type": "TextBlock",
-      "text": "Text `before` the separator, somewhat long, as we need to check if things wrap as they should...\n---\n...and more text after the separator, again let's make it long because wrapping is very important."
+      "text": "##### Text `before` the separator, somewhat long, as we need to check if things wrap as they should...\n---\n...and more text after the separator, again let's make it long because wrapping is very important."
     },
     {
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "### Code Block with Syntax Highlighting",
+      "text": "##### Code Block with Syntax Highlighting",
       "wrap": true
     },
         {

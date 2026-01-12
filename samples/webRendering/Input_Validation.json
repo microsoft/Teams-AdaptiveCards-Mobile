@@ -4,7 +4,7 @@
   "body": [
     {
       "type": "TextBlock",
-      "text": "All Input Types",
+      "text": "Component - Input Validation",
       "size": "Large",
       "weight": "Bolder"
     },

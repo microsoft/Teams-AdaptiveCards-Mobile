@@ -2,6 +2,12 @@
   "type": "AdaptiveCard",
   "body": [
     {
+      "type": "TextBlock",
+      "text": "Component - Input.Text",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
       "type": "Input.Text",
       "id": "1",
       "placeholder": "Placeholder text 1",

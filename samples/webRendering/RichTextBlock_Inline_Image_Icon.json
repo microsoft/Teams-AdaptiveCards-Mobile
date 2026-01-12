@@ -5,6 +5,12 @@
   "body": [
     {
       "type": "TextBlock",
+      "text": "Component - RichText Inline Icon/Image",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
       "text": "Inline Icons"
     },
     {
