@@ -5370,7 +5370,13 @@ extension SwiftBaseCardElement {
             SwiftCardElementType.choiceSetInput.rawValue,
             SwiftCardElementType.toggleInput.rawValue,
             SwiftCardElementType.media.rawValue,
-            SwiftCardElementType.table.rawValue
+            SwiftCardElementType.table.rawValue,
+            // New element types added in Swift port continuation
+            SwiftCardElementType.carousel.rawValue,
+            SwiftCardElementType.carouselPage.rawValue,
+            SwiftCardElementType.badge.rawValue,
+            SwiftCardElementType.progressBar.rawValue,
+            SwiftCardElementType.progressRing.rawValue
         ]
         
         if !knownTypes.contains(typeString) {
@@ -5417,6 +5423,17 @@ extension SwiftBaseCardElement {
             return try decoder.decode(SwiftMedia.self, from: data)
         case SwiftCardElementType.table.rawValue:
             return try decoder.decode(SwiftTable.self, from: data)
+        // New element types added in Swift port continuation
+        case SwiftCardElementType.carousel.rawValue:
+            return try decoder.decode(SwiftCarousel.self, from: data)
+        case SwiftCardElementType.carouselPage.rawValue:
+            return try decoder.decode(SwiftCarouselPage.self, from: data)
+        case SwiftCardElementType.badge.rawValue:
+            return try decoder.decode(SwiftBadge.self, from: data)
+        case SwiftCardElementType.progressBar.rawValue:
+            return try decoder.decode(SwiftProgressBar.self, from: data)
+        case SwiftCardElementType.progressRing.rawValue:
+            return try decoder.decode(SwiftProgressRing.self, from: data)
         case SwiftCardElementType.unknown.rawValue:
             fallthrough
         default:

@@ -14,6 +14,7 @@
 #import "ACRRendererPrivate.h"
 #import "SharedAdaptiveCard.h"
 #import "UnknownElement.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRCustomRenderer
 
@@ -34,20 +35,50 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     std::shared_ptr<UnknownElement> customElem = std::dynamic_pointer_cast<UnknownElement>([acoElem element]);
 
     ACRRegistration *reg = [ACRRegistration getInstance];
     if (reg) {
-        NSString *type = [NSString stringWithCString:customElem->GetElementTypeString().c_str() encoding:NSUTF8StringEncoding];
-        Json::Value blob = customElem->GetAdditionalProperties();
-        Json::StreamWriterBuilder streamWriterBuilder;
-        auto writer = streamWriterBuilder.newStreamWriter();
-        std::stringstream sstream;
-        writer->write(blob, &sstream);
-        delete writer;
-        NSString *jsonString =
-            [[NSString alloc] initWithCString:sstream.str().c_str()
-                                     encoding:NSUTF8StringEncoding];
+        // Get type string - use Swift bridge when available, otherwise fallback to C++
+        NSString *type;
+        if (useSwiftRendering) {
+            type = [SwiftAdaptiveCardObjcBridge getUnknownElementTypeString:acoElem useSwift:YES];
+            if (type.length == 0) {
+                // Fallback to C++ if Swift returns empty (element may not be Swift-parsed)
+                type = [NSString stringWithCString:customElem->GetElementTypeString().c_str() encoding:NSUTF8StringEncoding];
+            }
+        } else {
+            type = [NSString stringWithCString:customElem->GetElementTypeString().c_str() encoding:NSUTF8StringEncoding];
+        }
+
+        // Get additional properties as JSON - use Swift bridge when available, otherwise fallback to C++
+        NSString *jsonString;
+        if (useSwiftRendering) {
+            jsonString = [SwiftAdaptiveCardObjcBridge getUnknownElementAdditionalPropertiesJson:acoElem useSwift:YES];
+            if (jsonString.length == 0) {
+                // Fallback to C++ if Swift returns empty (element may not be Swift-parsed)
+                Json::Value blob = customElem->GetAdditionalProperties();
+                Json::StreamWriterBuilder streamWriterBuilder;
+                auto writer = streamWriterBuilder.newStreamWriter();
+                std::stringstream sstream;
+                writer->write(blob, &sstream);
+                delete writer;
+                jsonString = [[NSString alloc] initWithCString:sstream.str().c_str()
+                                                      encoding:NSUTF8StringEncoding];
+            }
+        } else {
+            Json::Value blob = customElem->GetAdditionalProperties();
+            Json::StreamWriterBuilder streamWriterBuilder;
+            auto writer = streamWriterBuilder.newStreamWriter();
+            std::stringstream sstream;
+            writer->write(blob, &sstream);
+            delete writer;
+            jsonString = [[NSString alloc] initWithCString:sstream.str().c_str()
+                                                  encoding:NSUTF8StringEncoding];
+        }
 
         if (jsonString.length > 0) {
             NSData *jsonPayload = [jsonString dataUsingEncoding:NSUTF8StringEncoding];

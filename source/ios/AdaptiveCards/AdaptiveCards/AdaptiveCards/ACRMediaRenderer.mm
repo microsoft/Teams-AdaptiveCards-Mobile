@@ -18,6 +18,7 @@
 #import "ACRView.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 #import <AVKit/AVKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
@@ -40,14 +41,24 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Media> mediaElem = std::dynamic_pointer_cast<Media>(elem);
 
     NSMutableDictionary *imageViewMap = [rootView getImageMap];
 
+    // Get poster URL - use bridge for Swift, C++ for legacy
+    NSString *urlString;
+    if (useSwiftRendering) {
+        urlString = [SwiftAdaptiveCardObjcBridge getMediaPoster:acoElem useSwift:YES];
+    } else {
+        urlString = [NSString stringWithCString:mediaElem->GetPoster().c_str() encoding:[NSString defaultCStringEncoding]];
+    }
+
     // makes parts for building a key to UIImage, there are different interfaces for loading the images
     // we list all the parts that are needed in building the key.
-    NSString *urlString = [NSString stringWithCString:mediaElem->GetPoster().c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *numberString = [[NSNumber numberWithUnsignedLongLong:(unsigned long long)(elem.get())] stringValue];
     NSString *piikey = [NSString stringWithCString:[acoConfig getHostConfig]->GetMedia().playButton.c_str() encoding:[NSString defaultCStringEncoding]];
     NSString *piikeyViewIF = [NSString stringWithFormat:@"%llu_playIcon", (unsigned long long)elem.get()];

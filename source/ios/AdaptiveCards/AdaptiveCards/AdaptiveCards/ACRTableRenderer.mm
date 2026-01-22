@@ -7,6 +7,7 @@
 
 #import "ACRTableRenderer.h"
 #import "ACRTableView.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRTableRenderer
 
@@ -27,6 +28,17 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSArray *swiftTableColumns = nil;
+    NSArray *swiftTableRows = nil;
+    BOOL swiftShowGridLines = NO;
+    if (useSwiftRendering) {
+        swiftTableColumns = [SwiftAdaptiveCardObjcBridge getTableColumns:acoElem useSwift:YES];
+        swiftTableRows = [SwiftAdaptiveCardObjcBridge getTableRows:acoElem useSwift:YES];
+        swiftShowGridLines = [SwiftAdaptiveCardObjcBridge getTableShowGridLines:acoElem useSwift:YES];
+    }
+
     [rootView.context pushBaseCardElementContext:acoElem];
     ACRTableView *tableView = [[ACRTableView alloc] init:acoElem
                                                viewGroup:viewGroup

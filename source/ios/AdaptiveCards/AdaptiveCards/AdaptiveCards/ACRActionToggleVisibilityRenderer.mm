@@ -13,6 +13,7 @@
 #import "ACRToggleVisibilityTarget.h"
 #import "ToggleVisibilityAction.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRActionToggleVisibilityRenderer
 
@@ -28,6 +29,13 @@
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSArray *swiftToggleVisibilityTargets = nil;
+    if (useSwiftRendering) {
+        swiftToggleVisibilityTargets = [SwiftAdaptiveCardObjcBridge getToggleVisibilityTargets:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<BaseActionElement> elem = [acoElem element];
     std::shared_ptr<ToggleVisibilityAction> action = std::dynamic_pointer_cast<ToggleVisibilityAction>(elem);
 
