@@ -194,7 +194,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
 
     public static void applyBleed(StyledCollectionElement collectionElement, ViewGroup collectionElementView, Context context, HostConfig hostConfig)
     {
-        if (collectionElement.GetBleed() && collectionElement.GetCanBleed())
+        if (collectionElement.GetBleed())
         {
             int padding = Util.dpToPixels(context, hostConfig.GetSpacing().getPaddingSpacing());
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) collectionElementView.getLayoutParams();
@@ -202,6 +202,11 @@ public class ContainerRenderer extends BaseCardElementRenderer
             int marginLeft = layoutParams.leftMargin, marginRight = layoutParams.rightMargin, marginTop = layoutParams.topMargin, marginBottom = layoutParams.bottomMargin;
 
             ContainerBleedDirection bleedDirection = collectionElement.GetBleedDirection();
+            if (collectionElement instanceof Container && collectionElement.GetBackgroundImage() != null
+                && bleedDirection == ContainerBleedDirection.BleedRestricted)
+            {
+                bleedDirection = ContainerBleedDirection.BleedAll;
+            }
 
             if ((bleedDirection.swigValue() & ContainerBleedDirection.BleedLeft.swigValue()) != ContainerBleedDirection.BleedRestricted.swigValue())
             {
