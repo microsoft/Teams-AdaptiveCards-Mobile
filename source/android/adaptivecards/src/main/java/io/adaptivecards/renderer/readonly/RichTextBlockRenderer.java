@@ -272,13 +272,15 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
         // The current inline element types are TextRun
         InlineVector inlines = richTextBlock.GetInlines();
 
+        // Properties required for actions to fire onClick event
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setLinksClickable(true);
+        textView.setFocusable(true);
+        textView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+
         textView.setText("");
         SpannableStringBuilder convertedString = buildSpannableParagraph(renderedCard, richTextBlock, inlines, cardActionHandler, fragmentManager, hostConfig, renderArgs, textView.getContext());
         textView.append(convertedString);
-
-        // Properties required for actions to fire onClick event
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-        textView.setClickable(true);
 
         viewGroup.addView(textView);
         return textView;
