@@ -276,7 +276,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         textView.setLinksClickable(true);
         textView.setFocusable(true);
-        textView.setFocusableInTouchMode(true); // Ensure keyboard focus
+        textView.setFocusableInTouchMode(true);
         textView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
 
         textView.setText("");
