@@ -182,7 +182,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
 
         ContainerRenderer.applyVerticalContentAlignment(columnLayout, column.GetVerticalContentAlignment(), layoutToApply);
 
-        ContainerRenderer.applyPadding(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig, column.GetShowBorder());
+        ContainerRenderer.applyPadding(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig, column.GetShowBorder(), column.GetBleed());
         ContainerRenderer.applyContainerStyle(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig);
         ContainerRenderer.applyBleed(column, columnLayout, context, hostConfig);
         ContainerRenderer.applyBorder(styleForThis, columnLayout, hostConfig, column.GetElementType(), column.GetShowBorder());

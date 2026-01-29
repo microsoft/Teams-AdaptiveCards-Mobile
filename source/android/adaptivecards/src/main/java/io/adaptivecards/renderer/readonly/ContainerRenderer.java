@@ -103,7 +103,7 @@ public class ContainerRenderer extends BaseCardElementRenderer
 
         ContainerStyle containerStyle = renderArgs.getContainerStyle();
         ContainerStyle styleForThis = getLocalContainerStyle(container, containerStyle);
-        applyPadding(styleForThis, containerStyle, containerView, hostConfig, container.GetShowBorder());
+        applyPadding(styleForThis, containerStyle, containerView, hostConfig, container.GetShowBorder(), container.GetBleed());
         applyContainerStyle(styleForThis, containerStyle, containerView, hostConfig);
         applyBleed(container, containerView, context, hostConfig);
         applyBorder(styleForThis, containerView, hostConfig, container.GetElementType(), container.GetShowBorder());
@@ -233,23 +233,10 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
     }
 
-    /**
-     * @deprecated Separated into specific {@link #applyPadding} and {@link #applyContainerStyle}.
-     */
-    public static void ApplyPadding(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig)
+    public static void applyPadding(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig,
+                                    boolean hasBorder, boolean hasBleed)
     {
-        applyPadding(computedContainerStyle, parentContainerStyle, collectionElementView, hostConfig);
-        applyContainerStyle(computedContainerStyle, parentContainerStyle, collectionElementView, hostConfig);
-    }
-
-    public static void applyPadding(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig)
-    {
-        applyPadding(computedContainerStyle, parentContainerStyle, collectionElementView, hostConfig, false);
-    }
-
-    public static void applyPadding(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig, boolean hasBorder)
-    {
-        if (hasBorder || computedContainerStyle != parentContainerStyle)
+        if (hasBleed || hasBorder || computedContainerStyle != parentContainerStyle)
         {
             int padding = Util.dpToPixels(collectionElementView.getContext(), hostConfig.GetSpacing().getPaddingSpacing());
             collectionElementView.setPadding(padding, padding, padding, padding);

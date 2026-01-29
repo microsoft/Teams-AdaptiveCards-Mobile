@@ -48,7 +48,7 @@ object CarouselPageRenderer : BaseCardElementRenderer() {
         val containerStyle = renderArgs.containerStyle
         val styleForThis = ContainerRenderer.getLocalContainerStyle(carouselPage, containerStyle)
 
-        ContainerRenderer.applyPadding(styleForThis, containerStyle, carouselPageView, hostConfig, carouselPage.GetShowBorder())
+        ContainerRenderer.applyPadding(styleForThis, containerStyle, carouselPageView, hostConfig, carouselPage.GetShowBorder(), carouselPage.GetBleed())
         ContainerRenderer.applyContainerStyle(styleForThis, containerStyle, carouselPageView, hostConfig)
         ContainerRenderer.applyBleed(carouselPage, carouselPageView, context, hostConfig)
         ContainerRenderer.applyBorder(styleForThis, carouselPageView, hostConfig, carouselPage.GetElementType(), carouselPage.GetShowBorder())
