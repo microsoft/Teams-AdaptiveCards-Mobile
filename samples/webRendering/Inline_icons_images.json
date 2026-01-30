@@ -1,0 +1,249 @@
+{
+          "type": "AdaptiveCard",
+          "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+          "version": "1.5",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Inline Icons"
+            },
+            {
+              "type": "Container",
+              "showBorder": true,
+              "roundedCorners": true,
+              "items": [
+                {
+                  "type": "RichTextBlock",
+                  "inlines": [
+                    {
+                      "type": "IconRun",
+                      "name": "Calendar",
+                      "size": "small"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Small text with icon",
+                      "size": "small"
+                    },
+                    {
+                      "type": "IconRun",
+                      "name": "Calendar"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Default (Medium) text with icon"
+                    },
+                    {
+                      "type": "IconRun",
+                      "name": "Calendar",
+                      "size": "large"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Large text with icon",
+                      "size": "large"
+                    },
+                    {
+                      "type": "IconRun",
+                      "name": "Calendar",
+                      "size": "extralarge"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Extra large text with icon",
+                      "size": "extralarge"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TextBlock",
+              "text": "Inline Images"
+            },
+            {
+              "type": "Container",
+              "showBorder": true,
+              "roundedCorners": true,
+              "items": [
+                {
+                  "type": "RichTextBlock",
+                  "inlines": [
+                    {
+                      "type": "ImageRun",
+                      "url": "https://adaptivecards.io/content/cats/1.png",
+                      "size": "small"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Small text with image",
+                      "size": "small"
+                    },
+                    {
+                      "type": "ImageRun",
+                      "url": "https://adaptivecards.io/content/cats/1.png",
+                      "name": "Calendar"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Default (Medium) text with image"
+                    },
+                    {
+                      "type": "ImageRun",
+                      "url": "https://adaptivecards.io/content/cats/1.png",
+                      "size": "large"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Large text with image",
+                      "size": "large"
+                    },
+                    {
+                      "type": "ImageRun",
+                      "url": "https://adaptivecards.io/content/cats/1.png",
+                      "size": "extralarge"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Extra large text with image",
+                      "size": "extralarge"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TextBlock",
+              "text": "Mix of Icons and Images"
+            },
+            {
+              "type": "Container",
+              "showBorder": true,
+              "roundedCorners": true,
+              "items": [
+                {
+                  "type": "RichTextBlock",
+                  "inlines": [
+                    {
+                      "type": "IconRun",
+                      "name": "Rocket",
+                      "size": "large",
+                      "color": "good",
+                      "style": "filled"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "Project Greenland",
+                      "size": "large",
+                      "weight": "bolder",
+                      "color": "good"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": " is moving full speed ahead! The team completed a successful deep dive"
+                    },
+                    {
+                      "type": "IconRun",
+                      "name": "ArrowCircleDown",
+                      "selectAction": {
+                        "type": "Action.OpenUrl",
+                        "title": "Click me!",
+                        "tooltip": "Icons can handle actions",
+                        "url": "www.microsoft.com"
+                      }
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": " last week"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": ", and we're now ",
+                      "fontType": "monospace"
+                    },
+                    {
+                      "type": "ImageRun",
+                      "url": "https://slp-statics.astockcdn.net/static_assets/staging/25spring/US_homepage/HP_storytelling_1439510772.jpg?width=580&format=webp",
+                      "style": "Person",
+                      "selectAction": {
+                        "type": "Action.OpenUrl",
+                        "title": "Click me!",
+                        "tooltip": "Icons can handle actions",
+                        "url": "www.microsoft.com"
+                      }
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": " preparing for the next check-in on Monday",
+                      "fontType": "monospace"
+                    },
+                    {
+                      "type": "IconRun",
+                      "name": "Calendar"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": ". A new role is opening up",
+                      "size": "small",
+                      "weight": "lighter"
+                    },
+                    {
+                      "type": "IconRun",
+                      "name": "BookContacts",
+                      "size": "small"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "—let us know if you'd like to help with interviews.",
+                      "size": "small",
+                      "italic": "true",
+                      "weight": "lighter"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": " Meanwhile, ",
+                      "size": "extralarge",
+                      "weight": "lighter"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "DON'T forget",
+                      "highlight": true,
+                      "size": "extralarge",
+                      "weight": "bolder"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": " to ",
+                      "size": "extralarge",
+                      "weight": "lighter"
+                    },
+                    {
+                      "type": "ImageRun",
+                      "url": "https://t4.ftcdn.net/jpg/13/81/92/57/240_F_1381925724_7KS5tRyTwqFqNY9wiNbEqp0jdjXVhTvs.jpg",
+                      "size": "extralarge",
+                      "style": "RoundedCorners"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": "review the updated documentation",
+                      "size": "extralarge",
+                      "weight": "lighter"
+                    },
+                    {
+                      "type": "IconRun",
+                      "name": "Document",
+                      "size": "extralarge"
+                    },
+                    {
+                      "type": "TextRun",
+                      "text": ".",
+                      "size": "extralarge",
+                      "weight": "lighter"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
