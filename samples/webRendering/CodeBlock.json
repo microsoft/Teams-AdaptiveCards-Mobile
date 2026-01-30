@@ -1,0 +1,75 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": 2,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "editor.js",
+              "style": "heading"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Lines 21 - 32"
+            },
+            {
+              "type": "CodeBlock",
+              "codeSnippet": "let lines = clonedChild.textContent?.split(\"\\n\");\nlines?.map((line, index) => {\n  let newSpan = document.createElement(\"span\");\n  newSpan.className = className;\n  newSpan.textContent = line;\n\n  // Add a line break after each span, except the last one\n  if (index < lines!.length - 1) {\n    newSpan.textContent += \"\\n\";\n  }\n  result.push(newSpan);\n}",
+              "language": "typescript",
+              "startLineNumber": 21
+            },
+            {
+              "type": "TextBlock",
+              "text": "Lines 61 - 74"
+            },
+            {
+              "type": "CodeBlock",
+              "codeSnippet": "const constructStyles = (codeBlock: SyntaxHighlightConfig) => {\n  const styles: ISyntaxStyleProps = {\n    ...defaultHostConfig.codeBlock,\n    backgroundColor:\n      codeBlock.backgroundColor ??\n      defaultHostConfig.codeBlock.backgroundColor,\n    borderColor:\n      codeBlock.borderColor ?? defaultHostConfig.codeBlock.borderColor,\n    syntaxColors:\n      (codeBlock.syntaxColors as SyntaxColorSetDefinition) ??\n      defaultHostConfig.codeBlock.syntaxColors,\n  };\n  return styles;\n};",
+              "language": "typescript",
+              "startLineNumber": 61
+            },
+            {
+              "type": "TextBlock",
+              "text": "Lines 61 - 76"
+            },
+            {
+              "type": "CodeBlock",
+              "codeSnippet": "/**\n * @author John Smith <john.smith@example.com>\n */\n package l2f.gameserver.model;\n\n public abstract strictfp class L2Char extends L2Object {\n  public static final Short ERROR = 0x0001;\n\n  public void moveTo(int x, int y, int z) {\n    _ai = null;\n    log(\"Should not be called\");\n    if (1 > 5) { // wtf!?\n      return;\n    }\n  }\n}",
+              "language": "java",
+              "startLineNumber": 61
+            },
+            {
+              "type": "TextBlock",
+              "text": "Lines 61 - 81"
+            },
+            {
+              "type": "CodeBlock",
+              "codeSnippet": "export default class CodeBlock extends BaseCodeBlock {\n  protected internalRender(): JSX.Element | null {\n  // Then register the languages you need\n  hljs.registerLanguage(\"javascript\", javascript);\n\n  return this.codeSnippet ? (\n    <div>\n      <h5>{this.fileName}</h5>\n      <p>Lines {this.startLineNumber} - {this.endLineNumber}</p>\n      <HighlightCodeBlockWrapper\n        language={this.language ?? \"plaintext\"}\n        offset={this.startLineNumber}\n      >\n        {this.codeSnippet}\n      </HighlightCodeBlockWrapper>\n    </div>\n  ) : (\n    <div>NOT SUPPORTED</div>\n    );\n  }\n}",
+              "language": "javascript",
+              "startLineNumber": 61
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "View in Azure Repos",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Edit in vscode.dev",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    }
+  ]
+}
