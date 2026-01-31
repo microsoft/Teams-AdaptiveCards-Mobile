@@ -410,6 +410,9 @@ InputsConfig InputsConfig::Deserialize(const Json::Value& json, const InputsConf
     result.label = ParseUtil::ExtractJsonValueAndMergeWithDefault<LabelConfig>(
         json, AdaptiveCardSchemaKey::Label, defaultValue.label, LabelConfig::Deserialize);
 
+    result.iconSize = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::IconSize, defaultValue.iconSize);
+    result.iconPadding = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::IconPadding, defaultValue.iconPadding);
+
     return result;
 }
 

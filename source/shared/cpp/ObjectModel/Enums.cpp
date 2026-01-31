@@ -98,6 +98,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::HorizontalAlignment, "horizontalAlignment"},
             {AdaptiveCardSchemaKey::HorizontalCellContentAlignment, "horizontalCellContentAlignment"},
             {AdaptiveCardSchemaKey::HostWidthBreakpoints, "hostWidthBreakpoints"},
+            {AdaptiveCardSchemaKey::IconPadding, "iconPadding"},
             {AdaptiveCardSchemaKey::IconPlacement, "iconPlacement"},
             {AdaptiveCardSchemaKey::IconPosition, "iconPosition"},
             {AdaptiveCardSchemaKey::IconSize, "iconSize"},

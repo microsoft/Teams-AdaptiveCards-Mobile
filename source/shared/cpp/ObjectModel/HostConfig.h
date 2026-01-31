@@ -382,6 +382,8 @@ struct InputsConfig
 {
     LabelConfig label;
     ErrorMessageConfig errorMessage;
+    unsigned int iconSize = 16;
+    unsigned int iconPadding = 8;
 
     static InputsConfig Deserialize(const Json::Value& json, const InputsConfig& defaultValue);
 };
