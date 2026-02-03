@@ -389,7 +389,7 @@ struct InputsConfig
 struct IconsConfig
 {
     unsigned int iconSize = 16;
-    unsigned int iconPadding = 8;
+    unsigned int iconPadding = 10;
 
     static IconsConfig Deserialize(const Json::Value& json, const IconsConfig& defaultValue);
 };
