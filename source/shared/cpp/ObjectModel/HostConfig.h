@@ -382,10 +382,16 @@ struct InputsConfig
 {
     LabelConfig label;
     ErrorMessageConfig errorMessage;
+
+    static InputsConfig Deserialize(const Json::Value& json, const InputsConfig& defaultValue);
+};
+
+struct IconsConfig
+{
     unsigned int iconSize = 16;
     unsigned int iconPadding = 8;
 
-    static InputsConfig Deserialize(const Json::Value& json, const InputsConfig& defaultValue);
+    static IconsConfig Deserialize(const Json::Value& json, const IconsConfig& defaultValue);
 };
 
 struct MediaConfig
@@ -634,6 +640,9 @@ public:
     InputsConfig GetInputs() const;
     void SetInputs(const InputsConfig value);
 
+    IconsConfig GetIcons() const;
+    void SetIcons(const IconsConfig value);
+
     HostWidthConfig getHostWidth() const;
     void SetHostWidth(const HostWidthConfig value);
 
@@ -685,6 +694,7 @@ private:
     ContainerStylesDefinition _containerStyles;
     MediaConfig _media;
     InputsConfig _inputs;
+    IconsConfig _icons;
     HostWidthConfig _hostWidth;
     TextBlockConfig _textBlock;
     CitationBlock _citationBlock;

@@ -141,8 +141,8 @@ using namespace AdaptiveCards;
             iconView.contentMode = UIViewContentModeScaleAspectFit;
             iconView.tintColor = [UIColor secondaryLabelColor];
             
-            CGFloat iconSize = hostConfig ? [hostConfig getHostConfig]->GetInputs().iconSize : 16.0;
-            CGFloat padding = hostConfig ? [hostConfig getHostConfig]->GetInputs().iconPadding : 8.0;
+            CGFloat iconSize = hostConfig ? [hostConfig getHostConfig]->GetIcons().iconSize : 16.0;
+            CGFloat padding = hostConfig ? [hostConfig getHostConfig]->GetIcons().iconPadding : 8.0;
             UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, iconSize + padding, iconSize)];
             iconView.frame = CGRectMake(0, 0, iconSize, iconSize);
             [containerView addSubview:iconView];

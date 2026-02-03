@@ -67,6 +67,9 @@ HostConfig HostConfig::Deserialize(const Json::Value& json)
     result._inputs = ParseUtil::ExtractJsonValueAndMergeWithDefault<InputsConfig>(
         json, AdaptiveCardSchemaKey::Inputs, result._inputs, InputsConfig::Deserialize);
 
+    result._icons = ParseUtil::ExtractJsonValueAndMergeWithDefault<IconsConfig>(
+        json, AdaptiveCardSchemaKey::Icons, result._icons, IconsConfig::Deserialize);
+
     result._textBlock = ParseUtil::ExtractJsonValueAndMergeWithDefault<TextBlockConfig>(
         json, AdaptiveCardSchemaKey::TextBlock, result._textBlock, TextBlockConfig::Deserialize);
 
@@ -409,6 +412,13 @@ InputsConfig InputsConfig::Deserialize(const Json::Value& json, const InputsConf
 
     result.label = ParseUtil::ExtractJsonValueAndMergeWithDefault<LabelConfig>(
         json, AdaptiveCardSchemaKey::Label, defaultValue.label, LabelConfig::Deserialize);
+
+    return result;
+}
+
+IconsConfig IconsConfig::Deserialize(const Json::Value& json, const IconsConfig& defaultValue)
+{
+    IconsConfig result;
 
     result.iconSize = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::IconSize, defaultValue.iconSize);
     result.iconPadding = ParseUtil::GetUInt(json, AdaptiveCardSchemaKey::IconPadding, defaultValue.iconPadding);
@@ -1147,6 +1157,16 @@ InputsConfig HostConfig::GetInputs() const
 void HostConfig::SetInputs(const InputsConfig value)
 {
     _inputs = value;
+}
+
+IconsConfig HostConfig::GetIcons() const
+{
+    return _icons;
+}
+
+void HostConfig::SetIcons(const IconsConfig value)
+{
+    _icons = value;
 }
 
 HostWidthConfig HostConfig::getHostWidth() const

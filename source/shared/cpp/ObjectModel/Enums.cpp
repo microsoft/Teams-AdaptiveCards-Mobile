@@ -100,6 +100,7 @@ namespace AdaptiveCards
             {AdaptiveCardSchemaKey::HostWidthBreakpoints, "hostWidthBreakpoints"},
             {AdaptiveCardSchemaKey::IconPadding, "iconPadding"},
             {AdaptiveCardSchemaKey::IconPlacement, "iconPlacement"},
+            {AdaptiveCardSchemaKey::Icons, "icons"},
             {AdaptiveCardSchemaKey::IconPosition, "iconPosition"},
             {AdaptiveCardSchemaKey::IconSize, "iconSize"},
             {AdaptiveCardSchemaKey::IconUrl, "iconUrl"},

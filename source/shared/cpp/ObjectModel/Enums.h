@@ -102,6 +102,7 @@ enum class AdaptiveCardSchemaKey
     HostWidthBreakpoints,
     IconPadding,
     IconPlacement,
+    Icons,
     IconSize,
     IconUrl,
     Id,
