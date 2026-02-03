@@ -7,12 +7,14 @@
 
 #ifdef SWIFT_PACKAGE
 /// Swift Package Imports
+#import "ACOHostConfig.h"
 #import "ACRIBaseInputHandler.h"
 #import "ACRTextField.h"
 #import "BaseInputElement.h"
 #import "SharedAdaptiveCard.h"
 #else
 /// Cocoapods Imports
+#import <AdaptiveCards/ACOHostConfig.h>
 #import <AdaptiveCards/ACRIBaseInputHandler.h>
 #import <AdaptiveCards/ACRTextField.h>
 #import <AdaptiveCards/BaseInputElement.h>
@@ -26,7 +28,8 @@
 @property NSRegularExpression *regularExpression;
 
 - (instancetype)initWithTimeDateInput:(std::shared_ptr<AdaptiveCards::BaseInputElement> const &)elem
-                            dateStyle:(NSDateFormatterStyle)dateStyle;
+                            dateStyle:(NSDateFormatterStyle)dateStyle
+                           hostConfig:(ACOHostConfig *)hostConfig;
 - (IBAction)update:(UIDatePicker *)picker;
 - (IBAction)dismiss;
 @end
