@@ -117,12 +117,25 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
                                                         boolean isHorizontalSpacing,
                                                         boolean isImageSet)
     {
+        return setSpacingAndSeparator(context, viewGroup, spacing, separator, hostConfig, style, isHorizontalSpacing, isImageSet, 0);
+    }
+
+    public static @Nullable View setSpacingAndSeparator(Context context,
+                                                        ViewGroup viewGroup,
+                                                        Spacing spacing,
+                                                        boolean separator,
+                                                        HostConfig hostConfig,
+                                                        @Nullable ContainerStyle style,
+                                                        boolean isHorizontalSpacing,
+                                                        boolean isImageSet,
+                                                        int bleedCompensationInPixels)
+    {
         if (viewGroup.getChildCount() <= 0)
         {
             //Do not add space to the first element of a viewgroup
             return null;
         }
-        int spacingSize = Util.dpToPixels(context, getSpacingSize(spacing, hostConfig.GetSpacing()));
+        int spacingSize = Util.dpToPixels(context, getSpacingSize(spacing, hostConfig.GetSpacing())) + bleedCompensationInPixels;
         int separatorThickness = Util.dpToPixels(context, hostConfig.GetSeparator().getLineThickness());
         int separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColor());
         if (style != null)

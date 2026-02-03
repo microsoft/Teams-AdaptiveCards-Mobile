@@ -609,7 +609,26 @@ public class CardRendererRegistration
                                       boolean isFlowLayout)
     {
         if (!isFlowLayout) {
-            // Render spacing
+            // Check if previous element has negative bottom margin from bleeding
+            // If so, we need to compensate by adding extra spacing
+            int bleedCompensation = 0;
+            if (viewGroup.getChildCount() > 0)
+            {
+                View previousChild = viewGroup.getChildAt(viewGroup.getChildCount() - 1);
+                ViewGroup.LayoutParams layoutParams = previousChild.getLayoutParams();
+                if (layoutParams instanceof ViewGroup.MarginLayoutParams)
+                {
+                    ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) layoutParams;
+                    // If the previous element has negative bottom margin (from BleedDown),
+                    // we need to add that amount to the spacing to prevent overlap
+                    if (marginParams.bottomMargin < 0)
+                    {
+                        bleedCompensation = -marginParams.bottomMargin;
+                    }
+                }
+            }
+
+            // Render spacing with bleed compensation
             View separator = BaseCardElementRenderer.setSpacingAndSeparator(context,
                 viewGroup,
                 cardElement.GetSpacing(),
@@ -617,7 +636,8 @@ public class CardRendererRegistration
                 hostConfig,
                 containerStyle,
                 isHorizontalSpacing,
-                false /* isImageSet */);
+                false /* isImageSet */,
+                bleedCompensation);
 
             // Sets the spacing as now we handle the spacing rendering
             tagContent.SetSeparator(separator);

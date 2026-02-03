@@ -184,7 +184,7 @@ public class ColumnRenderer extends BaseCardElementRenderer
 
         ContainerRenderer.applyPadding(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig, column.GetShowBorder(), column.GetBleed());
         ContainerRenderer.applyContainerStyle(styleForThis, renderArgs.getContainerStyle(), columnLayout, hostConfig);
-        ContainerRenderer.applyBleed(column, columnLayout, context, hostConfig);
+        ContainerRenderer.applyBleed(column, columnLayout, context, hostConfig, viewGroup);
         ContainerRenderer.applyBorder(styleForThis, columnLayout, hostConfig, column.GetElementType(), column.GetShowBorder());
         ContainerRenderer.applyRoundedCorners(columnLayout, hostConfig, column.GetElementType(), column.GetRoundedCorners());
         BaseCardElementRenderer.applyRtl(column.GetRtl(), columnLayout);

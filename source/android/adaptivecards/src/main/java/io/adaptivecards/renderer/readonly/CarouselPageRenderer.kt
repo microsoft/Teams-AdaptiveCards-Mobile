@@ -50,7 +50,7 @@ object CarouselPageRenderer : BaseCardElementRenderer() {
 
         ContainerRenderer.applyPadding(styleForThis, containerStyle, carouselPageView, hostConfig, carouselPage.GetShowBorder(), carouselPage.GetBleed())
         ContainerRenderer.applyContainerStyle(styleForThis, containerStyle, carouselPageView, hostConfig)
-        ContainerRenderer.applyBleed(carouselPage, carouselPageView, context, hostConfig)
+        ContainerRenderer.applyBleed(carouselPage, carouselPageView, context, hostConfig, viewGroup)
         ContainerRenderer.applyBorder(styleForThis, carouselPageView, hostConfig, carouselPage.GetElementType(), carouselPage.GetShowBorder())
         ContainerRenderer.applyRoundedCorners(carouselPageView, hostConfig, carouselPage.GetElementType(), carouselPage.GetRoundedCorners())
         applyRtl(carouselPage.GetRtl(), carouselPageView)
