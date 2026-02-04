@@ -275,6 +275,7 @@ public class RichTextBlockRenderer extends BaseCardElementRenderer
         // Properties required for actions to fire onClick event
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         textView.setLinksClickable(true);
+        textView.setClickable(true);
         textView.setFocusable(true);
         textView.setFocusableInTouchMode(true);
         textView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);

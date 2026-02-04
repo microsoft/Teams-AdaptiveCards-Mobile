@@ -16,6 +16,7 @@ import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.Set;
 
+import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.Spacing;
@@ -83,22 +84,85 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
         return android.graphics.Color.parseColor(colorCode);
     }
 
+    public static @Nullable View setSpacingAndSeparator(
+        Context context,
+        ViewGroup viewGroup,
+        Spacing spacing,
+        boolean separator,
+        HostConfig hostConfig,
+        boolean horizontalLine)
+    {
+        return setSpacingAndSeparator(context, viewGroup, spacing, separator, hostConfig,
+            null, horizontalLine, false /* isImageSet */);
+    }
+
     public static @Nullable View setSpacingAndSeparator(Context context,
                                                         ViewGroup viewGroup,
                                                         Spacing spacing,
                                                         boolean separator,
                                                         HostConfig hostConfig,
+                                                        @Nullable ContainerStyle style,
+                                                        boolean isHorizontalSpacing)
+    {
+        return setSpacingAndSeparator(context, viewGroup, spacing, separator, hostConfig,
+            style, isHorizontalSpacing, false /* isImageSet */);
+    }
+
+    public static @Nullable View setSpacingAndSeparator(Context context,
+                                                        ViewGroup viewGroup,
+                                                        Spacing spacing,
+                                                        boolean separator,
+                                                        HostConfig hostConfig,
+                                                        @Nullable ContainerStyle style,
                                                         boolean isHorizontalSpacing,
                                                         boolean isImageSet)
+    {
+        return setSpacingAndSeparator(context, viewGroup, spacing, separator, hostConfig, style, isHorizontalSpacing, isImageSet, 0);
+    }
+
+    public static @Nullable View setSpacingAndSeparator(Context context,
+                                                        ViewGroup viewGroup,
+                                                        Spacing spacing,
+                                                        boolean separator,
+                                                        HostConfig hostConfig,
+                                                        @Nullable ContainerStyle style,
+                                                        boolean isHorizontalSpacing,
+                                                        boolean isImageSet,
+                                                        int bleedCompensationInPixels)
     {
         if (viewGroup.getChildCount() <= 0)
         {
             //Do not add space to the first element of a viewgroup
             return null;
         }
-        int spacingSize = Util.dpToPixels(context, getSpacingSize(spacing, hostConfig.GetSpacing()));
+        int spacingSize = Util.dpToPixels(context, getSpacingSize(spacing, hostConfig.GetSpacing())) + bleedCompensationInPixels;
         int separatorThickness = Util.dpToPixels(context, hostConfig.GetSeparator().getLineThickness());
         int separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColor());
+        if (style != null)
+        {
+            switch (style) {
+                case Default:
+                    separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColorDefault());
+                    break;
+                case Accent:
+                    separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColorAccent());
+                    break;
+                case Attention:
+                    separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColorAttention());
+                    break;
+                case Warning:
+                    separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColorWarning());
+                    break;
+                case Emphasis:
+                    separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColorEmphasis());
+                    break;
+                case Good:
+                    separatorColor = android.graphics.Color.parseColor(hostConfig.GetSeparator().getLineColorGood());
+                    break;
+                default:
+                    break;
+            }
+        }
 
         View view = new ImageView(context);
 
@@ -155,17 +219,6 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
 
         viewGroup.addView(view);
         return view;
-    }
-
-    public static View setSpacingAndSeparator(
-            Context context,
-            ViewGroup viewGroup,
-            Spacing spacing,
-            boolean separator,
-            HostConfig hostConfig,
-            boolean horizontalLine)
-    {
-        return setSpacingAndSeparator(context, viewGroup, spacing, separator, hostConfig, horizontalLine, false /* isImageSet */);
     }
 
     /**
