@@ -7,6 +7,7 @@
 
 #import "ACRDateTextField.h"
 #import "ACOBundle.h"
+#import "ACOHostConfigPrivate.h"
 #import "ACRInputLabelView.h"
 #import "DateInput.h"
 #import "DateTimePreparser.h"
@@ -30,6 +31,7 @@ using namespace AdaptiveCards;
 
 - (instancetype)initWithTimeDateInput:(std::shared_ptr<BaseInputElement> const &)elem
                             dateStyle:(NSDateFormatterStyle)dateStyle
+                           hostConfig:(ACOHostConfig *)hostConfig
 {
     self = [super init];
     if (self) {
@@ -131,6 +133,23 @@ using namespace AdaptiveCards;
         }
 
         [picker addTarget:self action:@selector(update:) forControlEvents:UIControlEventValueChanged];
+
+        NSString *iconName = (dateStyle == NSDateFormatterShortStyle) ? @"calendar" : @"chevron.down";
+        UIImage *iconImage = [UIImage systemImageNamed:iconName];
+        if (iconImage) {
+            UIImageView *iconView = [[UIImageView alloc] initWithImage:iconImage];
+            iconView.contentMode = UIViewContentModeScaleAspectFit;
+            iconView.tintColor = [UIColor secondaryLabelColor];
+            
+            CGFloat iconSize = hostConfig ? [hostConfig getHostConfig]->GetIcons().iconSize : 16.0;
+            CGFloat padding = hostConfig ? [hostConfig getHostConfig]->GetIcons().iconPadding : 8.0;
+            UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, iconSize + padding, iconSize)];
+            iconView.frame = CGRectMake(0, 0, iconSize, iconSize);
+            [containerView addSubview:iconView];
+            
+            self.rightView = containerView;
+            self.rightViewMode = UITextFieldViewModeAlways;
+        }
 
 #if !TARGET_OS_VISION
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
