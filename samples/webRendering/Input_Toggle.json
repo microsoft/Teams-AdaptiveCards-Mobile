@@ -1,0 +1,53 @@
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - Input.Toggle",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "Toggle Inputs with showTitle Property"
+    },
+    {
+      "type": "TextBlock",
+      "text": "The showTitle property allows developers to visually hide the title while maintaining accessibility for screen readers.",
+      "wrap": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "Input.Toggle",
+      "id": "toggleWithVisibleTitle",
+      "title": "Enable notifications (visible title)",
+      "showTitle": true,
+      "label": "Toggle with visible title (default behavior)"
+    },
+    {
+      "type": "Input.Toggle",
+      "id": "toggleAccessibilityTest",
+      "title": "This title is hidden but accessible to screen readers",
+      "showTitle": false,
+      "label": "Accessibility test - title hidden but still announced"
+    },
+    {
+      "type": "TextBlock",
+      "text": "**Note:** Even when showTitle is false, the title is still available to accessibility software via aria-label.",
+      "wrap": true,
+      "spacing": "Medium",
+      "size": "Small",
+      "isSubtle": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Execute",
+      "title": "Submit"
+    }
+  ],
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5"
+}

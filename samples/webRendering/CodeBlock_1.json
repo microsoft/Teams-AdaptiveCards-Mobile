@@ -1,0 +1,179 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - CodeBlock ",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "CSS Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "Css",
+          "startLineNumber": 1,
+          "codeSnippet": "/* CSS Sample */\nbody {\n    margin: 0;\n    padding: 0;\n    font-family: Arial, sans-serif;\n    background-color: #f2f2f2;\n}\nh1 {\n    color: #333;\n    text-align: center;\n}\n.container {\n    width: 80%;\n    margin: auto;\n    padding: 20px;\n}\n.button {\n    background-color: #4CAF50;\n    border: none;\n    color: white;\n    padding: 10px 20px;\n    text-align: center;\n    font-size: 16px;\n    margin: 5px;\n    cursor: pointer;\n}\n.button:hover {\n    background-color: #45a049;\n}\nfooter {\n    text-align: center;\n    padding: 10px;\n    background-color: #ddd;\n}"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "HTML Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "Html",
+          "startLineNumber": 5,
+          "codeSnippet": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Sample HTML</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <header>\n        <h1>Welcome to My Page</h1>\n    </header>\n    <main>\n        <div class=\"container\">\n            <p>This is a sample paragraph.</p>\n            <button class=\"button\">Click Me</button>\n        </div>\n    </main>\n    <footer>\n        <p>© 2026 Example</p>\n    </footer>\n</body>\n</html>"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "Java Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "Java",
+          "startLineNumber": 10,
+          "codeSnippet": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello Java\");\n        int[] arr = {1,2,3,4,5};\n        int sum = 0;\n        for(int i: arr) {\n            sum += i;\n            System.out.println(\"Value: \" + i);\n        }\n        System.out.println(\"Sum: \" + sum);\n        for(int i=0;i<10;i++) {\n            System.out.println(\"Loop iteration \" + i);\n        }\n        String greeting = \"Welcome!\";\n        if(!greeting.isEmpty()) {\n            System.out.println(greeting);\n        }\n    }\n}"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "JavaScript Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "JavaScript",
+          "startLineNumber": 15,
+          "codeSnippet": "// JavaScript Sample\nconst arr = [1,2,3,4,5];\nlet sum = 0;\narr.forEach(n => {\n    console.log(n);\n    sum += n;\n});\nconsole.log(`Sum: ${sum}`);\n\nfunction greet(name) {\n    console.log(`Hello ${name}`);\n}\ngreet(\"World\");\nfor(let i=0;i<10;i++) {\n    console.log(`Iteration ${i}`);\n}"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "JSON Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "Json",
+          "startLineNumber": 1,
+          "codeSnippet": "{\n  \"name\": \"John Doe\",\n  \"age\": 30,\n  \"email\": \"john@example.com\",\n  \"skills\": [\"JavaScript\", \"Java\", \"Python\"],\n  \"projects\": [\n    {\"name\": \"Project A\", \"status\": \"Complete\"},\n    {\"name\": \"Project B\", \"status\": \"In Progress\"}\n  ],\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"Metropolis\",\n    \"zip\": \"12345\"\n  },\n  \"active\": true\n}"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "Objective-C Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "ObjectiveC",
+          "startLineNumber": 10,
+          "codeSnippet": "#import <Foundation/Foundation.h>\n\nint main(int argc, const char * argv[]) {\n    @autoreleasepool {\n        NSLog(@\"Hello Objective-C\");\n        NSArray *arr = @[@1,@2,@3,@4,@5];\n        NSInteger sum = 0;\n        for(NSNumber *num in arr) {\n            sum += [num integerValue];\n            NSLog(@\"Number: %@\", num);\n        }\n        NSLog(@\"Sum: %ld\", sum);\n    }\n    return 0;\n}"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "SQL Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "Sql",
+          "startLineNumber": 1,
+          "codeSnippet": "CREATE TABLE Employees (\n    ID INT PRIMARY KEY,\n    Name VARCHAR(100),\n    Age INT,\n    Department VARCHAR(50)\n);\n\nINSERT INTO Employees (ID, Name, Age, Department) VALUES\n(1, 'Alice', 30, 'HR'),\n(2, 'Bob', 25, 'IT'),\n(3, 'Charlie', 28, 'Finance');\n\nSELECT * FROM Employees;\nUPDATE Employees SET Age = 31 WHERE Name = 'Alice';\nDELETE FROM Employees WHERE ID = 2;"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "TypeScript Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "TypeScript",
+          "startLineNumber": 5,
+          "codeSnippet": "interface Person {\n    name: string;\n    age: number;\n}\n\nconst users: Person[] = [\n    { name: 'Alice', age: 30 },\n    { name: 'Bob', age: 25 }\n];\n\nusers.forEach(user => {\n    console.log(`${user.name} is ${user.age} years old`);\n});\n\nfunction greet(person: Person) {\n    console.log(`Hello, ${person.name}`);\n}\ngreet(users[0]);"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "PlainText Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "PlainText",
+          "startLineNumber": 1,
+          "codeSnippet": "This is plain text code block.\nYou can write multiple lines of text.\nNo syntax highlighting is applied.\nIt is useful for logs, notes, or config snippets.\nLine 5\nLine 6\nLine 7\nLine 8\nLine 9\nLine 10\nLine 11\nLine 12\nLine 13\nLine 14\nLine 15\nLine 16\nLine 17\nLine 18\nLine 19\nLine 20"
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        { "type": "TextBlock", "text": "XML Code Sample", "weight": "Bolder" },
+        {
+          "type": "CodeBlock",
+          "language": "Xml",
+          "startLineNumber": 1,
+          "codeSnippet": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<note>\n    <to>Tove</to>\n    <from>Jani</from>\n    <heading>Reminder</heading>\n    <body>Don't forget me this weekend!</body>\n</note>\n<tasks>\n    <task id=\"1\" status=\"complete\">Buy groceries</task>\n    <task id=\"2\" status=\"pending\">Clean house</task>\n    <task id=\"3\" status=\"in-progress\">Finish project</task>\n</tasks>"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Learn More About CodeBlock",
+      "url": "https://adaptivecards.io"
+    }
+  ]
+}

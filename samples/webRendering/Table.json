@@ -1,0 +1,755 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - Table",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Table",
+      "gridStyle": "accent",
+      "roundedCorners": true,
+      "firstRowAsHeaders": true,
+      "columns": [
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 3
+        }
+      ],
+      "rows": [
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Name",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Type",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Description",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            }
+          ],
+          "style": "accent"
+        },
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "style": "good",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "columns",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "warning",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "ColumnDefinition[]",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Defines the table's columns (number of columns, and column sizes).",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "style": "good",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "rows",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "TableRow[]",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "attention",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Defines the rows of the Table, each being a collection of cells. Rows are not required, which allows empty Tables to be generated via templating without breaking the rendering of the whole card.",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Table",
+      "gridStyle": "accent",
+      "firstRowAsHeaders": true,
+      "showGridLines": false,
+      "columns": [
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 3
+        }
+      ],
+      "rows": [
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Name",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Type",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Description",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            }
+          ],
+          "style": "accent"
+        },
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "style": "good",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "columns",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "warning",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "ColumnDefinition[]",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Defines the table's columns (number of columns, and column sizes).",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "style": "good",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "rows",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "TableRow[]",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "attention",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Defines the rows of the Table, each being a collection of cells. Rows are not required, which allows empty Tables to be generated via templating without breaking the rendering of the whole card.",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Large Table Example with horizontal scrollbar"
+    },
+    {
+      "type": "Table",
+      "gridStyle": "accent",
+      "minWidth": "auto",
+      "roundedCorners": true,
+      "firstRowAsHeaders": true,
+      "columns": [
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": "auto"
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        },
+        {
+          "width": 1
+        }
+      ],
+      "rows": [
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 1",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 2",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 3",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 4",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 5",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 6",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 7",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 8",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 9",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 10",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 11",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Column 12",
+                  "wrap": true,
+                  "weight": "Bolder"
+                }
+              ]
+            }
+          ],
+          "style": "accent"
+        },
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "style": "good",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "columns",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "warning",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "ColumnDefinition[]",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Defines the table's columns (number of columns, and column sizes).",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "style": "good",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "rows",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "TableRow[]",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "attention",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Defines the rows of the Table, each being a collection of cells. Rows are not required, which allows empty Tables to be generated via templating without breaking the rendering of the whole card.",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            },
+            {
+              "type": "TableCell",
+              "style": "accent",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Dummy Cell",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

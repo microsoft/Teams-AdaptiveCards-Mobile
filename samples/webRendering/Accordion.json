@@ -1,0 +1,494 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - Accordion",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Accordion with different header sizes",
+      "wrap": true,
+      "size": "Large"
+    },
+    {
+      "type": "Accordion",
+      "pages": [
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerIconName": "Calendar",
+          "headerTitle": "Smaller Header",
+          "headerSize": "Small",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 1 of 4",
+              "wrap": true,
+              "size": "Large"
+            },
+            {
+              "type": "TextBlock",
+              "text": "First TextBlock",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerIconName": "Calendar",
+          "headerTitle": "Medium Header",
+          "headerSize": "Medium",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 2 of 4",
+              "wrap": true,
+              "size": "Large"
+            },
+            {
+              "type": "TextBlock",
+              "text": "First TextBlock",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "warning",
+          "headerIconName": "Calendar",
+          "headerTitle": "Larger Header",
+          "headerSize": "Large",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 3 of 4",
+              "wrap": true,
+              "size": "Large"
+            },
+            {
+              "type": "TextBlock",
+              "text": "First TextBlock",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "warning",
+          "headerIconName": "Calendar",
+          "headerTitle": "Extra Large Header",
+          "headerSize": "XLarge",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "PAGE 4 of 4",
+              "wrap": true,
+              "size": "Large"
+            },
+            {
+              "type": "TextBlock",
+              "text": "First TextBlock",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Headers with different icon/text composition and positions of expand icons",
+      "wrap": true,
+      "size": "Large"
+    },
+    {
+      "type": "Accordion",
+      "pages": [
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerIconName": "Calendar",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page has an icon-only header",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerTitle": "Header 2",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page has an text-only header",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "warning",
+          "headerIconName": "Calendar",
+          "headerTitle": "Header 3",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page has an header with both icon and text",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "warning",
+          "headerIconName": "Calendar",
+          "headerTitle": "Header 4 with inline expand icon",
+          "expandIconPosition": "Inline",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page has an header with both icon and text",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "warning",
+          "headerIconName": "Calendar",
+          "headerTitle": "Header 5 with expand icon at the end",
+          "expandIconPosition": "End",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page has an header with both icon and text",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "warning",
+          "headerIconName": "Calendar",
+          "headerTitle": "Longer header text is not wrapped by default and truncated with ellipsis",
+          "headerWrap": false,
+          "expandIconPosition": "End",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page has an header with both icon and text",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "warning",
+          "headerIconName": "Calendar",
+          "headerTitle": "Longer header text that is wrapped (placeholder text to make it longer)",
+          "expandIconPosition": "End",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page has an header with both icon and text",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Accordion pages can be expanded by default",
+      "wrap": true,
+      "size": "Large"
+    },
+    {
+      "type": "Accordion",
+      "pages": [
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerTitle": "Collapsed by default",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page is collapsed by default",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerTitle": "Open by default",
+          "isExpanded": true,
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page is open by default",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "warning",
+          "headerTitle": "Collapsed by default",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page is collapsed by default",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "You can have at least one open page at all times",
+      "wrap": true,
+      "size": "Large"
+    },
+    {
+      "type": "Accordion",
+      "allowCollapseAllPages": false,
+      "pages": [
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerTitle": "Header 1",
+          "isExpanded": true,
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page is open by default",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerTitle": "Header 2",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page is collapsed by default",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Multiple pages can be open at the same time",
+      "wrap": true,
+      "size": "Large"
+    },
+    {
+      "type": "Accordion",
+      "allowMultipleExpandedPages": true,
+      "pages": [
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerTitle": "Header 1",
+          "isExpanded": true,
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page is open by default",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        },
+        {
+          "type": "AccordionPage",
+          "style": "emphasis",
+          "headerTitle": "Header 2",
+          "isExpanded": true,
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "This page is open by default",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Second TextBlock with separator",
+              "wrap": true,
+              "separator": true,
+              "spacing": "Medium"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

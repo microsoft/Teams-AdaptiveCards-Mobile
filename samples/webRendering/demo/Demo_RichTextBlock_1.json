@@ -1,0 +1,63 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.5",
+    "body": [
+        {
+            "type": "Image",
+            "url": "https://raw.githubusercontent.com/suzto/StarterCards/refs/heads/main/samples/quote/assets/mark.png",
+            "width": "39px",
+            "height": "29px"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "verticalContentAlignment": "Center",
+                    "items": [
+                        {
+                            "type": "RichTextBlock",
+                            "inlines": [
+                                {
+                                    "type": "TextRun",
+                                    "text": "Embracing neurodiversity unlocks the full potential of our teams and drives greater innovation.",
+                                    "wrap": true,
+                                    "size": "Large",
+                                    "weight": "Lighter",
+                                    "color": "Light",
+                                    "italic": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "https://raw.githubusercontent.com/suzto/StarterCards/refs/heads/main/samples/quote/assets/avatar.png",
+                            "style": "Person",
+                            "width": "78px",
+                            "height": "78px"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "TextBlock",
+            "text": "Amanda Brady",
+            "wrap": true,
+            "size": "ExtraLarge",
+            "color": "Light",
+            "weight": "Bolder"
+        }
+    ],
+    "backgroundImage": {
+        "url": "https://raw.githubusercontent.com/suzto/StarterCards/refs/heads/main/samples/quote/assets/black_bg_repeat.png"
+    }
+}

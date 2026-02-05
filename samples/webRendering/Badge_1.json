@@ -1,0 +1,332 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - Badge",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Icon Size & Position Variations",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Container",
+      "style": "emphasis",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        {
+          "type": "Badge",
+          "text": "Medium no icon"
+        },
+        {
+          "type": "Badge",
+          "text": "Medium with icon",
+          "icon": "Calendar"
+        },
+        {
+          "type": "Badge",
+          "text": "Medium with icon on right",
+          "icon": "Calendar",
+          "iconPosition": "After"
+        },
+        {
+          "type": "Badge",
+          "icon": "Calendar"
+        },
+        {
+          "type": "Badge",
+          "text": "Large no icon",
+          "size": "Large"
+        },
+        {
+          "type": "Badge",
+          "text": "Large with icon",
+          "size": "Large",
+          "icon": "Calendar"
+        },
+        {
+          "type": "Badge",
+          "text": "Large with icon on right",
+          "size": "Large",
+          "icon": "Calendar",
+          "iconPosition": "After"
+        },
+        {
+          "type": "Badge",
+          "size": "Large",
+          "icon": "Calendar"
+        },
+        {
+          "type": "Badge",
+          "text": "Extra large no icon",
+          "size": "ExtraLarge"
+        },
+        {
+          "type": "Badge",
+          "text": "Extra large with icon",
+          "size": "ExtraLarge",
+          "icon": "Calendar"
+        },
+        {
+          "type": "Badge",
+          "text": "Extra large with icon on right",
+          "size": "ExtraLarge",
+          "icon": "Calendar",
+          "iconPosition": "After"
+        },
+        {
+          "type": "Badge",
+          "size": "ExtraLarge",
+          "icon": "Calendar"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Shape Variations",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Container",
+      "style": "accent",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "layouts": [
+        {
+          "type": "Layout.Flow",
+          "horizontalItemsAlignment": "Left",
+          "minItemWidth": "0px"
+        }
+      ],
+      "items": [
+        {
+          "type": "Badge",
+          "text": "Square",
+          "shape": "Square",
+          "style": "Accent"
+        },
+        {
+          "type": "Badge",
+          "text": "Rounded",
+          "shape": "Rounded",
+          "style": "Accent"
+        },
+        {
+          "type": "Badge",
+          "text": "Circular",
+          "shape": "Circular",
+          "style": "Accent"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Style & Appearance Variations",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Container",
+      "style": "attention",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "layouts": [
+        {
+          "type": "Layout.Flow",
+          "horizontalItemsAlignment": "Left",
+          "minItemWidth": "0px"
+        }
+      ],
+      "items": [
+        {
+          "type": "Badge",
+          "text": "Default filled",
+          "size": "Large"
+        },
+        {
+          "type": "Badge",
+          "text": "Default tint",
+          "size": "Large",
+          "appearance": "Tint"
+        },
+        {
+          "type": "Badge",
+          "text": "Informative filled",
+          "size": "Large",
+          "style": "Informative"
+        },
+        {
+          "type": "Badge",
+          "text": "Informative tint",
+          "size": "Large",
+          "appearance": "Tint",
+          "style": "Informative"
+        },
+        {
+          "type": "Badge",
+          "text": "Accent filled",
+          "size": "Large",
+          "style": "Accent"
+        },
+        {
+          "type": "Badge",
+          "text": "Accent tint",
+          "size": "Large",
+          "appearance": "Tint",
+          "style": "Accent"
+        },
+        {
+          "type": "Badge",
+          "text": "Good filled",
+          "size": "Large",
+          "style": "Good"
+        },
+        {
+          "type": "Badge",
+          "text": "Good tint",
+          "size": "Large",
+          "appearance": "Tint",
+          "style": "Good"
+        },
+        {
+          "type": "Badge",
+          "text": "Attention filled",
+          "size": "Large",
+          "style": "Attention"
+        },
+        {
+          "type": "Badge",
+          "text": "Attention tint",
+          "size": "Large",
+          "appearance": "Tint",
+          "style": "Attention"
+        },
+        {
+          "type": "Badge",
+          "text": "Warning filled",
+          "size": "Large",
+          "style": "Warning"
+        },
+        {
+          "type": "Badge",
+          "text": "Warning tint",
+          "size": "Large",
+          "appearance": "Tint",
+          "style": "Warning"
+        },
+        {
+          "type": "Badge",
+          "text": "Subtle filled",
+          "size": "Large",
+          "style": "Subtle"
+        },
+        {
+          "type": "Badge",
+          "text": "Subtle tint",
+          "size": "Large",
+          "appearance": "Tint",
+          "style": "Subtle"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Tooltip Variations",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Container",
+      "style": "warning",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "layouts": [
+        {
+          "type": "Layout.Flow",
+          "horizontalItemsAlignment": "Left",
+          "minItemWidth": "0px"
+        }
+      ],
+      "items": [
+        {
+          "type": "Badge",
+          "text": "With Tooltip",
+          "tooltip": "Additional context shown on hover"
+        },
+        {
+          "type": "Badge",
+          "text": "Without Tooltip"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Spacing Variations",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "style": "good",
+      "separator": true,
+      "layouts": [
+        {
+          "type": "Layout.Flow",
+          "horizontalItemsAlignment": "Left",
+          "minItemWidth": "0px"
+        }
+      ],
+      "items": [
+        {
+          "type": "Badge",
+          "text": "None",
+          "spacing": "None"
+        },
+        {
+          "type": "Badge",
+          "text": "ExtraSmall",
+          "spacing": "ExtraSmall"
+        },
+        {
+          "type": "Badge",
+          "text": "Small",
+          "spacing": "Small"
+        },
+        {
+          "type": "Badge",
+          "text": "Default",
+          "spacing": "Default"
+        },
+        {
+          "type": "Badge",
+          "text": "Medium",
+          "spacing": "Medium"
+        },
+        {
+          "type": "Badge",
+          "text": "Large",
+          "spacing": "Large"
+        },
+        {
+          "type": "Badge",
+          "text": "ExtraLarge",
+          "spacing": "ExtraLarge"
+        },
+        {
+          "type": "Badge",
+          "text": "Padding",
+          "spacing": "Padding"
+        }
+      ]
+    }
+  ],
+  "actions": []
+}

@@ -1,0 +1,91 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - Input.Rating",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Input.Rating",
+      "id": "rating1",
+      "label": "Pick a rating(Medium)",
+      "size": "Medium",
+      "isRequired": true,
+      "color": "Neutral",
+      "errorMessage": "Please pick a rating"
+    },
+    {
+      "type": "Input.Rating",
+      "id": "rating2",
+      "label": "Pick a rating(Large)",
+      "size": "Large",
+      "isRequired": true,
+      "color": "Neutral",
+      "errorMessage": "Please pick a rating"
+    },
+    {
+      "type": "Input.Rating",
+      "id": "rating3",
+      "label": "Pick a rating(Medium)",
+      "allowHalfSteps": true,
+      "size": "Medium",
+      "isRequired": true,
+      "errorMessage": "Please pick a rating",
+      "color": "Marigold",
+      "value": 3
+    },
+    {
+      "type": "Input.Rating",
+      "id": "rating4",
+      "label": "Pick a rating(Large)",
+      "allowHalfSteps": true,
+      "size": "Large",
+      "isRequired": true,
+      "errorMessage": "Please pick a rating",
+      "color": "Marigold",
+      "value": 3
+    },
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "text": "Read-only ratings",
+      "separator": true,
+      "spacing": "ExtraLarge"
+    },
+    {
+      "type": "Rating",
+      "value": 4.7,
+      "size": "Medium"
+    },
+    {
+      "type": "Rating",
+      "value": 3.2,
+      "size": "Large"
+    },
+    {
+      "type": "Rating",
+      "style": "Default",
+      "value": 2.2,
+      "size": "Medium",
+      "color": "Marigold",
+      "count": 150
+    },
+    {
+      "type": "Rating",
+      "max": 20,
+      "value": 3.5,
+      "size": "Large",
+      "color": "Marigold"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Execute",
+      "title": "Submit"
+    }
+  ]
+}

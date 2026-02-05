@@ -1,0 +1,65 @@
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - Input.Number",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Input.Number",
+      "placeholder": "simple placeholder",
+      "label": "Simple",
+      "id": "1",
+      "isRequired": false,
+      "errorMessage": "Please specify a value"
+    },
+    {
+      "type": "Input.Number",
+      "label": "with default value",
+      "id": "2",
+      "value": 10,
+      "isRequired": true,
+      "errorMessage": "Please specify a value"
+    },
+    {
+      "type": "Input.Number",
+      "placeholder": "simple placeholder",
+      "label": "with only min value of 5",
+      "id": "3",
+      "min": 5,
+      "isRequired": true,
+      "errorMessage": "Please specify a value"
+    },
+    {
+      "type": "Input.Number",
+      "placeholder": "simple placeholder",
+      "label": "with only max value of 10",
+      "id": "4",
+      "max": 10,
+      "isRequired": true,
+      "errorMessage": "Please specify a value"
+    },
+    {
+      "type": "Input.Number",
+      "placeholder": "simple placeholder",
+      "label": "with min 5 and max 10",
+      "id": "5",
+      "min": 5,
+      "max": 10,
+      "isRequired": true,
+      "errorMessage": "Please specify a value"
+    }
+  ],
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "actions": [
+    {
+      "type": "Action.Execute",
+      "title": "Action.Execute",
+      "verb": "submitForm",
+      "id": "submitForm"
+    }
+  ]
+}

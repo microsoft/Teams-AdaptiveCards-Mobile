@@ -1,0 +1,187 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - Action & ActionSet",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+
+{
+      "type": "TextBlock",
+      "text": "Inside Action Set",
+      "size": "Large"
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.Submit",
+          "title": "1️⃣ Action.Submit Example",
+          "data": {
+            "action": "submitExample"
+          }
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "2️⃣ Action.OpenUrl Example",
+          "url": "https://www.example.com"
+        },
+        {
+          "type": "Action.ResetInputs",
+          "title": "3️⃣ Action.ResetInputs Example",
+          "targetInputIds": [
+            "resetInput1",
+            "resetInput2",
+            "toggleInput1"
+          ]
+        },
+        {
+          "type": "Action.ShowCard",
+          "title": "4️⃣ Action.ShowCard Example",
+          "card": {
+            "type": "AdaptiveCard",
+            "version": "1.6",
+            "body": [
+              {
+                "type": "ActionSet",
+                "actions": [
+                  {
+                    "type": "Action.Submit",
+                    "title": "Nested Submit from ShowCard",
+                    "data": {
+                      "action": "nestedSubmit"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Action.ToggleVisibility",
+          "title": "5️⃣ Action.ToggleVisibility Example",
+          "targetElements": ["toggleContainer"]
+        },
+        {
+          "type": "Action.Execute",
+          "title": "6️⃣ Action.Execute Example",
+          "verb": "executeExample",
+          "data": {
+            "param1": "value1",
+            "param2": "value2"
+          }
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Submit Another Example",
+          "data": {
+            "action": "anotherSubmit"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Input.Text",
+      "id": "resetInput1",
+      "placeholder": "Input for ResetInputs"
+    },
+    {
+      "type": "Input.Text",
+      "id": "resetInput2",
+      "placeholder": "Another input for ResetInputs"
+    },
+    {
+      "type": "Container",
+      "id": "toggleContainer",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "This container is toggled by Action.ToggleVisibility"
+        },
+        {
+          "type": "Input.Text",
+          "id": "toggleInput1",
+          "placeholder": "Input inside toggled container"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Inside Actions",
+      "size": "Large"
+    }
+  ],
+  "actions": [
+{
+          "type": "Action.Submit",
+          "title": "1️⃣ Action.Submit Example",
+          "data": {
+            "action": "submitExample"
+          }
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "2️⃣ Action.OpenUrl Example",
+          "url": "https://www.example.com"
+        },
+        {
+          "type": "Action.ResetInputs",
+          "title": "3️⃣ Action.ResetInputs Example",
+          "targetInputIds": [
+            "resetInput1",
+            "resetInput2",
+            "toggleInput1"
+          ]
+        },
+        {
+          "type": "Action.ShowCard",
+          "title": "4️⃣ Action.ShowCard Example",
+          "card": {
+            "type": "AdaptiveCard",
+            "version": "1.6",
+            "body": [
+              {
+                "type": "ActionSet",
+                "actions": [
+                  {
+                    "type": "Action.Submit",
+                    "title": "Nested Submit from ShowCard",
+                    "data": {
+                      "action": "nestedSubmit"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Action.ToggleVisibility",
+          "title": "5️⃣ Action.ToggleVisibility Example",
+          "targetElements": ["toggleContainer"]
+        },
+        {
+          "type": "Action.Execute",
+          "title": "6️⃣ Action.Execute Example",
+          "verb": "executeExample",
+          "data": {
+            "param1": "value1",
+            "param2": "value2"
+          }
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Submit Another Example",
+          "data": {
+            "action": "anotherSubmit"
+          }
+        }
+  ]
+}

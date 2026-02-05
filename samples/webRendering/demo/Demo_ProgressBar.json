@@ -1,0 +1,166 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "⚠️ Storage Alert",
+      "weight": "Bolder",
+      "size": "Large",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Your storage usage has reached a critical level. Some features may be restricted until you free up space.",
+      "wrap": true,
+      "size": "Default",
+      "spacing": "Small"
+    },
+    {
+      "type": "ProgressBar",
+      "value": 90,
+      "color": "Warning",
+      "spacing": "Medium"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Icon",
+              "name": "Warning",
+              "size": "Small",
+              "color": "Warning"
+            }
+          ],
+          "verticalContentAlignment": "Center"
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Warning: Storage is nearly full",
+              "size": "Default",
+              "weight": "Bolder",
+              "color": "Warning",
+              "wrap": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Last synced: 12 Jan 2026, 08:15 AM",
+              "size": "Small",
+              "weight": "Lighter",
+              "color": "Accent",
+              "wrap": true,
+              "spacing": "Small"
+            }
+          ],
+          "verticalContentAlignment": "Center",
+          "spacing": "Small"
+        },
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "22.5 of 25 MB used",
+              "size": "Small",
+              "wrap": true,
+              "weight": "Bolder"
+            },
+            {
+              "type": "TextBlock",
+              "text": "90% full",
+              "size": "Small",
+              "color": "Warning",
+              "weight": "Bolder",
+              "wrap": true,
+              "spacing": "Small"
+            }
+          ]
+        }
+      ],
+      "spacing": "Small",
+      "separator": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Recommendations:",
+      "weight": "Bolder",
+      "spacing": "Medium",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "- Remove old or large files\n- Move files to another storage account\n- Upgrade your plan for more storage\n- Review recently uploaded files consuming the most space",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "FactSet",
+      "facts": [
+        {
+          "title": "Largest File:",
+          "value": "presentation_final.pptx (5 MB)"
+        },
+        {
+          "title": "Last Upload:",
+          "value": "project_notes.docx, 11 Jan 2026"
+        },
+        {
+          "title": "Unused Files:",
+          "value": "4 files over 6 months old"
+        }
+      ],
+      "spacing": "Medium"
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Manage Storage",
+          "url": "https://onedrive.live.com/?id=manage_storage",
+          "style": "positive"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Upgrade Plan",
+          "url": "https://onedrive.live.com/?id=upgrade_plan",
+          "style": "destructive"
+        },
+        {
+          "type": "Action.ShowCard",
+          "title": "View Tips",
+          "card": {
+            "type": "AdaptiveCard",
+            "version": "1.6",
+            "body": [
+              {
+                "type": "TextBlock",
+                "text": "Storage Saving Tips",
+                "weight": "Bolder",
+                "size": "Medium",
+                "wrap": true
+              },
+              {
+                "type": "TextBlock",
+                "text": "- Delete duplicate files\n- Empty Recycle Bin\n- Compress large files before uploading\n- Sync only essential folders\n- Schedule regular cleanups",
+                "wrap": true,
+                "spacing": "Small"
+              }
+            ]
+          }
+        }
+      ],
+      "spacing": "Medium"
+    }
+  ]
+}
