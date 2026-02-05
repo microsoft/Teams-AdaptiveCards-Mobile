@@ -20,6 +20,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import io.adaptivecards.objectmodel.ACTheme;
 import io.adaptivecards.objectmodel.AdaptiveCard;
 import io.adaptivecards.objectmodel.BaseActionElementVector;
+import io.adaptivecards.objectmodel.CardElementType;
 import io.adaptivecards.objectmodel.ContainerStyle;
 import io.adaptivecards.objectmodel.HeightType;
 import io.adaptivecards.objectmodel.HostConfig;
@@ -135,8 +136,6 @@ public class AdaptiveCardRenderer
         rootLayout.setOrientation(LinearLayout.VERTICAL);
 
         // Add this two for allowing children to bleed
-        rootLayout.setClipChildren(false);
-        rootLayout.setClipToPadding(false);
 
         Layout layoutToApply = Util.getLayoutToApply(adaptiveCard.GetLayouts(), hostConfig);
 
@@ -146,8 +145,8 @@ public class AdaptiveCardRenderer
         cardLayout.setTag(adaptiveCard);
 
         // Add this two for allowing children to bleed
-        cardLayout.setClipChildren(false);
         cardLayout.setClipToPadding(false);
+        cardLayout.setClipToOutline(true);
 
         BaseCardElementRenderer.setMinHeight(cardMinHeight, rootLayout, context);
         BaseCardElementRenderer.applyRtl(adaptiveCard.GetRtl(), cardLayout);
@@ -185,7 +184,13 @@ public class AdaptiveCardRenderer
         if (backgroundColor == null) {
             backgroundColor = hostConfig.GetBackgroundColor(style);
         }
-        cardLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+        // Set corner radius for cardLayout
+        float cornerRadiusPx = Util.dpToPixels(context, hostConfig.GetCornerRadius(CardElementType.Container));
+        android.graphics.drawable.GradientDrawable cardBackground = new android.graphics.drawable.GradientDrawable();
+        cardBackground.setColor(Color.parseColor(backgroundColor));
+        cardBackground.setCornerRadius(cornerRadiusPx);
+        cardLayout.setBackground(cardBackground);
+
         /**
          * Rendering the body section of adaptive card inside the flexbox layout if the layout is flow
          * and adding the flow layout to the card layout
