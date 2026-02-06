@@ -445,9 +445,13 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 
     [_stateManager collapsed];
     [self updateControls];
-
     [self notifyDelegates];
     [self resignFirstResponder];
+    
+    // Return VoiceOver focus to the dropdown after selection
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self);
+    }
 }
 
 @synthesize hasValidationProperties;
