@@ -34,6 +34,12 @@ public enum SwiftCardElementType: String, Codable {
     case timeInput = "Input.Time"
     case toggleInput = "Input.Toggle"
     case compoundButton = "CompoundButton"
+    // New elements added in Swift port continuation
+    case carousel = "Carousel"
+    case carouselPage = "CarouselPage"
+    case badge = "Badge"
+    case progressBar = "ProgressBar"
+    case progressRing = "ProgressRing"
     case unknown = "Unknown"
 }
 
@@ -1379,6 +1385,220 @@ public struct SwiftSemanticVersion: Codable, Comparable, CustomStringConvertible
     
     public func serializeToJsonValue() -> String {
         return description
+    }
+}
+
+// MARK: - Carousel Enums
+
+/// Animation type for carousel page transitions
+public enum SwiftPageAnimation: String, Codable {
+    case slide = "Slide"
+    case crossFade = "CrossFade"
+    case none = "None"
+    
+    public static func fromString(_ string: String) -> SwiftPageAnimation? {
+        switch string.lowercased() {
+        case "slide": return .slide
+        case "crossfade": return .crossFade
+        case "none": return .none
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftPageAnimation.fromString(rawValue) ?? .slide
+    }
+}
+
+// MARK: - Badge Enums
+
+/// Style for Badge elements
+public enum SwiftBadgeStyle: String, Codable {
+    case `default` = "Default"
+    case accent = "Accent"
+    case attention = "Attention"
+    case good = "Good"
+    case informative = "Informative"
+    case subtle = "Subtle"
+    case warning = "Warning"
+    
+    public static func fromString(_ string: String) -> SwiftBadgeStyle? {
+        switch string.lowercased() {
+        case "default": return .default
+        case "accent": return .accent
+        case "attention": return .attention
+        case "good": return .good
+        case "informative": return .informative
+        case "subtle": return .subtle
+        case "warning": return .warning
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftBadgeStyle.fromString(rawValue) ?? .default
+    }
+}
+
+/// Size for Badge elements
+public enum SwiftBadgeSize: String, Codable {
+    case medium = "Medium"
+    case large = "Large"
+    case extraLarge = "ExtraLarge"
+    
+    public static func fromString(_ string: String) -> SwiftBadgeSize? {
+        switch string.lowercased() {
+        case "medium": return .medium
+        case "large": return .large
+        case "extralarge": return .extraLarge
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftBadgeSize.fromString(rawValue) ?? .medium
+    }
+}
+
+/// Appearance for Badge elements
+public enum SwiftBadgeAppearance: String, Codable {
+    case filled = "Filled"
+    case tint = "Tint"
+    
+    public static func fromString(_ string: String) -> SwiftBadgeAppearance? {
+        switch string.lowercased() {
+        case "filled": return .filled
+        case "tint": return .tint
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftBadgeAppearance.fromString(rawValue) ?? .filled
+    }
+}
+
+/// Shape for Badge elements
+public enum SwiftShape: String, Codable {
+    case square = "Square"
+    case rounded = "Rounded"
+    case circular = "Circular"
+    
+    public static func fromString(_ string: String) -> SwiftShape? {
+        switch string.lowercased() {
+        case "square": return .square
+        case "rounded": return .rounded
+        case "circular": return .circular
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftShape.fromString(rawValue) ?? .rounded
+    }
+}
+
+/// Icon position for Badge elements
+public enum SwiftIconPosition: String, Codable {
+    case before = "Before"
+    case after = "After"
+    
+    public static func fromString(_ string: String) -> SwiftIconPosition? {
+        switch string.lowercased() {
+        case "before": return .before
+        case "after": return .after
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftIconPosition.fromString(rawValue) ?? .before
+    }
+}
+
+// MARK: - Progress Enums
+
+/// Color for ProgressBar elements
+public enum SwiftProgressBarColor: String, Codable {
+    case accent = "Accent"
+    case attention = "Attention"
+    case good = "Good"
+    case warning = "Warning"
+    
+    public static func fromString(_ string: String) -> SwiftProgressBarColor? {
+        switch string.lowercased() {
+        case "accent": return .accent
+        case "attention": return .attention
+        case "good": return .good
+        case "warning": return .warning
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftProgressBarColor.fromString(rawValue) ?? .accent
+    }
+}
+
+/// Size for ProgressRing elements
+public enum SwiftProgressSize: String, Codable {
+    case tiny = "Tiny"
+    case small = "Small"
+    case medium = "Medium"
+    case large = "Large"
+    
+    public static func fromString(_ string: String) -> SwiftProgressSize? {
+        switch string.lowercased() {
+        case "tiny": return .tiny
+        case "small": return .small
+        case "medium": return .medium
+        case "large": return .large
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftProgressSize.fromString(rawValue) ?? .medium
+    }
+}
+
+/// Label position for ProgressRing elements
+public enum SwiftLabelPosition: String, Codable {
+    case above = "Above"
+    case below = "Below"
+    case before = "Before"
+    case after = "After"
+    
+    public static func fromString(_ string: String) -> SwiftLabelPosition? {
+        switch string.lowercased() {
+        case "above": return .above
+        case "below": return .below
+        case "before": return .before
+        case "after": return .after
+        default: return nil
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SwiftLabelPosition.fromString(rawValue) ?? .below
     }
 }
 

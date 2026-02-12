@@ -19,6 +19,7 @@
 #import "ACRFlowLayout.h"
 #import "ARCGridViewLayout.h"
 #import "ACRLayoutHelper.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRColumnRenderer
 
@@ -45,8 +46,20 @@
 
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Column> columnElem = std::dynamic_pointer_cast<Column>(elem);
+
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *swiftColumnWidth = nil;
+    NSArray *swiftColumnItems = nil;
+    NSInteger swiftVerticalContentAlignment = 0;
+    if (useSwiftRendering) {
+        swiftColumnWidth = [SwiftAdaptiveCardObjcBridge getColumnWidth:acoElem useSwift:YES];
+        swiftColumnItems = [SwiftAdaptiveCardObjcBridge getColumnItems:acoElem useSwift:YES];
+        swiftVerticalContentAlignment = [SwiftAdaptiveCardObjcBridge getColumnVerticalContentAlignment:acoElem useSwift:YES];
+    }
+
     [rootView.context pushBaseCardElementContext:acoElem];
-    
+
     //Layout
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     ACRFlowLayout *flowContainer;

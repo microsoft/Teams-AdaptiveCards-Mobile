@@ -17,6 +17,7 @@
 #import "AreaGridLayout.h"
 #import "ACRFlowLayout.h"
 #import "ARCGridViewLayout.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRTableCellRenderer
 
@@ -38,9 +39,16 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSArray *swiftTableCellItems = nil;
+    if (useSwiftRendering) {
+        swiftTableCellItems = [SwiftAdaptiveCardObjcBridge getTableCellItems:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     auto cellElement = std::dynamic_pointer_cast<TableCell>(elem);
-    
+
     float widthOfElement = [rootView widthForElement:elem->GetInternalId().Hash()];
     std::shared_ptr<Layout> final_layout = [[[ACRLayoutHelper alloc] init] layoutToApplyFrom:cellElement->GetLayouts() andHostConfig:acoConfig];
     ACRFlowLayout *flowContainer;

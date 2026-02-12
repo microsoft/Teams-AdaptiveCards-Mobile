@@ -12,6 +12,7 @@
 #import "ACRRegistration.h"
 #import "ProgressBar.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRProgressBarRenderer
 
@@ -32,6 +33,13 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    double swiftProgressBarValue = 0.0;
+    if (useSwiftRendering) {
+        swiftProgressBarValue = [SwiftAdaptiveCardObjcBridge getProgressBarValue:acoElem useSwift:YES];
+    }
+
     return nil;
 }
 

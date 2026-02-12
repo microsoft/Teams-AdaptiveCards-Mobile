@@ -18,6 +18,7 @@
 #import "ACRSVGIconHoldingView.h"
 #include "IconInfo.h"
 #import "ACRBadgeView.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRBadgeRenderer
 
@@ -38,6 +39,15 @@
    baseCardElement:(ACOBaseCardElement *)acoElem
         hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *swiftBadgeText = nil;
+    NSInteger swiftBadgeStyle = 0;
+    if (useSwiftRendering) {
+        swiftBadgeText = [SwiftAdaptiveCardObjcBridge getBadgeText:acoElem useSwift:YES];
+        swiftBadgeStyle = [SwiftAdaptiveCardObjcBridge getBadgeStyle:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Badge> badge = std::dynamic_pointer_cast<Badge>(elem);

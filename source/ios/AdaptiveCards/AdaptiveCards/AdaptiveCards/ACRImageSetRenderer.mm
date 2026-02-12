@@ -12,6 +12,7 @@
 #import "ImageSet.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 #import <UIKit/UIKit.h>
 
 using namespace AdaptiveCards;
@@ -37,6 +38,16 @@ using namespace AdaptiveCards;
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<ImageSet> imgSetElem = std::dynamic_pointer_cast<ImageSet>(elem);
+
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSArray *swiftImages = nil;
+    NSInteger swiftImageSize = 0;
+    if (useSwiftRendering) {
+        swiftImages = [SwiftAdaptiveCardObjcBridge getImageSetImages:acoElem useSwift:YES];
+        swiftImageSize = [SwiftAdaptiveCardObjcBridge getImageSetImageSize:acoElem useSwift:YES];
+    }
+
     ACRImageSetUICollectionView *view = [[ACRImageSetUICollectionView alloc] init:imgSetElem
                                                                    WithHostConfig:acoConfig
                                                                     WithSuperview:viewGroup

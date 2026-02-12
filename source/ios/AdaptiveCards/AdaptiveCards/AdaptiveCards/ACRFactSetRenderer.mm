@@ -17,6 +17,7 @@
 #import "Fact.h"
 #import "FactSet.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRFactSetRenderer
 
@@ -104,8 +105,18 @@
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<FactSet> factSet = std::dynamic_pointer_cast<FactSet>(elem);
 
-    if (factSet->GetFacts().empty()) {
-        return nil;
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSArray *swiftFacts = nil;
+    if (useSwiftRendering) {
+        swiftFacts = [SwiftAdaptiveCardObjcBridge getFactSetFacts:acoElem useSwift:YES];
+        if (swiftFacts.count == 0) {
+            return nil;
+        }
+    } else {
+        if (factSet->GetFacts().empty()) {
+            return nil;
+        }
     }
 
     ACRContainerStyle style = [viewGroup style];
@@ -135,61 +146,119 @@
 
     NSMutableArray *accessibilityElements = [[NSMutableArray alloc] init];
 
-    for (auto fact : factSet->GetFacts()) {
-        NSString *title = [NSString stringWithCString:fact->GetTitle().c_str() encoding:NSUTF8StringEncoding];
-        NSString *titleElemId = [key stringByAppendingString:[[NSNumber numberWithInt:rowFactId++] stringValue]];
-        if (![textMap objectForKey:titleElemId]) {
-            RichTextElementProperties titleTextProp{factSetConfig.title, fact->GetTitle(), fact->GetLanguage()};
-            buildIntermediateResultForText(rootView, acoConfig, titleTextProp, titleElemId);
+    // Process facts using Swift or C++ based on feature flag
+    if (useSwiftRendering) {
+        for (id fact in swiftFacts) {
+            NSString *title = [SwiftAdaptiveCardObjcBridge getFactTitle:fact useSwift:YES];
+            NSString *titleElemId = [key stringByAppendingString:[[NSNumber numberWithInt:rowFactId++] stringValue]];
+            if (![textMap objectForKey:titleElemId]) {
+                RichTextElementProperties titleTextProp{factSetConfig.title, [title UTF8String], ""};
+                buildIntermediateResultForText(rootView, acoConfig, titleTextProp, titleElemId);
+            }
+
+            ACRUILabel *titleLab = [ACRFactSetRenderer buildLabel:title
+                                                        superview:viewGroup
+                                                       hostConfig:acoConfig
+                                                       textConfig:factSetConfig.title
+                                                   containerStyle:style
+                                                        elementId:titleElemId
+                                                         rootView:rootView
+                                                          element:elem];
+
+            [titleLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+            [titleLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+            [titleLab setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+
+            if (factSetConfig.title.maxWidth) {
+                NSLayoutConstraint *constraintForTitleLab = [NSLayoutConstraint constraintWithItem:titleLab attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:factSetConfig.title.maxWidth];
+                constraintForTitleLab.active = YES;
+                constraintForTitleLab.priority = UILayoutPriorityRequired;
+            }
+            NSString *value = [SwiftAdaptiveCardObjcBridge getFactValue:fact useSwift:YES];
+            NSString *valElemId = [key stringByAppendingString:[[NSNumber numberWithInt:rowFactId++] stringValue]];
+            if (![textMap objectForKey:valElemId]) {
+                RichTextElementProperties valueTextProp{factSetConfig.value, [value UTF8String], ""};
+                buildIntermediateResultForText(rootView, acoConfig, valueTextProp, valElemId);
+            }
+
+            ACRUILabel *valueLab = [ACRFactSetRenderer buildLabel:value
+                                                        superview:viewGroup
+                                                       hostConfig:acoConfig
+                                                       textConfig:factSetConfig.value
+                                                   containerStyle:style
+                                                        elementId:valElemId
+                                                         rootView:rootView
+                                                          element:elem];
+
+            [valueLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+
+            if (title.length || value.length) {
+                [titleStack addArrangedSubview:titleLab];
+                [valueStack addArrangedSubview:valueLab];
+                [NSLayoutConstraint constraintWithItem:valueLab attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:titleLab attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0].active = YES;
+                [accessibilityElements addObject:titleLab];
+                [accessibilityElements addObject:valueLab];
+                nValidFacts++;
+            }
+            configRtl(titleLab, rootView.context);
+            configRtl(valueLab, rootView.context);
         }
+    } else {
+        for (auto fact : factSet->GetFacts()) {
+            NSString *title = [NSString stringWithCString:fact->GetTitle().c_str() encoding:NSUTF8StringEncoding];
+            NSString *titleElemId = [key stringByAppendingString:[[NSNumber numberWithInt:rowFactId++] stringValue]];
+            if (![textMap objectForKey:titleElemId]) {
+                RichTextElementProperties titleTextProp{factSetConfig.title, fact->GetTitle(), fact->GetLanguage()};
+                buildIntermediateResultForText(rootView, acoConfig, titleTextProp, titleElemId);
+            }
 
-        ACRUILabel *titleLab = [ACRFactSetRenderer buildLabel:title
-                                                    superview:viewGroup
-                                                   hostConfig:acoConfig
-                                                   textConfig:factSetConfig.title
-                                               containerStyle:style
-                                                    elementId:titleElemId
-                                                     rootView:rootView
-                                                      element:elem];
+            ACRUILabel *titleLab = [ACRFactSetRenderer buildLabel:title
+                                                        superview:viewGroup
+                                                       hostConfig:acoConfig
+                                                       textConfig:factSetConfig.title
+                                                   containerStyle:style
+                                                        elementId:titleElemId
+                                                         rootView:rootView
+                                                          element:elem];
 
-        [titleLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-        [titleLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-        [titleLab setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+            [titleLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+            [titleLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+            [titleLab setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
 
-        if (factSetConfig.title.maxWidth) {
-            NSLayoutConstraint *constraintForTitleLab = [NSLayoutConstraint constraintWithItem:titleLab attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:factSetConfig.title.maxWidth];
-            constraintForTitleLab.active = YES;
-            constraintForTitleLab.priority = UILayoutPriorityRequired;
+            if (factSetConfig.title.maxWidth) {
+                NSLayoutConstraint *constraintForTitleLab = [NSLayoutConstraint constraintWithItem:titleLab attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:factSetConfig.title.maxWidth];
+                constraintForTitleLab.active = YES;
+                constraintForTitleLab.priority = UILayoutPriorityRequired;
+            }
+            NSString *value = [NSString stringWithCString:fact->GetValue().c_str() encoding:NSUTF8StringEncoding];
+            NSString *valElemId = [key stringByAppendingString:[[NSNumber numberWithInt:rowFactId++] stringValue]];
+            if (![textMap objectForKey:valElemId]) {
+                RichTextElementProperties valueTextProp{factSetConfig.value, fact->GetValue(), fact->GetLanguage()};
+                buildIntermediateResultForText(rootView, acoConfig, valueTextProp, valElemId);
+            }
+
+            ACRUILabel *valueLab = [ACRFactSetRenderer buildLabel:value
+                                                        superview:viewGroup
+                                                       hostConfig:acoConfig
+                                                       textConfig:factSetConfig.value
+                                                   containerStyle:style
+                                                        elementId:valElemId
+                                                         rootView:rootView
+                                                          element:elem];
+
+            [valueLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+
+            if (title.length || value.length) {
+                [titleStack addArrangedSubview:titleLab];
+                [valueStack addArrangedSubview:valueLab];
+                [NSLayoutConstraint constraintWithItem:valueLab attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:titleLab attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0].active = YES;
+                [accessibilityElements addObject:titleLab];
+                [accessibilityElements addObject:valueLab];
+                nValidFacts++;
+            }
+            configRtl(titleLab, rootView.context);
+            configRtl(valueLab, rootView.context);
         }
-        NSString *value = [NSString stringWithCString:fact->GetValue().c_str() encoding:NSUTF8StringEncoding];
-        NSString *valElemId = [key stringByAppendingString:[[NSNumber numberWithInt:rowFactId++] stringValue]];
-        if (![textMap objectForKey:valElemId]) {
-            RichTextElementProperties valueTextProp{factSetConfig.value, fact->GetValue(), fact->GetLanguage()};
-            buildIntermediateResultForText(rootView, acoConfig, valueTextProp, valElemId);
-        }
-
-        ACRUILabel *valueLab = [ACRFactSetRenderer buildLabel:value
-                                                    superview:viewGroup
-                                                   hostConfig:acoConfig
-                                                   textConfig:factSetConfig.value
-                                               containerStyle:style
-                                                    elementId:valElemId
-                                                     rootView:rootView
-                                                      element:elem];
-
-
-        [valueLab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
-
-        if (title.length || value.length) {
-            [titleStack addArrangedSubview:titleLab];
-            [valueStack addArrangedSubview:valueLab];
-            [NSLayoutConstraint constraintWithItem:valueLab attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:titleLab attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0].active = YES;
-            [accessibilityElements addObject:titleLab];
-            [accessibilityElements addObject:valueLab];
-            nValidFacts++;
-        }
-        configRtl(titleLab, rootView.context);
-        configRtl(valueLab, rootView.context);
     }
 
     if (elem->GetHeight() == HeightType::Stretch) {

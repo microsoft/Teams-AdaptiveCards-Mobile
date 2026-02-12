@@ -14,6 +14,7 @@
 #import "ACRIContentHoldingView.h"
 #import "OpenUrlAction.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRActionOpenURLRenderer
 
@@ -29,6 +30,13 @@
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *swiftOpenUrlActionUrl = nil;
+    if (useSwiftRendering) {
+        swiftOpenUrlActionUrl = [SwiftAdaptiveCardObjcBridge getOpenUrlActionUrl:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<BaseActionElement> elem = [acoElem element];
     std::shared_ptr<OpenUrlAction> action = std::dynamic_pointer_cast<OpenUrlAction>(elem);
 

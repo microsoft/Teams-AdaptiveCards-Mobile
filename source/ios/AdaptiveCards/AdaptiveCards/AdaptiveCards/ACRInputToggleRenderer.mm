@@ -17,6 +17,7 @@
 #import "ACRToggleInputView.h"
 #import "ToggleInput.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRInputToggleRenderer
 
@@ -37,6 +38,13 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *swiftToggleTitle = nil;
+    if (useSwiftRendering) {
+        swiftToggleTitle = [SwiftAdaptiveCardObjcBridge getToggleInputTitle:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<ToggleInput> adaptiveToggleInput = std::dynamic_pointer_cast<ToggleInput>(elem);

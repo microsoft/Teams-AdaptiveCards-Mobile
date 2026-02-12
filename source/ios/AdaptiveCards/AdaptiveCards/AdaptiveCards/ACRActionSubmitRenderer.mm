@@ -14,6 +14,7 @@
 #import "SubmitAction.h"
 #import "UtiliOS.h"
 #import "ACRInputLabelView.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRActionSubmitRenderer
 NSMutableArray<ACRIBaseInputHandler> *_inputs;
@@ -30,6 +31,13 @@ NSMutableArray<ACRIBaseInputHandler> *_inputs;
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *swiftSubmitActionData = nil;
+    if (useSwiftRendering) {
+        swiftSubmitActionData = [SwiftAdaptiveCardObjcBridge getSubmitActionData:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<BaseActionElement> elem = [acoElem element];
     std::shared_ptr<SubmitAction> action = std::dynamic_pointer_cast<SubmitAction>(elem);
     NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];

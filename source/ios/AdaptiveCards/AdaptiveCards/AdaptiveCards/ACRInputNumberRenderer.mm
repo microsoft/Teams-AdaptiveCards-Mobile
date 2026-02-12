@@ -15,6 +15,7 @@
 #import "ACRTextInputHandler.h"
 #import "NumberInput.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRInputNumberRenderer
 
@@ -35,6 +36,13 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    double swiftNumberValue = 0.0;
+    if (useSwiftRendering) {
+        swiftNumberValue = [SwiftAdaptiveCardObjcBridge getNumberInputValue:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<NumberInput> numInputBlck = std::dynamic_pointer_cast<NumberInput>(elem);
