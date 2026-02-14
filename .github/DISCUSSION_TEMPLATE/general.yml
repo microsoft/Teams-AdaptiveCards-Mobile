@@ -1,0 +1,31 @@
+title: ""
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Welcome to Adaptive Cards Mobile Discussions! Use this space for general conversations about the project.
+
+        - For technical questions, please use the **Q&A** category instead.
+        - For feature requests, please use the **Ideas** category.
+
+  - type: textarea
+    id: body
+    attributes:
+      label: What's on your mind?
+      description: Share your thoughts, feedback, or start a conversation with the community.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Related Platform (optional)
+      description: If this relates to a specific platform, select it below.
+      options:
+        - Android
+        - iOS
+        - Both
+        - Not platform specific
+    validations:
+      required: false
