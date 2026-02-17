@@ -1,0 +1,117 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Two-Column Layout",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "1",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Left Column",
+              "weight": "Bolder"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Content in the first column with wrap enabled.",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "1",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Right Column",
+              "weight": "Bolder"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Content in the second column with wrap enabled.",
+              "wrap": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://adaptivecards.io/content/cats/1.png",
+              "size": "Small"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Auto + Stretch Layout",
+              "weight": "Bolder"
+            },
+            {
+              "type": "TextBlock",
+              "text": "The image column is auto-width; this column stretches.",
+              "wrap": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "1",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Col 1"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "2",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Col 2 (2x)"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "1",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Col 3"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

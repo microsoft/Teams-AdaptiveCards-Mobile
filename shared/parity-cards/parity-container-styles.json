@@ -1,0 +1,83 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Default Container",
+          "weight": "Bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "This is inside a default-style container.",
+          "wrap": true
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "style": "Emphasis",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Emphasis Container",
+          "weight": "Bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "This container uses the emphasis style for visual distinction.",
+          "wrap": true
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "style": "Good",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Good Container",
+          "weight": "Bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Success-style container."
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "style": "Warning",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Warning Container",
+          "weight": "Bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Warning-style container."
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "style": "Attention",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Attention Container",
+          "weight": "Bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Attention-style container."
+        }
+      ]
+    }
+  ]
+}

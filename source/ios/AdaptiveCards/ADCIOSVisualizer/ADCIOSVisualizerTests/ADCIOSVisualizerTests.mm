@@ -839,3 +839,157 @@
 }
 
 @end
+
+// =============================================================================
+#pragma mark - Parity Baseline Generator
+// =============================================================================
+//
+// Renders shared parity cards via the legacy ObjC/C++ renderer and exports
+// golden-path PNG baselines for the greenfield SwiftUI project to compare.
+//
+// Run testGenerateAllParityBaselines to regenerate all baselines at once,
+// or run individual testBaseline_* methods selectively.
+//
+// Output: shared/golden-baselines/legacy/*.png at the repo root
+// =============================================================================
+
+static const float kParityCardWidth = 393.0f; // iPhone 15 Pro logical width
+
+/// Derive the repository root from __FILE__.
+static NSString *parityRepoRoot(void) {
+    NSString *thisFile = @(__FILE__);
+    NSString *dir = thisFile;
+    for (int i = 0; i < 6; i++) {
+        dir = [dir stringByDeletingLastPathComponent];
+    }
+    return dir;
+}
+
+@interface ACRParityBaselineTests : XCTestCase
+@end
+
+@implementation ACRParityBaselineTests {
+    NSString *_parityCardsDir;
+    NSString *_baselinesDir;
+    ACOHostConfig *_parityHostConfig;
+}
+
+- (void)setUp {
+    [super setUp];
+    NSString *root = parityRepoRoot();
+    _parityCardsDir = [root stringByAppendingPathComponent:@"shared/parity-cards"];
+    _baselinesDir   = [root stringByAppendingPathComponent:@"shared/golden-baselines/legacy"];
+
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if (![fm fileExistsAtPath:_baselinesDir]) {
+        NSError *err = nil;
+        [fm createDirectoryAtPath:_baselinesDir
+      withIntermediateDirectories:YES
+                       attributes:nil
+                            error:&err];
+        XCTAssertNil(err, @"Failed to create baselines dir: %@", err);
+    }
+    _parityHostConfig = nil; // SDK defaults
+}
+
+- (ACOAdaptiveCard *)parityLoadCard:(NSString *)name {
+    NSString *path = [_parityCardsDir stringByAppendingPathComponent:name];
+    NSError *readErr = nil;
+    NSString *payload = [NSString stringWithContentsOfFile:path
+                                                 encoding:NSUTF8StringEncoding
+                                                    error:&readErr];
+    XCTAssertNotNil(payload, @"Could not read %@: %@", name, readErr);
+    ACOAdaptiveCardParseResult *result = [ACOAdaptiveCard fromJson:payload];
+    XCTAssertTrue(result.isValid, @"Parsing failed for %@", name);
+    return result.card;
+}
+
+- (UIView *)parityRenderCard:(ACOAdaptiveCard *)card {
+    ACRRenderResult *result = [ACRRenderer render:card
+                                           config:_parityHostConfig
+                                  widthConstraint:kParityCardWidth
+                                         delegate:nil
+                                            theme:ACRThemeLight];
+    XCTAssertTrue(result.succeeded, @"Rendering failed");
+    UIView *view = result.view;
+    CGSize fittingSize = [view systemLayoutSizeFittingSize:
+        CGSizeMake(kParityCardWidth, UILayoutFittingCompressedSize.height)
+                            withHorizontalFittingPriority:UILayoutPriorityRequired
+                                  verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
+    view.frame = CGRectMake(0, 0, kParityCardWidth, fittingSize.height);
+    [view layoutIfNeeded];
+    return view;
+}
+
+- (UIImage *)parityCaptureView:(UIView *)view {
+    CGRect bounds = view.bounds;
+    if (CGRectIsEmpty(bounds) || bounds.size.height < 1) {
+        CGSize intrinsic = [view intrinsicContentSize];
+        if (intrinsic.width > 0 && intrinsic.height > 0) {
+            bounds = CGRectMake(0, 0, intrinsic.width, intrinsic.height);
+            view.bounds = bounds;
+            [view layoutIfNeeded];
+        }
+    }
+    UIGraphicsImageRendererFormat *fmt = [[UIGraphicsImageRendererFormat alloc] init];
+    fmt.scale = 2.0;
+    fmt.opaque = NO;
+    UIGraphicsImageRenderer *renderer =
+        [[UIGraphicsImageRenderer alloc] initWithSize:bounds.size format:fmt];
+    return [renderer imageWithActions:^(UIGraphicsImageRendererContext *ctx) {
+        [view drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+    }];
+}
+
+- (void)paritySaveImage:(UIImage *)image name:(NSString *)name {
+    NSData *pngData = UIImagePNGRepresentation(image);
+    XCTAssertNotNil(pngData, @"PNG encoding failed for %@", name);
+    NSString *outPath = [_baselinesDir stringByAppendingPathComponent:
+        [name stringByAppendingString:@".png"]];
+    NSError *writeErr = nil;
+    BOOL ok = [pngData writeToFile:outPath options:NSDataWritingAtomic error:&writeErr];
+    XCTAssertTrue(ok, @"Write failed for %@: %@", name, writeErr);
+    NSLog(@"[ParityBaseline] Saved %@ (%lu bytes)", outPath, (unsigned long)pngData.length);
+}
+
+- (void)generateBaseline:(NSString *)jsonFile {
+    NSString *baseName = [jsonFile stringByDeletingPathExtension];
+    ACOAdaptiveCard *card = [self parityLoadCard:jsonFile];
+    UIView *view = [self parityRenderCard:card];
+    UIImage *image = [self parityCaptureView:view];
+    [self paritySaveImage:image name:baseName];
+}
+
+- (void)testGenerateAllParityBaselines {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSError *err = nil;
+    NSArray<NSString *> *files = [fm contentsOfDirectoryAtPath:_parityCardsDir error:&err];
+    XCTAssertNotNil(files, @"Could not list parity-cards: %@", err);
+    NSMutableArray<NSString *> *jsonFiles = [NSMutableArray array];
+    for (NSString *f in files) {
+        if ([f hasSuffix:@".json"]) [jsonFiles addObject:f];
+    }
+    [jsonFiles sortUsingSelector:@selector(compare:)];
+    XCTAssertGreaterThan(jsonFiles.count, 0, @"No parity card JSONs found in %@", _parityCardsDir);
+    NSLog(@"[ParityBaseline] Generating baselines for %lu cards...", (unsigned long)jsonFiles.count);
+    for (NSString *jsonFile in jsonFiles) {
+        [self generateBaseline:jsonFile];
+    }
+    NSLog(@"[ParityBaseline] Done. %lu baselines written to %@",
+          (unsigned long)jsonFiles.count, _baselinesDir);
+}
+
+- (void)testBaseline_TextBlockBasic     { [self generateBaseline:@"parity-textblock-basic.json"]; }
+- (void)testBaseline_ImageSizes         { [self generateBaseline:@"parity-image-sizes.json"]; }
+- (void)testBaseline_ContainerStyles    { [self generateBaseline:@"parity-container-styles.json"]; }
+- (void)testBaseline_ColumnSetLayouts   { [self generateBaseline:@"parity-columnset-layouts.json"]; }
+- (void)testBaseline_FactSet            { [self generateBaseline:@"parity-factset.json"]; }
+- (void)testBaseline_ImageSet           { [self generateBaseline:@"parity-imageset.json"]; }
+- (void)testBaseline_Actions            { [self generateBaseline:@"parity-actions.json"]; }
+- (void)testBaseline_RichText           { [self generateBaseline:@"parity-richtext.json"]; }
+- (void)testBaseline_Table              { [self generateBaseline:@"parity-table.json"]; }
+- (void)testBaseline_ActivityUpdate     { [self generateBaseline:@"parity-activity-update.json"]; }
+- (void)testBaseline_NestedContainers   { [self generateBaseline:@"parity-nested-containers.json"]; }
+- (void)testBaseline_Inputs             { [self generateBaseline:@"parity-inputs.json"]; }
+
+@end

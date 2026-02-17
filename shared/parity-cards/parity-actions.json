@@ -1,0 +1,43 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Action Buttons",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Card with multiple action types for button rendering parity.",
+      "wrap": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit"
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "Open Link",
+      "url": "https://adaptivecards.io"
+    },
+    {
+      "type": "Action.ShowCard",
+      "title": "Show Details",
+      "card": {
+        "type": "AdaptiveCard",
+        "body": [
+          {
+            "type": "TextBlock",
+            "text": "Hidden detail card content",
+            "wrap": true
+          }
+        ]
+      }
+    }
+  ]
+}

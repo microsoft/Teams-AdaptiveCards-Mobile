@@ -1,0 +1,38 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Fact Set Example",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "FactSet",
+      "facts": [
+        {
+          "title": "Name:",
+          "value": "Adaptive Cards"
+        },
+        {
+          "title": "Version:",
+          "value": "1.5"
+        },
+        {
+          "title": "Platform:",
+          "value": "iOS"
+        },
+        {
+          "title": "Language:",
+          "value": "Swift / Objective-C"
+        },
+        {
+          "title": "Status:",
+          "value": "Production"
+        }
+      ]
+    }
+  ]
+}

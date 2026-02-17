@@ -1,0 +1,50 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "RichTextBlock",
+      "inlines": [
+        {
+          "type": "TextRun",
+          "text": "Bold text ",
+          "weight": "Bolder"
+        },
+        {
+          "type": "TextRun",
+          "text": "followed by italic ",
+          "italic": true
+        },
+        {
+          "type": "TextRun",
+          "text": "and colored text ",
+          "color": "Accent"
+        },
+        {
+          "type": "TextRun",
+          "text": "with strikethrough",
+          "strikethrough": true
+        }
+      ]
+    },
+    {
+      "type": "RichTextBlock",
+      "inlines": [
+        {
+          "type": "TextRun",
+          "text": "Highlighted text ",
+          "highlight": true
+        },
+        {
+          "type": "TextRun",
+          "text": "and a link",
+          "selectAction": {
+            "type": "Action.OpenUrl",
+            "url": "https://adaptivecards.io"
+          }
+        }
+      ]
+    }
+  ]
+}

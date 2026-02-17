@@ -1,0 +1,83 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Input Controls Parity",
+      "weight": "Bolder",
+      "size": "Medium"
+    },
+    {
+      "type": "Input.Text",
+      "id": "name",
+      "label": "Name",
+      "placeholder": "Enter your name",
+      "isRequired": true,
+      "errorMessage": "Name is required"
+    },
+    {
+      "type": "Input.Text",
+      "id": "comments",
+      "label": "Comments",
+      "placeholder": "Enter comments",
+      "isMultiline": true
+    },
+    {
+      "type": "Input.Number",
+      "id": "quantity",
+      "label": "Quantity",
+      "placeholder": "Enter quantity",
+      "min": 0,
+      "max": 100,
+      "value": 1
+    },
+    {
+      "type": "Input.Date",
+      "id": "dueDate",
+      "label": "Due Date"
+    },
+    {
+      "type": "Input.Time",
+      "id": "startTime",
+      "label": "Start Time"
+    },
+    {
+      "type": "Input.Toggle",
+      "id": "accepted",
+      "title": "I accept the terms and conditions",
+      "valueOn": "true",
+      "valueOff": "false"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "color",
+      "label": "Favorite Color",
+      "style": "compact",
+      "choices": [
+        { "title": "Red", "value": "red" },
+        { "title": "Green", "value": "green" },
+        { "title": "Blue", "value": "blue" }
+      ]
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "options",
+      "label": "Select options",
+      "isMultiSelect": true,
+      "style": "expanded",
+      "choices": [
+        { "title": "Option A", "value": "a" },
+        { "title": "Option B", "value": "b" },
+        { "title": "Option C", "value": "c" }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit"
+    }
+  ]
+}

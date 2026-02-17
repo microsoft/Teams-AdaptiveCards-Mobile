@@ -1,0 +1,46 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Large Bold Title",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This is a medium default-weight text block that wraps to multiple lines when the content exceeds the available width.",
+      "size": "Medium",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Small subtle text for metadata",
+      "size": "Small",
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Accent colored text",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Center aligned text block",
+      "horizontalAlignment": "Center"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Right aligned text block",
+      "horizontalAlignment": "Right"
+    },
+    {
+      "type": "TextBlock",
+      "text": "This text has maxLines set to 2. It should truncate after two lines if the text is long enough to exceed the available space in the card rendering area.",
+      "maxLines": 2,
+      "wrap": true
+    }
+  ]
+}

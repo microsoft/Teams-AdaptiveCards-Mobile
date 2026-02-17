@@ -1,0 +1,31 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Image Set Gallery",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "ImageSet",
+      "imageSize": "Medium",
+      "images": [
+        {
+          "type": "Image",
+          "url": "https://adaptivecards.io/content/cats/1.png"
+        },
+        {
+          "type": "Image",
+          "url": "https://adaptivecards.io/content/cats/2.png"
+        },
+        {
+          "type": "Image",
+          "url": "https://adaptivecards.io/content/cats/3.png"
+        }
+      ]
+    }
+  ]
+}

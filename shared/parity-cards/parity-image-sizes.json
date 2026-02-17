@@ -1,0 +1,24 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "Image",
+      "url": "https://adaptivecards.io/content/cats/1.png",
+      "size": "Medium",
+      "altText": "A cute cat"
+    },
+    {
+      "type": "Image",
+      "url": "https://adaptivecards.io/content/cats/2.png",
+      "size": "Small"
+    },
+    {
+      "type": "Image",
+      "url": "https://adaptivecards.io/content/cats/3.png",
+      "size": "Large",
+      "horizontalAlignment": "Center"
+    }
+  ]
+}

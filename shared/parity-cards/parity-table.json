@@ -1,0 +1,75 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Table Example",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Table",
+      "firstRowAsHeaders": true,
+      "columns": [
+        { "width": 1 },
+        { "width": 1 },
+        { "width": 1 }
+      ],
+      "rows": [
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Name", "weight": "Bolder" }]
+            },
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Role", "weight": "Bolder" }]
+            },
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Status", "weight": "Bolder" }]
+            }
+          ]
+        },
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Alice" }]
+            },
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Engineer" }]
+            },
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Active" }]
+            }
+          ]
+        },
+        {
+          "type": "TableRow",
+          "cells": [
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Bob" }]
+            },
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Designer" }]
+            },
+            {
+              "type": "TableCell",
+              "items": [{ "type": "TextBlock", "text": "Away" }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
