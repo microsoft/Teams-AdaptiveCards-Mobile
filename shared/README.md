@@ -1,14 +1,23 @@
-# Visual Parity Baselines
+# Visual Parity Bridge
 
-This directory contains the shared infrastructure for visual parity testing
-between the **legacy** (ObjC/C++) and **greenfield** (SwiftUI) Adaptive Cards
-renderers.
+Shared infrastructure for **visual parity testing** between the legacy
+(ObjC/C++ + UIKit) and greenfield (SwiftUI) Adaptive Cards iOS renderers.
+
+## Overview
+
+The visual parity bridge ensures the greenfield SwiftUI renderer produces
+output that converges toward the legacy ObjC/C++ renderer over time. It uses
+a **golden-path baseline** approach:
+
+1. Legacy renders a set of canonical cards → golden PNG baselines
+2. Greenfield renders the same cards → greenfield regression baselines
+3. Cross-renderer pixel diff reports track convergence (informational, non-blocking)
 
 ## Structure
 
 ```
 shared/
-├── parity-cards/           # Canonical JSON card definitions (shared input)
+├── parity-cards/                # Canonical JSON card definitions (12 cards)
 │   ├── parity-textblock-basic.json
 │   ├── parity-image-sizes.json
 │   ├── parity-container-styles.json
@@ -18,52 +27,107 @@ shared/
 │   ├── parity-actions.json
 │   ├── parity-richtext.json
 │   ├── parity-table.json
-│   ├── parity-activity-update.json   # Composed card (TextBlock + ColumnSet + FactSet + Actions)
-│   ├── parity-nested-containers.json # Deep nesting with mixed styles
-│   └── parity-inputs.json            # Input controls (Text, Number, Date, Toggle, ChoiceSet)
+│   ├── parity-activity-update.json
+│   ├── parity-nested-containers.json
+│   └── parity-inputs.json
 ├── golden-baselines/
-│   └── legacy/             # PNG baselines rendered by the legacy ObjC/C++ renderer
+│   └── legacy/                  # PNG baselines from ObjC/C++ renderer
 │       ├── parity-textblock-basic.png
 │       ├── parity-image-sizes.png
-│       └── ...
-└── README.md               # This file
+│       └── ... (12 PNGs total)
+└── README.md                    # This file
 ```
+
+## Repositories
+
+| Repo | Branch | Role |
+|------|--------|------|
+| `microsoft/Teams-AdaptiveCards-Mobile` | `feature/hggz/visual-parity-baselines` | Legacy baseline generator |
+| `hggz/AdaptiveCards-Mobile-1` | `feature/visual-testing-activation` | Greenfield parity tests |
 
 ## How It Works
 
-### Phase 1: Shared Parity Cards
-Each JSON file in `parity-cards/` is a minimal Adaptive Card that exercises a
-single element type or layout pattern. Both renderers parse and render the same
-JSON, ensuring the comparison is apples-to-apples.
+### Legacy Baseline Generation (this repo)
 
-### Phase 2: Legacy Baseline Generation
-The test file `ACRParityBaselineTests.mm` (in `ADCIOSVisualizerTests`) renders
-each parity card via the legacy `ACRRenderer` at 393pt width (iPhone 15 Pro)
-and saves 2x PNG snapshots to `golden-baselines/legacy/`.
+The parity baseline generator is the `ACRParityBaselineTests` class, integrated
+into `ADCIOSVisualizerTests.mm` (no separate file or pbxproj changes needed).
 
-**To generate baselines:**
+It renders each parity card via `ACRRenderer` at 393pt width (iPhone 15 Pro
+equivalent) with `ACRThemeLight` and saves 2x PNG snapshots.
+
+**To regenerate baselines:**
 1. Open `AdaptiveCards.xcworkspace` in Xcode
-2. Add `ACRParityBaselineTests.mm` to the `ADCIOSVisualizerTests` target
-3. Run the test `testGenerateAllParityBaselines` on an iPhone simulator
+2. Select an iPhone simulator
+3. Run `ACRParityBaselineTests/testGenerateAllParityBaselines`
 4. PNGs appear in `shared/golden-baselines/legacy/`
 
-### Phase 3: Greenfield Parity Comparison
-The greenfield project (`hggz/AdaptiveCards-Mobile` fork) contains
-`LegacyParityTests.swift` which:
-1. Loads the same parity card JSONs
-2. Renders via `AdaptiveCardView` (SwiftUI)
-3. Compares the output against the legacy golden-baseline PNGs
-4. Uses a relaxed tolerance (5-10%) to account for font rendering
-   and layout engine differences between UIKit and SwiftUI
+Or run individual tests: `testBaseline_textblockBasic`, `testBaseline_actions`, etc.
+
+### Greenfield Parity Comparison (greenfield repo)
+
+`LegacyParityTests.swift` in the greenfield repo performs two checks per card:
+
+1. **Greenfield regression** (assertive, 1% tolerance) — catches SwiftUI render
+   regressions between greenfield commits
+2. **Cross-renderer parity** (reporting-only) — computes pixel diff against
+   legacy golden baselines, generates diff images and a JSON report
+
+The cross-renderer comparison is **intentionally non-failing** because the two
+renderers (UIKit/ObjC vs SwiftUI) produce structurally different output.
+Initial diffs are 60–92% and will decrease as the greenfield renderer matures.
+
+**To run greenfield tests:**
+```bash
+cd ios
+xcodebuild test -scheme AdaptiveCards-Package \
+  -destination 'platform=iOS Simulator,name=iPhone 16e' \
+  -only-testing:VisualTests/LegacyParityTests \
+  CODE_SIGNING_ALLOWED=NO
+```
+
+**To record new greenfield baselines** (after greenfield render changes):
+```bash
+touch ios/Tests/VisualTests/Snapshots/.record
+# Run tests (same command as above)
+rm ios/Tests/VisualTests/Snapshots/.record
+```
 
 ## Adding New Parity Cards
 
-1. Create a new JSON in `parity-cards/` following the naming convention
-   `parity-<element-or-pattern>.json`
-2. Add an individual test method in `ACRParityBaselineTests.mm`
-3. Re-run `testGenerateAllParityBaselines` to regenerate baselines
-4. Copy the new card and baseline to the greenfield project
-5. Add matching test in `LegacyParityTests.swift`
+1. Create a JSON in `parity-cards/` named `parity-<element>.json`
+2. Add a test method in `ACRParityBaselineTests` (in `ADCIOSVisualizerTests.mm`):
+   ```objc
+   - (void)testBaseline_newElement {
+       [self generateBaseline:@"parity-new-element"];
+   }
+   ```
+3. Run `testGenerateAllParityBaselines` to generate the legacy PNG
+4. Copy `shared/` changes to the greenfield repo
+5. Add a matching test in `LegacyParityTests.swift`:
+   ```swift
+   func testParity_newElement() {
+       assertLegacyParity(cardName: "parity-new-element")
+   }
+   ```
+6. Record greenfield baselines (touch `.record`, run tests, remove `.record`)
+
+## Parity Baseline (February 2026)
+
+| Card | Diff % | Notes |
+|------|--------|-------|
+| table | 60.5% | Best — closest structural match |
+| inputs | 63.7% | Input controls differ in chrome |
+| textblock-basic | 68.0% | Font rendering engine differences |
+| image-sizes | 78.0% | Image layout/sizing logic |
+| imageset | 78.4% | Grid layout differences |
+| factset | 78.7% | Label alignment and spacing |
+| actions | 79.8% | Button styling |
+| richtext | 79.1% | Inline text attribute rendering |
+| activity-update | 80.0% | Composite card |
+| columnset-layouts | 80.9% | Column width calculations |
+| nested-containers | 90.3% | Deep nesting + background styles |
+| container-styles | 92.2% | Background color/padding differences |
+| **Average** | **77.5%** | |
 
 ## Card Coverage
 
