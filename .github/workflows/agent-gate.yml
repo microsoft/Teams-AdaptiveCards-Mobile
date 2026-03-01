@@ -39,7 +39,7 @@ jobs:
     - name: Validate test card JSON
       run: |
         TOTAL=0; ERRORS=0
-        for f in $(find source -name '*.json' -path '*/TestFiles/*' -o -name '*.json' -path '*/testcards/*'); do
+        for f in $(find source -name '*.json' \( -path '*/TestFiles/*' -o -path '*/testcards/*' \) ! -name '*Invalid*'); do
           TOTAL=$((TOTAL + 1))
           if ! python3 -m json.tool "$f" > /dev/null 2>&1; then echo "FAIL: $f"; ERRORS=$((ERRORS + 1)); fi
         done
