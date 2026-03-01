@@ -20,6 +20,8 @@ Track every PR merged into `proxy/integration` that needs replication to
 | 2 |  | 2025-01-18 | ci: skip invalid test JSON files | `b4c4ef0b` | skipped | CI-only |
 | 3 |  | 2025-01-18 | docs: add proxy branch tracker | `6117dc06` | skipped | Docs-only |
 | 4 |  | 2025-01-18 | ci: upgrade gate with visual regression | `3eb25eee` | skipped | CI-only |
+| 5 |  | 2026-03-01 | docs: add proxy workflow guide + PR log | `d798b829` | skipped | Docs-only |
+| 6 | #14 | 2026-03-01 | docs: add descriptive comment to SharedAdaptiveCard.cpp | `7bd23944` | pending |  |
 
 ---
 
