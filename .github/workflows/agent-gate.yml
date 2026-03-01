@@ -104,6 +104,21 @@ jobs:
       working-directory: source/ios/AdaptiveCards
       run: pod install --repo-update 2>&1 | tail -20
 
+    - name: Boot iOS Simulator
+      run: |
+        SIMULATOR=$(xcrun simctl list devices available --json | python3 -c "
+        import json, sys
+        devices = json.load(sys.stdin)['devices']
+        for runtime, devs in devices.items():
+          if 'iOS' in runtime:
+            for d in devs:
+              if 'iPhone' in d['name']:
+                print(d['udid']); sys.exit(0)
+        ")
+        echo "SIM_UDID=$SIMULATOR" >> $GITHUB_ENV
+        xcrun simctl boot "$SIMULATOR" 2>/dev/null || true
+        echo "Using simulator: $SIMULATOR"
+
     - name: Build AdaptiveCards scheme
       working-directory: source/ios/AdaptiveCards
       run: |
@@ -111,7 +126,7 @@ jobs:
           -workspace AdaptiveCards.xcworkspace \
           -scheme AdaptiveCards \
           -sdk iphonesimulator \
-          -destination "platform=iOS Simulator,name=iPhone 16,OS=latest" \
+          -destination "platform=iOS Simulator,id=$SIM_UDID" \
           CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
           2>&1 | tee /tmp/xcode-build.log | tail -20
         if grep -qiE 'BUILD SUCCEEDED' /tmp/xcode-build.log; then
@@ -129,7 +144,7 @@ jobs:
           -workspace AdaptiveCards.xcworkspace \
           -scheme AdaptiveCards \
           -sdk iphonesimulator \
-          -destination "platform=iOS Simulator,name=iPhone 16,OS=latest" \
+          -destination "platform=iOS Simulator,id=$SIM_UDID" \
           -only-testing:AdaptiveCardsTests \
           CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
           2>&1 | tee /tmp/xcode-test.log | grep -E "Test Case|passed|failed|Test Suite"
