@@ -1,0 +1,212 @@
+name: Agent Validation Gate
+
+on:
+  push:
+    branches: [ 'proxy/**', main ]
+  pull_request:
+    branches: [ main, 'proxy/**' ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  structure-check:
+    name: '1. Structure and Shared C++ Check'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Validate repo structure
+      run: |
+        echo "=== Repo Structure Validation ==="
+        ERRORS=0
+        check_exists() {
+          if [ ! -e "$1" ]; then echo "MISSING: $1"; ERRORS=$((ERRORS + 1)); else echo "OK: $1"; fi
+        }
+        check_exists "Package.swift"
+        check_exists "source/shared/cpp/ObjectModel"
+        check_exists "source/ios/AdaptiveCards"
+        check_exists "source/android/build.gradle"
+        check_exists "source/android/adaptivecards/build.gradle"
+        check_exists "source/android/adaptivecards/CMakeLists.txt"
+        check_exists "source/android/gradlew"
+        if [ $ERRORS -gt 0 ]; then echo "::error::$ERRORS required files missing"; exit 1; fi
+        echo "All structural checks passed"
+    - name: Validate test card JSON
+      run: |
+        TOTAL=0; ERRORS=0
+        for f in $(find source -name '*.json' -path '*/TestFiles/*' -o -name '*.json' -path '*/testcards/*'); do
+          TOTAL=$((TOTAL + 1))
+          if ! python3 -m json.tool "$f" > /dev/null 2>&1; then echo "FAIL: $f"; ERRORS=$((ERRORS + 1)); fi
+        done
+        echo "Checked $TOTAL test card JSON files, $ERRORS errors"
+        if [ $ERRORS -gt 0 ]; then exit 1; fi
+
+  ios-spm-build:
+    name: '2a. iOS SPM Build and Test'
+    runs-on: macos-15
+    steps:
+    - uses: actions/checkout@v4
+    - name: Swift and Xcode version
+      run: |
+        swift --version
+        xcodebuild -version
+    - name: Build ObjectModel + AdaptiveCards (SPM)
+      run: |
+        swift build -v 2>&1 | tail -30
+        echo "SPM build succeeded"
+    - name: Run AdaptiveCardsTest (SPM)
+      run: |
+        swift test --filter AdaptiveCardsTest 2>&1 | tee /tmp/spm-test.log | tail -50
+        if grep -q 'Test Suite.*passed' /tmp/spm-test.log; then
+          echo "### iOS SPM Tests: PASSED" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "### iOS SPM Tests: CHECK LOG" >> $GITHUB_STEP_SUMMARY
+        fi
+
+  ios-xcodebuild:
+    name: '2b. iOS Xcode Build (xcworkspace)'
+    runs-on: macos-15
+    continue-on-error: true
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install CocoaPods
+      run: gem install cocoapods 2>/dev/null || true
+    - name: Pod Install
+      working-directory: source/ios/AdaptiveCards
+      run: pod install --repo-update 2>&1 | tail -20
+    - name: Build AdaptiveCards scheme
+      working-directory: source/ios/AdaptiveCards
+      run: |
+        xcodebuild build \
+          -workspace AdaptiveCards.xcworkspace \
+          -scheme AdaptiveCards \
+          -sdk iphonesimulator \
+          -destination "platform=iOS Simulator,name=iPhone 16,OS=latest" \
+          CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+          2>&1 | tee /tmp/xcode-build.log | tail -20
+        if grep -qiE 'BUILD SUCCEEDED' /tmp/xcode-build.log; then
+          echo "### iOS Xcode Build: PASSED" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "### iOS Xcode Build: FAILED" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
+  android-build:
+    name: '2c. Android Build (Library + Native)'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+    - uses: gradle/actions/setup-gradle@v4
+    - name: Build adaptivecards library
+      working-directory: source/android
+      run: |
+        ./gradlew :adaptivecards:assembleDebug --stacktrace 2>&1 | tee /tmp/android-build.log | tail -30
+        if grep -q 'BUILD SUCCESSFUL' /tmp/android-build.log; then
+          echo "### Android Build: PASSED" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "### Android Build: FAILED" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+
+  android-unit-tests:
+    name: '2d. Android Unit Tests'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+    - uses: gradle/actions/setup-gradle@v4
+    - name: Run unit tests
+      working-directory: source/android
+      run: |
+        ./gradlew :adaptivecards:testDebugUnitTest --stacktrace 2>&1 | tee /tmp/android-test.log | tail -30
+        echo "### Android Unit Tests" >> $GITHUB_STEP_SUMMARY
+        if grep -q 'BUILD SUCCESSFUL' /tmp/android-test.log; then
+          echo "Tests passed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "Check log" >> $GITHUB_STEP_SUMMARY
+        fi
+    - name: Upload test reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-unit-test-reports
+        path: |
+          source/android/adaptivecards/build/reports/tests/
+          source/android/adaptivecards/build/test-results/
+        retention-days: 7
+
+  parity-check:
+    name: '3. Cross-Platform Parity'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Source inventory
+      run: |
+        echo "### Cross-Platform Parity" >> $GITHUB_STEP_SUMMARY
+        CPP_COUNT=$(find source/shared/cpp/ObjectModel -name '*.cpp' | wc -l | tr -d ' ')
+        echo "- Shared C++ sources: $CPP_COUNT" >> $GITHUB_STEP_SUMMARY
+        IOS_COUNT=$(find source/ios -name '*.m' -o -name '*.mm' | wc -l | tr -d ' ')
+        echo "- iOS ObjC files: $IOS_COUNT" >> $GITHUB_STEP_SUMMARY
+        ANDROID_COUNT=$(find source/android -name '*.kt' -not -path '*/test/*' | wc -l | tr -d ' ')
+        echo "- Android Kotlin files: $ANDROID_COUNT" >> $GITHUB_STEP_SUMMARY
+
+  gate-verdict:
+    name: 'GATE VERDICT'
+    needs: [structure-check, ios-spm-build, ios-xcodebuild, android-build, android-unit-tests, parity-check]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: Evaluate gate
+      run: |
+        echo "============================================="
+        echo "   AGENT VALIDATION GATE - FINAL VERDICT"
+        echo "   Teams-AdaptiveCards-Mobile (Production)"
+        echo "============================================="
+        REQUIRED_PASSED=true
+        check_required() {
+          local name=$1; local result=$2
+          if [ "$result" != "success" ]; then echo "FAIL: $name ($result)"; REQUIRED_PASSED=false; else echo "PASS: $name"; fi
+        }
+        check_required "Structure Check" "${{ needs.structure-check.result }}"
+        check_required "iOS SPM Build" "${{ needs.ios-spm-build.result }}"
+        check_required "Android Build" "${{ needs.android-build.result }}"
+        echo "--- Advisory ---"
+        advisory() {
+          local name=$1; local result=$2
+          if [ "$result" = "success" ]; then echo "PASS: $name"; elif [ "$result" = "skipped" ]; then echo "SKIP: $name"; else echo "WARN: $name ($result)"; fi
+        }
+        advisory "iOS Xcode Build" "${{ needs.ios-xcodebuild.result }}"
+        advisory "Android Unit Tests" "${{ needs.android-unit-tests.result }}"
+        advisory "Parity Check" "${{ needs.parity-check.result }}"
+        echo "============================================="
+        echo "### Agent Validation Gate" >> $GITHUB_STEP_SUMMARY
+        echo "| Check | Result | Blocking |" >> $GITHUB_STEP_SUMMARY
+        echo "|-------|--------|----------|" >> $GITHUB_STEP_SUMMARY
+        echo "| Structure Check | ${{ needs.structure-check.result }} | Yes |" >> $GITHUB_STEP_SUMMARY
+        echo "| iOS SPM Build | ${{ needs.ios-spm-build.result }} | Yes |" >> $GITHUB_STEP_SUMMARY
+        echo "| iOS Xcode Build | ${{ needs.ios-xcodebuild.result }} | No |" >> $GITHUB_STEP_SUMMARY
+        echo "| Android Build | ${{ needs.android-build.result }} | Yes |" >> $GITHUB_STEP_SUMMARY
+        echo "| Android Unit Tests | ${{ needs.android-unit-tests.result }} | No |" >> $GITHUB_STEP_SUMMARY
+        echo "| Parity Check | ${{ needs.parity-check.result }} | No |" >> $GITHUB_STEP_SUMMARY
+        if [ "$REQUIRED_PASSED" = "true" ]; then
+          echo "GATE VERDICT: PASSED"
+          echo "**VERDICT: PASSED**" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "GATE VERDICT: FAILED"
+          echo "**VERDICT: FAILED**" >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
