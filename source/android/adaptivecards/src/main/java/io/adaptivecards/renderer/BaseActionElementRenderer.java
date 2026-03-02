@@ -332,7 +332,8 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 }
             }
 
-            v.setSelected(m_invisibleCard.getVisibility() != View.VISIBLE);
+            // Fix: Don't use setSelected() as it causes TalkBack to announce "selected/not selected" (#374)
+            // The expanded/collapsed state is announced via announceForAccessibility below
             // Reset all other buttons
             ViewGroup parentContainer;
             if (v.getTag(PARENT_DROPDOWN_TAG) != null)
@@ -363,6 +364,12 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             }
 
             m_invisibleCard.setVisibility(m_invisibleCard.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+
+            // Fix: Announce expanded/collapsed state for TalkBack (#374)
+            boolean isExpanded = m_invisibleCard.getVisibility() == View.VISIBLE;
+            v.announceForAccessibility(v.getContentDescription() != null ?
+                v.getContentDescription() + (isExpanded ? " Expanded" : " Collapsed") :
+                (isExpanded ? "Expanded" : "Collapsed"));
 
             View mainCardView = ((ViewGroup) m_hiddenCardsLayout.getParent()).getChildAt(0);
             int padding = mainCardView.getPaddingTop();
