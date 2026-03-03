@@ -105,6 +105,10 @@
     for (id<ACOIVisibilityManagerFacade> viewToUpdateVisibility in facades) {
         [viewToUpdateVisibility updatePaddingVisibility];
     }
+
+    // Post accessibility notification so VoiceOver announces the layout change
+    // and does not lose focus when elements are toggled (fixes #34)
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
 }
 
 @end
