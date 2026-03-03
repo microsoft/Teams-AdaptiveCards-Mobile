@@ -12,6 +12,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -376,6 +377,16 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             {
                 mainCardView.setPadding(padding, padding, padding, padding);
             }
+
+            // Announce expanded/collapsed state to TalkBack so users hear
+            // "expanded" or "collapsed" instead of irrelevant child content
+            boolean isExpanded = m_invisibleCard.getVisibility() == View.VISIBLE;
+            String stateText = isExpanded ? "expanded" : "collapsed";
+            ViewCompat.setStateDescription(v, stateText);
+            v.announceForAccessibility(
+                v instanceof Button
+                    ? ((Button) v).getText() + ", " + stateText
+                    : stateText);
         }
 
         private void handlePopoverAction(@NonNull PopoverAction action, @NonNull View v) {
