@@ -1008,4 +1008,54 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     }
 }
 
+#pragma mark - Accessibility
+
+- (BOOL)isAccessibilityElement
+{
+    if (self.selectActionTarget != nil)
+    {
+        return [super isAccessibilityElement];
+    }
+    return NO;
+}
+
+- (NSArray *)accessibilityElements
+{
+    if (self.isAccessibilityElement || !_hasCalled)
+    {
+        return [super accessibilityElements];
+    }
+
+    @try
+    {
+        NSMutableArray *elements = [NSMutableArray new];
+        [self collectAccessibleElementsFromView:self intoArray:elements];
+        return elements.count > 0 ? [elements copy] : [super accessibilityElements];
+    }
+    @catch (NSException *exception)
+    {
+        return [super accessibilityElements];
+    }
+}
+
+- (void)collectAccessibleElementsFromView:(UIView *)view
+                                intoArray:(NSMutableArray *)elements
+{
+    if (view == nil || view.isHidden || view.accessibilityElementsHidden)
+    {
+        return;
+    }
+
+    if (view.isAccessibilityElement)
+    {
+        [elements addObject:view];
+        return;
+    }
+
+    for (UIView *child in view.subviews)
+    {
+        [self collectAccessibleElementsFromView:child intoArray:elements];
+    }
+}
+
 @end
