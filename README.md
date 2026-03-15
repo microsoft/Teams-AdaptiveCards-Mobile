@@ -2,7 +2,7 @@
 
 ![logo](assets/adaptive-card-200.png)
 
-[Adaptive Cards](https://adaptivecards.io) are a new way for developers to exchange content in a common and consistent way. Get started today by putting Adaptive Cards into Microsoft Teams, Outlook Actionable Messages, Cortana Skills, or Windows Timeline -- or render cards inside your own apps by using our SDKs.
+[Adaptive Cards](https://adaptivecards.microsoft.com) are a new way for developers to exchange content in a common and consistent way. Get started today by putting Adaptive Cards into Microsoft Teams, Outlook Actionable Messages, Cortana Skills, or Windows Timeline -- or render cards inside your own apps by using our SDKs.
 
 ## Adaptive Cards is now a semi private repo
 * Pull requests and issue creations will no longer be accepted and will be closed. Please send all issues with Adaptive Cards to
@@ -12,10 +12,10 @@
 
 ## Dive in
 
-* [Documentation](https://adaptivecards.io/documentation/)
-* [Schema Explorer](https://adaptivecards.io/explorer/)
-* [Sample Cards](https://adaptivecards.io/samples/)
-* [Designer](https://adaptivecards.io/designer/)
+* [Documentation](https://adaptivecards.microsoft.com/documentation/)
+* [Schema Explorer](https://adaptivecards.microsoft.com/explorer/)
+* [Sample Cards](https://adaptivecards.microsoft.com/samples/)
+* [Designer](https://adaptivecards.microsoft.com/designer/)
 
 ## Install and Build
 
