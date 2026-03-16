@@ -65,6 +65,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     int _numberOfSubscribers;
     // flag that's set if didLoadElements delegate is called
     BOOL _hasCalled;
+    BOOL _isRenderingComplete;
     NSMutableDictionary *_imageContextMap;
     NSMutableDictionary *_elementWidthMap;
     NSMutableDictionary *_imageViewContextMap;
@@ -133,6 +134,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         self.isRenderingInsideBottomSheet = NO;
         [self render];
     }
+    _isRenderingComplete = YES;
     // call to check if all resources are loaded
     [self callDidLoadElementsIfNeeded];
     return self;
@@ -1019,9 +1021,13 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     return NO;
 }
 
+// Flattens the view hierarchy into a single list of leaf accessible elements.
+// This intentionally bypasses any shouldGroupAccessibilityChildren or
+// accessibilityContainerType semantics on intermediate containers to ensure
+// VoiceOver can reach controls in deeply nested cards.
 - (NSArray *)accessibilityElements
 {
-    if (self.isAccessibilityElement || !_hasCalled)
+    if (self.isAccessibilityElement || !_isRenderingComplete)
     {
         return [super accessibilityElements];
     }
@@ -1034,6 +1040,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     }
     @catch (NSException *exception)
     {
+        NSLog(@"[ACRView] accessibilityElements exception: %@", exception);
         return [super accessibilityElements];
     }
 }
@@ -1041,7 +1048,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 - (void)collectAccessibleElementsFromView:(UIView *)view
                                 intoArray:(NSMutableArray *)elements
 {
-    if (view == nil || view.isHidden || view.accessibilityElementsHidden)
+    if (view == nil || view.isHidden || view.accessibilityElementsHidden || view.alpha <= 0)
     {
         return;
     }
