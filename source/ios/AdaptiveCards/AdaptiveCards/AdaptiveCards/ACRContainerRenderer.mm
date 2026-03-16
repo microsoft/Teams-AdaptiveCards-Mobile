@@ -19,6 +19,7 @@
 #import "ACRFlowLayout.h"
 #import "ARCGridViewLayout.h"
 #import "ACRLayoutHelper.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRContainerRenderer
 
@@ -41,7 +42,16 @@
 {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Container> containerElem = std::dynamic_pointer_cast<Container>(elem);
-    
+
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSArray *swiftContainerItems = nil;
+    ACRContainerStyle swiftContainerStyle = ACRNone;
+    if (useSwiftRendering) {
+        swiftContainerItems = [SwiftAdaptiveCardObjcBridge getContainerItems:acoElem useSwift:YES];
+        swiftContainerStyle = (ACRContainerStyle)[SwiftAdaptiveCardObjcBridge getContainerStyle:acoElem useSwift:YES];
+    }
+
     [rootView.context pushBaseCardElementContext:acoElem];
     
     //Layout
@@ -97,7 +107,8 @@
         useStackLayout = YES;
     }
 
-    ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:(ACRContainerStyle)containerElem->GetStyle()
+    ACRContainerStyle containerStyle = useSwiftRendering ? swiftContainerStyle : (ACRContainerStyle)containerElem->GetStyle();
+    ACRColumnView *container = [[ACRColumnView alloc] initWithStyle:containerStyle
                                                         parentStyle:[viewGroup style]
                                                          hostConfig:acoConfig
                                                           superview:viewGroup];

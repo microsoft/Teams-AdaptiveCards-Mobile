@@ -25,6 +25,7 @@
 #import "ACRViewTextAttachment.h"
 #import "ACRViewAttachingTextView.h"
 #import "ACRCitationManager.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRTextBlockRenderer {
     ACRCitationManager *_citationManager;
@@ -61,9 +62,19 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<TextBlock> txtBlck = std::dynamic_pointer_cast<TextBlock>(elem);
-    
-    if (txtBlck->GetText().empty()) {
-        return nil;
+
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *textBlockText = nil;
+    if (useSwiftRendering) {
+        textBlockText = [SwiftAdaptiveCardObjcBridge getTextBlockText:acoElem useSwift:YES];
+        if (textBlockText.length == 0) {
+            return nil;
+        }
+    } else {
+        if (txtBlck->GetText().empty()) {
+            return nil;
+        }
     }
     
     ACRViewAttachingTextView *lab = [[ACRViewAttachingTextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];

@@ -25,6 +25,7 @@
 #import "ACRUILabel.h"
 #import "UtiliOS.h"
 #import "ARCGridViewLayout.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRCompoundButtonRenderer
 
@@ -45,10 +46,30 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<CompoundButton> compoundButton = std::dynamic_pointer_cast<CompoundButton>(elem);
-    std::shared_ptr<IconInfo> icon = compoundButton->getIcon();
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
+
+    // Get properties - use bridge for Swift, C++ for legacy
+    NSString *title;
+    NSString *description;
+    NSString *badge;
+    BOOL hasIcon;
+
+    if (useSwiftRendering) {
+        title = [SwiftAdaptiveCardObjcBridge getCompoundButtonTitle:acoElem useSwift:YES];
+        description = [SwiftAdaptiveCardObjcBridge getCompoundButtonDescription:acoElem useSwift:YES];
+        badge = [SwiftAdaptiveCardObjcBridge getCompoundButtonBadge:acoElem useSwift:YES];
+        hasIcon = ([SwiftAdaptiveCardObjcBridge getCompoundButtonIcon:acoElem useSwift:YES] != nil);
+    } else {
+        title = @(compoundButton->getTitle().c_str());
+        description = @(compoundButton->getDescription().c_str());
+        badge = @(compoundButton->getBadge().c_str());
+        hasIcon = (compoundButton->getIcon() != nil);
+    }
 
     UIStackView *verticalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     verticalStack.axis = UILayoutConstraintAxisVertical;
@@ -56,40 +77,42 @@
     verticalStack.alignment = UIStackViewAlignmentLeading;
     verticalStack.distribution = UIStackViewDistributionEqualSpacing;
     verticalStack.spacing = 4;
-    
+
     UIStackView *horizontalStack = [[UIStackView alloc] initWithFrame:CGRectZero];
     horizontalStack.translatesAutoresizingMaskIntoConstraints = NO;
     horizontalStack.spacing = 8;
     horizontalStack.alignment = UIStackViewAlignmentCenter;
     horizontalStack.distribution = UIStackViewDistributionEqualCentering;
-    
-    if(icon != nil)
-    {
-        ACRSVGIconHoldingView* iconView = [self getIconViewWithIconInfo:icon
-                                                               rootView:rootView
-                                                             hostConfig:acoConfig];
-        [horizontalStack addArrangedSubview:iconView];
-    }
-   
-    
-    UILabel *titleLabel = [self getTitleLabelWithText:compoundButton->getTitle() viewGroup:viewGroup hostConfig:acoConfig];
-    
-    UILabel* descriptionLabel = [self getDescriptionLabelWithText:compoundButton->getDescription()
-                                                           viewGroup:viewGroup
-                                                          hostConfig:acoConfig];
 
-   
-    
+    if (hasIcon)
+    {
+        // For Swift rendering, we still need to use C++ icon for now since IconInfo bridge is complex
+        // In the future, this could be refactored to use Swift icon info
+        std::shared_ptr<IconInfo> icon = compoundButton->getIcon();
+        if (icon != nil) {
+            ACRSVGIconHoldingView* iconView = [self getIconViewWithIconInfo:icon
+                                                                   rootView:rootView
+                                                                 hostConfig:acoConfig];
+            [horizontalStack addArrangedSubview:iconView];
+        }
+    }
+
+    UILabel *titleLabel = [self getTitleLabelWithNSString:title viewGroup:viewGroup hostConfig:acoConfig];
+
+    UILabel* descriptionLabel = [self getDescriptionLabelWithNSString:description
+                                                            viewGroup:viewGroup
+                                                           hostConfig:acoConfig];
+
     [horizontalStack addArrangedSubview:titleLabel];
-    if(!compoundButton->getBadge().empty()) {
-        UIView *badgeView = [self getBadgeLabelWithText:compoundButton->getBadge()
-                                                   viewGroup:viewGroup
-                                                  hostConfig:acoConfig];
+    if (badge.length > 0) {
+        UIView *badgeView = [self getBadgeLabelWithNSString:badge
+                                                 viewGroup:viewGroup
+                                                hostConfig:acoConfig];
         [horizontalStack addArrangedSubview:badgeView];
     }
     [verticalStack addArrangedSubview:horizontalStack];
     [verticalStack addArrangedSubview:descriptionLabel];
-    
+
     UIView *compoundButtonView = [[UIView alloc] initWithFrame:CGRectZero];
     compoundButtonView.translatesAutoresizingMaskIntoConstraints = NO;
     compoundButtonView.layer.borderWidth = 1;
@@ -105,11 +128,11 @@
     ]];
 
     configRtl(compoundButtonView, rootView.context);
-    
+
     std::shared_ptr<BaseActionElement> selectAction = compoundButton->GetSelectAction();
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, compoundButtonView, viewGroup);
-    compoundButtonView.accessibilityLabel = @(compoundButton->getTitle().c_str());
+    compoundButtonView.accessibilityLabel = title;
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:compoundButtonView withAreaName:areaName];
     return compoundButtonView;
@@ -119,9 +142,16 @@
                              viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
                             hostConfig:(ACOHostConfig *)acoConfig
 {
+    return [self getTitleLabelWithNSString:@(title.c_str()) viewGroup:viewGroup hostConfig:acoConfig];
+}
+
+-(UILabel*) getTitleLabelWithNSString:(NSString *) title
+                             viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
+                            hostConfig:(ACOHostConfig *)acoConfig
+{
     UILabel * titleLabel = [[UILabel alloc] init];
     titleLabel.textColor =  [acoConfig getTextBlockColor:[viewGroup style] textColor:ForegroundColor::Default subtleOption:NO];
-    titleLabel.text = @(title.c_str());
+    titleLabel.text = title;
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
     titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -154,9 +184,16 @@
                              viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
                             hostConfig:(ACOHostConfig *)acoConfig
 {
+    return [self getDescriptionLabelWithNSString:@(description.c_str()) viewGroup:viewGroup hostConfig:acoConfig];
+}
+
+-(UILabel*) getDescriptionLabelWithNSString:(NSString *) description
+                             viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
+                            hostConfig:(ACOHostConfig *)acoConfig
+{
     UILabel * descriptionLabel = [[UILabel alloc] init];
     descriptionLabel.textColor =  [acoConfig getTextBlockColor:[viewGroup style] textColor:ForegroundColor::Default subtleOption:NO];
-    descriptionLabel.text = @(description.c_str());
+    descriptionLabel.text = description;
     descriptionLabel.backgroundColor = [UIColor clearColor];
     descriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
     descriptionLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
@@ -166,6 +203,13 @@
 }
 
 -(UIView*) getBadgeLabelWithText:(std::string) badge
+                             viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
+                            hostConfig:(ACOHostConfig *)acoConfig
+{
+    return [self getBadgeLabelWithNSString:@(badge.c_str()) viewGroup:viewGroup hostConfig:acoConfig];
+}
+
+-(UIView*) getBadgeLabelWithNSString:(NSString *) badge
                              viewGroup:(UIView<ACRIContentHoldingView> *)viewGroup
                             hostConfig:(ACOHostConfig *)acoConfig
 {
@@ -180,7 +224,7 @@
     badgeContainerView.layer.borderColor = [ACOHostConfig convertHexColorCodeToUIColor:badgeBackgroundColor].CGColor;
     UILabel * badgeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     badgeLabel.textColor =  [acoConfig getBackgroundColorForContainerStyle:[viewGroup style]];
-    badgeLabel.text = @(badge.c_str());
+    badgeLabel.text = badge;
     badgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     badgeLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightMedium];
     badgeLabel.lineBreakMode = NSLineBreakByTruncatingTail;

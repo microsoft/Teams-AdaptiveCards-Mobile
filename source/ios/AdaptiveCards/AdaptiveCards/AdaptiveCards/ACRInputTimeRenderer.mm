@@ -11,6 +11,7 @@
 #import "ACRDateTextField.h"
 #import "ACRInputLabelViewPrivate.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRInputTimeRenderer
 
@@ -31,6 +32,13 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *swiftTimeValue = nil;
+    if (useSwiftRendering) {
+        swiftTimeValue = [SwiftAdaptiveCardObjcBridge getTimeInputValue:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<BaseInputElement> timeInput = std::dynamic_pointer_cast<BaseInputElement>(elem);

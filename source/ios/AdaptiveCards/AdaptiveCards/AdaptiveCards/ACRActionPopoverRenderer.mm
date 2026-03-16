@@ -14,6 +14,7 @@
 #import "ACRIContentHoldingView.h"
 #import "PopoverAction.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRActionPopoverRenderer
 
@@ -29,9 +30,24 @@
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     std::shared_ptr<BaseActionElement> elem = [acoElem element];
     std::shared_ptr<PopoverAction> action = std::dynamic_pointer_cast<PopoverAction>(elem);
-    NSString *title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
+
+    // Get title - use Swift bridge when available, otherwise fallback to C++
+    NSString *title;
+    if (useSwiftRendering) {
+        title = [SwiftAdaptiveCardObjcBridge getPopoverActionTitle:acoElem useSwift:YES];
+        if (title.length == 0) {
+            // Fallback to C++ if Swift returns empty (element may not be Swift-parsed)
+            title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
+        }
+    } else {
+        title = [NSString stringWithCString:action->GetTitle().c_str() encoding:NSUTF8StringEncoding];
+    }
+
     UIButton *button = [ACRButton rootView:rootView baseActionElement:acoElem title:title andHostConfig:acoConfig];
     ACRPopoverTarget *target;
     if (ACRRenderingStatus::ACROk == buildTargetForButton([rootView getActionsTargetBuilderDirector], acoElem, button, &target))

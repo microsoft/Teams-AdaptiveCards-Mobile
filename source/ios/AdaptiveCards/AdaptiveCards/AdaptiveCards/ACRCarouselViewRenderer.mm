@@ -8,6 +8,7 @@
 
 #import "ACRCarouselViewRenderer.h"
 #import "ACRCarouselView.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRCarouselViewRenderer
 
@@ -29,6 +30,15 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSArray *swiftCarouselPages = nil;
+    NSArray *swiftCarouselPageItems = nil;
+    if (useSwiftRendering) {
+        swiftCarouselPages = [SwiftAdaptiveCardObjcBridge getCarouselPages:acoElem useSwift:YES];
+        swiftCarouselPageItems = [SwiftAdaptiveCardObjcBridge getCarouselPageItems:acoElem useSwift:YES];
+    }
+
     return [[ACRCarouselView alloc] initWithViewGroup:viewGroup
                                              rootView:rootView
                                                inputs:inputs
