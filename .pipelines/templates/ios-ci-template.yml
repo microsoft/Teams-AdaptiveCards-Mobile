@@ -5,6 +5,22 @@ steps:
     workingDirectory: 'source/ios/AdaptiveCards'
     forceRepoUpdate: false
 
+- script: |
+    set -e
+    SIM_NAME=$(xcrun simctl list devices available --json | python3 -c "
+    import json, sys
+    devices = json.load(sys.stdin)['devices']
+    for runtime in sorted(devices.keys(), reverse=True):
+      if 'iOS' in runtime:
+        for d in devices[runtime]:
+          if 'iPhone' in d['name'] and d.get('isAvailable', False):
+            print(d['name']); sys.exit(0)
+    sys.exit(1)
+    ")
+    echo "Discovered simulator: $SIM_NAME"
+    echo "##vso[task.setvariable variable=SimulatorName]$SIM_NAME"
+  displayName: 'Discover available iOS Simulator'
+
 - task: Xcode@5
   displayName: 'Sample App Unit Test'
   inputs:
@@ -14,9 +30,9 @@ steps:
     xcodeVersion: 'default'
     packageApp: false
     signingOption: 'default'
-    sdk: 'iphonesimulator18.5'
-    destinationPlatformOption: 'iOS'
-    destinationSimulators: 'iPhone 16'
+    sdk: 'iphonesimulator'
+    destinationPlatformOption: 'custom'
+    destinationSimulators: 'platform=iOS Simulator,OS=latest,name=$(SimulatorName)'
 
 - task: Xcode@5
   displayName: 'Framework Unit Test'
@@ -27,6 +43,6 @@ steps:
     xcodeVersion: 'default'
     packageApp: false
     signingOption: 'default'
-    sdk: 'iphonesimulator18.5'
-    destinationPlatformOption: 'iOS'
-    destinationSimulators: 'iPhone 16'
+    sdk: 'iphonesimulator'
+    destinationPlatformOption: 'custom'
+    destinationSimulators: 'platform=iOS Simulator,OS=latest,name=$(SimulatorName)'
