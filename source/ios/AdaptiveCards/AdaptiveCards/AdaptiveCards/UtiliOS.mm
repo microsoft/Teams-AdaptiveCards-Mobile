@@ -26,6 +26,8 @@
 #import "TextRun.h"
 #import "ACRTapGestureRecognizerFactory.h"
 
+#import <iterator>
+
 using namespace AdaptiveCards;
 
 // tolerance value for computing scaler for background cover size
@@ -420,7 +422,7 @@ void configBleed(ACRView *rootView, std::shared_ptr<BaseCardElement> const &elem
                     [backgroundView layer].borderColor = [container layer].borderColor;
                     [container layer].borderColor = 0;
                 }
-                
+
                 if ([container layer].cornerRadius) {
                     [backgroundView layer].cornerRadius = [container layer].cornerRadius;
                     [container layer].cornerRadius = 0;
@@ -518,21 +520,21 @@ bool handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
     std::shared_ptr<BaseElement> fallbackBaseElement = adaptiveCard->GetRootFallbackContent();
     std::shared_ptr<BaseCardElement> elem = std::static_pointer_cast<BaseCardElement>(fallbackBaseElement);
     ACRRegistration *reg = [ACRRegistration getInstance];
-    
+
     if (fallbackType != FallbackType::Content || !elem)
     {
         return false;
     }
-    
+
     ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] init];
     [acoElem setElem:elem];
 
     ACRBaseCardElementRenderer *renderer =
         [reg getRenderer:[NSNumber numberWithInt:(int)elem->GetElementType()]];
-    
+
     if (renderer) {
         @try {
-            
+
             UIView* renderedView = [renderer render:view
                                            rootView:rootView
                                              inputs:inputs
@@ -540,9 +542,9 @@ bool handleRootFallback(std::shared_ptr<AdaptiveCard> const &adaptiveCard,
                                          hostConfig:config];
             [view removeAllArrangedSubviews];
             [view insertArrangedSubview:renderedView atIndex:0];
-            
+
             return true;
-            
+
         } @catch (ACOFallbackException *e) {
             NSLog(@"Root Fallback Failed");
             NSLog(@"%@", e);
@@ -729,9 +731,9 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
     std::shared_ptr<MarkDownParser> markDownParser = std::make_shared<MarkDownParser>([ACOHostConfig getLocalizedDate:textProperties.GetText() language:textProperties.GetLanguage()]);
 
     std::string markdownString;
-    
+
     NSString *markDownParserString = [NSString stringWithCString:markDownParser->GetRawText().c_str() encoding:NSUTF8StringEncoding];
-    
+
     // This validation prevents to detect the dot and space ". " of hungarian date as a list of elements in parsing
     if (matchHungarianDateRegex(markDownParserString))
     {
@@ -761,7 +763,7 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
         NSSet* symbolsToRemove = [NSSet setWithObjects:@"*", @"_", nil];
         parsedString = stringWithRemovedBackslashedSymbols(parsedString, symbolsToRemove);
     }
-    
+
     NSDictionary *data = nil;
 
     FontType sharedFontType = textProperties.GetFontType().value_or(FontType::Default);
@@ -1397,13 +1399,13 @@ NSString *stringForCString(const std::optional<std::string> cString)
     {
         return @"";
     }
-    
+
     const char* cStr = cString->c_str();
     if (!cStr)
     {
         return @"";
     }
-    
+
     return [NSString stringWithCString:cStr encoding:NSUTF8StringEncoding];
 }
 
