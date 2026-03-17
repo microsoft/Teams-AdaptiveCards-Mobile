@@ -1059,6 +1059,15 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         return;
     }
 
+    // UITableView and UICollectionView manage their own accessibility
+    // hierarchy internally. Treat them as leaf containers so XCUITest
+    // and VoiceOver can still discover them and their cells.
+    if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]])
+    {
+        [elements addObject:view];
+        return;
+    }
+
     for (UIView *child in view.subviews)
     {
         [self collectAccessibleElementsFromView:child intoArray:elements];
