@@ -5,8 +5,16 @@ steps:
     workingDirectory: 'source/ios/AdaptiveCards'
     forceRepoUpdate: false
 
-- script: xcodebuild -downloadPlatform iOS
-  displayName: 'Download iOS Simulator Runtime'
+- script: |
+    echo "=== Available Xcode versions ==="
+    ls /Applications/ | grep Xcode
+    echo "=== Current Xcode ==="
+    xcode-select -p
+    echo "=== Available runtimes ==="
+    xcrun simctl list runtimes
+    echo "=== Available devices ==="
+    xcrun simctl list devices available | head -30
+  displayName: 'Debug: List available simulators'
 
 - task: Xcode@5
   displayName: 'Sample App Unit Test'
