@@ -34,6 +34,8 @@
 // there are some subviews that can be stretched
 // it indicates that additional filler views are not needed.
 @property (nonatomic, readonly) BOOL hasStretchableView;
+// returns YES if at least one direct child is visible
+@property (nonatomic, readonly) BOOL hasVisibleContent;
 
 - (instancetype _Nonnull)initWithFrame:(CGRect)frame;
 
