@@ -31,5 +31,8 @@ schedules:
 pool:
   vmImage: 'macos-latest'
 
-steps:
+jobs:
+- job: iOS_CI
+  timeoutInMinutes: 120
+  steps:
     - template: templates/ios-ci-template.yml
