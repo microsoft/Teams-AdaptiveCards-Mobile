@@ -95,7 +95,7 @@ void configRtl(UIView *view, ACORenderContext *context)
         return;
     } else if (rtl == ACRRtlRTL) {
         view.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
-    } else if (rtl == ACRRtlRTL) {
+    } else if (rtl == ACRRtlLTR) {
         view.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
     }
 }
