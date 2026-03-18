@@ -121,7 +121,7 @@ using namespace AdaptiveCards;
         std::string data;
         if (_type == ACRSubmit) {
             std::shared_ptr<SubmitAction> submitAction = std::dynamic_pointer_cast<SubmitAction>(_elem);
-            data = submitAction->GetDataJson();
+            data = decodeUnicodeEscapes(submitAction->GetDataJson());
         }
 
         if (_type == ACRExecute) {
@@ -134,6 +134,77 @@ using namespace AdaptiveCards;
         }
     }
     return nil;
+}
+
+// Decodes \uXXXX (and surrogate-pair \uXXXX\uXXXX) escape sequences,
+// replacing them with the actual UTF-8 encoded characters.
+std::string decodeUnicodeEscapes(const std::string &jsonString) {
+    if (jsonString.empty()) {
+        return jsonString;
+    }
+
+    std::string result;
+    result.reserve(jsonString.size());
+
+    size_t i = 0;
+    while (i < jsonString.size()) {
+        // Need at least 6 chars for \uXXXX
+        if (jsonString[i] == '\\' && i + 5 < jsonString.size() && jsonString[i + 1] == 'u') {
+            const std::string hexStr = jsonString.substr(i + 2, 4);
+            bool validHex = true;
+            for (char c : hexStr) {
+                if (!isxdigit((unsigned char)c)) { validHex = false; break; }
+            }
+            if (validHex) {
+                unsigned int codePoint = (unsigned int)std::stoul(hexStr, nullptr, 16);
+
+                // High surrogate (U+D800–U+DBFF): look for a following low surrogate.
+                if (codePoint >= 0xD800 && codePoint <= 0xDBFF && i + 11 < jsonString.size() &&
+                    jsonString[i + 6] == '\\' && jsonString[i + 7] == 'u') {
+                    const std::string lowHex = jsonString.substr(i + 8, 4);
+                    bool validLow = true;
+                    for (char c : lowHex) {
+                        if (!isxdigit((unsigned char)c)) { validLow = false; break; }
+                    }
+                    if (validLow) {
+                        unsigned int low = (unsigned int)std::stoul(lowHex, nullptr, 16);
+                        if (low >= 0xDC00 && low <= 0xDFFF) {
+                            // UTF-16 surrogate-pair formula (Unicode §3.9 D91):
+                            //   0x10000  — base of supplementary planes
+                            //   0xD800   — first high-surrogate; subtracted to isolate 10-bit high payload
+                            //   << 10    — shift high payload into bits 10–19 of the 20-bit offset
+                            //   0xDC00   — first low-surrogate; subtracted to isolate 10-bit low payload
+                            uint32_t cp = 0x10000 + ((codePoint - 0xD800) << 10) + (low - 0xDC00);
+                            result += (char)(0xF0 | (cp >> 18));
+                            result += (char)(0x80 | ((cp >> 12) & 0x3F));
+                            result += (char)(0x80 | ((cp >> 6) & 0x3F));
+                            result += (char)(0x80 | (cp & 0x3F));
+                            i += 12;
+                            continue;
+                        }
+                    }
+                }
+
+                // BMP character (U+0000–U+FFFF) — encode as UTF-8.
+                if (codePoint < 0x80) {
+                    result += (char)codePoint;
+                } else if (codePoint < 0x800) {
+                    result += (char)(0xC0 | (codePoint >> 6));
+                    result += (char)(0x80 | (codePoint & 0x3F));
+                } else {
+                    result += (char)(0xE0 | (codePoint >> 12));
+                    result += (char)(0x80 | ((codePoint >> 6) & 0x3F));
+                    result += (char)(0x80 | (codePoint & 0x3F));
+                }
+                i += 6;
+                continue;
+            }
+        }
+        result += jsonString[i];
+        i++;
+    }
+
+    return result;
 }
 
 - (NSString *)verb

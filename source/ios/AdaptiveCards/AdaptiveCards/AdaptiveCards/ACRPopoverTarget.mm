@@ -23,6 +23,7 @@
 #import <UIKit/UIKit.h>
 #import "ACRInputLabelView.h"
 #import "ACROverflowTarget.h"
+#import "UtiliOS.h"
 
 @interface ACRPopoverTarget()
 
@@ -142,12 +143,16 @@
                                                          hostConfig:self.rootView.hostConfig
                                                           superview:self.rootView];
     self.rootView.isRenderingInsideBottomSheet = YES;
-    // Render the content into the cached container
-    [renderer render:self.cachedContentView
-            rootView:self.rootView
-              inputs:[sharedInputs mutableCopy]
-     baseCardElement:acoElement
-          hostConfig:self.rootView.hostConfig];
+    @try {
+        // Render the content into the cached container
+        [renderer render:self.cachedContentView
+                rootView:self.rootView
+                  inputs:[sharedInputs mutableCopy]
+         baseCardElement:acoElement
+              hostConfig:self.rootView.hostConfig];
+    } @catch (ACOFallbackException *e) {
+        NSLog(@"ACRPopoverTarget: Fallback exception caught during popover content rendering: %@", e);
+    }
 }
 
 - (void)markActionTargetsAsFromBottomSheet:(UIView *)containerView
