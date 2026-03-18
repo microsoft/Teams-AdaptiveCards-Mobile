@@ -173,6 +173,7 @@
 
     XCUIElement *commentTextInput = [chatWindow.textViews elementMatchingType:XCUIElementTypeAny identifier:@"comment"];
     [commentTextInput tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [commentTextInput typeText:@"A comment"];
 
     [buttons[@"Done"] tap];
@@ -457,12 +458,14 @@
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
     [outsideRequired tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideRequired typeText:@"text outside popover required"];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
     [outsideInput tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideInput typeText:@"text outside popover Input"];
     
     // Dismiss the keyboard
@@ -575,12 +578,14 @@
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
     [outsideRequired tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideRequired typeText:@"text outside popover required"];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
     [outsideInput tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideInput typeText:@"text outside popover Input"];
     
     // Dismiss the keyboard
@@ -689,12 +694,14 @@
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
     [outsideRequired tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideRequired typeText:@"text outside popover required"];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
     [outsideInput tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideInput typeText:@"text outside popover Input"];
     
     // Dismiss the keyboard
