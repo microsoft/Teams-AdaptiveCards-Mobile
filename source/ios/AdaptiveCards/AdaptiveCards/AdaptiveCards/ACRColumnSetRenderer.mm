@@ -239,7 +239,19 @@
 
     [rootView.context popBaseCardElementContext:acoElem];
 
-    columnSetView.accessibilityElements = [columnSetView getArrangedSubviews];
+    // Flatten column children so VoiceOver uses geometric (row-by-row)
+    // ordering instead of traversing each column sequentially
+    NSMutableArray *flatElements = [NSMutableArray array];
+    for (UIView *column in [columnSetView getArrangedSubviews]) {
+        if ([column respondsToSelector:@selector(getArrangedSubviews)]) {
+            for (UIView *child in [(id)column getArrangedSubviews]) {
+                [flatElements addObject:child];
+            }
+        } else {
+            [flatElements addObject:column];
+        }
+    }
+    columnSetView.accessibilityElements = flatElements;
 
     return columnSetView;
 }
