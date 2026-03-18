@@ -603,6 +603,11 @@ using namespace AdaptiveCards;
     return _paddingHandler.hasPadding;
 }
 
+- (BOOL)hasVisibleContent
+{
+    return _visibilityManager.hasVisibleViews;
+}
+
 - (void)registerInvisibleView:(UIView *)invisibleView
 {
     if (!_invisibleViews) {
@@ -881,6 +886,12 @@ using namespace AdaptiveCards;
     [rootView.context registerVisibilityManager:self targetViewTag:renderedView.tag];
 
     if (!acoElem.element->GetIsVisible()) {
+        [self registerInvisibleView:renderedView];
+    } else if ([renderedView isKindOfClass:[ACRContentStackView class]] &&
+               !((ACRContentStackView *)renderedView).hasVisibleContent) {
+        // The element is marked visible, but all of its children are invisible.
+        // Register it the same way as an explicit isVisible:false so the view
+        // and its separator are collapsed by applyVisibilityToSubviews.
         [self registerInvisibleView:renderedView];
     }
 }
