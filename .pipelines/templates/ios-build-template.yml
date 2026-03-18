@@ -22,17 +22,27 @@ steps:
     workingDirectory: 'source/ios/AdaptiveCards'
     forceRepoUpdate: false
 
-- task: Xcode@5
+- script: |
+    set -eo pipefail
+    cd source/ios/AdaptiveCards
+
+    SIM=$(xcrun simctl list devices available --json 2>/dev/null | python3 -c "
+    import json, sys
+    try:
+      devices = json.load(sys.stdin)['devices']
+      for runtime in sorted(devices.keys(), reverse=True):
+        if 'iOS' in runtime:
+          for d in devices[runtime]:
+            if 'iPhone' in d['name'] and d.get('isAvailable', False):
+              print(d['udid']); sys.exit(0)
+    except: pass
+    " 2>/dev/null || true)
+
+    if [ -n "$SIM" ]; then
+      DEST="platform=iOS Simulator,id=$SIM"
+    else
+      DEST="generic/platform=iOS Simulator"
+    fi
+
+    xcodebuild build       -workspace AdaptiveCards.xcworkspace       -scheme ADCIOSVisualizer       -sdk ${{ parameters.sdk }}       -configuration ${{ parameters.configuration }}       -destination "$DEST"       CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
   displayName: 'Compiling...'
-  inputs:
-    actions: 'build'
-    xcWorkspacePath: 'source/ios/AdaptiveCards/AdaptiveCards.xcworkspace'
-    scheme: 'ADCIOSVisualizer'
-    xcodeVersion: 'default'
-    packageApp: ${{ parameters.packageApp }}
-    signingOption: ${{ parameters.signingOption }}
-    sdk: ${{ parameters.sdk }}
-    configuration: ${{ parameters.configuration }}
-    destinationPlatformOption: 'iOS'
-    destinationSimulators: 'iPhone 12'
-    useXcpretty: false
