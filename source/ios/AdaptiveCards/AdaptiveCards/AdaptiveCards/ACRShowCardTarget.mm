@@ -137,6 +137,16 @@
         NSString *hint = hidden ? @"card expanded" : @"card collapsed";
         _button.accessibilityValue = NSLocalizedString(hint, nil);
 
+        // Post accessibility notification so VoiceOver announces the state change
+        // and moves focus to the expanded ShowCard content (fixes #166)
+        if (hidden) {
+            // Card was just expanded  move VoiceOver focus to the card content
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _adcView);
+        } else {
+            // Card was just collapsed  move VoiceOver focus back to the button
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _button);
+        }
+
         if ([_rootView.acrActionDelegate respondsToSelector:@selector(didChangeVisibility:isVisible:)]) {
             [_rootView.acrActionDelegate didChangeVisibility:_button isVisible:(!_adcView.hidden)];
         }
@@ -186,6 +196,10 @@
 {
     _adcView.hidden = YES;
     _button.selected = NO;
+
+    // Post accessibility notification so VoiceOver returns focus to the button
+    // when the ShowCard is dismissed (fixes #165)
+    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, _button);
 
     if ([_rootView.acrActionDelegate respondsToSelector:@selector(didChangeVisibility:isVisible:)]) {
         [_rootView.acrActionDelegate didChangeVisibility:_button isVisible:(!_adcView.hidden)];
