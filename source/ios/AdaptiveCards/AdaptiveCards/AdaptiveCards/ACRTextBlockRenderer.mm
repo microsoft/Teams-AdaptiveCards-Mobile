@@ -117,8 +117,6 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
             // if html rendering is skipped, remove p tags from both ends (<p>, </p>)
             content = [[NSMutableAttributedString alloc] initWithString:text attributes:descriptor];
         }
-        lab.selectable = YES;
-        lab.userInteractionEnabled = YES;
         BOOL isCitationsEnabled = [featureFlagResolver boolForFlag:@"isCitationsEnabled"] ?: NO;
         if (isCitationsEnabled)
         {
@@ -184,6 +182,14 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     }
     
     lab.editable = NO;
+
+    // If the text block has no links/HTML, prevent VoiceOver from announcing
+    // "double tap to activate" by marking it as static text (#170)
+    if (!htmlData) {
+        lab.accessibilityTraits &= ~UIAccessibilityTraitLink;
+        lab.selectable = NO;
+        lab.userInteractionEnabled = NO;
+    }
     
     [lab setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
