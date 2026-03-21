@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
+import io.adaptivecards.R;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -381,7 +382,9 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
             // Announce expanded/collapsed state to TalkBack so users hear
             // "expanded" or "collapsed" instead of irrelevant child content
             boolean isExpanded = m_invisibleCard.getVisibility() == View.VISIBLE;
-            String stateText = isExpanded ? "expanded" : "collapsed";
+            String stateText = isExpanded
+                ? v.getContext().getString(R.string.showcard_expanded)
+                : v.getContext().getString(R.string.showcard_collapsed);
             ViewCompat.setStateDescription(v, stateText);
             v.announceForAccessibility(
                 v instanceof Button
