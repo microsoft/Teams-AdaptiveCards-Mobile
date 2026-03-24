@@ -82,6 +82,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSAttributedString *)buildCitationAttachmentWithCitation:(ACOCitation *)citation
                                                  references:(NSArray<ACOReference *> *)references;
 
+/**
+ * Presents the citation reference bottom sheet for a given citation and reference.
+ * Can be called directly (e.g. from a web-rendered card) without a root ACRView.
+ * @param activeController The view controller from which to present the sheet
+ * @param citation The citation that was tapped
+ * @param referenceData The reference data for the citation
+ */
+- (void)presentBottomSheetFrom:(UIViewController *)activeController
+                didTapCitation:(ACOCitation *)citation
+                 referenceData:(ACOReference * _Nullable)referenceData;
+
 @end
 
 NS_ASSUME_NONNULL_END

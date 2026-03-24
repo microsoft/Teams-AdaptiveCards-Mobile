@@ -19,6 +19,7 @@
 #import "ACRRenderer.h"
 #import "ACRRenderResult.h"
 #import "ACRContentStackView.h"
+#import "ACOHostConfig.h"
 
 @interface ACRCitationManager () <ACRCitationParserDelegate, ACRCitationReferenceViewDelegate>
 
@@ -127,7 +128,9 @@ static NSString *const referencesKey = @"References";
                                                                                        reference:referenceData];
     citationView.delegate = self;
 
-    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:self.rootView.hostConfig];
+    ACOHostConfig *hostConfig = self.rootView ? self.rootView.hostConfig : [[ACOHostConfig alloc] init];
+    ACRBottomSheetConfiguration *config = [[ACRBottomSheetConfiguration alloc] initWithHostConfig:hostConfig];
+    
     config.dismissButtonType = ACRBottomSheetDismissButtonTypeNone;
     config.contentPadding = 8;
     config.headerText = NSLocalizedString(referencesKey, nil);
