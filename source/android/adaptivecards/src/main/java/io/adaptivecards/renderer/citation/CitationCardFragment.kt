@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -150,6 +151,7 @@ class CitationCardFragment(
 
     companion object {
         const val TAG = "CitationCardFragment"
+
         private val unsupportedElements = setOf(
             CardElementType.ActionSet,
             CardElementType.AdaptiveCard,
@@ -163,6 +165,7 @@ class CitationCardFragment(
             CardElementType.ToggleInput,
             CardElementType.CompoundButton,
         )
+
         private val unsupportedActionItems = setOf(
             ActionType.Unsupported,
             ActionType.Execute,
@@ -175,32 +178,71 @@ class CitationCardFragment(
             ActionType.UnknownAction,
             ActionType.Overflow
         )
-    }
-}
 
-class CitationCardFragmentFactory(
-    private val context: Context,
-    private val minHeight: Int?,
-    private val adaptiveCard: AdaptiveCard,
-    private val renderedAdaptiveCard: RenderedAdaptiveCard,
-    private val actionHandler: ICardActionHandler,
-    private val hostConfig: HostConfig,
-    private val renderArgs: RenderArgs
-) : FragmentFactory() {
+        /**
+         * Shows the citation card fragment.
+         *
+         * @param fragmentManager FragmentManager to show the dialog
+         * @param config Configuration object containing all citation card data
+         */
+        @JvmStatic
+        fun show(
+            fragmentManager: FragmentManager,
+            config: CitationCardConfig
+        ) {
+            // Create factory with config parameters
+            val factory = object : FragmentFactory() {
+                override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+                    return when (className) {
+                        CitationCardFragment::class.java.name -> CitationCardFragment(
+                            config.context,
+                            config.minHeight,
+                            config.adaptiveCard,
+                            config.renderedAdaptiveCard,
+                            config.actionHandler,
+                            config.hostConfig,
+                            config.renderArgs
+                        )
+                        else -> super.instantiate(classLoader, className)
+                    }
+                }
+            }
 
-    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
-        return when (className) {
-            CitationCardFragment::class.java.name -> CitationCardFragment(
-                context,
-                minHeight,
-                adaptiveCard,
-                renderedAdaptiveCard,
-                actionHandler,
-                hostConfig,
-                renderArgs
+            // Set factory and create fragment
+            fragmentManager.fragmentFactory = factory
+            val fragment = factory.instantiate(
+                ClassLoader.getSystemClassLoader(),
+                CitationCardFragment::class.java.name
             )
 
-            else -> super.instantiate(classLoader, className)
+            // Show the dialog
+            if (fragment is CitationCardFragment) {
+                fragment.show(fragmentManager, TAG)
+            }
         }
     }
 }
+
+/**
+ * Configuration class for CitationCardFragment.
+ *
+ * Create an instance of this class with your citation card data and pass it to
+ * CitationCardFragment.show() to display the fragment.
+ *
+ * @param context Android Context
+ * @param minHeight Minimum height for the bottom sheet (optional)
+ * @param adaptiveCard The adaptive card to render
+ * @param renderedAdaptiveCard The rendered adaptive card context
+ * @param actionHandler Handler for card actions
+ * @param hostConfig Host configuration for styling
+ * @param renderArgs Rendering arguments
+ */
+data class CitationCardConfig(
+    val context: Context,
+    val minHeight: Int?,
+    val adaptiveCard: AdaptiveCard,
+    val renderedAdaptiveCard: RenderedAdaptiveCard,
+    val actionHandler: ICardActionHandler,
+    val hostConfig: HostConfig,
+    val renderArgs: RenderArgs
+)

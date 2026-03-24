@@ -103,9 +103,9 @@ public class ContainerRenderer extends BaseCardElementRenderer
 
         ContainerStyle containerStyle = renderArgs.getContainerStyle();
         ContainerStyle styleForThis = getLocalContainerStyle(container, containerStyle);
-        applyPadding(styleForThis, containerStyle, containerView, hostConfig, container.GetShowBorder());
+        applyPadding(styleForThis, containerStyle, containerView, hostConfig, container.GetShowBorder(), container.GetBleed());
         applyContainerStyle(styleForThis, containerStyle, containerView, hostConfig);
-        applyBleed(container, containerView, context, hostConfig);
+        applyBleed(container, containerView, context, hostConfig, viewGroup);
         applyBorder(styleForThis, containerView, hostConfig, container.GetElementType(), container.GetShowBorder());
         applyRoundedCorners(containerView, hostConfig, container.GetElementType(), container.GetRoundedCorners());
         BaseCardElementRenderer.applyRtl(container.GetRtl(), containerView);
@@ -184,25 +184,35 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
     }
 
-    /**
-     * @deprecated renamed to {@link #applyBleed}
-     */
-    public static void ApplyBleed(StyledCollectionElement collectionElement, ViewGroup collectionElementView, Context context, HostConfig hostConfig)
+    public static void applyBleed(StyledCollectionElement collectionElement, ViewGroup collectionElementView, Context context, HostConfig hostConfig, ViewGroup parentViewGroup)
     {
-        applyBleed(collectionElement, collectionElementView, context, hostConfig);
-    }
-
-    public static void applyBleed(StyledCollectionElement collectionElement, ViewGroup collectionElementView, Context context, HostConfig hostConfig)
-    {
-        if (collectionElement.GetBleed() && collectionElement.GetCanBleed())
+        if (collectionElement.GetBleed())
         {
             int padding = Util.dpToPixels(context, hostConfig.GetSpacing().getPaddingSpacing());
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) collectionElementView.getLayoutParams();
             // TODO: Check RTL support
             int marginLeft = layoutParams.leftMargin, marginRight = layoutParams.rightMargin, marginTop = layoutParams.topMargin, marginBottom = layoutParams.bottomMargin;
 
-            ContainerBleedDirection bleedDirection = collectionElement.GetBleedDirection();
+            // Check if there are previous siblings in the parent container
+            // Need to handle two cases:
+            // 1. Element not yet added to parent: check childCount > 0
+            // 2. Element already added to parent: check childCount > 1 (exclude itself)
+            boolean hasPreviousSiblings = false;
+            if (parentViewGroup != null)
+            {
+                boolean alreadyAdded = (collectionElementView.getParent() == parentViewGroup);
+                int childCount = parentViewGroup.getChildCount();
+                hasPreviousSiblings = alreadyAdded ? (childCount > 1) : (childCount > 0);
+            }
 
+            ContainerBleedDirection bleedDirection = collectionElement.GetBleedDirection();
+            if (collectionElement instanceof Container && collectionElement.GetBackgroundImage() != null
+                && bleedDirection == ContainerBleedDirection.BleedRestricted)
+            {
+                bleedDirection = ContainerBleedDirection.BleedAll;
+            }
+
+            // Bleed horizontally - extend into parent's left/right padding
             if ((bleedDirection.swigValue() & ContainerBleedDirection.BleedLeft.swigValue()) != ContainerBleedDirection.BleedRestricted.swigValue())
             {
                 marginLeft = -padding;
@@ -213,11 +223,18 @@ public class ContainerRenderer extends BaseCardElementRenderer
                 marginRight = -padding;
             }
 
+            // Only bleed upward if this is the first element (no previous siblings)
+            // This preserves spacing between the bleeding container and previous elements
             if ((bleedDirection.swigValue() & ContainerBleedDirection.BleedUp.swigValue()) != ContainerBleedDirection.BleedRestricted.swigValue())
             {
-                marginTop = -padding;
+                if (!hasPreviousSiblings)
+                {
+                    marginTop = -padding;
+                }
             }
 
+            // Bleed downward - extend into parent's bottom padding
+            // The negative margin will pull subsequent elements up, but HandleSpacing will compensate
             if ((bleedDirection.swigValue() & ContainerBleedDirection.BleedDown.swigValue()) != ContainerBleedDirection.BleedRestricted.swigValue())
             {
                 marginBottom = -padding;
@@ -228,23 +245,10 @@ public class ContainerRenderer extends BaseCardElementRenderer
         }
     }
 
-    /**
-     * @deprecated Separated into specific {@link #applyPadding} and {@link #applyContainerStyle}.
-     */
-    public static void ApplyPadding(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig)
+    public static void applyPadding(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig,
+                                    boolean hasBorder, boolean hasBleed)
     {
-        applyPadding(computedContainerStyle, parentContainerStyle, collectionElementView, hostConfig);
-        applyContainerStyle(computedContainerStyle, parentContainerStyle, collectionElementView, hostConfig);
-    }
-
-    public static void applyPadding(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig)
-    {
-        applyPadding(computedContainerStyle, parentContainerStyle, collectionElementView, hostConfig, false);
-    }
-
-    public static void applyPadding(ContainerStyle computedContainerStyle, ContainerStyle parentContainerStyle, ViewGroup collectionElementView, HostConfig hostConfig, boolean hasBorder)
-    {
-        if (hasBorder || computedContainerStyle != parentContainerStyle)
+        if (hasBleed || hasBorder || computedContainerStyle != parentContainerStyle)
         {
             int padding = Util.dpToPixels(collectionElementView.getContext(), hostConfig.GetSpacing().getPaddingSpacing());
             collectionElementView.setPadding(padding, padding, padding, padding);

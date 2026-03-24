@@ -1,0 +1,177 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "speak": "Your flight is confirmed for you and 3 other passengers from San Francisco to Amsterdam on Friday, October 10 8:30 AM",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "✈️ Flight Itinerary",
+      "weight": "Bolder",
+      "size": "ExtraLarge",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Flight from San Francisco (SFO) to Amsterdam (AMS) - Friday, October 10, 2025",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Passengers",
+          "weight": "Bolder",
+          "wrap": true
+        },
+        {
+          "type": "FactSet",
+          "facts": [
+            { "title": "1.", "value": "Sarah Hum" },
+            { "title": "2.", "value": "Jeremy Goldberg" },
+            { "title": "3.", "value": "Evan Litvak" },
+            { "title": "4.", "value": "Alex Morgan" }
+          ]
+        }
+      ],
+      "style": "emphasis",
+      "separator": true
+    },
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Outbound Flight",
+          "weight": "Bolder",
+          "size": "Medium",
+          "spacing": "Medium"
+        },
+        {
+          "type": "ColumnSet",
+          "separator": true,
+          "columns": [
+            {
+              "type": "Column",
+              "width": 2,
+              "items": [
+                { "type": "TextBlock", "text": "San Francisco (SFO)", "wrap": true },
+                { "type": "TextBlock", "text": "Departure: Fri, Oct 10, 08:30 AM", "wrap": true, "spacing": "Small" },
+                { "type": "TextBlock", "text": "Gate: A12 | Seat: 12A", "wrap": true, "spacing": "Small", "isSubtle": true }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": 1,
+              "items": [
+                { "type": "Image", "url": "https://adaptivecards.io/content/airplane.png", "size": "Small", "spacing": "None", "altText": "Flight" }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": 2,
+              "items": [
+                { "type": "TextBlock", "text": "Amsterdam (AMS)", "wrap": true, "horizontalAlignment": "Right" },
+                { "type": "TextBlock", "text": "Arrival: Fri, Oct 10, 04:45 PM", "wrap": true, "horizontalAlignment": "Right", "spacing": "Small" },
+                { "type": "TextBlock", "text": "Gate: B8 | Seat: 14C", "wrap": true, "horizontalAlignment": "Right", "spacing": "Small", "isSubtle": true }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TextBlock",
+          "text": "Duration: 10h 15m | Non-stop",
+          "weight": "Bolder",
+          "spacing": "Medium",
+          "wrap": true
+        }
+      ],
+      "style": "default",
+      "separator": true
+    },
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Return Flight",
+          "weight": "Bolder",
+          "size": "Medium",
+          "spacing": "Medium"
+        },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": 2,
+              "items": [
+                { "type": "TextBlock", "text": "Amsterdam (AMS)", "wrap": true },
+                { "type": "TextBlock", "text": "Departure: Wed, Oct 20, 09:00 AM", "wrap": true, "spacing": "Small" },
+                { "type": "TextBlock", "text": "Gate: C5 | Seat: 12B", "wrap": true, "spacing": "Small", "isSubtle": true }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": 1,
+              "items": [
+                { "type": "Image", "url": "https://adaptivecards.io/content/airplane.png", "size": "Small", "spacing": "None", "altText": "Flight" }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": 2,
+              "items": [
+                { "type": "TextBlock", "text": "San Francisco (SFO)", "wrap": true, "horizontalAlignment": "Right" },
+                { "type": "TextBlock", "text": "Arrival: Wed, Oct 20, 05:15 PM", "wrap": true, "horizontalAlignment": "Right", "spacing": "Small" },
+                { "type": "TextBlock", "text": "Gate: A20 | Seat: 14D", "wrap": true, "horizontalAlignment": "Right", "spacing": "Small", "isSubtle": true }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TextBlock",
+          "text": "Duration: 10h 15m | Non-stop",
+          "weight": "Bolder",
+          "spacing": "Medium",
+          "wrap": true
+        }
+      ],
+      "style": "default",
+      "separator": true
+    },
+    {
+      "type": "ColumnSet",
+      "spacing": "Medium",
+      "columns": [
+        {
+          "type": "Column",
+          "width": 1,
+          "items": [
+            { "type": "TextBlock", "text": "Total Price", "size": "Medium", "isSubtle": true }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": 1,
+          "items": [
+            { "type": "TextBlock", "text": "$4,032.54", "size": "Medium", "weight": "Bolder", "horizontalAlignment": "Right" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "🛈 Boarding starts 45 minutes before departure.",
+      "wrap": true,
+      "spacing": "Medium",
+      "isSubtle": true,
+      "size": "Small"
+    }
+  ]
+}

@@ -65,6 +65,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     int _numberOfSubscribers;
     // flag that's set if didLoadElements delegate is called
     BOOL _hasCalled;
+    BOOL _isRenderingComplete;
     NSMutableDictionary *_imageContextMap;
     NSMutableDictionary *_elementWidthMap;
     NSMutableDictionary *_imageViewContextMap;
@@ -133,6 +134,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         self.isRenderingInsideBottomSheet = NO;
         [self render];
     }
+    _isRenderingComplete = YES;
     // call to check if all resources are loaded
     [self callDidLoadElementsIfNeeded];
     return self;
@@ -1005,6 +1007,70 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 {
     if (context) {
         _context = context;
+    }
+}
+
+#pragma mark - Accessibility
+
+- (BOOL)isAccessibilityElement
+{
+    if (self.selectActionTarget != nil)
+    {
+        return [super isAccessibilityElement];
+    }
+    return NO;
+}
+
+// Flattens the view hierarchy into a single list of leaf accessible elements.
+// This intentionally bypasses any shouldGroupAccessibilityChildren or
+// accessibilityContainerType semantics on intermediate containers to ensure
+// VoiceOver can reach controls in deeply nested cards.
+- (NSArray *)accessibilityElements
+{
+    if (self.isAccessibilityElement || !_isRenderingComplete)
+    {
+        return [super accessibilityElements];
+    }
+
+    @try
+    {
+        NSMutableArray *elements = [NSMutableArray new];
+        [self collectAccessibleElementsFromView:self intoArray:elements];
+        return elements.count > 0 ? [elements copy] : [super accessibilityElements];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"[ACRView] accessibilityElements exception: %@", exception);
+        return [super accessibilityElements];
+    }
+}
+
+- (void)collectAccessibleElementsFromView:(UIView *)view
+                                intoArray:(NSMutableArray *)elements
+{
+    if (view == nil || view.isHidden || view.accessibilityElementsHidden || view.alpha <= 0)
+    {
+        return;
+    }
+
+    if (view.isAccessibilityElement)
+    {
+        [elements addObject:view];
+        return;
+    }
+
+    // UITableView and UICollectionView manage their own accessibility
+    // hierarchy internally. Treat them as leaf containers so XCUITest
+    // and VoiceOver can still discover them and their cells.
+    if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]])
+    {
+        [elements addObject:view];
+        return;
+    }
+
+    for (UIView *child in view.subviews)
+    {
+        [self collectAccessibleElementsFromView:child intoArray:elements];
     }
 }
 

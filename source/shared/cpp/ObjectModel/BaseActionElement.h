@@ -55,7 +55,7 @@ public:
 
     bool GetIsEnabled() const;
     void SetIsEnabled(const bool isEnabled);
-    
+
     bool GetIsRtl() const;
     void SetIsRtl(const bool isRtl);
 
@@ -99,6 +99,23 @@ public:
                || actionType == ActionType::Submit
                || actionType == ActionType::ToggleVisibility;
     }
+
+    static const std::string GetSVGPathForIconUrl(const std::string& iconUrl) {
+        std::regex regex{R"([,:]+)"}; // split on ':' and ','
+        std::sregex_token_iterator it{iconUrl.begin(), iconUrl.end(), regex, -1};
+        std::vector<std::string> config{it, {}};
+        std::string iconStyle = IconStyleToString(IconStyle::Regular);
+        std::string iconName = "";
+        if(config.size() >= 2) {
+            iconName = config[1];
+            if(config.size() > 2) {
+                iconStyle = config[config.size() - 1];
+            }
+        }
+        std::string m_url = iconName + "/" + iconName + ".json";
+        return m_url;
+    }
+
 
 private:
     void PopulateKnownPropertiesSet();

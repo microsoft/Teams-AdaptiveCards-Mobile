@@ -161,6 +161,6 @@ public class TimeInputHandler extends TextInputHandler
     }
 
     private WeakReference<FragmentManager> m_fragmentManager;
-    public static final String TIME_FORMAT_SUBMIT = "kk:mm";
+    public static final String TIME_FORMAT_SUBMIT = "HH:mm";
     public static SimpleDateFormat s_simpleDateFormat = new SimpleDateFormat(TIME_FORMAT_SUBMIT);
 }

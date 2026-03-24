@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.widget.Button
+import io.adaptivecards.objectmodel.BaseActionElement
 
 object IconUtils {
     /**
@@ -80,5 +81,10 @@ object IconUtils {
     @JvmStatic
     fun getHexColor(currentTextColor: Int) : String {
         return String.format("#%06X", 0xFFFFFF and currentTextColor)
+    }
+
+    @JvmStatic
+    fun getSvgPathForIconUrl(iconUrl: String) : String {
+        return BaseActionElement.GetSVGPathForIconUrl(iconUrl)
     }
 }

@@ -1,0 +1,182 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - Container",
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Default container style",
+          "wrap": true,
+          "size": "Large"
+        },
+        {
+          "type": "TextBlock",
+          "text": "First TextBlock",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Second TextBlock with separator",
+          "wrap": true,
+          "separator": true,
+          "spacing": "Medium"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Emphasis container style",
+          "wrap": true,
+          "size": "Large"
+        },
+        {
+          "type": "TextBlock",
+          "text": "First TextBlock",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Second TextBlock with separator",
+          "wrap": true,
+          "separator": true,
+          "spacing": "Medium"
+        }
+      ],
+      "style": "emphasis"
+    },
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Accent container style",
+          "wrap": true,
+          "size": "Large",
+          "color": "Accent"
+        },
+        {
+          "type": "TextBlock",
+          "text": "First TextBlock",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Second TextBlock with separator",
+          "wrap": true,
+          "separator": true,
+          "spacing": "Medium"
+        }
+      ],
+      "style": "accent"
+    },
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Good container style",
+          "wrap": true,
+          "size": "Large",
+          "color": "Good"
+        },
+        {
+          "type": "TextBlock",
+          "text": "First TextBlock",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Second TextBlock with separator",
+          "wrap": true,
+          "separator": true,
+          "spacing": "Medium"
+        }
+      ],
+      "style": "good"
+    },
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Attention container style",
+          "wrap": true,
+          "size": "Large",
+          "color": "Attention"
+        },
+        {
+          "type": "TextBlock",
+          "text": "First TextBlock",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Second TextBlock with separator",
+          "wrap": true,
+          "separator": true,
+          "spacing": "Medium"
+        }
+      ],
+      "style": "attention"
+    },
+    {
+      "type": "Container",
+      "showBorder": true,
+      "roundedCorners": true,
+      "separator": true,
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Warning container style",
+          "wrap": true,
+          "size": "Large",
+          "color": "Warning"
+        },
+        {
+          "type": "TextBlock",
+          "text": "First TextBlock",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Second TextBlock with separator",
+          "wrap": true,
+          "separator": true,
+          "spacing": "Medium"
+        }
+      ],
+      "style": "warning"
+    }
+  ]
+}

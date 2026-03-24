@@ -1,0 +1,69 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🎬 Movie Details",
+      "weight": "Bolder",
+      "size": "Large",
+      "spacing": "Medium"
+    },
+    {
+      "type": "FactSet",
+      "facts": [
+        {
+          "title": "Title:",
+          "value": "The Quirky Chronicles of Quinton's Café"
+        },
+        {
+          "title": "Genre:",
+          "value": "Comedy, Adventure, Family"
+        },
+        {
+          "title": "Synopsis:",
+          "value": "Quinton's café brings comic characters to life, creating hilarious chaos in Willowbrook. Adventures ensue as quirky patrons collide in comedic mishaps.",
+          "isSubtle": true
+        },
+        {
+          "title": "Release Year:",
+          "value": "2024"
+        },
+        {
+          "title": "Rating:",
+          "value": "PG-13"
+        },
+        {
+          "title": "Runtime:",
+          "value": "1h 45min"
+        },
+        {
+          "title": "Cast:",
+          "value": "Daxley Krane, Aria Skye, Maximus Blaze, Thalia Rose, Ophelia Bright, Hugo Vance"
+        },
+        {
+          "title": "Director:",
+          "value": "Lucien Marlowe"
+        },
+        {
+          "title": "Producer:",
+          "value": "Catherine L. Vale"
+        },
+        {
+          "title": "Box Office:",
+          "value": "$78M (Worldwide)"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "💡 Fun Fact: This film was shot entirely in one café over 45 days!",
+      "wrap": true,
+      "size": "Small",
+      "weight": "Lighter",
+      "isSubtle": true,
+      "spacing": "Medium"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "Container",
+      "bleed": true,
+      "backgroundImage": {
+        "url": "https://raw.githubusercontent.com/OfficeDev/Microsoft-Teams-Adaptive-Card-Samples/refs/heads/Suz-StarterCardsSetThree/samples/simple-event/assets/eventHero.png",
+        "verticalAlignment": "Center"
+      },
+      "minHeight": "200px",
+      "verticalContentAlignment": "Bottom",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "MAY",
+          "wrap": true,
+          "color": "Light",
+          "size": "Large"
+        },
+        {
+          "type": "TextBlock",
+          "text": "31",
+          "wrap": true,
+          "color": "Light",
+          "size": "ExtraLarge",
+          "spacing": "None",
+          "weight": "Bolder"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "AI Reality Check: Accessibility and Personalization",
+          "weight": "Bolder",
+          "size": "Medium",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Fri, Aug 23, 12:00 PM – 2:00 PM",
+          "wrap": true,
+          "size": "Small",
+          "isSubtle": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Online (Microsoft Teams)",
+          "wrap": true,
+          "size": "Small",
+          "isSubtle": true,
+          "spacing": "None"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Speaker: Jane Doe, AI Accessibility Expert",
+          "wrap": true,
+          "size": "Small",
+          "isSubtle": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Tags: AI, Accessibility, Personalization, Tech",
+          "wrap": true,
+          "size": "Small",
+          "isSubtle": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Description: Join us for an engaging session on how AI can improve accessibility and personalization in modern applications. Learn best practices, see demos, and interact with experts.",
+          "wrap": true,
+          "spacing": "Medium"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.ShowCard",
+          "title": "Reserve a seat",
+          "style": "positive",
+          "card": {
+            "type": "AdaptiveCard",
+            "version": "1.6",
+            "body": [
+              {
+                "type": "Input.Text",
+                "id": "name",
+                "label": "Full Name",
+                "placeholder": "Enter your full name",
+                "isRequired": true,
+                "errorMessage": "A name is required"
+              },
+              {
+                "type": "Input.Text",
+                "id": "email",
+                "label": "Email Address",
+                "placeholder": "Enter your email",
+                "isRequired": true,
+                "errorMessage": "An email is required"
+              },
+              {
+                "type": "Input.Text",
+                "id": "phone",
+                "label": "Phone Number",
+                "placeholder": "Enter your phone number"
+              },
+              {
+                "type": "Input.ChoiceSet",
+                "id": "dietary",
+                "label": "Dietary Preferences",
+                "style": "compact",
+                "isMultiSelect": true,
+                "choices": [
+                  { "title": "None", "value": "none" },
+                  { "title": "Vegetarian", "value": "vegetarian" },
+                  { "title": "Vegan", "value": "vegan" },
+                  { "title": "Gluten-Free", "value": "glutenfree" },
+                  { "title": "Other", "value": "other" }
+                ]
+              },
+              {
+                "type": "Input.Toggle",
+                "id": "newsletter",
+                "title": "Subscribe to AI newsletter",
+                "valueOn": "true",
+                "valueOff": "false"
+              },
+              {
+                "type": "Input.Text",
+                "id": "notes",
+                "label": "Additional Notes",
+                "placeholder": "Any special requests or questions",
+                "isMultiline": true
+              },
+              {
+                "type": "ActionSet",
+                "actions": [
+                  {
+                    "type": "Action.Submit",
+                    "title": "Submit Registration",
+                    "style": "positive",
+                    "data": {
+                      "eventId": "AI2024",
+                      "action": "register"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Add to Calendar",
+          "url": "https://calendar.example.com/event/AI2024"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Event Website",
+          "url": "https://www.example.com/events/AI2024"
+        }
+      ]
+    }
+  ]
+}

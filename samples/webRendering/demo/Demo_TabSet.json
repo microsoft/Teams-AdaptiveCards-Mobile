@@ -1,0 +1,189 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Project Dashboard",
+      "size": "ExtraLarge",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Overview of your project status in different tabs",
+      "wrap": true,
+      "size": "Large",
+      "spacing": "Small"
+    },
+    {
+      "type": "TabSet",
+      "pages": [
+        {
+          "type": "TabPage",
+          "title": "Tasks",
+          "iconName": "ListBar",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Pending Tasks",
+              "weight": "Bolder",
+              "spacing": "Medium"
+            },
+            {
+              "type": "Container",
+              "items": [
+                { "type": "TextBlock", "text": "Design UI mockups", "wrap": true },
+                { "type": "TextBlock", "text": "Implement login API", "wrap": true },
+                { "type": "TextBlock", "text": "Test payment gateway", "wrap": true }
+              ],
+              "style": "emphasis",
+              "spacing": "Small",
+              "separator": true
+            },
+            {
+              "type": "TextBlock",
+              "text": "Task Progress",
+              "weight": "Bolder",
+              "spacing": "Medium"
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "ColumnSet",
+                  "columns": [
+                    { "type": "Column", "width": "stretch", "items": [{ "type": "TextBlock", "text": "UI Mockups", "wrap": true }] },
+                    {
+                      "type": "Column",
+                      "width": "stretch",
+                      "items": [
+                        {
+                          "type": "Container",
+                          "style": "good",
+                          "minHeight": "10px",
+                          "width": "80%",
+                          "bleed": true
+                        }
+                      ]
+                    },
+                    { "type": "Column", "width": "auto", "items": [{ "type": "TextBlock", "text": "80%", "wrap": true }] }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "columns": [
+                    { "type": "Column", "width": "stretch", "items": [{ "type": "TextBlock", "text": "Login API", "wrap": true }] },
+                    {
+                      "type": "Column",
+                      "width": "stretch",
+                      "items": [
+                        {
+                          "type": "Container",
+                          "style": "accent",
+                          "minHeight": "10px",
+                          "width": "50%",
+                          "bleed": true
+                        }
+                      ]
+                    },
+                    { "type": "Column", "width": "auto", "items": [{ "type": "TextBlock", "text": "50%", "wrap": true }] }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "columns": [
+                    { "type": "Column", "width": "stretch", "items": [{ "type": "TextBlock", "text": "Payment Gateway", "wrap": true }] },
+                    {
+                      "type": "Column",
+                      "width": "stretch",
+                      "items": [
+                        {
+                          "type": "Container",
+                          "style": "attention",
+                          "minHeight": "10px",
+                          "width": "20%",
+                          "bleed": true
+                        }
+                      ]
+                    },
+                    { "type": "Column", "width": "auto", "items": [{ "type": "TextBlock", "text": "20%", "wrap": true }] }
+                  ]
+                }
+              ],
+              "spacing": "Small",
+              "separator": true
+            }
+          ]
+        },
+        {
+          "type": "TabPage",
+          "title": "Team",
+          "iconName": "People",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            { "type": "TextBlock", "text": "Team Members", "weight": "Bolder", "spacing": "Medium" },
+            {
+              "type": "Container",
+              "spacing": "Small",
+              "separator": true,
+              "items": [
+                {
+                  "type": "ColumnSet",
+                  "columns": [
+                    { "type": "Column", "width": "auto", "items": [{ "type": "TextBlock", "text": "👩", "size": "Medium" }] },
+                    { "type": "Column", "width": "stretch", "items": [{ "type": "TextBlock", "text": "Alice", "weight": "Bolder" }, { "type": "TextBlock", "text": "UI/UX Designer", "isSubtle": true, "spacing": "None" }] }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "columns": [
+                    { "type": "Column", "width": "auto", "items": [{ "type": "TextBlock", "text": "👨", "size": "Medium" }] },
+                    { "type": "Column", "width": "stretch", "items": [{ "type": "TextBlock", "text": "Bob", "weight": "Bolder" }, { "type": "TextBlock", "text": "Backend Developer", "isSubtle": true, "spacing": "None" }] }
+                  ]
+                },
+                {
+                  "type": "ColumnSet",
+                  "columns": [
+                    { "type": "Column", "width": "auto", "items": [{ "type": "TextBlock", "text": "👩‍💻", "size": "Medium" }] },
+                    { "type": "Column", "width": "stretch", "items": [{ "type": "TextBlock", "text": "Carol", "weight": "Bolder" }, { "type": "TextBlock", "text": "QA Engineer", "isSubtle": true, "spacing": "None" }] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TabPage",
+          "title": "Metrics",
+          "iconName": "ChartMultiple",
+          "showBorder": true,
+          "roundedCorners": true,
+          "items": [
+            { "type": "TextBlock", "text": "Project Completion", "weight": "Bolder", "spacing": "Medium" },
+            { "type": "Input.Rating", "id": "completionRating", "label": "Rate project progress", "size": "Medium", "value": 4, "isRequired": true, "errorMessage": "Please select a rating" },
+            { "type": "TextBlock", "text": "Milestone Progress", "weight": "Bolder", "spacing": "Medium" },
+            {
+              "type": "FactSet",
+              "facts": [
+                { "title": "Design Phase", "value": "✅ Completed" },
+                { "title": "Development Phase", "value": "⚠️ In Progress" },
+                { "title": "Testing Phase", "value": "⏳ Pending" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        { "type": "Action.OpenUrl", "title": "View Full Dashboard", "url": "https://www.example.com/projects/dashboard" },
+        { "type": "Action.OpenUrl", "title": "Create New Task", "url": "https://www.example.com/projects/newtask" }
+      ]
+    }
+  ]
+}

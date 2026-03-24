@@ -1,0 +1,102 @@
+{
+  "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Component - TextBlock",
+      "size": "ExtraLarge",
+      "weight": "Bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Sizes Example",
+      "weight": "Bolder",
+      "size": "Large",
+      "separator": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Small size",
+      "wrap": true,
+      "size": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Default size",
+      "wrap": true,
+      "size": "Default"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Large size",
+      "wrap": true,
+      "size": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "ExtraLarge size",
+      "wrap": true,
+      "size": "ExtraLarge"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Colors Example",
+      "weight": "Bolder",
+      "size": "Large",
+      "separator": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "Container",
+      "items": [
+        { "type": "TextBlock", "text": "Default color", "wrap": true },
+        { "type": "TextBlock", "text": "Accent color", "wrap": true, "color": "Accent" },
+        { "type": "TextBlock", "text": "Good color", "wrap": true, "color": "Good" },
+        { "type": "TextBlock", "text": "Warning color", "wrap": true, "color": "Warning" },
+        { "type": "TextBlock", "text": "Attention color", "wrap": true, "color": "Attention" }
+      ],
+      "separator": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Font & Style Example",
+      "weight": "Bolder",
+      "size": "Large",
+      "separator": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "Container",
+      "items": [
+        { "type": "TextBlock", "text": "Monospace font", "wrap": true, "fontType": "Monospace" },
+        { "type": "TextBlock", "text": "Default style", "wrap": true, "style": "default" },
+        { "type": "TextBlock", "text": "ColumnHeader style", "wrap": true, "style": "columnHeader" },
+        { "type": "TextBlock", "text": "Heading style", "wrap": true, "style": "heading" }
+      ],
+      "separator": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Weight Example",
+      "weight": "Bolder",
+      "size": "Large",
+      "separator": true,
+      "spacing": "Medium"
+    },
+    {
+      "type": "Container",
+      "items": [
+        { "type": "TextBlock", "text": "Lighter weight", "wrap": true, "weight": "Lighter" },
+        { "type": "TextBlock", "text": "Default weight", "wrap": true, "weight": "Default" },
+        { "type": "TextBlock", "text": "Bolder weight", "wrap": true, "weight": "Bolder" }
+      ],
+      "separator": true,
+      "spacing": "Medium"
+    }
+  ]
+}

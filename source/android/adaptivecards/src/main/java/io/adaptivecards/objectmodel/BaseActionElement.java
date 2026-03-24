@@ -213,6 +213,10 @@ public class BaseActionElement extends BaseElement {
     return AdaptiveCardObjectModelJNI.BaseActionElement_IsValidMenuAction(actionType.swigValue());
   }
 
+  public static String GetSVGPathForIconUrl(String iconUrl) {
+    return AdaptiveCardObjectModelJNI.BaseActionElement_GetSVGPathForIconUrl(iconUrl);
+  }
+
   public java.lang.Object swigOriginalObject() {
     return AdaptiveCardObjectModelJNI.BaseActionElement_swigOriginalObject(swigCPtr, this);
   }

@@ -325,7 +325,7 @@ public class ImageRenderer extends BaseCardElementRenderer
         boolean isInImageSet = viewGroup instanceof HorizontalFlowLayout;
         if (isInImageSet)
         {
-            separator = setSpacingAndSeparator(context, viewGroup, image.GetSpacing(), image.GetSeparator(), hostConfig, false /* horizontal line */, true);
+            separator = setSpacingAndSeparator(context, viewGroup, image.GetSpacing(), image.GetSeparator(), hostConfig, null, false /* horizontal line */, true);
         }
 
         ImageView imageView = new ImageView(context);
