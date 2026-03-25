@@ -198,6 +198,9 @@
         prevColumn = column;
     }
 
+    // Store columns with relative width for visibility management
+    columnSetView.columnsWithRelativeWidth = viewsWithRelativeWidth;
+    
     for (ACRColumnView *view in viewsWithRelativeWidth) {
         if (view != viewWithMinWidth && view.relativeWidth) {
             NSLayoutConstraint *widthConstraint =
@@ -208,10 +211,8 @@
                                              attribute:NSLayoutAttributeWidth
                                             multiplier:view.relativeWidth / minRelativeWidth
                                               constant:0];
-            // Use high priority (750) instead of required (1000) so the constraint can be
-            // broken when a column is hidden. This fixes toggle visibility for columns
-            // with relative widths (without this, hiding columnA forces columnB to 0 width).
-            widthConstraint.priority = UILayoutPriorityDefaultHigh;
+            // Store constraint on the column so it can be deactivated when visibility changes
+            view.relativeWidthConstraint = widthConstraint;
             [constraints addObject:widthConstraint];
         }
     }

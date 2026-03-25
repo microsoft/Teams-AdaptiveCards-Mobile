@@ -11,6 +11,8 @@
 
 @class ACRSeparator;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ACRColumnView : ACRContentStackView <ACOIVisibilityManagerFacade>
 
 typedef NS_ENUM(NSInteger, ACRColumnWidthPriority) {
@@ -28,4 +30,10 @@ typedef NS_ENUM(NSInteger, ACRColumnWidthPriority) {
 @property NSMutableArray<ACRIBaseInputHandler> *inputHandlers;
 @property (weak) ACRColumnSetView *columnsetView;
 
+/// Constraint linking this column's width to another column (for relative widths).
+/// Stored so it can be deactivated when visibility changes.
+@property (nonatomic, strong, nullable) NSLayoutConstraint *relativeWidthConstraint;
+
 @end
+
+NS_ASSUME_NONNULL_END
