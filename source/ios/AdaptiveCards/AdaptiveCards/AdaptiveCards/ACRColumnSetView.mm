@@ -6,6 +6,7 @@
 //
 
 #import "ACRColumnSetView.h"
+#import "ACRColumnView.h"
 
 @implementation ACRColumnSetView
 
@@ -102,6 +103,49 @@
         constraint.priority = 999;
         constraint.active = YES;
     }
+}
+
+- (void)updateRelativeWidthConstraintsForVisibilityChange
+{
+    if (!self.columnsWithRelativeWidth || self.columnsWithRelativeWidth.count == 0) {
+        return;
+    }
+    
+    // Find the first visible column to use as the reference for relative widths
+    ACRColumnView *visibleReferenceColumn = nil;
+    for (ACRColumnView *column in self.columnsWithRelativeWidth) {
+        if (!column.isHidden) {
+            visibleReferenceColumn = column;
+            break;
+        }
+    }
+    
+    // Deactivate all existing relative width constraints
+    for (ACRColumnView *column in self.columnsWithRelativeWidth) {
+        if (column.relativeWidthConstraint) {
+            column.relativeWidthConstraint.active = NO;
+        }
+    }
+    
+    // If we have a visible reference column, recreate constraints between visible columns
+    if (visibleReferenceColumn) {
+        for (ACRColumnView *column in self.columnsWithRelativeWidth) {
+            if (column != visibleReferenceColumn && !column.isHidden && column.relativeWidth > 0) {
+                NSLayoutConstraint *newConstraint = [NSLayoutConstraint 
+                    constraintWithItem:column
+                             attribute:NSLayoutAttributeWidth
+                             relatedBy:NSLayoutRelationEqual
+                                toItem:visibleReferenceColumn
+                             attribute:NSLayoutAttributeWidth
+                            multiplier:column.relativeWidth / visibleReferenceColumn.relativeWidth
+                              constant:0];
+                column.relativeWidthConstraint = newConstraint;
+                newConstraint.active = YES;
+            }
+        }
+    }
+    
+    [self setNeedsLayout];
 }
 
 @end

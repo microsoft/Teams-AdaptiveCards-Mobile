@@ -8,6 +8,7 @@
 
 #import "ACOVisibilityManager.h"
 #import "ACRColumnView.h"
+#import "ACRColumnSetView.h"
 #import "ACREnums.h"
 #import "ACRSeparator.h"
 
@@ -156,6 +157,11 @@
         // `viewToBeHidden` otherwise, viewTobeHidden's size will be included
         [hostView decreaseIntrinsicContentSize:viewToBeHidden];
         [self changeVisiblityOfAssociatedViews:viewToBeHidden visibilityValue:YES contentStackView:hostView];
+        
+        // Update relative width constraints if this is a ColumnSetView
+        if ([hostView isKindOfClass:[ACRColumnSetView class]]) {
+            [(ACRColumnSetView *)hostView updateRelativeWidthConstraintsForVisibilityChange];
+        }
     }
 
     // if `viewToBeHidden` is a head, get new head if any, and hide its separator
@@ -207,6 +213,11 @@
             [hostView increaseIntrinsicContentSize:viewToBeUnhidden];
         }
         [self changeVisiblityOfAssociatedViews:viewToBeUnhidden visibilityValue:NO contentStackView:hostView];
+    }
+    
+    // Update relative width constraints if this is a ColumnSetView
+    if ([hostView isKindOfClass:[ACRColumnSetView class]]) {
+        [(ACRColumnSetView *)hostView updateRelativeWidthConstraintsForVisibilityChange];
     }
 }
 
