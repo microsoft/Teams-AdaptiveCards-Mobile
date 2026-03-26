@@ -38,7 +38,8 @@
 									"weight": "lighter",
 									"color": "accent",
 									"text": "Flight to JFK",
-									"wrap": true
+									"wrap": true,
+									"style": "heading"
 								},
 								{
 									"type": "TextBlock",
