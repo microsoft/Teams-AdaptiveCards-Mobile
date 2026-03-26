@@ -80,10 +80,12 @@ FOUNDATION_EXPORT const unsigned char AdaptiveCarsFrameworkVersionString[];
 #import "ACRView.h"
 #import "ACRStringBasedKeyValueObservation.h"
 #import "TSExpressionObjCBridge.h"
+#import "ACICitationPresenter.h"
 #import "ACOCitation.h"
 #import "ACOReference.h"
-#import "ACRCitationManager.h"
-#import "ACRCitationManagerDelegate.h"
+#import "ACRCitationPresenter.h"
+#import "ACRCitationBuilder.h"
+#import "ACRCitationBuilderDelegate.h"
 
 #else
 /// Cocoapods Imports
@@ -152,9 +154,11 @@ FOUNDATION_EXPORT const unsigned char AdaptiveCarsFrameworkVersionString[];
 #import <AdaptiveCards/ACRView.h>
 #import <AdaptiveCards/ACRStringBasedKeyValueObservation.h>
 #import <AdaptiveCards/TSExpressionObjCBridge.h>
+#import <AdaptiveCards/ACICitationPresenter.h>
 #import <AdaptiveCards/ACOCitation.h>
 #import <AdaptiveCards/ACOReference.h>
-#import <AdaptiveCards/ACRCitationManager.h>
-#import <AdaptiveCards/ACRCitationManagerDelegate.h>
+#import <AdaptiveCards/ACRCitationPresenter.h>
+#import <AdaptiveCards/ACRCitationBuilder.h>
+#import <AdaptiveCards/ACRCitationBuilderDelegate.h>
 
 #endif

@@ -7,7 +7,7 @@
 //
 
 #import "ACRCitationParser.h"
-#import "ACRCitationManager.h"
+#import "ACRCitationBuilder.h"
 #import "ACRViewTextAttachment.h"
 #import "ACOReference.h"
 #import "ACOCitation.h"
