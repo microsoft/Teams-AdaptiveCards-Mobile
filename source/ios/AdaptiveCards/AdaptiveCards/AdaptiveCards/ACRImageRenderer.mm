@@ -21,6 +21,7 @@
 #import "Image.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 #import <Foundation/Foundation.h>
 
 @implementation ACRImageRenderer
@@ -59,11 +60,19 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<Image> imgElem = std::dynamic_pointer_cast<Image>(elem);
 
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     // makes parts for building a key to UIImage, there are different interfaces for loading the images
     // we list all the parts that are needed in building the key.
     NSString *number = [[NSNumber numberWithUnsignedLongLong:(unsigned long long)(elem.get())] stringValue];
     std::shared_ptr<AdaptiveCard> card = [[rootView card] card];
-    NSString *urlString = [NSString stringWithCString:imgElem->GetUrl(ACTheme(rootView.theme), card->GetResources(), GetDeviceLanguageLocale()).c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString *urlString = nil;
+    if (useSwiftRendering) {
+        urlString = [SwiftAdaptiveCardObjcBridge getImageUrl:acoElem useSwift:YES];
+    } else {
+        urlString = [NSString stringWithCString:imgElem->GetUrl(ACTheme(rootView.theme), card->GetResources(), GetDeviceLanguageLocale()).c_str() encoding:[NSString defaultCStringEncoding]];
+    }
     NSDictionary *pieces = @{
         @"number" : number,
         @"url" : urlString
@@ -149,7 +158,13 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
     wrappingView.translatesAutoresizingMaskIntoConstraints = NO;
 
     view.isAccessibilityElement = YES;
-    NSMutableString *stringForAccessiblilityLabel = [NSMutableString stringWithCString:imgElem->GetAltText().c_str() encoding:NSUTF8StringEncoding];
+    NSMutableString *stringForAccessiblilityLabel = nil;
+    if (useSwiftRendering) {
+        NSString *altText = [SwiftAdaptiveCardObjcBridge getImageAltText:acoElem useSwift:YES];
+        stringForAccessiblilityLabel = [NSMutableString stringWithString:altText ?: @""];
+    } else {
+        stringForAccessiblilityLabel = [NSMutableString stringWithCString:imgElem->GetAltText().c_str() encoding:NSUTF8StringEncoding];
+    }
     NSString *toolTipAccessibilityLabel = configureForAccessibilityLabel(acoSelectAction, nil);
     if (toolTipAccessibilityLabel) {
         [stringForAccessiblilityLabel appendString:toolTipAccessibilityLabel];

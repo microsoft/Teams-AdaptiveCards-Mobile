@@ -13,6 +13,7 @@
 #import "ACRShowCardTarget.h"
 #import "ShowCardAction.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRActionShowCardRenderer
 
@@ -28,6 +29,13 @@
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    id swiftShowCardActionCard = nil;
+    if (useSwiftRendering) {
+        swiftShowCardActionCard = [SwiftAdaptiveCardObjcBridge getShowCardActionCard:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<BaseActionElement> elem = [acoElem element];
     std::shared_ptr<ShowCardAction> action = std::dynamic_pointer_cast<ShowCardAction>(elem);
 

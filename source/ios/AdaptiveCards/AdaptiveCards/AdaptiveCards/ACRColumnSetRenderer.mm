@@ -18,6 +18,7 @@
 #import "Enums.h"
 #import "SharedAdaptiveCard.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRColumnSetRenderer
 
@@ -41,7 +42,14 @@
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<ColumnSet> columnSetElem = std::dynamic_pointer_cast<ColumnSet>(elem);
-    
+
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSArray *swiftColumns = nil;
+    if (useSwiftRendering) {
+        swiftColumns = [SwiftAdaptiveCardObjcBridge getColumnSetColumns:acoElem useSwift:YES];
+    }
+
     // Get responsive layout's host width
     ACRRegistration *reg = [ACRRegistration getInstance];
     HostWidthConfig hostWidthConfig = config->getHostWidth();

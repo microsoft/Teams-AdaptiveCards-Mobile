@@ -27,6 +27,7 @@
 #import "ACRUIImageView.h"
 #import "TextInput.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRInputRenderer
 
@@ -91,6 +92,17 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *swiftPlaceholder = nil;
+    NSString *swiftValue = nil;
+    BOOL swiftIsMultiline = NO;
+    if (useSwiftRendering) {
+        swiftPlaceholder = [SwiftAdaptiveCardObjcBridge getTextInputPlaceholder:acoElem useSwift:YES];
+        swiftValue = [SwiftAdaptiveCardObjcBridge getTextInputValue:acoElem useSwift:YES];
+        swiftIsMultiline = [SwiftAdaptiveCardObjcBridge getTextInputIsMultiline:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<TextInput> inputBlck = std::dynamic_pointer_cast<TextInput>(elem);

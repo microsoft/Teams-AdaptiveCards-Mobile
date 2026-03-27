@@ -15,6 +15,7 @@
 #import "ACROverflowTarget.h"
 #import "ACRView.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRActionOverflowRenderer
 
@@ -30,6 +31,9 @@
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     if (acoElem.type == ACRActionType::ACROverflow) {
         NSString *title = @"...";
         UIButton *button = [ACRButton rootView:rootView

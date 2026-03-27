@@ -29,6 +29,7 @@
 #import "TextInput.h"
 #import "UtiliOS.h"
 #import "ACRViewAttachingTextView.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRRichTextBlockRenderer {
     ACRCitationManager *_citationManager;
@@ -60,10 +61,27 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     std::shared_ptr<HostConfig> config = [acoConfig getHostConfig];
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<RichTextBlock> rTxtBlck = std::dynamic_pointer_cast<RichTextBlock>(elem);
-    
+
+    // Get horizontal alignment - use bridge for Swift, C++ for legacy
+    HorizontalAlignment horizontalAlignment;
+    if (useSwiftRendering) {
+        NSInteger alignmentIndex = [SwiftAdaptiveCardObjcBridge getRichTextBlockHorizontalAlignment:acoElem useSwift:YES];
+        switch (alignmentIndex) {
+            case 0: horizontalAlignment = HorizontalAlignment::Left; break;
+            case 1: horizontalAlignment = HorizontalAlignment::Center; break;
+            case 2: horizontalAlignment = HorizontalAlignment::Right; break;
+            default: horizontalAlignment = HorizontalAlignment::Left; break;
+        }
+    } else {
+        horizontalAlignment = rTxtBlck->GetHorizontalAlignment().value_or(HorizontalAlignment::Left);
+    }
+
     ACRViewAttachingTextView *lab = [[ACRViewAttachingTextView alloc] initWithFrame:CGRectMake(0, 0, viewGroup.frame.size.width, 0)];
 
     lab.backgroundColor = [UIColor clearColor];

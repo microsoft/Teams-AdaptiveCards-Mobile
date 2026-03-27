@@ -14,6 +14,7 @@
 #import "ExecuteAction.h"
 #import "UtiliOS.h"
 #import "ACRInputLabelView.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRActionExecuteRenderer
 NSMutableArray<ACRIBaseInputHandler> *_inputsArray;
@@ -30,6 +31,13 @@ NSMutableArray<ACRIBaseInputHandler> *_inputsArray;
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+    NSString *swiftExecuteActionVerb = nil;
+    if (useSwiftRendering) {
+        swiftExecuteActionVerb = [SwiftAdaptiveCardObjcBridge getExecuteActionVerb:acoElem useSwift:YES];
+    }
+
     std::shared_ptr<BaseActionElement> elem = [acoElem element];
     std::shared_ptr<ExecuteAction> action = std::dynamic_pointer_cast<ExecuteAction>(elem);
 

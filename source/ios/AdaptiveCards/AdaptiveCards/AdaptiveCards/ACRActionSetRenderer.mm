@@ -17,6 +17,7 @@
 #import "ACRRenderer.h"
 #import "ActionSet.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 @implementation ACRActionSetRenderer
 
@@ -37,6 +38,9 @@
     baseCardElement:(ACOBaseCardElement *)acoElem
          hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     std::shared_ptr<BaseCardElement> elem = [acoElem element];
     std::shared_ptr<ActionSet> actionSetElem = std::dynamic_pointer_cast<ActionSet>(elem);
     [[rootView card] setInputs:inputs];

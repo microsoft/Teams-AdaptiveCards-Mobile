@@ -13,6 +13,7 @@
 #import "SharedAdaptiveCard.h"
 #import "UnknownAction.h"
 #import "UtiliOS.h"
+#import "SwiftAdaptiveCardObjcBridge.h"
 
 // this is an entry point to custom parsing and rendering
 // it will call a registered custom parser to deserialize, then the deserialized object is rendered by calling
@@ -36,12 +37,26 @@
          baseActionElement:(ACOBaseActionElement *)acoElem
                 hostConfig:(ACOHostConfig *)acoConfig
 {
+    // Check if we should use Swift for rendering
+    BOOL useSwiftRendering = [SwiftAdaptiveCardObjcBridge useSwiftForRendering];
+
     std::shared_ptr<UnknownAction> unknownAction = std::dynamic_pointer_cast<UnknownAction>([acoElem element]);
     // we get back a deserialized action object by calling a custom parser registered via host
     ACOBaseActionElement *customAction = deserializeUnknownActionToCustomAction(unknownAction);
     if (customAction) {
         ACRRegistration *reg = [ACRRegistration getInstance];
-        NSString *type = [NSString stringWithCString:unknownAction->GetElementTypeString().c_str() encoding:NSUTF8StringEncoding];
+
+        // Get type string - use Swift bridge when available, otherwise fallback to C++
+        NSString *type;
+        if (useSwiftRendering) {
+            type = [SwiftAdaptiveCardObjcBridge getUnknownActionTypeString:acoElem useSwift:YES];
+            if (type.length == 0) {
+                // Fallback to C++ if Swift returns empty (element may not be Swift-parsed)
+                type = [NSString stringWithCString:unknownAction->GetElementTypeString().c_str() encoding:NSUTF8StringEncoding];
+            }
+        } else {
+            type = [NSString stringWithCString:unknownAction->GetElementTypeString().c_str() encoding:NSUTF8StringEncoding];
+        }
 
         ACRBaseActionElementRenderer *renderer = [reg getActionRenderer:[NSNumber numberWithLong:type.hash]];
 
