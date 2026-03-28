@@ -17,7 +17,6 @@
 @interface ACRCitationBuilder () <ACRCitationParserDelegate>
 
 @property (nonatomic, weak) id<ACRCitationBuilderDelegate> delegate;
-@property (nonatomic, weak) id<ACICitationPresenter> presenter;
 @property (nonatomic, strong) ACRTextBlockCitationParser *textBlockParser;
 @property (nonatomic, strong) ACRInlineCitationTokenParser *inlineCitationParser;
 @property (nonatomic, strong) ACRCitationParser *citationRunParser;
@@ -65,7 +64,7 @@
                                                  presenter:(id<ACICitationPresenter>)presenter
                                                      theme:(ACRTheme)theme
 {
-    self.presenter = presenter;
+    self.inlineCitationParser.presenter = presenter;
     NSMutableAttributedString *result = [self.inlineCitationParser parseAttributedString:attributedString
                                                                           withReferences:references
                                                                                    theme:theme];
@@ -77,7 +76,7 @@
                                                                    presenter:(id<ACICitationPresenter>)presenter
                                                                        theme:(ACRTheme)theme
 {
-    self.presenter = presenter;
+    self.textBlockParser.presenter = presenter;
     NSMutableAttributedString *result = [self.textBlockParser parseAttributedString:attributedString
                                                                      withReferences:references
                                                                               theme:theme];
@@ -88,7 +87,7 @@
                                                  references:(NSArray<ACOReference *> *)references
                                                   presenter:(id<ACICitationPresenter>)presenter
 {
-    self.presenter = presenter;
+    self.citationRunParser.presenter = presenter;
     return [self.citationRunParser parseAttributedStringWithCitation:citation
                                                        andReferences:references];
 }
@@ -98,13 +97,10 @@
 - (void)citationParser:(id)parser
         didTapCitation:(ACOCitation *)citation
          referenceData:(ACOReference * _Nullable)referenceData {
-
+    // Analytics only — the presenter is called directly by the parser
+    // via the per-button associated object set at attachment-creation time.
     if (self.delegate && [self.delegate respondsToSelector:@selector(citationBuilder:didTapCitation:referenceData:)]) {
         [self.delegate citationBuilder:self didTapCitation:citation referenceData:referenceData];
-    }
-
-    if ([self.presenter respondsToSelector:@selector(handleCitationTap:referenceData:)]) {
-        [self.presenter handleCitationTap:citation referenceData:referenceData];
     }
 }
 
