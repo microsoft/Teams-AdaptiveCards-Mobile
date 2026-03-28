@@ -8,3 +8,7 @@
 
 // Renamed to ACRCitationBuilderDelegate. This file is kept as a redirect.
 #import "ACRCitationBuilderDelegate.h"
+
+// Backward-compatible alias for the renamed protocol.
+@protocol ACRCitationManagerDelegate <ACRCitationBuilderDelegate>
+@end
