@@ -24,6 +24,7 @@ using namespace AdaptiveCards;
     NSMutableSet *_invisibleViews;
     ACRVerticalContentAlignment _verticalContentAlignment;
     ACRHorizontalAlignment _horizontalAlignment;
+    NSTimeInterval _lastSelectActionTouchTimestamp;
 }
 
 // this is the dedicated initializer
@@ -541,10 +542,25 @@ using namespace AdaptiveCards;
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     if (self.selectActionTarget) {
+        // Guard: iOS 26 re-delivers touchesEnded with the same touch timestamp
+        // but a different UIEvent pointer ~350ms later. Block the re-delivery.
+        UITouch *touch = [touches anyObject];
+        NSTimeInterval touchTS = touch ? touch.timestamp : 0;
+        if (_lastSelectActionTouchTimestamp > 0 &&
+            fabs(touchTS - _lastSelectActionTouchTimestamp) < 0.001) {
+            return; // Same touch — iOS 26 re-delivery, block it
+        }
+        _lastSelectActionTouchTimestamp = touchTS;
         [self.selectActionTarget doSelectAction];
     } else {
         [self.nextResponder touchesEnded:touches withEvent:event];
     }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    _lastSelectActionTouchTimestamp = 0;
+    [self.nextResponder touchesCancelled:touches withEvent:event];
 }
 
 - (UIView *)addPaddingSpace

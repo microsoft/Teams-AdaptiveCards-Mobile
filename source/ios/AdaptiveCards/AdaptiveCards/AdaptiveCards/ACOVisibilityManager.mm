@@ -168,6 +168,51 @@
     }
 }
 
+/// Remove stale zero-width constraints that were set when this view was initially
+/// hidden (isVisible: false). These prevent the view from getting proper layout
+/// space in the UIStackView after toggle visibility unhides it.
+- (void)removeStaleZeroWidthConstraints:(UIView *)viewToBeUnhidden
+                               hostView:(ACRContentStackView *)hostView
+                               subviews:(NSArray<UIView *> *)subviews
+{
+    NSMutableArray *staleConstraints = [NSMutableArray array];
+    for (NSLayoutConstraint *c in viewToBeUnhidden.constraints) {
+        if (c.firstAttribute == NSLayoutAttributeWidth &&
+            c.secondItem == nil &&
+            c.constant < 1.0) {
+            [staleConstraints addObject:c];
+        }
+    }
+    for (NSLayoutConstraint *c in staleConstraints) {
+        [viewToBeUnhidden removeConstraint:c];
+    }
+
+    // If stale constraints were removed, copy the width from a visible sibling
+    // that is about to hide (they're swapping visibility). This ensures the
+    // newly-visible column gets the full available width.
+    if (staleConstraints.count > 0 && hostView) {
+        for (UIView *sibling in subviews) {
+            if (sibling != viewToBeUnhidden &&
+                !sibling.isHidden &&
+                sibling.frame.size.width > 10 &&
+                [sibling isKindOfClass:[viewToBeUnhidden class]]) {
+                CGFloat siblingWidth = sibling.frame.size.width;
+                NSLayoutConstraint *widthC = [NSLayoutConstraint
+                    constraintWithItem:viewToBeUnhidden
+                    attribute:NSLayoutAttributeWidth
+                    relatedBy:NSLayoutRelationEqual
+                    toItem:nil
+                    attribute:NSLayoutAttributeNotAnAttribute
+                    multiplier:1.0
+                    constant:siblingWidth];
+                widthC.priority = UILayoutPriorityRequired - 1; // 999
+                [viewToBeUnhidden addConstraint:widthC];
+                break;
+            }
+        }
+    }
+}
+
 /// unhide `viewToBeUnhidden`. `hostView` is a superview of type ColumnView or ColumnSetView
 - (void)unhideView:(UIView *)viewToBeUnhidden hostView:(ACRContentStackView *)hostView
 {
@@ -192,6 +237,7 @@
         // only enable filler view associated with the `viewTobeUnhidden`
         [self changeVisibilityOfPadding:viewToBeUnhidden visibilityHidden:NO];
         if (viewToBeUnhidden.isHidden) {
+            [self removeStaleZeroWidthConstraints:viewToBeUnhidden hostView:hostView subviews:subviews];
             viewToBeUnhidden.hidden = NO;
             [hostView increaseIntrinsicContentSize:viewToBeUnhidden];
         }
@@ -203,6 +249,7 @@
         }
     } else {
         if (viewToBeUnhidden.isHidden) {
+            [self removeStaleZeroWidthConstraints:viewToBeUnhidden hostView:hostView subviews:subviews];
             viewToBeUnhidden.hidden = NO;
             [hostView increaseIntrinsicContentSize:viewToBeUnhidden];
         }
