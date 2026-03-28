@@ -10,6 +10,7 @@
 #import "ACOEnums.h"
 
 @protocol ACRCitationParserDelegate;
+@protocol ACICitationPresenter;
 @class ACRViewTextAttachment;
 @class ACOReference;
 @class ACOCitation;
@@ -23,6 +24,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ACRCitationParser : NSObject
 
 @property (nonatomic, weak, nullable) id<ACRCitationParserDelegate> delegate;
+
+/**
+ * The presenter stored per-button via associated object at attachment-creation time.
+ * Set by ACRCitationBuilder before each parse call; stored immediately onto each
+ * created UIButton so tap events route to the correct presenter per card instance.
+ */
+@property (nonatomic, weak, nullable) id<ACICitationPresenter> presenter;
 
 /**
  * Initialize the parser with a delegate

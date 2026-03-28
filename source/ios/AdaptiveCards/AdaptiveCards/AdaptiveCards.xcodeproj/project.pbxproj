@@ -419,14 +419,12 @@
 		CFF95C0D2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0C2982E3C900F321C3 /* ACOTypeaheadDynamicChoicesServiceTests.mm */; };
 		CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */; };
 		DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */; };
-		E204C8A52EBB79F60065F8F5 /* ACOCitation.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8962EBB79F60065F8F5 /* ACOCitation.h */; };
+		E204C8A52EBB79F60065F8F5 /* ACOCitation.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8962EBB79F60065F8F5 /* ACOCitation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E204C8A72EBB79F60065F8F5 /* ACRCitationManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89C2EBB79F60065F8F5 /* ACRCitationManagerDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E204C8A82EBB79F60065F8F5 /* ACRCitationParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */; };
+		E204C8A82EBB79F60065F8F5 /* ACRCitationParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E204C8A92EBB79F60065F8F5 /* ACRCitationParserDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8A02EBB79F60065F8F5 /* ACRCitationParserDelegate.h */; };
-		E204C8AA2EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8A32EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h */; };
-		E204C8AB2EBB79F60065F8F5 /* ACOReference.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8982EBB79F60065F8F5 /* ACOReference.h */; };
-		E204C8AC2EBB79F60065F8F5 /* ACRCitationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89A2EBB79F60065F8F5 /* ACRCitationManager.h */; };
-		E204C8AD2EBB79F60065F8F5 /* ACRCitationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C89B2EBB79F60065F8F5 /* ACRCitationManager.m */; };
+		E204C8AA2EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8A32EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E204C8AB2EBB79F60065F8F5 /* ACOReference.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8982EBB79F60065F8F5 /* ACOReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E204C8AE2EBB79F60065F8F5 /* ACRCitationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C89F2EBB79F60065F8F5 /* ACRCitationParser.m */; };
 		E204C8B02EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8A42EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m */; };
 		E204C8B12EBB79F60065F8F5 /* ACOCitation.mm in Sources */ = {isa = PBXBuildFile; fileRef = E204C8972EBB79F60065F8F5 /* ACOCitation.mm */; };
@@ -445,6 +443,12 @@
 		E25D48EF2EBC7A1D00CF9715 /* ACRCitationReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = E25D48ED2EBC7A1D00CF9715 /* ACRCitationReferenceView.m */; };
 		E25D48F22EBCA2C000CF9715 /* UIColor+GrayColor.h in Headers */ = {isa = PBXBuildFile; fileRef = E25D48F02EBCA2C000CF9715 /* UIColor+GrayColor.h */; };
 		E25D48F32EBCA2C000CF9715 /* UIColor+GrayColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E25D48F12EBCA2C000CF9715 /* UIColor+GrayColor.m */; };
+		E2AC17052EBB79F60065F8F5 /* ACRCitationPresenter.h in Headers */ = {isa = PBXBuildFile; fileRef = E2AC17032EBB79F60065F8F5 /* ACRCitationPresenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2AC17062EBB79F60065F8F5 /* ACRCitationPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E2AC17042EBB79F60065F8F5 /* ACRCitationPresenter.m */; };
+		E2AC17082EBB79F60065F8F5 /* ACICitationPresenter.h in Headers */ = {isa = PBXBuildFile; fileRef = E2AC17072EBB79F60065F8F5 /* ACICitationPresenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2AC170C2EBB79F60065F8F5 /* ACRCitationBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = E2AC17092EBB79F60065F8F5 /* ACRCitationBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2AC170D2EBB79F60065F8F5 /* ACRCitationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = E2AC170A2EBB79F60065F8F5 /* ACRCitationBuilder.m */; };
+		E2AC170E2EBB79F60065F8F5 /* ACRCitationBuilderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E2AC170B2EBB79F60065F8F5 /* ACRCitationBuilderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E67241702E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m in Sources */ = {isa = PBXBuildFile; fileRef = E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */; };
 		E67241712E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h in Headers */ = {isa = PBXBuildFile; fileRef = E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC367F912F6036B68C5BBFDB /* Pods_AdaptiveCards_AdaptiveCardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */; };
@@ -1113,8 +1117,6 @@
 		E204C8972EBB79F60065F8F5 /* ACOCitation.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOCitation.mm; sourceTree = "<group>"; };
 		E204C8982EBB79F60065F8F5 /* ACOReference.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACOReference.h; sourceTree = "<group>"; };
 		E204C8992EBB79F60065F8F5 /* ACOReference.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACOReference.mm; sourceTree = "<group>"; };
-		E204C89A2EBB79F60065F8F5 /* ACRCitationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationManager.h; sourceTree = "<group>"; };
-		E204C89B2EBB79F60065F8F5 /* ACRCitationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationManager.m; sourceTree = "<group>"; };
 		E204C89C2EBB79F60065F8F5 /* ACRCitationManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationManagerDelegate.h; sourceTree = "<group>"; };
 		E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationParser.h; sourceTree = "<group>"; };
 		E204C89F2EBB79F60065F8F5 /* ACRCitationParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationParser.m; sourceTree = "<group>"; };
@@ -1135,6 +1137,12 @@
 		E25D48ED2EBC7A1D00CF9715 /* ACRCitationReferenceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationReferenceView.m; sourceTree = "<group>"; };
 		E25D48F02EBCA2C000CF9715 /* UIColor+GrayColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+GrayColor.h"; sourceTree = "<group>"; };
 		E25D48F12EBCA2C000CF9715 /* UIColor+GrayColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+GrayColor.m"; sourceTree = "<group>"; };
+		E2AC17032EBB79F60065F8F5 /* ACRCitationPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationPresenter.h; sourceTree = "<group>"; };
+		E2AC17042EBB79F60065F8F5 /* ACRCitationPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationPresenter.m; sourceTree = "<group>"; };
+		E2AC17072EBB79F60065F8F5 /* ACICitationPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACICitationPresenter.h; sourceTree = "<group>"; };
+		E2AC17092EBB79F60065F8F5 /* ACRCitationBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationBuilder.h; sourceTree = "<group>"; };
+		E2AC170A2EBB79F60065F8F5 /* ACRCitationBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRCitationBuilder.m; sourceTree = "<group>"; };
+		E2AC170B2EBB79F60065F8F5 /* ACRCitationBuilderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCitationBuilderDelegate.h; sourceTree = "<group>"; };
 		E3DBB3CD3C02321AED9AEF65 /* Pods_AdaptiveCards_AdaptiveCardsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdaptiveCards_AdaptiveCardsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E672416E2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRStringBasedKeyValueObservation.h; sourceTree = "<group>"; };
 		E672416F2E67690C000ECCE4 /* ACRStringBasedKeyValueObservation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRStringBasedKeyValueObservation.m; sourceTree = "<group>"; };
@@ -1814,11 +1822,15 @@
 				E204C8C42EBB81D30065F8F5 /* ACRTextBlockCitationParser.h */,
 				E204C8C52EBB81D30065F8F5 /* ACRTextBlockCitationParser.m */,
 				E204C8962EBB79F60065F8F5 /* ACOCitation.h */,
+				E2AC17072EBB79F60065F8F5 /* ACICitationPresenter.h */,
+				E2AC17032EBB79F60065F8F5 /* ACRCitationPresenter.h */,
+				E2AC17042EBB79F60065F8F5 /* ACRCitationPresenter.m */,
 				E204C8972EBB79F60065F8F5 /* ACOCitation.mm */,
 				E204C8982EBB79F60065F8F5 /* ACOReference.h */,
 				E204C8992EBB79F60065F8F5 /* ACOReference.mm */,
-				E204C89A2EBB79F60065F8F5 /* ACRCitationManager.h */,
-				E204C89B2EBB79F60065F8F5 /* ACRCitationManager.m */,
+				E2AC17092EBB79F60065F8F5 /* ACRCitationBuilder.h */,
+				E2AC170A2EBB79F60065F8F5 /* ACRCitationBuilder.m */,
+				E2AC170B2EBB79F60065F8F5 /* ACRCitationBuilderDelegate.h */,
 				E204C89C2EBB79F60065F8F5 /* ACRCitationManagerDelegate.h */,
 				E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */,
 				E204C89F2EBB79F60065F8F5 /* ACRCitationParser.m */,
@@ -2476,12 +2488,15 @@
 				F43110431F357487001AAE30 /* ACRInputTableView.h in Headers */,
 				F4F44B94204A157B00A2F24C /* ACRImageRenderer.h in Headers */,
 				E204C8A52EBB79F60065F8F5 /* ACOCitation.h in Headers */,
+				E2AC17082EBB79F60065F8F5 /* ACICitationPresenter.h in Headers */,
+				E2AC17052EBB79F60065F8F5 /* ACRCitationPresenter.h in Headers */,
 				E204C8A72EBB79F60065F8F5 /* ACRCitationManagerDelegate.h in Headers */,
 				E204C8A82EBB79F60065F8F5 /* ACRCitationParser.h in Headers */,
 				E204C8A92EBB79F60065F8F5 /* ACRCitationParserDelegate.h in Headers */,
 				E204C8AA2EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h in Headers */,
 				E204C8AB2EBB79F60065F8F5 /* ACOReference.h in Headers */,
-				E204C8AC2EBB79F60065F8F5 /* ACRCitationManager.h in Headers */,
+				E2AC170C2EBB79F60065F8F5 /* ACRCitationBuilder.h in Headers */,
+				E2AC170E2EBB79F60065F8F5 /* ACRCitationBuilderDelegate.h in Headers */,
 				F4F44B8D204A11D000A2F24C /* (null) in Headers */,
 				F4F44B8F204A148200A2F24C /* ACOBaseCardElement.h in Headers */,
 				F401A87F1F1045CA006D7AF2 /* ACRContentHoldingUIView.h in Headers */,
@@ -2901,7 +2916,8 @@
 				F9A9E55526FE9FE400D13410 /* StyledCollectionElement.cpp in Sources */,
 				6BFF99C825FFF53E0028069F /* ExecuteAction.cpp in Sources */,
 				F42979431F322C3E00E89914 /* ACRErrors.mm in Sources */,
-				E204C8AD2EBB79F60065F8F5 /* ACRCitationManager.m in Sources */,
+				E2AC170D2EBB79F60065F8F5 /* ACRCitationBuilder.m in Sources */,
+				E2AC17062EBB79F60065F8F5 /* ACRCitationPresenter.m in Sources */,
 				E204C8AE2EBB79F60065F8F5 /* ACRCitationParser.m in Sources */,
 				E204C8B02EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m in Sources */,
 				E204C8B12EBB79F60065F8F5 /* ACOCitation.mm in Sources */,

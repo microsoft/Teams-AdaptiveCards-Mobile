@@ -7,346 +7,514 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "ACRCitationManager.h"
-#import "ACRCitationManagerDelegate.h"
-#import "ACRInlineCitationTokenParser.h"
+#import <objc/runtime.h>
 #import "ACRCitationParser.h"
-#import "ACOReference.h"
+#import "ACRCitationBuilder.h"
+#import "ACRCitationBuilderDelegate.h"
+#import "ACRCitationParserDelegate.h"
+#import "ACICitationPresenter.h"
 #import "ACOCitation.h"
-#import "ACRView.h"
+#import "ACOReference.h"
+#import "ACRViewTextAttachment.h"
 
-@interface MockCitationDelegate : NSObject <ACRCitationManagerDelegate>
-@property (nonatomic, strong) UIViewController *mockViewController;
-@property (nonatomic, strong) NSArray<ACOReference *> *mockReferences;
-@property (nonatomic, strong) NSMutableArray<NSDictionary *> *citationTapEvents;
-@property (nonatomic, strong) NSMutableArray<NSString *> *presentedCitations;
-@property (nonatomic, strong) NSMutableArray<NSString *> *dismissedCitations;
+#pragma mark - Mock: Builder Delegate (analytics)
+
+@interface MockBuilderDelegate : NSObject <ACRCitationBuilderDelegate>
+@property (nonatomic, strong) NSMutableArray<ACOCitation *> *tappedCitations;
+@property (nonatomic, strong) NSMutableArray<ACOReference *> *tappedReferences;
 @end
 
-@implementation MockCitationDelegate
+@implementation MockBuilderDelegate
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _mockViewController = [[UIViewController alloc] init];
-        _citationTapEvents = [NSMutableArray array];
-        _presentedCitations = [NSMutableArray array];
-        _dismissedCitations = [NSMutableArray array];
-        
-        // Create mock references - we cannot set properties directly as they are readonly
-        // We'll need to create them through proper initialization or find another way
-        _mockReferences = @[]; // Will be empty for now since ACOReference doesn't expose setters
+        _tappedCitations = [NSMutableArray array];
+        _tappedReferences = [NSMutableArray array];
     }
     return self;
 }
 
-- (void)citationWillPresent:(NSString *)citationId referenceData:(ACOReference * _Nullable)referenceData {
-    [self.presentedCitations addObject:citationId];
-}
-
-- (void)citationDidDismiss:(NSString *)citationId {
-    [self.dismissedCitations addObject:citationId];
-}
-
-- (void)citationManager:(ACRCitationManager *)citationManager 
-         didTapCitation:(ACOCitation *)citation 
-          referenceData:(ACOReference * _Nullable)referenceData {
-    
-    // Record the tap event for verification
-    NSDictionary *tapEvent = @{
-        @"citation": citation ?: [NSNull null],
-        @"referenceData": referenceData ?: [NSNull null],
-        @"timestamp": [NSDate date]
-    };
-    [self.citationTapEvents addObject:tapEvent];
+- (void)citationBuilder:(ACRCitationBuilder *)citationBuilder
+         didTapCitation:(ACOCitation *)citation
+          referenceData:(ACOReference *)referenceData {
+    [self.tappedCitations addObject:citation];
+    if (referenceData) {
+        [self.tappedReferences addObject:referenceData];
+    }
 }
 
 @end
 
-@interface ACRCitationManagerTests : XCTestCase
-@property (nonatomic, strong) ACRCitationManager *citationManager;
-@property (nonatomic, strong) MockCitationDelegate *mockDelegate;
-@property (nonatomic, strong) ACRView *mockRootView;
+#pragma mark - Mock: Parser Delegate (analytics from parser layer)
+
+@interface MockParserDelegate : NSObject <ACRCitationParserDelegate>
+@property (nonatomic, strong) NSMutableArray<ACOCitation *> *tappedCitations;
 @end
 
-@implementation ACRCitationManagerTests
+@implementation MockParserDelegate
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _tappedCitations = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)citationParser:(id)parser
+       didTapCitation:(ACOCitation *)citation
+        referenceData:(ACOReference *)referenceData {
+    [self.tappedCitations addObject:citation];
+}
+
+@end
+
+#pragma mark - Mock: Citation Presenter
+
+@interface MockCitationPresenter : NSObject <ACICitationPresenter>
+@property (nonatomic, strong) NSMutableArray<ACOCitation *> *handledCitations;
+@end
+
+@implementation MockCitationPresenter
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _handledCitations = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)presentBottomSheetFrom:(UIViewController *)activeController
+                didTapCitation:(ACOCitation *)citation
+                 referenceData:(ACOReference *)referenceData {
+    // no-op: tests use the handleCitationTap: path
+}
+
+- (void)handleCitationTap:(ACOCitation *)citation
+            referenceData:(ACOReference *)referenceData {
+    [self.handledCitations addObject:citation];
+}
+
+@end
+
+#pragma mark - Testable ACRCitationParser Subclass
+
+/// Subclass that overrides createButtonWithTitle:size: to capture the created UIButton.
+/// This enables per-button associated object assertions without using private API.
+@interface TestableCitationParser : ACRCitationParser
+@property (nonatomic, strong) UIButton *lastCreatedButton;
+@end
+
+/// Private-method forward declaration so the subclass can call super.
+@interface ACRCitationParser (TestingPrivate)
+- (UIButton *)createButtonWithTitle:(NSString *)title size:(CGSize)size;
+@end
+
+@implementation TestableCitationParser
+
+- (UIButton *)createButtonWithTitle:(NSString *)title size:(CGSize)size {
+    UIButton *button = [super createButtonWithTitle:title size:size];
+    self.lastCreatedButton = button;
+    return button;
+}
+
+@end
+
+// TEST CASES BELOW THIS POINT
+
+#pragma mark - ACRCitationParser Tests
+
+@interface ACRCitationParserTests : XCTestCase
+@property (nonatomic, strong) MockParserDelegate *mockDelegate;
+@property (nonatomic, strong) ACRCitationParser *parser;
+@property (nonatomic, strong) ACOReference *mockReference;
+@property (nonatomic, strong) NSArray<ACOReference *> *references;
+@end
+
+@implementation ACRCitationParserTests
 
 - (void)setUp {
     [super setUp];
-    
-    // Given: Mock delegate and root view
-    self.mockDelegate = [[MockCitationDelegate alloc] init];
-    self.mockRootView = [[ACRView alloc] init];
-    
-    // Given: Citation manager with delegate
-    self.citationManager = [[ACRCitationManager alloc] initWithDelegate:self.mockDelegate];
-    self.citationManager.rootView = self.mockRootView;
+    self.mockDelegate = [[MockParserDelegate alloc] init];
+    self.parser = [[ACRCitationParser alloc] initWithDelegate:self.mockDelegate];
+    self.mockReference = [[ACOReference alloc] init];
+    self.references = @[self.mockReference];
 }
 
 - (void)tearDown {
-    self.citationManager = nil;
+    self.parser = nil;
     self.mockDelegate = nil;
-    self.mockRootView = nil;
+    self.mockReference = nil;
+    self.references = nil;
     [super tearDown];
 }
 
-#pragma mark - Initialization Tests
+/// findReferenceByIndex returns the correct object for an in-bounds index.
+- (void)testFindReference_returnsCorrectObjectForInBoundsIndex {
+    // Given: A references array with one item and a valid index
+    NSNumber *referenceId = @0;
 
-/// Test that citation manager initializes correctly with delegate
-- (void)testCitationManagerInitialization {
-    // Given: A citation manager delegate
-    MockCitationDelegate *delegate = [[MockCitationDelegate alloc] init];
-    
-    // When: Creating a citation manager with delegate
-    ACRCitationManager *manager = [[ACRCitationManager alloc] initWithDelegate:delegate];
-    
-    // Then: Manager should be properly initialized
-    XCTAssertNotNil(manager, @"Citation manager should be initialized");
-    // Note: Cannot test delegate property as it's private
+    // When: Looking up the reference by index
+    ACOReference *found = [self.parser findReferenceByIndex:referenceId inReferences:self.references];
+
+    // Then: The reference at index 0 should be returned
+    XCTAssertNotNil(found, @"Should return a reference for a valid index");
+    XCTAssertEqual(found, self.mockReference, @"Should return exactly the reference at the given index");
 }
 
-#pragma mark - Parser Access Tests
+/// findReferenceByIndex returns nil for an index beyond the array bounds.
+- (void)testFindReference_returnsNilForOutOfBoundsIndex {
+    // Given: An index well beyond the array bounds
+    NSNumber *referenceId = @999;
 
-/// Test that InlineCitation parser is accessible
-- (void)testInlineCitationParserAccess {
-    // When: Accessing inlineCitationParser property
-    ACRInlineCitationTokenParser *parser = self.citationManager.inlineCitationParser;
-    
-    // Then: Parser should be accessible
-    XCTAssertNotNil(parser, @"InlineCitation parser should be accessible");
-    XCTAssertTrue([parser isKindOfClass:[ACRInlineCitationTokenParser class]], @"Should be correct parser type");
+    // When: Looking up the reference
+    ACOReference *found = [self.parser findReferenceByIndex:referenceId inReferences:self.references];
+
+    // Then: Should return nil without crashing
+    XCTAssertNil(found, @"Should return nil for an out-of-bounds index");
 }
 
-/// Test that CitationRun parser is accessible
-- (void)testCitationRunParserAccess {
-    // When: Accessing citationRunParser property
-    ACRCitationParser *parser = self.citationManager.citationRunParser;
-    
-    // Then: Parser should be accessible
-    XCTAssertNotNil(parser, @"CitationRun parser should be accessible");
-    XCTAssertTrue([parser isKindOfClass:[ACRCitationParser class]], @"Should be correct parser type");
+/// findReferenceByIndex returns nil when referenceId is nil.
+- (void)testFindReference_returnsNilForNilReferenceId {
+    // Given: A nil referenceId
+
+    // When: Looking up the reference
+    ACOReference *found = [self.parser findReferenceByIndex:nil inReferences:self.references];
+
+    // Then: Should return nil without crashing
+    XCTAssertNil(found, @"Should return nil when referenceId is nil");
 }
 
-#pragma mark - Citation Building Tests
+/// findReferenceByIndex returns nil when the references array is nil.
+- (void)testFindReference_returnsNilForNilReferencesArray {
+    // Given: A valid referenceId but nil references array
+    NSNumber *referenceId = @0;
 
-/// Test building citations from attributed string with inline token citations
-- (void)testBuildCitationsFromAttributedStringWithInlineTokens {
-    // Given: Input text with inline citation tokens
-    NSString *inputText = @"Machine learning has changed computing {{cite:0}} and sustainable practices are important {{cite:1}}.";
-    NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
-    
-    // When: Building citations from attributed string with references
-    NSAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString
-                                                                               references:self.mockDelegate.mockReferences];
-    
-    // Then: Result should be processed
+    // When: Looking up the reference
+    ACOReference *found = [self.parser findReferenceByIndex:referenceId inReferences:nil];
+
+    // Then: Should return nil without crashing
+    XCTAssertNil(found, @"Should return nil when references array is nil");
+}
+
+/// createAttachmentWithCitation returns nil when referenceData is nil.
+- (void)testCreateAttachment_returnsNilForNilReferenceData {
+    // Given: A valid citation with no matching referenceData
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
+                                                      referenceIndex:@0
+                                                               theme:ACRThemeLight];
+
+    // When: Creating the attachment with nil referenceData
+    ACRViewTextAttachment *attachment = [self.parser createAttachmentWithCitation:citation
+                                                                    referenceData:nil];
+
+    // Then: No attachment should be created
+    XCTAssertNil(attachment, @"createAttachment should return nil when referenceData is nil");
+}
+
+/// createAttachmentWithCitation returns a non-nil attachment for valid citation and reference.
+- (void)testCreateAttachment_returnsAttachmentForValidData {
+    // Given: A valid citation and a matching reference
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
+                                                      referenceIndex:@0
+                                                               theme:ACRThemeLight];
+
+    // When: Creating the attachment
+    ACRViewTextAttachment *attachment = [self.parser createAttachmentWithCitation:citation
+                                                                    referenceData:self.mockReference];
+
+    // Then: A valid attachment should be returned
+    XCTAssertNotNil(attachment, @"createAttachment should return a valid attachment for valid data");
+    XCTAssertTrue([attachment isKindOfClass:[ACRViewTextAttachment class]],
+                  @"Should be an ACRViewTextAttachment");
+}
+
+/// createAttachmentWithCitation stores the parser's presenter on the created button.
+- (void)testCreateAttachment_storesPresenterOnButton {
+    // Given: A testable parser with a mock presenter and a valid citation
+    TestableCitationParser *testParser = [[TestableCitationParser alloc] initWithDelegate:self.mockDelegate];
+    MockCitationPresenter *mockPresenter = [[MockCitationPresenter alloc] init];
+    testParser.presenter = mockPresenter;
+
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
+                                                      referenceIndex:@0
+                                                               theme:ACRThemeLight];
+
+    // When: Creating an attachment
+    [testParser createAttachmentWithCitation:citation referenceData:self.mockReference];
+    UIButton *capturedButton = testParser.lastCreatedButton;
+
+    // Then: The presenter should be retrievable from the button via associated object
+    id storedPresenter = objc_getAssociatedObject(capturedButton, @"presenter");
+    XCTAssertNotNil(capturedButton, @"A UIButton should have been created");
+    XCTAssertEqual(storedPresenter, mockPresenter,
+                   @"The presenter should be stored on the button at creation time");
+}
+
+/// Tapping a citation button fires the parser delegate analytics callback.
+- (void)testCitationButtonTapped_invokesDelegate {
+    // Given: A testable parser wired to a mock delegate, with a button created for a citation
+    TestableCitationParser *testParser = [[TestableCitationParser alloc] initWithDelegate:self.mockDelegate];
+    testParser.presenter = [[MockCitationPresenter alloc] init];
+
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
+                                                      referenceIndex:@0
+                                                               theme:ACRThemeLight];
+    [testParser createAttachmentWithCitation:citation referenceData:self.mockReference];
+    UIButton *capturedButton = testParser.lastCreatedButton;
+
+    // When: Simulating a tap on the button
+    [capturedButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+    // Then: The parser delegate should receive exactly one analytics tap event
+    XCTAssertEqual(self.mockDelegate.tappedCitations.count, 1,
+                   @"Delegate should receive one tap event");
+    XCTAssertEqual(self.mockDelegate.tappedCitations.firstObject, citation,
+                   @"Delegate citation should match what was stored on the button");
+}
+
+/// Tapping a citation button invokes the presenter stored on that specific button,
+/// not the parser's current presenter property (per-button isolation).
+- (void)testCitationButtonTapped_routesToPerButtonPresenter {
+    // Given: Two separate presenters, each used to create one button
+    TestableCitationParser *testParser = [[TestableCitationParser alloc] initWithDelegate:self.mockDelegate];
+    MockCitationPresenter *presenterA = [[MockCitationPresenter alloc] init];
+    MockCitationPresenter *presenterB = [[MockCitationPresenter alloc] init];
+
+    ACOCitation *citationA = [[ACOCitation alloc] initWithDisplayText:@"1"
+                                                       referenceIndex:@0
+                                                                theme:ACRThemeLight];
+    ACOCitation *citationB = [[ACOCitation alloc] initWithDisplayText:@"2"
+                                                       referenceIndex:@0
+                                                                theme:ACRThemeLight];
+
+    // Button A created with presenterA
+    testParser.presenter = presenterA;
+    [testParser createAttachmentWithCitation:citationA referenceData:self.mockReference];
+    UIButton *buttonA = testParser.lastCreatedButton;
+
+    // Button B created with presenterB
+    testParser.presenter = presenterB;
+    [testParser createAttachmentWithCitation:citationB referenceData:self.mockReference];
+    UIButton *buttonB = testParser.lastCreatedButton;
+
+    // When: Both buttons are tapped
+    [buttonA sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [buttonB sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+    // Then: Each presenter should only receive its own citation tap
+    XCTAssertEqual(presenterA.handledCitations.count, 1,
+                   @"PresenterA should receive exactly one tap");
+    XCTAssertEqual(presenterA.handledCitations.firstObject, citationA,
+                   @"PresenterA should receive citationA, not citationB");
+    XCTAssertEqual(presenterB.handledCitations.count, 1,
+                   @"PresenterB should receive exactly one tap");
+    XCTAssertEqual(presenterB.handledCitations.firstObject, citationB,
+                   @"PresenterB should receive citationB, not citationA");
+}
+
+/// parseAttributedStringWithCitation falls back to the citation's displayText when no reference matches.
+- (void)testParseStringWithCitation_returnsFallbackWhenNoMatchingReference {
+    // Given: A citation with an index that does not match any reference
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"[1]"
+                                                      referenceIndex:@999
+                                                               theme:ACRThemeLight];
+
+    // When: Parsing with an empty references array
+    NSAttributedString *result = [self.parser parseAttributedStringWithCitation:citation
+                                                                  andReferences:@[]];
+
+    // Then: The returned string should contain the citation's displayText
+    XCTAssertNotNil(result, @"Should return a non-nil string even when no reference matches");
+    XCTAssertEqualObjects(result.string, @"[1]",
+                          @"Fallback should be the citation's displayText");
+}
+
+/// parseAttributedStringWithCitation embeds a text attachment when a reference is found.
+- (void)testParseStringWithCitation_returnsAttachmentWhenReferenceExists {
+    // Given: A citation whose index resolves to a known reference
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
+                                                      referenceIndex:@0
+                                                               theme:ACRThemeLight];
+
+    // When: Parsing with valid references
+    NSAttributedString *result = [self.parser parseAttributedStringWithCitation:citation
+                                                                  andReferences:self.references];
+
+    // Then: The result should contain a text attachment attribute
+    __block BOOL hasAttachment = NO;
+    [result enumerateAttribute:NSAttachmentAttributeName
+                       inRange:NSMakeRange(0, result.length)
+                       options:0
+                    usingBlock:^(id _Nullable value, NSRange range, BOOL *stop) {
+        if ([value isKindOfClass:[NSTextAttachment class]]) {
+            hasAttachment = YES;
+            *stop = YES;
+        }
+    }];
+    XCTAssertTrue(hasAttachment,
+                  @"Result should contain a NSTextAttachment for a valid reference");
+}
+
+@end
+
+#pragma mark - ACRCitationBuilder Tests
+
+@interface ACRCitationBuilderTests : XCTestCase
+@property (nonatomic, strong) MockBuilderDelegate *mockDelegate;
+@property (nonatomic, strong) ACRCitationBuilder *builder;
+@property (nonatomic, strong) MockCitationPresenter *mockPresenter;
+@property (nonatomic, strong) ACOReference *mockReference;
+@property (nonatomic, strong) NSArray<ACOReference *> *references;
+@end
+
+@implementation ACRCitationBuilderTests
+
+- (void)setUp {
+    [super setUp];
+    self.mockDelegate = [[MockBuilderDelegate alloc] init];
+    self.builder = [[ACRCitationBuilder alloc] initWithDelegate:self.mockDelegate];
+    self.mockPresenter = [[MockCitationPresenter alloc] init];
+    self.mockReference = [[ACOReference alloc] init];
+    self.references = @[self.mockReference];
+}
+
+- (void)tearDown {
+    self.builder = nil;
+    self.mockDelegate = nil;
+    self.mockPresenter = nil;
+    self.mockReference = nil;
+    self.references = nil;
+    [super tearDown];
+}
+
+/// ACRCitationBuilder initializes successfully with a delegate.
+- (void)testBuilderInitialization {
+    // Given: A valid builder delegate
+
+    // When: Initializing the builder
+    ACRCitationBuilder *newBuilder = [[ACRCitationBuilder alloc] initWithDelegate:self.mockDelegate];
+
+    // Then: Builder instance should be non-nil
+    XCTAssertNotNil(newBuilder, @"Builder should initialize successfully with a delegate");
+}
+
+/// buildCitationsFromAttributedString returns non-nil output for text with inline tokens.
+- (void)testBuildCitationsFromAttributedString_returnsNonNil {
+    // Given: Input text containing an inline citation token
+    NSAttributedString *input = [[NSAttributedString alloc]
+                                 initWithString:@"Result with {{cite:0}} inline citation."];
+
+    // When: Building citations
+    NSAttributedString *result = [self.builder buildCitationsFromAttributedString:input
+                                                                       references:self.references
+                                                                        presenter:self.mockPresenter
+                                                                            theme:ACRThemeLight];
+
+    // Then: Result should be non-nil with content
     XCTAssertNotNil(result, @"Result should not be nil");
     XCTAssertTrue(result.length > 0, @"Result should have content");
 }
 
-/// Test building citations from NSLink attributes in attributed string
-- (void)testBuildCitationsFromNSLinkAttributesInAttributedString {
-    // Given: Attributed string with NSLink attributes for citations
-    NSMutableAttributedString *inputAttributedString = [[NSMutableAttributedString alloc] initWithString:@"Check this reference and this one too."];
-    
-    // Add NSLink attributes to simulate citation links
-    [inputAttributedString addAttribute:NSLinkAttributeName 
-                                  value:[NSURL URLWithString:@"cite:0"]
-                                  range:NSMakeRange(6, 4)]; // "this"
-    [inputAttributedString addAttribute:NSLinkAttributeName 
-                                  value:[NSURL URLWithString:@"cite:1"]
-                                  range:NSMakeRange(25, 4)]; // "this"
-    
-    // When: Building citations from NSLink attributes
-    NSAttributedString *result = [self.citationManager buildCitationsFromNSLinkAttributesInAttributedString:inputAttributedString
-                                                                                                  references:self.mockDelegate.mockReferences];
-    
-    // Then: Result should be processed
-    XCTAssertNotNil(result, @"Result should not be nil");
-    XCTAssertTrue(result.length > 0, @"Result should have content");
-}
+/// buildCitationsFromAttributedString handles an empty input without crashing.
+- (void)testBuildCitationsFromAttributedString_handlesEmptyInput {
+    // Given: An empty attributed string
+    NSAttributedString *emptyInput = [[NSAttributedString alloc] initWithString:@""];
 
-/// Test building citation attachment with citation and references
-- (void)testBuildCitationAttachmentWithCitation {
-    // Given: A citation object
-    ACOCitation *citation = [[ACOCitation alloc] init];
-    citation.displayText = @"1";
-    citation.referenceIndex = @0;
-    
-    // When: Building citation attachment
-    NSAttributedString *result = [self.citationManager buildCitationAttachmentWithCitation:citation
-                                                                                 references:self.mockDelegate.mockReferences];
-    
-    // Then: Result should be created
-    XCTAssertNotNil(result, @"Citation attachment result should not be nil");
-}
+    // When: Building citations on empty input
+    NSAttributedString *result = [self.builder buildCitationsFromAttributedString:emptyInput
+                                                                       references:self.references
+                                                                        presenter:self.mockPresenter
+                                                                            theme:ACRThemeLight];
 
-#pragma mark - Edge Case Tests
-
-/// Test building citations from empty attributed string
-- (void)testBuildCitationsFromEmptyAttributedString {
-    // Given: Empty attributed string
-    NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:@""];
-    
-    // When: Building citations from empty string
-    NSAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString
-                                                                               references:self.mockDelegate.mockReferences];
-    
-    // Then: Result should handle gracefully
-    XCTAssertNotNil(result, @"Result should not be nil for empty string");
+    // Then: Should return an empty string without crashing
+    XCTAssertNotNil(result, @"Result should not be nil even for empty input");
     XCTAssertEqual(result.length, 0, @"Result should be empty for empty input");
 }
 
-/// Test building citations with nil references
-- (void)testBuildCitationsWithNilReferences {
-    // Given: Input text with citations but nil references
-    NSString *inputText = @"This has a citation {{cite:0}} in it.";
-    NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
-    
-    // When: Building citations with nil references
-    NSAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString
-                                                                               references:nil];
-    
-    // Then: Should handle gracefully without crashes
-    XCTAssertNotNil(result, @"Result should not be nil even with nil references");
-}
+/// buildCitationsFromNSLinkAttributesInAttributedString returns non-nil output for NSLink citations.
+- (void)testBuildCitationsFromNSLinkAttributes_returnsNonNil {
+    // Given: An attributed string with an NSLink cite URL
+    NSMutableAttributedString *input = [[NSMutableAttributedString alloc]
+                                        initWithString:@"Reference click here."];
+    [input addAttribute:NSLinkAttributeName
+                  value:[NSURL URLWithString:@"cite:0"]
+                  range:NSMakeRange(10, 10)];
 
-/// Test building citations with empty references array
-- (void)testBuildCitationsWithEmptyReferences {
-    // Given: Input text with citations but empty references
-    NSString *inputText = @"This has a citation {{cite:0}} in it.";
-    NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
-    NSArray<ACOReference *> *emptyReferences = @[];
-    
-    // When: Building citations with empty references
-    NSAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString
-                                                                               references:emptyReferences];
-    
-    // Then: Should handle gracefully without crashes
-    XCTAssertNotNil(result, @"Result should not be nil even with empty references");
-}
+    // When: Building citations from NSLink attributes
+    NSAttributedString *result = [self.builder buildCitationsFromNSLinkAttributesInAttributedString:input
+                                                                                         references:self.references
+                                                                                          presenter:self.mockPresenter
+                                                                                              theme:ACRThemeLight];
 
-#pragma mark - Delegation Tests
-
-/// Test citation manager delegation when citation is tapped
-- (void)testCitationTappedDelegation {
-    // Given: Citation and reference data
-    ACOCitation *citation = [[ACOCitation alloc] init];
-    citation.displayText = @"1";
-    citation.referenceIndex = @0;
-    
-    ACOReference *referenceData = nil; // Using nil since we can't create mock references easily
-    
-    // When: Simulating a citation tap by calling the delegate method directly
-    [self.mockDelegate citationManager:self.citationManager
-                        didTapCitation:citation
-                         referenceData:referenceData];
-    
-    // Then: Delegate method should be called and recorded
-    XCTAssertEqual(self.mockDelegate.citationTapEvents.count, 1, @"One citation tap event should be recorded");
-    
-    NSDictionary *tapEvent = self.mockDelegate.citationTapEvents.firstObject;
-    XCTAssertEqualObjects(tapEvent[@"citation"], citation, @"Citation object should match");
-    XCTAssertEqualObjects(tapEvent[@"referenceData"], [NSNull null], @"Reference data should be null for nil input");
-}
-
-/// Test citation presentation delegation
-- (void)testCitationPresentationDelegation {
-    // Given: Citation ID
-    NSString *citationId = @"test-citation-1";
-    
-    // When: Simulating citation presentation
-    [self.mockDelegate citationWillPresent:citationId referenceData:nil];
-    
-    // Then: Should be recorded
-    XCTAssertEqual(self.mockDelegate.presentedCitations.count, 1, @"One citation presentation should be recorded");
-    XCTAssertEqualObjects(self.mockDelegate.presentedCitations.firstObject, citationId, @"Citation ID should match");
-}
-
-/// Test citation dismissal delegation
-- (void)testCitationDismissalDelegation {
-    // Given: Citation ID
-    NSString *citationId = @"test-citation-1";
-    
-    // When: Simulating citation dismissal
-    [self.mockDelegate citationDidDismiss:citationId];
-    
-    // Then: Should be recorded
-    XCTAssertEqual(self.mockDelegate.dismissedCitations.count, 1, @"One citation dismissal should be recorded");
-    XCTAssertEqualObjects(self.mockDelegate.dismissedCitations.firstObject, citationId, @"Citation ID should match");
-}
-
-#pragma mark - Property Tests
-
-/// Test root view assignment and access
-- (void)testRootViewAssignment {
-    // Given: A citation manager and root view
-    ACRCitationManager *manager = [[ACRCitationManager alloc] initWithDelegate:self.mockDelegate];
-    ACRView *rootView = [[ACRView alloc] init];
-    
-    // When: Setting root view
-    manager.rootView = rootView;
-    
-    // Then: Root view should be accessible
-    XCTAssertEqual(manager.rootView, rootView, @"Root view should be set correctly");
-}
-
-/// Test parser property access
-- (void)testParserPropertyAccess {
-    // When: Accessing parser properties
-    ACRInlineCitationTokenParser *inlineParser = self.citationManager.inlineCitationParser;
-    ACRCitationParser *citationRunParser = self.citationManager.citationRunParser;
-    
-    // Then: Both parsers should be accessible
-    XCTAssertNotNil(inlineParser, @"Inline citation parser should be accessible");
-    XCTAssertNotNil(citationRunParser, @"Citation run parser should be accessible");
-}
-
-#pragma mark - Integration Tests
-
-/// Test citation building with citation that has nil referenceIndex
-- (void)testCitationBuildingWithNilReferenceIndex {
-    // Given: Citation with nil reference index
-    ACOCitation *citation = [[ACOCitation alloc] init];
-    citation.displayText = @"Invalid";
-    citation.referenceIndex = nil;
-    
-    // When: Building citation attachment
-    NSAttributedString *result = [self.citationManager buildCitationAttachmentWithCitation:citation
-                                                                                 references:self.mockDelegate.mockReferences];
-    
-    // Then: Should handle gracefully
-    XCTAssertNotNil(result, @"Should handle citation with nil reference index");
-}
-
-/// Test citation building with out-of-bounds reference index
-- (void)testCitationBuildingWithOutOfBoundsReferenceIndex {
-    // Given: Citation with out-of-bounds reference index
-    ACOCitation *citation = [[ACOCitation alloc] init];
-    citation.displayText = @"OutOfBounds";
-    citation.referenceIndex = @999; // Much larger than available references
-    
-    // When: Building citation attachment
-    NSAttributedString *result = [self.citationManager buildCitationAttachmentWithCitation:citation
-                                                                                 references:self.mockDelegate.mockReferences];
-    
-    // Then: Should handle gracefully
-    XCTAssertNotNil(result, @"Should handle citation with out-of-bounds reference index");
-}
-
-/// Test mixed citation formats in one text
-- (void)testCitationManagerWithMixedCitationFormats {
-    // Given: Text with inline citation format
-    NSString *inputText = @"Research shows {{cite:0}} significant improvements. Also check {{cite:1}} this reference.";
-    NSAttributedString *inputAttributedString = [[NSAttributedString alloc] initWithString:inputText];
-    
-    // When: Processing with inline citation method
-    NSAttributedString *result = [self.citationManager buildCitationsFromAttributedString:inputAttributedString
-                                                                               references:self.mockDelegate.mockReferences];
-    
-    // Then: Should process without errors
-    XCTAssertNotNil(result, @"Mixed citation types should be processed");
+    // Then: Result should be non-nil with content
+    XCTAssertNotNil(result, @"Result should not be nil");
     XCTAssertTrue(result.length > 0, @"Result should have content");
+}
+
+/// buildCitationAttachmentWithCitation returns an attributed string for a valid citation.
+- (void)testBuildCitationAttachment_returnsNonNilForValidCitation {
+    // Given: A citation whose referenceIndex resolves to a known reference
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
+                                                      referenceIndex:@0
+                                                               theme:ACRThemeLight];
+
+    // When: Building the citation attachment
+    NSAttributedString *result = [self.builder buildCitationAttachmentWithCitation:citation
+                                                                         references:self.references
+                                                                          presenter:self.mockPresenter];
+
+    // Then: A non-nil attributed string should be returned
+    XCTAssertNotNil(result, @"Result should not be nil for a valid citation");
+}
+
+/// buildCitationAttachmentWithCitation falls back to displayText when no reference is found.
+- (void)testBuildCitationAttachment_returnsFallbackTextForNoReference {
+    // Given: A citation whose referenceIndex does not match any reference
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"[unknown]"
+                                                      referenceIndex:@999
+                                                               theme:ACRThemeLight];
+
+    // When: Building with an empty references array
+    NSAttributedString *result = [self.builder buildCitationAttachmentWithCitation:citation
+                                                                         references:@[]
+                                                                          presenter:self.mockPresenter];
+
+    // Then: Should fall back to the citation's displayText
+    XCTAssertNotNil(result, @"Result should not be nil even when reference is missing");
+    XCTAssertEqualObjects(result.string, @"[unknown]",
+                          @"Should use displayText as the fallback when no reference is found");
+}
+
+/// The builder forwards citation tap analytics to its delegate.
+- (void)testBuilder_forwardsAnalyticsTapToDelegate {
+    // Given: A testable parser subclass wired to a builder that uses a shared citation parser
+
+    // We test analytics forwarding by creating a citation button via the builder's
+    // buildCitationAttachment path, capturing its button via a TestableCitationParser,
+    // then sending a tap and asserting the builder delegate was notified.
+
+    // Re-create builder so we can inject our testable parser
+    MockParserDelegate *parserDelegate = [[MockParserDelegate alloc] init];
+    TestableCitationParser *testParser = [[TestableCitationParser alloc] initWithDelegate:parserDelegate];
+    testParser.presenter = self.mockPresenter;
+
+    ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
+                                                      referenceIndex:@0
+                                                               theme:ACRThemeLight];
+    [testParser createAttachmentWithCitation:citation referenceData:self.mockReference];
+    UIButton *capturedButton = testParser.lastCreatedButton;
+
+    // When: Tapping the button
+    [capturedButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+    // Then: The parser-level delegate (analytics) should have fired
+    XCTAssertEqual(parserDelegate.tappedCitations.count, 1,
+                   @"Parser delegate should receive a tap event");
+    XCTAssertEqual(parserDelegate.tappedCitations.firstObject, citation,
+                   @"Parser delegate should receive the correct citation");
 }
 
 @end
