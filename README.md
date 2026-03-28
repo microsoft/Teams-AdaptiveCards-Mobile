@@ -12,7 +12,8 @@
 
 ## Dive in
 
-* [Documentation](https://adaptivecards.io/documentation/)
+* [Documentation](https://adaptivecards.microsoft.com/)
+* [Legacy Documentation](https://adaptivecards.io/documentation/)
 * [Schema Explorer](https://adaptivecards.io/explorer/)
 * [Sample Cards](https://adaptivecards.io/samples/)
 * [Designer](https://adaptivecards.io/designer/)
