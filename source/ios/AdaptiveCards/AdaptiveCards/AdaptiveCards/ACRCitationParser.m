@@ -105,7 +105,7 @@
     }
 
     // Call the per-button presenter — routes to the correct card instance
-    if ([presenter respondsToSelector:@selector(handleCitationTap:referenceData:)]) {
+    if (presenter) {
         [presenter handleCitationTap:citation referenceData:referenceData];
     }
 }

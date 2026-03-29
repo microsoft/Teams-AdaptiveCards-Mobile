@@ -16,12 +16,24 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Public protocol for presenting citation bottom sheets.
  * Adopt this protocol to present citation reference details without depending on internal implementation.
+ *
+ * Both methods are required:
+ * - handleCitationTap: is called by the native card tap path (parser fires it; conformer resolves the UIViewController internally).
+ * - presentBottomSheetFrom: is called by the web-rendering path (caller provides the UIViewController directly).
  */
 @protocol ACICitationPresenter <NSObject>
 
 /**
- * Presents the citation reference bottom sheet for a given citation and reference.
- * Web-rendering path: caller has already resolved the active view controller.
+ * Native card path: called when a citation pill is tapped in a rendered card.
+ * The conformer is responsible for resolving the active UIViewController (e.g. via its stored actionDelegate).
+ * @param citation The citation that was tapped
+ * @param referenceData The reference data for the citation
+ */
+- (void)handleCitationTap:(ACOCitation *)citation
+            referenceData:(ACOReference * _Nullable)referenceData;
+
+/**
+ * Web-rendering path: called when the caller has already resolved the active view controller.
  * @param activeController The view controller from which to present the sheet
  * @param citation The citation that was tapped
  * @param referenceData The reference data for the citation
@@ -29,17 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)presentBottomSheetFrom:(UIViewController *)activeController
                 didTapCitation:(ACOCitation *)citation
                  referenceData:(ACOReference * _Nullable)referenceData;
-
-@optional
-
-/**
- * Native card path: called by ACRCitationBuilder when a parser tap fires.
- * The conformer resolves the active UIViewController from its own stored actionDelegate.
- * @param citation The citation that was tapped
- * @param referenceData The reference data for the citation
- */
-- (void)handleCitationTap:(ACOCitation *)citation
-            referenceData:(ACOReference * _Nullable)referenceData;
 
 @end
 
