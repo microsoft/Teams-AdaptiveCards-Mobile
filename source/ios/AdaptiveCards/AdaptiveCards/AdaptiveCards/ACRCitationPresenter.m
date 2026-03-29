@@ -100,6 +100,10 @@ static NSString *const referencesKey = @"References";
                                                delegate:self.actionDelegate
                                                   theme:citation.theme];
 
+    if (!renderResult.view) {
+        return;
+    }
+
     UIView *cardContentView = (UIView *)renderResult.view;
     ACRBottomSheetViewController *detailSheet = [[ACRBottomSheetViewController alloc] initWithContent:cardContentView
                                                                                         configuration:config];
