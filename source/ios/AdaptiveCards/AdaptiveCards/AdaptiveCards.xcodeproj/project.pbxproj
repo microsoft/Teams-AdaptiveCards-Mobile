@@ -420,9 +420,9 @@
 		CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFF95C0E2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm */; };
 		DD278A02932F65F8BDD1EA5D /* Pods_AdaptiveCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 255F5D3143215497D4067E21 /* Pods_AdaptiveCards.framework */; };
 		E204C8A52EBB79F60065F8F5 /* ACOCitation.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8962EBB79F60065F8F5 /* ACOCitation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E204C8A82EBB79F60065F8F5 /* ACRCitationParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E204C8A82EBB79F60065F8F5 /* ACRCitationParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C89E2EBB79F60065F8F5 /* ACRCitationParser.h */; };
 		E204C8A92EBB79F60065F8F5 /* ACRCitationParserDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8A02EBB79F60065F8F5 /* ACRCitationParserDelegate.h */; };
-		E204C8AA2EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8A32EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E204C8AA2EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8A32EBB79F60065F8F5 /* ACRInlineCitationTokenParser.h */; };
 		E204C8AB2EBB79F60065F8F5 /* ACOReference.h in Headers */ = {isa = PBXBuildFile; fileRef = E204C8982EBB79F60065F8F5 /* ACOReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E204C8AE2EBB79F60065F8F5 /* ACRCitationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C89F2EBB79F60065F8F5 /* ACRCitationParser.m */; };
 		E204C8B02EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E204C8A42EBB79F60065F8F5 /* ACRInlineCitationTokenParser.m */; };
