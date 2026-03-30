@@ -123,9 +123,7 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         if (isCitationsEnabled)
         {
             content = [[[self citationBuilder] buildCitationsFromNSLinkAttributesInAttributedString:content
-                                                                                         references:[[rootView card] references]
-                                                                                          presenter:rootView.citationPresenter
-                                                                                              theme:rootView.theme] mutableCopy];
+                                                                                          rootView:rootView] mutableCopy];
         }
         
         lab.textContainer.lineFragmentPadding = 0;

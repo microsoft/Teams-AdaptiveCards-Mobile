@@ -71,6 +71,19 @@
     return [result copy];
 }
 
+- (NSAttributedString *)buildCitationsFromAttributedString:(NSAttributedString *)attributedString
+                                                 rootView:(ACRView *)rootView
+{
+    NSArray<ACOReference *> *references = rootView.card.references;
+    id<ACICitationPresenter> presenter = rootView.citationPresenter;
+    ACRTheme theme = rootView.theme;
+    
+    return [self buildCitationsFromAttributedString:attributedString
+                                         references:references
+                                          presenter:presenter
+                                              theme:theme];
+}
+
 - (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString
                                                                   references:(NSArray<ACOReference *> *)references
                                                                    presenter:(id<ACICitationPresenter>)presenter
@@ -81,6 +94,19 @@
                                                                      withReferences:references
                                                                               theme:theme];
     return [result copy];
+}
+
+- (NSAttributedString *)buildCitationsFromNSLinkAttributesInAttributedString:(NSAttributedString *)attributedString
+                                                                    rootView:(ACRView *)rootView
+{
+    NSArray<ACOReference *> *references = rootView.card.references;
+    id<ACICitationPresenter> presenter = rootView.citationPresenter;
+    ACRTheme theme = rootView.theme;
+    
+    return [self buildCitationsFromNSLinkAttributesInAttributedString:attributedString
+                                                           references:references
+                                                            presenter:presenter
+                                                                theme:theme];
 }
 
 - (NSAttributedString *)buildCitationAttachmentWithCitation:(ACOCitation *)citation

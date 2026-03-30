@@ -25,10 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ACRCitationPresenter : NSObject <ACICitationPresenter>
 
 /**
- * @param hostConfig  Configures ACRBottomSheetConfiguration and ACRRenderer.
+ * @param hostConfig  Configures ACRBottomSheetConfiguration and ACRRenderer. If nil, defaults to a new empty config.
  * @param actionDelegate  Used in handleCitationTap: to resolve the active UIViewController. Held weakly.
  */
-- (instancetype)initWithHostConfig:(ACOHostConfig *)hostConfig
+- (instancetype)initWithHostConfig:(nullable ACOHostConfig *)hostConfig
                     actionDelegate:(id<ACRActionDelegate>)actionDelegate NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
