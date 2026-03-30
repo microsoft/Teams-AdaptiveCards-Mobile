@@ -175,6 +175,9 @@
                                hostView:(ACRContentStackView *)hostView
                                subviews:(NSArray<UIView *> *)subviews
 {
+    if (!viewToBeUnhidden) {
+        return;
+    }
     NSMutableArray *staleConstraints = [NSMutableArray array];
     for (NSLayoutConstraint *c in viewToBeUnhidden.constraints) {
         if (c.firstAttribute == NSLayoutAttributeWidth &&
