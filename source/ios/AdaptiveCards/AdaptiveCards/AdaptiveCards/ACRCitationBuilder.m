@@ -13,6 +13,7 @@
 #import "ACOReference.h"
 #import "ACOCitation.h"
 #import "ACRCitationParserDelegate.h"
+#import "ACRView.h"
 
 @interface ACRCitationBuilder () <ACRCitationParserDelegate>
 
