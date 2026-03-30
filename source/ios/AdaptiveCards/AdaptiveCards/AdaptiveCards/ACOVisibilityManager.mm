@@ -168,52 +168,58 @@
     }
 }
 
-/// Remove stale zero-width constraints that were set when this view was initially
-/// hidden (isVisible: false). These prevent the view from getting proper layout
-/// space in the UIStackView after toggle visibility unhides it.
-- (void)removeStaleZeroWidthConstraints:(UIView *)viewToBeUnhidden
-                               hostView:(ACRContentStackView *)hostView
-                               subviews:(NSArray<UIView *> *)subviews
+/// Reset UIStackView's internal layout for a view that was initially hidden
+/// (isVisible: false). When a hidden view is added to a UIStackView, the stack
+/// view assigns it zero internal sizing. After unhiding via ToggleVisibility,
+/// this stale sizing can leave the column at the wrong position or width.
+///
+/// Fix: Remove ALL arranged subviews from the host's UIStackView and re-add
+/// them in the same order. This forces UIStackView to discard its stale internal
+/// constraints and rebuild them from scratch, giving every column proper layout.
+///
+/// This approach does NOT scan, remove, or copy any constraints — it relies
+/// entirely on UIStackView's own lifecycle to handle constraint bookkeeping.
+/// Safe on older iOS (no-op if no UIStackView found or no columns need fixing).
+- (void)resetStackViewLayoutForView:(UIView *)viewToBeUnhidden
+                           hostView:(ACRContentStackView *)hostView
 {
-    if (!viewToBeUnhidden) {
+    if (!hostView || !viewToBeUnhidden) {
         return;
     }
-    NSMutableArray *staleConstraints = [NSMutableArray array];
-    for (NSLayoutConstraint *c in viewToBeUnhidden.constraints) {
-        if (c.firstAttribute == NSLayoutAttributeWidth &&
-            c.secondItem == nil &&
-            c.constant < 1.0) {
-            [staleConstraints addObject:c];
+
+    // Find the UIStackView that manages the columns
+    UIStackView *stackView = nil;
+    for (UIView *sub in hostView.subviews) {
+        if ([sub isKindOfClass:[UIStackView class]]) {
+            stackView = (UIStackView *)sub;
+            break;
         }
     }
-    for (NSLayoutConstraint *c in staleConstraints) {
-        [viewToBeUnhidden removeConstraint:c];
+    if (!stackView) {
+        return;
     }
 
-    // If stale constraints were removed, copy the width from a visible sibling
-    // that is about to hide (they're swapping visibility). This ensures the
-    // newly-visible column gets the full available width.
-    if (staleConstraints.count > 0 && hostView) {
-        for (UIView *sibling in subviews) {
-            if (sibling != viewToBeUnhidden &&
-                !sibling.isHidden &&
-                sibling.frame.size.width > 10 &&
-                [sibling isKindOfClass:[viewToBeUnhidden class]]) {
-                CGFloat siblingWidth = sibling.frame.size.width;
-                NSLayoutConstraint *widthC = [NSLayoutConstraint
-                    constraintWithItem:viewToBeUnhidden
-                    attribute:NSLayoutAttributeWidth
-                    relatedBy:NSLayoutRelationEqual
-                    toItem:nil
-                    attribute:NSLayoutAttributeNotAnAttribute
-                    multiplier:1.0
-                    constant:siblingWidth];
-                widthC.priority = UILayoutPriorityRequired - 1; // 999
-                [viewToBeUnhidden addConstraint:widthC];
-                break;
-            }
-        }
+    // Check if the unhidden view actually needs layout repair
+    // (zero width or positioned off-screen to the right)
+    BOOL needsFix = (viewToBeUnhidden.frame.size.width < 1.0 ||
+                     viewToBeUnhidden.frame.origin.x >= hostView.frame.size.width);
+    if (!needsFix) {
+        return;
     }
+
+    // Snapshot all arranged subviews, remove them all, then re-add in order.
+    // UIStackView rebuilds its internal constraints from scratch on insertion.
+    NSArray *allArranged = [stackView.arrangedSubviews copy];
+    for (UIView *sub in allArranged) {
+        [stackView removeArrangedSubview:sub];
+        [sub removeFromSuperview];
+    }
+    for (UIView *sub in allArranged) {
+        [stackView addArrangedSubview:sub];
+    }
+
+    [stackView setNeedsLayout];
+    [hostView setNeedsLayout];
 }
 
 /// unhide `viewToBeUnhidden`. `hostView` is a superview of type ColumnView or ColumnSetView
@@ -240,9 +246,9 @@
         // only enable filler view associated with the `viewTobeUnhidden`
         [self changeVisibilityOfPadding:viewToBeUnhidden visibilityHidden:NO];
         if (viewToBeUnhidden.isHidden) {
-            [self removeStaleZeroWidthConstraints:viewToBeUnhidden hostView:hostView subviews:subviews];
             viewToBeUnhidden.hidden = NO;
             [hostView increaseIntrinsicContentSize:viewToBeUnhidden];
+            [self resetStackViewLayoutForView:viewToBeUnhidden hostView:hostView];
         }
 
         // previous head view's separator becomes visible
@@ -252,9 +258,9 @@
         }
     } else {
         if (viewToBeUnhidden.isHidden) {
-            [self removeStaleZeroWidthConstraints:viewToBeUnhidden hostView:hostView subviews:subviews];
             viewToBeUnhidden.hidden = NO;
             [hostView increaseIntrinsicContentSize:viewToBeUnhidden];
+            [self resetStackViewLayoutForView:viewToBeUnhidden hostView:hostView];
         }
         [self changeVisiblityOfAssociatedViews:viewToBeUnhidden visibilityValue:NO contentStackView:hostView];
     }
