@@ -168,58 +168,58 @@
     }
 }
 
-/// Reset UIStackView's internal layout for a view that was initially hidden
-/// (isVisible: false). When a hidden view is added to a UIStackView, the stack
-/// view assigns it zero internal sizing. After unhiding via ToggleVisibility,
-/// this stale sizing can leave the column at the wrong position or width.
+/// Reset UIStackView's internal layout for a single column that was initially
+/// hidden (isVisible: false). UIStackView assigns stale zero-width sizing to
+/// views added while hidden. After unhiding via ToggleVisibility, this stale
+/// sizing can leave the column at the wrong position or width.
 ///
-/// Fix: Remove ALL arranged subviews from the host's UIStackView and re-add
-/// them in the same order. This forces UIStackView to discard its stale internal
-/// constraints and rebuild them from scratch, giving every column proper layout.
+/// Fix: Remove only the affected view from the arranged subview list and
+/// re-insert it at the same index. This forces UIStackView to discard its
+/// stale internal constraints for that one view and rebuild them, without
+/// touching any other columns.
 ///
-/// This approach does NOT scan, remove, or copy any constraints — it relies
-/// entirely on UIStackView's own lifecycle to handle constraint bookkeeping.
-/// Safe on older iOS (no-op if no UIStackView found or no columns need fixing).
+/// Uses ACRContentStackView's public API (getArrangedSubviews,
+/// removeArrangedSubview:, insertArrangedSubview:atIndex:) rather than
+/// scanning hostView.subviews for a private UIStackView.
+///
+/// The needsFix check is deferred via dispatch_async so the frame values
+/// reflect the post-unhide layout pass.
 - (void)resetStackViewLayoutForView:(UIView *)viewToBeUnhidden
                            hostView:(ACRContentStackView *)hostView
 {
-    if (!hostView || !viewToBeUnhidden) {
+    if (!hostView || !viewToBeUnhidden)
+    {
         return;
     }
 
-    // Find the UIStackView that manages the columns
-    UIStackView *stackView = nil;
-    for (UIView *sub in hostView.subviews) {
-        if ([sub isKindOfClass:[UIStackView class]]) {
-            stackView = (UIStackView *)sub;
-            break;
+    // Defer the check+fix to after the current layout pass completes,
+    // so frame values are current (not stale pre-layout values).
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Check if the unhidden view actually needs layout repair
+        BOOL needsFix = (viewToBeUnhidden.frame.size.width < 1.0 ||
+                         viewToBeUnhidden.frame.origin.x >= hostView.frame.size.width);
+        if (!needsFix)
+        {
+            return;
         }
-    }
-    if (!stackView) {
-        return;
-    }
 
-    // Check if the unhidden view actually needs layout repair
-    // (zero width or positioned off-screen to the right)
-    BOOL needsFix = (viewToBeUnhidden.frame.size.width < 1.0 ||
-                     viewToBeUnhidden.frame.origin.x >= hostView.frame.size.width);
-    if (!needsFix) {
-        return;
-    }
+        // Find the view's index in the arranged subviews via public API
+        NSArray<UIView *> *arranged = [hostView getArrangedSubviews];
+        NSUInteger idx = [arranged indexOfObject:viewToBeUnhidden];
+        if (idx == NSNotFound)
+        {
+            return;
+        }
 
-    // Snapshot all arranged subviews, remove them all, then re-add in order.
-    // UIStackView rebuilds its internal constraints from scratch on insertion.
-    NSArray *allArranged = [stackView.arrangedSubviews copy];
-    for (UIView *sub in allArranged) {
-        [stackView removeArrangedSubview:sub];
-        [sub removeFromSuperview];
-    }
-    for (UIView *sub in allArranged) {
-        [stackView addArrangedSubview:sub];
-    }
+        // Remove only the affected view from the arranged list (not from the
+        // view hierarchy — avoids detaching gesture recognizers, disrupting
+        // animations, or resetting accessibility state).
+        [hostView removeArrangedSubview:viewToBeUnhidden];
+        [hostView insertArrangedSubview:viewToBeUnhidden atIndex:idx];
 
-    [stackView setNeedsLayout];
-    [hostView setNeedsLayout];
+        [hostView setNeedsLayout];
+        [hostView layoutIfNeeded];
+    });
 }
 
 /// unhide `viewToBeUnhidden`. `hostView` is a superview of type ColumnView or ColumnSetView
