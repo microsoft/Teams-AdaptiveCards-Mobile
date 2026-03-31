@@ -146,6 +146,7 @@ typedef NS_ENUM(NSInteger, ACRCitationIcon) {
         NSString *title    = dictionary[@"title"]    ?: @"";
         NSString *abstract = dictionary[@"abstract"] ?: @"";
         NSString *url      = dictionary[@"url"]      ?: @"";
+        NSString *iconString = dictionary[@"icon"]   ?: @"image";
 
         std::vector<std::string> cppKeywords;
         for (NSString *kw in (NSArray<NSString *> *)(dictionary[@"keywords"] ?: @[])) {
@@ -159,6 +160,10 @@ typedef NS_ENUM(NSInteger, ACRCitationIcon) {
             std::string([url UTF8String]),
             cppKeywords
         );
+        
+        // Set the icon from the dictionary
+        ReferenceIcon cppIcon = ReferenceIconFromString([iconString UTF8String], ReferenceIcon::Image);
+        _reference->SetIcon(cppIcon);
     }
     return self;
 }

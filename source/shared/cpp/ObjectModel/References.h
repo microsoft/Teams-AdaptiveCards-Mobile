@@ -40,6 +40,7 @@ namespace AdaptiveCards {
 
         const ReferenceType GetType() const;
         const ReferenceIcon GetIcon() const;
+        void SetIcon(ReferenceIcon icon);
         const std::string GetAbstract() const;
         const std::string GetTitle() const;
         const std::string GetUrl() const;
