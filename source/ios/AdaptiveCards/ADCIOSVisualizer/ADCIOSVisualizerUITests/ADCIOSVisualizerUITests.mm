@@ -912,7 +912,9 @@
     
     // Try finding as a button (ColumnSet with selectAction becomes a button-like element)
     XCUIElementQuery *buttons = chatWindow.buttons;
-    for (NSUInteger i = 0; i < buttons.count; i++) {
+    for (NSUInteger i = 0; i < buttons.count; i++)
+
+    {
         XCUIElement *btn = [buttons elementBoundByIndex:i];
         NSString *label = btn.label;
         if (label && ([label containsString:@"Sources"] || [label containsString:@"sources"])) {
@@ -922,27 +924,38 @@
     }
     
     // Also try staticTexts
-    if (!sourcesButton) {
+    if (!sourcesButton)
+
+    {
         XCUIElement *sourcesText = chatWindow.staticTexts[@"Sources"];
-        if ([sourcesText exists] && [sourcesText isHittable]) {
+        if ([sourcesText exists] && [sourcesText isHittable])
+
+        {
             sourcesButton = sourcesText;
         }
     }
     
     // Try any element matching "Sources"
-    if (!sourcesButton) {
+    if (!sourcesButton)
+
+    {
         XCUIElementQuery *anyElements = [chatWindow descendantsMatchingType:XCUIElementTypeAny];
         for (NSUInteger i = 0; i < MIN(anyElements.count, 100); i++) {
             XCUIElement *elem = [anyElements elementBoundByIndex:i];
             NSString *label = elem.label;
-            if (label && [label containsString:@"Sources"] && elem.isHittable) {
+            if (label && [label containsString:@"Sources"] && elem.isHittable)
+
+            {
                 sourcesButton = elem;
                 break;
             }
         }
     }
     
-    if (sourcesButton) {
+    if (sourcesButton)
+
+    
+    {
         [sourcesButton tap];
         [NSThread sleepForTimeInterval:1];
         
@@ -964,7 +977,9 @@
         [self addAttachment:attachment3];
         
         // Tap again to collapse
-        if ([sourcesButton exists] && [sourcesButton isHittable]) {
+        if ([sourcesButton exists] && [sourcesButton isHittable])
+
+        {
             [sourcesButton tap];
             [NSThread sleepForTimeInterval:1];
             
@@ -975,7 +990,11 @@
             attachment4.lifetime = XCTAttachmentLifetimeKeepAlways;
             [self addAttachment:attachment4];
         }
-    } else {
+    }
+
+    else
+
+    {
         // Even if we can't find Sources, take a screenshot showing what's visible
         XCUIScreenshot *screenshotFail = [testApp screenshot];
         XCTAttachment *attachFail = [XCTAttachment attachmentWithScreenshot:screenshotFail];
