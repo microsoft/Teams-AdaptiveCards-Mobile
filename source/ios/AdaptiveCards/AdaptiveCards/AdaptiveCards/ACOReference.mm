@@ -162,8 +162,13 @@ typedef NS_ENUM(NSInteger, ACRCitationIcon) {
         );
         
         // Set the icon from the dictionary
-        ReferenceIcon cppIcon = ReferenceIconFromString([iconString UTF8String], ReferenceIcon::Image);
-        _reference->SetIcon(cppIcon);
+        try {
+            ReferenceIcon cppIcon = ReferenceIconFromString([iconString UTF8String]);
+            _reference->SetIcon(cppIcon);
+        } catch (const std::out_of_range&) {
+            // Use default icon if string doesn't match any enum value
+            _reference->SetIcon(ReferenceIcon::Image);
+        }
     }
     return self;
 }
