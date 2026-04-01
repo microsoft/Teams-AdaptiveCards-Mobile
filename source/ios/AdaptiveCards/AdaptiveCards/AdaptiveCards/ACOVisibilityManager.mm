@@ -182,8 +182,8 @@
 /// removeArrangedSubview:, insertArrangedSubview:atIndex:) rather than
 /// scanning hostView.subviews for a private UIStackView.
 ///
-/// The needsFix check is deferred via dispatch_async so the frame values
-/// reflect the post-unhide layout pass.
+/// Always runs synchronously — the remove/re-add is cheap and idempotent,
+/// so no frame-based guard or async deferral is needed.
 - (void)resetStackViewLayoutForView:(UIView *)viewToBeUnhidden
                            hostView:(ACRContentStackView *)hostView
 {
@@ -192,34 +192,23 @@
         return;
     }
 
-    // Defer the check+fix to after the current layout pass completes,
-    // so frame values are current (not stale pre-layout values).
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // Check if the unhidden view actually needs layout repair
-        BOOL needsFix = (viewToBeUnhidden.frame.size.width < 1.0 ||
-                         viewToBeUnhidden.frame.origin.x >= hostView.frame.size.width);
-        if (!needsFix)
-        {
-            return;
-        }
+    // Find the view's index in the arranged subviews via public API
+    NSArray<UIView *> *arranged = [hostView getArrangedSubviews];
+    NSUInteger idx = [arranged indexOfObject:viewToBeUnhidden];
+    if (idx == NSNotFound)
+    {
+        return;
+    }
 
-        // Find the view's index in the arranged subviews via public API
-        NSArray<UIView *> *arranged = [hostView getArrangedSubviews];
-        NSUInteger idx = [arranged indexOfObject:viewToBeUnhidden];
-        if (idx == NSNotFound)
-        {
-            return;
-        }
+    // Remove only the affected view from the arranged list (not from the
+    // view hierarchy — avoids detaching gesture recognizers, disrupting
+    // animations, or resetting accessibility state).
+    // This is cheap and idempotent — UIStackView rebuilds internal
+    // constraints for the re-inserted view on the next layout pass.
+    [hostView removeArrangedSubview:viewToBeUnhidden];
+    [hostView insertArrangedSubview:viewToBeUnhidden atIndex:idx];
 
-        // Remove only the affected view from the arranged list (not from the
-        // view hierarchy — avoids detaching gesture recognizers, disrupting
-        // animations, or resetting accessibility state).
-        [hostView removeArrangedSubview:viewToBeUnhidden];
-        [hostView insertArrangedSubview:viewToBeUnhidden atIndex:idx];
-
-        [hostView setNeedsLayout];
-        [hostView layoutIfNeeded];
-    });
+    [hostView setNeedsLayout];
 }
 
 /// unhide `viewToBeUnhidden`. `hostView` is a superview of type ColumnView or ColumnSetView
