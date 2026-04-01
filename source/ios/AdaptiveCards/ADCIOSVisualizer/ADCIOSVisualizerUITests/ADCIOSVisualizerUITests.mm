@@ -173,6 +173,7 @@
 
     XCUIElement *commentTextInput = [chatWindow.textViews elementMatchingType:XCUIElementTypeAny identifier:@"comment"];
     [commentTextInput tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [commentTextInput typeText:@"A comment"];
 
     [buttons[@"Done"] tap];
@@ -457,12 +458,14 @@
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
     [outsideRequired tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideRequired typeText:@"text outside popover required"];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
     [outsideInput tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideInput typeText:@"text outside popover Input"];
     
     // Dismiss the keyboard
@@ -575,12 +578,14 @@
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
     [outsideRequired tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideRequired typeText:@"text outside popover required"];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
     [outsideInput tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideInput typeText:@"text outside popover Input"];
     
     // Dismiss the keyboard
@@ -689,12 +694,14 @@
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
     [outsideRequired tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideRequired typeText:@"text outside popover required"];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
     [outsideInput tap];
+    [NSThread sleepForTimeInterval:0.5]; // Wait for keyboard focus
     [outsideInput typeText:@"text outside popover Input"];
     
     // Dismiss the keyboard
@@ -865,6 +872,137 @@
         swipes++;
     }
     [element tap];
+}
+
+#pragma mark - Magic File Injection Tests
+
+/// Renders whatever card is in samples/v1.3/Tests/MagicFileInjectionTest.json
+/// and takes a screenshot for visual inspection.
+- (void)testMagicFileInjection
+{
+    [self openCardForVersion:@"v1.3" forCardType:@"Tests" withCardName:@"MagicFileInjectionTest.json"];
+    
+    // Wait for the card to fully render
+    [NSThread sleepForTimeInterval:2];
+    
+    // Take screenshot of the initial render (before any interaction)
+    XCUIScreenshot *screenshot1 = [testApp screenshot];
+    XCTAttachment *attachment1 = [XCTAttachment attachmentWithScreenshot:screenshot1];
+    attachment1.name = @"MagicFileInjection_01_Initial";
+    attachment1.lifetime = XCTAttachmentLifetimeKeepAlways;
+    [self addAttachment:attachment1];
+    
+    // Scroll down to find the Sources toggle area
+    XCUIElement *chatWindow = testApp.tables[@"ChatWindow"];
+    
+    // Swipe up to scroll down to the Sources area
+    [chatWindow swipeUp];
+    [NSThread sleepForTimeInterval:1];
+    
+    // Take screenshot after scrolling to show Sources area
+    XCUIScreenshot *screenshot1b = [testApp screenshot];
+    XCTAttachment *attachment1b = [XCTAttachment attachmentWithScreenshot:screenshot1b];
+    attachment1b.name = @"MagicFileInjection_01b_ScrolledToSources";
+    attachment1b.lifetime = XCTAttachmentLifetimeKeepAlways;
+    [self addAttachment:attachment1b];
+    
+    // The ColumnSet with selectAction becomes a single accessibility element
+    // Look for the "Sources" text within buttons or other accessible elements
+    XCUIElement *sourcesButton = nil;
+    
+    // Try finding as a button (ColumnSet with selectAction becomes a button-like element)
+    XCUIElementQuery *buttons = chatWindow.buttons;
+    for (NSUInteger i = 0; i < buttons.count; i++)
+
+    {
+        XCUIElement *btn = [buttons elementBoundByIndex:i];
+        NSString *label = btn.label;
+        if (label && ([label containsString:@"Sources"] || [label containsString:@"sources"])) {
+            sourcesButton = btn;
+            break;
+        }
+    }
+    
+    // Also try staticTexts
+    if (!sourcesButton)
+
+    {
+        XCUIElement *sourcesText = chatWindow.staticTexts[@"Sources"];
+        if ([sourcesText exists] && [sourcesText isHittable])
+
+        {
+            sourcesButton = sourcesText;
+        }
+    }
+    
+    // Try any element matching "Sources"
+    if (!sourcesButton)
+
+    {
+        XCUIElementQuery *anyElements = [chatWindow descendantsMatchingType:XCUIElementTypeAny];
+        for (NSUInteger i = 0; i < MIN(anyElements.count, 100); i++) {
+            XCUIElement *elem = [anyElements elementBoundByIndex:i];
+            NSString *label = elem.label;
+            if (label && [label containsString:@"Sources"] && elem.isHittable)
+
+            {
+                sourcesButton = elem;
+                break;
+            }
+        }
+    }
+    
+    if (sourcesButton)
+
+    
+    {
+        [sourcesButton tap];
+        [NSThread sleepForTimeInterval:1];
+        
+        // Take screenshot after first tap (should be expanded)
+        XCUIScreenshot *screenshot2 = [testApp screenshot];
+        XCTAttachment *attachment2 = [XCTAttachment attachmentWithScreenshot:screenshot2];
+        attachment2.name = @"MagicFileInjection_02_AfterFirstTap_ShouldBeExpanded";
+        attachment2.lifetime = XCTAttachmentLifetimeKeepAlways;
+        [self addAttachment:attachment2];
+        
+        // Wait 2 more seconds to see if it auto-collapses (the bug)
+        [NSThread sleepForTimeInterval:2];
+        
+        // Take screenshot to check if it stayed expanded
+        XCUIScreenshot *screenshot3 = [testApp screenshot];
+        XCTAttachment *attachment3 = [XCTAttachment attachmentWithScreenshot:screenshot3];
+        attachment3.name = @"MagicFileInjection_03_After2sWait_ShouldStillBeExpanded";
+        attachment3.lifetime = XCTAttachmentLifetimeKeepAlways;
+        [self addAttachment:attachment3];
+        
+        // Tap again to collapse
+        if ([sourcesButton exists] && [sourcesButton isHittable])
+
+        {
+            [sourcesButton tap];
+            [NSThread sleepForTimeInterval:1];
+            
+            // Take screenshot after second tap (should be collapsed again)
+            XCUIScreenshot *screenshot4 = [testApp screenshot];
+            XCTAttachment *attachment4 = [XCTAttachment attachmentWithScreenshot:screenshot4];
+            attachment4.name = @"MagicFileInjection_04_AfterSecondTap_ShouldBeCollapsed";
+            attachment4.lifetime = XCTAttachmentLifetimeKeepAlways;
+            [self addAttachment:attachment4];
+        }
+    }
+
+    else
+
+    {
+        // Even if we can't find Sources, take a screenshot showing what's visible
+        XCUIScreenshot *screenshotFail = [testApp screenshot];
+        XCTAttachment *attachFail = [XCTAttachment attachmentWithScreenshot:screenshotFail];
+        attachFail.name = @"MagicFileInjection_FAIL_CouldNotFindSources";
+        attachFail.lifetime = XCTAttachmentLifetimeKeepAlways;
+        [self addAttachment:attachFail];
+        XCTFail(@"Could not find 'Sources' element to tap for toggle visibility test");
+    }
 }
 
 @end
