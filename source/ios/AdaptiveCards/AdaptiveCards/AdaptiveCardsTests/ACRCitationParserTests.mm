@@ -216,7 +216,7 @@
     UIButton *capturedButton = testParser.lastCreatedButton;
 
     // Then: The presenter should be retrievable from the button via associated object
-    id storedPresenter = objc_getAssociatedObject(capturedButton, @"presenter");
+    id storedPresenter = objc_getAssociatedObject(capturedButton, (const void *)@"presenter");
     XCTAssertNotNil(capturedButton, @"A UIButton should have been created");
     XCTAssertEqual(storedPresenter, mockPresenter,
                    @"The presenter should be stored on the button at creation time");
