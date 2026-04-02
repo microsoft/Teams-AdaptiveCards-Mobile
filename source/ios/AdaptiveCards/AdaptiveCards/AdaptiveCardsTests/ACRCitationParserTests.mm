@@ -79,6 +79,7 @@
 /// Private-method forward declaration so the subclass can call super.
 @interface ACRCitationParser (TestingPrivate)
 - (UIButton *)createButtonWithTitle:(NSString *)title size:(CGSize)size;
+- (void)citationButtonTapped:(UIButton *)button;
 @end
 
 @implementation ACRCitationParserTestsMock
@@ -235,7 +236,7 @@
     UIButton *capturedButton = testParser.lastCreatedButton;
 
     // When: Simulating a tap on the button
-    [capturedButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [testParser citationButtonTapped:capturedButton];
 
     // Then: The parser delegate should receive exactly one analytics tap event
     XCTAssertEqual(self.mockDelegate.tappedCitations.count, 1,
@@ -270,8 +271,8 @@
     UIButton *buttonB = testParser.lastCreatedButton;
 
     // When: Both buttons are tapped
-    [buttonA sendActionsForControlEvents:UIControlEventTouchUpInside];
-    [buttonB sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [testParser citationButtonTapped:buttonA];
+    [testParser citationButtonTapped:buttonB];
 
     // Then: Each presenter should only receive its own citation tap
     XCTAssertEqual(presenterA.handledCitations.count, 1,
@@ -303,9 +304,11 @@
 
 /// parseAttributedStringWithCitation embeds a text attachment when a reference is found.
 - (void)testParseStringWithCitation_returnsAttachmentWhenReferenceExists {
-    // Given: A citation whose index resolves to a known reference
+    // Given: A citation whose index resolves to a known reference.
+    // Note: ACOCitation init does (referenceIndex - 1), so pass @1 to store @0
+    // which resolves to references[0].
     ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
-                                                      referenceIndex:@0
+                                                      referenceIndex:@1
                                                                theme:ACRThemeLight];
 
     // When: Parsing with valid references
@@ -341,7 +344,7 @@
     UIButton *capturedButton = testParser.lastCreatedButton;
 
     // When: Tapping the button
-    [capturedButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [testParser citationButtonTapped:capturedButton];
 
     // Then: The parser-level delegate (analytics) should have fired
     XCTAssertEqual(parserDelegate.tappedCitations.count, 1,
