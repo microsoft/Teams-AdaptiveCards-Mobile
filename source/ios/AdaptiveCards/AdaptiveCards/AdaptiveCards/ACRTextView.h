@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBInspectable UIColor *borderColor;
 @property (nonatomic, strong) IBInspectable UIColor *placeholderColor;
 @property (nonatomic, strong) NSPredicate *regexPredicate;
+@property BOOL isShowingPlaceholder;
 
 - (instancetype)initWithFrame:(CGRect)frame element:(ACOBaseCardElement *)element;
 - (void)configWithSharedModel:(ACOBaseCardElement *)element;

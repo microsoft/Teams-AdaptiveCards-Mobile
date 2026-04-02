@@ -721,6 +721,12 @@ UIFont *getFont(ACOHostConfig *hostConfig, const AdaptiveCards::RichTextElementP
         font = [UIFont fontWithDescriptor:descriptor size:[hostConfig getTextBlockTextSize:sharedFontType textSize:sharedTextSize]];
     }
 
+    // Guard against nil font — fontWithDescriptor:size: returns nil when the
+    // host config specifies a font family/face not available on the device.
+    // Fall back to the system font at the requested size.
+    if (!font) {
+        font = [UIFont systemFontOfSize:[hostConfig getTextBlockTextSize:sharedFontType textSize:sharedTextSize]];
+    }
     return [UIFontMetrics.defaultMetrics scaledFontForFont:font];
 }
 

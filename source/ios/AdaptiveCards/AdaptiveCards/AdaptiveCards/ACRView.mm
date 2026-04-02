@@ -113,8 +113,20 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 {
     self = [self initWithFrame:CGRectMake(0, 0, width, 0)];
     if (self) {
-        self.accessibilityLabel = @"ACR Root View";
         _adaptiveCard = card;
+        // Set accessibility label from the card speak property if available
+        if (card) {
+            auto cardModel = [card card];
+            if (cardModel) {
+                std::string speak = cardModel->GetSpeak();
+                if (!speak.empty()) {
+                    NSString *label = [NSString stringWithUTF8String:speak.c_str()];
+                    if (label.length > 0) {
+                        self.accessibilityLabel = label;
+                    }
+                }
+            }
+        }
         _warnings = [[NSMutableArray<ACOWarning *> alloc] init];
         // override default host config if user host config is provided
         if (config) {

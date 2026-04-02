@@ -12,7 +12,6 @@
 #import "UtiliOS.h"
 
 @implementation ACRTextView {
-    BOOL _isShowingPlaceholder;
     NSMutableArray<CompletionHandler> *_completionHandlers;
 }
 
