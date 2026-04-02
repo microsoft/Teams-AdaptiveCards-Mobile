@@ -760,6 +760,13 @@ using namespace AdaptiveCards;
     }
 }
 
+- (void)removeArrangedSubview:(UIView *)view
+{
+    if (view) {
+        [_stackView removeArrangedSubview:view];
+    }
+}
+
 - (void)removeLastViewFromArrangedSubview
 {
     if ([self subviewsCounts]) {
