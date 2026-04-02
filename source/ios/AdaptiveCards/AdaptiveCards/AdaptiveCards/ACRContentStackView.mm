@@ -24,6 +24,7 @@ using namespace AdaptiveCards;
     NSMutableSet *_invisibleViews;
     ACRVerticalContentAlignment _verticalContentAlignment;
     ACRHorizontalAlignment _horizontalAlignment;
+    BOOL _hasFiredActionForCurrentTouch;
 }
 
 // this is the dedicated initializer
@@ -522,6 +523,7 @@ using namespace AdaptiveCards;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    _hasFiredActionForCurrentTouch = NO;
     for (UITouch *touch in touches) {
         for (UIGestureRecognizer *recognizer in touch.gestureRecognizers) {
             if ([recognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
@@ -541,10 +543,20 @@ using namespace AdaptiveCards;
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     if (self.selectActionTarget) {
+        if (_hasFiredActionForCurrentTouch) {
+            return;
+        }
+        _hasFiredActionForCurrentTouch = YES;
         [self.selectActionTarget doSelectAction];
     } else {
         [self.nextResponder touchesEnded:touches withEvent:event];
     }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    _hasFiredActionForCurrentTouch = NO;
+    [self.nextResponder touchesCancelled:touches withEvent:event];
 }
 
 - (UIView *)addPaddingSpace
