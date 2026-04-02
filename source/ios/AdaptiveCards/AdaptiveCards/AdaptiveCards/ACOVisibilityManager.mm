@@ -182,12 +182,21 @@
 /// removeArrangedSubview:, insertArrangedSubview:atIndex:) rather than
 /// scanning hostView.subviews for a private UIStackView.
 ///
-/// Always runs synchronously — the remove/re-add is cheap and idempotent,
-/// so no frame-based guard or async deferral is needed.
+/// Runs synchronously. Guards against unnecessary work by checking if the
+/// view actually has broken layout (zero width or off-screen position).
 - (void)resetStackViewLayoutForView:(UIView *)viewToBeUnhidden
                            hostView:(ACRContentStackView *)hostView
 {
     if (!hostView || !viewToBeUnhidden)
+    {
+        return;
+    }
+
+    // Check if the unhidden view actually needs layout repair
+    // (zero width or positioned off-screen to the right)
+    BOOL needsFix = (viewToBeUnhidden.frame.size.width < 1.0 ||
+                     viewToBeUnhidden.frame.origin.x >= hostView.frame.size.width);
+    if (!needsFix)
     {
         return;
     }
