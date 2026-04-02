@@ -76,8 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @param references Array of ACOReference objects to search through
  * @return ACOReference object if found, nil otherwise
  */
-- (nullable ACOReference *)findReferenceByIndex:(NSNumber *)referenceId 
-                                   inReferences:(NSArray<ACOReference *> *)references;
+- (nullable ACOReference *)findReferenceByIndex:(nullable NSNumber *)referenceId 
+                                   inReferences:(nullable NSArray<ACOReference *> *)references;
 
 @end
 
