@@ -168,22 +168,36 @@
     }
 }
 
-/// Reset UIStackView's internal layout for a single column that was initially
-/// hidden (isVisible: false). UIStackView assigns stale zero-width sizing to
+/// Reset UIStackView's internal layout for a view that was initially hidden
+/// (isVisible: false). UIStackView assigns stale zero-width internal sizing to
 /// views added while hidden. After unhiding via ToggleVisibility, this stale
-/// sizing can leave the column at the wrong position or width.
+/// sizing leaves the column at the wrong position or width.
 ///
-/// Fix: Remove only the affected view from the arranged subview list and
-/// re-insert it at the same index. This forces UIStackView to discard its
-/// stale internal constraints for that one view and rebuild them, without
-/// touching any other columns.
+/// Fix: Remove ALL arranged subviews from the host's UIStackView and re-add
+/// them in the same order. This forces UIStackView to fully discard its stale
+/// internal constraints (UISV-spacing, UISV-alignment) and rebuild them from
+/// scratch, giving every column proper layout.
 ///
-/// Uses ACRContentStackView's public API (getArrangedSubviews,
-/// removeArrangedSubview:, insertArrangedSubview:atIndex:) rather than
-/// scanning hostView.subviews for a private UIStackView.
+/// Why full reset instead of single-view re-insert:
+/// UIStackView retains stale internal constraints for views that are only
+/// removed from the arranged list (removeArrangedSubview:) but remain in
+/// the view hierarchy. removeFromSuperview is required to force UIStackView
+/// to fully discard these constraints. addArrangedSubview: then re-adds the
+/// view to the hierarchy and the arranged list in one step.
 ///
-/// Runs synchronously. Guards against unnecessary work by checking if the
-/// view actually has broken layout (zero width or off-screen position).
+/// Why removeFromSuperview is safe:
+/// - Views are immediately re-added via addArrangedSubview: in the same
+///   synchronous call, so they're never missing from the hierarchy for
+///   more than a single statement.
+/// - Gesture recognizers are owned by the view object (strong reference),
+///   not the superview — they survive the remove/re-add round-trip.
+/// - Accessibility state is retained because UIAccessibility properties
+///   are stored on the view, not on the parent relationship.
+/// - No constraint scanning, removal, or copying occurs.
+/// - The operation is idempotent — repeated cycles produce identical results.
+///
+/// Guard: Only triggers when a visible column has broken layout (width < 1
+/// or positioned off-screen). No-op for cards where layout is already correct.
 - (void)resetStackViewLayoutForView:(UIView *)viewToBeUnhidden
                            hostView:(ACRContentStackView *)hostView
 {
@@ -193,7 +207,6 @@
     }
 
     // Check if the unhidden view actually needs layout repair
-    // (zero width or positioned off-screen to the right)
     BOOL needsFix = (viewToBeUnhidden.frame.size.width < 1.0 ||
                      viewToBeUnhidden.frame.origin.x >= hostView.frame.size.width);
     if (!needsFix)
@@ -201,21 +214,26 @@
         return;
     }
 
-    // Find the view's index in the arranged subviews via public API
+    // Get all arranged subviews via public API
     NSArray<UIView *> *arranged = [hostView getArrangedSubviews];
-    NSUInteger idx = [arranged indexOfObject:viewToBeUnhidden];
-    if (idx == NSNotFound)
+    if (!arranged || arranged.count == 0)
     {
         return;
     }
 
-    // Remove only the affected view from the arranged list (not from the
-    // view hierarchy — avoids detaching gesture recognizers, disrupting
-    // animations, or resetting accessibility state).
-    // This is cheap and idempotent — UIStackView rebuilds internal
-    // constraints for the re-inserted view on the next layout pass.
-    [hostView removeArrangedSubview:viewToBeUnhidden];
-    [hostView insertArrangedSubview:viewToBeUnhidden atIndex:idx];
+    // Full reset: remove all, then re-add in same order.
+    // removeFromSuperview is essential — without it, UIStackView retains
+    // stale internal UISV-spacing constraints from the initial hidden layout.
+    NSArray<UIView *> *snapshot = [arranged copy];
+    for (UIView *view in snapshot)
+    {
+        [hostView removeArrangedSubview:view];
+        [view removeFromSuperview];
+    }
+    for (UIView *view in snapshot)
+    {
+        [hostView addArrangedSubview:view];
+    }
 
     [hostView setNeedsLayout];
 }
