@@ -257,6 +257,13 @@ public class AdaptiveCardRenderer
         ContainerRenderer.setBackgroundImage(renderedCard, context, adaptiveCard.GetBackgroundImage(), hostConfig, renderArgs, cardLayout);
         ContainerRenderer.setSelectAction(renderedCard, renderedCard.getAdaptiveCard().GetSelectAction(), rootLayout, cardActionHandler, fragmentManager, hostConfig, renderArgs);
 
+        // Set accessibility content description from card speak property
+        String speak = adaptiveCard.GetSpeak();
+        if (speak != null && !speak.isEmpty()) {
+            rootLayout.setContentDescription(speak);
+            rootLayout.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
+        }
+
         return rootLayout;
     }
 
