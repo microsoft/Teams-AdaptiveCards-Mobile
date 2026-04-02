@@ -17,6 +17,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// Associated object keys — exposed so tests can verify stored values.
+// Using address of static char gives a unique, stable pointer across all dylibs.
+FOUNDATION_EXTERN const char kACRCitationKey;
+FOUNDATION_EXTERN const char kACRReferenceDataKey;
+FOUNDATION_EXTERN const char kACRPresenterKey;
+
 /**
  * Abstract base class for citation parsing strategies
  * Subclasses implement specific parsing logic for different input formats (TextBlock vs RichTextBlock)

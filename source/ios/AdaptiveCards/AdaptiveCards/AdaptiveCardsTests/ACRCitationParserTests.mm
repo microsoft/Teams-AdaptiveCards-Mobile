@@ -72,7 +72,7 @@
 
 /// Subclass that overrides createButtonWithTitle:size: to capture the created UIButton.
 /// This enables per-button associated object assertions without using private API.
-@interface TestableCitationParser : ACRCitationParser
+@interface ACRCitationParserTestsMock : ACRCitationParser
 @property (nonatomic, strong) UIButton *lastCreatedButton;
 @end
 
@@ -81,7 +81,7 @@
 - (UIButton *)createButtonWithTitle:(NSString *)title size:(CGSize)size;
 @end
 
-@implementation TestableCitationParser
+@implementation ACRCitationParserTestsMock
 
 - (UIButton *)createButtonWithTitle:(NSString *)title size:(CGSize)size {
     UIButton *button = [super createButtonWithTitle:title size:size];
@@ -203,7 +203,7 @@
 /// createAttachmentWithCitation stores the parser's presenter on the created button.
 - (void)testCreateAttachment_storesPresenterOnButton {
     // Given: A testable parser with a mock presenter and a valid citation
-    TestableCitationParser *testParser = [[TestableCitationParser alloc] initWithDelegate:self.mockDelegate];
+    ACRCitationParserTestsMock *testParser = [[ACRCitationParserTestsMock alloc] initWithDelegate:self.mockDelegate];
     MockCitationPresenter *mockPresenter = [[MockCitationPresenter alloc] init];
     testParser.presenter = mockPresenter;
 
@@ -216,7 +216,7 @@
     UIButton *capturedButton = testParser.lastCreatedButton;
 
     // Then: The presenter should be retrievable from the button via associated object
-    id storedPresenter = objc_getAssociatedObject(capturedButton, (const void *)@"presenter");
+    id storedPresenter = objc_getAssociatedObject(capturedButton, &kACRPresenterKey);
     XCTAssertNotNil(capturedButton, @"A UIButton should have been created");
     XCTAssertEqual(storedPresenter, mockPresenter,
                    @"The presenter should be stored on the button at creation time");
@@ -225,7 +225,7 @@
 /// Tapping a citation button fires the parser delegate analytics callback.
 - (void)testCitationButtonTapped_invokesDelegate {
     // Given: A testable parser wired to a mock delegate, with a button created for a citation
-    TestableCitationParser *testParser = [[TestableCitationParser alloc] initWithDelegate:self.mockDelegate];
+    ACRCitationParserTestsMock *testParser = [[ACRCitationParserTestsMock alloc] initWithDelegate:self.mockDelegate];
     testParser.presenter = [[MockCitationPresenter alloc] init];
 
     ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
@@ -248,7 +248,7 @@
 /// not the parser's current presenter property (per-button isolation).
 - (void)testCitationButtonTapped_routesToPerButtonPresenter {
     // Given: Two separate presenters, each used to create one button
-    TestableCitationParser *testParser = [[TestableCitationParser alloc] initWithDelegate:self.mockDelegate];
+    ACRCitationParserTestsMock *testParser = [[ACRCitationParserTestsMock alloc] initWithDelegate:self.mockDelegate];
     MockCitationPresenter *presenterA = [[MockCitationPresenter alloc] init];
     MockCitationPresenter *presenterB = [[MockCitationPresenter alloc] init];
 
@@ -331,7 +331,7 @@
 - (void)testCitationButtonTapped_forwardsAnalyticsToParserDelegate {
     // Given: A testable parser wired to a dedicated delegate
     MockParserDelegate *parserDelegate = [[MockParserDelegate alloc] init];
-    TestableCitationParser *testParser = [[TestableCitationParser alloc] initWithDelegate:parserDelegate];
+    ACRCitationParserTestsMock *testParser = [[ACRCitationParserTestsMock alloc] initWithDelegate:parserDelegate];
     testParser.presenter = [[MockCitationPresenter alloc] init];
 
     ACOCitation *citation = [[ACOCitation alloc] initWithDisplayText:@"1"
