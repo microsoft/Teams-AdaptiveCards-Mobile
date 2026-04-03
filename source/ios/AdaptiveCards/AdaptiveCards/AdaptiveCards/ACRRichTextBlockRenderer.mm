@@ -7,7 +7,7 @@
 
 #import "ACOAdaptiveCardPrivate.h"
 #import "ACRRichTextBlockRenderer.h"
-#import "ACRCitationManager.h"
+#import "ACRCitationBuilder.h"
 #import "ACRViewTextAttachment.h"
 #import "ACOBaseActionElementPrivate.h"
 #import "ACOBaseCardElementPrivate.h"
@@ -31,16 +31,16 @@
 #import "ACRViewAttachingTextView.h"
 
 @implementation ACRRichTextBlockRenderer {
-    ACRCitationManager *_citationManager;
+    ACRCitationBuilder *_citationBuilder;
 }
 
 #pragma mark - Lazy Properties
 
-- (ACRCitationManager *)citationManager {
-    if (!_citationManager) {
-        _citationManager = [[ACRCitationManager alloc] initWithDelegate:self];
+- (ACRCitationBuilder *)citationBuilder {
+    if (!_citationBuilder) {
+        _citationBuilder = [[ACRCitationBuilder alloc] initWithDelegate:self];
     }
-    return _citationManager;
+    return _citationBuilder;
 }
 
 + (ACRRichTextBlockRenderer *)getInstance
@@ -249,13 +249,9 @@
                                                                                   referenceIndex:referenceId
                                                                                            theme:rootView.theme];
                                 NSArray<ACOReference *> *references = [[rootView card] references];
-                                
-                                ACRCitationManager *citationManager = [self citationManager];
-                                [citationManager setRootView:rootView];
-                                
-                                // Use citation manager (rootView is stored as property)
-                                NSAttributedString *citationRunContent = [citationManager buildCitationAttachmentWithCitation:citation
-                                                                                                                   references:references];
+                                NSAttributedString *citationRunContent = [[self citationBuilder] buildCitationAttachmentWithCitation:citation
+                                                                                                                          references:references
+                                                                                                                           presenter:rootView.citationPresenter];
                                 [content appendAttributedString:citationRunContent];
                             }
                         }
@@ -325,20 +321,6 @@
     [viewGroup addArrangedSubview:lab withAreaName:areaName];
 
     return lab;
-}
-
-#pragma mark - Citation Processing
-
-- (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView {
-    
-    // References contain the array of references to render
-    NSArray<ACOReference *> *references = [[rootView card] references];
-    
-    ACRCitationManager *citationManager = [self citationManager];
-    [citationManager setRootView:rootView];
-    
-    // Use citation manager (rootView is stored as property)
-    return [citationManager buildCitationsFromAttributedString:content references:references];
 }
 
 @end
