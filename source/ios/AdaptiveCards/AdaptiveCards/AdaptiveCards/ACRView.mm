@@ -43,6 +43,7 @@
 #import "CarouselPage.h"
 #import "Carousel.h"
 #import "ACRStringBasedKeyValueObservation.h"
+#import "ACRCitationPresenter.h"
 #import <AVFoundation/AVFoundation.h>
 
 using namespace AdaptiveCards;
@@ -62,6 +63,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     dispatch_queue_t _global_queue;
     dispatch_group_t _async_tasks_group;
     int _serialNumber;
+    ACRCitationPresenter *_citationPresenter;
     int _numberOfSubscribers;
     // flag that's set if didLoadElements delegate is called
     BOOL _hasCalled;
@@ -662,6 +664,15 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
 - (ACOAdaptiveCard *)card
 {
     return _adaptiveCard;
+}
+
+- (id<ACICitationPresenter>)citationPresenter
+{
+    if (!_citationPresenter) {
+        _citationPresenter = [[ACRCitationPresenter alloc] initWithHostConfig:self.hostConfig
+                                                               actionDelegate:self.acrActionDelegate];
+    }
+    return _citationPresenter;
 }
 
 // notification is delivered from main (serial) queue, thus run in the main thread context

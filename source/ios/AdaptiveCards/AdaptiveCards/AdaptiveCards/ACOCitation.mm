@@ -25,4 +25,11 @@
     return self;
 }
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+                             theme:(ACRTheme)theme
+{
+    NSString *displayText = dictionary[@"title"] ?: @"";
+    return [self initWithDisplayText:displayText referenceIndex:@(1) theme:theme];
+}
+
 @end

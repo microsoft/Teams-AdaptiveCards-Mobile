@@ -7,12 +7,19 @@
 //
 
 #import "ACRCitationParser.h"
-#import "ACRCitationManager.h"
 #import "ACRViewTextAttachment.h"
 #import "ACOReference.h"
 #import "ACOCitation.h"
+#import "ACICitationPresenter.h"
 #import <objc/runtime.h>
 #import "ACRCitationParserDelegate.h"
+
+// Static keys for associated objects — using address of static var guarantees
+// a unique, stable pointer across all dylibs (unlike NSString literals).
+const char kACRCitationKey = '\0';
+const char kACRReferenceDataKey = '\0';
+const char kACRPresenterKey = '\0';
+
 @implementation ACRCitationParser
 
 - (instancetype)initWithDelegate:(id<ACRCitationParserDelegate>)delegate {
@@ -79,9 +86,11 @@
     // Create a UIButton with citation styling
     UIButton *citationButton = [self createButtonWithTitle:text size: size];
     
-    // Store both citation data and reference data for retrieval in tap handler
-    objc_setAssociatedObject(citationButton, @"citation", citation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(citationButton, @"referenceData", referenceData, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    // Store citation, reference, and presenter per-button so each tap routes to
+    // the correct card instance regardless of renderer singleton state.
+    objc_setAssociatedObject(citationButton, &kACRCitationKey, citation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(citationButton, &kACRReferenceDataKey, referenceData, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(citationButton, &kACRPresenterKey, self.presenter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     // Adjust width for long strings
     CGFloat newWidth = MAX(citationButton.titleLabel.intrinsicContentSize.width + 8.0, size.width);
@@ -93,14 +102,19 @@
 }
 
 - (void)citationButtonTapped:(UIButton *)button {
-    // Get stored citation and reference data
-    ACOCitation *citation = objc_getAssociatedObject(button, @"citation");
-    ACOReference *referenceData = objc_getAssociatedObject(button, @"referenceData");
-    
-    // Delegate back to the parser delegate
+    ACOCitation *citation = objc_getAssociatedObject(button, &kACRCitationKey);
+    ACOReference *referenceData = objc_getAssociatedObject(button, &kACRReferenceDataKey);
+    id<ACICitationPresenter> presenter = objc_getAssociatedObject(button, &kACRPresenterKey);
+
+    // Fire analytics delegate
     if (self.delegate && citation) {
         [self.delegate citationParser:self didTapCitation:citation referenceData:referenceData];
-    }    
+    }
+
+    // Call the per-button presenter — routes to the correct card instance
+    if (presenter) {
+        [presenter handleCitationTap:citation referenceData:referenceData];
+    }
 }
 
 #pragma mark - Helper Methods

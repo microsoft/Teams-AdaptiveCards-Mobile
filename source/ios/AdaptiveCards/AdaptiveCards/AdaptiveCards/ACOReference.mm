@@ -134,4 +134,43 @@ typedef NS_ENUM(NSInteger, ACRCitationIcon) {
     return _reference;
 }
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    if (self) {
+        NSString *typeString = dictionary[@"type"];
+        ReferenceType cppType = [typeString isEqualToString:@"AdaptiveCardReference"]
+            ? ReferenceType::AdaptiveCard
+            : ReferenceType::Document;
+
+        NSString *title    = dictionary[@"title"]    ?: @"";
+        NSString *abstract = dictionary[@"abstract"] ?: @"";
+        NSString *url      = dictionary[@"url"]      ?: @"";
+        NSString *iconString = dictionary[@"icon"]   ?: @"image";
+
+        std::vector<std::string> cppKeywords;
+        for (NSString *kw in (NSArray<NSString *> *)(dictionary[@"keywords"] ?: @[])) {
+            cppKeywords.push_back(std::string([kw UTF8String]));
+        }
+
+        _reference = std::make_shared<References>(
+            cppType,
+            std::string([abstract UTF8String]),
+            std::string([title UTF8String]),
+            std::string([url UTF8String]),
+            cppKeywords
+        );
+        
+        // Set the icon from the dictionary
+        try {
+            ReferenceIcon cppIcon = ReferenceIconFromString([iconString UTF8String]);
+            _reference->SetIcon(cppIcon);
+        } catch (const std::out_of_range&) {
+            // Use default icon if string doesn't match any enum value
+            _reference->SetIcon(ReferenceIcon::Image);
+        }
+    }
+    return self;
+}
+
 @end
