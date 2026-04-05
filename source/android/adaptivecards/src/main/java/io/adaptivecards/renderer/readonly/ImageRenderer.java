@@ -22,6 +22,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.FragmentManager;
 
+import androidx.core.view.ViewCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.core.view.AccessibilityDelegateCompat;
+
 import io.adaptivecards.R;
 import io.adaptivecards.objectmodel.BaseCardElement;
 import io.adaptivecards.objectmodel.HeightType;
@@ -330,6 +334,15 @@ public class ImageRenderer extends BaseCardElementRenderer
 
         ImageView imageView = new ImageView(context);
         imageView.setContentDescription(image.GetAltText());
+
+        // Fix: Set Image role for TalkBack (#490, #375)
+        ViewCompat.setAccessibilityDelegate(imageView, new AccessibilityDelegateCompat() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setRoleDescription("Image");
+            }
+        });
 
         int backgroundColor = getBackgroundColorFromHexCode(image.GetBackgroundColor());
 
