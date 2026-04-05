@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.TooltipCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.fragment.app.FragmentManager;
 
 import io.adaptivecards.R;
@@ -172,7 +175,17 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         }
 
         if (baseActionElement.GetElementType() == ActionType.OpenUrl) {
-            button.setContentDescription(Util.getOpenUrlAnnouncement(context, baseActionElement.GetTitle()));
+            // Fix: Use roleDescription instead of appending "link" to contentDescription (#492)
+            // This prevents TalkBack from announcing both "link" (from text) and "Button" (from widget)
+            button.setContentDescription(baseActionElement.GetTitle());
+            ViewCompat.setAccessibilityDelegate(button, new AccessibilityDelegateCompat() {
+                @Override
+                public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
+                    super.onInitializeAccessibilityNodeInfo(host, info);
+                    info.setClassName("");
+                    info.setRoleDescription("Link");
+                }
+            });
         }
 
         viewGroup.addView(button);
