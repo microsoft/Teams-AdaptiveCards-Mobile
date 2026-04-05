@@ -1,0 +1,76 @@
+title: "[Idea]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea for improving Adaptive Cards Mobile? We'd love to hear it!
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform does this idea apply to?
+      options:
+        - Android
+        - iOS
+        - Both
+        - Platform agnostic
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: What area does this idea relate to?
+      options:
+        - New card element
+        - Rendering improvement
+        - Accessibility
+        - Performance
+        - Theming / Styling
+        - Developer experience
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the Feature
+      description: A clear description of the feature you'd like to see.
+      placeholder: |
+        What:
+        ...
+
+        Why this is valuable:
+        ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Describe the scenario where this feature would be useful.
+      placeholder: "As a developer, I want to ... so that ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any workarounds or alternative approaches?
+    validations:
+      required: false
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups / Examples
+      description: If applicable, add mockups, screenshots, or links to examples.
+    validations:
+      required: false
