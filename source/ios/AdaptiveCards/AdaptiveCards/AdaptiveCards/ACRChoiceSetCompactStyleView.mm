@@ -434,6 +434,11 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
     cell.accessibilityValue = [NSString stringWithFormat:@"%ld of %ld", indexPath.row + 1, [self tableView:tableView numberOfRowsInSection:0]];
     cell.accessibilityIdentifier = [NSString stringWithFormat:@"%@, %@", self.id, cell.textLabel.text];
     cell.accessibilityTraits = UIAccessibilityTraitButton;
+    // Mark the currently selected item with the Selected trait so VoiceOver
+    // announces "selected" when the user navigates to it
+    if ([cell.textLabel.text isEqualToString:self.text]) {
+        cell.accessibilityTraits |= UIAccessibilityTraitSelected;
+    }
     return cell;
 }
 
