@@ -95,15 +95,15 @@ public class TextInputRenderer extends BaseCardElementRenderer
         }
         else if (textInputStyle == TextInputStyle.Url)
         {
-            editText.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
         }
         else if (textInputStyle == TextInputStyle.Email)
         {
-            editText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         }
         else if (textInputStyle == TextInputStyle.Password)
         {
-            editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
         else
