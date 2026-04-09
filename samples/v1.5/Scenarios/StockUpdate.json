@@ -47,7 +47,7 @@
 								},
 								{
 									"type": "TextBlock",
-									"text": "▲ 2.69 USD (2.13%)",
+									"text": "▲ Up 2.69 USD (2.13%)",
 									"color": "good",
 									"spacing": "none",
 									"wrap": true
