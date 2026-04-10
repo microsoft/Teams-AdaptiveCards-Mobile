@@ -9,6 +9,7 @@
 #import "ACOBaseActionElementPrivate.h"
 #import "ACOHostConfigPrivate.h"
 #import "ACOVisibilityManager.h"
+#import "ACRContentStackView.h"
 #import "ACRRendererPrivate.h"
 #import "ACRView.h"
 #import "BaseActionElement.h"
@@ -104,6 +105,64 @@
 
     for (id<ACOIVisibilityManagerFacade> viewToUpdateVisibility in facades) {
         [viewToUpdateVisibility updatePaddingVisibility];
+    }
+
+    // Repair stack layout for any host whose columns were just unhidden.
+    //
+    // Context: UIStackView retains stale internal UISV-spacing constraints when
+    // a column is initially hidden and later unhidden via ToggleVisibility. The
+    // fix is a full reset: remove all arranged subviews (with removeFromSuperview
+    // to discard stale constraints), then re-add them in original order.
+    //
+    // This MUST run here in doSelectActionWithAction: (toggle-only context),
+    // NOT in unhideView: which also fires during initial card rendering. At
+    // initial render time views have zero frames, so the needsFix guard falsely
+    // triggers and corrupts layout (e.g. WorkDay card buttons disappear).
+    //
+    // Safety notes:
+    // - removeFromSuperview is safe: views are re-added synchronously in the
+    //   same call, gesture recognizers survive (strong ref on view), and
+    //   accessibility properties are stored on the view, not the parent.
+    // - The operation is idempotent — repeated toggle cycles produce identical
+    //   results.
+    for (id<ACOIVisibilityManagerFacade> facade in facades) {
+        if (![facade isKindOfClass:[ACRContentStackView class]]) {
+            continue;
+        }
+
+        ACRContentStackView *hostView = (ACRContentStackView *)facade;
+        if (hostView.frame.size.width < 1.0) {
+            continue; // Host not yet laid out — skip to avoid false positives
+        }
+
+        NSArray<UIView *> *arranged = [hostView getArrangedSubviews];
+        if (!arranged || arranged.count == 0) {
+            continue;
+        }
+
+        // Check if any visible column has broken layout (zero width or off-screen)
+        BOOL needsFix = NO;
+        for (UIView *v in arranged) {
+            if (!v.isHidden && (v.frame.size.width < 1.0 ||
+                v.frame.origin.x >= hostView.frame.size.width)) {
+                needsFix = YES;
+                break;
+            }
+        }
+        if (!needsFix) {
+            continue;
+        }
+
+        // Full reset: remove all, then re-add in same order.
+        NSArray<UIView *> *snapshot = [arranged copy];
+        for (UIView *v in snapshot) {
+            [hostView removeArrangedSubview:v];
+            [v removeFromSuperview];
+        }
+        for (UIView *v in snapshot) {
+            [hostView addArrangedSubview:v];
+        }
+        [hostView setNeedsLayout];
     }
 
     // Post accessibility notification so VoiceOver announces the layout change
