@@ -189,7 +189,9 @@
     UIScrollView *scrollView = [[UIScrollView alloc] init];
     scrollView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:scrollView];
+#if !TARGET_OS_VISION
     scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+#endif
     self.scrollView = scrollView;
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.scrollView addSubview:self.contentView];
