@@ -185,6 +185,59 @@
 /// to fully discard these constraints. addArrangedSubview: then re-adds the
 /// view to the hierarchy and the arranged list in one step.
 ///
+/// Why removeFromSuperview is safe:
+/// - Views are immediately re-added via addArrangedSubview: in the same
+///   synchronous call, so they're never missing from the hierarchy for
+///   more than a single statement.
+/// - Gesture recognizers are owned by the view object (strong reference),
+///   not the superview — they survive the remove/re-add round-trip.
+/// - Accessibility state is retained because UIAccessibility properties
+///   are stored on the view, not on the parent relationship.
+/// - No constraint scanning, removal, or copying occurs.
+/// - The operation is idempotent — repeated cycles produce identical results.
+///
+/// Guard: Only triggers when a visible column has broken layout (width < 1
+/// or positioned off-screen). No-op for cards where layout is already correct.
+- (void)resetStackViewLayoutForView:(UIView *)viewToBeUnhidden
+                           hostView:(ACRContentStackView *)hostView
+{
+    if (!hostView || !viewToBeUnhidden)
+    {
+        return;
+    }
+
+    // Check if the unhidden view actually needs layout repair
+    BOOL needsFix = (viewToBeUnhidden.frame.size.width < 1.0 ||
+                     viewToBeUnhidden.frame.origin.x >= hostView.frame.size.width);
+    if (!needsFix)
+    {
+        return;
+    }
+
+    // Get all arranged subviews via public API
+    NSArray<UIView *> *arranged = [hostView getArrangedSubviews];
+    if (!arranged || arranged.count == 0)
+    {
+        return;
+    }
+
+    // Full reset: remove all, then re-add in same order.
+    // removeFromSuperview is essential — without it, UIStackView retains
+    // stale internal UISV-spacing constraints from the initial hidden layout.
+    NSArray<UIView *> *snapshot = [arranged copy];
+    for (UIView *view in snapshot)
+    {
+        [hostView removeArrangedSubview:view];
+        [view removeFromSuperview];
+    }
+    for (UIView *view in snapshot)
+    {
+        [hostView addArrangedSubview:view];
+    }
+
+    [hostView setNeedsLayout];
+}
+
 /// unhide `viewToBeUnhidden`. `hostView` is a superview of type ColumnView or ColumnSetView
 - (void)unhideView:(UIView *)viewToBeUnhidden hostView:(ACRContentStackView *)hostView
 {
@@ -211,6 +264,7 @@
         if (viewToBeUnhidden.isHidden) {
             viewToBeUnhidden.hidden = NO;
             [hostView increaseIntrinsicContentSize:viewToBeUnhidden];
+            [self resetStackViewLayoutForView:viewToBeUnhidden hostView:hostView];
         }
 
         // previous head view's separator becomes visible
@@ -222,6 +276,7 @@
         if (viewToBeUnhidden.isHidden) {
             viewToBeUnhidden.hidden = NO;
             [hostView increaseIntrinsicContentSize:viewToBeUnhidden];
+            [self resetStackViewLayoutForView:viewToBeUnhidden hostView:hostView];
         }
         [self changeVisiblityOfAssociatedViews:viewToBeUnhidden visibilityValue:NO contentStackView:hostView];
     }
