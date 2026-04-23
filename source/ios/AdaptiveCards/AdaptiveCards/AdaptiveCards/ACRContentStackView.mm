@@ -819,6 +819,11 @@ using namespace AdaptiveCards;
             // so it and its subviews become one unit.
             if (!rootView.context.childHasSelectAction) {
                 self.isAccessibilityElement = YES;
+                // Remove button trait from children to prevent VoiceOver
+                // from announcing "button" twice (#176)
+                for (UIView *subview in self.subviews) {
+                    subview.accessibilityTraits &= ~UIAccessibilityTraitButton;
+                }
             }
         }
     }
