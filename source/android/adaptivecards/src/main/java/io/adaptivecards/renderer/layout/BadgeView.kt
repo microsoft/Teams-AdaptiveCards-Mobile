@@ -104,6 +104,15 @@ class BadgeView(
         iconView.loadIcon(badge.GetBadgeIcon(), badge.GetBadgeSize(), badgeConfig, renderedCard)
     }
 
+    /**
+     * System font scale (clamped at >= 1.0) used to scale the badge icon so it
+     * grows in lockstep with the SP-scaled text. Without this, increasing
+     * Android's font size in Settings makes the badge text grow while the icon
+     * stays at its hardcoded dp size, producing a visually mismatched badge.
+     */
+    private val fontScale: Float
+        get() = context.resources.configuration.fontScale.coerceAtLeast(1f)
+
     private fun ImageView.loadIcon(
         icon: String,
         badgeSize: BadgeSize,
@@ -121,7 +130,9 @@ class BadgeView(
 
         val foregroundColor: String = badgeConfig.textColor
 
-        val iconSize = badgeSize.getIconSize()
+        // Scale the icon size by the system font scale so the icon grows
+        // proportionally with the SP-scaled badge text (WCAG 1.4.4 Resize Text).
+        val iconSize = (badgeSize.getIconSize() * fontScale).toLong()
 
         val fluentIconImageLoaderAsync = FluentIconImageLoaderAsync(
             renderedCard,
