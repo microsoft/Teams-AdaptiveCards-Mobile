@@ -125,6 +125,13 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         setButtonEnabledState(baseActionElement, button, renderedCard);
 
         button.setText(baseActionElement.GetTitle());
+        // Allow Action button text to wrap (up to 2 lines) instead of being clipped
+        // when the user increases system font scale (Settings > Display > Font size).
+        // The default android.widget.Button is effectively single-line on most themes
+        // and either truncates or clips characters when scaled text exceeds the
+        // available width. Wrapping respects WCAG 1.4.4 (Resize Text).
+        button.setMaxLines(2);
+        button.setEllipsize(null);
         if (!TextUtils.isEmpty(baseActionElement.GetTooltip()))
         {
             TooltipCompat.setTooltipText(button, baseActionElement.GetTooltip());
