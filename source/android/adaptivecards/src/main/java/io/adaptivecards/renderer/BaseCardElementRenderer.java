@@ -277,6 +277,13 @@ public abstract class BaseCardElementRenderer implements IBaseCardElementRendere
         }
 
         elementView.setVisibility(visibility);
+
+        // When hiding an element, also mark it as not important for accessibility
+        // so TalkBack does not focus on invisible/gone views (#12, #108).
+        // Restore importance when showing the element again.
+        elementView.setImportantForAccessibility(
+            isVisible ? View.IMPORTANT_FOR_ACCESSIBILITY_AUTO
+                      : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
     }
 
     /**
