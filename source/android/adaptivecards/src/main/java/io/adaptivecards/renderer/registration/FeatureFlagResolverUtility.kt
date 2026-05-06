@@ -13,6 +13,7 @@ object FeatureFlagResolverUtility {
     private const val IS_FLOW_LAYOUT_ENABLED = "adaptiveCard/isFlowLayoutEnabled"
     private const val IS_GRID_LAYOUT_ENABLED = "adaptiveCard/isGridLayoutEnabled"
     private const val IS_ITEM_FIT_TO_FILL_ENABLED_FOR_COLUMN = "adaptiveCard/isItemFitToFillEnabledForColumn"
+    const val IS_EDGE_TO_EDGE_ENABLED = "ui/edgeToEdgeEnabled"
     private const val FLUENT_ICON_CDN_ROOT_ECS_KEY = "adaptiveCard/fluentIconCdnRoot"
     private const val FLUENT_ICON_CDN_PATH_ECS_KEY = "adaptiveCard/fluentIconCdnPath"
     private const val FLUENT_ICON_CDN_ROOT_DEFAULT_VALUE = "https://res-1.cdn.office.net"
@@ -29,6 +30,13 @@ object FeatureFlagResolverUtility {
     fun isCitationsEnabled() : Boolean {
         val featureFlagResolver = CardRendererRegistration.getInstance().featureFlagResolver
         return featureFlagResolver?.getEcsSettingAsBoolean(IS_CITATIONS_ENABLED)
+            ?: false
+    }
+
+    @JvmStatic
+    fun isEdgeToEdgeEnabled(): Boolean {
+        val featureFlagResolver = CardRendererRegistration.getInstance().featureFlagResolver
+        return featureFlagResolver?.getEcsSettingAsBoolean(IS_EDGE_TO_EDGE_ENABLED)
             ?: false
     }
 

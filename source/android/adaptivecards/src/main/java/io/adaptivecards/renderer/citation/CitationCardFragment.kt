@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
@@ -28,12 +29,16 @@ import io.adaptivecards.objectmodel.AdaptiveCard
 import io.adaptivecards.objectmodel.CardElementType
 import io.adaptivecards.objectmodel.HostConfig
 import io.adaptivecards.renderer.AdaptiveCardRenderer
+import io.adaptivecards.renderer.InsetSide
 import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.Utils
 import io.adaptivecards.renderer.Utils.dpToPx
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
+import io.adaptivecards.renderer.applyEdgeToEdgePaddingInsets
 import io.adaptivecards.renderer.citation.CitationUtil.applyDrawableColor
+import io.adaptivecards.renderer.getCombinedSysBarAndCutoutInsets
+import io.adaptivecards.renderer.setupEdgeToEdge
 
 class CitationCardFragment(
     private val context: Context,
@@ -42,11 +47,18 @@ class CitationCardFragment(
     private val renderedAdaptiveCard: RenderedAdaptiveCard,
     private val actionHandler: ICardActionHandler,
     private val hostConfig: HostConfig,
-    private val renderArgs: RenderArgs
+    private val renderArgs: RenderArgs,
+    private val isEdgeToEdgeEnabled: Boolean = false
 ) : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+
+        // Enable edge-to-edge if enabled
+        if (isEdgeToEdgeEnabled) {
+            dialog.setupEdgeToEdge()
+        }
+
         return dialog
     }
 
@@ -56,6 +68,16 @@ class CitationCardFragment(
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.citation_card_bottom_sheet_layout, container, false)
+
+        // Apply edge-to-edge insets if enabled
+        if (isEdgeToEdgeEnabled) {
+            // Apply horizontal insets to root view
+            view.applyEdgeToEdgePaddingInsets(InsetSide.START, InsetSide.END)
+
+            // Apply bottom insets to content layout
+            val contentLayout = view.findViewById<LinearLayout>(R.id.adaptiveCard_contentLayout)
+            contentLayout.applyEdgeToEdgePaddingInsets(InsetSide.BOTTOM)
+        }
 
         val header = view.findViewById<TextView>(R.id.header)
         header.setTextColor(hostConfig.GetCitationBlock().bottomSheetTextColor.toColorInt())
@@ -119,6 +141,31 @@ class CitationCardFragment(
                 .build()
             fillColor =
                 ColorStateList.valueOf(hostConfig.GetCitationBlock().bottomSheetBackgroundColor.toColorInt())
+        }
+
+        // Apply edge-to-edge insets to bottom sheet if enabled
+        if (isEdgeToEdgeEnabled) {
+            bottomSheet?.let {
+                // Remove default horizontal margins for edge-to-edge
+                (it.layoutParams as? ViewGroup.MarginLayoutParams)?.let { params ->
+                    params.leftMargin = 0
+                    params.rightMargin = 0
+                    it.layoutParams = params
+                }
+
+                ViewCompat.setOnApplyWindowInsetsListener(it) { v, insets ->
+                    val currInsets = insets.getCombinedSysBarAndCutoutInsets()
+                    // Apply horizontal insets to bottom sheet
+                    v.setPaddingRelative(
+                        currInsets.left,
+                        it.paddingTop,
+                        currInsets.right,
+                        it.paddingBottom
+                    )
+                    insets
+                }
+                ViewCompat.requestApplyInsets(it)
+            }
         }
 
         bottomSheet?.viewTreeObserver?.addOnGlobalLayoutListener(object :
@@ -201,7 +248,8 @@ class CitationCardFragment(
                             config.renderedAdaptiveCard,
                             config.actionHandler,
                             config.hostConfig,
-                            config.renderArgs
+                            config.renderArgs,
+                            config.isEdgeToEdgeEnabled
                         )
                         else -> super.instantiate(classLoader, className)
                     }
@@ -236,6 +284,7 @@ class CitationCardFragment(
  * @param actionHandler Handler for card actions
  * @param hostConfig Host configuration for styling
  * @param renderArgs Rendering arguments
+ * @param isEdgeToEdgeEnabled Flag to enable edge-to-edge display mode
  */
 data class CitationCardConfig(
     val context: Context,
@@ -244,5 +293,6 @@ data class CitationCardConfig(
     val renderedAdaptiveCard: RenderedAdaptiveCard,
     val actionHandler: ICardActionHandler,
     val hostConfig: HostConfig,
-    val renderArgs: RenderArgs
+    val renderArgs: RenderArgs,
+    val isEdgeToEdgeEnabled: Boolean = false
 )

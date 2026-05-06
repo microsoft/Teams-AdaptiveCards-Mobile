@@ -35,6 +35,7 @@ import io.adaptivecards.objectmodel.ToggleVisibilityTarget;
 import io.adaptivecards.objectmodel.ToggleVisibilityTargetVector;
 import io.adaptivecards.renderer.action.ActionElementUtils;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public abstract class BaseActionElementRenderer implements IBaseActionElementRenderer
 {
@@ -384,12 +385,16 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
                 return;
             }
 
+            // Resolve edge-to-edge feature flag
+            boolean isEdgeToEdgeEnabled = FeatureFlagResolverUtility.isEdgeToEdgeEnabled();
+
             PopoverBottomSheetDailogFragmentFactory factory = new PopoverBottomSheetDailogFragmentFactory(v.getContext(),
                 action,
                 m_renderedAdaptiveCard,
                 m_cardActionHandler,
                 m_hostConfig,
-                m_renderArgs
+                m_renderArgs,
+                isEdgeToEdgeEnabled
             );
             m_fragmentManager.setFragmentFactory(factory);
 

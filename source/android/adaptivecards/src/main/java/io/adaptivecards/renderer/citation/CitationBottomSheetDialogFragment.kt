@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.graphics.toColorInt
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
@@ -26,8 +27,12 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import io.adaptivecards.renderer.InsetSide
 import io.adaptivecards.renderer.Utils
 import io.adaptivecards.renderer.Utils.dpToPx
+import io.adaptivecards.renderer.applyEdgeToEdgePaddingInsets
+import io.adaptivecards.renderer.getCombinedSysBarAndCutoutInsets
+import io.adaptivecards.renderer.setupEdgeToEdge
 
 
 class CitationBottomSheetDialogFragment(
@@ -44,11 +49,18 @@ class CitationBottomSheetDialogFragment(
     private val bottomSheetBackgroundColor: String,
     private val dividerColor: String,
     private val onTitleClickListener: (() -> Unit)?,
-    private val onMoreDetailsClickListener: ((Int?) -> Unit)?
+    private val onMoreDetailsClickListener: ((Int?) -> Unit)?,
+    private val isEdgeToEdgeEnabled: Boolean = false
 ) : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+
+        // Enable edge-to-edge if enabled
+        if (isEdgeToEdgeEnabled) {
+            dialog.setupEdgeToEdge()
+        }
+
         return dialog
     }
 
@@ -59,6 +71,25 @@ class CitationBottomSheetDialogFragment(
     ): View {
 
         val view = inflater.inflate(R.layout.citation_bottom_sheet_layout, container, false)
+
+        // Apply edge-to-edge insets if enabled
+        if (isEdgeToEdgeEnabled) {
+            // Apply horizontal insets to root view
+            view.applyEdgeToEdgePaddingInsets(InsetSide.START, InsetSide.END)
+
+            // Apply bottom insets to the content inside NestedScrollView
+            // Since NestedScrollView doesn't have an ID, we need to find it by iterating
+            if (view is android.view.ViewGroup) {
+                for (i in 0 until view.childCount) {
+                    val child = view.getChildAt(i)
+                    if (child is androidx.core.widget.NestedScrollView && child.childCount > 0) {
+                        // Apply insets to the content inside NestedScrollView
+                        child.getChildAt(0).applyEdgeToEdgePaddingInsets(InsetSide.BOTTOM)
+                        break
+                    }
+                }
+            }
+        }
 
         val header = view.findViewById<TextView>(R.id.header)
         header.setTextColor(bottomSheetTextColor.toColorInt())
@@ -136,6 +167,31 @@ class CitationBottomSheetDialogFragment(
             fillColor = ColorStateList.valueOf(bottomSheetBackgroundColor.toColorInt())
         }
 
+        // Apply edge-to-edge insets to bottom sheet if enabled
+        if (isEdgeToEdgeEnabled) {
+            bottomSheet?.let {
+                // Remove default horizontal margins for edge-to-edge
+                (it.layoutParams as? ViewGroup.MarginLayoutParams)?.let { params ->
+                    params.leftMargin = 0
+                    params.rightMargin = 0
+                    it.layoutParams = params
+                }
+
+                ViewCompat.setOnApplyWindowInsetsListener(it) { v, insets ->
+                    val currInsets = insets.getCombinedSysBarAndCutoutInsets()
+                    // Apply horizontal insets to bottom sheet
+                    v.setPaddingRelative(
+                        currInsets.left,
+                        it.paddingTop,
+                        currInsets.right,
+                        it.paddingBottom
+                    )
+                    insets
+                }
+                ViewCompat.requestApplyInsets(it)
+            }
+        }
+
         bottomSheet?.viewTreeObserver?.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -197,7 +253,8 @@ class CitationBottomSheetDialogFragment(
                             config.bottomSheetBackgroundColor,
                             config.dividerColor,
                             config.onTitleClickListener,
-                            config.onMoreDetailsClickListener
+                            config.onMoreDetailsClickListener,
+                            config.isEdgeToEdgeEnabled
                         )
                         else -> super.instantiate(classLoader, className)
                     }
@@ -239,6 +296,7 @@ class CitationBottomSheetDialogFragment(
  * @param dividerColor Hex color string for divider line
  * @param onTitleClickListener Optional: Custom click handler for title (overrides default URL opening)
  * @param onMoreDetailsClickListener Optional: Click handler for "More Details" button (button hidden if null)
+ * @param isEdgeToEdgeEnabled Flag to enable edge-to-edge display mode
  */
 data class CitationBottomSheetConfig(
     val context: Context,
@@ -254,5 +312,6 @@ data class CitationBottomSheetConfig(
     val bottomSheetBackgroundColor: String,
     val dividerColor: String,
     val onTitleClickListener: (() -> Unit)? = null,
-    val onMoreDetailsClickListener: ((Int?) -> Unit)? = null
+    val onMoreDetailsClickListener: ((Int?) -> Unit)? = null,
+    val isEdgeToEdgeEnabled: Boolean = false
 )

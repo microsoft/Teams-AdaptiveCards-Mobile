@@ -14,6 +14,7 @@ import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 import io.adaptivecards.renderer.registration.CardRendererRegistration
+import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility
 
 class CitationClickableSpan(
     private val citationText: String,
@@ -47,6 +48,9 @@ class CitationClickableSpan(
             null
         }
 
+        // Resolve edge-to-edge feature flag
+        val isEdgeToEdgeEnabled = FeatureFlagResolverUtility.isEdgeToEdgeEnabled()
+
         // Create config and show the dialog
         val citationBlock = hostConfig.GetCitationBlock()
         val config = CitationBottomSheetConfig(
@@ -63,13 +67,17 @@ class CitationClickableSpan(
             bottomSheetBackgroundColor = citationBlock.bottomSheetBackgroundColor,
             dividerColor = citationBlock.dividerColor,
             onTitleClickListener = null, // Let bottom sheet handle default browser opening
-            onMoreDetailsClickListener = onMoreDetailsClickListener
+            onMoreDetailsClickListener = onMoreDetailsClickListener,
+            isEdgeToEdgeEnabled = isEdgeToEdgeEnabled
         )
 
         CitationBottomSheetDialogFragment.show(fragmentManager, config)
     }
 
     private fun showCitationCard(minHeight: Int?, adaptiveCard: io.adaptivecards.objectmodel.AdaptiveCard) {
+        // Resolve edge-to-edge feature flag
+        val isEdgeToEdgeEnabled = FeatureFlagResolverUtility.isEdgeToEdgeEnabled()
+
         // Create config and show the citation card
         val config = CitationCardConfig(
             context = context,
@@ -78,7 +86,8 @@ class CitationClickableSpan(
             renderedAdaptiveCard = renderedCard,
             actionHandler = cardActionHandler,
             hostConfig = hostConfig,
-            renderArgs = renderArgs
+            renderArgs = renderArgs,
+            isEdgeToEdgeEnabled = isEdgeToEdgeEnabled
         )
 
         CitationCardFragment.show(fragmentManager, config)
