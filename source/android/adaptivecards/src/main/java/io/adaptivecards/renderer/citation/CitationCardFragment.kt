@@ -34,6 +34,7 @@ import io.adaptivecards.renderer.Utils
 import io.adaptivecards.renderer.Utils.dpToPx
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
 import io.adaptivecards.renderer.citation.CitationUtil.applyDrawableColor
+import io.adaptivecards.renderer.edgetoedge.setupEdgeToEdgeBottomSheet
 
 class CitationCardFragment(
     private val context: Context,
@@ -44,6 +45,10 @@ class CitationCardFragment(
     private val hostConfig: HostConfig,
     private val renderArgs: RenderArgs
 ) : BottomSheetDialogFragment() {
+
+    override fun getTheme(): Int {
+        return R.style.EdgeToEdgeBottomSheetTheme
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
@@ -78,6 +83,19 @@ class CitationCardFragment(
         renderCitationCard(contentLayout)
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Find the NestedScrollView and apply insets directly to it for smooth scrolling
+        val scrollView = view.findViewById<androidx.core.widget.NestedScrollView>(R.id.citation_card_scrollView)
+
+        setupEdgeToEdgeBottomSheet(
+            contentView = scrollView,
+            extendBehindNavBar = true,
+            backgroundColor = hostConfig.GetCitationBlock().bottomSheetBackgroundColor
+        )
     }
 
     private fun renderCitationCard(contentLayout: ViewGroup) {

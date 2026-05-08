@@ -1,6 +1,5 @@
 package io.adaptivecards.renderer.citation
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -19,15 +18,16 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import io.adaptivecards.R
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import io.adaptivecards.R
 import io.adaptivecards.renderer.Utils
 import io.adaptivecards.renderer.Utils.dpToPx
+import io.adaptivecards.renderer.edgetoedge.setupEdgeToEdgeBottomSheet
 
 
 class CitationBottomSheetDialogFragment(
@@ -47,9 +47,8 @@ class CitationBottomSheetDialogFragment(
     private val onMoreDetailsClickListener: ((Int?) -> Unit)?
 ) : BottomSheetDialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-        return dialog
+    override fun getTheme(): Int {
+        return R.style.EdgeToEdgeBottomSheetTheme
     }
 
     override fun onCreateView(
@@ -119,6 +118,19 @@ class CitationBottomSheetDialogFragment(
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Find the NestedScrollView and apply insets directly to it for smooth scrolling
+        val scrollView = view.findViewById<androidx.core.widget.NestedScrollView>(R.id.citation_scrollView)
+
+        setupEdgeToEdgeBottomSheet(
+            contentView = scrollView,
+            extendBehindNavBar = true,
+            backgroundColor = bottomSheetBackgroundColor
+        )
+    }
+
     override fun onStart() {
         super.onStart()
 
@@ -160,6 +172,8 @@ class CitationBottomSheetDialogFragment(
 
     private fun getPeekHeight(contentHeight: Int): Int {
         val screenHeight = Utils.getScreenAvailableHeight(context)
+        // With edge-to-edge, the sheet extends behind the nav bar and content has padding,
+        // so we use full screen height for calculations
         val minHeight = screenHeight / 3
         val maxHeight = screenHeight / 2
         return contentHeight.coerceIn(minHeight, maxHeight)
