@@ -3,7 +3,6 @@
     <style name="CitationBottomSheetTheme" parent="Theme.Design.BottomSheetDialog">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:background">@android:color/transparent</item>
     </style>

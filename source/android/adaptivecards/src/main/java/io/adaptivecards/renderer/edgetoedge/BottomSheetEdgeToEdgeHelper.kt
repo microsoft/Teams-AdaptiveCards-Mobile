@@ -62,18 +62,24 @@ object BottomSheetEdgeToEdgeHelper {
      * @param contentView Content view that receives the bottom inset
      * @param extendBehindNavBar Opt-in for the API-36 seamless-nav-bar behaviour. Defaults
      *   to `false` so existing callers are unaffected.
+     * @param backgroundColor Optional background color hex string (e.g., "#FFFFFF"). When provided,
+     *   nav bar appearance is calculated from color luminance instead of system theme. Use this
+     *   when the background color is set programmatically and may differ from system theme.
      */
     @MainThread
     fun setup(
         bottomSheetFragment: BottomSheetDialogFragment,
         contentView: View,
-        extendBehindNavBar: Boolean = false
+        extendBehindNavBar: Boolean = false,
+        backgroundColor: String? = null
     ) {
         val dialog = bottomSheetFragment.dialog ?: return
         dialog.window?.let(::configureWindow)
 
         if (extendBehindNavBar) {
-            dialog.window?.let(::configureNavBarAppearance)
+            dialog.window?.let { window ->
+                configureNavBarAppearance(window, backgroundColor)
+            }
             setEdgeToEdgeEnabled(dialog)
             // Pad the styled background-bearing descendant rather than the (often
             // backgroundless) root: a View's background fills its full padded bounds, so
@@ -122,21 +128,29 @@ object BottomSheetEdgeToEdgeHelper {
      *
      *  - On API 29+ the automatic system contrast scrim is disabled so it does not paint
      *    a translucent bar over a sheet that already extends behind it.
-     *  - The nav-bar icon appearance is synced to the dialog's theme so the system
-     *    back/home pill stays visible against the sheet background that now shows through
-     *    the transparent nav bar.
+     *  - The nav-bar icon appearance is synced to the sheet's background color (if provided)
+     *    or dialog's theme so the system back/home pill stays visible against the sheet
+     *    background that now shows through the transparent nav bar.
      *
      * Kept as a separate method (rather than folded into [configureWindow]) so that
      * callers which previously relied on [configureWindow] are not retroactively changed.
+     *
+     * @param window The dialog window
+     * @param backgroundColor Optional background color hex string (e.g., "#FFFFFF"). When provided,
+     *   determines nav bar appearance from color luminance instead of system theme.
      */
     @MainThread
-    fun configureNavBarAppearance(window: Window) {
+    fun configureNavBarAppearance(window: Window, backgroundColor: String? = null) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         }
-        val isLightTheme = detectLightTheme(window)
+        val isLightBackground = if (backgroundColor != null) {
+            isColorLight(backgroundColor)
+        } else {
+            detectLightTheme(window)
+        }
         WindowCompat.getInsetsController(window, window.decorView)
-            ?.isAppearanceLightNavigationBars = isLightTheme
+            ?.isAppearanceLightNavigationBars = isLightBackground
     }
 
     /**
@@ -150,6 +164,32 @@ object BottomSheetEdgeToEdgeHelper {
         } else {
             val uiMode = window.context.resources.configuration.uiMode
             (uiMode and Configuration.UI_MODE_NIGHT_MASK) != Configuration.UI_MODE_NIGHT_YES
+        }
+    }
+
+    /**
+     * Determine if a color is light or dark based on luminance.
+     * Uses relative luminance formula: L = 0.2126*R + 0.7152*G + 0.0722*B
+     * Returns true if light (luminance > 0.5), false if dark.
+     *
+     * @param colorHex Color hex string (e.g., "#FFFFFF", "#000000")
+     * @return true if the color is light (needs dark icons), false if dark (needs light icons)
+     */
+    private fun isColorLight(colorHex: String): Boolean {
+        return try {
+            val color = Color.parseColor(colorHex)
+            val red = Color.red(color) / 255.0
+            val green = Color.green(color) / 255.0
+            val blue = Color.blue(color) / 255.0
+
+            // Calculate relative luminance
+            val luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+
+            // Return true if light (luminance > 0.5)
+            luminance > 0.5
+        } catch (e: IllegalArgumentException) {
+            // If color parsing fails, fall back to assuming light
+            true
         }
     }
 
@@ -206,12 +246,15 @@ object BottomSheetEdgeToEdgeHelper {
  * @param extendBehindNavBar Opt-in for the API-36 seamless-nav-bar behaviour. See
  *   [BottomSheetEdgeToEdgeHelper.setup] for what changes when enabled. Defaults to `false`
  *   so existing callers are unaffected.
+ * @param backgroundColor Optional background color hex string (e.g., "#FFFFFF"). When provided,
+ *   nav bar appearance is calculated from color luminance instead of system theme.
  */
 @MainThread
 fun BottomSheetDialogFragment.setupEdgeToEdgeBottomSheet(
     contentView: View? = null,
-    extendBehindNavBar: Boolean = false
+    extendBehindNavBar: Boolean = false,
+    backgroundColor: String? = null
 ) {
     val targetView = contentView ?: view ?: return
-    BottomSheetEdgeToEdgeHelper.setup(this, targetView, extendBehindNavBar)
+    BottomSheetEdgeToEdgeHelper.setup(this, targetView, extendBehindNavBar, backgroundColor)
 }

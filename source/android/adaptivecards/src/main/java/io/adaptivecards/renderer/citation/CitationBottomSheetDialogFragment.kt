@@ -120,7 +120,10 @@ class CitationBottomSheetDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupEdgeToEdgeBottomSheet(extendBehindNavBar = true)
+        setupEdgeToEdgeBottomSheet(
+            extendBehindNavBar = true,
+            backgroundColor = bottomSheetBackgroundColor
+        )
     }
 
     override fun onStart() {
