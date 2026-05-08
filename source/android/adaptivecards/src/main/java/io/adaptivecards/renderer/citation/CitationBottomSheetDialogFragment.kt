@@ -1,6 +1,5 @@
 package io.adaptivecards.renderer.citation
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -19,22 +18,16 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import io.adaptivecards.R
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import io.adaptivecards.R
 import io.adaptivecards.renderer.Utils
 import io.adaptivecards.renderer.Utils.dpToPx
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
-import androidx.core.graphics.Insets
-import android.util.TypedValue
-import android.content.res.Configuration
+import io.adaptivecards.renderer.edgetoedge.setupEdgeToEdgeBottomSheet
 
 
 class CitationBottomSheetDialogFragment(
@@ -127,13 +120,11 @@ class CitationBottomSheetDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupEdgeToEdgeBottomSheet(extendBehindNavBar = true)
     }
 
     override fun onStart() {
         super.onStart()
-
-        // Setup edge-to-edge in onStart() when dialog is fully initialized
-        setupEdgeToEdgeBottomSheet()
 
         val dialog = dialog as? BottomSheetDialog
         val bottomSheet =
@@ -178,125 +169,6 @@ class CitationBottomSheetDialogFragment(
         val minHeight = screenHeight / 3
         val maxHeight = screenHeight / 2
         return contentHeight.coerceIn(minHeight, maxHeight)
-    }
-
-    /**
-     * Set up edge-to-edge for this bottom sheet dialog.
-     * Based on Teams Android BottomSheetEdgeToEdgeHelper pattern.
-     */
-    private fun setupEdgeToEdgeBottomSheet() {
-        val dialog = dialog as? BottomSheetDialog
-        if (dialog == null) {
-            Log.d(TAG, "setupEdgeToEdgeBottomSheet: dialog is null")
-            return
-        }
-
-        val contentView = view
-        if (contentView == null) {
-            Log.d(TAG, "setupEdgeToEdgeBottomSheet: contentView is null")
-            return
-        }
-
-        Log.d(TAG, "setupEdgeToEdgeBottomSheet: Starting setup")
-
-        // Configure window for edge-to-edge
-        dialog.window?.let { window ->
-            Log.d(TAG, "Configuring window")
-            configureWindow(window)
-            configureNavBarAppearance(window)
-        }
-
-        // Enable edge-to-edge (disable fitsSystemWindows on Material's container/coordinator)
-        Log.d(TAG, "Setting edge-to-edge enabled")
-        setEdgeToEdgeEnabled(dialog)
-
-        // Apply bottom insets to the first descendant with a background
-        val targetView = findInsetTarget(contentView)
-        Log.d(TAG, "Applying bottom insets to: ${targetView.javaClass.simpleName}")
-        applyBottomInsets(targetView)
-
-        Log.d(TAG, "setupEdgeToEdgeBottomSheet: Setup complete")
-    }
-
-    /**
-     * Configure window for edge-to-edge.
-     */
-    private fun configureWindow(window: android.view.Window) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        @Suppress("DEPRECATION")
-        window.navigationBarColor = android.graphics.Color.TRANSPARENT
-    }
-
-    /**
-     * Configure navigation bar appearance for seamless edge-to-edge on API 29+.
-     */
-    private fun configureNavBarAppearance(window: android.view.Window) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            window.isNavigationBarContrastEnforced = false
-        }
-        // Detect theme based on isLightTheme attribute or UI mode
-        val typedValue = TypedValue()
-        val isLightTheme = if (window.context.theme.resolveAttribute(android.R.attr.isLightTheme, typedValue, true)) {
-            typedValue.data != 0
-        } else {
-            (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) != Configuration.UI_MODE_NIGHT_YES
-        }
-
-        WindowCompat.getInsetsController(window, window.decorView)?.let {
-            it.isAppearanceLightStatusBars = isLightTheme
-            it.isAppearanceLightNavigationBars = isLightTheme
-        }
-    }
-
-    /**
-     * Enable edge-to-edge by disabling fitsSystemWindows on Material's container and coordinator.
-     * Equivalent to Material 1.4.0+'s BottomSheetDialog.setEdgeToEdgeEnabled(true).
-     */
-    private fun setEdgeToEdgeEnabled(dialog: Dialog) {
-        dialog.findViewById<View>(com.google.android.material.R.id.container)
-            ?.fitsSystemWindows = false
-        dialog.findViewById<View>(com.google.android.material.R.id.coordinator)
-            ?.fitsSystemWindows = false
-    }
-
-    /**
-     * Find the first descendant with a non-null background (max depth 3).
-     * This ensures the nav-bar inset lands on the styled container.
-     */
-    private fun findInsetTarget(root: View, maxDepth: Int = 3): View {
-        if (root.background != null) return root
-        if (maxDepth <= 0 || root !is ViewGroup) return root
-        for (i in 0 until root.childCount) {
-            val target = findInsetTarget(root.getChildAt(i), maxDepth - 1)
-            if (target.background != null) return target
-        }
-        return root
-    }
-
-    /**
-     * Apply bottom navigation bar insets to the target view.
-     * Preserves existing padding and adds nav bar inset on top.
-     * Uses combined system bars and cutout insets to handle display cutouts (notches, camera holes).
-     */
-    private fun applyBottomInsets(targetView: View) {
-        val originalPaddingBottom = targetView.paddingBottom
-        ViewCompat.setOnApplyWindowInsetsListener(targetView) { v, insets ->
-            // Use combined insets (system bars + display cutout) to handle notches/cutouts
-            val combinedInsets = getCombinedSysBarAndCutoutInsets(insets)
-            v.updatePadding(bottom = originalPaddingBottom + combinedInsets.bottom)
-            insets
-        }
-        targetView.requestApplyInsets()
-    }
-
-    /**
-     * Returns the maximum of system bar insets and display cutout insets.
-     * This ensures content is not obscured by notches, camera cutouts, or navigation bars.
-     */
-    private fun getCombinedSysBarAndCutoutInsets(windowInsets: WindowInsetsCompat): Insets {
-        val sysBarInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-        val cutoutInsets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
-        return Insets.max(sysBarInsets, cutoutInsets)
     }
 
     companion object {
