@@ -120,7 +120,12 @@ class CitationBottomSheetDialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Find the NestedScrollView and apply insets directly to it for smooth scrolling
+        val scrollView = view.findViewById<androidx.core.widget.NestedScrollView>(R.id.citation_scrollView)
+
         setupEdgeToEdgeBottomSheet(
+            contentView = scrollView,
             extendBehindNavBar = true,
             backgroundColor = bottomSheetBackgroundColor
         )

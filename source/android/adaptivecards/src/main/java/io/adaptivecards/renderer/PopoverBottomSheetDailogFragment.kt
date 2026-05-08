@@ -73,7 +73,12 @@ class PopoverBottomSheetDailogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Find the NestedScrollView and apply insets directly to it for smooth scrolling
+        val scrollView = view.findViewById<androidx.core.widget.NestedScrollView>(R.id.popover_scrollView)
+
         setupEdgeToEdgeBottomSheet(
+            contentView = scrollView,
             extendBehindNavBar = true,
             backgroundColor = hostConfig.GetActions().getPopover().getBackgroundColor()
         )
