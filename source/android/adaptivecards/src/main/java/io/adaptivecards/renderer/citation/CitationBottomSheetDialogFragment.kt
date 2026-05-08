@@ -48,7 +48,7 @@ class CitationBottomSheetDialogFragment(
 ) : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int {
-        return R.style.CitationBottomSheetTheme
+        return R.style.EdgeToEdgeBottomSheetTheme
     }
 
     override fun onCreateView(

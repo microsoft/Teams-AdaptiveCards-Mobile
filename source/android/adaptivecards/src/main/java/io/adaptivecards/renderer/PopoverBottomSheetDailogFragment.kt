@@ -32,6 +32,7 @@ import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import io.adaptivecards.renderer.Utils.dpToPx
+import io.adaptivecards.renderer.edgetoedge.setupEdgeToEdgeBottomSheet
 
 class PopoverBottomSheetDailogFragment(
     private val context: Context,
@@ -41,6 +42,10 @@ class PopoverBottomSheetDailogFragment(
     private val hostConfig: HostConfig,
     private val renderArgs: RenderArgs
 ) : BottomSheetDialogFragment() {
+
+    override fun getTheme(): Int {
+        return R.style.EdgeToEdgeBottomSheetTheme
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
@@ -64,6 +69,14 @@ class PopoverBottomSheetDailogFragment(
         renderPopoverContent(popoverAction, contentLayout, dialogContentViewId)
 
         return view;
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupEdgeToEdgeBottomSheet(
+            extendBehindNavBar = true,
+            backgroundColor = hostConfig.GetActions().getPopover().getBackgroundColor()
+        )
     }
 
     private fun setCloseButton(
