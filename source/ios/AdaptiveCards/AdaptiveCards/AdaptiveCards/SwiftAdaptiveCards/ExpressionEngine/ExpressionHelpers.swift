@@ -11,49 +11,70 @@ import Foundation
 // MARK: - Objective-C Bridge Implementation
 
 @objc public class ObjCExpressionEvaluator: NSObject {
-    
+
     @objc public static let shared = ObjCExpressionEvaluator()
-    
+
     private let engine: ExpressionEngineProtocol
     private var expressionEvalEnabled = false
-    
+    private var hostFunctions: [FunctionDeclaration] = []
+
     // Private initializer prevents external instantiation
     private override init() {
         self.engine = ExpressionEngine()
         super.init()
     }
-    
+
     // MARK: - Configuration
-    
+
     @objc public static func setExpressionEvalEnabled(_ isEnabled: Bool) {
         shared.expressionEvalEnabled = isEnabled
     }
-    
+
     @objc public static func isExpressionEvalEnabled() -> Bool {
         return shared.expressionEvalEnabled
     }
-        
+
+    // MARK: - Host Function Registration
+
+    /// Register a host-provided function that expressions can call.
+    /// Registered functions are available to all subsequent expression evaluations.
+    public static func registerHostFunction(_ declaration: FunctionDeclaration) {
+        shared.hostFunctions.removeAll { $0.name == declaration.name }
+        shared.hostFunctions.append(declaration)
+    }
+
+    /// Register multiple host-provided functions.
+    public static func registerHostFunctions(_ declarations: [FunctionDeclaration]) {
+        for declaration in declarations {
+            registerHostFunction(declaration)
+        }
+    }
+
+    /// Remove all registered host functions.
+    @objc public static func removeAllHostFunctions() {
+        shared.hostFunctions.removeAll()
+    }
+
     // Static convenience method for backward compatibility
     @objc public static func evaluateExpression(_ expressionString: String, withData data: NSDictionary? = nil, completion: @escaping (NSObject?, NSError?) -> Void) {
         shared.evaluateExpression(expressionString, withData: data, completion: completion)
     }
-    
+
     /// Instance method for evaluating expressions
     @objc public func evaluateExpression(_ expressionString: String, withData data: NSDictionary? = nil, completion: @escaping (NSObject?, NSError?) -> Void) {
-        
+
         Task {
             do {
                 let expr = try engine.createExpression(expressionString, allowAssignment: false)
-                let context: EvaluationContext?
-                
-                if let data = data {
-                    context = await engine.createContext(with: data as? [String: Any])
-                } else {
-                    context = await engine.createDefaultContext(with: nil)
-                }
-                
+
+                let config = EvaluationContextConfig(
+                    root: data as? [String: Any],
+                    functions: hostFunctions
+                )
+                let context = await EvaluationContext(config: config)
+
                 let result = await expr.evaluateResult(context: context)
-                
+
                 switch result {
                 case .success(let value):
                     if let nsObj = value as? NSObject {

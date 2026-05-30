@@ -441,12 +441,13 @@ NSString * const DYNAMIC_VISIBLE_PROP = @"isVisible.dynamic";
 + (void)evaluateDynamicProperties:(NSString * _Nullable)titleDynamic
                  isVisibleDynamic:(NSString * _Nullable)isVisibleDynamic
                  isEnabledDynamic:(NSString * _Nullable)isEnabledDynamic
+                      dataContext:(NSDictionary * _Nullable)dataContext
                            button:(ACRButton *)button
     {
-        
+
         if (titleDynamic && [titleDynamic isKindOfClass:[NSString class]] && titleDynamic.length > 0)
         {
-            [self evaluateExpression:titleDynamic completion:^(id value, NSError *error)
+            [self evaluateExpression:titleDynamic withData:dataContext completion:^(id value, NSError *error)
              {
                 if ([value isKindOfClass:[NSString class]] && [((NSString *)value) length] > 0)
                 {
@@ -458,7 +459,7 @@ NSString * const DYNAMIC_VISIBLE_PROP = @"isVisible.dynamic";
         }
         if (isVisibleDynamic && [isVisibleDynamic isKindOfClass:[NSString class]] && isVisibleDynamic.length > 0)
         {
-            [self evaluateExpression:isVisibleDynamic completion:^(id value, NSError *error)
+            [self evaluateExpression:isVisibleDynamic withData:dataContext completion:^(id value, NSError *error)
              {
                 if ([value isKindOfClass:[NSNumber class]])
                 {
@@ -469,10 +470,10 @@ NSString * const DYNAMIC_VISIBLE_PROP = @"isVisible.dynamic";
                 }
             }];
         }
-        
+
         if (isEnabledDynamic && [isEnabledDynamic isKindOfClass:[NSString class]] && isEnabledDynamic.length > 0)
         {
-            [self evaluateExpression:isEnabledDynamic completion:^(id value, NSError *error)
+            [self evaluateExpression:isEnabledDynamic withData:dataContext completion:^(id value, NSError *error)
              {
                 if ([value isKindOfClass:[NSNumber class]])
                 {
@@ -488,7 +489,6 @@ NSString * const DYNAMIC_VISIBLE_PROP = @"isVisible.dynamic";
 + (void)handleExpressionEvaluationForButton:(ACRButton *)button
                           baseActionElement:(ACOBaseActionElement *)acoElem
 {
-   
     NSData *additionalProperty = [acoElem additionalProperty];
     if (additionalProperty)
     {
@@ -498,18 +498,17 @@ NSString * const DYNAMIC_VISIBLE_PROP = @"isVisible.dynamic";
         NSString * _Nullable titleDynamic = additionalProperties[DYNAMIC_TITLE_PROP];
         NSString * _Nullable isEnabledDynamic = additionalProperties[DYNAMIC_ENABLE_PROP];
         NSString * _Nullable isVisibleDynamic = additionalProperties[DYNAMIC_VISIBLE_PROP];
+        NSDictionary * _Nullable dataContext = additionalProperties[@"data"];
         [self evaluateDynamicProperties:titleDynamic
                        isVisibleDynamic:isVisibleDynamic
                        isEnabledDynamic:isEnabledDynamic
+                            dataContext:dataContext
                                  button:button];
     }
-
 }
 
-/// Evaluates an expression string using the Swift ObjCExpressionEvaluator bridge.
-/// Calls the completion block with success/failure and result/error.
-+ (void)evaluateExpression:(NSString *)expression completion:(void (^)(id _Nullable result, NSError * _Nullable error))completion {
-    [TSExpressionObjCBridge evaluateExpression:expression withData:nil completion:^(NSObject * _Nullable evalResult, NSError * _Nullable evalError)
++ (void)evaluateExpression:(NSString *)expression withData:(NSDictionary * _Nullable)data completion:(void (^)(id _Nullable result, NSError * _Nullable error))completion {
+    [TSExpressionObjCBridge evaluateExpression:expression withData:data completion:^(NSObject * _Nullable evalResult, NSError * _Nullable evalError)
      {
         if (completion)
         {
