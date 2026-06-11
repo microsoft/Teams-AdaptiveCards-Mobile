@@ -750,6 +750,19 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
     }
     NSString *parsedString = (markDownParser->HasHtmlTags()) ? [NSString stringWithCString:markdownString.c_str() encoding:NSUTF8StringEncoding] : [NSString stringWithCString:markDownParser->GetRawText().c_str() encoding:NSUTF8StringEncoding];
 
+    // Convert <ul>/<li> to literal "• " bullets and <br> separators.
+    // Apple's NSHTMLTextDocumentType renders list bullets via NSTextList in the
+    // paragraph style, which is overwritten downstream in ACRTextBlockRenderer
+    // when alignment is applied — wiping out the bullet markers. Mirroring the
+    // Android renderer (RendererUtil.UlTagHandler) by injecting bullets as text
+    // makes the marker survive any paragraph-style changes.
+    if (markDownParser->HasHtmlTags() && [parsedString containsString:@"<li>"]) {
+        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"<ul>" withString:@""];
+        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"</ul>" withString:@""];
+        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"<li>" withString:@"• "];
+        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"</li>" withString:@"<br>"];
+    }
+
     if (markDownParser->HasHtmlTags() && ([parsedString containsString:@"\n"] || [parsedString containsString:@"\r"])) {
         // Different systems have different line break styles
         // Windows style: \r\n
