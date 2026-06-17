@@ -16,7 +16,6 @@ typedef NS_ENUM(NSInteger, ACRActionType) {
     ACRToggleVisibility,
     ACROverflow,
     ACRUnknownAction = 8,
-    ACRRunCommands,
 };
 
 typedef NS_ENUM(NSInteger, ACRIconPlacement) {
