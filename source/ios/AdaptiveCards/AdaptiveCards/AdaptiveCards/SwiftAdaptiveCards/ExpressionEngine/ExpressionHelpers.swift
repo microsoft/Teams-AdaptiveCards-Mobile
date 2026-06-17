@@ -17,7 +17,7 @@ import Foundation
     private let engine: ExpressionEngineProtocol
     private var expressionEvalEnabled = false
     private var hostFunctions: [FunctionDeclaration] = []
-    private let lock = NSLock()
+    private let hostFunctionsQueue = DispatchQueue(label: "com.adaptivecards.hostFunctions")
 
     // Private initializer prevents external instantiation
     private override init() {
@@ -40,27 +40,27 @@ import Foundation
     /// Register a host-provided function that expressions can call.
     /// Registered functions are available to all subsequent expression evaluations.
     public static func registerHostFunction(_ declaration: FunctionDeclaration) {
-        shared.lock.lock()
-        defer { shared.lock.unlock() }
-        shared.hostFunctions.removeAll { $0.name == declaration.name }
-        shared.hostFunctions.append(declaration)
-    }
-
-    /// Register multiple host-provided functions.
-    public static func registerHostFunctions(_ declarations: [FunctionDeclaration]) {
-        shared.lock.lock()
-        defer { shared.lock.unlock() }
-        for declaration in declarations {
+        shared.hostFunctionsQueue.sync {
             shared.hostFunctions.removeAll { $0.name == declaration.name }
             shared.hostFunctions.append(declaration)
         }
     }
 
+    /// Register multiple host-provided functions.
+    public static func registerHostFunctions(_ declarations: [FunctionDeclaration]) {
+        shared.hostFunctionsQueue.sync {
+            for declaration in declarations {
+                shared.hostFunctions.removeAll { $0.name == declaration.name }
+                shared.hostFunctions.append(declaration)
+            }
+        }
+    }
+
     /// Remove all registered host functions.
     @objc public static func removeAllHostFunctions() {
-        shared.lock.lock()
-        defer { shared.lock.unlock() }
-        shared.hostFunctions.removeAll()
+        shared.hostFunctionsQueue.sync {
+            shared.hostFunctions.removeAll()
+        }
     }
 
     // Static convenience method for backward compatibility
@@ -75,9 +75,7 @@ import Foundation
             do {
                 let expr = try engine.createExpression(expressionString, allowAssignment: false)
 
-                self.lock.lock()
-                let functions = self.hostFunctions
-                self.lock.unlock()
+                let functions = self.hostFunctionsQueue.sync { self.hostFunctions }
 
                 let config = EvaluationContextConfig(
                     root: data as? [String: Any],
