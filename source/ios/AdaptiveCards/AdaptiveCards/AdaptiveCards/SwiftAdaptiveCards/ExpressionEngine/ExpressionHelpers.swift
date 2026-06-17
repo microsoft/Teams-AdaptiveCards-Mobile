@@ -17,6 +17,7 @@ import Foundation
     private let engine: ExpressionEngineProtocol
     private var expressionEvalEnabled = false
     private var hostFunctions: [FunctionDeclaration] = []
+    private let lock = NSLock()
 
     // Private initializer prevents external instantiation
     private override init() {
@@ -39,19 +40,26 @@ import Foundation
     /// Register a host-provided function that expressions can call.
     /// Registered functions are available to all subsequent expression evaluations.
     public static func registerHostFunction(_ declaration: FunctionDeclaration) {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
         shared.hostFunctions.removeAll { $0.name == declaration.name }
         shared.hostFunctions.append(declaration)
     }
 
     /// Register multiple host-provided functions.
     public static func registerHostFunctions(_ declarations: [FunctionDeclaration]) {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
         for declaration in declarations {
-            registerHostFunction(declaration)
+            shared.hostFunctions.removeAll { $0.name == declaration.name }
+            shared.hostFunctions.append(declaration)
         }
     }
 
     /// Remove all registered host functions.
     @objc public static func removeAllHostFunctions() {
+        shared.lock.lock()
+        defer { shared.lock.unlock() }
         shared.hostFunctions.removeAll()
     }
 
@@ -67,9 +75,13 @@ import Foundation
             do {
                 let expr = try engine.createExpression(expressionString, allowAssignment: false)
 
+                self.lock.lock()
+                let functions = self.hostFunctions
+                self.lock.unlock()
+
                 let config = EvaluationContextConfig(
                     root: data as? [String: Any],
-                    functions: hostFunctions
+                    functions: functions
                 )
                 let context = await EvaluationContext(config: config)
 
