@@ -17,7 +17,6 @@ import Foundation
     private let engine: ExpressionEngineProtocol
     private var expressionEvalEnabled = false
     private var hostFunctions: [FunctionDeclaration] = []
-    private let hostFunctionsQueue = DispatchQueue(label: "com.adaptivecards.hostFunctions")
 
     // Private initializer prevents external instantiation
     private override init() {
@@ -40,27 +39,21 @@ import Foundation
     /// Register a host-provided function that expressions can call.
     /// Registered functions are available to all subsequent expression evaluations.
     public static func registerHostFunction(_ declaration: FunctionDeclaration) {
-        shared.hostFunctionsQueue.sync {
+        shared.hostFunctions.removeAll { $0.name == declaration.name }
+        shared.hostFunctions.append(declaration)
+    }
+
+    /// Register multiple host-provided functions.
+    public static func registerHostFunctions(_ declarations: [FunctionDeclaration]) {
+        for declaration in declarations {
             shared.hostFunctions.removeAll { $0.name == declaration.name }
             shared.hostFunctions.append(declaration)
         }
     }
 
-    /// Register multiple host-provided functions.
-    public static func registerHostFunctions(_ declarations: [FunctionDeclaration]) {
-        shared.hostFunctionsQueue.sync {
-            for declaration in declarations {
-                shared.hostFunctions.removeAll { $0.name == declaration.name }
-                shared.hostFunctions.append(declaration)
-            }
-        }
-    }
-
     /// Remove all registered host functions.
     @objc public static func removeAllHostFunctions() {
-        shared.hostFunctionsQueue.sync {
-            shared.hostFunctions.removeAll()
-        }
+        shared.hostFunctions.removeAll()
     }
 
     // Static convenience method for backward compatibility
@@ -75,7 +68,7 @@ import Foundation
             do {
                 let expr = try engine.createExpression(expressionString, allowAssignment: false)
 
-                let functions = self.hostFunctionsQueue.sync { self.hostFunctions }
+                let functions = self.hostFunctions
 
                 let config = EvaluationContextConfig(
                     root: data as? [String: Any],
