@@ -756,11 +756,78 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
     // when alignment is applied — wiping out the bullet markers. Mirroring the
     // Android renderer (RendererUtil.UlTagHandler) by injecting bullets as text
     // makes the marker survive any paragraph-style changes.
-    if (markDownParser->HasHtmlTags() && [parsedString containsString:@"<li>"]) {
-        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"<ul>" withString:@""];
-        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"</ul>" withString:@""];
-        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"<li>" withString:@"• "];
-        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"</li>" withString:@"<br>"];
+    //
+    // Single-pass scan with a stack per tag kind: each opener records its
+    // position in the output buffer; the matching closer rewrites that
+    // position (<li> → "• ", <ul> → removed) and emits its own replacement.
+    // An unmatched opener stays as-is in the output; an unmatched closer is
+    // emitted verbatim — neither is silently dropped.
+    if (markDownParser->HasHtmlTags() && [parsedString containsString:@"<ul>"]) {
+        NSUInteger length = parsedString.length;
+        NSMutableString *output = [NSMutableString stringWithCapacity:length];
+        NSMutableArray<NSNumber *> *ulOpenerPositions = [NSMutableArray array];
+        NSMutableArray<NSNumber *> *liOpenerPositions = [NSMutableArray array];
+        NSUInteger chunkStart = 0;
+        NSUInteger i = 0;
+
+        while (i < length) {
+            if ([parsedString characterAtIndex:i] != '<') {
+                i++;
+                continue;
+            }
+
+            NSString *tag4 = (i + 4 <= length) ? [parsedString substringWithRange:NSMakeRange(i, 4)] : nil;
+            NSString *tag5 = (i + 5 <= length) ? [parsedString substringWithRange:NSMakeRange(i, 5)] : nil;
+
+            BOOL isUlOpen = [tag4 isEqualToString:@"<ul>"];
+            BOOL isLiOpen = [tag4 isEqualToString:@"<li>"];
+            BOOL isUlClose = [tag5 isEqualToString:@"</ul>"];
+            BOOL isLiClose = [tag5 isEqualToString:@"</li>"];
+
+            if (!(isUlOpen || isLiOpen || isUlClose || isLiClose)) {
+                i++;
+                continue;
+            }
+
+            // Flush text between the last tag and this one.
+            if (i > chunkStart) {
+                [output appendString:[parsedString substringWithRange:NSMakeRange(chunkStart, i - chunkStart)]];
+            }
+
+            if (isUlOpen) {
+                [ulOpenerPositions addObject:@(output.length)];
+                [output appendString:@"<ul>"];
+                i += 4;
+            } else if (isLiOpen) {
+                [liOpenerPositions addObject:@(output.length)];
+                [output appendString:@"<li>"];
+                i += 4;
+            } else if (isUlClose) {
+                if (ulOpenerPositions.count > 0) {
+                    NSUInteger openerPos = ulOpenerPositions.lastObject.unsignedIntegerValue;
+                    [ulOpenerPositions removeLastObject];
+                    [output deleteCharactersInRange:NSMakeRange(openerPos, 4)];
+                } else {
+                    [output appendString:@"</ul>"];
+                }
+                i += 5;
+            } else {
+                if (liOpenerPositions.count > 0) {
+                    NSUInteger openerPos = liOpenerPositions.lastObject.unsignedIntegerValue;
+                    [liOpenerPositions removeLastObject];
+                    [output replaceCharactersInRange:NSMakeRange(openerPos, 4) withString:@"• "];
+                    [output appendString:@"<br>"];
+                } else {
+                    [output appendString:@"</li>"];
+                }
+                i += 5;
+            }
+            chunkStart = i;
+        }
+        if (chunkStart < length) {
+            [output appendString:[parsedString substringFromIndex:chunkStart]];
+        }
+        parsedString = output;
     }
 
     if (markDownParser->HasHtmlTags() && ([parsedString containsString:@"\n"] || [parsedString containsString:@"\r"])) {
