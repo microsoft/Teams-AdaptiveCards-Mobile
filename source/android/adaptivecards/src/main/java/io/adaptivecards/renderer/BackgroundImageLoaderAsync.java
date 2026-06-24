@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.ViewGroup;
 
@@ -97,56 +97,44 @@ public class BackgroundImageLoaderAsync extends GenericImageLoaderAsync
             return Math.max(xScaleFactor, yScaleFactor);
         }
 
-        // TODO: Optimize the rendering as drawBitmap source rectangle can scale images automatically
-        // Taken from here https://stackoverflow.com/questions/35276834/scale-bitmap-maintaining-aspect-ratio-and-fitting-both-width-and-height
         /**
          * Resizes the bitmap so the bitmap will completely fill the container where it is inserted
          * @param canvas
          */
-        private void resizeBitmapForCover(Canvas canvas)
-        {
+        private void resizeBitmapForCover(Canvas canvas) {
             Bitmap bitmap = m_bitmap;
             double originalWidth = bitmap.getWidth(), originalHeight = bitmap.getHeight();
             double scale = getScaleFactorForCover(canvas, bitmap);
 
-            int scaledWidth = (int)(scale * originalWidth);
-            int scaledHeight = (int)(scale * originalHeight);
-            Bitmap background = Bitmap.createBitmap(scaledWidth, scaledHeight, Bitmap.Config.ARGB_8888);
-            Canvas backgroundCanvas = new Canvas(background);
+            int canvasWidth = canvas.getWidth();
+            int canvasHeight = canvas.getHeight();
 
-            Matrix transformation = new Matrix();
-            transformation.preScale((float)scale, (float)scale);
-            Paint scaledImagePaint = new Paint();
-            scaledImagePaint.setFilterBitmap(true);
-            backgroundCanvas.drawBitmap(bitmap, transformation, scaledImagePaint);
+            float scaledWidth = (float) (scale * originalWidth);
+            float scaledHeight = (float) (scale * originalHeight);
 
             // canvasWidth <= scaledBitmapWidth and canvasHeight <= scaledBitmapHeight
-            int canvasWidth = canvas.getWidth(), canvasHeight = canvas.getHeight();
-            int origX = 0, origY = 0;
-            switch (m_backgroundImageProperties.GetHorizontalAlignment())
-            {
+            float origX = 0;
+            float origY = 0;
+            switch (m_backgroundImageProperties.GetHorizontalAlignment()) {
                 case Center:
-                    origX = (scaledWidth - canvasWidth) / 2;
+                    origX = (canvasWidth - scaledWidth) / 2;
                     break;
                 case Right:
-                    origX = scaledWidth - canvasWidth;
+                    origX = canvasWidth - scaledWidth;
                     break;
             }
 
-            switch (m_backgroundImageProperties.GetVerticalAlignment())
-            {
+            switch (m_backgroundImageProperties.GetVerticalAlignment()) {
                 case Center:
-                    origY = (scaledHeight - canvasHeight) / 2;
+                    origY = (canvasHeight - scaledHeight) / 2;
                     break;
                 case Bottom:
-                    origY = scaledHeight - canvasHeight;
+                    origY = canvasHeight - scaledHeight;
                     break;
             }
-
-            canvas.drawBitmap(background,
-                                new Rect(origX, origY, origX + canvasWidth, origY + canvasHeight),
-                                new Rect(0, 0, canvasWidth, canvasHeight),
-                                scaledImagePaint);
+            Paint scaledImagePaint = new Paint(Paint.FILTER_BITMAP_FLAG);
+            RectF destinationRect = new RectF(origX, origY, origX + scaledWidth, origY + scaledHeight);
+            canvas.drawBitmap(bitmap, null, destinationRect, scaledImagePaint);
         }
 
         private void tileHorizontally(Canvas canvas)
