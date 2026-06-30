@@ -69,6 +69,23 @@
     std::shared_ptr<BaseActionElement> selectAction = icon->GetSelectAction();
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, wrappingView, viewGroup);
+
+    // An interactive icon (one with a selectAction) must be reachable and named for
+    // VoiceOver. Without this the icon is not an accessibility element, so screen
+    // reader users cannot find or activate it. Use the selectAction tooltip/title as
+    // the accessible name; fall back to the icon name. Decorative icons (no
+    // selectAction) are intentionally left non-accessible.
+    if (acoSelectAction) {
+        NSString *iconAccessibilityLabel = configureForAccessibilityLabel(acoSelectAction, nil);
+        if (!iconAccessibilityLabel.length) {
+            iconAccessibilityLabel = [NSString stringWithCString:icon->GetName().c_str() encoding:NSUTF8StringEncoding];
+        }
+        if (iconAccessibilityLabel.length) {
+            wrappingView.isAccessibilityElement = YES;
+            wrappingView.accessibilityLabel = iconAccessibilityLabel;
+            wrappingView.accessibilityTraits = UIAccessibilityTraitButton;
+        }
+    }
     
     // Configure visibility for the wrapping view so toggle visibility actions work correctly
     configVisibility(wrappingView, elem);
