@@ -243,6 +243,18 @@ NSSet *unsupportedActionItems = [NSSet setWithArray:@[
     // renders background image for AdaptiveCard and an inner AdaptiveCard in a ShowCard
     renderBackgroundImage(backgroundImageProperties, verticalView, rootView);
 
+    // A card-level selectAction makes the whole card a single accessibility element
+    // (configureForSelectAction sets isAccessibilityElement = YES so the card and its
+    // subviews are read as one unit). When the card also has interactive children -
+    // action buttons or inputs - that collapse makes those controls unreachable for
+    // VoiceOver. Restore individual accessibility for the children while keeping a
+    // grouped reading order.
+    if (selectAction && verticalView.isAccessibilityElement &&
+        (!actions.empty() || inputs.count > 0)) {
+        verticalView.isAccessibilityElement = NO;
+        verticalView.shouldGroupAccessibilityChildren = YES;
+    }
+
     [rootView.context popCardContext:wrapperCard];
 
     return verticalView;
