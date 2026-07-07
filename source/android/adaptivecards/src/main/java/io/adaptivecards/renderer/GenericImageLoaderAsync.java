@@ -242,8 +242,12 @@ public abstract class GenericImageLoaderAsync extends AsyncTask<String, Void, Ht
             if(image != null) {
                 image = styleBitmap(image);
                 image.setDensity(DisplayMetrics.DENSITY_DEFAULT);
+                onSuccessfulPostExecute(image);
             }
-            onSuccessfulPostExecute(image);
+            else if (m_renderedCard != null)
+            {
+                m_renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.UNABLE_TO_LOAD_IMAGE, "Image could not be decoded"));
+            }
         }
         else
         {

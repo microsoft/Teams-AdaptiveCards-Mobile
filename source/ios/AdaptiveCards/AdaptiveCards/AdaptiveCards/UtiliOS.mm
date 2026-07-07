@@ -750,6 +750,35 @@ void buildIntermediateResultForText(ACRView *rootView, ACOHostConfig *hostConfig
     }
     NSString *parsedString = (markDownParser->HasHtmlTags()) ? [NSString stringWithCString:markdownString.c_str() encoding:NSUTF8StringEncoding] : [NSString stringWithCString:markDownParser->GetRawText().c_str() encoding:NSUTF8StringEncoding];
 
+    // Convert <ul>/<li> to literal "• " bullets and <br> separators.
+    // Apple's NSHTMLTextDocumentType renders list bullets via NSTextList in the
+    // paragraph style, which is overwritten downstream in ACRTextBlockRenderer
+    // when alignment is applied — wiping out the bullet markers. Mirroring the
+    // Android renderer (RendererUtil.UlTagHandler) by injecting bullets as text
+    // makes the marker survive any paragraph-style changes.
+    if (markDownParser->HasHtmlTags() && [parsedString containsString:@"<li>"]) {
+        // Strip the list containers, then rewrite each well-formed <li>…</li>
+        // pair into a "• " line ending in <br>. Matching the pair with one
+        // regex avoids leaking a half-formed bullet from a stray <li> or </li>.
+        NSRegularExpression *ulRegex =
+            [NSRegularExpression regularExpressionWithPattern:@"<ul>(.*?)</ul>"
+                                                      options:NSRegularExpressionDotMatchesLineSeparators
+                                                        error:nil];
+        parsedString = [ulRegex stringByReplacingMatchesInString:parsedString
+                                                         options:0
+                                                           range:NSMakeRange(0, parsedString.length)
+                                                    withTemplate:@"$1"];
+
+        NSRegularExpression *liRegex =
+            [NSRegularExpression regularExpressionWithPattern:@"<li>(.*?)</li>"
+                                                      options:NSRegularExpressionDotMatchesLineSeparators
+                                                        error:nil];
+        parsedString = [liRegex stringByReplacingMatchesInString:parsedString
+                                                         options:0
+                                                           range:NSMakeRange(0, parsedString.length)
+                                                    withTemplate:@"• $1<br>"];
+    }
+
     if (markDownParser->HasHtmlTags() && ([parsedString containsString:@"\n"] || [parsedString containsString:@"\r"])) {
         // Different systems have different line break styles
         // Windows style: \r\n
