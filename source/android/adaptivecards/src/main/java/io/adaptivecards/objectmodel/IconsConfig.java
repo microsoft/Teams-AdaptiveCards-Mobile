@@ -8,20 +8,20 @@
 
 package io.adaptivecards.objectmodel;
 
-public class TextBlockConfig {
+public class IconsConfig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  protected TextBlockConfig(long cPtr, boolean cMemoryOwn) {
+  protected IconsConfig(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  protected static long getCPtr(TextBlockConfig obj) {
+  protected static long getCPtr(IconsConfig obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
-  protected static long swigRelease(TextBlockConfig obj) {
+  protected static long swigRelease(IconsConfig obj) {
     long ptr = 0;
     if (obj != null) {
       if (!obj.swigCMemOwn)
@@ -42,26 +42,34 @@ public class TextBlockConfig {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        AdaptiveCardObjectModelJNI.delete_TextBlockConfig(swigCPtr);
+        AdaptiveCardObjectModelJNI.delete_IconsConfig(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
-  public void setHeadingLevel(long value) {
-    AdaptiveCardObjectModelJNI.TextBlockConfig_headingLevel_set(swigCPtr, this, value);
+  public void setIconSize(long value) {
+    AdaptiveCardObjectModelJNI.IconsConfig_iconSize_set(swigCPtr, this, value);
   }
 
-  public long getHeadingLevel() {
-    return AdaptiveCardObjectModelJNI.TextBlockConfig_headingLevel_get(swigCPtr, this);
+  public long getIconSize() {
+    return AdaptiveCardObjectModelJNI.IconsConfig_iconSize_get(swigCPtr, this);
   }
 
-  public static TextBlockConfig Deserialize(JsonValue json, TextBlockConfig defaultValue) {
-    return new TextBlockConfig(AdaptiveCardObjectModelJNI.TextBlockConfig_Deserialize(JsonValue.getCPtr(json), json, TextBlockConfig.getCPtr(defaultValue), defaultValue), true);
+  public void setIconPadding(long value) {
+    AdaptiveCardObjectModelJNI.IconsConfig_iconPadding_set(swigCPtr, this, value);
   }
 
-  public TextBlockConfig() {
-    this(AdaptiveCardObjectModelJNI.new_TextBlockConfig(), true);
+  public long getIconPadding() {
+    return AdaptiveCardObjectModelJNI.IconsConfig_iconPadding_get(swigCPtr, this);
+  }
+
+  public static IconsConfig Deserialize(JsonValue json, IconsConfig defaultValue) {
+    return new IconsConfig(AdaptiveCardObjectModelJNI.IconsConfig_Deserialize(JsonValue.getCPtr(json), json, IconsConfig.getCPtr(defaultValue), defaultValue), true);
+  }
+
+  public IconsConfig() {
+    this(AdaptiveCardObjectModelJNI.new_IconsConfig(), true);
   }
 
 }
