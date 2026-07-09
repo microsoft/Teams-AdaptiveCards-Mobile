@@ -457,12 +457,12 @@
     // Type in "Outside Popover Input Required *"
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
-    [self typeText:@"text outside popover required" intoElement:outsideRequired];
+    [self typeTextAfterKeyboardFocus:@"text outside popover required" intoElement:outsideRequired];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
-    [self typeText:@"text outside popover Input" intoElement:outsideInput];
+    [self typeTextAfterKeyboardFocus:@"text outside popover Input" intoElement:outsideInput];
     
     // Dismiss the keyboard
     XCUIElement *returnKey = testApp.keyboards.buttons[@"return"];
@@ -487,7 +487,8 @@
     // Type in the popover input
     XCUIElement *textField = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"inputInPopover1"]];
     XCTAssertTrue(textField.exists, @"Popover text field should exist after tapping and swiping if needed");
-    [self typeText:@"Input inside popover\n" intoElement:textField];
+    [self checkAndTap:textField];
+    [textField typeText:@"Input inside popover\n"];
     
     // Click on overflow button
     XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
@@ -545,7 +546,8 @@
     // Type in the popover input
     XCUIElement *textField = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"inputInPopover1"]];
     XCTAssertTrue(textField.exists, @"Popover text field should exist after tapping and swiping if needed");
-    [self typeText:@"Input inside popover\n" intoElement:textField];
+    [self checkAndTap:textField];
+    [textField typeText:@"Input inside popover\n"];
     
     // Click on overflow button
     XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
@@ -571,12 +573,12 @@
     // Type in "Outside Popover Input Required *"
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
-    [self typeText:@"text outside popover required" intoElement:outsideRequired];
+    [self typeTextAfterKeyboardFocus:@"text outside popover required" intoElement:outsideRequired];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
-    [self typeText:@"text outside popover Input" intoElement:outsideInput];
+    [self typeTextAfterKeyboardFocus:@"text outside popover Input" intoElement:outsideInput];
     
     // Dismiss the keyboard
     XCUIElement *returnKey = testApp.keyboards.buttons[@"return"];
@@ -683,12 +685,12 @@
     // Type in "Outside Popover Input Required *"
     XCUIElement *outsideRequired = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover1"]];
     XCTAssertTrue(outsideRequired.exists);
-    [self typeText:@"text outside popover required" intoElement:outsideRequired];
+    [self typeTextAfterKeyboardFocus:@"text outside popover required" intoElement:outsideRequired];
     
     // Type in "Outside Popover Input"
     XCUIElement *outsideInput = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"outsidePopover2"]];
     XCTAssertTrue(outsideInput.exists);
-    [self typeText:@"text outside popover Input" intoElement:outsideInput];
+    [self typeTextAfterKeyboardFocus:@"text outside popover Input" intoElement:outsideInput];
     
     // Dismiss the keyboard
     XCUIElement *returnKey = testApp.keyboards.buttons[@"return"];
@@ -713,7 +715,8 @@
     // Type in the popover input
     XCUIElement *textField = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"inputInPopover2"]];
     XCTAssertTrue(textField.exists, @"Popover text field should exist after tapping and swiping if needed");
-    [self typeText:@"1234\n" intoElement:textField];
+    [self checkAndTap:textField];
+    [textField typeText:@"1234\n"];
     
     // Click on overflow button
     XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
@@ -778,7 +781,8 @@
     // Type in the popover input
     XCUIElement *textField = [testApp.textFields elementMatchingPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", @"inputInPopover2"]];
     XCTAssertTrue(textField.exists, @"Popover text field should exist after tapping and swiping if needed");
-    [self typeText:@"1234\n" intoElement:textField];
+    [self checkAndTap:textField];
+    [textField typeText:@"1234\n"];
     
     // Click on overflow button
     XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
@@ -858,7 +862,7 @@
     [element tap];
 }
 
-- (void) typeText:(NSString *)text intoElement:(XCUIElement *)element
+- (void) typeTextAfterKeyboardFocus:(NSString *)text intoElement:(XCUIElement *)element
 {
     [self checkAndTap:element];
 
