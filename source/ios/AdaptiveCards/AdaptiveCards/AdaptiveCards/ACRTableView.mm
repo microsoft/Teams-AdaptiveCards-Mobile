@@ -146,6 +146,11 @@
     }
 
     self.accessibilityElements = self.subviews;
+
+    // Mark as a semantic group so VoiceOver provides table navigation cues
+    if (@available(iOS 11.0, *)) {
+        self.accessibilityContainerType = UIAccessibilityContainerTypeSemanticGroup;
+    }
 }
 
 - (CGSize)intrinsicContentSize
