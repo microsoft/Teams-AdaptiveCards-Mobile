@@ -55,6 +55,8 @@ public class TimePickerFragment extends DialogFragment
         Calendar calendar = new GregorianCalendar(0, 0, 0, hourOfDay, min);
         String value = TimeInputRenderer.getTimeFormat().format(calendar.getTime());
         m_editText.setText(value);
+        // Return focus to the edit text after picker dismisses (#86)
+        m_editText.requestFocus();
     }
 
     private TimeInput m_timeInput;
