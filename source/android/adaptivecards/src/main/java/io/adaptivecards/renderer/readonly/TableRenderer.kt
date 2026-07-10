@@ -13,6 +13,9 @@ import androidx.fragment.app.FragmentManager
 import io.adaptivecards.objectmodel.*
 import io.adaptivecards.renderer.*
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import io.adaptivecards.renderer.registration.CardRendererRegistration
 
 object TableRenderer : BaseCardElementRenderer() {
@@ -28,6 +31,21 @@ object TableRenderer : BaseCardElementRenderer() {
             clipChildren = false
             clipToPadding = false
         }
+
+        val rowCount = table.GetRows().size()
+        val colCount = table.GetColumns().size()
+
+        // Provide table collection semantics for TalkBack
+        ViewCompat.setAccessibilityDelegate(tableLayout, object : AccessibilityDelegateCompat() {
+            override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfoCompat) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.setCollectionInfo(
+                    AccessibilityNodeInfoCompat.CollectionInfoCompat.obtain(
+                        rowCount.toInt(), colCount.toInt(), false
+                    )
+                )
+            }
+        })
 
         val isFirstRowHeader = table.GetFirstRowAsHeaders()
         val computedGridStyle = if (table.GetGridStyle() == ContainerStyle.None) {

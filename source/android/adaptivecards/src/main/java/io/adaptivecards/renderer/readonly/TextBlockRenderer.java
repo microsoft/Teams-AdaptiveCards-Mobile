@@ -94,13 +94,18 @@ public class TextBlockRenderer extends BaseCardElementRenderer
 
     public static void applyAccessibilityHeading(@NonNull final TextView textView, @Nullable final TextStyle textStyle)
     {
+        applyAccessibilityHeading(textView, textStyle, false);
+    }
+
+    public static void applyAccessibilityHeading(@NonNull final TextView textView, @Nullable final TextStyle textStyle, boolean isColumnHeader)
+    {
         // Indicate Heading to accessibility service
         // TODO: Refactor to ViewCompat.setAccessibilityHeading after AndroidX upgrade
         ViewCompat.setAccessibilityDelegate(textView, new AccessibilityDelegateCompat() {
             @Override
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
                 super.onInitializeAccessibilityNodeInfo(host, info);
-                info.setHeading(textStyle == TextStyle.Heading);
+                info.setHeading(textStyle == TextStyle.Heading || isColumnHeader);
             }
         });
     }
@@ -328,7 +333,7 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         applyTextSize(textView, hostConfig, textBlock.GetStyle(), textBlock.GetFontType(), textBlock.GetTextSize(), renderArgs);
         applyTextColor(textView, hostConfig, textBlock.GetStyle(), textBlock.GetTextColor(), textBlock.GetIsSubtle(), renderArgs.getContainerStyle(), renderArgs);
         applyHorizontalAlignment(textView, textBlock.GetHorizontalAlignment(), renderArgs);
-        applyAccessibilityHeading(textView, textBlock.GetStyle());
+        applyAccessibilityHeading(textView, textBlock.GetStyle(), renderArgs.isColumnHeader());
         applyAccessibilityProperties(textView, context, textHandleResult);
 
         textView.setEllipsize(TextUtils.TruncateAt.END);
