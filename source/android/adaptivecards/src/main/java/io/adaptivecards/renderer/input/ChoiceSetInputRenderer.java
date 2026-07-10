@@ -37,6 +37,9 @@ import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedAutoCompleteTextView;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.core.view.AccessibilityDelegateCompat;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedCheckBoxLayout;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedInputLayout;
 import io.adaptivecards.renderer.input.customcontrols.ValidatedRadioGroup;
@@ -170,8 +173,29 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
             // and check/uncheck the box ourselves
             checkBox.setOnTouchListener(new FocusableChoiceListener<CheckBox>(checkBoxList.get(0)));
 
+            // Add position info for TalkBack ("1 of N")
+            final int position = i;
+            final int total = (int) size;
+            ViewCompat.setAccessibilityDelegate(checkBox, new AccessibilityDelegateCompat() {
+                @Override
+                public void onInitializeAccessibilityNodeInfo(@NonNull View host, @NonNull AccessibilityNodeInfoCompat info) {
+                    super.onInitializeAccessibilityNodeInfo(host, info);
+                    info.setCollectionItemInfo(AccessibilityNodeInfoCompat.CollectionItemInfoCompat.obtain(position, 1, 0, 1, false));
+                }
+            });
+
             checkBoxLayout.addView(checkBox);
         }
+
+        // Set collection info on parent so TalkBack announces "in list, X of Y"
+        final int checkBoxCount = (int) size;
+        ViewCompat.setAccessibilityDelegate(checkBoxLayout, new AccessibilityDelegateCompat() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(@NonNull View host, @NonNull AccessibilityNodeInfoCompat info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setCollectionInfo(AccessibilityNodeInfoCompat.CollectionInfoCompat.obtain(checkBoxCount, 1, false));
+            }
+        });
 
         renderedCard.registerInputHandler(checkBoxSetInputHandler, renderArgs.getContainerCardId());
         return checkBoxLayout;
