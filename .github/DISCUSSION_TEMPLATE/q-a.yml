@@ -1,0 +1,73 @@
+title: "[Q&A]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for asking a question! Please fill in the details below so we can help you faster.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform are you working with?
+      options:
+        - Android
+        - iOS
+        - Both
+    validations:
+      required: true
+
+  - type: input
+    id: sdk-version
+    attributes:
+      label: SDK Version
+      description: "Which version of the Adaptive Cards SDK are you using?"
+      placeholder: "e.g., adaptivecards-android:2.11.0 or AdaptiveCards iOS 2.10.9"
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Describe your question in detail. Include what you're trying to achieve and what you've already tried.
+      placeholder: |
+        What I'm trying to do:
+        ...
+
+        What I've tried so far:
+        ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code Snippet
+      description: If applicable, include a minimal code snippet that demonstrates the issue or context.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: card-json
+    attributes:
+      label: Adaptive Card JSON
+      description: If your question relates to a specific card, paste the card JSON here.
+      render: json
+    validations:
+      required: false
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Host Application
+      description: Where are you rendering the Adaptive Card?
+      options:
+        - Microsoft Teams
+        - Custom App
+        - Outlook
+        - Other
+    validations:
+      required: false
