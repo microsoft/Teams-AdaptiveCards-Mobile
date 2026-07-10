@@ -284,6 +284,7 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
 
 - (void)showListView
 {
+    _view.accessibilityViewIsModal = YES;
     [self.window addSubview:_view];
     [self setNeedsLayout];
     [self layoutIfNeeded];
