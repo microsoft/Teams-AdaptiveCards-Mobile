@@ -171,12 +171,12 @@ const CGFloat minimumRowHeight = 44.0;
     // If required field voice over should call it out as required.
     if (isRequired)
     {
-        cell.accessibilityLabel = [NSString stringWithFormat:@"%@ %@, %@, %@", _accessibilityString, @"(Required)", cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
+        cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@, %@", @"(Required)", cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
         cell.accessibilityLabel = [cell.accessibilityLabel stringByReplacingOccurrencesOfString:@"*" withString:@""];
     }
     else
     {
-        cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@, %@", _accessibilityString, cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
+        cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@", cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
     }
     
     cell.accessibilityHint = NSLocalizedString(@"double tap to select", nil);
