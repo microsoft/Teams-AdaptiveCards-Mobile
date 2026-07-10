@@ -37,6 +37,11 @@
                                          title:title
                                  andHostConfig:acoConfig];
 
+        // The visible glyph is "...", but VoiceOver would otherwise read the title
+        // literally ("dot dot dot"). Give the overflow control a descriptive, localized
+        // accessible name so screen-reader users know it reveals more options.
+        button.accessibilityLabel = NSLocalizedString(@"More options", nil);
+
         ACROverflowTarget *target;
         ACRTargetBuilderDirector *director = [rootView getActionsTargetBuilderDirector];
         ACRRenderingStatus status = buildTargetForButton(director, acoElem, button, &target);
