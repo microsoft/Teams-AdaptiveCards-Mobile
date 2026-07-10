@@ -148,6 +148,7 @@
         view.userInteractionEnabled = YES;
 
         contentholdingview.isAccessibilityElement = YES;
+        contentholdingview.shouldGroupAccessibilityChildren = YES;
         view.isAccessibilityElement = NO;
         contentholdingview.accessibilityTraits = UIAccessibilityTraitStartsMediaSession | UIAccessibilityTraitButton;
         NSString *stringForAccessibilityLabel = [NSString stringWithCString:mediaElem->GetAltText().c_str() encoding:NSUTF8StringEncoding];
