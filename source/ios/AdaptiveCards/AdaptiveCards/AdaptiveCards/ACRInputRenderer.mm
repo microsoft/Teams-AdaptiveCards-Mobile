@@ -81,6 +81,13 @@
                                               encoding:NSUTF8StringEncoding];
     txtInput.text = [NSString stringWithCString:inputBlock->GetValue().c_str() encoding:NSUTF8StringEncoding];
 
+    // Surface the placeholder text as a VoiceOver accessibility hint so it is
+    // announced even after the user begins typing (UITextField stops reading
+    // the visual placeholder once `text` becomes non-empty).
+    if (txtInput.placeholder.length > 0) {
+        txtInput.accessibilityHint = txtInput.placeholder;
+    }
+
     txtInput.allowsEditingTextAttributes = YES;
     return txtInput;
 }
