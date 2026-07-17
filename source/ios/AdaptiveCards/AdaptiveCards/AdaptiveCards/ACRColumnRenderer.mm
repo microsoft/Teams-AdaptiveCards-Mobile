@@ -153,7 +153,12 @@
     
     [column configureForSelectAction:acoSelectAction rootView:rootView];
 
-    column.shouldGroupAccessibilityChildren = YES;
+    // Only group children for accessibility when the column is not itself an accessibility element
+    // (i.e., when it does not have a selectAction). When a selectAction makes the column a
+    // single accessibility element, grouping causes VoiceOver to announce "Group" incorrectly.
+    if (!column.isAccessibilityElement) {
+        column.shouldGroupAccessibilityChildren = YES;
+    }
 
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:column withAreaName:areaName];
