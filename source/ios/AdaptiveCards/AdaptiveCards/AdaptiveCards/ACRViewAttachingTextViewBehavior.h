@@ -35,6 +35,19 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)layoutAttachedSubviews;
 
+/**
+ Returns the currently attached views paired with their character ranges in the text storage,
+ sorted by ascending range location. Each entry is @{ @"view": UIView, @"range": NSValue(NSRange) }.
+ Accessibility containers use this to interleave attachment views with surrounding text in reading order.
+ */
+- (NSArray<NSDictionary *> *)orderedAttachments;
+
+/**
+ Invoked after attached subviews are added/removed (updateAttachedSubviews) or repositioned
+ (layoutAttachedSubviews). Accessibility containers use this to invalidate their cached elements.
+ */
+@property (nonatomic, copy, nullable) void (^attachmentsDidChangeHandler)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END

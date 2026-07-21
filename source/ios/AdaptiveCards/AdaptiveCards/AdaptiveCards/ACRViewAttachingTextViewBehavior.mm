@@ -114,6 +114,27 @@ static CGPoint ACRIntegralPointWithScaleFactor(CGPoint point, CGFloat scaleFacto
             }
         }
     }
+
+    if (self.attachmentsDidChangeHandler) {
+        self.attachmentsDidChangeHandler();
+    }
+}
+
+- (NSArray<NSDictionary *> *)orderedAttachments {
+    if (!self.textView) {
+        return @[];
+    }
+    // acr_subviewAttachmentRanges enumerates attachments in ascending document order.
+    NSArray<NSDictionary *> *attachmentRanges = [self.textView.textStorage acr_subviewAttachmentRanges];
+    NSMutableArray<NSDictionary *> *ordered = [NSMutableArray array];
+    for (NSDictionary *rangeDict in attachmentRanges) {
+        ACRViewTextAttachment *attachment = rangeDict[@"attachment"];
+        UIView *view = [_attachedViews objectForKey:attachment.viewProvider];
+        if (view) {
+            [ordered addObject:@{ @"view": view, @"range": rangeDict[@"range"] }];
+        }
+    }
+    return [ordered copy];
 }
 
 - (void)removeAttachedSubviews {
@@ -157,6 +178,10 @@ static CGPoint ACRIntegralPointWithScaleFactor(CGPoint point, CGFloat scaleFacto
             
             view.frame = viewRect;
         }
+    }
+
+    if (self.attachmentsDidChangeHandler) {
+        self.attachmentsDidChangeHandler();
     }
 }
 
