@@ -308,7 +308,8 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
                 View spinnerView = super.getDropDownView(position, convertView, parent);
                 TextView spinnerTextView = (TextView) spinnerView;
 
-                String talkbackAnnouncement = context.getResources().getString(R.string.spinner_talkback_announcement, m_items.get(position), position+1, m_items.size());
+                // Fix: Use getCount() instead of m_items.size() to exclude hidden placeholder (#466)
+                String talkbackAnnouncement = context.getResources().getString(R.string.spinner_talkback_announcement, m_items.get(position), position+1, getCount());
                 spinnerTextView.setContentDescription(talkbackAnnouncement);
                 return spinnerView;
             }
