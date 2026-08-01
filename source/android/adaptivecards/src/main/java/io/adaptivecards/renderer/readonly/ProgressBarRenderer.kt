@@ -43,7 +43,7 @@ object ProgressBarRenderer : BaseCardElementRenderer() {
             this.max = max.toInt()
             if (!isIndeterminate) {
                 progress = value!!.toInt()
-                isIndeterminate = false
+                this.isIndeterminate = false
             } else {
                 this.isIndeterminate = true
             }
