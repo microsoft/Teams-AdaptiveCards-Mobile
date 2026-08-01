@@ -495,7 +495,7 @@
     [textField typeText:@"Input inside popover\n"];
     
     // Click on overflow button
-    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
+    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"More options"]];
     XCTAssertTrue(overflowButton.exists);
     [overflowButton tap];
     
@@ -554,7 +554,7 @@
     [textField typeText:@"Input inside popover\n"];
     
     // Click on overflow button
-    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
+    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"More options"]];
     XCTAssertTrue(overflowButton.exists);
     [overflowButton tap];
     
@@ -731,7 +731,7 @@
     [textField typeText:@"1234\n"];
     
     // Click on overflow button
-    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
+    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"More options"]];
     XCTAssertTrue(overflowButton.exists);
     [overflowButton tap];
     
@@ -797,7 +797,7 @@
     [textField typeText:@"1234\n"];
     
     // Click on overflow button
-    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"..."]];
+    XCUIElement *overflowButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label CONTAINS[c] %@", @"More options"]];
     XCTAssertTrue(overflowButton.exists);
     [overflowButton tap];
     
