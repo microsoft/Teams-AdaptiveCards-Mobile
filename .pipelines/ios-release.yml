@@ -26,10 +26,22 @@ steps:
     secureFile: 8bf566e4-a21c-48b4-90e5-368f3adaef68
     retryCount: 5
 
-- task: UseDotNet@2
-  displayName: Use .NET 8 SDK
+- task: Bash@3
+  displayName: Bash Script
   inputs:
-    version: 8.0.x
+    targetType: inline
+    script: >-
+      # Use the environment variables input below to pass secret variables to this script
+
+      cp -f $(ConnectString.secureFilePath)  ./source/ios/tools/IOSFeed
+
+- task: DotNetCoreCLI@2
+  displayName: dotnet custom
+  inputs:
+    command: custom
+    projects: source/ios/tools/IOSFeed/IOSFeed.csproj
+    custom: add
+    arguments: package Microsoft.Azure.Storage.Blob
 
 - task: DotNetCoreCLI@2
   displayName: dotnet build
@@ -41,8 +53,6 @@ steps:
   inputs:
     command: run
     projects: source/ios/tools/IOSFeed/IOSFeed.csproj
-  env:
-    IOSFEED_CONNECTION_STRING_PATH: $(ConnectString.secureFilePath)
 
 - task: Bash@3
   displayName: Push To cocoapods
