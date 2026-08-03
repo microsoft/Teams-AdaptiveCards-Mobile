@@ -7,10 +7,10 @@
 //
 
 #import "ACRTextBlockCitationParser.h"
-#import "ACRCitationManager.h"
 #import "ACRViewTextAttachment.h"
-#import "ACOReference.h"
 #import "ACOCitation.h"
+
+@class ACOReference;
 
 @implementation ACRTextBlockCitationParser
 

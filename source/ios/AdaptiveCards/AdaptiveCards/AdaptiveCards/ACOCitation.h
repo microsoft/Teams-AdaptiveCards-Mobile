@@ -19,4 +19,10 @@
                      referenceIndex:(NSNumber *)referenceIndex
                               theme:(ACRTheme)theme;
 
+/// Convenience initializer for the web-render path.
+/// Reads `displayText` from `dictionary[@"title"]`.
+/// `referenceIndex` is not meaningful in this context (no references array).
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+                             theme:(ACRTheme)theme;
+
 @end

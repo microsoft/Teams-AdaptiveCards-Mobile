@@ -10,11 +10,18 @@
 #import "ACOEnums.h"
 
 @protocol ACRCitationParserDelegate;
+@protocol ACICitationPresenter;
 @class ACRViewTextAttachment;
 @class ACOReference;
 @class ACOCitation;
 
 NS_ASSUME_NONNULL_BEGIN
+
+// Associated object keys — exposed so tests can verify stored values.
+// Using address of static char gives a unique, stable pointer across all dylibs.
+FOUNDATION_EXTERN const char kACRCitationKey;
+FOUNDATION_EXTERN const char kACRReferenceDataKey;
+FOUNDATION_EXTERN const char kACRPresenterKey;
 
 /**
  * Abstract base class for citation parsing strategies
@@ -23,6 +30,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ACRCitationParser : NSObject
 
 @property (nonatomic, weak, nullable) id<ACRCitationParserDelegate> delegate;
+
+/**
+ * The presenter stored per-button via associated object at attachment-creation time.
+ * Set by ACRCitationBuilder before each parse call; stored immediately onto each
+ * created UIButton so tap events route to the correct presenter per card instance.
+ */
+@property (nonatomic, weak, nullable) id<ACICitationPresenter> presenter;
 
 /**
  * Initialize the parser with a delegate
@@ -68,8 +82,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @param references Array of ACOReference objects to search through
  * @return ACOReference object if found, nil otherwise
  */
-- (nullable ACOReference *)findReferenceByIndex:(NSNumber *)referenceId 
-                                   inReferences:(NSArray<ACOReference *> *)references;
+- (nullable ACOReference *)findReferenceByIndex:(nullable NSNumber *)referenceId 
+                                   inReferences:(nullable NSArray<ACOReference *> *)references;
 
 @end
 

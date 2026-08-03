@@ -6,12 +6,10 @@
 //
 
 #import "ACRBaseCardElementRenderer.h"
-#import "ACRCitationManagerDelegate.h"
+#import "ACRCitationBuilderDelegate.h"
 
-@interface ACRTextBlockRenderer : ACRBaseCardElementRenderer <ACRCitationManagerDelegate>
+@interface ACRTextBlockRenderer : ACRBaseCardElementRenderer <ACRCitationBuilderDelegate>
 
 + (ACRTextBlockRenderer *)getInstance;
-
-- (NSAttributedString *)processCitationsWithManager:(NSAttributedString *)content rootView:(ACRView *)rootView;
 
 @end

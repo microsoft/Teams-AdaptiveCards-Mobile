@@ -6,9 +6,9 @@
 //
 
 #import "ACRBaseCardElementRenderer.h"
-#import "ACRCitationManagerDelegate.h"
+#import "ACRCitationBuilderDelegate.h"
 
-@interface ACRRichTextBlockRenderer : ACRBaseCardElementRenderer <ACRCitationManagerDelegate>
+@interface ACRRichTextBlockRenderer : ACRBaseCardElementRenderer <ACRCitationBuilderDelegate>
 
 + (ACRRichTextBlockRenderer *)getInstance;
 

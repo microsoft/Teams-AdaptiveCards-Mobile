@@ -43,6 +43,10 @@
 
 - (void)addArrangedSubview:(nonnull UIView *)view;
 
+- (void)removeArrangedSubview:(nonnull UIView *)view;
+
+- (void)insertArrangedSubview:(nonnull UIView *)view atIndex:(NSUInteger)index;
+
 - (void)config:(nullable NSDictionary<NSString *, id> *)attributes;
 
 - (void)adjustHuggingForLastElement;

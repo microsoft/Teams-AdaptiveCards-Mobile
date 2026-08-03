@@ -15,6 +15,10 @@ const ReferenceIcon References::GetIcon() const {
     return m_icon;
 }
 
+void References::SetIcon(ReferenceIcon icon) {
+    m_icon = icon;
+}
+
 const std::string References::GetAbstract() const {
     return m_abstract;
 }

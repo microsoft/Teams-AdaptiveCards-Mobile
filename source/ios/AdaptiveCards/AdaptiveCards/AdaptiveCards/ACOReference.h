@@ -61,6 +61,12 @@ typedef NS_ENUM(NSUInteger, ACOReferenceType) {
 /**
  * Icon to show in citation bottomsheet
  */
+/// Convenience initializer for the web-render path.
+/// Reads `title`, `abstract`, `url`, `keywords`, and `type` from the dictionary.
+/// Recognized `type` values: `@"AdaptiveCardReference"` → `ACOReferenceTypeAdaptiveCard`,
+/// anything else → `ACOReferenceTypeDocument`.
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 - (UIImage *)iconForTheme:(ACRTheme)theme;
 
 @end

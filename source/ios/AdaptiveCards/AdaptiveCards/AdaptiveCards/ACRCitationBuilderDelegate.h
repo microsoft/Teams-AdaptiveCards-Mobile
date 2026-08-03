@@ -1,5 +1,5 @@
 //
-//  ACRCitationManagerDelegate.h
+//  ACRCitationBuilderDelegate.h
 //  AdaptiveCards
 //
 //  Created by Gaurav Keshre on 29/10/25.
@@ -9,16 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@class ACRCitationManager;
+@class ACRCitationBuilder;
 @class ACOReference;
 @class ACOCitation;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Delegate protocol for ACRCitationManager to provide necessary context and data
+ * Delegate protocol for ACRCitationBuilder to provide analytics callbacks on citation taps.
  */
-@protocol ACRCitationManagerDelegate <NSObject>
+@protocol ACRCitationBuilderDelegate <NSObject>
 
 @optional
 
@@ -37,12 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Called when a citation button is tapped
- * @param citationManager The citation manager handling the tap (contains rootView as property)
+ * @param citationBuilder The citation builder handling the tap
  * @param citation ACOCitation object containing citation information
  * @param referenceData ACOReference object containing full reference information
  */
-- (void)citationManager:(ACRCitationManager *)citationManager 
-         didTapCitation:(ACOCitation *)citation 
+- (void)citationBuilder:(ACRCitationBuilder *)citationBuilder
+         didTapCitation:(ACOCitation *)citation
           referenceData:(ACOReference * _Nullable)referenceData;
 
 @end

@@ -12,6 +12,7 @@
 #import "ACRActionDelegate.h"
 #import "ACRColumnView.h"
 #import "ACRIMedia.h"
+#import "ACICitationPresenter.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -24,6 +25,7 @@
 @property (readwrite)ACRTheme theme;
 @property (readonly) ACOHostConfig *hostConfig;
 @property (nonatomic, assign) BOOL isRenderingInsideBottomSheet;
+@property (nonatomic, readonly) id<ACICitationPresenter> citationPresenter;
 
 - (instancetype)init:(ACOAdaptiveCard *)card hostconfig:(ACOHostConfig *)config widthConstraint:(float)width theme:(ACRTheme)theme;
 
