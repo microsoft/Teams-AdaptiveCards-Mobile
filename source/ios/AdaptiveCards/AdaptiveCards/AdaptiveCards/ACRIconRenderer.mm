@@ -69,6 +69,33 @@
     std::shared_ptr<BaseActionElement> selectAction = icon->GetSelectAction();
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, wrappingView, viewGroup);
+
+    // An interactive icon (one with a selectAction) must be reachable and named for
+    // VoiceOver. Without this the icon is not an accessibility element, so screen
+    // reader users cannot find or activate it. Decorative icons (no selectAction) are
+    // intentionally left non-accessible.
+    //
+    // Use the first meaningful name: the action's title, then its tooltip, then the
+    // icon name. Deliberately not configureForAccessibilityLabel(), which *joins* title
+    // and tooltip with ", " and so yields a leading ", " when the action has no title -
+    // a string identical to the one already carried by the action's own button, which
+    // would make this icon a duplicate element with the same announced name.
+    if (acoSelectAction) {
+        NSString *iconAccessibilityLabel = acoSelectAction.title.length ? acoSelectAction.title : nil;
+        if (!iconAccessibilityLabel.length) {
+            iconAccessibilityLabel = acoSelectAction.tooltip.length ? acoSelectAction.tooltip : nil;
+        }
+        if (!iconAccessibilityLabel.length) {
+            iconAccessibilityLabel = [NSString stringWithCString:icon->GetName().c_str() encoding:NSUTF8StringEncoding];
+        }
+        if (iconAccessibilityLabel.length) {
+            wrappingView.isAccessibilityElement = YES;
+            wrappingView.accessibilityLabel = iconAccessibilityLabel;
+            // OR the trait in so traits already applied by setAccessibilityTrait()
+            // (for example UIAccessibilityTraitNotEnabled) are preserved.
+            wrappingView.accessibilityTraits |= UIAccessibilityTraitButton;
+        }
+    }
     
     // Configure visibility for the wrapping view so toggle visibility actions work correctly
     configVisibility(wrappingView, elem);
