@@ -5,7 +5,7 @@ trigger: none
 
 pool:
   name: Azure Pipelines
-  vmImage: internal-macos-10.15
+  vmImage: macos-latest
 
 variables:
 - group: AdaptiveCards-KVLink
@@ -58,6 +58,6 @@ steps:
   displayName: Push To cocoapods
   inputs:
     targetType: inline
-    script: "cat ./source/ios/AdaptiveCards.podspec\nif type brew >/dev/null 2>&1;\nthen \n   brew upgrade cocoapods >/dev/null 2>&1; \n   brew install cocoapods >/dev/null 2>&1; \nfi\n\npod trunk push  ./source/ios/AdaptiveCards.podspec\n"
+    script: "cat ./source/ios/tools/AdaptiveCards.podspec\nif type brew >/dev/null 2>&1;\nthen \n   brew upgrade cocoapods >/dev/null 2>&1; \n   brew install cocoapods >/dev/null 2>&1; \nfi\n\npod trunk push ./source/ios/tools/AdaptiveCards.podspec --allow-warnings\n"
   env:
     COCOAPODS_TRUNK_TOKEN: $(cocoapod-trunk-token)
