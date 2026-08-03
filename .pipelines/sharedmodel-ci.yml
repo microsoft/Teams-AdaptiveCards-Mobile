@@ -17,7 +17,7 @@ jobs:
   timeoutInMinutes: 100
   cancelTimeoutInMinutes: 1
   pool:
-    vmImage: windows-2019
+    vmImage: windows-2022
   steps:
   - checkout: self
     clean: true
@@ -28,7 +28,7 @@ jobs:
     displayName: Build solution
     inputs:
       solution: source/shared/cpp/AdaptiveCardsSharedModel/AdaptiveCardsSharedModel.sln
-      vsVersion: 16.0
+      vsVersion: 17.0
       platform: 'x64'
       configuration: 'Release'
       maximumCpuCount: true

@@ -55,34 +55,22 @@ extends:
           timeoutInMinutes: 120
           steps:
           - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk 2.1.818'
-            inputs:
-              version: 2.1.818
-              installationPath: 'c:\Program Files\dotnet'
-
-          - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk 2.1.x'
-            inputs:
-              version: 2.1.x
-              installationPath: $(Agent.ToolsDirectory)/dotnet
-
-          - task: UseDotNet@2
-            displayName: 'Use .Net Core SDK 6'
-            inputs:
-              version: 6.0.x
-
-          - task: UseDotNet@2
             displayName: 'Use .Net Core SDK 8'
             inputs:
-              includePreviewVersions: true
               version: 8.0.x
-            condition: eq(variables['TargetNet8'], 'True')
 
           - task: DotNetCoreCLI@2
             displayName: 'dotnet --list-sdks '
             inputs:
               command: custom
               custom: '--list-sdks '
+
+          - task: JavaToolInstaller@0
+            displayName: 'Use JDK 17'
+            inputs:
+              versionSpec: '17'
+              jdkArchitectureOption: x64
+              jdkSourceOption: PreInstalled
 
           - task: Gradle@3
             displayName: build
@@ -91,7 +79,8 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:build'
               publishJUnitResults: false
-              jdkVersionOption: 1.17
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
 
           - task: Gradle@3
             displayName: 'Gradle Unsigned Publication'
@@ -100,7 +89,8 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
               publishJUnitResults: false
-              jdkVersionOption: 1.17
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
 
           - task: Powershell@2
             name: prepareSigningTask
@@ -157,7 +147,8 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishSignedReleasePublicationToSignedArtifactRepository'
               publishJUnitResults: false
-              jdkVersionOption: 1.17
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
             env:
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
@@ -239,4 +230,3 @@ extends:
             inputs:
               path: '$(build.artifactstagingdirectory)'
               artifact: drop
-
