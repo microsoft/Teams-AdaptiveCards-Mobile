@@ -69,6 +69,25 @@ extends:
               command: custom
               custom: '--list-sdks '
 
+          - task: PowerShell@2
+            displayName: 'Download JDK 17'
+            inputs:
+              targetType: inline
+              script: |
+                Invoke-WebRequest `
+                  -Uri "https://aka.ms/download-jdk/microsoft-jdk-17-windows-x64.zip" `
+                  -OutFile "$(Agent.TempDirectory)\microsoft-jdk-17.zip" `
+                  -UseBasicParsing
+
+          - task: JavaToolInstaller@0
+            displayName: 'Use JDK 17'
+            inputs:
+              versionSpec: '17'
+              jdkArchitectureOption: x64
+              jdkSourceOption: LocalDirectory
+              jdkFile: '$(Agent.TempDirectory)\microsoft-jdk-17.zip'
+              jdkDestinationDirectory: '$(Agent.TempDirectory)\jdk-17'
+
           - task: Gradle@3
             displayName: build
             inputs:
@@ -76,7 +95,9 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:build'
               publishJUnitResults: false
-        
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
+
           - task: Gradle@3
             displayName: 'Gradle Unsigned Publication'
             inputs:
@@ -84,6 +105,8 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
               publishJUnitResults: false
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
 
           - task: Powershell@2
             name: prepareSigningTask
@@ -140,6 +163,8 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishSignedReleasePublicationToSignedArtifactRepository'
               publishJUnitResults: false
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
             env:
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
