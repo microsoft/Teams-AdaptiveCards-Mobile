@@ -4,9 +4,7 @@ pr: none
 trigger: none
 
 pool:
-  name: 1ES-Teams-Windows-2022-DomoreexpGithub
-  os: windows
-  demands: java
+  name: 1ES-Teams-Windows-2022-Compliant-Daily
 
 parameters:
 - name: base_version
@@ -49,9 +47,7 @@ extends:
         enabled: true
         break: true
     pool:
-      name: 1ES-Teams-Windows-2022-DomoreexpGithub
-      os: windows
-      demands: java
+      name: 1ES-Teams-Windows-2022-Compliant-Daily
     stages:
       - stage: Staging
         jobs:
