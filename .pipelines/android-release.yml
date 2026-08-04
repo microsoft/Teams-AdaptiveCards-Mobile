@@ -4,7 +4,7 @@ pr: none
 trigger: none
 
 pool:
-  name: 1ES-Teams-Windows-2022-Compliant-Daily
+   name: 1ES-Teams-Ubuntu-Latest-Compliant
 
 parameters:
 - name: base_version
@@ -47,7 +47,7 @@ extends:
         enabled: true
         break: true
     pool:
-      name: 1ES-Teams-Windows-2022-Compliant-Daily
+       name: 1ES-Teams-Ubuntu-Latest-Compliant
     stages:
       - stage: Staging
         jobs:
@@ -64,25 +64,6 @@ extends:
             inputs:
               command: custom
               custom: '--list-sdks '
-
-          - task: PowerShell@2
-            displayName: 'Download JDK 17'
-            inputs:
-              targetType: inline
-              script: |
-                Invoke-WebRequest `
-                  -Uri "https://aka.ms/download-jdk/microsoft-jdk-17-windows-x64.zip" `
-                  -OutFile "$(Agent.TempDirectory)\microsoft-jdk-17.zip" `
-                  -UseBasicParsing
-
-          - task: JavaToolInstaller@0
-            displayName: 'Use JDK 17'
-            inputs:
-              versionSpec: '17'
-              jdkArchitectureOption: x64
-              jdkSourceOption: LocalDirectory
-              jdkFile: '$(Agent.TempDirectory)\microsoft-jdk-17.zip'
-              jdkDestinationDirectory: '$(Agent.TempDirectory)\jdk-17'
 
           - task: Gradle@3
             displayName: build
