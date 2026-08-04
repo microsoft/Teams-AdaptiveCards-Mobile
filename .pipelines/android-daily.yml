@@ -12,7 +12,7 @@ schedules:
 
 pool:
   name: Azure Pipelines
-  vmImage: vs2017-win2016
+  vmImage: windows-2022
   demands: java
 
 parameters:
@@ -91,4 +91,3 @@ steps:
   displayName: 'Publish Artifact: drop'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
-
