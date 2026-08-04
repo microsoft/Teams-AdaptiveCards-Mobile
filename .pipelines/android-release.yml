@@ -56,6 +56,9 @@ extends:
       - stage: Staging
         jobs:
         - job: Staging
+          templateContext:
+            type: releaseJob
+            isProduction: true
           timeoutInMinutes: 120
           steps:
           - task: UseDotNet@2
@@ -76,9 +79,7 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:build'
               publishJUnitResults: false
-              javaHomeOption: Path
-              jdkVersionOption: 1.17
-
+        
           - task: Gradle@3
             displayName: 'Gradle Unsigned Publication'
             inputs:
@@ -86,8 +87,6 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
               publishJUnitResults: false
-              javaHomeOption: Path
-              jdkVersionOption: 1.17
 
           - task: Powershell@2
             name: prepareSigningTask
@@ -144,8 +143,6 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishSignedReleasePublicationToSignedArtifactRepository'
               publishJUnitResults: false
-              javaHomeOption: Path
-              jdkVersionOption: 1.17
             env:
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
