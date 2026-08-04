@@ -52,9 +52,6 @@ extends:
       - stage: Staging
         jobs:
         - job: Staging
-          templateContext:
-            type: releaseJob
-            isProduction: true
           timeoutInMinutes: 120
           steps:
           - task: UseDotNet@2
