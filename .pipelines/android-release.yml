@@ -52,6 +52,9 @@ extends:
       - stage: Staging
         jobs:
         - job: Staging
+          templateContext:
+            type: releaseJob
+            isProduction: true
           timeoutInMinutes: 120
           steps:
           - task: UseDotNet@2
@@ -119,20 +122,33 @@ extends:
                   $sdkManager = Get-Item (Join-Path $toolsDestination "bin\sdkmanager.bat")
                 }
 
-                1..20 | ForEach-Object { "y" } |
+                $licenseAnswers = 1..100 | ForEach-Object { "y" }
+                $licenseAnswers |
                   & $sdkManager.FullName "--sdk_root=$androidSdk" --licenses | Out-Host
                 if ($LASTEXITCODE -ne 0) {
                   throw "Failed to accept Android SDK licenses."
                 }
 
-                & $sdkManager.FullName "--sdk_root=$androidSdk" `
+                $licenseAnswers |
+                  & $sdkManager.FullName "--sdk_root=$androidSdk" `
                   "platform-tools" `
                   "platforms;android-34" `
                   "build-tools;34.0.0" `
                   "cmake;3.22.1" `
-                  "ndk;28.0.13004108"
+                  "ndk;28.0.13004108" | Out-Host
                 if ($LASTEXITCODE -ne 0) {
                   throw "Failed to install required Android SDK packages."
+                }
+
+                $licenseAnswers |
+                  & $sdkManager.FullName "--sdk_root=$androidSdk" --licenses | Out-Host
+                if ($LASTEXITCODE -ne 0) {
+                  throw "Android SDK licenses remain unaccepted."
+                }
+
+                $ndkProperties = Join-Path $androidSdk "ndk\28.0.13004108\source.properties"
+                if (-not (Test-Path $ndkProperties)) {
+                  throw "Android NDK 28.0.13004108 was not installed."
                 }
 
                 $sdkPropertyPath = $androidSdk.Replace("\", "/")
