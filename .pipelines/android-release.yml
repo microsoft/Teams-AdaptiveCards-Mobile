@@ -4,7 +4,7 @@ pr: none
 trigger: none
 
 pool:
-   name: 1ES-Teams-Ubuntu-Latest-Compliant
+  name: 1ES-Teams-Windows-2022-Compliant-Daily
 
 parameters:
 - name: base_version
@@ -47,11 +47,14 @@ extends:
         enabled: true
         break: true
     pool:
-       name: 1ES-Teams-Ubuntu-Latest-Compliant
+      name: 1ES-Teams-Windows-2022-Compliant-Daily
     stages:
       - stage: Staging
         jobs:
         - job: Staging
+          templateContext:
+            type: releaseJob
+            isProduction: true
           timeoutInMinutes: 120
           steps:
           - task: UseDotNet@2
@@ -65,6 +68,84 @@ extends:
               command: custom
               custom: '--list-sdks '
 
+          - task: PowerShell@2
+            displayName: 'Download JDK 17'
+            inputs:
+              targetType: inline
+              script: |
+                Invoke-WebRequest `
+                  -Uri "https://aka.ms/download-jdk/microsoft-jdk-17-windows-x64.zip" `
+                  -OutFile "$(Agent.TempDirectory)\microsoft-jdk-17.zip" `
+                  -UseBasicParsing
+
+          - task: JavaToolInstaller@0
+            displayName: 'Use JDK 17'
+            inputs:
+              versionSpec: '17'
+              jdkArchitectureOption: x64
+              jdkSourceOption: LocalDirectory
+              jdkFile: '$(Agent.TempDirectory)\microsoft-jdk-17.zip'
+              jdkDestinationDirectory: '$(Agent.TempDirectory)\jdk-17'
+
+          - task: PowerShell@2
+            displayName: 'Install Android SDK'
+            inputs:
+              targetType: inline
+              script: |
+                $ErrorActionPreference = "Stop"
+                $androidSdk = @(
+                  $env:ANDROID_HOME,
+                  $env:ANDROID_SDK_ROOT,
+                  "C:\Android\android-sdk",
+                  "$env:LOCALAPPDATA\Android\Sdk"
+                ) | Where-Object { $_ -and (Test-Path $_) } | Select-Object -First 1
+
+                if (-not $androidSdk) {
+                  $androidSdk = "$(Agent.TempDirectory)\android-sdk"
+                  New-Item -ItemType Directory -Path $androidSdk -Force | Out-Null
+                }
+
+                $sdkManager = Get-ChildItem -Path $androidSdk -Filter sdkmanager.bat -Recurse -ErrorAction SilentlyContinue |
+                  Select-Object -First 1
+                if (-not $sdkManager) {
+                  $toolsArchive = "$(Agent.TempDirectory)\android-command-line-tools.zip"
+                  $toolsExtract = "$(Agent.TempDirectory)\android-command-line-tools"
+                  $toolsDestination = Join-Path $androidSdk "cmdline-tools\latest"
+
+                  Invoke-WebRequest `
+                    -Uri "https://dl.google.com/android/repository/commandlinetools-win-14742923_latest.zip" `
+                    -OutFile $toolsArchive `
+                    -UseBasicParsing
+                  Expand-Archive -Path $toolsArchive -DestinationPath $toolsExtract -Force
+                  New-Item -ItemType Directory -Path $toolsDestination -Force | Out-Null
+                  Copy-Item -Path "$toolsExtract\cmdline-tools\*" -Destination $toolsDestination -Recurse -Force
+                  $sdkManager = Get-Item (Join-Path $toolsDestination "bin\sdkmanager.bat")
+                }
+
+                1..20 | ForEach-Object { "y" } |
+                  & $sdkManager.FullName "--sdk_root=$androidSdk" --licenses | Out-Host
+                if ($LASTEXITCODE -ne 0) {
+                  throw "Failed to accept Android SDK licenses."
+                }
+
+                & $sdkManager.FullName "--sdk_root=$androidSdk" `
+                  "platform-tools" `
+                  "platforms;android-34" `
+                  "build-tools;34.0.0" `
+                  "cmake;3.22.1" `
+                  "ndk;28.0.13004108"
+                if ($LASTEXITCODE -ne 0) {
+                  throw "Failed to install required Android SDK packages."
+                }
+
+                $sdkPropertyPath = $androidSdk.Replace("\", "/")
+                Set-Content `
+                  -Path "$(Build.SourcesDirectory)\source\android\local.properties" `
+                  -Value "sdk.dir=$sdkPropertyPath"
+                Write-Host "##vso[task.setvariable variable=ANDROID_HOME]$androidSdk"
+                Write-Host "##vso[task.setvariable variable=ANDROID_SDK_ROOT]$androidSdk"
+                Write-Host "##vso[task.prependpath]$androidSdk\platform-tools"
+
           - task: Gradle@3
             displayName: build
             inputs:
@@ -74,6 +155,9 @@ extends:
               publishJUnitResults: false
               javaHomeOption: Path
               jdkDirectory: $(JAVA_HOME)
+            env:
+              ANDROID_HOME: $(ANDROID_HOME)
+              ANDROID_SDK_ROOT: $(ANDROID_SDK_ROOT)
 
           - task: Gradle@3
             displayName: 'Gradle Unsigned Publication'
@@ -84,6 +168,9 @@ extends:
               publishJUnitResults: false
               javaHomeOption: Path
               jdkDirectory: $(JAVA_HOME)
+            env:
+              ANDROID_HOME: $(ANDROID_HOME)
+              ANDROID_SDK_ROOT: $(ANDROID_SDK_ROOT)
 
           - task: Powershell@2
             name: prepareSigningTask
@@ -143,6 +230,8 @@ extends:
               javaHomeOption: Path
               jdkDirectory: $(JAVA_HOME)
             env:
+              ANDROID_HOME: $(ANDROID_HOME)
+              ANDROID_SDK_ROOT: $(ANDROID_SDK_ROOT)
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
 
