@@ -45,6 +45,9 @@
 
 - (NSMutableDictionary *)getTextMap;
 
+// Returns the current text preprocessing result using synchronized access.
+- (NSDictionary *)textDataForElementId:(NSString *)elementId;
+
 - (ACOAdaptiveCard *)card;
 
 - (UIView *)render;

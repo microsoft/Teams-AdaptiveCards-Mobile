@@ -9,6 +9,8 @@
 #import "TextBlock.h"
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "ACRView.h"
+#import "ACRViewPrivate.h"
 #import "ACRViewAttachingTextView.h"
 #import "ACRViewTextAttachment.h"
 
@@ -100,6 +102,47 @@
     [self verifyTextColorIsSerialized:AdaptiveCards::ForegroundColor::Attention
                                    as:"Attention"
                           onTextBlock:textblock];
+}
+
+- (void)testTextMapSupportsConcurrentReadsAndWrites
+{
+    ACRView *rootView = [[ACRView alloc] initWithFrame:CGRectZero];
+    dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+    dispatch_group_t group = dispatch_group_create();
+
+    for (NSInteger index = 0; index < 500; index++) {
+        NSString *key = [NSString stringWithFormat:@"text-%ld", (long)index];
+        NSDictionary *data = @{@"nonhtml" : key};
+
+        dispatch_group_async(group, queue, ^{
+            [rootView enqueueIntermediateTextProcessingResult:data elementId:key];
+        });
+        dispatch_group_async(group, queue, ^{
+            (void)[rootView textDataForElementId:key];
+        });
+    }
+
+    XCTAssertEqual(dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC)), 0);
+    XCTAssertEqualObjects([rootView textDataForElementId:@"text-0"][@"nonhtml"], @"text-0");
+    XCTAssertEqualObjects([rootView textDataForElementId:@"text-499"][@"nonhtml"], @"text-499");
+}
+
+- (void)testTextDataForElementIdReturnsStoredData
+{
+    ACRView *rootView = [[ACRView alloc] initWithFrame:CGRectZero];
+    NSDictionary *expectedData = @{@"nonhtml" : @"expected"};
+
+    [rootView enqueueIntermediateTextProcessingResult:expectedData elementId:@"text"];
+
+    XCTAssertEqualObjects([rootView textDataForElementId:@"text"], expectedData);
+}
+
+- (void)testTextDataForElementIdReturnsNilForMissingOrNilKey
+{
+    ACRView *rootView = [[ACRView alloc] initWithFrame:CGRectZero];
+
+    XCTAssertNil([rootView textDataForElementId:@"missing"]);
+    XCTAssertNil([rootView textDataForElementId:nil]);
 }
 
 @end
