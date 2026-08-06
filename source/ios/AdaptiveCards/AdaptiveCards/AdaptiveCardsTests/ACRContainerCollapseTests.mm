@@ -80,9 +80,11 @@
     XCTAssertTrue(result.succeeded, @"render failed");
     XCTAssertNotNil(result.view);
 
-    [result.view setNeedsLayout];
-    [result.view layoutIfNeeded];
-    return result.view;
+    // ACRView is only forward declared here; the test only needs UIView behaviour.
+    UIView *rendered = (UIView *)result.view;
+    [rendered setNeedsLayout];
+    [rendered layoutIfNeeded];
+    return rendered;
 }
 
 /// A FactSet inside a Container must still render. Regression: the container was
