@@ -661,6 +661,19 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
     return _textMap;
 }
 
+- (NSDictionary *)textDataForElementId:(NSString *)elementId
+{
+    if (elementId == nil) {
+        return nil;
+    }
+
+    __block NSDictionary *data = nil;
+    dispatch_sync(_serial_text_queue, ^{
+        data = self->_textMap[elementId];
+    });
+    return data;
+}
+
 - (ACOAdaptiveCard *)card
 {
     return _adaptiveCard;
