@@ -219,10 +219,12 @@ using namespace AdaptiveCards;
     dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
     dispatch_group_t group = dispatch_group_create();
 
-    for (NSInteger index = 0; index < 500; index++) {
+    for (NSInteger worker = 0; worker < 4; worker++) {
         dispatch_group_async(group, queue, ^{
-            NSString *key = [NSString stringWithFormat:@"background-%ld", (long)index];
-            [rootView enqueueIntermediateTextProcessingResult:@{@"nonhtml" : key} elementId:key];
+            for (NSInteger iteration = 0; iteration < 50; iteration++) {
+                NSString *key = [NSString stringWithFormat:@"background-%ld-%ld", (long)worker, (long)iteration];
+                [rootView enqueueIntermediateTextProcessingResult:@{@"nonhtml" : key} elementId:key];
+            }
         });
     }
 
@@ -234,7 +236,7 @@ using namespace AdaptiveCards;
 
     XCTAssertEqual(dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC)), 0);
     XCTAssertEqual(rootView.liveTextMapAccessCount, 0);
-    XCTAssertEqualObjects([rootView textDataForElementId:@"background-499"][@"nonhtml"], @"background-499");
+    XCTAssertEqualObjects([rootView textDataForElementId:@"background-3-49"][@"nonhtml"], @"background-3-49");
 }
 
 @end

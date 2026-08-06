@@ -667,7 +667,7 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         return nil;
     }
 
-    __block NSDictionary *data;
+    __block NSDictionary *data = nil;
     dispatch_sync(_serial_text_queue, ^{
         data = self->_textMap[elementId];
     });

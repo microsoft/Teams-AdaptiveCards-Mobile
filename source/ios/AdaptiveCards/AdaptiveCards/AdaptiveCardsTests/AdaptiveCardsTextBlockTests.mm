@@ -109,22 +109,57 @@
     ACRView *rootView = [[ACRView alloc] initWithFrame:CGRectZero];
     dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
     dispatch_group_t group = dispatch_group_create();
+    NSMutableArray<NSString *> *failures = [[NSMutableArray alloc] init];
 
-    for (NSInteger index = 0; index < 500; index++) {
-        NSString *key = [NSString stringWithFormat:@"text-%ld", (long)index];
-        NSDictionary *data = @{@"nonhtml" : key};
+    for (NSInteger worker = 0; worker < 4; worker++) {
+        dispatch_group_async(group, queue, ^{
+            for (NSInteger iteration = 0; iteration < 50; iteration++) {
+                NSString *key = [NSString stringWithFormat:@"text-%ld-%ld", (long)worker, (long)iteration];
+                NSDictionary *data = @{@"nonhtml" : key};
 
-        dispatch_group_async(group, queue, ^{
-            [rootView enqueueIntermediateTextProcessingResult:data elementId:key];
-        });
-        dispatch_group_async(group, queue, ^{
-            (void)[rootView textDataForElementId:key];
+                [rootView enqueueIntermediateTextProcessingResult:data elementId:key];
+                NSString *observedValue = [rootView textDataForElementId:key][@"nonhtml"];
+                if (![observedValue isEqualToString:key]) {
+                    @synchronized(failures) {
+                        [failures addObject:[NSString stringWithFormat:@"%@ returned %@", key, observedValue]];
+                    }
+                }
+            }
         });
     }
 
     XCTAssertEqual(dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC)), 0);
-    XCTAssertEqualObjects([rootView textDataForElementId:@"text-0"][@"nonhtml"], @"text-0");
-    XCTAssertEqualObjects([rootView textDataForElementId:@"text-499"][@"nonhtml"], @"text-499");
+    XCTAssertEqual(failures.count, 0, @"Concurrent lookup failures: %@", failures);
+}
+
+- (void)testTextMapSupportsConcurrentHotKeyOverwrites
+{
+    ACRView *rootView = [[ACRView alloc] initWithFrame:CGRectZero];
+    dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+    dispatch_group_t group = dispatch_group_create();
+    NSMutableArray<NSString *> *failures = [[NSMutableArray alloc] init];
+    NSString *hotKey = @"hot-key";
+
+    [rootView enqueueIntermediateTextProcessingResult:@{@"nonhtml" : @"hot-0"} elementId:hotKey];
+
+    for (NSInteger worker = 0; worker < 4; worker++) {
+        dispatch_group_async(group, queue, ^{
+            for (NSInteger iteration = 0; iteration < 25; iteration++) {
+                NSString *value = [NSString stringWithFormat:@"hot-%ld-%ld", (long)worker, (long)iteration];
+                [rootView enqueueIntermediateTextProcessingResult:@{@"nonhtml" : value} elementId:hotKey];
+
+                NSString *observedValue = [rootView textDataForElementId:hotKey][@"nonhtml"];
+                if (![observedValue hasPrefix:@"hot-"]) {
+                    @synchronized(failures) {
+                        [failures addObject:observedValue ?: @"nil"];
+                    }
+                }
+            }
+        });
+    }
+
+    XCTAssertEqual(dispatch_group_wait(group, dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC)), 0);
+    XCTAssertEqual(failures.count, 0, @"Invalid hot-key values: %@", failures);
 }
 
 - (void)testTextDataForElementIdReturnsStoredData
