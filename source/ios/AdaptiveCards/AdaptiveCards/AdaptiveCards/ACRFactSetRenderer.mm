@@ -53,8 +53,7 @@
     NSMutableAttributedString *content = nil;
     if (rootView) {
         std::shared_ptr<FactSet> fctSet = std::dynamic_pointer_cast<FactSet>(element);
-        NSMutableDictionary *textMap = [rootView getTextMap];
-        NSDictionary *data = textMap[elementId];
+        NSDictionary *data = [rootView textDataForElementId:elementId];
         NSData *htmlData = data[@"html"];
         NSDictionary *options = data[@"options"];
         NSDictionary *descriptor = data[@"descriptor"];
@@ -130,7 +129,6 @@
     [factSetWrapperView addArrangedSubview:valueStack];
     [ACRSeparator renderSeparationWithFrame:CGRectMake(0, 0, factSetConfig.spacing, factSetConfig.spacing) superview:factSetWrapperView axis:UILayoutConstraintAxisHorizontal];
 
-    NSMutableDictionary *textMap = [rootView getTextMap];
     NSInteger nValidFacts = 0;
 
     NSMutableArray *accessibilityElements = [[NSMutableArray alloc] init];
@@ -138,7 +136,7 @@
     for (auto fact : factSet->GetFacts()) {
         NSString *title = [NSString stringWithCString:fact->GetTitle().c_str() encoding:NSUTF8StringEncoding];
         NSString *titleElemId = [key stringByAppendingString:[[NSNumber numberWithInt:rowFactId++] stringValue]];
-        if (![textMap objectForKey:titleElemId]) {
+        if (![rootView textDataForElementId:titleElemId]) {
             RichTextElementProperties titleTextProp{factSetConfig.title, fact->GetTitle(), fact->GetLanguage()};
             buildIntermediateResultForText(rootView, acoConfig, titleTextProp, titleElemId);
         }
@@ -163,7 +161,7 @@
         }
         NSString *value = [NSString stringWithCString:fact->GetValue().c_str() encoding:NSUTF8StringEncoding];
         NSString *valElemId = [key stringByAppendingString:[[NSNumber numberWithInt:rowFactId++] stringValue]];
-        if (![textMap objectForKey:valElemId]) {
+        if (![rootView textDataForElementId:valElemId]) {
             RichTextElementProperties valueTextProp{factSetConfig.value, fact->GetValue(), fact->GetLanguage()};
             buildIntermediateResultForText(rootView, acoConfig, valueTextProp, valElemId);
         }
