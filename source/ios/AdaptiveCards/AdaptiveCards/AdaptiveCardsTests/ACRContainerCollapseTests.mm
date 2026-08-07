@@ -9,6 +9,7 @@
 #import "ACOAdaptiveCardParseResult.h"
 #import "ACOHostConfig.h"
 #import "ACOHostConfigParseResult.h"
+#import "ACRContentStackView.h"
 #import "ACRRenderResult.h"
 #import "ACRRenderer.h"
 #import <UIKit/UIKit.h>
@@ -21,6 +22,19 @@
 /// which point a child container always reports "no visible content", so every nested
 /// container was collapsed and its content disappeared. FactSets nested in a Container
 /// were the most visible casualty.
+///
+/// These tests assert on **hidden state** rather than on rendered text. Text is not a
+/// usable signal here for two reasons:
+///   1. TextBlock renders into an ACRViewAttachingTextView (a UITextView), not a UILabel.
+///   2. Text content is populated by background preprocessing on ACRView's serial text
+///      queue, and the SDK never awaits it during render, so no text is present
+///      synchronously.
+/// A text-based assertion therefore passes or fails for reasons unrelated to collapsing,
+/// and a "text is absent" assertion would pass vacuously.
+///
+/// The collapse path itself is synchronous and deterministic:
+///   registerInvisibleView: -> applyVisibilityToSubviews -> hideView:
+/// and hideView: sets `hidden = YES` on the target view. That is what is asserted below.
 @interface ACRContainerCollapseTests : XCTestCase
 @end
 
@@ -34,35 +48,40 @@
     _hostConfig = @"{\"supportsInteractivity\":true}";
 }
 
-- (NSArray<UILabel *> *)labelsIn:(UIView *)view
+#pragma mark - Helpers
+
+/// Every ACRContentStackView in the tree. Containers, Columns and ColumnSets are all
+/// content stack views, and collapsing manifests as one of them being hidden.
+- (NSArray<ACRContentStackView *> *)contentStacksIn:(UIView *)view
 {
-    NSMutableArray<UILabel *> *found = [NSMutableArray array];
-    if ([view isKindOfClass:[UILabel class]]) {
-        [found addObject:(UILabel *)view];
+    NSMutableArray<ACRContentStackView *> *found = [NSMutableArray array];
+    if ([view isKindOfClass:[ACRContentStackView class]]) {
+        [found addObject:(ACRContentStackView *)view];
     }
     for (UIView *sub in view.subviews) {
-        [found addObjectsFromArray:[self labelsIn:sub]];
+        [found addObjectsFromArray:[self contentStacksIn:sub]];
     }
     return found;
 }
 
-- (NSArray<NSString *> *)visibleTextIn:(UIView *)view
+- (NSArray<ACRContentStackView *> *)hiddenContentStacksIn:(UIView *)view
 {
-    NSMutableArray<NSString *> *texts = [NSMutableArray array];
-    for (UILabel *label in [self labelsIn:view]) {
-        // Ignore text that is not actually on screen.
-        BOOL hidden = label.isHidden;
-        UIView *ancestor = label.superview;
-        while (!hidden && ancestor) {
-            hidden = ancestor.isHidden;
-            ancestor = ancestor.superview;
-        }
-        NSString *text = label.text ?: label.attributedText.string;
-        if (!hidden && text.length) {
-            [texts addObject:text];
+    NSMutableArray<ACRContentStackView *> *hidden = [NSMutableArray array];
+    for (ACRContentStackView *stack in [self contentStacksIn:view]) {
+        if (stack.isHidden) {
+            [hidden addObject:stack];
         }
     }
-    return texts;
+    return hidden;
+}
+
+- (NSUInteger)hiddenViewCountIn:(UIView *)view
+{
+    NSUInteger count = view.isHidden ? 1 : 0;
+    for (UIView *sub in view.subviews) {
+        count += [self hiddenViewCountIn:sub];
+    }
+    return count;
 }
 
 - (UIView *)renderPayload:(NSString *)payload
@@ -75,17 +94,36 @@
 
     ACRRenderResult *result = [ACRRenderer render:parsed.card
                                            config:config.config
-                                   widthConstraint:320.0f
+                                  widthConstraint:320.0f
                                             theme:ACRThemeLight];
     XCTAssertTrue(result.succeeded, @"render failed");
     XCTAssertNotNil(result.view);
 
-    // ACRView is only forward declared here; the test only needs UIView behaviour.
     UIView *rendered = (UIView *)result.view;
     [rendered setNeedsLayout];
     [rendered layoutIfNeeded];
     return rendered;
 }
+
+/// Shared assertion. Guards against passing vacuously: if the payload produced no
+/// content stack views at all then "nothing is hidden" would be trivially true, so the
+/// presence of at least `expectedStacks` of them is asserted first.
+- (void)assertNothingCollapsedIn:(UIView *)rendered
+                 atLeastStacks:(NSUInteger)expectedStacks
+                       message:(NSString *)message
+{
+    NSArray<ACRContentStackView *> *stacks = [self contentStacksIn:rendered];
+    XCTAssertGreaterThanOrEqual(stacks.count, expectedStacks,
+                                @"%@: expected at least %lu content stack views, found %lu - "
+                                @"the payload did not render the shape under test",
+                                message, (unsigned long)expectedStacks, (unsigned long)stacks.count);
+
+    NSArray<ACRContentStackView *> *hidden = [self hiddenContentStacksIn:rendered];
+    XCTAssertEqual(hidden.count, 0u, @"%@: %lu of %lu content stack views were collapsed",
+                   message, (unsigned long)hidden.count, (unsigned long)stacks.count);
+}
+
+#pragma mark - Tests
 
 /// A FactSet inside a Container must still render. Regression: the container was
 /// collapsed and the card came back visually empty.
@@ -99,12 +137,7 @@
                          "{\"title\":\"Location\",\"value\":\"Zone 1\"}]}]}]}";
 
     UIView *rendered = [self renderPayload:payload];
-    NSArray<NSString *> *texts = [self visibleTextIn:rendered];
-
-    XCTAssertTrue([texts containsObject:@"Severity"], @"fact title missing, container was collapsed. got: %@", texts);
-    XCTAssertTrue([texts containsObject:@"Severity A"], @"fact value missing, container was collapsed. got: %@", texts);
-    XCTAssertTrue([texts containsObject:@"Location"], @"fact title missing, container was collapsed. got: %@", texts);
-    XCTAssertGreaterThan(CGRectGetHeight(rendered.frame), 0.0f, @"card rendered with zero height");
+    [self assertNothingCollapsedIn:rendered atLeastStacks:1 message:@"Container with FactSet"];
 }
 
 /// Same shape one level deeper, since the collapse walked nested content stack views.
@@ -116,8 +149,8 @@
                          "\"type\":\"Container\",\"items\":[{"
                          "\"type\":\"TextBlock\",\"text\":\"Nested survives\"}]}]}]}";
 
-    NSArray<NSString *> *texts = [self visibleTextIn:[self renderPayload:payload]];
-    XCTAssertTrue([texts containsObject:@"Nested survives"], @"nested container was collapsed. got: %@", texts);
+    UIView *rendered = [self renderPayload:payload];
+    [self assertNothingCollapsedIn:rendered atLeastStacks:2 message:@"Nested Container"];
 }
 
 /// ColumnSet is the other shape the collapse targeted.
@@ -129,21 +162,29 @@
                          "\"type\":\"Column\",\"items\":[{"
                          "\"type\":\"TextBlock\",\"text\":\"Column content\"}]}]}]}";
 
-    NSArray<NSString *> *texts = [self visibleTextIn:[self renderPayload:payload]];
-    XCTAssertTrue([texts containsObject:@"Column content"], @"column was collapsed. got: %@", texts);
+    UIView *rendered = [self renderPayload:payload];
+    [self assertNothingCollapsedIn:rendered atLeastStacks:2 message:@"ColumnSet with Column"];
 }
 
-/// The genuinely-empty case must still be allowed to collapse, so a future re-land of
-/// the feature has a target to satisfy rather than silently regressing this file.
-- (void)testContainerWithOnlyInvisibleChildrenRendersNoText
+/// The explicit isVisible:false path must still hide its target. This is the control:
+/// it proves the visibility machinery is actually running in these tests, so the
+/// "nothing is hidden" assertions above are meaningful rather than vacuous.
+- (void)testExplicitlyInvisibleChildIsStillHidden
 {
     NSString *payload = @"{"
                          "\"type\":\"AdaptiveCard\",\"version\":\"1.5\",\"body\":[{"
-                         "\"type\":\"Container\",\"items\":[{"
-                         "\"type\":\"TextBlock\",\"text\":\"Hidden\",\"isVisible\":false}]}]}";
+                         "\"type\":\"Container\",\"items\":["
+                         "{\"type\":\"TextBlock\",\"text\":\"Visible\"},"
+                         "{\"type\":\"TextBlock\",\"text\":\"Hidden\",\"isVisible\":false}]}]}";
 
-    NSArray<NSString *> *texts = [self visibleTextIn:[self renderPayload:payload]];
-    XCTAssertFalse([texts containsObject:@"Hidden"], @"invisible child should not be visible. got: %@", texts);
+    UIView *rendered = [self renderPayload:payload];
+
+    XCTAssertGreaterThan([self hiddenViewCountIn:rendered], 0u,
+                         @"isVisible:false produced no hidden view - the visibility "
+                         @"machinery did not run, so the collapse assertions would be vacuous");
+
+    // The container itself still holds a visible child and must survive.
+    [self assertNothingCollapsedIn:rendered atLeastStacks:1 message:@"Container with one hidden child"];
 }
 
 @end
