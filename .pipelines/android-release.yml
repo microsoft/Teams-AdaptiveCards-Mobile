@@ -307,7 +307,7 @@ extends:
               targetType: inline
               script: |
                 ls $(build.sourcesdirectory) -File -Recur | ?{
-                  $_.FullName -Match ".*\\signedArtifact\\.*(.aar|.pom|.aar.asc|.pom.asc)$"
+                  $_.FullName -Match ".*\\signedArtifact\\.*(\.aar|\.pom|\.aar\.asc|\.pom\.asc)$"
                 } | %{
                 echo "Copying artifact $_.Name"
                 cp $_.FullName (Join-Path $(build.artifactstagingdirectory) $_.Name)
