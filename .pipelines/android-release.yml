@@ -38,6 +38,7 @@ variables:
     value: ${{ parameters.base_version }}
 - name: AC_APPEND_BUILD_NUMBER
   value: false
+- group: TeamsSDK-Release
 
 
 resources:
