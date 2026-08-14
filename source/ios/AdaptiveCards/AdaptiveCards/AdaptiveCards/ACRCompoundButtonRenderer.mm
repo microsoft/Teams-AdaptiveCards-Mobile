@@ -109,7 +109,21 @@
     std::shared_ptr<BaseActionElement> selectAction = compoundButton->GetSelectAction();
     ACOBaseActionElement *acoSelectAction = [ACOBaseActionElement getACOActionElementFromAdaptiveElement:selectAction];
     addSelectActionToView(acoConfig, acoSelectAction, rootView, compoundButtonView, viewGroup);
-    compoundButtonView.accessibilityLabel = @(compoundButton->getTitle().c_str());
+
+    // Expose the compound button as a single accessible button. Previously only the
+    // title was set as the label and no button trait was applied, so VoiceOver read
+    // the inner labels individually and never announced the control role. Combine
+    // the title, badge and description into one label and mark the view as a button.
+    compoundButtonView.isAccessibilityElement = YES;
+    NSMutableArray<NSString *> *compoundButtonLabelParts = [NSMutableArray array];
+    NSString *compoundButtonTitle = @(compoundButton->getTitle().c_str());
+    NSString *compoundButtonBadge = @(compoundButton->getBadge().c_str());
+    NSString *compoundButtonDescription = @(compoundButton->getDescription().c_str());
+    if (compoundButtonTitle.length) { [compoundButtonLabelParts addObject:compoundButtonTitle]; }
+    if (compoundButtonBadge.length) { [compoundButtonLabelParts addObject:compoundButtonBadge]; }
+    if (compoundButtonDescription.length) { [compoundButtonLabelParts addObject:compoundButtonDescription]; }
+    compoundButtonView.accessibilityLabel = [compoundButtonLabelParts componentsJoinedByString:@", "];
+    compoundButtonView.accessibilityTraits |= UIAccessibilityTraitButton;
     NSString *areaName = stringForCString(elem->GetAreaGridName());
     [viewGroup addArrangedSubview:compoundButtonView withAreaName:areaName];
     return compoundButtonView;
