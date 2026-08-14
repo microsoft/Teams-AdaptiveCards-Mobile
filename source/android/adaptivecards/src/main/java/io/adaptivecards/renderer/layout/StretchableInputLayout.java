@@ -118,6 +118,12 @@ public class StretchableInputLayout extends StretchableElementLayout
             else
             {
                 m_label.setContentDescription(m_label.getText() + " " + m_errorMessage.getText());
+
+                // Announce the error message to TalkBack so screen reader users
+                // are informed of validation failures (fixes #493)
+                if (m_errorMessage != null && m_errorMessage.getText() != null) {
+                    m_errorMessage.announceForAccessibility(m_errorMessage.getText());
+                }
             }
         }
     }
