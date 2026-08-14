@@ -223,6 +223,7 @@ public class AdaptiveCardRenderer
                 LinearLayout showCardsLayout = new LinearLayout(context);
                 showCardsLayout.setBackgroundColor(Color.parseColor(backgroundColor));
                 showCardsLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                showCardsLayout.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
                 rootLayout.addView(showCardsLayout);
 
                 IActionLayoutRenderer actionLayoutRenderer = CardRendererRegistration.getInstance().getActionLayoutRenderer();

@@ -364,6 +364,18 @@ public abstract class BaseActionElementRenderer implements IBaseActionElementRen
 
             m_invisibleCard.setVisibility(m_invisibleCard.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
 
+            // Toggle accessibility importance on the show cards container so
+            // TalkBack can reach the expanded card content but skips it when hidden
+            boolean anyCardVisible = false;
+            for (int j = 0; j < m_hiddenCardsLayout.getChildCount(); ++j) {
+                if (m_hiddenCardsLayout.getChildAt(j).getVisibility() == View.VISIBLE) {
+                    anyCardVisible = true;
+                    break;
+                }
+            }
+            m_hiddenCardsLayout.setImportantForAccessibility(
+                anyCardVisible ? View.IMPORTANT_FOR_ACCESSIBILITY_YES : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+
             View mainCardView = ((ViewGroup) m_hiddenCardsLayout.getParent()).getChildAt(0);
             int padding = mainCardView.getPaddingTop();
 
