@@ -3,9 +3,6 @@ name: $(Year:yy).$(Month).$(DayOfMonth).$(rev:r)
 pr: none
 trigger: none
 
-pool:
-  name: 1ES-Teams-Windows-2022-Compliant-Daily
-
 parameters:
 - name: base_version
   displayName: Please enter the base version (i.e. MAJOR.MINOR.PATCH)
@@ -18,10 +15,22 @@ parameters:
   displayName: "Please enter pre-release suffix (this is appended to the base version with a hyphen, only if pre-release checkbox selected above)"
   type: string
   default: beta.1
+- name: publish_to_maven
+  displayName: "Publish to Maven Central via ESRP? (leave unchecked to build and sign only)"
+  type: boolean
+  default: false
 
 variables:
 - name: AC_FULL_VERSION_SPECIFIED
   value: true
+- name: JDK_17_URL
+  value: 'https://aka.ms/download-jdk/microsoft-jdk-17.0.20-windows-x64.zip'
+- name: JDK_17_SHA256
+  value: 'e46fd292317c6bb0a8fe9dc63115021329f3a63caeba791c185f89f3666a68e5'
+- name: ANDROID_CMDLINE_TOOLS_URL
+  value: 'https://dl.google.com/android/repository/commandlinetools-win-14742923_latest.zip'
+- name: ANDROID_CMDLINE_TOOLS_SHA256
+  value: 'cc610ccbe83faddb58e1aa68e8fc8743bb30aa5e83577eceb4cc168dae95f9ee'
 - name: AC_VERSION_STRING
   ${{ if parameters.is_prerelease }}:
     value: ${{ format('{0}-{1}', parameters.base_version, parameters.prerelease_suffix) }}
@@ -29,6 +38,7 @@ variables:
     value: ${{ parameters.base_version }}
 - name: AC_APPEND_BUILD_NUMBER
   value: false
+- group: TeamsSDK-Release
 
 
 resources:
@@ -48,41 +58,149 @@ extends:
         break: true
     pool:
       name: 1ES-Teams-Windows-2022-Compliant-Daily
+      os: windows
     stages:
       - stage: Staging
         jobs:
         - job: Staging
           timeoutInMinutes: 120
+          pool:
+            name: 1ES-Teams-Windows-2022-Compliant-Daily
+            os: windows
+          templateContext:
+            outputs:
+            - output: pipelineArtifact
+              targetPath: '$(build.artifactstagingdirectory)'
+              artifactName: drop
           steps:
-          - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk 2.1.818'
-            inputs:
-              version: 2.1.818
-              installationPath: 'c:\Program Files\dotnet'
-
-          - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk 2.1.x'
-            inputs:
-              version: 2.1.x
-              installationPath: $(Agent.ToolsDirectory)/dotnet
-
-          - task: UseDotNet@2
-            displayName: 'Use .Net Core SDK 6'
-            inputs:
-              version: 6.0.x
-
           - task: UseDotNet@2
             displayName: 'Use .Net Core SDK 8'
             inputs:
-              includePreviewVersions: true
               version: 8.0.x
-            condition: eq(variables['TargetNet8'], 'True')
 
           - task: DotNetCoreCLI@2
             displayName: 'dotnet --list-sdks '
             inputs:
               command: custom
               custom: '--list-sdks '
+
+          - task: PowerShell@2
+            displayName: 'Download JDK 17'
+            inputs:
+              targetType: inline
+              script: |
+                $ErrorActionPreference = "Stop"
+                $jdkArchive = "$(Agent.TempDirectory)\microsoft-jdk-17.zip"
+
+                Invoke-WebRequest `
+                  -Uri "$(JDK_17_URL)" `
+                  -OutFile $jdkArchive `
+                  -UseBasicParsing
+
+                $actual = (Get-FileHash -Path $jdkArchive -Algorithm SHA256).Hash
+                if ($actual -ne "$(JDK_17_SHA256)".ToUpperInvariant()) {
+                  throw "JDK 17 checksum mismatch. Expected $(JDK_17_SHA256), got $actual."
+                }
+                Write-Host "JDK 17 checksum verified."
+
+          - task: JavaToolInstaller@0
+            displayName: 'Use JDK 17'
+            inputs:
+              versionSpec: '17'
+              jdkArchitectureOption: x64
+              jdkSourceOption: LocalDirectory
+              jdkFile: '$(Agent.TempDirectory)\microsoft-jdk-17.zip'
+              jdkDestinationDirectory: '$(Agent.TempDirectory)\jdk-17'
+
+          - task: PowerShell@2
+            displayName: 'Install Android SDK'
+            inputs:
+              targetType: inline
+              script: |
+                $ErrorActionPreference = "Stop"
+                $androidSdk = @(
+                  $env:ANDROID_HOME,
+                  $env:ANDROID_SDK_ROOT,
+                  "C:\Android\android-sdk",
+                  "$env:LOCALAPPDATA\Android\Sdk"
+                ) | Where-Object { $_ -and (Test-Path $_) } | Select-Object -First 1
+
+                if (-not $androidSdk) {
+                  $androidSdk = "$(Agent.TempDirectory)\android-sdk"
+                  New-Item -ItemType Directory -Path $androidSdk -Force | Out-Null
+                }
+
+                $sdkManager = Get-ChildItem -Path $androidSdk -Filter sdkmanager.bat -Recurse -ErrorAction SilentlyContinue |
+                  Select-Object -First 1
+                if (-not $sdkManager) {
+                  $toolsArchive = "$(Agent.TempDirectory)\android-command-line-tools.zip"
+                  $toolsExtract = "$(Agent.TempDirectory)\android-command-line-tools"
+                  $toolsDestination = Join-Path $androidSdk "cmdline-tools\latest"
+
+                  Invoke-WebRequest `
+                    -Uri "$(ANDROID_CMDLINE_TOOLS_URL)" `
+                    -OutFile $toolsArchive `
+                    -UseBasicParsing
+
+                  $actual = (Get-FileHash -Path $toolsArchive -Algorithm SHA256).Hash
+                  if ($actual -ne "$(ANDROID_CMDLINE_TOOLS_SHA256)".ToUpperInvariant()) {
+                    throw "Android command line tools checksum mismatch. Expected $(ANDROID_CMDLINE_TOOLS_SHA256), got $actual."
+                  }
+                  Write-Host "Android command line tools checksum verified."
+
+                  Expand-Archive -Path $toolsArchive -DestinationPath $toolsExtract -Force
+                  New-Item -ItemType Directory -Path $toolsDestination -Force | Out-Null
+                  Copy-Item -Path "$toolsExtract\cmdline-tools\*" -Destination $toolsDestination -Recurse -Force
+                  $sdkManager = Get-Item (Join-Path $toolsDestination "bin\sdkmanager.bat")
+                }
+
+                $licenseAnswersFile = "$(Agent.TempDirectory)\android-sdk-license-answers.txt"
+                1..100 | ForEach-Object { "y" } |
+                  Set-Content -Path $licenseAnswersFile -Encoding Ascii
+
+                function Invoke-SdkManager {
+                  param(
+                    [string[]] $Arguments,
+                    [string] $FailureMessage
+                  )
+
+                  $quotedArguments = $Arguments | ForEach-Object {
+                    "`"$($_.Replace('"', '\"'))`""
+                  }
+                  $command = "`"`"$($sdkManager.FullName)`" $($quotedArguments -join ' ') < `"$licenseAnswersFile`"`""
+                  & $env:ComSpec /d /s /c $command
+                  if ($LASTEXITCODE -ne 0) {
+                    throw $FailureMessage
+                  }
+                }
+
+                Invoke-SdkManager `
+                  -Arguments @(
+                    "--sdk_root=$androidSdk",
+                    "platform-tools",
+                    "platforms;android-34",
+                    "build-tools;34.0.0",
+                    "cmake;3.22.1",
+                    "ndk;28.0.13004108"
+                  ) `
+                  -FailureMessage "Failed to install required Android SDK packages."
+
+                Invoke-SdkManager `
+                  -Arguments @("--sdk_root=$androidSdk", "--licenses") `
+                  -FailureMessage "Android SDK licenses remain unaccepted."
+
+                $ndkProperties = Join-Path $androidSdk "ndk\28.0.13004108\source.properties"
+                if (-not (Test-Path $ndkProperties)) {
+                  throw "Android NDK 28.0.13004108 was not installed."
+                }
+
+                $sdkPropertyPath = $androidSdk.Replace("\", "/")
+                Set-Content `
+                  -Path "$(Build.SourcesDirectory)\source\android\local.properties" `
+                  -Value "sdk.dir=$sdkPropertyPath"
+                Write-Host "##vso[task.setvariable variable=ANDROID_HOME]$androidSdk"
+                Write-Host "##vso[task.setvariable variable=ANDROID_SDK_ROOT]$androidSdk"
+                Write-Host "##vso[task.prependpath]$androidSdk\platform-tools"
 
           - task: Gradle@3
             displayName: build
@@ -91,7 +209,11 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:build'
               publishJUnitResults: false
-              jdkVersionOption: 1.17
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
+            env:
+              ANDROID_HOME: $(ANDROID_HOME)
+              ANDROID_SDK_ROOT: $(ANDROID_SDK_ROOT)
 
           - task: Gradle@3
             displayName: 'Gradle Unsigned Publication'
@@ -100,7 +222,11 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishUnsignedReleasePublicationToUnsignedArtifactRepository'
               publishJUnitResults: false
-              jdkVersionOption: 1.17
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
+            env:
+              ANDROID_HOME: $(ANDROID_HOME)
+              ANDROID_SDK_ROOT: $(ANDROID_SDK_ROOT)
 
           - task: Powershell@2
             name: prepareSigningTask
@@ -108,23 +234,34 @@ extends:
             inputs:
               targetType: inline
               script: |
-                ls $(build.sourcesdirectory) -File -Recur | ?{
-                  $_.FullName -Match ".*\\io\\adaptivecards\\.*(.aar)$"
-                } | %{
-                  $dest = (Join-Path $(build.artifactstagingdirectory) ($_.Name + ".asc"))
-                  echo "##vso[task.setvariable variable=aarSignaturePath;isOutput=true;]$dest"
-                  cp $_.FullName $dest
-                  echo "Copied aar to $dest for signing"
+                $ErrorActionPreference = "Stop"
+
+                function Copy-SingleArtifactForSigning {
+                  param(
+                    [string] $Extension,
+                    [string] $VariableName
+                  )
+
+                  $pattern = '.*\\io\\adaptivecards\\.*' + [regex]::Escape($Extension) + '$'
+                  $candidates = @(
+                    Get-ChildItem -Path "$(build.sourcesdirectory)" -File -Recurse |
+                      Where-Object { $_.FullName -match $pattern }
+                  )
+
+                  if ($candidates.Count -ne 1) {
+                    $found = ($candidates | ForEach-Object { $_.FullName }) -join "`n  "
+                    throw "Expected exactly one '$Extension' artifact to sign, found $($candidates.Count).`n  $found"
+                  }
+
+                  $source = $candidates[0]
+                  $dest = Join-Path "$(build.artifactstagingdirectory)" ($source.Name + ".asc")
+                  Copy-Item -Path $source.FullName -Destination $dest -Force
+                  Write-Host "##vso[task.setvariable variable=$VariableName;isOutput=true;]$dest"
+                  Write-Host "Copied $($source.Name) to $dest for signing"
                 }
 
-                ls $(build.sourcesdirectory) -File -Recur | ?{
-                  $_.FullName -Match ".*\\io\\adaptivecards\\.*(.pom)$"
-                } | %{
-                  $dest = (Join-Path $(build.artifactstagingdirectory) ($_.Name + ".asc"))
-                  echo "##vso[task.setvariable variable=pomSignaturePath;isOutput=true;]$dest"
-                  cp $_.FullName $dest
-                  echo "Copied pom to $dest for signing"
-                }
+                Copy-SingleArtifactForSigning -Extension ".aar" -VariableName "aarSignaturePath"
+                Copy-SingleArtifactForSigning -Extension ".pom" -VariableName "pomSignaturePath"
 
           - task: EsrpCodeSigning@5
             displayName: 'ESRP CodeSign (Detached PGP)'
@@ -157,8 +294,11 @@ extends:
               workingDirectory: source/android
               tasks: 'adaptivecards:publishSignedReleasePublicationToSignedArtifactRepository'
               publishJUnitResults: false
-              jdkVersionOption: 1.17
+              javaHomeOption: Path
+              jdkDirectory: $(JAVA_HOME)
             env:
+              ANDROID_HOME: $(ANDROID_HOME)
+              ANDROID_SDK_ROOT: $(ANDROID_SDK_ROOT)
               AC_AAR_SIGNATURE_PATH: $(prepareSigningTask.aarSignaturePath)
               AC_POM_SIGNATURE_PATH: $(prepareSigningTask.pomSignaturePath)
 
@@ -168,75 +308,103 @@ extends:
               targetType: inline
               script: |
                 ls $(build.sourcesdirectory) -File -Recur | ?{
-                  $_.FullName -Match ".*\\signedArtifact\\.*(.aar|.pom|.aar.asc|.pom.asc)$"
+                  $_.FullName -Match ".*\\signedArtifact\\.*(\.aar|\.pom|\.aar\.asc|\.pom\.asc)$"
                 } | %{
                 echo "Copying artifact $_.Name"
                 cp $_.FullName (Join-Path $(build.artifactstagingdirectory) $_.Name)
                 }
 
           - task: Powershell@2
-            name: listStagingDir
-            displayName: 'list signed Files'
+            displayName: 'Prune non-publishable files from staging directory'
             inputs:
               targetType: inline
               script: |
+                $ErrorActionPreference = "Stop"
                 $folderPath = "$(build.artifactstagingdirectory)"
-                
-                # Get all .md files in the folder
-                $mdFiles = Get-ChildItem -Path $folderPath -Filter *.md
-                
-                # Delete each .md file
-                foreach ($file in $mdFiles) {
-                    Remove-Item -Path $file.FullName -Force
-                }
-                
-                Write-Host "All .md files have been deleted from $folderPath"
+                $publishable = @(".aar", ".pom", ".asc")
 
-                ls $(build.artifactstagingdirectory)
-                
+                Get-ChildItem -Path $folderPath -File |
+                  Where-Object { $publishable -notcontains $_.Extension.ToLowerInvariant() } |
+                  ForEach-Object {
+                Write-Host "Removing non-publishable file $($_.Name)"
+                Remove-Item -Path $_.FullName -Force
+                  }
+
+                Write-Host "Staging directory after pruning:"
+                Get-ChildItem -Path $folderPath
+
+          - task: Powershell@2
+            name: generateChecksums
+            displayName: 'Generate checksums for Maven artifacts'
+            inputs:
+              targetType: inline
+              script: |
+                $ErrorActionPreference = "Stop"
                 $folderPath = "$(build.artifactstagingdirectory)"
-                $files = Get-ChildItem -Path $folderPath -File
- 
+                $checksumExtensions = @(".md5", ".sha1", ".sha256", ".sha512")
+
+                $files = @(
+                  Get-ChildItem -Path $folderPath -File |
+                Where-Object { $checksumExtensions -notcontains $_.Extension.ToLowerInvariant() }
+                )
+
+                if ($files.Count -eq 0) {
+                  throw "No artifacts found in $folderPath to checksum."
+                }
+
                 foreach ($file in $files) {
-                    $filePath = $file.FullName
-                    $baseName = $file.Name
- 
-                    # Generate checksums
-                    $md5 = Get-FileHash -Path $filePath -Algorithm MD5
-                    $sha1 = Get-FileHash -Path $filePath -Algorithm SHA1
-                    $sha256 = Get-FileHash -Path $filePath -Algorithm SHA256
-                    $sha512 = Get-FileHash -Path $filePath -Algorithm SHA512
- 
-                    # Write each hash to corresponding file
-                    Set-Content -Path "$folderPath\$baseName.md5" -Value "$($md5.Hash)"
-                    Set-Content -Path "$folderPath\$baseName.sha1" -Value "$($sha1.Hash)"
-                    Set-Content -Path "$folderPath\$baseName.sha256" -Value "$($sha256.Hash)"
-                    Set-Content -Path "$folderPath\$baseName.sha512" -Value "$($sha512.Hash)"
-                    Write-Host "Generated checksums for $baseName"
+                $filePath = $file.FullName
+                $baseName = $file.Name
+
+                $md5 = Get-FileHash -Path $filePath -Algorithm MD5
+                $sha1 = Get-FileHash -Path $filePath -Algorithm SHA1
+                $sha256 = Get-FileHash -Path $filePath -Algorithm SHA256
+                $sha512 = Get-FileHash -Path $filePath -Algorithm SHA512
+
+                Set-Content -Path "$folderPath\$baseName.md5" -Value "$($md5.Hash)"
+                Set-Content -Path "$folderPath\$baseName.sha1" -Value "$($sha1.Hash)"
+                Set-Content -Path "$folderPath\$baseName.sha256" -Value "$($sha256.Hash)"
+                Set-Content -Path "$folderPath\$baseName.sha512" -Value "$($sha512.Hash)"
+                Write-Host "Generated checksums for $baseName"
                 }
- 
-                Write-Host "All checksums have been generated and stored next to the original files."
 
-                ls $(build.artifactstagingdirectory)
+                Write-Host "Staging directory contents to be released:"
+                Get-ChildItem -Path $folderPath
 
-          - task: EsrpRelease@9
-            displayName: 'Publish Maven artifacts via ESRP'
-            inputs:
-              connectedservicename: "TeamsESRP-CP-464385-Pgp"
-              usemanagedidentity: true
-              keyvaultname: 'esrp-teams'
-              signcertname: 'd91c83b4-bfc6-40d3-a591-e5b0598a2796'
-              clientid: 'd91c83b4-bfc6-40d3-a591-e5b0598a2796'
-              contenttype: 'MAVEN'
-              folderlocation: '$(build.artifactstagingdirectory)'
-              owners: 'vidoddab@microsoft.com'
-              approvers: 'mejain@microsoft.com'
-              mainpublisher: ESRPRELPACMAN
-              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
-          
-          - task: 1ES.PublishPipelineArtifact@1
-            displayName: 'Publish Artifact: drop'
-            inputs:
-              path: '$(build.artifactstagingdirectory)'
-              artifact: drop
-
+      - ${{ if parameters.publish_to_maven }}:
+        - stage: Release
+          dependsOn: Staging
+          jobs:
+          - job: Release
+            timeoutInMinutes: 120
+            pool:
+              name: 1ES-Teams-Windows-2022-Compliant-Daily
+              os: windows
+            templateContext:
+              type: releaseJob
+              isProduction: true
+              inputs:
+              - input: pipelineArtifact
+                artifactName: drop
+                targetPath: '$(Pipeline.Workspace)/drop'
+            steps:
+            - task: EsrpRelease@10
+              displayName: 'Publish Maven artifacts via ESRP'
+              inputs:
+                connectedservicename: "TeamsESRP-CP-464385-Pgp"
+                usemanagedidentity: true
+                keyvaultname: 'esrp-teams'
+                signcertname: 'd91c83b4-bfc6-40d3-a591-e5b0598a2796'
+                clientid: 'd91c83b4-bfc6-40d3-a591-e5b0598a2796'
+                intent: 'packagedistribution'
+                contenttype: 'MAVEN'
+                contentsource: 'Folder'
+                folderlocation: '$(Pipeline.Workspace)/drop'
+                waitforreleasecompletion: true
+                serviceendpointurl: 'https://api.esrp.microsoft.com'
+                owners: $(Release.Owners)
+                approvers: $(Release.Approvers)
+                mainpublisher: ESRPRELPACMAN
+                domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+                productState: ${{ iif(parameters.is_prerelease, 'PreRelease', 'Release') }}
+                releasetitle: 'AdaptiveCards Android $(AC_VERSION_STRING)'
