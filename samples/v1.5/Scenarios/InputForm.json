@@ -36,7 +36,7 @@
 							"id": "myName",
 							"label": "Your name (Last, First)",
 							"isRequired": true,
-							"regex": "^[A-Z][a-z]+, [A-Z][a-z]+$",
+							"regex": "^[A-Z][a-z]*, [A-Z][a-z]*$",
 							"errorMessage": "Please enter your name in the specified format"
 						},
 						{
