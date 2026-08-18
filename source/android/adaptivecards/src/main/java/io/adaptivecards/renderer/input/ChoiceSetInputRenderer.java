@@ -364,6 +364,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         spinner.setAdapter(spinnerArrayAdapter);
         spinner.setSelection(selection);
         spinner.setFocusable(true);
+        spinner.setFocusableInTouchMode(true);
 
         if (needsOuterLayout)
         {
