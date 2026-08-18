@@ -157,6 +157,10 @@ typedef NS_ENUM(NSInteger, CustomContentMode) {
 
     if (stringForAccessiblilityLabel.length) {
         view.accessibilityLabel = stringForAccessiblilityLabel;
+    } else if (selectAction) {
+        // Provide a fallback label for interactive images without alt text
+        NSString *actionTitle = stringForCString(selectAction->GetTitle());
+        view.accessibilityLabel = actionTitle.length ? actionTitle : @"Image";
     }
 
     if (imgElem->GetImageStyle() == ImageStyle::Person) {
