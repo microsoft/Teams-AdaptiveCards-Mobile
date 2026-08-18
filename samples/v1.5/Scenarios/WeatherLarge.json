@@ -26,7 +26,7 @@
 					"items": [
 						{
 							"type": "TextBlock",
-							"text": "Tue, Nov 5, 2019",
+							"text": "Tuesday, November 5, 2019",
 							"weight": "bolder",
 							"size": "large",
 							"wrap": true,
