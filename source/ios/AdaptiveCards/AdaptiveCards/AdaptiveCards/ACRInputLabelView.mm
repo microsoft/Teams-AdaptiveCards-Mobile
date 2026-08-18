@@ -124,6 +124,9 @@
             self.label.hidden = NO;
         } else if (!inputBlck->GetIsRequired()) {
             self.label.hidden = YES;
+        } else {
+            // Input is required but has no label text - still show the asterisk (#190)
+            self.label.attributedText = attributedSuffix;
         }
 
         self.label.attributedText = attributedLabel;
