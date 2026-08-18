@@ -65,7 +65,7 @@
 		{
 			"type": "Action.Submit",
 			"title": "Delivery",
-			"isEnabled": false,
+			"isEnabled": true,
 			"tooltip": "Your location is too far for delivery"
 		}
 	]
