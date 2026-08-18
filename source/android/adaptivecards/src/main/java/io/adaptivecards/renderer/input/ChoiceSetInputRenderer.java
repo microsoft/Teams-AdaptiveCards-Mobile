@@ -310,6 +310,7 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
 
                 String talkbackAnnouncement = context.getResources().getString(R.string.spinner_talkback_announcement, m_items.get(position), position+1, m_items.size());
                 spinnerTextView.setContentDescription(talkbackAnnouncement);
+                spinnerView.setSelected(position == ((Spinner) parent).getSelectedItemPosition());
                 return spinnerView;
             }
 
