@@ -168,16 +168,30 @@ const CGFloat minimumRowHeight = 44.0;
     _accessibilityString = accessibilityLabel ? accessibilityLabel : @"";
     cell.accessibilityTraits = cell.accessibilityTraits;
     
-    // If required field voice over should call it out as required.
-    if (isRequired)
-    {
-        cell.accessibilityLabel = [NSString stringWithFormat:@"%@ %@, %@, %@", _accessibilityString, @"(Required)", cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
-        cell.accessibilityLabel = [cell.accessibilityLabel stringByReplacingOccurrencesOfString:@"*" withString:@""];
+    // Build the label from the parts that actually have content. The previous format
+    // strings always emitted their separators, so a ChoiceSet with no accessible name
+    // produced ", Red, check box" - a leading comma where the name should be, which
+    // VoiceOver reads as a pause and leaves the control effectively unnamed.
+    NSMutableArray<NSString *> *components = [NSMutableArray array];
+
+    NSString *name = [_accessibilityString stringByTrimmingCharactersInSet:
+                      [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (name.length > 0) {
+        if (isRequired) {
+            name = [NSString stringWithFormat:@"%@ %@", name, NSLocalizedString(@"(Required)", nil)];
+        }
+        [components addObject:name];
+    } else if (isRequired) {
+        [components addObject:NSLocalizedString(@"(Required)", nil)];
     }
-    else
-    {
-        cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@, %@", _accessibilityString, cell.textLabel.text, _isMultiChoicesAllowed ? @"check box" : @"radio button"];
+
+    if (cell.textLabel.text.length > 0) {
+        [components addObject:cell.textLabel.text];
     }
+    [components addObject:_isMultiChoicesAllowed ? @"check box" : @"radio button"];
+
+    cell.accessibilityLabel = [[components componentsJoinedByString:@", "]
+                               stringByReplacingOccurrencesOfString:@"*" withString:@""];
     
     cell.accessibilityHint = NSLocalizedString(@"double tap to select", nil);
 
