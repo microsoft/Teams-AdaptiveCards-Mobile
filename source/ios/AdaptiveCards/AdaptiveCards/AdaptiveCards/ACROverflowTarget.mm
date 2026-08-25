@@ -242,9 +242,20 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
         }
     }
 
+    // Dismissing the sheet has to say where focus goes. With a nil handler nothing posts
+    // an accessibility notification, so VoiceOver falls back to the platform default and
+    // the user loses their place instead of returning to the control they opened the menu
+    // from. ACRShowCardTarget already handles the equivalent case this way.
+    __weak __typeof(self) weakSelf = self;
     [_alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
                                                style:UIAlertActionStyleCancel
-                                             handler:nil]];
+                                             handler:^(UIAlertAction *action) {
+                                                 __strong __typeof(weakSelf) strongSelf = weakSelf;
+                                                 UIView *anchor = strongSelf.accessibilityFocusAnchor;
+                                                 if (anchor) {
+                                                     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, anchor);
+                                                 }
+                                             }]];
 }
 
 - (void)setInputs:(NSMutableArray *)inputs
