@@ -87,6 +87,15 @@ std::shared_ptr<BaseCardElement> RichTextBlockParser::Deserialize(ParseContext& 
             if (item->GetInlineType() == InlineElementType::TextRun)
             {
                 auto textRun = std::static_pointer_cast<TextRun>(item);
+                // A run carrying a selectAction is an independently focusable, activatable
+                // link. Folding its text into the labelled input's accessible name makes a
+                // screen reader announce that wording as part of the field name - where it
+                // cannot be activated - and then announce it a second time on reaching the
+                // link itself. Skip those runs; the link remains reachable in its own right.
+                if (textRun->GetSelectAction() != nullptr)
+                {
+                    continue;
+                }
                 label += textRun->GetText() + " ";
             } else if (item->GetInlineType() == InlineElementType::CitationRun) {
                 auto citationRun = std::static_pointer_cast<CitationRun>(item);
