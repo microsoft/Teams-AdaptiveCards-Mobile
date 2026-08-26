@@ -36,4 +36,8 @@
 /// the screen.
 @property (nonatomic, weak) UIView *accessibilityFocusAnchor;
 
+/// Hands VoiceOver focus back to ``accessibilityFocusAnchor``. Called when the menu is
+/// dismissed. A no-op when no anchor is set or the anchor has already gone away.
+- (void)restoreAccessibilityFocusToAnchor;
+
 @end

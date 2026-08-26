@@ -249,13 +249,17 @@ NSString *const ACROverflowTargetIsRootLevelKey = @"isAtRootLevel";
     __weak __typeof(self) weakSelf = self;
     [_alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
                                                style:UIAlertActionStyleCancel
-                                             handler:^(UIAlertAction *action) {
-                                                 __strong __typeof(weakSelf) strongSelf = weakSelf;
-                                                 UIView *anchor = strongSelf.accessibilityFocusAnchor;
-                                                 if (anchor) {
-                                                     UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, anchor);
-                                                 }
+                                             handler:^(__unused UIAlertAction *action) {
+                                                 [weakSelf restoreAccessibilityFocusToAnchor];
                                              }]];
+}
+
+- (void)restoreAccessibilityFocusToAnchor
+{
+    UIView *anchor = self.accessibilityFocusAnchor;
+    if (anchor) {
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, anchor);
+    }
 }
 
 - (void)setInputs:(NSMutableArray *)inputs
