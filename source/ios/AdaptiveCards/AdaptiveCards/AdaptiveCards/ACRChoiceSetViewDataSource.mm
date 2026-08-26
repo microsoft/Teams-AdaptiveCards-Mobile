@@ -172,7 +172,9 @@ const CGFloat minimumRowHeight = 44.0;
     // strings always emitted their separators, so a ChoiceSet with no accessible name
     // produced ", Red, check box" - a leading comma where the name should be, which
     // VoiceOver reads as a pause and leaves the control effectively unnamed.
-    NSMutableArray<NSString *> *components = [NSMutableArray array];
+    // At most three components: the name (optionally with the required suffix), the
+    // choice text, and the control role.
+    NSMutableArray<NSString *> *components = [NSMutableArray arrayWithCapacity:3];
 
     NSString *name = [_accessibilityString stringByTrimmingCharactersInSet:
                       [NSCharacterSet whitespaceAndNewlineCharacterSet]];
