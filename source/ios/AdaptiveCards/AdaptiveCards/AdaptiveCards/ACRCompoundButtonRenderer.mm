@@ -115,7 +115,8 @@
     // the inner labels individually and never announced the control role. Combine
     // the title, badge and description into one label and mark the view as a button.
     compoundButtonView.isAccessibilityElement = YES;
-    NSMutableArray<NSString *> *compoundButtonLabelParts = [NSMutableArray array];
+    // At most three parts: title, badge, description.
+    NSMutableArray<NSString *> *compoundButtonLabelParts = [NSMutableArray arrayWithCapacity:3];
     NSString *compoundButtonTitle = @(compoundButton->getTitle().c_str());
     NSString *compoundButtonBadge = @(compoundButton->getBadge().c_str());
     NSString *compoundButtonDescription = @(compoundButton->getDescription().c_str());
