@@ -107,6 +107,9 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         // configure UITextField
         self.delegate = self;
         self.placeholder = _validator.placeHolder;
+        UIColor *placeholderColor = [UIColor colorWithWhite:0.4 alpha:1.0];
+        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholder ?: @""
+                                                                     attributes:@{NSForegroundColorAttributeName : placeholderColor}];
         self.allowsEditingTextAttributes = NO;
         self.text = _validator.userInitialChoice;
 

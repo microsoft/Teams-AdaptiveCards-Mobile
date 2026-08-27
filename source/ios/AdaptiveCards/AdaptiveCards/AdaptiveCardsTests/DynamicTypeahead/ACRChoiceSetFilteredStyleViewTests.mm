@@ -27,6 +27,7 @@
 {
     _rootView = [[MockACRView alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
     std::shared_ptr<ChoiceSetInput> choiceSet = std::make_shared<ChoiceSetInput>();
+    choiceSet->SetPlaceholder("Please choose");
     _acoElem = [[ACOBaseCardElement alloc] initWithBaseCardElement:choiceSet];
 }
 
@@ -45,6 +46,15 @@
     XCTAssertEqualObjects(selectedText, @"Option 1");
     res = [filteredView validate:nil];
     XCTAssertFalse(res);
+}
+
+- (void)testPlaceholderUsesAccessibleColor
+{
+    ACRChoiceSetFilteredStyleView *filteredView = [[ACRChoiceSetFilteredStyleView alloc] initWithInputChoiceSet:_acoElem rootView:_rootView hostConfig:nil searchStateParams:nil typeaheadViewTitle:@"typeahead"];
+    UIColor *placeholderColor = [filteredView.attributedPlaceholder attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
+    UIColor *expectedColor = [UIColor colorWithWhite:0.4 alpha:1.0];
+
+    XCTAssertEqualObjects(placeholderColor, expectedColor);
 }
 
 @end

@@ -45,8 +45,18 @@ using namespace AdaptiveCards;
 - (ACOBaseCardElement *)buildBaseCardElement
 {
     std::shared_ptr<ChoiceSetInput> choiceSet = std::make_shared<ChoiceSetInput>();
+    choiceSet->SetPlaceholder("Please choose");
     ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] initWithBaseCardElement:choiceSet];
     return acoElem;
+}
+
+- (void)testPlaceholderUsesAccessibleColor
+{
+    ACRChoiceSetCompactStyleView *compactStyleView = [[ACRChoiceSetCompactStyleView alloc] initWithInputChoiceSet:[self buildBaseCardElement] rootView:_rootView hostConfig:_hostConfig];
+    UIColor *placeholderColor = [compactStyleView.attributedPlaceholder attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
+    UIColor *expectedColor = [UIColor colorWithWhite:0.4 alpha:1.0];
+
+    XCTAssertEqualObjects(placeholderColor, expectedColor);
 }
 
 - (void)testUpdateFilteredListForStaticTypeahead
