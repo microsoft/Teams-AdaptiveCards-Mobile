@@ -18,6 +18,11 @@
 
 using namespace AdaptiveCards;
 
+/// Used by reference in the initializer below. Declared here so this header compiles on
+/// its own: it previously relied on whatever imported it having already pulled the type
+/// in, which held for ACRActionSetRenderer.mm only because its own header does so first.
+@class ACOAdaptiveCard;
+
 @interface ACOActionOverflow : ACOBaseActionElement
 
 - (instancetype)initWithBaseActionElements:(const std::vector<std::shared_ptr<BaseActionElement>> &)elements
