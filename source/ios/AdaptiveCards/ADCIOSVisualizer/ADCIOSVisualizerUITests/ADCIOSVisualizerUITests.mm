@@ -599,7 +599,10 @@
 
     // Adjust this to select a rating (e.g., tap the 4th star for rating=4)
     // Tap the 4th star for rating=4
-    XCUIElement *fourthStar = [testApp.images elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Rate 4 Star"]];
+    // The star now carries UIAccessibilityTraitButton, so it resolves as a button rather
+    // than an image. That role change is the point of the fix - VoiceOver previously
+    // announced "Rate 4 Star, image" with no indication the control was actuatable.
+    XCUIElement *fourthStar = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Rate 4 Star"]];
     XCTAssertTrue(fourthStar.exists && fourthStar.isHittable, @"The 4th star should exist and be hittable");
     [fourthStar tap];
 
@@ -656,7 +659,10 @@
 
     // Adjust this to select a rating (e.g., tap the 4th star for rating=4)
     // Tap the 4th star for rating=4
-    XCUIElement *fourthStar = [testApp.images elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Rate 4 Star"]];
+    // The star now carries UIAccessibilityTraitButton, so it resolves as a button rather
+    // than an image. That role change is the point of the fix - VoiceOver previously
+    // announced "Rate 4 Star, image" with no indication the control was actuatable.
+    XCUIElement *fourthStar = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Rate 4 Star"]];
     XCTAssertTrue(fourthStar.exists && fourthStar.isHittable, @"The 4th star should exist and be hittable");
     [fourthStar tap];
 
