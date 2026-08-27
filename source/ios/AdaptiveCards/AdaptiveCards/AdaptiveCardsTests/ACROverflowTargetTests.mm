@@ -5,12 +5,22 @@
 //  Copyright © 2026 Microsoft. All rights reserved.
 //
 
-#import "ACOActionOverflowPrivate.h"
 #import "ACOAdaptiveCard.h"
 #import "ACOAdaptiveCardParseResult.h"
 #import "ACROverflowTarget.h"
 #import "ACRView.h"
+#import "BaseActionElement.h"
 #import <XCTest/XCTest.h>
+
+/// The designated initializer lives in ACOActionOverflowPrivate.h, but that header
+/// re-declares the whole @interface rather than using a class extension, so it cannot be
+/// imported alongside the public ACOActionOverflow.h — which ACROverflowTarget.h above
+/// already brings in. Declaring just the one initializer here keeps the two out of
+/// conflict; the implementation is in ACOActionOverflow.mm.
+@interface ACOActionOverflow (ACROverflowTargetTests)
+- (instancetype)initWithBaseActionElements:(const std::vector<std::shared_ptr<AdaptiveCards::BaseActionElement>> &)elements
+                                    atCard:(ACOAdaptiveCard *)card;
+@end
 
 @interface ACROverflowTargetTests : XCTestCase
 @end
