@@ -94,6 +94,9 @@
         starImageView.userInteractionEnabled = YES;
         starImageView.isAccessibilityElement = YES;
         starImageView.accessibilityLabel = [NSString stringWithFormat:@"Rate %d Star", (int)i+1];
+        // Each star is tappable, so announce it as a button. Without a trait VoiceOver
+        // reads "Rate 3 Star, image" and gives no indication the control is actuatable.
+        starImageView.accessibilityTraits |= UIAccessibilityTraitButton;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleStarTap:)];
         [starImageView addGestureRecognizer:tapGesture];
         [_accessibleChildren addObject:starImageView];
@@ -129,13 +132,16 @@
     _ratingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _ratingLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _ratingLabel.attributedText = [self atrributedStringForLabel];
+    // These branches were inverted: a rating WITH a count announced "Rating 3.2," -
+    // dropping the count and leaving a dangling comma that VoiceOver pauses on - while a
+    // rating WITHOUT a count announced the meaningless "Count 0".
     if (_count > 0)
     {
-        _ratingLabel.accessibilityLabel = [[NSString alloc] initWithFormat:@"Rating %.1f,", (float)_value];
+        _ratingLabel.accessibilityLabel = [[NSString alloc] initWithFormat:@"Rating %.1f, Count %d", (float)_value, (int)_count];
     }
     else
     {
-        _ratingLabel.accessibilityLabel = [[NSString alloc] initWithFormat:@"Rating %.1f, Count %d", (float)_value, (int)_count];
+        _ratingLabel.accessibilityLabel = [[NSString alloc] initWithFormat:@"Rating %.1f", (float)_value];
     }
     
     [self addSubview:_ratingLabel];

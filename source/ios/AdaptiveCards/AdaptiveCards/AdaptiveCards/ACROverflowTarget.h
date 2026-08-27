@@ -31,4 +31,13 @@
 
 @property (readonly) NSArray<ACROverflowMenuItem *> *menuItems;
 
+/// The control that opened the overflow menu. VoiceOver focus is returned here when the
+/// menu is dismissed, so the user lands back where they were instead of at the top of
+/// the screen.
+@property (nonatomic, weak) UIView *accessibilityFocusAnchor;
+
+/// Hands VoiceOver focus back to ``accessibilityFocusAnchor``. Called when the menu is
+/// dismissed. A no-op when no anchor is set or the anchor has already gone away.
+- (void)restoreAccessibilityFocusToAnchor;
+
 @end

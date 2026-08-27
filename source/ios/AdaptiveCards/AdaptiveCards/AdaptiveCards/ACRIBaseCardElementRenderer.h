@@ -19,19 +19,19 @@
            rootView:(ACRView *)rootView
              inputs:(NSMutableArray *)inputs
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig NS_SWIFT_UI_ACTOR;
 @optional
 /// override this method for custom styling
 /// not all renderers supports it
 - (void)configure:(UIView *)view
            rootView:(ACRView *)rootView
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig NS_SWIFT_UI_ACTOR;
 
 - (void)configureVC:(UIViewController *)view
            rootView:(ACRView *)rootView
     baseCardElement:(ACOBaseCardElement *)acoElem
-         hostConfig:(ACOHostConfig *)acoConfig;
+         hostConfig:(ACOHostConfig *)acoConfig NS_SWIFT_UI_ACTOR;
 @end
 
 @protocol ACRIKVONotificationHandler
