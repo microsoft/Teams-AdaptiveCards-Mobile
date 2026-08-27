@@ -87,6 +87,13 @@ public class IdentifierNode: EvaluationNode {
     public func evaluate(context: EvaluationContext) async throws -> EvaluationResult {
         guard let identifier = identifier else { return nil }
 
+        // Handle $var prefix — return the variable scope as a [String: Any] dictionary
+        // so PathNode can resolve $var.result → variableScope["result"]
+        if identifier == "$var" {
+            let vars = await context.allVariables
+            return vars.compactMapValues { $0 }
+        }
+
         // First check variable scope using the actor's public method
         if let value = await context.getVariable(identifier) {
             return value
