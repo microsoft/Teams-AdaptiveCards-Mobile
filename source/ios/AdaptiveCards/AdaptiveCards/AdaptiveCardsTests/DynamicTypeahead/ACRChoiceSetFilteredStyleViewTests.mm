@@ -10,6 +10,7 @@
 #import "ACOBaseCardElementPrivate.h"
 #import "ACOHostConfigPrivate.h"
 #import "ACRChoiceSetFilteredStyleView.h"
+#import "ACRContrastTestUtils.h"
 #import "ACRMockViews.h"
 #import "ChoiceSetInput.h"
 #import <UIKit/UIKit.h>
@@ -51,15 +52,14 @@
     XCTAssertFalse(res);
 }
 
-- (void)testPlaceholderUsesAccessibleColor
+- (void)testPlaceholderMeetsContrastRequirement
 {
     ACRChoiceSetFilteredStyleView *filteredView = [[ACRChoiceSetFilteredStyleView alloc] initWithInputChoiceSet:_acoElem rootView:_rootView hostConfig:_hostConfig searchStateParams:nil typeaheadViewTitle:@"typeahead"];
     UIColor *placeholderColor = [filteredView.attributedPlaceholder attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
-    UIColor *expectedColor = [_hostConfig getTextBlockColor:ACRDefault
-                                                 textColor:ForegroundColor::Default
-                                              subtleOption:YES];
+    UITraitCollection *lightTraits = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
+    UIColor *backgroundColor = [UIColor.systemGroupedBackgroundColor resolvedColorWithTraitCollection:lightTraits];
 
-    XCTAssertEqualObjects(placeholderColor, expectedColor);
+    XCTAssertGreaterThanOrEqual(ACRContrastRatio(placeholderColor, backgroundColor, lightTraits), 4.5);
 }
 
 @end
