@@ -8,6 +8,7 @@
 
 #import "ACOBaseCardElement.h"
 #import "ACOBaseCardElementPrivate.h"
+#import "ACOHostConfigPrivate.h"
 #import "ACRChoiceSetFilteredStyleView.h"
 #import "ACRMockViews.h"
 #import "ChoiceSetInput.h"
@@ -21,6 +22,7 @@
 @implementation ACRChoiceSetFilteredStyleViewTests {
     MockACRView *_rootView;
     ACOBaseCardElement *_acoElem;
+    ACOHostConfig *_hostConfig;
 }
 
 - (void)setUp
@@ -29,11 +31,12 @@
     std::shared_ptr<ChoiceSetInput> choiceSet = std::make_shared<ChoiceSetInput>();
     choiceSet->SetPlaceholder("Please choose");
     _acoElem = [[ACOBaseCardElement alloc] initWithBaseCardElement:choiceSet];
+    _hostConfig = [[ACOHostConfig alloc] init];
 }
 
 - (void)testFilteredStyleViewInit
 {
-    ACRChoiceSetFilteredStyleView *filteredView = [[ACRChoiceSetFilteredStyleView alloc] initWithInputChoiceSet:_acoElem rootView:_rootView hostConfig:nil searchStateParams:nil typeaheadViewTitle:@"typeahead"];
+    ACRChoiceSetFilteredStyleView *filteredView = [[ACRChoiceSetFilteredStyleView alloc] initWithInputChoiceSet:_acoElem rootView:_rootView hostConfig:_hostConfig searchStateParams:nil typeaheadViewTitle:@"typeahead"];
     XCTAssertNotNil(filteredView.showFilteredListControl);
     NSString *selectedText = [filteredView getSelectedText];
     XCTAssertEqual(selectedText.length, 0);
@@ -50,9 +53,11 @@
 
 - (void)testPlaceholderUsesAccessibleColor
 {
-    ACRChoiceSetFilteredStyleView *filteredView = [[ACRChoiceSetFilteredStyleView alloc] initWithInputChoiceSet:_acoElem rootView:_rootView hostConfig:nil searchStateParams:nil typeaheadViewTitle:@"typeahead"];
+    ACRChoiceSetFilteredStyleView *filteredView = [[ACRChoiceSetFilteredStyleView alloc] initWithInputChoiceSet:_acoElem rootView:_rootView hostConfig:_hostConfig searchStateParams:nil typeaheadViewTitle:@"typeahead"];
     UIColor *placeholderColor = [filteredView.attributedPlaceholder attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
-    UIColor *expectedColor = [UIColor colorWithWhite:0.4 alpha:1.0];
+    UIColor *expectedColor = [_hostConfig getTextBlockColor:ACRDefault
+                                                 textColor:ForegroundColor::Default
+                                              subtleOption:YES];
 
     XCTAssertEqualObjects(placeholderColor, expectedColor);
 }

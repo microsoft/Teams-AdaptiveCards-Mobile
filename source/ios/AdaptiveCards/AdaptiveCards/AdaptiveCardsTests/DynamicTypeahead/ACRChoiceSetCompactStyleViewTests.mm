@@ -54,7 +54,9 @@ using namespace AdaptiveCards;
 {
     ACRChoiceSetCompactStyleView *compactStyleView = [[ACRChoiceSetCompactStyleView alloc] initWithInputChoiceSet:[self buildBaseCardElement] rootView:_rootView hostConfig:_hostConfig];
     UIColor *placeholderColor = [compactStyleView.attributedPlaceholder attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
-    UIColor *expectedColor = [UIColor colorWithWhite:0.4 alpha:1.0];
+    UIColor *expectedColor = [_hostConfig getTextBlockColor:ACRDefault
+                                                 textColor:ForegroundColor::Default
+                                              subtleOption:YES];
 
     XCTAssertEqualObjects(placeholderColor, expectedColor);
 }

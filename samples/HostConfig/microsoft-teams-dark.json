@@ -370,7 +370,7 @@
 			"tint": {
 				"backgroundColor": "#2f2f4a",
 				"strokeColor": "#292929",
-				"textColor": "#7f85f5"
+				"textColor": "#a6a7dc"
 			}
 		},
 		"attention": {
@@ -382,7 +382,7 @@
 			"tint": {
 				"backgroundColor": "#250909",
 				"strokeColor": "#292929",
-				"textColor": "#e83a3a"
+				"textColor": "#f1707b"
 			}
 		},
 		"good": {
@@ -401,12 +401,12 @@
 			"filled": {
 				"backgroundColor": "#292929",
 				"strokeColor": "#292929",
-				"textColor": "#919191"
+				"textColor": "#adadad"
 			},
 			"tint": {
 				"backgroundColor": "#212121",
 				"strokeColor": "#292929",
-				"textColor": "#919191"
+				"textColor": "#adadad"
 			}
 		},
 		"subtle": {

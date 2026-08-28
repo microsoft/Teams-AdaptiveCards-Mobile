@@ -11,7 +11,9 @@
 #import "TextInput.h"
 
 
-@implementation ACRTextField
+@implementation ACRTextField {
+    UIButton *_acrClearButton;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -46,8 +48,16 @@
     self.font = [UIFont systemFontOfSize:15];
     self.minimumFontSize = 15;
 
-    // Display clear button always
-    self.clearButtonMode = UITextFieldViewModeAlways;
+    self.clearButtonMode = UITextFieldViewModeNever;
+    _acrClearButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _acrClearButton.tintColor = UIColor.secondaryLabelColor;
+    _acrClearButton.accessibilityLabel = @"Clear text";
+    UIImage *clearImage = [[UIImage systemImageNamed:@"xmark.circle.fill"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_acrClearButton setImage:clearImage forState:UIControlStateNormal];
+    [_acrClearButton addTarget:self action:@selector(acr_clearTextField:) forControlEvents:UIControlEventTouchUpInside];
+    self.rightView = _acrClearButton;
+    self.rightViewMode = UITextFieldViewModeNever;
+    [self addTarget:self action:@selector(updateClearButtonVisibility) forControlEvents:UIControlEventEditingChanged];
 
     // Automatically enable the return key when appropriate
     self.enablesReturnKeyAutomatically = YES;
@@ -62,6 +72,33 @@
     } @catch (NSException *exception) {
         // Fallback if the placeholderLabel property is not available.
         NSLog(@"Placeholder text color not set: %@", exception);
+    }
+}
+
+- (CGRect)rightViewRectForBounds:(CGRect)bounds
+{
+    if (self.rightView == _acrClearButton) {
+        return [super clearButtonRectForBounds:bounds];
+    }
+    return [super rightViewRectForBounds:bounds];
+}
+
+- (void)setText:(NSString *)text
+{
+    [super setText:text];
+    [self updateClearButtonVisibility];
+}
+
+- (void)acr_clearTextField:(UIButton *)sender
+{
+    self.text = @"";
+    [self sendActionsForControlEvents:UIControlEventEditingChanged];
+}
+
+- (void)updateClearButtonVisibility
+{
+    if (self.rightView == _acrClearButton) {
+        self.rightViewMode = self.text.length ? UITextFieldViewModeAlways : UITextFieldViewModeNever;
     }
 }
 

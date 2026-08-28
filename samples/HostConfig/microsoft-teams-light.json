@@ -370,7 +370,7 @@
 			"tint": {
 				"backgroundColor": "#e8ebfa",
 				"strokeColor": "#e1e1e1",
-				"textColor": "#5b5fc7"
+				"textColor": "#444791"
 			}
 		},
 		"attention": {
@@ -382,7 +382,7 @@
 			"tint": {
 				"backgroundColor": "#f9d9d9",
 				"strokeColor": "#e1e1e1",
-				"textColor": "#d92c2c"
+				"textColor": "#a4262c"
 			}
 		},
 		"good": {
@@ -394,7 +394,7 @@
 			"tint": {
 				"backgroundColor": "#e7f2da",
 				"strokeColor": "#e1e1e1",
-				"textColor": "#0f7a0b"
+				"textColor": "#0b6a0b"
 			}
 		},
 		"informative": {
@@ -413,12 +413,12 @@
 			"filled": {
 				"backgroundColor": "#f1f1f1",
 				"strokeColor": "#f1f1f1",
-				"textColor": "#6e6e6e"
+				"textColor": "#5f5f5f"
 			},
 			"tint": {
 				"backgroundColor": "#f1f1f1",
 				"strokeColor": "#e1e1e1",
-				"textColor": "#6e6e6e"
+				"textColor": "#5f5f5f"
 			}
 		},
 		"warning": {
