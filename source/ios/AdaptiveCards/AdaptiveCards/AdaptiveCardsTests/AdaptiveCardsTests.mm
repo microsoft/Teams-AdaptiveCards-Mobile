@@ -11,6 +11,7 @@
 #import "ACRFactSetRenderer.h"
 #import "ACRInputLabelView.h"
 #import "ACRRegistration.h"
+#import "ACRTextField.h"
 #import "ACRTextView.h"
 #import "ACRViewPrivate.h"
 #import "Fact.h"
@@ -21,6 +22,10 @@
 #import <XCTest/XCTest.h>
 
 using namespace AdaptiveCards;
+
+@interface ACRTextField (Testing)
+- (void)acr_clearTextField:(UIButton *)sender;
+@end
 
 @interface ACRTrackingTextMapView : ACRView
 
@@ -71,6 +76,43 @@ using namespace AdaptiveCards;
 
     std::string serializedTextBlock = textblock->Serialize();
     XCTAssert(serializedTextBlock == "{\"text\":\"Text test\",\"type\":\"TextBlock\"}\n");
+}
+
+- (void)testDefaultBadgeStylesUseAccessibleTextColors
+{
+    HostConfig hostConfig;
+    BadgeStylesDefinition badgeStyles = hostConfig.GetBadgeStyles();
+
+    XCTAssertEqual(badgeStyles.accentPalette.tintStyle.textColor, std::string("#444791"));
+    XCTAssertEqual(badgeStyles.attentionPalette.tintStyle.textColor, std::string("#a4262c"));
+    XCTAssertEqual(badgeStyles.goodPalette.tintStyle.textColor, std::string("#0b6a0b"));
+    XCTAssertEqual(badgeStyles.subtlePalette.filledStyle.textColor, std::string("#5f5f5f"));
+    XCTAssertEqual(badgeStyles.subtlePalette.tintStyle.textColor, std::string("#5f5f5f"));
+}
+
+- (void)testTextFieldClearButtonUsesAccessibleColorAndNativeLayout
+{
+    CGRect bounds = CGRectMake(0, 0, 220, 34);
+    ACRTextField *textField = [[ACRTextField alloc] initWithFrame:bounds];
+    textField.text = @"Ashley";
+
+    UITextField *nativeTextField = [[UITextField alloc] initWithFrame:bounds];
+    nativeTextField.borderStyle = UITextBorderStyleRoundedRect;
+    nativeTextField.clearButtonMode = UITextFieldViewModeAlways;
+
+    XCTAssertEqual(textField.rightViewMode, UITextFieldViewModeAlways);
+    XCTAssertTrue([textField.rightView isKindOfClass:UIButton.class]);
+    XCTAssertTrue(CGRectEqualToRect([textField rightViewRectForBounds:bounds],
+                                    [nativeTextField clearButtonRectForBounds:bounds]));
+
+    UIButton *clearButton = (UIButton *)textField.rightView;
+    XCTAssertEqualObjects(clearButton.tintColor, UIColor.secondaryLabelColor);
+    XCTAssertEqualObjects(clearButton.accessibilityLabel, @"Clear text");
+
+    [textField acr_clearTextField:clearButton];
+
+    XCTAssertEqualObjects(textField.text, @"");
+    XCTAssertEqual(textField.rightViewMode, UITextFieldViewModeNever);
 }
 
 - (void)testContentHoldingUIViewWithImage

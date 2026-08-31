@@ -8,6 +8,7 @@
 #import "ACRChoiceSetCompactStyleView.h"
 #import "ACOBaseCardElementPrivate.h"
 #import "ACOBundle.h"
+#import "ACOHostConfigPrivate.h"
 #import "ACRActionDelegate.h"
 #import "ACRBaseCardElementRenderer.h"
 #import "ACRInputLabelView.h"
@@ -107,6 +108,11 @@ static inline CGRect ActiveSceneBoundsForView(UIView *view)
         // configure UITextField
         self.delegate = self;
         self.placeholder = _validator.placeHolder;
+        UIColor *placeholderColor = [acoConfig getTextBlockColor:ACRDefault
+                                                       textColor:ForegroundColor::Default
+                                                    subtleOption:YES];
+        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholder ?: @""
+                                                                     attributes:@{NSForegroundColorAttributeName : placeholderColor}];
         self.allowsEditingTextAttributes = NO;
         self.text = _validator.userInitialChoice;
 

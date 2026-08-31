@@ -916,6 +916,7 @@
 		6BE6C7A426E17132009E9171 /* ColumnSet.VerticalStretch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = ColumnSet.VerticalStretch.json; path = ../../../../../../samples/v1.1/Tests/ColumnSet.VerticalStretch.json; sourceTree = "<group>"; };
 		6BE6C7AE26E2C969009E9171 /* ACRCustomRenderers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCustomRenderers.h; sourceTree = "<group>"; };
 		6BE6C7AF26E2C9A3009E9171 /* ACRCustomRenderers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCustomRenderers.mm; sourceTree = "<group>"; };
+		A11C0A572F51000100C0A57A /* ACRContrastTestUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRContrastTestUtils.h; sourceTree = "<group>"; };
 		6BE6C7B126E2DF29009E9171 /* Container.VerticalContentAlignment2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Container.VerticalContentAlignment2.json; sourceTree = "<group>"; };
 		6BE6C7B526E2E140009E9171 /* Column.VerticalAlignment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Column.VerticalAlignment.json; sourceTree = "<group>"; };
 		6BE6C7B726E2E30A009E9171 /* Container.VerticalContentAlignment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Container.VerticalContentAlignment.json; sourceTree = "<group>"; };
@@ -1600,6 +1601,7 @@
 		6BE6C79426E1560A009E9171 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A11C0A572F51000100C0A57A /* ACRContrastTestUtils.h */,
 				6BE6C7AE26E2C969009E9171 /* ACRCustomRenderers.h */,
 				6BE6C7AF26E2C9A3009E9171 /* ACRCustomRenderers.mm */,
 			);
