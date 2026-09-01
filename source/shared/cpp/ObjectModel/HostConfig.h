@@ -499,7 +499,7 @@ struct BadgeStylesDefinition
         {
             "#e8ebfa",
             "#e1e1e1",
-            "#5b5fc7"
+            "#444791"
         }
     };
     BadgeStyleDefinition attentionPalette = {
@@ -511,7 +511,7 @@ struct BadgeStylesDefinition
         {
             "#f9d9d9",
             "#e1e1e1",
-            "#d92c2c"
+            "#a4262c"
         }
     };
     BadgeStyleDefinition goodPalette = {
@@ -523,7 +523,7 @@ struct BadgeStylesDefinition
         {
             "#e7f2da",
             "#e1e1e1",
-            "#0f7a0b"
+            "#0b6a0b"
         }
     };
 
@@ -544,12 +544,12 @@ struct BadgeStylesDefinition
         {
             "#f1f1f1",
             "#f1f1f1",
-            "#6e6e6e"
+            "#5f5f5f"
         },
         {
             "#f1f1f1",
             "#e1e1e1",
-            "#6e6e6e"
+            "#5f5f5f"
         }
     };
 

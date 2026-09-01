@@ -192,7 +192,16 @@
         NSString *key = [NSString stringWithCString:action->GetIconUrl(ACTheme(rootView.theme)).c_str() encoding:[NSString defaultCStringEncoding]];
         UIImage *img = imageViewMap[key];
         button.iconPlacement = ACRNoTitle;
-        button.accessibilityLabel = title;
+        // An icon-only inline action carries no title, so this assigned an empty string and
+        // left the button with no accessible name at all - VoiceOver reaches a control it
+        // cannot announce or describe. The card does name it, through the action's tooltip,
+        // which is the same text a sighted user gets on hover.
+        //
+        // This is the mirror of the rule further down that promotes the title to the tooltip
+        // when an icon button has a title but no tooltip; title and tooltip are already
+        // treated as interchangeable naming sources for these buttons.
+        NSString *tooltip = [NSString stringWithCString:action->GetTooltip().c_str() encoding:NSUTF8StringEncoding];
+        button.accessibilityLabel = title.length ? title : tooltip;
 
         if (img) {
             UIImageView *iconView = [[ACRUIImageView alloc] init];

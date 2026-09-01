@@ -11,6 +11,7 @@
 #import "ACOHostConfigPrivate.h"
 #import "ACRButton.h"
 #import "ACRChoiceSetCompactStyleView.h"
+#import "ACRContrastTestUtils.h"
 #import "ACRMockViews.h"
 #import "ACRViewPrivate.h"
 #import "ChoiceSetInput.h"
@@ -45,8 +46,33 @@ using namespace AdaptiveCards;
 - (ACOBaseCardElement *)buildBaseCardElement
 {
     std::shared_ptr<ChoiceSetInput> choiceSet = std::make_shared<ChoiceSetInput>();
+    choiceSet->SetPlaceholder("Please choose");
     ACOBaseCardElement *acoElem = [[ACOBaseCardElement alloc] initWithBaseCardElement:choiceSet];
     return acoElem;
+}
+
+- (void)testPlaceholderMeetsContrastRequirement
+{
+    ACRChoiceSetCompactStyleView *compactStyleView = [[ACRChoiceSetCompactStyleView alloc] initWithInputChoiceSet:[self buildBaseCardElement] rootView:_rootView hostConfig:_hostConfig];
+    UIColor *placeholderColor = [compactStyleView.attributedPlaceholder attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
+    UITraitCollection *lightTraits = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleLight];
+    UIColor *backgroundColor = [UIColor.systemGroupedBackgroundColor resolvedColorWithTraitCollection:lightTraits];
+
+    XCTAssertGreaterThanOrEqual(ACRContrastRatio(placeholderColor, backgroundColor, lightTraits), 4.5);
+}
+
+- (void)testPlaceholderMeetsContrastRequirementInDarkMode
+{
+    NSString *darkHostConfigJson = @"{\"containerStyles\":{\"default\":{\"foregroundColors\":{\"default\":{\"default\":\"#FFFFFFFF\",\"subtle\":\"#BFFFFFFF\"}},\"backgroundColor\":\"#141414\"}}}";
+    ACOHostConfigParseResult *parseResult = [ACOHostConfig fromJson:darkHostConfigJson];
+    XCTAssertTrue(parseResult.isValid);
+
+    ACRChoiceSetCompactStyleView *compactStyleView = [[ACRChoiceSetCompactStyleView alloc] initWithInputChoiceSet:[self buildBaseCardElement] rootView:_rootView hostConfig:parseResult.config];
+    UIColor *placeholderColor = [compactStyleView.attributedPlaceholder attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
+    UITraitCollection *darkTraits = [UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark];
+    UIColor *backgroundColor = [UIColor.systemGroupedBackgroundColor resolvedColorWithTraitCollection:darkTraits];
+
+    XCTAssertGreaterThanOrEqual(ACRContrastRatio(placeholderColor, backgroundColor, darkTraits), 4.5);
 }
 
 - (void)testUpdateFilteredListForStaticTypeahead

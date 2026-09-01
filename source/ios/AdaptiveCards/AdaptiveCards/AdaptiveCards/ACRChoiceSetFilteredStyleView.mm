@@ -8,6 +8,7 @@
 #import "ACRChoiceSetFilteredStyleView.h"
 #import "ACOBaseCardElementPrivate.h"
 #import "ACOBundle.h"
+#import "ACOHostConfigPrivate.h"
 #import "ACRActionDelegate.h"
 #import "ACRBaseCardElementRenderer.h"
 #import "ACRChoiceSetCompactStyleView.h"
@@ -57,6 +58,11 @@ using namespace AdaptiveCards;
         // configure UITextField
         self.delegate = self;
         self.placeholder = _validator.placeHolder;
+        UIColor *placeholderColor = [hostConfig getTextBlockColor:ACRDefault
+                                                       textColor:ForegroundColor::Default
+                                                    subtleOption:YES];
+        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholder ?: @""
+                                                                     attributes:@{NSForegroundColorAttributeName : placeholderColor}];
         self.allowsEditingTextAttributes = NO;
         self.text = _validator.userInitialChoice;
 

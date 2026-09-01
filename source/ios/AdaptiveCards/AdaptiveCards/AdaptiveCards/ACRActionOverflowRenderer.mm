@@ -46,6 +46,8 @@
         ACRTargetBuilderDirector *director = [rootView getActionsTargetBuilderDirector];
         ACRRenderingStatus status = buildTargetForButton(director, acoElem, button, &target);
         if (ACRRenderingStatus::ACROk == status) {
+            // So the menu can hand VoiceOver focus back to this button on dismissal.
+            target.accessibilityFocusAnchor = button;
             [superview addTarget:target];
             // to support Action.ShowCard in menu item action, this line is required
             [target setInputs:inputs superview:superview];
