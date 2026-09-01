@@ -31,6 +31,7 @@
 		244049E12EC24097000A06DF /* ACRIImageResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 244049E02EC2408D000A06DF /* ACRIImageResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		244915622EBCE3BD0040DF94 /* ACOReferencePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 244915612EBCE3BD0040DF94 /* ACOReferencePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		246485662E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */; };
+		2AC0F7A22F01000B0085F3BD /* ACROverflowTargetTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0F7A12F01000A0085F3BD /* ACROverflowTargetTests.mm */; };
 		248924C62EBB617600F76802 /* CitationRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C32EBB617600F76802 /* CitationRun.cpp */; };
 		248924C72EBB617600F76802 /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C52EBB617600F76802 /* References.cpp */; };
 		248924C82EBB617600F76802 /* CitationRun.h in Headers */ = {isa = PBXBuildFile; fileRef = 248924C22EBB617600F76802 /* CitationRun.h */; };
@@ -705,6 +706,7 @@
 		244049E02EC2408D000A06DF /* ACRIImageResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRIImageResolver.h; sourceTree = "<group>"; };
 		244915612EBCE3BD0040DF94 /* ACOReferencePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACOReferencePrivate.h; path = PrivateHeaders/ACOReferencePrivate.h; sourceTree = "<group>"; };
 		246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverTargetTests.mm; sourceTree = "<group>"; };
+		2AC0F7A12F01000A0085F3BD /* ACROverflowTargetTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACROverflowTargetTests.mm; sourceTree = "<group>"; };
 		248924C22EBB617600F76802 /* CitationRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CitationRun.h; path = ../../../../shared/cpp/ObjectModel/CitationRun.h; sourceTree = "<group>"; };
 		248924C32EBB617600F76802 /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CitationRun.cpp; path = ../../../../shared/cpp/ObjectModel/CitationRun.cpp; sourceTree = "<group>"; };
 		248924C42EBB617600F76802 /* References.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = References.h; path = ../../../../shared/cpp/ObjectModel/References.h; sourceTree = "<group>"; };
@@ -914,6 +916,7 @@
 		6BE6C7A426E17132009E9171 /* ColumnSet.VerticalStretch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = ColumnSet.VerticalStretch.json; path = ../../../../../../samples/v1.1/Tests/ColumnSet.VerticalStretch.json; sourceTree = "<group>"; };
 		6BE6C7AE26E2C969009E9171 /* ACRCustomRenderers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRCustomRenderers.h; sourceTree = "<group>"; };
 		6BE6C7AF26E2C9A3009E9171 /* ACRCustomRenderers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRCustomRenderers.mm; sourceTree = "<group>"; };
+		A11C0A572F51000100C0A57A /* ACRContrastTestUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRContrastTestUtils.h; sourceTree = "<group>"; };
 		6BE6C7B126E2DF29009E9171 /* Container.VerticalContentAlignment2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Container.VerticalContentAlignment2.json; sourceTree = "<group>"; };
 		6BE6C7B526E2E140009E9171 /* Column.VerticalAlignment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Column.VerticalAlignment.json; sourceTree = "<group>"; };
 		6BE6C7B726E2E30A009E9171 /* Container.VerticalContentAlignment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Container.VerticalContentAlignment.json; sourceTree = "<group>"; };
@@ -1598,6 +1601,7 @@
 		6BE6C79426E1560A009E9171 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A11C0A572F51000100C0A57A /* ACRContrastTestUtils.h */,
 				6BE6C7AE26E2C969009E9171 /* ACRCustomRenderers.h */,
 				6BE6C7AF26E2C9A3009E9171 /* ACRCustomRenderers.mm */,
 			);
@@ -1921,6 +1925,7 @@
 				6B124C9226B8AE3B007E9641 /* Mocks */,
 				6BE6C79F26E17077009E9171 /* TestFiles */,
 				246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */,
+				2AC0F7A12F01000A0085F3BD /* ACROverflowTargetTests.mm */,
 			);
 			path = AdaptiveCardsTests;
 			sourceTree = "<group>";
@@ -3231,6 +3236,7 @@
 				CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */,
 				6B124C9826B9F5FC007E9641 /* AdaptiveCardsColumnTests.mm in Sources */,
 				246485662E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm in Sources */,
+				2AC0F7A22F01000B0085F3BD /* ACROverflowTargetTests.mm in Sources */,
 				46CBB6422C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm in Sources */,
 				6B4C05BF27864B0800882387 /* ACRImagePropertiesTests.mm in Sources */,
 			);

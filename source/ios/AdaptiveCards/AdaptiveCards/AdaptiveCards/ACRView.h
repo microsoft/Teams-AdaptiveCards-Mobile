@@ -45,6 +45,9 @@
 
 - (NSMutableDictionary *)getTextMap;
 
+// Returns nil for a nil or missing element ID. Do not call from the internal text-processing queue.
+- (NSDictionary *)textDataForElementId:(NSString *)elementId;
+
 - (ACOAdaptiveCard *)card;
 
 - (UIView *)render;
