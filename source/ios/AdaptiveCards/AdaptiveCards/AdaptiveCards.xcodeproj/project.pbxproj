@@ -31,6 +31,7 @@
 		244049E12EC24097000A06DF /* ACRIImageResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 244049E02EC2408D000A06DF /* ACRIImageResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		244915622EBCE3BD0040DF94 /* ACOReferencePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 244915612EBCE3BD0040DF94 /* ACOReferencePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		246485662E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */; };
+		724D78627BA31B464C0B33D0 /* ACRContainerCollapseTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2086D6F3FBCB3C480E4E59BD /* ACRContainerCollapseTests.mm */; };
 		2AC0F7A22F01000B0085F3BD /* ACROverflowTargetTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2AC0F7A12F01000A0085F3BD /* ACROverflowTargetTests.mm */; };
 		248924C62EBB617600F76802 /* CitationRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C32EBB617600F76802 /* CitationRun.cpp */; };
 		248924C72EBB617600F76802 /* References.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 248924C52EBB617600F76802 /* References.cpp */; };
@@ -706,6 +707,7 @@
 		244049E02EC2408D000A06DF /* ACRIImageResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRIImageResolver.h; sourceTree = "<group>"; };
 		244915612EBCE3BD0040DF94 /* ACOReferencePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACOReferencePrivate.h; path = PrivateHeaders/ACOReferencePrivate.h; sourceTree = "<group>"; };
 		246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRPopoverTargetTests.mm; sourceTree = "<group>"; };
+		2086D6F3FBCB3C480E4E59BD /* ACRContainerCollapseTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACRContainerCollapseTests.mm; sourceTree = "<group>"; };
 		2AC0F7A12F01000A0085F3BD /* ACROverflowTargetTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACROverflowTargetTests.mm; sourceTree = "<group>"; };
 		248924C22EBB617600F76802 /* CitationRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CitationRun.h; path = ../../../../shared/cpp/ObjectModel/CitationRun.h; sourceTree = "<group>"; };
 		248924C32EBB617600F76802 /* CitationRun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CitationRun.cpp; path = ../../../../shared/cpp/ObjectModel/CitationRun.cpp; sourceTree = "<group>"; };
@@ -1925,6 +1927,7 @@
 				6B124C9226B8AE3B007E9641 /* Mocks */,
 				6BE6C79F26E17077009E9171 /* TestFiles */,
 				246485652E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm */,
+				2086D6F3FBCB3C480E4E59BD /* ACRContainerCollapseTests.mm */,
 				2AC0F7A12F01000A0085F3BD /* ACROverflowTargetTests.mm */,
 			);
 			path = AdaptiveCardsTests;
@@ -3236,6 +3239,7 @@
 				CFF95C0F2982E4EC00F321C3 /* ACOTypeaheadDebouncerTests.mm in Sources */,
 				6B124C9826B9F5FC007E9641 /* AdaptiveCardsColumnTests.mm in Sources */,
 				246485662E3CEA0C0085F3BD /* ACRPopoverTargetTests.mm in Sources */,
+				724D78627BA31B464C0B33D0 /* ACRContainerCollapseTests.mm in Sources */,
 				2AC0F7A22F01000B0085F3BD /* ACROverflowTargetTests.mm in Sources */,
 				46CBB6422C22BA88008FC5D5 /* AdaptiveCardCompoundButtonTests.mm in Sources */,
 				6B4C05BF27864B0800882387 /* ACRImagePropertiesTests.mm in Sources */,

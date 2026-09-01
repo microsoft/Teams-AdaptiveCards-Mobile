@@ -910,12 +910,6 @@ using namespace AdaptiveCards;
 
     if (!acoElem.element->GetIsVisible()) {
         [self registerInvisibleView:renderedView];
-    } else if ([renderedView isKindOfClass:[ACRContentStackView class]] &&
-               !((ACRContentStackView *)renderedView).hasVisibleContent) {
-        // The element is marked visible, but all of its children are invisible.
-        // Register it the same way as an explicit isVisible:false so the view
-        // and its separator are collapsed by applyVisibilityToSubviews.
-        [self registerInvisibleView:renderedView];
     }
 }
 
