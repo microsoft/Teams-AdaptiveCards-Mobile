@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+// SharedAdaptiveCard: Core card model used by both iOS and Android renderers.
 #include "pch.h"
 #include "SharedAdaptiveCard.h"
 #include "ParseUtil.h"
