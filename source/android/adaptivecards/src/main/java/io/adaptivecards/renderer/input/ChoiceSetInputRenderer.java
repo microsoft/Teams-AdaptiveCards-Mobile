@@ -223,6 +223,10 @@ public class ChoiceSetInputRenderer extends BaseCardElementRenderer
         renderedCard.registerInputHandler(radioGroupInputHandler, renderArgs.getContainerCardId());
         InputUtils.updateInputHandlerInputWatcher(radioGroupInputHandler);
 
+        // Fix: Prevent RadioGroup from aggregating all child labels for TalkBack (#483)
+        // Each individual RadioButton should be announced separately
+        radioGroup.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+
         return radioGroup;
     }
 
