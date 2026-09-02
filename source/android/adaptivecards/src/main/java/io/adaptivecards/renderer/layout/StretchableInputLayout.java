@@ -98,7 +98,8 @@ public class StretchableInputLayout extends StretchableElementLayout
     {
         addView(errorMessage);
         m_errorMessage = errorMessage;
-        m_errorMessage.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
+        // Fix: Allow TalkBack to announce error messages (#493)
+        m_errorMessage.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
     }
 
     public void setValidationResult(boolean isValid)
@@ -119,6 +120,12 @@ public class StretchableInputLayout extends StretchableElementLayout
             {
                 m_label.setContentDescription(m_label.getText() + " " + m_errorMessage.getText());
             }
+        }
+
+        // Fix: Announce error message to TalkBack when validation fails (#493)
+        if (!isValid && m_errorMessage != null && m_inputView != null)
+        {
+            m_inputView.announceForAccessibility(m_errorMessage.getText());
         }
     }
 }
