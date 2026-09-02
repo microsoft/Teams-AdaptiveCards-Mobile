@@ -27,6 +27,8 @@ steps:
   inputs:
     wrapperScript: source/android/gradlew
     cwd: source/android
+    tasks: assembleDebug testDebugUnitTest lint
+    options: --no-daemon
     publishJUnitResults: false
     jdkVersionOption: 1.17
 
@@ -60,7 +62,7 @@ steps:
    $ANDROID_HOME/platform-tools/adb shell settings put secure show_ime_with_hard_keyboard 0
 
    echo "Emulator started"
-   
+
   displayName: Creation of emulator for testing
   enabled: false
 
