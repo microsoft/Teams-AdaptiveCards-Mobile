@@ -9,6 +9,10 @@
 #import "AdaptiveCards/ACOHostConfigPrivate.h"
 #import <AdaptiveCards/AdaptiveCards.h>
 #import <XCTest/XCTest.h>
+
+/// Ceiling for popover/bottom-sheet transitions. Generous on purpose: this bounds a
+/// wait that normally returns in well under a second; it is not a fixed delay.
+static const NSTimeInterval kACRPopoverTimeout = 10.0;
 #include <string>
 
 @interface ADCIOSVisualizerUITests : XCTestCase
@@ -831,13 +835,36 @@
     XCTAssertTrue(lessContentTextView.exists, @"'Less Content' TextView should exist");
     [self dismissPopoverBottomSheet];
     XCUIElement *containerButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"This Container is clickable and will show a popover"]];
-    XCTAssertTrue(containerButton.exists && containerButton.isHittable, @"'This Container is clickable and will show a popover' button should exist and be hittable");
+    XCTAssertTrue([containerButton waitForExistenceWithTimeout:kACRPopoverTimeout] && containerButton.isHittable, @"'This Container is clickable and will show a popover' button should exist and be hittable");
     [containerButton tap];
     XCUIElement *popoverTextView = [testApp.textViews elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"This is a popover"]];
     XCTAssertTrue(popoverTextView.exists, @"'This is a popover' TextView should exist");
     [self dismissPopoverBottomSheet];
-    XCUIElement *popoverIcon = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @", Click me to show a popover"]];
-    XCTAssertTrue(popoverIcon.exists && popoverIcon.isHittable, @"Button ', Click me to show a popover' should exist and be hittable");
+    // The card carries two accessibility elements for this popover, both reachable and both
+    // correct. body[6] is an Image whose selectAction opens the popover; body[7] is an Icon
+    // carrying an identical selectAction and identical popover content.
+    //
+    // The Image's bitmap is fetched from a remote URL. When that fetch does not complete -
+    // CI runners have no dependable egress, and the URL answers a redirect - the
+    // UIImageView collapses to height 0. Measured on a runner: frame {354, 0}, isHittable
+    // NO, and zero images anywhere in the tree, while the sibling Icon measured {354, 56}
+    // and was hittable. The Image element is still present and still correctly named,
+    // because ACRImageRenderer applies the label synchronously at render; only its hit area
+    // is gone. Asserting isHittable on it therefore tested network availability rather than
+    // the SDK, which is why this failed 10/10 offline and passed intermittently before.
+    //
+    // So: still assert the Image is present and correctly named - that is the part that
+    // protects ACRImageRenderer's labelling, and it is network-independent - but drive the
+    // popover through the Icon, which is drawn from a local font glyph and is deterministic.
+    //
+    // Both predicates must remain exact. The two labels differ only by a leading ", ",
+    // because configureForAccessibilityLabel joins an empty title component, so a CONTAINS
+    // match would match both and elementMatchingPredicate requires a unique match.
+    XCUIElement *popoverImage = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @", Click me to show a popover"]];
+    XCTAssertTrue([popoverImage waitForExistenceWithTimeout:kACRPopoverTimeout], @"Image with a popover selectAction should be present and named");
+
+    XCUIElement *popoverIcon = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Click me to show a popover"]];
+    XCTAssertTrue([popoverIcon waitForExistenceWithTimeout:kACRPopoverTimeout] && popoverIcon.isHittable, @"Icon with a popover selectAction should exist and be hittable");
     [popoverIcon tap];
     popoverTextView = [testApp.textViews elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"This Popover is made with Adaptive Card elements, it supports actions and is fully accessible."]];
     XCTAssertTrue(popoverTextView.exists, @"The icon popover TextView with the expected label should exist");
@@ -864,9 +891,16 @@
 - (void) dismissPopoverBottomSheet
 {
     XCUIElement *dismissButton = [testApp.buttons elementMatchingPredicate:[NSPredicate predicateWithFormat:@"label == %@", @"Dismiss"]];
-    XCTAssertTrue(dismissButton.exists && dismissButton.isHittable, @"'Dismiss' button should exist and be hittable");
+    XCTAssertTrue([dismissButton waitForExistenceWithTimeout:kACRPopoverTimeout] && dismissButton.isHittable, @"'Dismiss' button should exist and be hittable");
     [dismissButton tap];
 
+    // The sheet dismisses with an animation. Returning as soon as the tap is delivered lets
+    // every caller race it: the element underneath already exists but is still covered, so
+    // isHittable reports NO. Wait for the sheet to leave the hierarchy before returning.
+    [self expectationForPredicate:[NSPredicate predicateWithFormat:@"exists == NO"]
+                        evaluatedWithObject:dismissButton
+                                    handler:nil];
+    [self waitForExpectationsWithTimeout:kACRPopoverTimeout handler:nil];
 }
 
 - (void) checkAndTap:(XCUIElement *)element
