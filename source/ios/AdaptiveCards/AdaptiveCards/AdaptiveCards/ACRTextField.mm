@@ -35,6 +35,7 @@
 
 - (void)commonInitialization
 {
+    NSLog(@"Test textblock");
     // Set border style (rounded rect)
     self.borderStyle = UITextBorderStyleRoundedRect;
 
