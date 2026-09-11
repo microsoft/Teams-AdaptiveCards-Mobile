@@ -10,6 +10,9 @@
 
 @interface ACRProgressBarRenderer : ACRBaseCardElementRenderer
 
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, strong) CAGradientLayer *glowLayer;
+
 + (ACRProgressBarRenderer *)getInstance;
 
 @end
