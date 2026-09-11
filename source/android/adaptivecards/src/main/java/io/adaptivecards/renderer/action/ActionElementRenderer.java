@@ -7,6 +7,7 @@ import static io.adaptivecards.renderer.inputhandler.InputUtils.isAnyInputValid;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.TooltipCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import io.adaptivecards.R;
@@ -116,6 +118,19 @@ public class ActionElementRenderer extends BaseActionElementRenderer
         }
 
         Button button = getButtonForStyle(context, baseActionElement.GetStyle(), hostConfig);
+
+        // Apply a foreground ripple/focus drawable so keyboard users see a clear focus
+        // indicator on the action button (WCAG 2.4.7 Focus Visible). Themed Positive /
+        // Destructive buttons use a ContextThemeWrapper, but the underlying button
+        // background may not include a focus state on every device theme.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            TypedValue focusFg = new TypedValue();
+            if (button.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, focusFg, true)
+                && focusFg.resourceId != 0
+                && button.getForeground() == null) {
+                button.setForeground(ContextCompat.getDrawable(button.getContext(), focusFg.resourceId));
+            }
+        }
 
         if (Util.isOfType(baseActionElement, ExecuteAction.class) || Util.isOfType(baseActionElement, SubmitAction.class))
         {
