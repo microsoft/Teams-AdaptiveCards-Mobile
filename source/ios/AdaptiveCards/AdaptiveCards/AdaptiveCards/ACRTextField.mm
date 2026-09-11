@@ -44,9 +44,12 @@
     // Set natural text alignment
     self.textAlignment = NSTextAlignmentNatural;
 
-    // Setup font and minimum font size
-    self.font = [UIFont systemFontOfSize:15];
+    // Setup font and minimum font size — scale with Dynamic Type so users
+    // who increase Larger Text accessibility setting get a proportionally
+    // larger input font.
+    self.font = [[UIFontMetrics defaultMetrics] scaledFontForFont:[UIFont systemFontOfSize:15]];
     self.minimumFontSize = 15;
+    self.adjustsFontForContentSizeCategory = YES;
 
     self.clearButtonMode = UITextFieldViewModeNever;
     _acrClearButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -146,8 +149,9 @@
     // Set the minimum font size.
     self.minimumFontSize = 17;
 
-    // Set the font (system, size 14).
-    self.font = [UIFont systemFontOfSize:14];
+    // Set the font (system, size 14) — scale with Dynamic Type.
+    self.font = [[UIFontMetrics defaultMetrics] scaledFontForFont:[UIFont systemFontOfSize:14]];
+    self.adjustsFontForContentSizeCategory = YES;
 
     // Setup text input traits: email keyboard and email content type.
     self.keyboardType = UIKeyboardTypeEmailAddress;
@@ -197,9 +201,10 @@
     // Set natural text alignment.
     self.textAlignment = NSTextAlignmentNatural;
 
-    // Set minimum font size and font.
+    // Set minimum font size and font — scale with Dynamic Type.
     self.minimumFontSize = 17;
-    self.font = [UIFont systemFontOfSize:14];
+    self.font = [[UIFontMetrics defaultMetrics] scaledFontForFont:[UIFont systemFontOfSize:14]];
+    self.adjustsFontForContentSizeCategory = YES;
 
     // Configure text input traits.
     self.keyboardType = UIKeyboardTypePhonePad;
@@ -248,9 +253,10 @@
     // Set natural text alignment.
     self.textAlignment = NSTextAlignmentNatural;
 
-    // Set minimum font size and font.
+    // Set minimum font size and font — scale with Dynamic Type.
     self.minimumFontSize = 17;
-    self.font = [UIFont systemFontOfSize:14];
+    self.font = [[UIFontMetrics defaultMetrics] scaledFontForFont:[UIFont systemFontOfSize:14]];
+    self.adjustsFontForContentSizeCategory = YES;
 
     // Configure text input traits.
     self.keyboardType = UIKeyboardTypeURL;
