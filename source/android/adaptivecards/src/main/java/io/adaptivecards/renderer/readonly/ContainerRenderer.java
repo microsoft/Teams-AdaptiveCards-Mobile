@@ -440,10 +440,8 @@ public class ContainerRenderer extends BaseCardElementRenderer
                     View childView = group.getChildAt(0);
                     if (childView.isFocusable())
                     {
-                        childView.setFocusable(false);
-
-                        // setScreenReaderFocusable is only available in API level 28 (P) and above
-                        // Need to check the SDK version of the current device
+                        // Keep focusable for keyboard navigation but
+                        // mark as not important for TalkBack swipe (#105)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
                         {
                             childView.setScreenReaderFocusable(false);
