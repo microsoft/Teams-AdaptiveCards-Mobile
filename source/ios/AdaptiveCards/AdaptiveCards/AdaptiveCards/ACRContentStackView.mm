@@ -819,6 +819,9 @@ using namespace AdaptiveCards;
             // so it and its subviews become one unit.
             if (!rootView.context.childHasSelectAction) {
                 self.isAccessibilityElement = YES;
+                // Prevent VoiceOver from announcing "Group" by ensuring
+                // the container is not treated as an accessibility group
+                self.shouldGroupAccessibilityChildren = NO;
             }
         }
     }
