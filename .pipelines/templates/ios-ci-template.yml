@@ -58,3 +58,7 @@ steps:
 
     xcodebuild test       -workspace AdaptiveCards.xcworkspace       -scheme AdaptiveCards       -sdk iphonesimulator       -destination "$DEST"       CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO       | xcpretty -r junit --no-color
   displayName: 'Framework Unit Test'
+  # The SDK's own unit tests must run even when the sample-app UI suite fails.
+  # Without this they inherit the default condition: succeeded() and are silently
+  # skipped whenever a flaky UI test trips, leaving the framework untested.
+  condition: succeededOrFailed()
