@@ -29,7 +29,7 @@
     self.borderStyle = UITextBorderStyleRoundedRect;
     self.placeholder = @" ";
     self.textAlignment = NSTextAlignmentNatural;
-    self.clearsOnBeginEditing = YES;
+    self.clearsOnBeginEditing = NO;
     self.minimumFontSize = 17;
     self.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.font = [UIFont systemFontOfSize:14];

@@ -10,6 +10,7 @@
 #import "ACRContentHoldingUIView.h"
 #import "ACRFactSetRenderer.h"
 #import "ACRInputLabelView.h"
+#import "ACRNumericTextField.h"
 #import "ACRRegistration.h"
 #import "ACRTextField.h"
 #import "ACRTextView.h"
@@ -113,6 +114,15 @@ using namespace AdaptiveCards;
 
     XCTAssertEqualObjects(textField.text, @"");
     XCTAssertEqual(textField.rightViewMode, UITextFieldViewModeNever);
+}
+
+- (void)testNumericTextFieldPreservesValueWhenEditingBegins
+{
+    ACRNumericTextField *textField = [[ACRNumericTextField alloc] init];
+    textField.text = @"8";
+
+    XCTAssertFalse(textField.clearsOnBeginEditing);
+    XCTAssertEqualObjects(textField.text, @"8");
 }
 
 - (void)testContentHoldingUIViewWithImage
