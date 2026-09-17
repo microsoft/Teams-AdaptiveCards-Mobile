@@ -16,6 +16,9 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
 import io.adaptivecards.objectmodel.*
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import io.adaptivecards.renderer.BaseCardElementRenderer
 import io.adaptivecards.renderer.RenderArgs
 import io.adaptivecards.renderer.RenderedAdaptiveCard
@@ -82,6 +85,22 @@ object TableCellRenderer : BaseCardElementRenderer() {
             layoutToApply)
 
         ContainerRenderer.applyItemFillForFlowLayout(layoutToApply, cellLayout)
+
+        // Provide cell position info for TalkBack (row X of N, column Y of M)
+        val isHeader = renderArgs.isColumnHeader
+        ViewCompat.setAccessibilityDelegate(cellLayout, object : AccessibilityDelegateCompat() {
+            override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfoCompat) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.setCollectionItemInfo(
+                    AccessibilityNodeInfoCompat.CollectionItemInfoCompat.obtain(
+                        renderArgs.rowIndex, 1, renderArgs.colIndex, 1, isHeader
+                    )
+                )
+            }
+        })
+        if (isHeader) {
+            ViewCompat.setAccessibilityHeading(cellLayout, true)
+        }
 
         viewGroup.addView(cellLayout)
         return cellLayout
