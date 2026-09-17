@@ -67,6 +67,8 @@ public class DatePickerFragment extends DialogFragment
         Date date = calendar.getTime();
         String value = DateFormat.getDateInstance().format(date);
         m_editText.setText(value);
+        // Return focus to the edit text after picker dismisses (#86)
+        m_editText.requestFocus();
     }
 
     private DateInput m_dateInput;
