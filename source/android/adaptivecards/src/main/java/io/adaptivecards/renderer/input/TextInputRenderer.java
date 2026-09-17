@@ -226,7 +226,7 @@ public class TextInputRenderer extends BaseCardElementRenderer
                     @Override
                     public void onInitializeAccessibilityNodeInfo(@NonNull View host, AccessibilityNodeInfoCompat info) {
                         super.onInitializeAccessibilityNodeInfo(host, info);
-                        info.setText(label);
+                        info.setHintText(label);
                     }
                 });
             }
