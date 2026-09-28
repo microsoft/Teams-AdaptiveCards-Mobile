@@ -204,3 +204,12 @@ NSString *cdnURLForIcon(NSString *iconPath);
 
 // Returns device locale in "en-US" format
 std::string GetDeviceLanguageLocale();
+
+/**
+ Returns whether @c url may be fetched directly by the SDK.
+
+ Card payloads are untrusted, so URLs originating from them are restricted to an allow list.
+ Anything else (@c file://, @c http://, custom app schemes, ...) must be routed through a host
+ supplied resource resolver so that the fetch happens under the host's control.
+ */
+BOOL ACRIsAllowedResourceURL(NSURL *url);

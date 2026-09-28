@@ -142,7 +142,7 @@ std::shared_ptr<BaseCardElement> TextInputParser::Deserialize(ParseContext& cont
     textInput->SetIsMultiline(isMultiline);
 
     const auto textInputStyle =
-        ParseUtil::GetEnumValue<TextInputStyle>(json, AdaptiveCardSchemaKey::Style, TextInputStyle::Text, TextInputStyleFromString);
+        ParseUtil::GetEnumValue<TextInputStyle>(json, AdaptiveCardSchemaKey::Style, TextInputStyle::Text, TextInputStyleFromString, false, &context);
     textInput->SetTextInputStyle(textInputStyle);
 
     // emit warning in the case where style is `password` but multiline is specified (this is an invalid combination.

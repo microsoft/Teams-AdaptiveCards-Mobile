@@ -41,7 +41,26 @@
 
 - (BOOL)validate:(NSError *__autoreleasing *)error
 {
+    if (![self isWithinMaxLength:self.text]) {
+        if (error) {
+            *error = [NSError errorWithDomain:ACRInputErrorDomain code:ACRInputErrorGreaterThanMax userInfo:nil];
+        }
+        return NO;
+    }
+
     return [ACRInputLabelView commonTextUIValidate:self.isRequired hasText:self.hasText predicate:self.regexPredicate text:self.text error:error];
+}
+
+/**
+ Returns whether @c text satisfies the element's maxLength.
+
+ -textField:shouldChangeCharactersInRange:replacementString: only constrains typing, so the length
+ is re-checked here and in -getInput: to cover programmatic mutations such as paste handlers,
+ autofill and accessibility actions.
+ */
+- (BOOL)isWithinMaxLength:(NSString *)text
+{
+    return !_maxLength || text.length <= _maxLength;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
@@ -53,6 +72,12 @@
 
 - (void)getInput:(NSMutableDictionary *)dictionary
 {
+    // Never emit a value that exceeds maxLength, even if the UI level length check was bypassed.
+    if (![self isWithinMaxLength:self.text]) {
+        dictionary[self.id] = [self.text substringToIndex:_maxLength];
+        return;
+    }
+
     dictionary[self.id] = self.text;
 }
 

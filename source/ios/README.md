@@ -77,6 +77,13 @@ ViewController.m
 {
     if(action.type == ACROpenUrl){
         NSURL *url = [NSURL URLWithString:[action url]];
+        // Action.OpenUrl URLs are authored remotely and are untrusted. SFSafariViewController only
+        // supports http and https, and anything else must not be handed to -[UIApplication openURL:]
+        // without an explicit allow list, so check the scheme before presenting.
+        if (![[url.scheme lowercaseString] isEqualToString:@"https"]) {
+            NSLog(@"Blocked Action.OpenUrl with a non-HTTPS scheme");
+            return;
+        }
         SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:url];
         [self presentViewController:svc animated:YES completion:nil];
     }

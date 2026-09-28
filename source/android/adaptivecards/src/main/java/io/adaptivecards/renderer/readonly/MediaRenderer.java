@@ -44,6 +44,7 @@ import io.adaptivecards.objectmodel.Media;
 import io.adaptivecards.objectmodel.MediaSource;
 import io.adaptivecards.objectmodel.MediaSourceVector;
 import io.adaptivecards.renderer.BaseCardElementRenderer;
+import io.adaptivecards.renderer.AdaptiveWarning;
 import io.adaptivecards.renderer.IMediaDataSourceOnPreparedListener;
 import io.adaptivecards.renderer.IOnlineMediaLoader;
 import io.adaptivecards.renderer.MediaLoaderAsync;
@@ -52,6 +53,7 @@ import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.http.UrlPolicy;
 import io.adaptivecards.renderer.layout.FullscreenVideoLayout;
 import io.adaptivecards.renderer.layout.FullscreenVideoView;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
@@ -266,6 +268,15 @@ public class MediaRenderer extends BaseCardElementRenderer
 
         DefaultHttpDataSource.Factory dataSourceFactory = new DefaultHttpDataSource.Factory();
         io.adaptivecards.objectmodel.MediaSource mediaSource = media.GetSources().get(0);
+        if (!UrlPolicy.isAllowedResourceUrl(mediaSource.GetUrl()))
+        {
+            // The media URL comes from a remote card author; refuse to hand a disallowed scheme to
+            // the player rather than relying on the data source factory to reject it.
+            renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.INVALID_MEDIA_SOURCE, "Media source URL uses a scheme that is not allowed"));
+            viewGroup.addView(playerView);
+            return playerView;
+        }
+
         MediaItem.Builder mediaItemBuilder = new MediaItem.Builder().setUri(Uri.parse(mediaSource.GetUrl()));
 
         CaptionSourceVector captionSources = media.GetCaptionSources();
@@ -275,6 +286,12 @@ public class MediaRenderer extends BaseCardElementRenderer
             CaptionSource captionSource = media.GetCaptionSources().get(i);
             if (captionSource.GetMimeType().contains("vtt"))
             {
+                if (!UrlPolicy.isAllowedResourceUrl(captionSource.GetUrl()))
+                {
+                    renderedCard.addWarning(new AdaptiveWarning(AdaptiveWarning.INVALID_MEDIA_SOURCE, "Caption source URL uses a scheme that is not allowed"));
+                    continue;
+                }
+
                 Uri subtitleUri = Uri.parse(captionSource.GetUrl());
 
                 MediaItem.SubtitleConfiguration.Builder subtitleConfigurationBuilder = new MediaItem.SubtitleConfiguration.Builder(subtitleUri);

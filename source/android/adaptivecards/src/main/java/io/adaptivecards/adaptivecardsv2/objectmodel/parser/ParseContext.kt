@@ -11,6 +11,14 @@ import io.adaptivecards.adaptivecardsv2.objectmodel.utils.InternalId.Companion.I
 
 class ParseContext {
 
+    companion object {
+        /** Maximum element nesting depth accepted from a card payload. */
+        const val MAX_NESTING_DEPTH = 32
+
+        /** Maximum total number of elements accepted from a card payload. */
+        const val MAX_ELEMENT_COUNT = 5000
+    }
+
     private var elementParserRegistration: ElementParserRegistration = ElementParserRegistration()
     private var actionParserRegistration: ActionParserRegistration = ActionParserRegistration()
     val warnings: MutableList<ParseWarning> = mutableListOf()
@@ -27,6 +35,9 @@ class ParseContext {
 
     var canFallbackToAncestor: Boolean = false
     private var language: String = ""
+
+    // Total elements seen so far. Monotonic: this is a budget for the whole parse, not a live count.
+    private var elementCount: Int = 0
 
     // Default constructor
     constructor()
@@ -48,6 +59,20 @@ class ParseContext {
                 "Attempting to push an element on to the stack with an invalid ID"
             )
         }
+        if (idStack.size >= MAX_NESTING_DEPTH) {
+            throw ParseException(
+                ErrorStatusCode.InvalidPropertyValue,
+                "Card exceeds the maximum supported nesting depth of $MAX_NESTING_DEPTH"
+            )
+        }
+
+        if (++elementCount > MAX_ELEMENT_COUNT) {
+            throw ParseException(
+                ErrorStatusCode.InvalidPropertyValue,
+                "Card exceeds the maximum supported element count of $MAX_ELEMENT_COUNT"
+            )
+        }
+
         idStack.add(Triple(idJsonProperty, internalId, isFallback))
     }
 

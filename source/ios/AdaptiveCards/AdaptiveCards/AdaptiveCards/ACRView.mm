@@ -596,6 +596,13 @@ typedef UIImage * (^ImageLoadBlock)(NSURL *url);
         url = [NSURL URLWithString:nSUrlStr relativeToURL:_hostConfig.baseURL];
     }
 
+    // Image URLs come from a remote card author and are dereferenced below with
+    // -[NSData dataWithContentsOfURL:], which also reads file:// and other local schemes. Refuse
+    // anything outside the allow list rather than failing open when no resource resolver matched.
+    if (!ACRIsAllowedResourceURL(url)) {
+        return;
+    }
+
     ImageLoadBlock imageloadblock = ^(NSURL *imgUrl) {
         // download image
         UIImage *img = nil;

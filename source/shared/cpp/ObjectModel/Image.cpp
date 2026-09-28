@@ -211,14 +211,14 @@ std::shared_ptr<BaseCardElement> ImageParser::DeserializeWithoutCheckingType(Par
 
     image->SetUrl(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Url, true));
     image->SetBackgroundColor(ValidateColor(ParseUtil::GetString(json, AdaptiveCardSchemaKey::BackgroundColor), context.warnings));
-    image->SetImageStyle(ParseUtil::GetEnumValue<ImageStyle>(json, AdaptiveCardSchemaKey::Style, ImageStyle::Default, ImageStyleFromString));
+    image->SetImageStyle(ParseUtil::GetEnumValue<ImageStyle>(json, AdaptiveCardSchemaKey::Style, ImageStyle::Default, ImageStyleFromString, false, &context));
     image->SetAltText(ParseUtil::GetString(json, AdaptiveCardSchemaKey::AltText));
     image->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
 
-    image->m_imageFitMode = ParseUtil::GetEnumValue<ImageFitMode>(json, AdaptiveCardSchemaKey::ImageFitMode, DEFAULT_IMAGE_FIT_MODE, ImageFitModeFromString);
-    image->m_horizontalContentAlignment = ParseUtil::GetEnumValue<HorizontalContentAlignment>(json, AdaptiveCardSchemaKey::HorizontalContentAlignment, DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT, HorizontalContentAlignmentFromString);
-    image->m_verticalContentAlignment = ParseUtil::GetEnumValue<VerticalContentAlignment>(json, AdaptiveCardSchemaKey::VerticalContentAlignment, DEFAULT_VERTICAL_CONTENT_ALIGNMENT, VerticalContentAlignmentFromString);
+    image->m_imageFitMode = ParseUtil::GetEnumValue<ImageFitMode>(json, AdaptiveCardSchemaKey::ImageFitMode, DEFAULT_IMAGE_FIT_MODE, ImageFitModeFromString, false, &context);
+    image->m_horizontalContentAlignment = ParseUtil::GetEnumValue<HorizontalContentAlignment>(json, AdaptiveCardSchemaKey::HorizontalContentAlignment, DEFAULT_HORIZONTAL_CONTENT_ALIGNMENT, HorizontalContentAlignmentFromString, false, &context);
+    image->m_verticalContentAlignment = ParseUtil::GetEnumValue<VerticalContentAlignment>(json, AdaptiveCardSchemaKey::VerticalContentAlignment, DEFAULT_VERTICAL_CONTENT_ALIGNMENT, VerticalContentAlignmentFromString, false, &context);
 
     // When fitMode is set to contain, the default style is always used
     if (image->m_imageFitMode == ImageFitMode::Contain) {

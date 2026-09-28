@@ -112,11 +112,11 @@ std::shared_ptr<BaseCardElement> IconParser::DeserializeWithoutCheckingType(Pars
 {
     std::shared_ptr<Icon> icon = BaseCardElement::Deserialize<Icon>(context, json);
     
-    icon->setIconSize(ParseUtil::GetEnumValue<IconSize>(json, AdaptiveCardSchemaKey::Size, IconSize::Standard, IconSizeFromString));
+    icon->setIconSize(ParseUtil::GetEnumValue<IconSize>(json, AdaptiveCardSchemaKey::Size, IconSize::Standard, IconSizeFromString, false, &context));
     
-    icon->setIconStyle(ParseUtil::GetEnumValue<IconStyle>(json, AdaptiveCardSchemaKey::Style, IconStyle::Regular, IconStyleFromString));
+    icon->setIconStyle(ParseUtil::GetEnumValue<IconStyle>(json, AdaptiveCardSchemaKey::Style, IconStyle::Regular, IconStyleFromString, false, &context));
     
-    icon->setForgroundColor(ParseUtil::GetEnumValue<ForegroundColor>(json, AdaptiveCardSchemaKey::Color, ForegroundColor::Default, ForegroundColorFromString));
+    icon->setForgroundColor(ParseUtil::GetEnumValue<ForegroundColor>(json, AdaptiveCardSchemaKey::Color, ForegroundColor::Default, ForegroundColorFromString, false, &context));
     
     icon->SetName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Name));
 

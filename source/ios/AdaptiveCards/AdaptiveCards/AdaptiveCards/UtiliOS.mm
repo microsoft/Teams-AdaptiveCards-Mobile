@@ -1461,3 +1461,9 @@ std::string GetDeviceLanguageLocale()
         return [formatted UTF8String];
     }
 }
+
+BOOL ACRIsAllowedResourceURL(NSURL *url)
+{
+    NSString *scheme = [url.scheme lowercaseString];
+    return [scheme isEqualToString:@"https"] || [scheme isEqualToString:@"data"];
+}

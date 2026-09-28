@@ -5,6 +5,7 @@ package io.adaptivecards.renderer.readonly;
 import android.os.Build;
 import android.text.Editable;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.URLSpan;
 
@@ -22,6 +23,7 @@ import io.adaptivecards.objectmodel.DateTimePreparser;
 import io.adaptivecards.objectmodel.HorizontalAlignment;
 import io.adaptivecards.objectmodel.MarkDownParser;
 import io.adaptivecards.renderer.RenderArgs;
+import io.adaptivecards.renderer.http.UrlPolicy;
 
 public class RendererUtil
 {
@@ -149,7 +151,52 @@ public class RendererUtil
             htmlString = Html.fromHtml(textString, null, new UlTagHandler());
         }
 
-        return htmlString;
+        return removeDisallowedLinks(htmlString);
+    }
+
+    /**
+     * Strips every {@link URLSpan} whose scheme is not permitted by {@link UrlPolicy}.
+     *
+     * <p>Link text comes from a remote card author and {@code URLSpan.onClick} launches an implicit
+     * {@code ACTION_VIEW} intent for whatever URL it holds. Removing the span here covers every way
+     * the platform can activate it (movement method, touch listener, key listener and accessibility
+     * link traversal) rather than guarding each activation site individually.
+     */
+    private static Spanned removeDisallowedLinks(Spanned htmlString)
+    {
+        URLSpan[] spans = htmlString.getSpans(0, htmlString.length(), URLSpan.class);
+        if (spans.length == 0)
+        {
+            return htmlString;
+        }
+
+        boolean hasDisallowedLink = false;
+        for (URLSpan span : spans)
+        {
+            if (!UrlPolicy.isAllowedNavigationUrl(span.getURL()))
+            {
+                hasDisallowedLink = true;
+                break;
+            }
+        }
+
+        if (!hasDisallowedLink)
+        {
+            return htmlString;
+        }
+
+        // The span instances are copied by value into the builder, so look the replacements up from
+        // the copy rather than reusing the instances obtained from the original Spanned.
+        SpannableStringBuilder sanitized = new SpannableStringBuilder(htmlString);
+        for (URLSpan span : sanitized.getSpans(0, sanitized.length(), URLSpan.class))
+        {
+            if (!UrlPolicy.isAllowedNavigationUrl(span.getURL()))
+            {
+                sanitized.removeSpan(span);
+            }
+        }
+
+        return sanitized;
     }
 
     public static CharSequence trimHtmlString(Spanned htmlString)

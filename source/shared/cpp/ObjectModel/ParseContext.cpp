@@ -152,6 +152,20 @@ void ParseContext::PushElement(const std::string& idJsonProperty, const Adaptive
             ErrorStatusCode::InvalidPropertyValue, "Attemping to push an element on to the stack with an invalid ID");
     }
 
+    if (m_idStack.size() >= MaxNestingDepth)
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue,
+            "Card exceeds the maximum supported nesting depth of " + std::to_string(MaxNestingDepth));
+    }
+
+    if (++m_elementCount > MaxElementCount)
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue,
+            "Card exceeds the maximum supported element count of " + std::to_string(MaxElementCount));
+    }
+
     m_idStack.push_back({idJsonProperty, internalId, isFallback});
 }
 

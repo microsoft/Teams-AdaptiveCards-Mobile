@@ -35,6 +35,13 @@ class AdaptiveCardParser {
             rendererVersion: String,
             context: ParseContext
         ): ParseResult {
+            if (jsonText.length > ParseUtil.MAX_JSON_PAYLOAD_BYTES) {
+                throw ParseException(
+                    ErrorStatusCode.InvalidJson,
+                    "Card payload exceeds the maximum supported size of ${ParseUtil.MAX_JSON_PAYLOAD_BYTES} bytes"
+                )
+            }
+
             val json = Json.parseToJsonElement(jsonText)
             return deserialize(json.jsonObject, rendererVersion, context)
         }

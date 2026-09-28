@@ -37,7 +37,7 @@ std::shared_ptr<BaseActionElement> OpenUrlActionParser::Deserialize(ParseContext
 
     openUrlAction->SetUrl(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Url, true));
     openUrlAction->SetRole(
-        ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Link, ActionRoleFromString));
+        ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Link, ActionRoleFromString, false, &context));
 
     return openUrlAction;
 }

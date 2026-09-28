@@ -194,6 +194,20 @@ using namespace AdaptiveCards;
             NSArray<NSError *> *errors = @[ parseError ];
 
             result = [[ACOAdaptiveCardParseResult alloc] init:nil errors:errors warnings:nil];
+        } catch (const std::exception &e) {
+            // Defense in depth: never let a non-AdaptiveCardParseException (e.g. Json::Exception)
+            // escape into Objective-C, where it would terminate the host process.
+            NSDictionary<NSErrorUserInfoKey, id> *userInfo = @{NSLocalizedDescriptionKey : [NSString localizedStringWithFormat:@"Parse Error: %s", e.what()]};
+            NSError *parseError = [NSError errorWithDomain:ACRParseErrorDomain
+                                                      code:(long)ErrorStatusCode::InvalidJson
+                                                  userInfo:userInfo];
+            result = [[ACOAdaptiveCardParseResult alloc] init:nil errors:@[ parseError ] warnings:nil];
+        } catch (...) {
+            NSDictionary<NSErrorUserInfoKey, id> *userInfo = @{NSLocalizedDescriptionKey : @"Parse Error: unknown failure"};
+            NSError *parseError = [NSError errorWithDomain:ACRParseErrorDomain
+                                                      code:(long)ErrorStatusCode::InvalidJson
+                                                  userInfo:userInfo];
+            result = [[ACOAdaptiveCardParseResult alloc] init:nil errors:@[ parseError ] warnings:nil];
         }
     }
 

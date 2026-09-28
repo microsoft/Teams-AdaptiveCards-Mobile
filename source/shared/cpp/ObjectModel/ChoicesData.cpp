@@ -85,7 +85,7 @@ std::shared_ptr<ChoicesData> ChoicesData::Deserialize(ParseContext& context, con
     }
 
     choicesData->SetAssociatedInputs(ParseUtil::GetEnumValue<AssociatedInputs>(
-            json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString));
+            json, AdaptiveCardSchemaKey::AssociatedInputs, AssociatedInputs::Auto, AssociatedInputsFromString, false, &context));
 
     return choicesData;
 }

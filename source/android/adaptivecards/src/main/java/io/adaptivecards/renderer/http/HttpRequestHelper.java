@@ -11,7 +11,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -19,6 +21,9 @@ import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSocketFactory;
 
 import static java.net.HttpURLConnection.HTTP_MOVED_PERM;
 import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
@@ -35,8 +40,20 @@ public abstract class HttpRequestHelper
             throws MalformedURLException, URISyntaxException, IOException
     {
         URL netURL = validateUrl(url);
+        InetAddress pinnedAddress = resolvePublicAddress(netURL);
 
         HttpURLConnection conn = (HttpURLConnection) netURL.openConnection();
+
+        if (conn instanceof HttpsURLConnection)
+        {
+            // Pin the connection to the address that was screened in validateUrl. Without this the
+            // connection re-resolves the host independently, which lets an attacker controlled DNS
+            // name answer with a public address during validation and a private one at connect time
+            // (DNS rebinding).
+            ((HttpsURLConnection) conn).setSSLSocketFactory(
+                new PinnedAddressSSLSocketFactory(HttpsURLConnection.getDefaultSSLSocketFactory(), pinnedAddress));
+        }
+
         conn.setRequestMethod(method);
         conn.setInstanceFollowRedirects(false);
         conn.setDoOutput(doOutput);
@@ -54,6 +71,124 @@ public abstract class HttpRequestHelper
         }
 
         return conn;
+    }
+
+    /**
+     * Resolves {@code netURL}'s host and returns the first public address, throwing when any
+     * resolved address is non-public.
+     */
+    private static InetAddress resolvePublicAddress(URL netURL) throws IOException
+    {
+        InetAddress[] addresses = InetAddress.getAllByName(netURL.getHost());
+        if (addresses.length == 0)
+        {
+            throw new IOException("Resource URL host could not be resolved");
+        }
+
+        for (InetAddress address : addresses)
+        {
+            if (isNonPublicAddress(address))
+            {
+                throw new IOException("Resource URL resolves to a non-public address");
+            }
+        }
+
+        return addresses[0];
+    }
+
+    /**
+     * Connects to a pre-screened IP address while keeping the original host name for SNI and
+     * certificate hostname verification.
+     */
+    private static final class PinnedAddressSSLSocketFactory extends SSLSocketFactory
+    {
+        private final SSLSocketFactory m_delegate;
+        private final InetAddress m_pinnedAddress;
+
+        PinnedAddressSSLSocketFactory(SSLSocketFactory delegate, InetAddress pinnedAddress)
+        {
+            m_delegate = delegate;
+            m_pinnedAddress = pinnedAddress;
+        }
+
+        @Override
+        public String[] getDefaultCipherSuites()
+        {
+            return m_delegate.getDefaultCipherSuites();
+        }
+
+        @Override
+        public String[] getSupportedCipherSuites()
+        {
+            return m_delegate.getSupportedCipherSuites();
+        }
+
+        @Override
+        public Socket createSocket(Socket s, String host, int port, boolean autoClose) throws IOException
+        {
+            // This is the overload the OkHttp-backed HttpsURLConnection on Android actually uses:
+            // it creates and connects the raw socket itself (re-resolving the host through its own
+            // DNS lookup) and only then layers TLS on top. The socket is already connected, so
+            // pinning is impossible here and we instead verify the address it actually reached.
+            // This is the enforcement point that closes the DNS rebinding window.
+            verifyPeerAddress(s);
+            return m_delegate.createSocket(s, host, port, autoClose);
+        }
+
+        @Override
+        public Socket createSocket(String host, int port) throws IOException
+        {
+            return createPinnedSocket(host, port);
+        }
+
+        @Override
+        public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException
+        {
+            return createPinnedSocket(host, port);
+        }
+
+        @Override
+        public Socket createSocket(InetAddress host, int port) throws IOException
+        {
+            return m_delegate.createSocket(host, port);
+        }
+
+        @Override
+        public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException
+        {
+            return m_delegate.createSocket(address, port, localAddress, localPort);
+        }
+
+        private void verifyPeerAddress(Socket socket) throws IOException
+        {
+            InetAddress peer = socket == null ? null : socket.getInetAddress();
+            if (peer == null)
+            {
+                throw new IOException("Resource URL connection has no resolvable peer address");
+            }
+
+            if (isNonPublicAddress(peer))
+            {
+                throw new IOException("Resource URL connected to a non-public address");
+            }
+        }
+
+        private Socket createPinnedSocket(String host, int port) throws IOException
+        {
+            Socket plainSocket = new Socket();
+            try
+            {
+                plainSocket.connect(new InetSocketAddress(m_pinnedAddress, port), CONNECT_TIMEOUT_MILLISECONDS);
+                // Passing the host name (not the pinned address) keeps SNI and certificate hostname
+                // verification bound to the name the caller asked for.
+                return m_delegate.createSocket(plainSocket, host, port, true);
+            }
+            catch (IOException e)
+            {
+                plainSocket.close();
+                throw e;
+            }
+        }
     }
 
     static URL validateUrl(String url) throws IOException, URISyntaxException

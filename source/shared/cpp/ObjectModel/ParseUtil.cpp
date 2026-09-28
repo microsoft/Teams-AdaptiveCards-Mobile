@@ -20,6 +20,31 @@ Json::StreamWriterBuilder CreateJsonStreamWriter()
 
     return builder;
 }
+
+// Json::Value::empty() only reports emptiness for null values and empty arrays/objects, so an
+// explicitly authored "" passes every isRequired check. Treat a blank string as absent so that
+// required properties genuinely have to carry a value.
+bool IsAbsentOrBlank(const Json::Value& value)
+{
+    if (value.empty())
+    {
+        return true;
+    }
+
+    if (!value.isString())
+    {
+        return false;
+    }
+
+    const std::string asString = value.asString();
+    return asString.find_first_not_of(" \t\r\n") == std::string::npos;
+}
+
+// Card payloads are untrusted, so bound the sizes the parser is willing to materialize. The limits
+// are deliberately generous so that legitimate content (including base64 data URIs) still parses.
+constexpr size_t MaxJsonPayloadBytes = 10 * 1024 * 1024;
+constexpr size_t MaxStringLength = 4 * 1024 * 1024;
+constexpr size_t MaxArraySize = 1000;
 } // namespace
 
 namespace AdaptiveCards
@@ -57,7 +82,15 @@ std::string ParseUtil::GetTypeAsString(const Json::Value& json)
         throw AdaptiveCardParseException(ErrorStatusCode::RequiredPropertyMissing, ss.str());
     }
 
-    return json.get(typeKey, Json::Value()).asString();
+    auto typeValue = json.get(typeKey, Json::Value());
+    if (!typeValue.isString())
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue,
+            "Value for property type was invalid. Expected type string.");
+    }
+
+    return typeValue.asString();
 }
 
 std::string ParseUtil::TryGetTypeAsString(const Json::Value& json)
@@ -67,6 +100,10 @@ std::string ParseUtil::TryGetTypeAsString(const Json::Value& json)
         return GetTypeAsString(json);
     }
     catch (const AdaptiveCardParseException&)
+    {
+        return "";
+    }
+    catch (const Json::Exception&)
     {
         return "";
     }
@@ -89,17 +126,15 @@ std::string ParseUtil::GetString(const Json::Value& json, AdaptiveCardSchemaKey 
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
     auto propertyValue = json.get(propertyName, Json::Value());
+    if (isRequired && ::IsAbsentOrBlank(propertyValue))
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
+    }
+
     if (propertyValue.empty())
     {
-        if (isRequired)
-        {
-            throw AdaptiveCardParseException(
-                ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
-        }
-        else
-        {
-            return "";
-        }
+        return "";
     }
 
     if (!propertyValue.isString())
@@ -109,7 +144,16 @@ std::string ParseUtil::GetString(const Json::Value& json, AdaptiveCardSchemaKey 
             "Value for property " + propertyName + " was invalid. Expected type string.");
     }
 
-    return propertyValue.asString();
+    std::string result = propertyValue.asString();
+    if (result.size() > ::MaxStringLength)
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue,
+            "Value for property " + propertyName + " exceeds the maximum supported length of " +
+                std::to_string(::MaxStringLength));
+    }
+
+    return result;
 }
 
 std::string ParseUtil::GetString(const Json::Value& json, AdaptiveCardSchemaKey key, const std::string& defaultValue, bool isRequired)
@@ -128,17 +172,15 @@ std::string ParseUtil::GetJsonString(const Json::Value& json, AdaptiveCardSchema
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
     auto propertyValue = json.get(propertyName, Json::Value());
+    if (isRequired && ::IsAbsentOrBlank(propertyValue))
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
+    }
+
     if (propertyValue.empty())
     {
-        if (isRequired)
-        {
-            throw AdaptiveCardParseException(
-                ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
-        }
-        else
-        {
-            return "";
-        }
+        return "";
     }
 
     return propertyValue.toStyledString();
@@ -149,17 +191,15 @@ std::string ParseUtil::GetValueAsString(const Json::Value& json, AdaptiveCardSch
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
     auto propertyValue = json.get(propertyName, Json::Value());
+    if (isRequired && ::IsAbsentOrBlank(propertyValue))
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
+    }
+
     if (propertyValue.empty())
     {
-        if (isRequired)
-        {
-            throw AdaptiveCardParseException(
-                ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
-        }
-        else
-        {
-            return "";
-        }
+        return "";
     }
 
     return propertyValue.asString();
@@ -427,6 +467,14 @@ Json::Value ParseUtil::GetArray(const Json::Value& json, AdaptiveCardSchemaKey k
             "Could not parse required key: " + propertyName + ". It was not found");
     }
 
+    if (elementArray.size() > ::MaxArraySize)
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue,
+            "Value for property " + propertyName + " exceeds the maximum supported collection size of " +
+                std::to_string(::MaxArraySize));
+    }
+
     return elementArray;
 }
 
@@ -439,6 +487,14 @@ std::vector<std::string> ParseUtil::GetStringArray(const Json::Value& json, Adap
 
     for (const auto& curJsonValue : jsonArray)
     {
+        if (!curJsonValue.isString())
+        {
+            throw AdaptiveCardParseException(
+                ErrorStatusCode::InvalidPropertyValue,
+                "Value for property " + AdaptiveCardSchemaKeyToString(key) +
+                    " was invalid. Expected an array of strings.");
+        }
+
         strings.push_back(curJsonValue.asString());
     }
 
@@ -447,6 +503,13 @@ std::vector<std::string> ParseUtil::GetStringArray(const Json::Value& json, Adap
 
 Json::Value ParseUtil::GetJsonValueFromString(const std::string& jsonString)
 {
+    if (jsonString.size() > ::MaxJsonPayloadBytes)
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidJson,
+            "Card payload exceeds the maximum supported size of " + std::to_string(::MaxJsonPayloadBytes) + " bytes");
+    }
+
     const thread_local Json::CharReaderBuilder readerBuilder = [] {
         Json::CharReaderBuilder builder;
         Json::CharReaderBuilder::strictMode(&builder.settings_);
@@ -457,7 +520,20 @@ Json::Value ParseUtil::GetJsonValueFromString(const std::string& jsonString)
 
     Json::Value jsonValue;
     std::string errors;
-    if (!reader->parse(jsonString.data(), jsonString.data() + jsonString.size(), &jsonValue, &errors))
+    bool parsed = false;
+    try
+    {
+        parsed = reader->parse(jsonString.data(), jsonString.data() + jsonString.size(), &jsonValue, &errors);
+    }
+    catch (const Json::Exception& e)
+    {
+        // jsoncpp throws (rather than returning false) for conditions such as exceeding its
+        // internal stack limit on deeply nested payloads. Surface those as parse errors so they
+        // never escape the object model as a foreign exception type.
+        throw AdaptiveCardParseException(ErrorStatusCode::InvalidJson, std::string("Expected JSON Object (") + e.what() + ")");
+    }
+
+    if (!parsed)
     {
         std::ostringstream exceptionMsg{};
         exceptionMsg << "Expected JSON Object (" << errors << ")";

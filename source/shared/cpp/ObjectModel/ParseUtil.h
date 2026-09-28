@@ -68,10 +68,10 @@ namespace ParseUtil
     Json::Value ExtractJsonValue(const Json::Value& jsonRoot, AdaptiveCardSchemaKey key, bool isRequired = false);
 
     template <typename T, typename Fn>
-    std::optional<T> GetOptionalEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, Fn enumConverter);
+    std::optional<T> GetOptionalEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, Fn enumConverter, ParseContext* context = nullptr);
 
     template <typename T, typename Fn>
-    T GetEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, T defaultEnumValue, Fn enumConverter, bool isRequired = false);
+    T GetEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, T defaultEnumValue, Fn enumConverter, bool isRequired = false, ParseContext* context = nullptr);
 
     template <typename T>
     std::shared_ptr<T> DeserializeValue(
@@ -180,12 +180,12 @@ namespace ParseUtil
 }; // namespace ParseUtil
 
 template <typename T, typename Fn>
-std::optional<T> ParseUtil::GetOptionalEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, Fn enumConverter)
+std::optional<T> ParseUtil::GetOptionalEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, Fn enumConverter, ParseContext* context)
 {
     std::string propertyValueStr = "";
+    const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
     try
     {
-        const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
         auto const& propertyValue = json.get(propertyName, Json::Value());
         if (propertyValue.empty())
         {
@@ -203,14 +203,24 @@ std::optional<T> ParseUtil::GetOptionalEnumValue(const Json::Value& json, Adapti
     }
     catch (const std::out_of_range&)
     {
+        // The value was present but isn't a member of the enum's accepted set. Surface it as a
+        // warning instead of silently substituting the default, which would hide malformed input.
+        if (context)
+        {
+            context->warnings.push_back(std::make_shared<AdaptiveCardParseWarning>(
+                WarningStatusCode::UnknownEnumValue,
+                "Value \"" + propertyValueStr + "\" for property " + propertyName +
+                    " is not a recognized value and was ignored."));
+        }
+
         return std::nullopt;
     }
 }
 
 template <typename T, typename Fn>
-T ParseUtil::GetEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, T defaultEnumValue, Fn enumConverter, bool isRequired)
+T ParseUtil::GetEnumValue(const Json::Value& json, AdaptiveCardSchemaKey key, T defaultEnumValue, Fn enumConverter, bool isRequired, ParseContext* context)
 {
-    std::optional<T> optionalEnum = GetOptionalEnumValue<T, Fn>(json, key, enumConverter);
+    std::optional<T> optionalEnum = GetOptionalEnumValue<T, Fn>(json, key, enumConverter, context);
 
     if (isRequired && !optionalEnum.has_value())
     {

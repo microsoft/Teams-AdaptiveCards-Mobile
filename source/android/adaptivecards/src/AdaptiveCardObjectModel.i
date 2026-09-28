@@ -518,6 +518,34 @@ namespace Json {
   }
 %}
 
+// Global catch-all so that no C++ exception can unwind across the JNI boundary.
+// An exception escaping a JNI method invokes std::terminate and kills the host process,
+// so every wrapped call is guarded here. Method-specific %exception directives declared
+// later (e.g. the dynamic_cast helpers) take precedence over this default.
+%exception {
+  try {
+    $action
+  } catch (const AdaptiveCards::AdaptiveCardParseException &e) {
+    jclass excep = jenv->FindClass("java/io/IOException");
+    if (excep) {
+      jenv->ThrowNew(excep, e.what());
+    }
+    return $null;
+  } catch (const std::exception &e) {
+    jclass excep = jenv->FindClass("java/lang/RuntimeException");
+    if (excep) {
+      jenv->ThrowNew(excep, e.what());
+    }
+    return $null;
+  } catch (...) {
+    jclass excep = jenv->FindClass("java/lang/RuntimeException");
+    if (excep) {
+      jenv->ThrowNew(excep, "Unknown native exception");
+    }
+    return $null;
+  }
+}
+
 %template(ReferencesVector) std::vector<std::shared_ptr<AdaptiveCards::References> >;
 %template(RemoteResourceInformationVector) std::vector<AdaptiveCards::RemoteResourceInformation>;
 %template(AdaptiveCardParseWarningVector) std::vector<std::shared_ptr<AdaptiveCards::AdaptiveCardParseWarning> >;

@@ -15,6 +15,12 @@ class StyledCollectionElement;
 class ParseContext
 {
 public:
+    // Card payloads are untrusted, and Deserialize recurses once per nested element, so bound both
+    // the nesting depth and the total element count to keep a hostile payload from exhausting the
+    // stack or turning parsing into a denial of service.
+    static constexpr size_t MaxNestingDepth = 32;
+    static constexpr size_t MaxElementCount = 5000;
+
     ParseContext();
     ParseContext(std::shared_ptr<ElementParserRegistration> elementRegistration, std::shared_ptr<ActionParserRegistration> actionRegistration);
 
@@ -80,5 +86,6 @@ private:
 
     bool m_canFallbackToAncestor;
     std::string m_language;
+    size_t m_elementCount{0};
 };
 } // namespace AdaptiveCards

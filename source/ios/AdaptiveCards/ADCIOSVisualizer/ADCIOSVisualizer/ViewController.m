@@ -313,6 +313,12 @@ UIColor* defaultButtonBackgroundColor;
             {
                 action.isActionFromSplitButtonBottomSheet = NO;
                 NSURL *url = [NSURL URLWithString:[action url]];
+                // Action.OpenUrl URLs are authored remotely and are untrusted. Only hand HTTPS URLs
+                // to SFSafariViewController; anything else requires an explicit host allow list.
+                if (![[url.scheme lowercaseString] isEqualToString:@"https"]) {
+                    NSLog(@"Blocked Action.OpenUrl with a non-HTTPS scheme");
+                    break;
+                }
                 SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:url];
                 [self presentViewController:svc animated:YES completion:nil];
             }

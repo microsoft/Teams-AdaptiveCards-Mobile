@@ -97,9 +97,9 @@ std::shared_ptr<BaseCardElement> RatingInputParser::Deserialize(ParseContext& co
     ratingInput->SetValue(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Value, 0));
     ratingInput->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 5));
     ratingInput->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(
-        json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));
-    ratingInput->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString));
-    ratingInput->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString));
+        json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString, false, &context));
+    ratingInput->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString, false, &context));
+    ratingInput->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString, false, &context));
     
     if (ratingInput->GetValue() > ratingInput->GetMax())
     {

@@ -14,6 +14,7 @@ import java.net.URL;
 import io.adaptivecards.objectmodel.HostConfig;
 import io.adaptivecards.objectmodel.MediaSource;
 import io.adaptivecards.renderer.http.HttpRequestHelper;
+import io.adaptivecards.renderer.http.UrlPolicy;
 import io.adaptivecards.renderer.layout.FullscreenVideoView;
 import io.adaptivecards.renderer.registration.CardRendererRegistration;
 
@@ -39,7 +40,7 @@ public class MediaLoaderAsync extends AsyncTask<String, Void, Void>
             try
             {
                 HttpRequestHelper.query(mediaSourceUrl);
-                m_mediaView.setVideoURI(Uri.parse(mediaSourceUrl), m_isAudio);
+                setVideoUri(mediaSourceUrl);
             }
             catch (MalformedURLException e1)
             {
@@ -57,7 +58,9 @@ public class MediaLoaderAsync extends AsyncTask<String, Void, Void>
                     URL url = new URL(urlContext, mediaSourceUrl);
 
                     HttpRequestHelper.query(url.toString());
-                    m_mediaView.setVideoURI(Uri.parse(baseUrl + mediaSourceUrl), m_isAudio);
+
+                    // Play back exactly the URL that was validated above rather than re-deriving it.
+                    setVideoUri(url.toString());
 
                 }
                 catch (MalformedURLException e2)
@@ -83,6 +86,23 @@ public class MediaLoaderAsync extends AsyncTask<String, Void, Void>
             // Do nothing if the media was not found at all
         }
         return null;
+    }
+
+    /**
+     * Hands a card supplied URL to the media view only when its scheme is permitted by
+     * {@link UrlPolicy}.
+     *
+     * <p>Unlike {@link HttpRequestHelper}, {@code MediaPlayer} happily dereferences {@code file://}
+     * and {@code content://} URIs, so the scheme is re-checked here immediately before playback.
+     */
+    private void setVideoUri(String url) throws IOException
+    {
+        if (!UrlPolicy.isAllowedResourceUrl(url))
+        {
+            throw new IOException("Media URL uses a scheme that is not allowed");
+        }
+
+        m_mediaView.setVideoURI(Uri.parse(url), m_isAudio);
     }
 
 

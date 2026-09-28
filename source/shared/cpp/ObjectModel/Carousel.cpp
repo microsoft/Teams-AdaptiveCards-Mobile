@@ -73,7 +73,7 @@ std::shared_ptr<BaseCardElement> CarouselParser::Deserialize(ParseContext& conte
 std::shared_ptr<BaseCardElement> CarouselParser::DeserializeWithoutCheckingType(ParseContext& context, const Json::Value& json)
 {
     std::shared_ptr<Carousel> carousel = StyledCollectionElement::Deserialize<Carousel>(context, json);
-    carousel->setPageAnimation(ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::PageAnimation,PageAnimation::Slide,PageAnimationFromString));
+    carousel->setPageAnimation(ParseUtil::GetEnumValue(json, AdaptiveCardSchemaKey::PageAnimation,PageAnimation::Slide,PageAnimationFromString, false, &context));
     return carousel;
 }
 

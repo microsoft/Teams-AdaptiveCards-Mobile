@@ -59,7 +59,7 @@ std::shared_ptr<BaseCardElement> ImageSetParser::Deserialize(ParseContext& conte
     auto imageSet = BaseCardElement::Deserialize<ImageSet>(context, value);
     // Get ImageSize
     imageSet->m_imageSize =
-        ParseUtil::GetEnumValue<ImageSize>(value, AdaptiveCardSchemaKey::ImageSize, ImageSize::None, ImageSizeFromString);
+        ParseUtil::GetEnumValue<ImageSize>(value, AdaptiveCardSchemaKey::ImageSize, ImageSize::None, ImageSizeFromString, false, &context);
 
     // Parse Images
     auto images = ParseUtil::GetElementCollection<Image>(

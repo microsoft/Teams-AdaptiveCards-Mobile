@@ -132,7 +132,7 @@ std::shared_ptr<BaseCardElement> ChoiceSetInputParser::Deserialize(ParseContext&
     auto choiceSet = BaseInputElement::Deserialize<ChoiceSetInput>(context, json);
 
     choiceSet->SetChoiceSetStyle(ParseUtil::GetEnumValue<ChoiceSetStyle>(
-        json, AdaptiveCardSchemaKey::Style, ChoiceSetStyle::Compact, ChoiceSetStyleFromString));
+        json, AdaptiveCardSchemaKey::Style, ChoiceSetStyle::Compact, ChoiceSetStyleFromString, false, &context));
     choiceSet->SetIsMultiSelect(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsMultiSelect, false));
     choiceSet->SetValue(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Value, false));
     choiceSet->SetWrap(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Wrap, true, false));

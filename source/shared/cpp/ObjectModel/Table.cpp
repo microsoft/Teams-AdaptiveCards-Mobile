@@ -195,7 +195,7 @@ std::shared_ptr<BaseCardElement> TableParser::Deserialize(ParseContext& context,
     table->SetShowGridLines(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::ShowGridLines, true, false));
     table->SetRoundedCorners(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::RoundedCorners, false, false));
     table->SetGridStyle(ParseUtil::GetEnumValue<ContainerStyle>(
-        json, AdaptiveCardSchemaKey::GridStyle, ContainerStyle::None, ContainerStyleFromString));
+        json, AdaptiveCardSchemaKey::GridStyle, ContainerStyle::None, ContainerStyleFromString, false, &context));
     table->SetFirstRowAsHeaders(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::FirstRowAsHeaders, true, false));
     table->SetHorizontalCellContentAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
         json, AdaptiveCardSchemaKey::HorizontalCellContentAlignment, HorizontalAlignmentFromString));

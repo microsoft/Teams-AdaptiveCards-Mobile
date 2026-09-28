@@ -232,11 +232,11 @@ void BaseCardElement::DeserializeBaseProperties(ParseContext& context, const Jso
 
     element->DeserializeBase<BaseCardElement>(context, json);
     element->SetCanFallbackToAncestor(context.GetCanFallbackToAncestor());
-    element->SetHeight(ParseUtil::GetEnumValue<HeightType>(json, AdaptiveCardSchemaKey::Height, HeightType::Auto, HeightTypeFromString));
-    element->SetTargetWidth(ParseUtil::GetEnumValue<TargetWidthType>(json, AdaptiveCardSchemaKey::TargetWidth, TargetWidthType::Default, TargetWidthTypeFromString));
+    element->SetHeight(ParseUtil::GetEnumValue<HeightType>(json, AdaptiveCardSchemaKey::Height, HeightType::Auto, HeightTypeFromString, false, &context));
+    element->SetTargetWidth(ParseUtil::GetEnumValue<TargetWidthType>(json, AdaptiveCardSchemaKey::TargetWidth, TargetWidthType::Default, TargetWidthTypeFromString, false, &context));
     element->SetIsVisible(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsVisible, true));
     element->SetSeparator(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Separator, false));
-    element->SetSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::Spacing, Spacing::Default, SpacingFromString));
+    element->SetSpacing(ParseUtil::GetEnumValue<Spacing>(json, AdaptiveCardSchemaKey::Spacing, Spacing::Default, SpacingFromString, false, &context));
     element->SetAreaGridName(ParseUtil::GetString(json, AdaptiveCardSchemaKey::AreaGridName, "", false));
     element->SetNonOptionalAreaGridName(ParseUtil::GetOptionalString(json, AdaptiveCardSchemaKey::AreaGridName).has_value() ?
     ParseUtil::GetString(json, AdaptiveCardSchemaKey::AreaGridName) : "");

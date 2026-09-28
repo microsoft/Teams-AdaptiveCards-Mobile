@@ -9,6 +9,7 @@
 #import "ACOHostConfigPrivate.h"
 #import "ACRAVPlayerViewHoldingUIView.h"
 #import "ACRContentHoldingUIView.h"
+#import "UtiliOS.h"
 
 // tags for easy accessing of subviews
 const int playIconTag = 0x49434F4E;
@@ -71,6 +72,12 @@ const int posterTag = 0x504F5354;
             if (source.isValid) {
                 if (source.isVideo) {
                     NSURL *url = [[NSURL alloc] initWithString:source.url];
+                    if (!ACRIsAllowedResourceURL(url)) {
+                        // Media URLs come straight from the untrusted card payload. Without this
+                        // check AVURLAsset would happily read file:// and cleartext http:// URLs.
+                        NSLog(@"Warning: media source URL scheme is not allowed; skipping source");
+                        continue;
+                    }
                     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:nil];
                     _mimeType = source.mimeType;
                     [asset loadValuesAsynchronouslyForKeys:@[ @"tracks" ]
@@ -86,6 +93,10 @@ const int posterTag = 0x504F5354;
                     break;
                 } else { // audio type
                     NSURL *url = [[NSURL alloc] initWithString:source.url];
+                    if (!ACRIsAllowedResourceURL(url)) {
+                        NSLog(@"Warning: media source URL scheme is not allowed; skipping source");
+                        continue;
+                    }
                     AVPlayer *player = [AVPlayer playerWithURL:url];
 
                     self->_mediaViewController = [[AVPlayerViewController alloc] init];

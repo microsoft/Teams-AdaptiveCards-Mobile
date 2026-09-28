@@ -89,3 +89,10 @@ steps:
   inputs:
     PathtoPublish: '$(build.SourcesDirectory)/Screenshots'
   condition: succeededOrFailed()
+
+# Detect known-vulnerable and out-of-policy third party dependencies pulled in by the Gradle build.
+- task: ComponentGovernanceComponentDetection@0
+  displayName: 'Component detection and dependency scanning'
+  inputs:
+    scanType: 'Register'
+    failOnAlert: true

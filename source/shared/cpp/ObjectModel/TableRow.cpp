@@ -119,7 +119,7 @@ std::shared_ptr<TableRow> TableRow::DeserializeTableRow(ParseContext& context, c
     tableRow->SetVerticalCellContentAlignment(ParseUtil::GetOptionalEnumValue<VerticalContentAlignment>(
         json, AdaptiveCardSchemaKey::VerticalCellContentAlignment, VerticalContentAlignmentFromString));
     tableRow->SetStyle(ParseUtil::GetEnumValue<ContainerStyle>(
-        json, AdaptiveCardSchemaKey::Style, ContainerStyle::None, ContainerStyleFromString));
+        json, AdaptiveCardSchemaKey::Style, ContainerStyle::None, ContainerStyleFromString, false, &context));
 
     auto cells = ParseUtil::GetElementCollectionOfSingleType<TableCell>(
         context, json, AdaptiveCardSchemaKey::Cells, &TableCell::DeserializeTableCell, false);

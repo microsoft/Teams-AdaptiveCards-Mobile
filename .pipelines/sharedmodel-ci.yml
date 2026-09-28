@@ -51,3 +51,10 @@ jobs:
       failOnMinTestsNotRun: true
       diagnosticsEnabled: True
       collectDumpOn: always
+
+  # Detect known-vulnerable and out-of-policy third party dependencies vendored into the shared model.
+  - task: ComponentGovernanceComponentDetection@0
+    displayName: 'Component detection and dependency scanning'
+    inputs:
+      scanType: 'Register'
+      failOnAlert: true

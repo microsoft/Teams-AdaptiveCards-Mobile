@@ -18,6 +18,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -55,11 +56,14 @@ import io.adaptivecards.renderer.TagContent;
 import io.adaptivecards.renderer.Util;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
 import io.adaptivecards.renderer.citation.CitationUtil;
+import io.adaptivecards.renderer.http.UrlPolicy;
 import io.adaptivecards.renderer.input.InputUtils;
 import io.adaptivecards.renderer.registration.FeatureFlagResolverUtility;
 
 public class TextBlockRenderer extends BaseCardElementRenderer
 {
+    private static final String TAG = "TextBlockRenderer";
+
     protected TextBlockRenderer()
     {
         // Set up Text Weight Map
@@ -150,7 +154,7 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         {
             this.spannable = spannable;
             URLSpan[] spans = spannable.getSpans(0, 1, URLSpan.class);
-            urlSpan = spans[0];
+            urlSpan = spans.length > 0 ? spans[0] : null;
         }
 
         @Override
@@ -158,10 +162,33 @@ public class TextBlockRenderer extends BaseCardElementRenderer
         {
             if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)
             {
-                urlSpan.onClick(view);
+                activateLink(urlSpan, view);
             }
             return false;
         }
+    }
+
+    /**
+     * Activates {@code urlSpan} only when its scheme is permitted by {@link UrlPolicy}.
+     *
+     * <p>Spans carrying a disallowed scheme are already stripped in
+     * {@link RendererUtil#getSpecialTextSpans(String)}; this is a defense in depth check so that any
+     * span reaching an activation site is re-validated immediately before it launches an intent.
+     */
+    private static void activateLink(@Nullable URLSpan urlSpan, View view)
+    {
+        if (urlSpan == null)
+        {
+            return;
+        }
+
+        if (!UrlPolicy.isAllowedNavigationUrl(urlSpan.getURL()))
+        {
+            Log.w(TAG, "Blocked activation of a link with a disallowed scheme");
+            return;
+        }
+
+        urlSpan.onClick(view);
     }
 
     static class TouchTextView implements View.OnTouchListener
@@ -205,7 +232,7 @@ public class TextBlockRenderer extends BaseCardElementRenderer
                 {
                     if (action == MotionEvent.ACTION_UP)
                     {
-                        link[0].onClick(textView);
+                        activateLink(link[0], textView);
                     }
                     else if (action == MotionEvent.ACTION_DOWN)
                     {

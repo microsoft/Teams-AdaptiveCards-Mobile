@@ -58,3 +58,10 @@ steps:
 
     xcodebuild test       -workspace AdaptiveCards.xcworkspace       -scheme AdaptiveCards       -sdk iphonesimulator       -destination "$DEST"       CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO       | xcpretty -r junit --no-color
   displayName: 'Framework Unit Test'
+
+# Detect known-vulnerable and out-of-policy third party dependencies pulled in by CocoaPods.
+- task: ComponentGovernanceComponentDetection@0
+  displayName: 'Component detection and dependency scanning'
+  inputs:
+    scanType: 'Register'
+    failOnAlert: true

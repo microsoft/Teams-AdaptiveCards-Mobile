@@ -130,10 +130,10 @@ std::shared_ptr<BaseCardElement> RatingLabelParser::Deserialize(ParseContext& co
     ratingLabel->SetMax(ParseUtil::GetDouble(json, AdaptiveCardSchemaKey::Max, 5));
     ratingLabel->SetCount(ParseUtil::GetOptionalInt(json, AdaptiveCardSchemaKey::Count));
     ratingLabel->SetHorizontalAlignment(ParseUtil::GetEnumValue<HorizontalAlignment>(
-        json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString));
-    ratingLabel->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString));
-    ratingLabel->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString));
-    ratingLabel->SetRatingStyle(ParseUtil::GetEnumValue<RatingStyle>(json, AdaptiveCardSchemaKey::Style, RatingStyle::Default, RatingStyleFromString));
+        json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignment::Left, HorizontalAlignmentFromString, false, &context));
+    ratingLabel->SetRatingSize(ParseUtil::GetEnumValue<RatingSize>(json, AdaptiveCardSchemaKey::Size, RatingSize::Medium, RatingSizeFromString, false, &context));
+    ratingLabel->SetRatingColor(ParseUtil::GetEnumValue<RatingColor>(json, AdaptiveCardSchemaKey::Color, RatingColor::Neutral, RatingColorFromString, false, &context));
+    ratingLabel->SetRatingStyle(ParseUtil::GetEnumValue<RatingStyle>(json, AdaptiveCardSchemaKey::Style, RatingStyle::Default, RatingStyleFromString, false, &context));
     
     if (ratingLabel->GetValue() > ratingLabel->GetMax())
     {

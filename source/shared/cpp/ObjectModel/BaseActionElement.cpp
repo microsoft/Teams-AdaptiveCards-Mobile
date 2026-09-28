@@ -236,10 +236,10 @@ void BaseActionElement::DeserializeBaseProperties(ParseContext& context, const J
     element->SetTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title));
     element->SetIconUrl(ParseUtil::GetString(json, AdaptiveCardSchemaKey::IconUrl));
     element->SetStyle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Style, defaultStyle, false));
-    element->SetMode(ParseUtil::GetEnumValue<Mode>(json, AdaptiveCardSchemaKey::Mode, Mode::Primary, ModeFromString));
+    element->SetMode(ParseUtil::GetEnumValue<Mode>(json, AdaptiveCardSchemaKey::Mode, Mode::Primary, ModeFromString, false, &context));
     element->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip));
     element->SetIsEnabled(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::IsEnabled, true));
-    element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString));
+    element->SetRole(ParseUtil::GetEnumValue<ActionRole>(json, AdaptiveCardSchemaKey::ActionRole, ActionRole::Button, ActionRoleFromString, false, &context));
     element->SetIsRtl(ParseUtil::GetBool(json, AdaptiveCardSchemaKey::Rtl, false));
 
     auto themedUrls = ParseUtil::GetElementCollectionOfSingleType<ThemedUrl>(context, json, AdaptiveCardSchemaKey::ThemedIconUrls, ThemedUrl::Deserialize, false);

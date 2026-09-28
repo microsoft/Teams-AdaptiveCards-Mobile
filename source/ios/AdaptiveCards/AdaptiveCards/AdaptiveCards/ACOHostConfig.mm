@@ -80,6 +80,13 @@ using namespace AdaptiveCards;
                                                   userInfo:nil];
             NSArray<NSError *> *errors = @[ parseError ];
             result = [[ACOHostConfigParseResult alloc] init:nil errors:errors];
+        } catch (...) {
+            // Defense in depth: a non-AdaptiveCardParseException escaping into Objective-C
+            // would terminate the host process.
+            NSError *parseError = [NSError errorWithDomain:ACRParseErrorDomain
+                                                      code:(long)ErrorStatusCode::InvalidJson
+                                                  userInfo:nil];
+            result = [[ACOHostConfigParseResult alloc] init:nil errors:@[ parseError ]];
         }
     }
     return result;

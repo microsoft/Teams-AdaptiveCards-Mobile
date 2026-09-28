@@ -1,9 +1,11 @@
 package io.adaptivecards.adaptivecardsv2.objectmodel.utils
 
 import android.text.Html
+import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.URLSpan
 import io.adaptivecards.adaptivecardsv2.objectmodel.markdown.MarkDownParser
+import io.adaptivecards.renderer.http.UrlPolicy
 
 object RenderUtil {
 
@@ -72,6 +74,28 @@ object RenderUtil {
                 null,
                 UlTagHandler()
             )
-        return htmlString
+        return removeDisallowedLinks(htmlString)
+    }
+
+    /**
+     * Strips every [URLSpan] whose scheme is not permitted by [UrlPolicy].
+     *
+     * Link text comes from a remote card author and `URLSpan.onClick` launches an implicit
+     * `ACTION_VIEW` intent for whatever URL it holds. Removing the span here covers every way the
+     * platform can activate it rather than guarding each activation site individually.
+     */
+    private fun removeDisallowedLinks(htmlString: Spanned): Spanned {
+        val spans = htmlString.getSpans(0, htmlString.length, URLSpan::class.java)
+        if (spans.none { !UrlPolicy.isAllowedNavigationUrl(it.url) }) {
+            return htmlString
+        }
+
+        // The span instances are copied by value into the builder, so look the replacements up from
+        // the copy rather than reusing the instances obtained from the original Spanned.
+        val sanitized = SpannableStringBuilder(htmlString)
+        sanitized.getSpans(0, sanitized.length, URLSpan::class.java)
+            .filterNot { UrlPolicy.isAllowedNavigationUrl(it.url) }
+            .forEach { sanitized.removeSpan(it) }
+        return sanitized
     }
 }

@@ -353,13 +353,13 @@ std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, 
         context, json, AdaptiveCardSchemaKey::Authentication, Authentication::Deserialize);
 
     ContainerStyle style =
-        ParseUtil::GetEnumValue<ContainerStyle>(json, AdaptiveCardSchemaKey::Style, ContainerStyle::None, ContainerStyleFromString);
+        ParseUtil::GetEnumValue<ContainerStyle>(json, AdaptiveCardSchemaKey::Style, ContainerStyle::None, ContainerStyleFromString, false, &context);
     context.SetParentalContainerStyle(style);
 
     VerticalContentAlignment verticalContentAlignment = ParseUtil::GetEnumValue<VerticalContentAlignment>(
-        json, AdaptiveCardSchemaKey::VerticalContentAlignment, VerticalContentAlignment::Top, VerticalContentAlignmentFromString);
+        json, AdaptiveCardSchemaKey::VerticalContentAlignment, VerticalContentAlignment::Top, VerticalContentAlignmentFromString, false, &context);
     HeightType height =
-        ParseUtil::GetEnumValue<HeightType>(json, AdaptiveCardSchemaKey::Height, HeightType::Auto, HeightTypeFromString);
+        ParseUtil::GetEnumValue<HeightType>(json, AdaptiveCardSchemaKey::Height, HeightType::Auto, HeightTypeFromString, false, &context);
 
     unsigned int minHeight =
         ParseSizeForPixelSize(ParseUtil::GetString(json, AdaptiveCardSchemaKey::MinHeight), &context.warnings).value_or(0);

@@ -1,0 +1,75 @@
+name: CodeQL
+
+# Static analysis gate for the shared C++ object model, the Android renderer and the iOS renderer.
+# Card payloads are untrusted input, so every change to the parsing and rendering surface is scanned
+# before it can be merged.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Re-scan weekly so that newly published queries are applied to code that is not being changed.
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: java-kotlin
+            runner: ubuntu-latest
+          - language: c-cpp
+            runner: macos-latest
+          - language: swift
+            runner: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        if: matrix.language == 'java-kotlin'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+
+      - name: Build Android
+        if: matrix.language == 'java-kotlin'
+        working-directory: source/android
+        run: ./gradlew --no-daemon assembleDebug
+
+      # The shared object model has no committed CMake bootstrap for CI, so compile the sources
+      # directly. This is enough for CodeQL to observe every translation unit.
+      - name: Build shared object model
+        if: matrix.language == 'c-cpp'
+        working-directory: source/shared/cpp/ObjectModel
+        run: clang++ -std=c++17 -fsyntax-only -I. *.cpp
+
+      - name: Autobuild
+        if: matrix.language == 'swift'
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:${{ matrix.language }}

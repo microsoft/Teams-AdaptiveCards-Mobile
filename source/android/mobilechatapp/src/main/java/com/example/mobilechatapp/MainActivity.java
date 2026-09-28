@@ -48,6 +48,7 @@ import io.adaptivecards.objectmodel.ShowCardAction;
 import io.adaptivecards.objectmodel.SubmitAction;
 import io.adaptivecards.renderer.RenderedAdaptiveCard;
 import io.adaptivecards.renderer.actionhandler.ICardActionHandler;
+import io.adaptivecards.renderer.http.UrlPolicy;
 
 public class MainActivity extends AppCompatActivity implements ICardActionHandler, RecyclerViewAdapter.ItemClickListener
 {
@@ -377,7 +378,17 @@ public class MainActivity extends AppCompatActivity implements ICardActionHandle
             throw new InternalError("Unable to convert BaseActionElement to ShowCardAction object model.");
         }
 
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(openUrlAction.GetUrl()));
+        // Action.OpenUrl URLs are authored remotely and are therefore untrusted. Launching an
+        // implicit ACTION_VIEW intent for an arbitrary scheme would let a card author drive this app
+        // into any installed app's deep link handler, so check the scheme before handing it off.
+        String url = openUrlAction.GetUrl();
+        if (!UrlPolicy.isAllowedNavigationUrl(url))
+        {
+            showToast("Blocked a link with a disallowed scheme", Toast.LENGTH_LONG);
+            return;
+        }
+
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         this.startActivity(browserIntent);
     }
 

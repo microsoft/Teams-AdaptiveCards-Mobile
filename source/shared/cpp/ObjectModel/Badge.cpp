@@ -147,21 +147,21 @@ std::shared_ptr<BaseCardElement> BadgeParser::Deserialize(ParseContext& context,
     badge->SetText(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Text, "",false));
     badge->SetBadgeIcon(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Icon, "", false));
     badge->SetBadgeStyle(ParseUtil::GetEnumValue<BadgeStyle>(json, AdaptiveCardSchemaKey::Style, BadgeStyle::Default,
-                                                                     BadgeStyleFromString));
+                                                                     BadgeStyleFromString, false, &context));
     badge->SetBadgeSize(ParseUtil::GetEnumValue<BadgeSize>(json, AdaptiveCardSchemaKey::Size, BadgeSize::Medium,
-                                                        BadgeSizeFromString));
+                                                        BadgeSizeFromString, false, &context));
     badge->SetShape(ParseUtil::GetEnumValue<Shape>(json, AdaptiveCardSchemaKey::Shape, Shape::Circular,
-                                                           ShapeFromString));
+                                                           ShapeFromString, false, &context));
     badge->SetHorizontalAlignment(ParseUtil::GetOptionalEnumValue<HorizontalAlignment>(
             json, AdaptiveCardSchemaKey::HorizontalAlignment, HorizontalAlignmentFromString));
 
     badge->SetIconPosition(ParseUtil::GetEnumValue<IconPosition>(
             json, AdaptiveCardSchemaKey::IconPosition, IconPosition::Before,
-            IconPositionFromString));
+            IconPositionFromString, false, &context));
 
     badge->SetBadgeAppearance(ParseUtil::GetEnumValue<BadgeAppearance>(
             json, AdaptiveCardSchemaKey::Appearance, BadgeAppearance::Filled,
-            BadgeAppearanceFromString));
+            BadgeAppearanceFromString, false, &context));
     badge->SetTooltip(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Tooltip, "",false));
 
     return badge;
