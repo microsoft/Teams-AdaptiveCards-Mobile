@@ -55,8 +55,15 @@ namespace AdaptiveCardsSharedModelUnitTest
         TEST_METHOD(GetJsonValueFromStringTests)
         {
             Assert::ExpectException<AdaptiveCardParseException>([]() { ParseUtil::GetJsonValueFromString("definitely not json"); });
+            Assert::ExpectException<AdaptiveCardParseException>(
+                []() { ParseUtil::GetJsonValueFromString("{ \"foo\": \"first\", \"foo\": \"second\" }"); });
+            Assert::ExpectException<AdaptiveCardParseException>(
+                []() { ParseUtil::GetJsonValueFromString("{ \"foo\": \"bar\" } trailing"); });
+            Assert::ExpectException<AdaptiveCardParseException>(
+                []() { ParseUtil::GetJsonValueFromString("{ /* comment */ \"foo\": \"bar\" }"); });
             auto jsonValue = ParseUtil::GetJsonValueFromString("{ \"foo\": \"bar\" }");
             Assert::AreEqual(jsonValue["foo"].asCString(), "bar", false);
+            Assert::AreEqual(ParseUtil::GetJsonValueFromString("\"scalar\"").asString(), "scalar"s);
         }
 
         TEST_METHOD(ThrowIfNotJsonObjectTests)

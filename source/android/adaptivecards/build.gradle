@@ -48,6 +48,9 @@ android {
     lint {
         abortOnError false
     }
+    publishing {
+        singleVariant("release")
+    }
 }
 
 tasks.register("sourcesJar", Jar) {

@@ -50,7 +50,7 @@ ViewController.m
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    NSString *jsonStr = @"{ \"type\": \"AdaptiveCard\", \"version\": \"1.0\", \"body\": [ { \"type\": \"Image\", \"url\": \"http://adaptivecards.io/content/adaptive-card-50.png\", \"horizontalAlignment\":\"center\" }, { \"type\": \"TextBlock\", \"horizontalAlignment\":\"center\", \"text\": \"Hello **Adaptive Cards!**\" } ], \"actions\": [ { \"type\": \"Action.OpenUrl\", \"title\": \"Learn more\", \"url\": \"http://adaptivecards.io\" }, { \"type\": \"Action.OpenUrl\", \"title\": \"GitHub\", \"url\": \"http://github.com/Microsoft/AdaptiveCards\" } ] }";
+    NSString *jsonStr = @"{ \"type\": \"AdaptiveCard\", \"version\": \"1.0\", \"body\": [ { \"type\": \"Image\", \"url\": \"https://adaptivecards.io/content/adaptive-card-50.png\", \"horizontalAlignment\":\"center\" }, { \"type\": \"TextBlock\", \"horizontalAlignment\":\"center\", \"text\": \"Hello **Adaptive Cards!**\" } ], \"actions\": [ { \"type\": \"Action.OpenUrl\", \"title\": \"Learn more\", \"url\": \"https://adaptivecards.io\" }, { \"type\": \"Action.OpenUrl\", \"title\": \"GitHub\", \"url\": \"https://github.com/Microsoft/AdaptiveCards\" } ] }";
     ACRRenderResult *renderResult;
     ACOAdaptiveCardParseResult *cardParseResult = [ACOAdaptiveCard fromJson:jsonStr];
     if(cardParseResult.isValid){
@@ -88,14 +88,7 @@ ViewController.m
 ### Step 2 
 Allow Image Downloading
 
-Please be sure to add exceptions for specific domains to info.plist or add the following to info.plist 
-```
-<key>NSAppTransportSecurity</key>
-    <dict>
-     <key>NSAllowsArbitraryLoads</key>
-     <true/>
-    </dict>
-```
+Use HTTPS image URLs. If a host must access a nonstandard endpoint, add the narrowest possible domain-specific App Transport Security exception rather than enabling arbitrary loads.
 For more information on NSAppTransportSecurity plese check here https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW33
 
 ### Step 3
@@ -122,7 +115,7 @@ class ViewController: UIViewController, ACRActionDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let jsonStr = "{ \"type\": \"AdaptiveCard\", \"version\": \"1.0\", \"body\": [ { \"type\": \"Image\", \"url\": \"http://adaptivecards.io/content/adaptive-card-50.png\", \"horizontalAlignment\":\"center\" }, { \"type\": \"TextBlock\", \"horizontalAlignment\":\"center\", \"text\": \"Hello **Adaptive Cards!**\" } ], \"actions\": [ { \"type\": \"Action.OpenUrl\", \"title\": \"Learn more\", \"url\": \"http://adaptivecards.io\" }, { \"type\": \"Action.OpenUrl\", \"title\": \"GitHub\", \"url\": \"http://github.com/Microsoft/AdaptiveCards\" } ] }";
+        let jsonStr = "{ \"type\": \"AdaptiveCard\", \"version\": \"1.0\", \"body\": [ { \"type\": \"Image\", \"url\": \"https://adaptivecards.io/content/adaptive-card-50.png\", \"horizontalAlignment\":\"center\" }, { \"type\": \"TextBlock\", \"horizontalAlignment\":\"center\", \"text\": \"Hello **Adaptive Cards!**\" } ], \"actions\": [ { \"type\": \"Action.OpenUrl\", \"title\": \"Learn more\", \"url\": \"https://adaptivecards.io\" }, { \"type\": \"Action.OpenUrl\", \"title\": \"GitHub\", \"url\": \"https://github.com/Microsoft/AdaptiveCards\" } ] }";
 
         let cardParseResult = ACOAdaptiveCard.fromJson(jsonStr);
         if((cardParseResult?.isValid)!){
@@ -156,14 +149,7 @@ class ViewController: UIViewController, ACRActionDelegate{
 ### Step 3 
 Allow Image Downloading
 
-Please be sure to add exceptions for specific domains to info.plist or add the following to info.plist 
-```
-<key>NSAppTransportSecurity</key>
-    <dict>
-     <key>NSAllowsArbitraryLoads</key>
-     <true/>
-    </dict>
- ```
+Use HTTPS image URLs. If a host must access a nonstandard endpoint, add the narrowest possible domain-specific App Transport Security exception rather than enabling arbitrary loads.
 For more information on NSAppTransportSecurity plese check here https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW33
 
 ### Step 4

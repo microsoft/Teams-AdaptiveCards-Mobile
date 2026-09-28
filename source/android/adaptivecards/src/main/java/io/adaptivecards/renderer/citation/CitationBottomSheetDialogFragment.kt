@@ -88,10 +88,13 @@ class CitationBottomSheetDialogFragment(
                     // Custom behavior provided by caller
                     onTitleClickListener.invoke()
                 } else {
-                    // Default behavior: open URL in browser
                     val uri = url.toUri()
-                    val browserIntent = Intent(Intent.ACTION_VIEW, uri)
-                    context.startActivity(browserIntent)
+                    if (uri.scheme.equals("https", ignoreCase = true)) {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, uri)
+                        context.startActivity(browserIntent)
+                    } else {
+                        Log.w(TAG, "Blocked citation URL with a non-HTTPS scheme")
+                    }
                 }
             }
         }

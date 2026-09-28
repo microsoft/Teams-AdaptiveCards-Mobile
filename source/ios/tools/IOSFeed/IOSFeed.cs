@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Storage;
@@ -12,7 +12,9 @@ namespace AdaptiveCards.Tools.IOSFeed
 {
     public static class Constants
     {
-        public const string ConnectionStringPath = "source/ios/tools/IOSFeed/ConnectString.txt";
+        public static readonly string ConnectionStringPath =
+            Environment.GetEnvironmentVariable("IOSFEED_CONNECTION_STRING_PATH") ??
+            "source/ios/tools/IOSFeed/ConnectString.txt";
         public const string ContainerId = "adaptivecardsiosblobs";
         public const string FrameworkPath = "source/ios/AdaptiveCards/AdaptiveCards";
         public const string FrameworkName = "AdaptiveCards.framework.zip";
@@ -36,7 +38,8 @@ namespace AdaptiveCards.Tools.IOSFeed
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Uploading task failed with {0} exception", ex);
+                Console.Error.WriteLine("Uploading task failed with exception type {0}", ex.GetType().Name);
+                Environment.ExitCode = 1;
             }
         }
 
@@ -81,6 +84,7 @@ namespace AdaptiveCards.Tools.IOSFeed
                 await cloudBlobContainer.SetPermissionsAsync(permissions);
 
                 var sourceFile = Path.Combine(Constants.FrameworkPath, Constants.FrameworkName);
+                var sourceFileSha256 = GetSha256(sourceFile);
                 var blobGuid = Guid.NewGuid().ToString();
                 var cloudFileName = blobGuid + Constants.FrameworkName;
 
@@ -88,22 +92,7 @@ namespace AdaptiveCards.Tools.IOSFeed
                 try
                 {
                     await cloudBlockBlob.UploadFromFileAsync(sourceFile);
-
-                    BlobContinuationToken blobContinuationToken = null;
-                    do
-                    {
-                        var results = await cloudBlobContainer.ListBlobsSegmentedAsync(null, blobContinuationToken);
-                        // Get the value of the continuation token returned by the listing call.
-                        blobContinuationToken = results.ContinuationToken;
-                        foreach (IListBlobItem item in results.Results)
-                        {
-                            var uriString = item.Uri.ToString();
-                            if (uriString.Contains(blobGuid))
-                            {
-                                UpdatePodSpec(uriString);
-                            }
-                        }
-                    } while (blobContinuationToken != null);
+                    UpdatePodSpec(cloudBlockBlob.Uri.ToString(), sourceFileSha256);
                 }
                 catch (Exception)
                 {
@@ -115,7 +104,16 @@ namespace AdaptiveCards.Tools.IOSFeed
             }
         }
 
-        private static void UpdatePodSpec(string uri)
+        private static string GetSha256(string filePath)
+        {
+            using (var stream = File.OpenRead(filePath))
+            using (var sha256 = SHA256.Create())
+            {
+                return BitConverter.ToString(sha256.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
+            }
+        }
+
+        private static void UpdatePodSpec(string uri, string sha256)
         {
             var sourceFile = Path.Combine(Constants.PodspecPath, Constants.PodspecName);
             var targetFile = Path.Combine(Constants.TargetPodspecPath, Constants.PodspecName);
@@ -141,7 +139,13 @@ namespace AdaptiveCards.Tools.IOSFeed
                         {
                             if (splits[0].Contains("spec.source", StringComparison.OrdinalIgnoreCase))
                             {
-                                stringBuilderForEditedString.Append(splits[0]).Append("= { :http => " + "'" + uri + "' }");
+                                stringBuilderForEditedString
+                                    .Append(splits[0])
+                                    .Append("= { :http => '")
+                                    .Append(uri)
+                                    .Append("', :sha256 => '")
+                                    .Append(sha256)
+                                    .Append("' }");
                             }
                             else
                             {

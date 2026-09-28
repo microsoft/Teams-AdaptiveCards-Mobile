@@ -447,7 +447,12 @@ std::vector<std::string> ParseUtil::GetStringArray(const Json::Value& json, Adap
 
 Json::Value ParseUtil::GetJsonValueFromString(const std::string& jsonString)
 {
-    const thread_local Json::CharReaderBuilder readerBuilder;
+    const thread_local Json::CharReaderBuilder readerBuilder = [] {
+        Json::CharReaderBuilder builder;
+        Json::CharReaderBuilder::strictMode(&builder.settings_);
+        builder.settings_["strictRoot"] = false;
+        return builder;
+    }();
     std::unique_ptr<Json::CharReader> reader(readerBuilder.newCharReader());
 
     Json::Value jsonValue;
