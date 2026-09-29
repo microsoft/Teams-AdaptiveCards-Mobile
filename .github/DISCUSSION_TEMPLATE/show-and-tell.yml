@@ -1,0 +1,53 @@
+title: "[Show & Tell]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Built something with Adaptive Cards Mobile? Show it off!
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What did you build?
+      description: Describe your project or integration.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform(s) does your project target?
+      options:
+        - Android
+        - iOS
+        - Both
+        - Cross-platform
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / Demo
+      description: Share screenshots, GIFs, or links to a video demo of your project.
+    validations:
+      required: false
+
+  - type: textarea
+    id: highlights
+    attributes:
+      label: Highlights & Learnings
+      description: Any interesting challenges you faced, tips for other developers, or noteworthy implementation details?
+    validations:
+      required: false
+
+  - type: input
+    id: link
+    attributes:
+      label: Project Link
+      description: Link to your project, repo, or blog post (optional).
+      placeholder: "https://github.com/..."
+    validations:
+      required: false
