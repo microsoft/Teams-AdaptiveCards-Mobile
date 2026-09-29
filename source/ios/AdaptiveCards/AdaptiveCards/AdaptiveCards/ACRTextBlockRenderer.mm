@@ -220,20 +220,23 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
         additionalProperties = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&jsonError];
         if (additionalProperties && [additionalProperties isKindOfClass:[NSDictionary class]])
         {
-            NSString *titleDynamic = additionalProperties[DYNAMIC_TEXT_PROP];
-            
-            [self evaluateDynamicProperties:titleDynamic
+            NSString *textDynamic = additionalProperties[DYNAMIC_TEXT_PROP];
+            NSDictionary * _Nullable dataContext = additionalProperties[@"data"];
+
+            [self evaluateDynamicProperties:textDynamic
+                                dataContext:dataContext
                                       label:label];
         }
     }
 }
 
 - (void)evaluateDynamicProperties:(NSString * _Nullable)textDynamic
+                      dataContext:(NSDictionary * _Nullable)dataContext
                             label:(ACRViewAttachingTextView *)label
 {
     if (textDynamic && [textDynamic length] > 0)
     {
-        [self evaluateExpression:textDynamic completion:^(id value, NSError *error)
+        [self evaluateExpression:textDynamic withData:dataContext completion:^(id value, NSError *error)
          {
             if ([value isKindOfClass:[NSString class]] && [((NSString *)value) length] > 0)
             {
@@ -245,11 +248,9 @@ NSString * const DYNAMIC_TEXT_PROP = @"text.dynamic";
     }
 }
 
-/// Evaluates an expression string using the Swift ObjCExpressionEvaluator bridge.
-/// Calls the completion block with success/failure and result/error.
-- (void)evaluateExpression:(NSString *)expression completion:(void (^)(id _Nullable result, NSError * _Nullable error))completion
+- (void)evaluateExpression:(NSString *)expression withData:(NSDictionary * _Nullable)data completion:(void (^)(id _Nullable result, NSError * _Nullable error))completion
 {
-    [TSExpressionObjCBridge evaluateExpression:expression withData:nil completion:^(NSObject * _Nullable evalResult, NSError * _Nullable evalError)
+    [TSExpressionObjCBridge evaluateExpression:expression withData:data completion:^(NSObject * _Nullable evalResult, NSError * _Nullable evalError)
      {
         if (completion)
         {

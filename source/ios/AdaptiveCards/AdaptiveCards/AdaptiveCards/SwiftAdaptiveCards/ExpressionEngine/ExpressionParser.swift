@@ -150,6 +150,11 @@ public class ExpressionParser {
             throw TokenizerError.unexpectedCharacter("Unexpected end of expression.")
         }
         switch curr.type {
+        case "${":
+            moveNext()
+            let inner = try parsePath()
+            _ = try parseToken("}")
+            return inner
         case "identifier", "(":
             return try parsePath()
         case "[":
