@@ -72,6 +72,10 @@ public class References {
     return ReferenceIcon.swigToEnum(AdaptiveCardObjectModelJNI.References_GetIcon(swigCPtr, this));
   }
 
+  public void SetIcon(ReferenceIcon icon) {
+    AdaptiveCardObjectModelJNI.References_SetIcon(swigCPtr, this, icon.swigValue());
+  }
+
   public String GetAbstract() {
     return AdaptiveCardObjectModelJNI.References_GetAbstract(swigCPtr, this);
   }

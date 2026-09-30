@@ -158,23 +158,11 @@ public:
     const std::unordered_map<std::string, AdaptiveCards::SemanticVersion>& GetRootRequires() const;
     std::shared_ptr<BaseElement> GetRootFallbackContent() const;
     FallbackType GetRootFallbackType() const;
-#ifdef __ANDROID__
-#pragma GCC diagnostic ignored "-Wdynamic-exception-spec"
-    static std::shared_ptr<ParseResult> DeserializeFromFile(
-        const std::string& jsonFile, std::string rendererVersion, ParseContext& context) throw(AdaptiveCards::AdaptiveCardParseException);
-    static std::shared_ptr<ParseResult> DeserializeFromFile(
-        const std::string& jsonFile, std::string rendererVersion) throw(AdaptiveCards::AdaptiveCardParseException);
-
-    static std::shared_ptr<ParseResult> Deserialize(
-        const Json::Value& json, std::string rendererVersion, ParseContext& context) throw(AdaptiveCards::AdaptiveCardParseException);
-
-    static std::shared_ptr<ParseResult> DeserializeFromString(
-        const std::string& jsonString, std::string rendererVersion, ParseContext& context) throw(AdaptiveCards::AdaptiveCardParseException);
-    static std::shared_ptr<ParseResult> DeserializeFromString(
-        const std::string& jsonString, std::string rendererVersion) throw(AdaptiveCards::AdaptiveCardParseException);
-    static std::shared_ptr<AdaptiveCard> MakeFallbackTextCard(
-        const std::string& fallbackText, const std::string& language, const std::string& speak) throw(AdaptiveCards::AdaptiveCardParseException);
-#else
+    // NOTE: These deliberately carry no exception specification. A dynamic exception
+    // specification such as throw(AdaptiveCardParseException) routes any other exception type
+    // (for example Json::LogicError raised from deep inside jsoncpp) to std::terminate before
+    // unwinding reaches the caller, which makes it impossible for the SWIG/JNI layer or the host
+    // app to catch. Parsing runs on fully untrusted input, so it must stay catchable.
     static std::shared_ptr<ParseResult> DeserializeFromFile(const std::string& jsonFile, const std::string& rendererVersion, ParseContext& context);
     static std::shared_ptr<ParseResult> DeserializeFromFile(const std::string& jsonFile, const std::string& rendererVersion);
 
@@ -186,7 +174,6 @@ public:
     static std::shared_ptr<AdaptiveCard> MakeFallbackTextCard(
         const std::string& fallbackText, const std::string& language, const std::string& speak);
 
-#endif // __ANDROID__
     Json::Value SerializeToJsonValue() const;
     std::string Serialize() const;
 

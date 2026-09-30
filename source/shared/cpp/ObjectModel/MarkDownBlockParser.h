@@ -53,6 +53,26 @@ protected:
 
     void ParseTextAndEmphasis(std::stringstream& stream);
 
+    // Link and list parsing are mutually recursive: ParseBlock dispatches '[' to LinkParser, whose
+    // MatchAtLinkTextRun calls ParseBlock again (and likewise for ListParser::ParseSubBlocks).
+    // Markdown runs at render time on attacker-supplied TextBlock text, after the object model's
+    // parse-time limits no longer apply, so the recursion needs its own bound or a few KB of
+    // nested '[' overflows the UI thread stack.
+    static constexpr unsigned int MaxNestingDepth = 32;
+
+    // Propagates the current nesting depth into a nested parser.
+    void AdoptDepth(MarkDownBlockParser& child) const
+    {
+        child.m_depth = m_depth + 1;
+    }
+
+    // Drains the stream into the parsed result as literal text. Used when the depth bound is hit;
+    // callers such as ListParser::ParseSubBlocks loop until eof, so this must always make progress.
+    void ConsumeRemainingAsText(std::stringstream& stream);
+
+    // Current recursion depth, incremented for each nested parser.
+    unsigned int m_depth = 0;
+
     // Holds parsed results
     MarkDownParsedResult m_parsedResult;
 };

@@ -39,8 +39,11 @@ public class MediaLoaderAsync extends AsyncTask<String, Void, Void>
             // Try loading online using only the path first
             try
             {
-                HttpRequestHelper.query(mediaSourceUrl);
-                setVideoUri(mediaSourceUrl);
+                // Play back exactly the URL that was screened, not the original string. The two can
+                // parse to different authorities, and only the screened one has been checked.
+                URL validatedUrl = HttpRequestHelper.validateAndNormalizeUrl(mediaSourceUrl);
+                HttpRequestHelper.query(validatedUrl.toString());
+                setVideoUri(validatedUrl.toString());
             }
             catch (MalformedURLException e1)
             {
@@ -57,10 +60,11 @@ public class MediaLoaderAsync extends AsyncTask<String, Void, Void>
                     URL urlContext = new URL(baseUrl);
                     URL url = new URL(urlContext, mediaSourceUrl);
 
-                    HttpRequestHelper.query(url.toString());
+                    URL validatedUrl = HttpRequestHelper.validateAndNormalizeUrl(url.toString());
+                    HttpRequestHelper.query(validatedUrl.toString());
 
                     // Play back exactly the URL that was validated above rather than re-deriving it.
-                    setVideoUri(url.toString());
+                    setVideoUri(validatedUrl.toString());
 
                 }
                 catch (MalformedURLException e2)

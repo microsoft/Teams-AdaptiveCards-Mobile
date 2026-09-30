@@ -9,12 +9,21 @@ using namespace AdaptiveCards;
 // Parses according to each key words
 void MarkDownBlockParser::ParseBlock(std::stringstream& stream)
 {
+    if (m_depth >= MaxNestingDepth)
+    {
+        // Past the bound, stop recursing and emit whatever is left verbatim. Draining the stream
+        // guarantees the eof-driven loops in ListParser terminate.
+        ConsumeRemainingAsText(stream);
+        return;
+    }
+
     switch (stream.peek())
     {
         // parses link
     case '[':
     {
         LinkParser linkParser;
+        AdoptDepth(linkParser);
         // do syntax check of link
         linkParser.Match(stream);
         // append link result to the rest
@@ -47,6 +56,7 @@ void MarkDownBlockParser::ParseBlock(std::stringstream& stream)
     case '*':
     {
         ListParser listParser;
+        AdoptDepth(listParser);
         // do syntax check of list
         listParser.Match(stream);
         // append list result to the rest
@@ -66,6 +76,7 @@ void MarkDownBlockParser::ParseBlock(std::stringstream& stream)
     case '9':
     {
         OrderedListParser orderedListParser;
+        AdoptDepth(orderedListParser);
         // do syntax check of list
         orderedListParser.Match(stream);
         // append list result to the rest
@@ -78,9 +89,25 @@ void MarkDownBlockParser::ParseBlock(std::stringstream& stream)
     }
 }
 
+void MarkDownBlockParser::ConsumeRemainingAsText(std::stringstream& stream)
+{
+    std::string remaining;
+    char streamChar{};
+    while (stream.get(streamChar))
+    {
+        remaining += streamChar;
+    }
+
+    if (!remaining.empty())
+    {
+        m_parsedResult.AddNewTokenToParsedResult(remaining);
+    }
+}
+
 void MarkDownBlockParser::ParseTextAndEmphasis(std::stringstream& stream)
 {
     EmphasisParser emphasisParser;
+    AdoptDepth(emphasisParser);
     // do syntax check of normal text + emphasis
     emphasisParser.Match(stream);
     // append result to the rest

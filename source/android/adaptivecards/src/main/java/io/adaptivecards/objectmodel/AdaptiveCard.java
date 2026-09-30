@@ -242,32 +242,32 @@ public class AdaptiveCard {
     return FallbackType.swigToEnum(AdaptiveCardObjectModelJNI.AdaptiveCard_GetRootFallbackType(swigCPtr, this));
   }
 
-  public static ParseResult DeserializeFromFile(String jsonFile, String rendererVersion, ParseContext context) throws java.io.IOException {
+  public static ParseResult DeserializeFromFile(String jsonFile, String rendererVersion, ParseContext context) {
     long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_DeserializeFromFile__SWIG_0(jsonFile, rendererVersion, ParseContext.getCPtr(context), context);
     return (cPtr == 0) ? null : new ParseResult(cPtr, true);
   }
 
-  public static ParseResult DeserializeFromFile(String jsonFile, String rendererVersion) throws java.io.IOException {
+  public static ParseResult DeserializeFromFile(String jsonFile, String rendererVersion) {
     long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_DeserializeFromFile__SWIG_1(jsonFile, rendererVersion);
     return (cPtr == 0) ? null : new ParseResult(cPtr, true);
   }
 
-  public static ParseResult Deserialize(JsonValue json, String rendererVersion, ParseContext context) throws java.io.IOException {
+  public static ParseResult Deserialize(JsonValue json, String rendererVersion, ParseContext context) {
     long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_Deserialize(JsonValue.getCPtr(json), json, rendererVersion, ParseContext.getCPtr(context), context);
     return (cPtr == 0) ? null : new ParseResult(cPtr, true);
   }
 
-  public static ParseResult DeserializeFromString(String jsonString, String rendererVersion, ParseContext context) throws java.io.IOException {
+  public static ParseResult DeserializeFromString(String jsonString, String rendererVersion, ParseContext context) {
     long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_DeserializeFromString__SWIG_0(jsonString, rendererVersion, ParseContext.getCPtr(context), context);
     return (cPtr == 0) ? null : new ParseResult(cPtr, true);
   }
 
-  public static ParseResult DeserializeFromString(String jsonString, String rendererVersion) throws java.io.IOException {
+  public static ParseResult DeserializeFromString(String jsonString, String rendererVersion) {
     long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_DeserializeFromString__SWIG_1(jsonString, rendererVersion);
     return (cPtr == 0) ? null : new ParseResult(cPtr, true);
   }
 
-  public static AdaptiveCard MakeFallbackTextCard(String fallbackText, String language, String speak) throws java.io.IOException {
+  public static AdaptiveCard MakeFallbackTextCard(String fallbackText, String language, String speak) {
     long cPtr = AdaptiveCardObjectModelJNI.AdaptiveCard_MakeFallbackTextCard(fallbackText, language, speak);
     return (cPtr == 0) ? null : new AdaptiveCard(cPtr, true);
   }

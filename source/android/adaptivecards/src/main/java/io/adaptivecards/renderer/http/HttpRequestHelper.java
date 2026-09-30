@@ -17,7 +17,6 @@ import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -191,9 +190,26 @@ public abstract class HttpRequestHelper
         }
     }
 
+    /**
+     * Validates {@code url} and returns the normalized form that was actually screened.
+     *
+     * <p>Callers that hand a URL to something other than {@link #query} (a media player, for
+     * example) must pass on the returned value rather than the original string. Validating one
+     * spelling of a URL and dereferencing another is what lets an attacker slip a different
+     * authority past the private-address screen.
+     */
+    public static URL validateAndNormalizeUrl(String url) throws IOException, URISyntaxException
+    {
+        return validateUrl(url);
+    }
+
     static URL validateUrl(String url) throws IOException, URISyntaxException
     {
-        URL netURL = new URL(URLDecoder.decode(url, "UTF-8"));
+        // Parse the URL exactly as authored. Percent-decoding first would let an encoded delimiter
+        // such as %2F restructure the authority, so that java.net.URL sees a different host here
+        // than the RFC 3986 parsers used downstream (Uri.parse, ExoPlayer) see when they are handed
+        // the original string. That mismatch turns this screen into a no-op.
+        URL netURL = new URL(url);
         URI uri = new URI(netURL.getProtocol(), netURL.getUserInfo(), netURL.getHost(), netURL.getPort(), netURL.getPath(), netURL.getQuery(), netURL.getRef());
         netURL = uri.toURL();
 

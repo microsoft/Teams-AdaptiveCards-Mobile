@@ -155,24 +155,13 @@ const std::unordered_map<std::string, AdaptiveCards::SemanticVersion> AdaptiveCa
     return {{ParseUtil::ToLowercase("responsiveLayout"), AdaptiveCards::SemanticVersion("1.0")}};
 }
 
-#ifdef __ANDROID__
-std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromFile(const std::string& jsonFile, std::string rendererVersion) throw(AdaptiveCards::AdaptiveCardParseException)
-#else
 std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromFile(const std::string& jsonFile, const std::string& rendererVersion)
-#endif // __ANDROID__
 {
     ParseContext context;
     return AdaptiveCard::DeserializeFromFile(jsonFile, rendererVersion, context);
 }
 
-#ifdef __ANDROID__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdynamic-exception-spec"
-std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromFile(
-    const std::string& jsonFile, std::string rendererVersion, ParseContext& context) throw(AdaptiveCards::AdaptiveCardParseException)
-#else
 std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromFile(const std::string& jsonFile, const std::string& rendererVersion, ParseContext& context)
-#endif // __ANDROID__
 {
     std::ifstream jsonFileStream(jsonFile);
 
@@ -257,12 +246,7 @@ void AdaptiveCard::_ValidateLanguage(const std::string& language, std::vector<st
     }
 }
 
-#ifdef __ANDROID__
-std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(
-    const Json::Value& json, std::string rendererVersion, ParseContext& context) throw(AdaptiveCards::AdaptiveCardParseException)
-#else
 std::shared_ptr<ParseResult> AdaptiveCard::Deserialize(const Json::Value& json, const std::string& rendererVersion, ParseContext& context)
-#endif // __ANDROID__
 {
     ParseUtil::ThrowIfNotJsonObject(json);
 
@@ -459,23 +443,13 @@ bool AdaptiveCard::MeetsRootRequirements(std::unordered_map<std::string, Adaptiv
     return true;
 }
 
-#ifdef __ANDROID__
-std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromString(
-    const std::string& jsonString, std::string rendererVersion) throw(AdaptiveCards::AdaptiveCardParseException)
-#else
 std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromString(const std::string& jsonString, const std::string& rendererVersion)
-#endif // __ANDROID__
 {
     ParseContext context;
     return AdaptiveCard::DeserializeFromString(jsonString, rendererVersion, context);
 }
 
-#ifdef __ANDROID__
-std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromString(
-    const std::string& jsonString, std::string rendererVersion, ParseContext& context) throw(AdaptiveCards::AdaptiveCardParseException)
-#else
 std::shared_ptr<ParseResult> AdaptiveCard::DeserializeFromString(const std::string& jsonString, const std::string& rendererVersion, ParseContext& context)
-#endif // __ANDROID__
 {
     return AdaptiveCard::Deserialize(ParseUtil::GetJsonValueFromString(jsonString), rendererVersion, context);
 }
@@ -572,13 +546,8 @@ Json::Value AdaptiveCard::SerializeToJsonValue() const
     return root;
 }
 
-#ifdef __ANDROID__
-std::shared_ptr<AdaptiveCard> AdaptiveCard::MakeFallbackTextCard(
-    const std::string& fallbackText, const std::string& language, const std::string& speak) throw(AdaptiveCards::AdaptiveCardParseException)
-#else
 std::shared_ptr<AdaptiveCard> AdaptiveCard::MakeFallbackTextCard(
     const std::string& fallbackText, const std::string& language, const std::string& speak)
-#endif // __ANDROID__
 {
     std::shared_ptr<AdaptiveCard> fallbackCard = std::make_shared<AdaptiveCard>(
         "1.0", fallbackText, "", ContainerStyle::Default, speak, language, VerticalContentAlignment::Top, HeightType::Auto, 0);

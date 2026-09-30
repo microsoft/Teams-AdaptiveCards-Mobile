@@ -202,6 +202,15 @@ std::string ParseUtil::GetValueAsString(const Json::Value& json, AdaptiveCardSch
         return "";
     }
 
+    // asString() throws Json::LogicError for arrays and objects. Every other JSON type converts
+    // cleanly, so reject only the two that would throw and let scalars stringify as before.
+    if (propertyValue.isObject() || propertyValue.isArray())
+    {
+        throw AdaptiveCardParseException(
+            ErrorStatusCode::InvalidPropertyValue,
+            "Value for property " + propertyName + " was invalid. Expected a primitive value.");
+    }
+
     return propertyValue.asString();
 }
 
@@ -687,7 +696,18 @@ void ParseUtil::GetParsedRequiresSet(const Json::Value& json, std::unordered_map
             for (unsigned int i = 0; i < countNames; ++i)
             {
                 const auto& memberName = memberNames.at(i);
-                const auto& memberValue = json[memberName].asString();
+                const auto& rawValue = json[memberName];
+
+                // asString() throws Json::LogicError for arrays and objects, which would escape
+                // deserialization as a foreign exception type.
+                if (rawValue.isObject() || rawValue.isArray())
+                {
+                    throw AdaptiveCardParseException(
+                        ErrorStatusCode::InvalidPropertyValue,
+                        "Value for requires entry " + memberName + " was invalid. Expected a version string.");
+                }
+
+                const auto& memberValue = rawValue.asString();
 
                 if (memberValue == "*")
                 {

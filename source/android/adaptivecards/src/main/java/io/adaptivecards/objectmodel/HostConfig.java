@@ -228,6 +228,14 @@ public class HostConfig {
     AdaptiveCardObjectModelJNI.HostConfig_SetInputs(swigCPtr, this, InputsConfig.getCPtr(value), value);
   }
 
+  public IconsConfig GetIcons() {
+    return new IconsConfig(AdaptiveCardObjectModelJNI.HostConfig_GetIcons(swigCPtr, this), true);
+  }
+
+  public void SetIcons(IconsConfig value) {
+    AdaptiveCardObjectModelJNI.HostConfig_SetIcons(swigCPtr, this, IconsConfig.getCPtr(value), value);
+  }
+
   public HostWidthConfig getHostWidth() {
     return new HostWidthConfig(AdaptiveCardObjectModelJNI.HostConfig_getHostWidth(swigCPtr, this), true);
   }

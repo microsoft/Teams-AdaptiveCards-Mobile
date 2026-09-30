@@ -135,4 +135,6 @@ public class ParseContext {
     AdaptiveCardObjectModelJNI.ParseContext_PopBleedDirection(swigCPtr, this);
   }
 
+  public final static long MaxNestingDepth = 32;
+  public final static long MaxElementCount = 5000;
 }
