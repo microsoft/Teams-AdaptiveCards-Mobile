@@ -21,25 +21,6 @@ Json::StreamWriterBuilder CreateJsonStreamWriter()
     return builder;
 }
 
-// Json::Value::empty() only reports emptiness for null values and empty arrays/objects, so an
-// explicitly authored "" passes every isRequired check. Treat a blank string as absent so that
-// required properties genuinely have to carry a value.
-bool IsAbsentOrBlank(const Json::Value& value)
-{
-    if (value.empty())
-    {
-        return true;
-    }
-
-    if (!value.isString())
-    {
-        return false;
-    }
-
-    const std::string asString = value.asString();
-    return asString.find_first_not_of(" \t\r\n") == std::string::npos;
-}
-
 // Card payloads are untrusted, so bound the sizes the parser is willing to materialize. The limits
 // are deliberately generous so that legitimate content (including base64 data URIs) still parses.
 constexpr size_t MaxJsonPayloadBytes = 10 * 1024 * 1024;
@@ -126,7 +107,7 @@ std::string ParseUtil::GetString(const Json::Value& json, AdaptiveCardSchemaKey 
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
     auto propertyValue = json.get(propertyName, Json::Value());
-    if (isRequired && ::IsAbsentOrBlank(propertyValue))
+    if (isRequired && propertyValue.empty())
     {
         throw AdaptiveCardParseException(
             ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
@@ -172,7 +153,7 @@ std::string ParseUtil::GetJsonString(const Json::Value& json, AdaptiveCardSchema
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
     auto propertyValue = json.get(propertyName, Json::Value());
-    if (isRequired && ::IsAbsentOrBlank(propertyValue))
+    if (isRequired && propertyValue.empty())
     {
         throw AdaptiveCardParseException(
             ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
@@ -191,7 +172,7 @@ std::string ParseUtil::GetValueAsString(const Json::Value& json, AdaptiveCardSch
 {
     const std::string& propertyName = AdaptiveCardSchemaKeyToString(key);
     auto propertyValue = json.get(propertyName, Json::Value());
-    if (isRequired && ::IsAbsentOrBlank(propertyValue))
+    if (isRequired && propertyValue.empty())
     {
         throw AdaptiveCardParseException(
             ErrorStatusCode::RequiredPropertyMissing, "Property is required but was found empty: " + propertyName);
