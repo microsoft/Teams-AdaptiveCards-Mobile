@@ -22,27 +22,69 @@ steps:
     workingDirectory: 'source/ios/AdaptiveCards'
     forceRepoUpdate: false
 
-- script: |
-    set -eo pipefail
-    cd source/ios/AdaptiveCards
+- ${{ if eq(parameters.packageApp, true) }}:
+  - script: |
+      set -eo pipefail
+      cd source/ios/AdaptiveCards
+      # Under the sources dir so AppCenterDistribute's **/*.ipa and **/*.dSYM globs find the output.
+      OUT="$(Build.SourcesDirectory)/output"
+      ARCHIVE="$OUT/ADCIOSVisualizer.xcarchive"
+      xcodebuild -version
 
-    SIM=$(xcrun simctl list devices available --json 2>/dev/null | python3 -c "
-    import json, sys
-    try:
-      devices = json.load(sys.stdin)['devices']
-      for runtime in sorted(devices.keys(), reverse=True):
-        if 'iOS' in runtime:
-          for d in devices[runtime]:
-            if 'iPhone' in d['name'] and d.get('isAvailable', False):
-              print(d['udid']); sys.exit(0)
-    except: pass
-    " 2>/dev/null || true)
+      xcodebuild archive \
+        -workspace AdaptiveCards.xcworkspace \
+        -scheme ADCIOSVisualizer \
+        -sdk iphoneos \
+        -configuration ${{ parameters.configuration }} \
+        -destination 'generic/platform=iOS' \
+        -archivePath "$ARCHIVE" \
+        CODE_SIGN_STYLE=Automatic
 
-    if [ -n "$SIM" ]; then
-      DEST="platform=iOS Simulator,id=$SIM"
-    else
-      DEST="generic/platform=iOS Simulator"
-    fi
+      BUNDLE_ID=$(/usr/libexec/PlistBuddy -c 'Print :ApplicationProperties:CFBundleIdentifier' "$ARCHIVE/Info.plist")
+      TEAM_ID=$(/usr/libexec/PlistBuddy -c 'Print :ApplicationProperties:Team' "$ARCHIVE/Info.plist")
+      echo "bundle=$BUNDLE_ID team=$TEAM_ID profile=$APPLE_PROV_PROFILE_UUID"
 
-    xcodebuild build       -workspace AdaptiveCards.xcworkspace       -scheme ADCIOSVisualizer       -sdk ${{ parameters.sdk }}       -configuration ${{ parameters.configuration }}       -destination "$DEST"       CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
-  displayName: 'Compiling...'
+      EXPORT_OPTIONS="$(Agent.TempDirectory)/ExportOptions.plist"
+      /usr/libexec/PlistBuddy -c 'Add :method string development' \
+        -c 'Add :signingStyle string manual' \
+        -c "Add :teamID string $TEAM_ID" \
+        -c 'Add :signingCertificate string Apple Development' \
+        -c 'Add :provisioningProfiles dict' \
+        -c "Add :provisioningProfiles:$BUNDLE_ID string $APPLE_PROV_PROFILE_UUID" \
+        "$EXPORT_OPTIONS"
+      cat "$EXPORT_OPTIONS"
+
+      xcodebuild -exportArchive \
+        -archivePath "$ARCHIVE" \
+        -exportPath "$OUT/ipa" \
+        -exportOptionsPlist "$EXPORT_OPTIONS"
+      ls -la "$OUT/ipa"
+    displayName: 'Archive and export signed IPA'
+    env:
+      APPLE_PROV_PROFILE_UUID: $(APPLE_PROV_PROFILE_UUID)
+
+- ${{ else }}:
+  - script: |
+      set -eo pipefail
+      cd source/ios/AdaptiveCards
+
+      SIM=$(xcrun simctl list devices available --json 2>/dev/null | python3 -c "
+      import json, sys
+      try:
+        devices = json.load(sys.stdin)['devices']
+        for runtime in sorted(devices.keys(), reverse=True):
+          if 'iOS' in runtime:
+            for d in devices[runtime]:
+              if 'iPhone' in d['name'] and d.get('isAvailable', False):
+                print(d['udid']); sys.exit(0)
+      except: pass
+      " 2>/dev/null || true)
+
+      if [ -n "$SIM" ]; then
+        DEST="platform=iOS Simulator,id=$SIM"
+      else
+        DEST="generic/platform=iOS Simulator"
+      fi
+
+      xcodebuild build       -workspace AdaptiveCards.xcworkspace       -scheme ADCIOSVisualizer       -sdk ${{ parameters.sdk }}       -configuration ${{ parameters.configuration }}       -destination "$DEST"       CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+    displayName: 'Compiling...'
