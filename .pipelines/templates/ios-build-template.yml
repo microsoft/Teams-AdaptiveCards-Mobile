@@ -38,10 +38,10 @@ steps:
         -configuration ${{ parameters.configuration }} \
         -destination 'generic/platform=iOS' \
         -archivePath "$ARCHIVE" \
-        CODE_SIGN_STYLE=Automatic
+        CODE_SIGN_STYLE=Automatic CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
 
       BUNDLE_ID=$(/usr/libexec/PlistBuddy -c 'Print :ApplicationProperties:CFBundleIdentifier' "$ARCHIVE/Info.plist")
-      TEAM_ID=$(/usr/libexec/PlistBuddy -c 'Print :ApplicationProperties:Team' "$ARCHIVE/Info.plist")
+      TEAM_ID=$(/usr/libexec/PlistBuddy -c 'Print :ApplicationProperties:Team' "$ARCHIVE/Info.plist" || echo unsigned)
       echo "bundle=$BUNDLE_ID team=$TEAM_ID profile=$APPLE_PROV_PROFILE_UUID"
 
       EXPORT_OPTIONS="$(Agent.TempDirectory)/ExportOptions.plist"
@@ -54,6 +54,9 @@ steps:
         "$EXPORT_OPTIONS"
       cat "$EXPORT_OPTIONS"
 
+      echo "DIAG: archive contents"; ls -la "$ARCHIVE/Products/Applications" "$ARCHIVE/dSYMs" || true
+      /usr/libexec/PlistBuddy -c Print "$ARCHIVE/Info.plist"
+      echo "DIAG: export skipped (no valid signing identity yet)"; exit 0
       xcodebuild -exportArchive \
         -archivePath "$ARCHIVE" \
         -exportPath "$OUT/ipa" \
